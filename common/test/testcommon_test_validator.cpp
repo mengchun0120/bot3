@@ -12,5 +12,11 @@ TEST(TestValidator, DefaultValidatorEvaluateToTrue)
     ASSERT_TRUE(v.validate());
 }
 
+TEST(TestValidator, DefaultDescriptionIsEmpty)
+{
+    Validator v;
+    ASSERT_EQ(v.description(), "");
+}
+
 } // end of namespace common
 } // end of namespace mcdane
