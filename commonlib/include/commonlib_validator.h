@@ -30,15 +30,33 @@ private:
 template <typename T, typename F>
 Validator eq(const T &lhs, const F &rhs)
 {
-    Validator::ValidateFunc validateFunc = [=]()->bool
+    Validator::ValidateFunc validateFunc = [&]()->bool
     {
         return lhs == rhs;
     };
 
-    Validator::DescriptionFunc descriptionFunc = [=]()->std::string
+    Validator::DescriptionFunc descriptionFunc = [&]()->std::string
     {
         std::ostringstream oss;
         oss << "(" << lhs << " == " << rhs << ")";
+        return oss.str();
+    };
+
+    return Validator(validateFunc, descriptionFunc);
+}
+
+template <typename T, typename F>
+Validator ne(const T &lhs, const F &rhs)
+{
+    Validator::ValidateFunc validateFunc = [&]()->bool
+    {
+        return lhs != rhs;
+    };
+
+    Validator::DescriptionFunc descriptionFunc = [&]()->std::string
+    {
+        std::ostringstream oss;
+        oss << "(" << lhs << " != " << rhs << ")";
         return oss.str();
     };
 

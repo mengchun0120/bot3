@@ -18,18 +18,20 @@ TEST(TestValidator, DefaultDescriptionIsEmpty)
     ASSERT_EQ(v.description(), "");
 }
 
-TEST(TestValidator, EqValidateReturnsTrue)
+TEST(TestValidator, Eq)
 {
     int i = 1, j = 1;
     Validator v = eq(i, j);
     ASSERT_TRUE(v.validate());
+    ASSERT_EQ(v.description(), "(1 == 1)");
 }
 
-TEST(TestValidator, EqDescription)
+TEST(TestValidator, Ne)
 {
     int i = 1, j = 2;
-    Validator v = eq(i, j);
-    ASSERT_EQ(v.description(), "(1 == 2)");
+    Validator v = ne(i, j);
+    ASSERT_TRUE(v.validate());
+    ASSERT_EQ(v.description(), "(1 != 2)");
 }
 
 } // end of namespace commonlib
