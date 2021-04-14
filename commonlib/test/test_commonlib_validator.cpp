@@ -1,10 +1,10 @@
 #include <gtest/gtest.h>
-#include <common_validator.h>
+#include <commonlib_validator.h>
 
 using namespace ::testing;
 
 namespace mcdane {
-namespace common {
+namespace commonlib {
 
 TEST(TestValidator, DefaultValidateReturnsTrue)
 {
@@ -32,5 +32,5 @@ TEST(TestValidator, EqDescription)
     ASSERT_EQ(v.description(), "(1 == 2)");
 }
 
-} // end of namespace common
+} // end of namespace commonlib
 } // end of namespace mcdane

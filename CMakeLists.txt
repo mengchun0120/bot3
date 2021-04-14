@@ -2,5 +2,5 @@ cmake_minimum_required(VERSION 3.10)
 
 project(bot CXX)
 
-add_subdirectory(common)
+add_subdirectory(commonlib)
 

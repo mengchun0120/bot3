@@ -1,12 +1,12 @@
-#ifndef INCLUDED_COMMON_VALIDATOR_H
-#define INCLUDED_COMMON_VALIDATOR_H
+#ifndef INCLUDED_COMMONLIB_VALIDATOR_H
+#define INCLUDED_COMMONLIB_VALIDATOR_H
 
 #include <string>
 #include <functional>
 #include <sstream>
 
 namespace mcdane {
-namespace common {
+namespace commonlib {
 
 class Validator {
 public:
@@ -45,7 +45,7 @@ Validator eq(const T &lhs, const F &rhs)
     return Validator(validateFunc, descriptionFunc);
 }
 
-} // end of namespace common
+} // end of namespace commonlib
 } // end of namespace mcdane
 
 #endif

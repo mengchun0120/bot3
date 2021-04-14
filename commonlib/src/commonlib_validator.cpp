@@ -1,7 +1,7 @@
-#include <common_validator.h>
+#include <commonlib_validator.h>
 
 namespace mcdane {
-namespace common {
+namespace commonlib {
 
 Validator::Validator()
 {
@@ -34,6 +34,6 @@ std::string Validator::description() const
     return std::string();
 }
 
-} // end of namespace common
+} // end of namespace commonlib
 } // end of namespace mcdane
 
