@@ -15,52 +15,52 @@ public:
 
     Validator();
 
-    Validator(ValidateFunc validateFunc,
-              DescriptionFunc descriptionFunc);
+    Validator(ValidateFunc validate_func,
+              DescriptionFunc description_func);
 
-    bool validate() const;
+    bool Validate() const;
 
-    std::string description() const;
+    std::string Description() const;
 
 private:
-    ValidateFunc validateFunc_;
-    DescriptionFunc descriptionFunc_;
+    ValidateFunc validate_func_;
+    DescriptionFunc description_func_;
 };
 
 template <typename T, typename F>
-Validator eq(const T &lhs, const F &rhs)
+Validator Eq(const T &lhs, const F &rhs)
 {
-    Validator::ValidateFunc validateFunc = [&]()->bool
+    Validator::ValidateFunc validate_func = [&]()->bool
     {
         return lhs == rhs;
     };
 
-    Validator::DescriptionFunc descriptionFunc = [&]()->std::string
+    Validator::DescriptionFunc description_func = [&]()->std::string
     {
         std::ostringstream oss;
         oss << "(" << lhs << " == " << rhs << ")";
         return oss.str();
     };
 
-    return Validator(validateFunc, descriptionFunc);
+    return Validator(validate_func, description_func);
 }
 
 template <typename T, typename F>
-Validator ne(const T &lhs, const F &rhs)
+Validator Ne(const T &lhs, const F &rhs)
 {
-    Validator::ValidateFunc validateFunc = [&]()->bool
+    Validator::ValidateFunc validate_func = [&]()->bool
     {
         return lhs != rhs;
     };
 
-    Validator::DescriptionFunc descriptionFunc = [&]()->std::string
+    Validator::DescriptionFunc description_func = [&]()->std::string
     {
         std::ostringstream oss;
         oss << "(" << lhs << " != " << rhs << ")";
         return oss.str();
     };
 
-    return Validator(validateFunc, descriptionFunc);
+    return Validator(validate_func, description_func);
 }
 
 } // end of namespace commonlib

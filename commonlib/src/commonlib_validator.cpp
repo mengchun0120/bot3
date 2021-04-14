@@ -7,28 +7,28 @@ Validator::Validator()
 {
 }
 
-Validator::Validator(ValidateFunc validateFunc,
-                     DescriptionFunc descriptionFunc):
-    validateFunc_(validateFunc),
-    descriptionFunc_(descriptionFunc)
+Validator::Validator(ValidateFunc validate_func,
+                     DescriptionFunc description_func):
+    validate_func_(validate_func),
+    description_func_(description_func)
 {
 }
 
-bool Validator::validate() const
+bool Validator::Validate() const
 {
-    if (validateFunc_)
+    if (validate_func_)
     {
-        return validateFunc_();
+        return validate_func_();
     }
 
     return true;
 }
 
-std::string Validator::description() const
+std::string Validator::Description() const
 {
-    if (descriptionFunc_)
+    if (description_func_)
     {
-        return descriptionFunc_();
+        return description_func_();
     }
 
     return std::string();
