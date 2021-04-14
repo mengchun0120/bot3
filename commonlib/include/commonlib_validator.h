@@ -63,6 +63,78 @@ Validator Ne(const T &lhs, const F &rhs)
     return Validator(validate_func, description_func);
 }
 
+template <typename T, typename F>
+Validator Gt(const T &lhs, const F &rhs)
+{
+    Validator::ValidateFunc validate_func = [&]()->bool
+    {
+        return lhs > rhs;
+    };
+
+    Validator::DescriptionFunc description_func = [&]()->std::string
+    {
+        std::ostringstream oss;
+        oss << "(" << lhs << " > " << rhs << ")";
+        return oss.str();
+    };
+
+    return Validator(validate_func, description_func);
+}
+
+template <typename T, typename F>
+Validator Ge(const T &lhs, const F &rhs)
+{
+    Validator::ValidateFunc validate_func = [&]()->bool
+    {
+        return lhs >= rhs;
+    };
+
+    Validator::DescriptionFunc description_func = [&]()->std::string
+    {
+        std::ostringstream oss;
+        oss << "(" << lhs << " >= " << rhs << ")";
+        return oss.str();
+    };
+
+    return Validator(validate_func, description_func);
+}
+
+template <typename T, typename F>
+Validator Lt(const T &lhs, const F &rhs)
+{
+    Validator::ValidateFunc validate_func = [&]()->bool
+    {
+        return lhs < rhs;
+    };
+
+    Validator::DescriptionFunc description_func = [&]()->std::string
+    {
+        std::ostringstream oss;
+        oss << "(" << lhs << " < " << rhs << ")";
+        return oss.str();
+    };
+
+    return Validator(validate_func, description_func);
+}
+
+template <typename T, typename F>
+Validator Le(const T &lhs, const F &rhs)
+{
+    Validator::ValidateFunc validate_func = [&]()->bool
+    {
+        return lhs <= rhs;
+    };
+
+    Validator::DescriptionFunc description_func = [&]()->std::string
+    {
+        std::ostringstream oss;
+        oss << "(" << lhs << " <= " << rhs << ")";
+        return oss.str();
+    };
+
+    return Validator(validate_func, description_func);
+}
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 

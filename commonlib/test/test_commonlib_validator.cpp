@@ -29,5 +29,37 @@ TEST(TestValidator, Ne)
     ASSERT_EQ(v.Description(), "(1 != 2)");
 }
 
+TEST(TestValidator, Gt)
+{
+    int i = 3, j = 2;
+    Validator v = Gt(i, j);
+    ASSERT_TRUE(v.Validate());
+    ASSERT_EQ(v.Description(), "(3 > 2)");
+}
+
+TEST(TestValidator, Ge)
+{
+    int i = 2, j = 1;
+    Validator v = Ge(i, j);
+    ASSERT_TRUE(v.Validate());
+    ASSERT_EQ(v.Description(), "(2 >= 1)");
+}
+
+TEST(TestValidator, Lt)
+{
+    int i = 1, j = 2;
+    Validator v = Lt(i, j);
+    ASSERT_TRUE(v.Validate());
+    ASSERT_EQ(v.Description(), "(1 < 2)");
+}
+
+TEST(TestValidator, Le)
+{
+    int i = 1, j = 2;
+    Validator v = Le(i, j);
+    ASSERT_TRUE(v.Validate());
+    ASSERT_EQ(v.Description(), "(1 <= 2)");
+}
+
 } // end of namespace commonlib
 } // end of namespace mcdane
