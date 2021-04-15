@@ -34,6 +34,52 @@ std::string Validator::Description() const
     return std::string();
 }
 
+Validator operator&&(const Validator &lhs, const Validator &rhs)
+{
+    Validator::ValidateFunc validate_func = [=]()->bool
+    {
+        return lhs.Validate() && rhs.Validate();
+    };
+
+    Validator::DescriptionFunc description_func = [=]()->std::string
+    {
+        return "(" + lhs.Description() + " && " + rhs.Description() + ")";
+    };
+
+    return Validator(validate_func, description_func);
+}
+
+Validator operator||(const Validator &lhs, const Validator &rhs)
+{
+    Validator::ValidateFunc validate_func = [=]()->bool
+    {
+        return lhs.Validate() || rhs.Validate();
+    };
+
+    Validator::DescriptionFunc description_func = [=]()->std::string
+    {
+        return "(" + lhs.Description() + " || " + rhs.Description() + ")";
+    };
+
+    return Validator(validate_func, description_func);
+}
+
+Validator operator!(const Validator &v)
+{
+    Validator::ValidateFunc validate_func = [=]()->bool
+    {
+        return !v.Validate();
+    };
+
+    Validator::DescriptionFunc description_func = [=]()->std::string
+    {
+        return "!" + v.Description();
+    };
+
+    return Validator(validate_func, description_func);
+
+}
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 

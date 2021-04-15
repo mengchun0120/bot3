@@ -135,6 +135,12 @@ Validator Le(const T &lhs, const F &rhs)
     return Validator(validate_func, description_func);
 }
 
+Validator operator&&(const Validator &lhs, const Validator &rhs);
+
+Validator operator||(const Validator &lhs, const Validator &rhs);
+
+Validator operator!(const Validator &v);
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 
