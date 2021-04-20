@@ -3,6 +3,7 @@
 
 #include <string>
 #include <memory>
+#include <commonlib_parse.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -21,7 +22,11 @@ public:
 
     static bool ValidateName(const std::string &name);
 
+    static bool ValidateName(const char *name);
+
     static bool ValidateOpt(const std::string &opt);
+
+    static bool ValidateOpt(const char *opt);
 
     explicit Argument(const std::string &name,
                       const std::string &short_opt="",
@@ -39,28 +44,43 @@ public:
 
     Argument &operator=(Argument &&other) noexcept = default;
 
-    const std::string &name() const noexcept
+    const std::string &Name() const noexcept
     {
         return name_;
     }
 
-    const std::string &short_opt() const noexcept
+    bool IsPosArg() const noexcept
+    {
+        return short_opt_.empty() && long_opt_.empty();
+    }
+
+    const std::string &ShortOpt() const noexcept
     {
         return short_opt_;
     }
 
-    const std::string &long_opt() const noexcept
+    const std::string &LongOpt() const noexcept
     {
         return long_opt_;
     }
 
-    const std::string &description() const noexcept
+    const std::string &Description() const noexcept
     {
         return description_;
     }
 
-    virtual void eval(const char *s)
+    virtual void Eval(const char *s)
     {
+    }
+
+    bool &Specified() noexcept
+    {
+        return specified_;
+    }
+
+    bool Specified() const noexcept
+    {
+        return specified_;
     }
 
 private:
@@ -68,8 +88,9 @@ private:
     std::string short_opt_;
     std::string long_opt_;
     std::string description_;
+    bool specified_;
 };
-/*
+
 template <typename T>
 class TypedArgument: public Argument {
 public:
@@ -97,7 +118,7 @@ public:
         return arg_;
     }
 
-    void eval(const char *s) override;
+    void Eval(const char *s) override;
 
 private:
     T &arg_;
@@ -125,11 +146,12 @@ TypedArgument<T>::TypedArgument(T &arg,
 {}
 
 template <typename T>
-void TypedArgument<T>::eval(const char *s)
+void TypedArgument<T>::Eval(const char *s)
 {
     Parse(arg_, s);
+    Specified() = true;
 }
-*/
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 

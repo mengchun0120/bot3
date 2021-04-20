@@ -14,6 +14,13 @@ MyException::MyException(int line,
     description_ = file_ + ":" + std::to_string(line_) + " " + msg_;
 }
 
+MyException::MyException(int line,
+                         const char *file,
+                         const std::string &msg) noexcept:
+    MyException(line, file, msg.c_str())
+{
+}
+
 const char *MyException::what() const noexcept
 {
     return description_.c_str();

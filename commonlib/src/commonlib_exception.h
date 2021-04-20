@@ -13,6 +13,10 @@ public:
                 const char *file,
                 const char *msg) noexcept;
 
+    MyException(int line,
+                const char *file,
+                const std::string &msg) noexcept;
+
     const char *what() const noexcept override;
 
     int line() const noexcept
@@ -42,6 +46,12 @@ public:
     InvalidArgumentException(int line,
                     const char *file,
                     const char *msg) noexcept:
+        MyException(line, file, msg)
+    {}
+
+    InvalidArgumentException(int line,
+                    const char *file,
+                    const std::string &msg) noexcept:
         MyException(line, file, msg)
     {}
 };

@@ -7,11 +7,21 @@ namespace commonlib {
 
 bool Argument::ValidateName(const std::string &name)
 {
+    return ValidateName(name.c_str());
+}
+
+bool Argument::ValidateName(const char *name)
+{
     static std::regex r("^\\w+$");
     return std::regex_match(name, r);
 }
 
 bool Argument::ValidateOpt(const std::string &opt)
+{
+    return ValidateOpt(opt.c_str());
+}
+
+bool Argument::ValidateOpt(const char *opt)
 {
     static std::regex r("^\\w*$");
     return std::regex_match(opt, r);
@@ -24,7 +34,8 @@ Argument::Argument(const std::string &name,
     name_(name),
     short_opt_(short_opt),
     long_opt_(long_opt),
-    description_(description)
+    description_(description),
+    specified_(false)
 {
     if (!ValidateName(name_))
     {
