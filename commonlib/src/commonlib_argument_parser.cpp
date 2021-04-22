@@ -189,13 +189,21 @@ void ArgumentParser::evalLongOpt(const std::string &long_opt,
                      "Unknown option " + long_opt);
     }
 
+    Argument::Ptr &arg = it->second;
+
+    if (arg->Specified())
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Parameter " + arg->Name() + " was already specified");
+    }
+
     if (arg_idx + 1 >= argc)
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Not enough parameter for option " + long_opt);
+                     "No value specified for parameter " + arg->Name());
     }
 
-    it->second->Eval(argv[arg_idx+1]);
+    arg->Eval(argv[arg_idx+1]);
     arg_idx += 2;
 }
 
@@ -211,13 +219,21 @@ void ArgumentParser::evalShortOpt(const std::string &short_opt,
                      "Unknown option" + short_opt);
     }
 
+    Argument::Ptr &arg = it->second;
+
+    if (arg->Specified())
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Parameter " + arg->Name() + " was already specified");
+    }
+
     if (arg_idx + 1 >= argc)
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Not enough parameter for option " + short_opt);
+                     "No value specified for parameter " + arg->Name());
     }
 
-    it->second->Eval(argv[arg_idx+1]);
+    arg->Eval(argv[arg_idx+1]);
     arg_idx += 2;
 }
 
