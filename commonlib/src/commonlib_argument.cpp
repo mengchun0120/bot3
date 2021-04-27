@@ -5,51 +5,61 @@
 namespace mcdane {
 namespace commonlib {
 
-bool Argument::ValidateName(const std::string &name)
+bool Argument::validateName(const std::string &name)
 {
-    return ValidateName(name.c_str());
+    return validateName(name.c_str());
 }
 
-bool Argument::ValidateName(const char *name)
+bool Argument::validateName(const char *name)
 {
     static std::regex r("^\\w+$");
     return std::regex_match(name, r);
 }
 
-bool Argument::ValidateOpt(const std::string &opt)
+bool Argument::validateOpt(const std::string &opt)
 {
-    return ValidateOpt(opt.c_str());
+    return validateOpt(opt.c_str());
 }
 
-bool Argument::ValidateOpt(const char *opt)
+bool Argument::validateOpt(const char *opt)
 {
     static std::regex r("^\\w*$");
     return std::regex_match(opt, r);
 }
 
 Argument::Argument(const std::string &name,
-                   const std::string &short_opt,
-                   const std::string &long_opt,
-                   const std::string &description):
+                   const std::string &shortOpt,
+                   const std::string &longOpt,
+                   const std::string &description,
+                   bool optional,
+                   Validator validator):
     name_(name),
-    short_opt_(short_opt),
-    long_opt_(long_opt),
+    shortOpt_(shortOpt),
+    longOpt_(longOpt),
     description_(description),
+    optional_(optional),
+    validator_(validator),
     specified_(false)
 {
-    if (!ValidateName(name_))
+    if (!validateName(name_))
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid name");
     }
 
-    if (!ValidateOpt(short_opt_))
+    if (!validateOpt(shortOpt_))
     {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid short_opt");
+        THROW_EXCEPT(InvalidArgumentException, "Invalid shortOpt");
     }
 
-    if (!ValidateOpt(long_opt_))
+    if (!validateOpt(longOpt_))
     {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid long_opt");
+        THROW_EXCEPT(InvalidArgumentException, "Invalid longOpt");
+    }
+
+    if (isPosArg() && optional_)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Position argument cannot be optional");
     }
 }
 

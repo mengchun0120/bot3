@@ -15,32 +15,32 @@ public:
 
     ArgumentParser(std::initializer_list<Argument::Ptr> args);
 
-    void Parse(int argc, const char * const argv[]);
+    void init(const std::initializer_list<Argument::Ptr> &args);
 
-    bool ArgExists(const std::string &name) const
+    void parse(int argc, const char * const argv[]);
+
+    bool argExists(const std::string &name) const
     {
-        return name_arg_map_.find(name) != name_arg_map_.end();
+        return nameArgMap_.find(name) != nameArgMap_.end();
     }
 
-    bool ShortOptExists(const std::string &short_opt) const
+    bool shortOptExists(const std::string &shortOpt) const
     {
-        return short_opt_arg_map_.find(short_opt) !=
-               short_opt_arg_map_.end();
+        return shortOptArgMap_.find(shortOpt) !=
+               shortOptArgMap_.end();
     }
 
-    bool LongOptExists(const std::string &long_opt) const
+    bool longOptExists(const std::string &longOpt) const
     {
-        return long_opt_arg_map_.find(long_opt) !=
-               long_opt_arg_map_.end();
+        return longOptArgMap_.find(longOpt) !=
+               longOptArgMap_.end();
     }
 
 private:
-    void initArgs(const std::initializer_list<Argument::Ptr> &args);
-
-    void resetArgs();
+    void clearAll();
 
     void addArg(Argument::Ptr arg,
-                unsigned int &pos_arg_idx);
+                unsigned int &posArgIdx);
 
     void addArgToNameArgMap(Argument::Ptr arg);
 
@@ -48,25 +48,32 @@ private:
 
     void addArgToLongOptArgMap(Argument::Ptr arg);
 
-    void evalLongOpt(const std::string &long_opt,
-                     int &arg_idx,
+    void resetArgs();
+
+    void evalArgs(int argc,
+                  const char * const argv[]);
+
+    void evalLongOpt(const std::string &longOpt,
+                     int &argIdx,
                      int argc,
                      const char * const argv[]);
 
-    void evalShortOpt(const std::string &short_opt,
-                      int &arg_idx,
+    void evalShortOpt(const std::string &shortOpt,
+                      int &argIdx,
                       int argc,
                       const char * const argv[]);
 
-    void evalPosOpt(unsigned int &pos_arg_idx,
-                    int &arg_idx,
+    void evalPosOpt(unsigned int &posArgIdx,
+                    int &argIdx,
                     const char * const argv[]);
 
+    void checkNonOptional();
+
 private:
-    std::unordered_map<std::string, Argument::Ptr> name_arg_map_;
-    std::vector<Argument::Ptr> pos_args_;
-    std::unordered_map<std::string, Argument::Ptr> short_opt_arg_map_;
-    std::unordered_map<std::string, Argument::Ptr> long_opt_arg_map_;
+    std::unordered_map<std::string, Argument::Ptr> nameArgMap_;
+    std::vector<Argument::Ptr> posArgs_;
+    std::unordered_map<std::string, Argument::Ptr> shortOptArgMap_;
+    std::unordered_map<std::string, Argument::Ptr> longOptArgMap_;
 };
 
 } // end of namespace commonlib

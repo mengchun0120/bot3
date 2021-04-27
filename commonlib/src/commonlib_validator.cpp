@@ -7,28 +7,28 @@ Validator::Validator()
 {
 }
 
-Validator::Validator(ValidateFunc validate_func,
-                     DescriptionFunc description_func):
-    validate_func_(validate_func),
-    description_func_(description_func)
+Validator::Validator(ValidateFunc validateFunc,
+                     DescriptionFunc descFunc):
+    validateFunc_(validateFunc),
+    descFunc_(descFunc)
 {
 }
 
-bool Validator::Validate() const
+bool Validator::validate() const
 {
-    if (validate_func_)
+    if (validateFunc_)
     {
-        return validate_func_();
+        return validateFunc_();
     }
 
     return true;
 }
 
-std::string Validator::Description() const
+std::string Validator::description() const
 {
-    if (description_func_)
+    if (descFunc_)
     {
-        return description_func_();
+        return descFunc_();
     }
 
     return std::string();
@@ -36,47 +36,47 @@ std::string Validator::Description() const
 
 Validator operator&&(const Validator &lhs, const Validator &rhs)
 {
-    Validator::ValidateFunc validate_func = [=]()->bool
+    Validator::ValidateFunc validateFunc = [=]()->bool
     {
-        return lhs.Validate() && rhs.Validate();
+        return lhs.validate() && rhs.validate();
     };
 
-    Validator::DescriptionFunc description_func = [=]()->std::string
+    Validator::DescriptionFunc descFunc = [=]()->std::string
     {
-        return "(" + lhs.Description() + " && " + rhs.Description() + ")";
+        return "(" + lhs.description() + " && " + rhs.description() + ")";
     };
 
-    return Validator(validate_func, description_func);
+    return Validator(validateFunc, descFunc);
 }
 
 Validator operator||(const Validator &lhs, const Validator &rhs)
 {
-    Validator::ValidateFunc validate_func = [=]()->bool
+    Validator::ValidateFunc validateFunc = [=]()->bool
     {
-        return lhs.Validate() || rhs.Validate();
+        return lhs.validate() || rhs.validate();
     };
 
-    Validator::DescriptionFunc description_func = [=]()->std::string
+    Validator::DescriptionFunc descFunc = [=]()->std::string
     {
-        return "(" + lhs.Description() + " || " + rhs.Description() + ")";
+        return "(" + lhs.description() + " || " + rhs.description() + ")";
     };
 
-    return Validator(validate_func, description_func);
+    return Validator(validateFunc, descFunc);
 }
 
 Validator operator!(const Validator &v)
 {
-    Validator::ValidateFunc validate_func = [=]()->bool
+    Validator::ValidateFunc validateFunc = [=]()->bool
     {
-        return !v.Validate();
+        return !v.validate();
     };
 
-    Validator::DescriptionFunc description_func = [=]()->std::string
+    Validator::DescriptionFunc descFunc = [=]()->std::string
     {
-        return "!" + v.Description();
+        return "!" + v.description();
     };
 
-    return Validator(validate_func, description_func);
+    return Validator(validateFunc, descFunc);
 
 }
 

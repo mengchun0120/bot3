@@ -5,21 +5,101 @@
 namespace mcdane {
 namespace commonlib {
 
-TEST(TestArgument, ValidNameOptThrowNoException)
+class TestArgument: public testing::Test {
+public:
+    Argument::Ptr arg_;
+};
+
+TEST_F(TestArgument, CreateWithValidArgsThrowNoException)
 {
-    EXPECT_NO_THROW(Argument arg("name", "n", "name", ""));
-    EXPECT_NO_THROW(Argument arg("arg01", "1", "arg_01", ""));
-    EXPECT_NO_THROW(Argument arg("stash_count", "s", "stash_count", ""));
+    std::string name;
+    EXPECT_NO_THROW(arg_ = Argument::create(name, "name", "n", "name", "Name"));
 }
 
-TEST(TestArgument, InvalidNameOptThrowException)
+TEST_F(TestArgument, CreateWithEmptyNameThrowException)
 {
-    EXPECT_THROW(Argument arg("", "n", "name", ""),
-                 InvalidArgumentException);
-    EXPECT_THROW(Argument arg("price", "-p", "price", "price"),
-                 InvalidArgumentException);
-    EXPECT_THROW(Argument arg("weight", "w", "--weight", "weight"),
-                 InvalidArgumentException);
+    std::string name;
+    bool exceptionHappened = false;
+
+    try
+    {
+        arg_ = Argument::create(name, "", "n", "name", "Name");
+    }
+    catch (const InvalidArgumentException &e)
+    {
+        std::cerr << e.what() << std::endl;
+        exceptionHappened = true;
+    }
+
+    ASSERT_TRUE(exceptionHappened);
+}
+
+TEST_F(TestArgument, CreateWithInvalidShortOptionThrowException)
+{
+    std::string name;
+    bool exceptionHappened = false;
+
+    try
+    {
+        arg_ = Argument::create(name, "", "-n", "name", "Name");
+    }
+    catch (const InvalidArgumentException &e)
+    {
+        std::cerr << e.what() << std::endl;
+        exceptionHappened = true;
+    }
+
+    ASSERT_TRUE(exceptionHappened);
+}
+
+TEST_F(TestArgument, CreateWithInvalidLongOptThrowException)
+{
+    std::string name;
+    bool exceptionHappened = false;
+
+    try
+    {
+        arg_ = Argument::create(name, "", "n", "--name", "Name");
+    }
+    catch (const InvalidArgumentException &e)
+    {
+        std::cerr << e.what() << std::endl;
+        exceptionHappened = true;
+    }
+
+    ASSERT_TRUE(exceptionHappened);
+}
+
+TEST_F(TestArgument, EvalWithoutFailingValidationThrowsNoException)
+{
+    int count;
+
+    ASSERT_NO_THROW(arg_ = Argument::create(count, "count", "c", "count",
+                                            "Count", true, gt(count, 0)));
+    ASSERT_NO_THROW(arg_->eval("123"));
+    EXPECT_EQ(count, 123);
+    EXPECT_TRUE(arg_->specified());
+}
+
+TEST_F(TestArgument, EvalWithFailingValidationThrowsException)
+{
+    int count;
+    bool exceptionHappened = false;
+
+    ASSERT_NO_THROW(arg_ = Argument::create(count, "count", "c", "count",
+                                            "Count", true, gt(count, 0)));
+
+    try
+    {
+        arg_->eval("0");
+    }
+    catch (const InvalidArgumentException &e)
+    {
+        std::cerr << e.what() << std::endl;
+        exceptionHappened = true;
+    }
+
+    ASSERT_TRUE(exceptionHappened);
 }
 
 } // end of namespace commonlib

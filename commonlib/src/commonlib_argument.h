@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <commonlib_parse.h>
+#include <commonlib_validator.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -14,24 +15,28 @@ public:
 
 public:
     template <typename T>
-    static Ptr Create(T &arg,
+    static Ptr create(T &arg,
                       const std::string &name,
-                      const std::string &short_opt="",
-                      const std::string &long_opt="",
-                      const std::string &description="");
+                      const std::string &shortOpt="",
+                      const std::string &longOpt="",
+                      const std::string &description="",
+                      bool optional=false,
+                      Validator validator=Validator());
 
-    static bool ValidateName(const std::string &name);
+    static bool validateName(const std::string &name);
 
-    static bool ValidateName(const char *name);
+    static bool validateName(const char *name);
 
-    static bool ValidateOpt(const std::string &opt);
+    static bool validateOpt(const std::string &opt);
 
-    static bool ValidateOpt(const char *opt);
+    static bool validateOpt(const char *opt);
 
-    explicit Argument(const std::string &name,
-                      const std::string &short_opt="",
-                      const std::string &long_opt="",
-                      const std::string &description="");
+    Argument(const std::string &name,
+             const std::string &shortOpt="",
+             const std::string &longOpt="",
+             const std::string &description="",
+             bool optional=false,
+             Validator validator=Validator());
 
     Argument(const Argument &other) noexcept = default;
 
@@ -44,50 +49,60 @@ public:
 
     Argument &operator=(Argument &&other) noexcept = default;
 
-    const std::string &Name() const noexcept
+    const std::string &name() const noexcept
     {
         return name_;
     }
 
-    bool IsPosArg() const noexcept
+    bool isPosArg() const noexcept
     {
-        return short_opt_.empty() && long_opt_.empty();
+        return shortOpt_.empty() && longOpt_.empty();
     }
 
-    const std::string &ShortOpt() const noexcept
+    const std::string &shortOpt() const noexcept
     {
-        return short_opt_;
+        return shortOpt_;
     }
 
-    const std::string &LongOpt() const noexcept
+    const std::string &longOpt() const noexcept
     {
-        return long_opt_;
+        return longOpt_;
     }
 
-    const std::string &Description() const noexcept
+    const std::string &description() const noexcept
     {
         return description_;
     }
 
-    virtual void Eval(const char *s)
+    bool optional() const noexcept
     {
+        return optional_;
     }
 
-    bool &Specified() noexcept
+    const Validator &validator() const noexcept
+    {
+        return validator_;
+    }
+
+    virtual void eval(const char *s) = 0;
+
+    bool &specified() noexcept
     {
         return specified_;
     }
 
-    bool Specified() const noexcept
+    bool specified() const noexcept
     {
         return specified_;
     }
 
 private:
     std::string name_;
-    std::string short_opt_;
-    std::string long_opt_;
+    std::string shortOpt_;
+    std::string longOpt_;
     std::string description_;
+    bool optional_;
+    Validator validator_;
     bool specified_;
 };
 
@@ -96,9 +111,11 @@ class TypedArgument: public Argument {
 public:
     TypedArgument(T &arg,
                   const std::string &name,
-                  const std::string &short_opt="",
-                  const std::string &long_opt="",
-                  const std::string &description="");
+                  const std::string &shortOpt="",
+                  const std::string &longOpt="",
+                  const std::string &description="",
+                  bool optional=false,
+                  Validator validator=Validator());
 
     TypedArgument(const TypedArgument &other) noexcept = default;
 
@@ -118,38 +135,48 @@ public:
         return arg_;
     }
 
-    void Eval(const char *s) override;
+    void eval(const char *s) override;
 
 private:
     T &arg_;
 };
 
 template <typename T>
-Argument::Ptr Argument::Create(T &arg,
+Argument::Ptr Argument::create(T &arg,
                                const std::string &name,
-                               const std::string &short_opt,
-                               const std::string &long_opt,
-                               const std::string &description)
+                               const std::string &shortOpt,
+                               const std::string &longOpt,
+                               const std::string &description,
+                               bool optional,
+                               Validator validator)
 {
-    return Ptr(new TypedArgument<T>(arg, name, short_opt,
-                                    long_opt, description));
+    return Ptr(new TypedArgument<T>(arg, name, shortOpt,
+                                    longOpt, description,
+                                    optional, validator));
 }
 
 template <typename T>
 TypedArgument<T>::TypedArgument(T &arg,
                                 const std::string &name,
-                                const std::string &short_opt,
-                                const std::string &long_opt,
-                                const std::string &description):
-    Argument(name, short_opt, long_opt, description),
+                                const std::string &shortOpt,
+                                const std::string &longOpt,
+                                const std::string &description,
+                                bool optional,
+                                Validator validator):
+    Argument(name, shortOpt, longOpt, description, optional, validator),
     arg_(arg)
 {}
 
 template <typename T>
-void TypedArgument<T>::Eval(const char *s)
+void TypedArgument<T>::eval(const char *s)
 {
-    Parse(arg_, s);
-    Specified() = true;
+    parse(arg_, s);
+    if (!validator().validate())
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Validation failed: " + validator().description());
+    }
+    specified() = true;
 }
 
 } // end of namespace commonlib

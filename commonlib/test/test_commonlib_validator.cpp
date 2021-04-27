@@ -6,115 +6,140 @@ using namespace ::testing;
 namespace mcdane {
 namespace commonlib {
 
-TEST(TestValidator, Default)
-{
-    Validator v;
+class TestValidator: public testing::Test {
+public:
+    Validator v_;
+};
 
-    ASSERT_TRUE(v.Validate());
-    ASSERT_EQ(v.Description(), "");
+TEST_F(TestValidator, TestDefaultValidator)
+{
+    EXPECT_TRUE(v_.validate());
+    EXPECT_EQ(v_.description(), "");
 }
 
-TEST(TestValidator, Eq)
+TEST_F(TestValidator, TestEq)
 {
     int i = 1, j = 1;
-    Validator v = Eq(i, j);
+    v_ = eq(i, j);
 
-    ASSERT_TRUE(v.Validate());
-    ASSERT_EQ(v.Description(), "(1 == 1)");
+    EXPECT_TRUE(v_.validate());
+    EXPECT_EQ(v_.description(), "(1 == 1)");
+
+    j = 3;
+    EXPECT_FALSE(v_.validate());
+    EXPECT_EQ(v_.description(), "(1 == 3)");
 }
 
-TEST(TestValidator, Ne)
+TEST_F(TestValidator, TestNe)
 {
     int i = 1, j = 2;
-    Validator v = Ne(i, j);
+    v_ = ne(i, j);
 
-    ASSERT_TRUE(v.Validate());
-    ASSERT_EQ(v.Description(), "(1 != 2)");
+    EXPECT_TRUE(v_.validate());
+    EXPECT_EQ(v_.description(), "(1 != 2)");
+
+    j = 1;
+    EXPECT_FALSE(v_.validate());
+    EXPECT_EQ(v_.description(), "(1 != 1)");
 }
 
-TEST(TestValidator, Gt)
+TEST_F(TestValidator, TestGt)
 {
     int i = 3, j = 2;
-    Validator v = Gt(i, j);
+    v_ = gt(i, j);
 
-    ASSERT_TRUE(v.Validate());
-    ASSERT_EQ(v.Description(), "(3 > 2)");
+    EXPECT_TRUE(v_.validate());
+    EXPECT_EQ(v_.description(), "(3 > 2)");
+
+    j = 4;
+    EXPECT_FALSE(v_.validate());
+    EXPECT_EQ(v_.description(), "(3 > 4)");
 }
 
-TEST(TestValidator, Ge)
+TEST_F(TestValidator, TestGe)
 {
     int i = 2, j = 1;
-    Validator v = Ge(i, j);
+    v_ = ge(i, j);
 
-    ASSERT_TRUE(v.Validate());
-    ASSERT_EQ(v.Description(), "(2 >= 1)");
+    EXPECT_TRUE(v_.validate());
+    EXPECT_EQ(v_.description(), "(2 >= 1)");
+
+    j = 4;
+    EXPECT_FALSE(v_.validate());
+    EXPECT_EQ(v_.description(), "(2 >= 4)");
 }
 
-TEST(TestValidator, Lt)
+TEST_F(TestValidator, TestLt)
 {
     int i = 1, j = 2;
-    Validator v = Lt(i, j);
+    v_ = lt(i, j);
 
-    ASSERT_TRUE(v.Validate());
-    ASSERT_EQ(v.Description(), "(1 < 2)");
+    EXPECT_TRUE(v_.validate());
+    EXPECT_EQ(v_.description(), "(1 < 2)");
+
+    j = -1;
+    EXPECT_FALSE(v_.validate());
+    EXPECT_EQ(v_.description(), "(1 < -1)");
 }
 
-TEST(TestValidator, Le)
+TEST_F(TestValidator, TestLe)
 {
     int i = 1, j = 2;
-    Validator v = Le(i, j);
+    v_ = le(i, j);
 
-    ASSERT_TRUE(v.Validate());
-    ASSERT_EQ(v.Description(), "(1 <= 2)");
+    EXPECT_TRUE(v_.validate());
+    EXPECT_EQ(v_.description(), "(1 <= 2)");
+
+    j = -1;
+    EXPECT_FALSE(v_.validate());
+    EXPECT_EQ(v_.description(), "(1 <= -1)");
 }
 
-TEST(TestValidator, And)
+TEST_F(TestValidator, TestAnd)
 {
     int i = 1, j = 2, k = 3;
-    Validator v = Le(i, j) && Gt(k, j);
+    v_ = le(i, j) && gt(k, j);
 
-    ASSERT_TRUE(v.Validate());
-    ASSERT_EQ(v.Description(), "((1 <= 2) && (3 > 2))");
-}
-
-TEST(TestValidator, Or)
-{
-    int i = 1, j = 2, k = 3;
-    Validator v = Lt(i, j) || Eq(k, j);
-
-    ASSERT_TRUE(v.Validate());
-    ASSERT_EQ(v.Description(), "((1 < 2) || (3 == 2))");
-}
-
-TEST(TestValidator, Not)
-{
-    int i = 1, j = 2;
-    Validator v = !Lt(j, i);
-
-    ASSERT_TRUE(v.Validate());
-    ASSERT_EQ(v.Description(), "!(2 < 1)");
-}
-
-TEST(TestValidator, ComplexComposition)
-{
-    Validator v = Le(1, 2) && (Ge(3, 2) || Lt(1, 3));
-
-    ASSERT_TRUE(v.Validate());
-    ASSERT_EQ(v.Description(), "((1 <= 2) && ((3 >= 2) || (1 < 3)))");
-}
-
-TEST(TestValidator, ValidatorChangeWhenReferenceChange)
-{
-    int i = 1, j = 2;
-    Validator v = Le(i, j);
-
-    ASSERT_TRUE(v.Validate());
-    ASSERT_EQ(v.Description(), "(1 <= 2)");
+    EXPECT_TRUE(v_.validate());
+    EXPECT_EQ(v_.description(), "((1 <= 2) && (3 > 2))");
 
     i = 3;
-    j = 1;
-    ASSERT_FALSE(v.Validate());
-    ASSERT_EQ(v.Description(), "(3 <= 1)");
+    EXPECT_FALSE(v_.validate());
+    EXPECT_EQ(v_.description(), "((3 <= 2) && (3 > 2))");
+}
+
+TEST_F(TestValidator, TestOr)
+{
+    int i = 1, j = 2, k = 3;
+    v_ = lt(i, j) || eq(k, j);
+
+    EXPECT_TRUE(v_.validate());
+    EXPECT_EQ(v_.description(), "((1 < 2) || (3 == 2))");
+
+    i = 3;
+    EXPECT_FALSE(v_.validate());
+    EXPECT_EQ(v_.description(), "((3 < 2) || (3 == 2))");
+}
+
+TEST_F(TestValidator, TestNot)
+{
+    int i = 1, j = 2;
+    v_ = !lt(j, i);
+
+    EXPECT_TRUE(v_.validate());
+    EXPECT_EQ(v_.description(), "!(2 < 1)");
+
+    j = 0;
+    EXPECT_FALSE(v_.validate());
+    EXPECT_EQ(v_.description(), "!(0 < 1)");
+}
+
+TEST_F(TestValidator, TestComplexValidator)
+{
+    v_ = le(1, 2) && (ge(3, 2) || lt(1, 3));
+
+    EXPECT_TRUE(v_.validate());
+    EXPECT_EQ(v_.description(), "((1 <= 2) && ((3 >= 2) || (1 < 3)))");
 }
 
 } // end of namespace commonlib

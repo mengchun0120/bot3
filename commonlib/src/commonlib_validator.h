@@ -15,124 +15,124 @@ public:
 
     Validator();
 
-    Validator(ValidateFunc validate_func,
-              DescriptionFunc description_func);
+    Validator(ValidateFunc validateFunc,
+              DescriptionFunc descFunc);
 
-    bool Validate() const;
+    bool validate() const;
 
-    std::string Description() const;
+    std::string description() const;
 
 private:
-    ValidateFunc validate_func_;
-    DescriptionFunc description_func_;
+    ValidateFunc validateFunc_;
+    DescriptionFunc descFunc_;
 };
 
 template <typename T, typename F>
-Validator Eq(const T &lhs, const F &rhs)
+Validator eq(const T &lhs, const F &rhs)
 {
-    Validator::ValidateFunc validate_func = [&]()->bool
+    Validator::ValidateFunc validateFunc = [&]()->bool
     {
         return lhs == rhs;
     };
 
-    Validator::DescriptionFunc description_func = [&]()->std::string
+    Validator::DescriptionFunc descFunc = [&]()->std::string
     {
         std::ostringstream oss;
         oss << "(" << lhs << " == " << rhs << ")";
         return oss.str();
     };
 
-    return Validator(validate_func, description_func);
+    return Validator(validateFunc, descFunc);
 }
 
 template <typename T, typename F>
-Validator Ne(const T &lhs, const F &rhs)
+Validator ne(const T &lhs, const F &rhs)
 {
-    Validator::ValidateFunc validate_func = [&]()->bool
+    Validator::ValidateFunc validateFunc = [&]()->bool
     {
         return lhs != rhs;
     };
 
-    Validator::DescriptionFunc description_func = [&]()->std::string
+    Validator::DescriptionFunc descFunc = [&]()->std::string
     {
         std::ostringstream oss;
         oss << "(" << lhs << " != " << rhs << ")";
         return oss.str();
     };
 
-    return Validator(validate_func, description_func);
+    return Validator(validateFunc, descFunc);
 }
 
 template <typename T, typename F>
-Validator Gt(const T &lhs, const F &rhs)
+Validator gt(const T &lhs, const F &rhs)
 {
-    Validator::ValidateFunc validate_func = [&]()->bool
+    Validator::ValidateFunc validateFunc = [&]()->bool
     {
         return lhs > rhs;
     };
 
-    Validator::DescriptionFunc description_func = [&]()->std::string
+    Validator::DescriptionFunc descFunc = [&]()->std::string
     {
         std::ostringstream oss;
         oss << "(" << lhs << " > " << rhs << ")";
         return oss.str();
     };
 
-    return Validator(validate_func, description_func);
+    return Validator(validateFunc, descFunc);
 }
 
 template <typename T, typename F>
-Validator Ge(const T &lhs, const F &rhs)
+Validator ge(const T &lhs, const F &rhs)
 {
-    Validator::ValidateFunc validate_func = [&]()->bool
+    Validator::ValidateFunc validateFunc = [&]()->bool
     {
         return lhs >= rhs;
     };
 
-    Validator::DescriptionFunc description_func = [&]()->std::string
+    Validator::DescriptionFunc descFunc = [&]()->std::string
     {
         std::ostringstream oss;
         oss << "(" << lhs << " >= " << rhs << ")";
         return oss.str();
     };
 
-    return Validator(validate_func, description_func);
+    return Validator(validateFunc, descFunc);
 }
 
 template <typename T, typename F>
-Validator Lt(const T &lhs, const F &rhs)
+Validator lt(const T &lhs, const F &rhs)
 {
-    Validator::ValidateFunc validate_func = [&]()->bool
+    Validator::ValidateFunc validateFunc = [&]()->bool
     {
         return lhs < rhs;
     };
 
-    Validator::DescriptionFunc description_func = [&]()->std::string
+    Validator::DescriptionFunc descFunc = [&]()->std::string
     {
         std::ostringstream oss;
         oss << "(" << lhs << " < " << rhs << ")";
         return oss.str();
     };
 
-    return Validator(validate_func, description_func);
+    return Validator(validateFunc, descFunc);
 }
 
 template <typename T, typename F>
-Validator Le(const T &lhs, const F &rhs)
+Validator le(const T &lhs, const F &rhs)
 {
-    Validator::ValidateFunc validate_func = [&]()->bool
+    Validator::ValidateFunc validateFunc = [&]()->bool
     {
         return lhs <= rhs;
     };
 
-    Validator::DescriptionFunc description_func = [&]()->std::string
+    Validator::DescriptionFunc descFunc = [&]()->std::string
     {
         std::ostringstream oss;
         oss << "(" << lhs << " <= " << rhs << ")";
         return oss.str();
     };
 
-    return Validator(validate_func, description_func);
+    return Validator(validateFunc, descFunc);
 }
 
 Validator operator&&(const Validator &lhs, const Validator &rhs);
