@@ -3,10 +3,6 @@
 namespace mcdane {
 namespace commonlib {
 
-Validator::Validator()
-{
-}
-
 Validator::Validator(ValidateFunc validateFunc,
                      DescriptionFunc descFunc):
     validateFunc_(validateFunc),
@@ -34,7 +30,7 @@ std::string Validator::description() const
     return std::string();
 }
 
-Validator operator&&(const Validator &lhs, const Validator &rhs)
+Validator operator&&(const Validator& lhs, const Validator& rhs)
 {
     Validator::ValidateFunc validateFunc = [=]()->bool
     {
@@ -49,7 +45,7 @@ Validator operator&&(const Validator &lhs, const Validator &rhs)
     return Validator(validateFunc, descFunc);
 }
 
-Validator operator||(const Validator &lhs, const Validator &rhs)
+Validator operator||(const Validator& lhs, const Validator& rhs)
 {
     Validator::ValidateFunc validateFunc = [=]()->bool
     {
@@ -64,7 +60,7 @@ Validator operator||(const Validator &lhs, const Validator &rhs)
     return Validator(validateFunc, descFunc);
 }
 
-Validator operator!(const Validator &v)
+Validator operator!(const Validator& v)
 {
     Validator::ValidateFunc validateFunc = [=]()->bool
     {

@@ -2,12 +2,15 @@ cmake_minimum_required(VERSION 3.10)
 
 set(CPP_COMPILE_FLAG "-g -Wall")
 
+set(COMMONLIB_MISC_SRC
+    src/misc/commonlib_exception.cpp
+    src/misc/commonlib_validator.cpp
+    src/misc/commonlib_parse.cpp
+    src/misc/commonlib_argument.cpp
+    src/misc/commonlib_argument_parser.cpp)
+
 set(COMMONLIB_SRC
-    src/commonlib_exception.cpp
-    src/commonlib_validator.cpp
-    src/commonlib_parse.cpp
-    src/commonlib_argument.cpp
-    src/commonlib_argument_parser.cpp)
+    ${COMMONLIB_MISC_SRC})
 
 set(TEST_COMMONLIB_SRC
     test/test_commonlib_main.cpp
@@ -18,7 +21,7 @@ set(TEST_COMMONLIB_SRC
 
 add_definitions(${CPP_COMPILE_FLAG})
 
-include_directories(src)
+include_directories(src/misc)
 
 add_library(commonlib STATIC ${COMMONLIB_SRC})
 add_executable(test_commonlib ${TEST_COMMONLIB_SRC})

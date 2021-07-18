@@ -13,7 +13,9 @@ public:
     using ValidateFunc = std::function<bool()>;
     using DescriptionFunc = std::function<std::string()>;
 
-    Validator();
+    Validator() = default;
+
+    Validator(const Validator& other) = default;
 
     Validator(ValidateFunc validateFunc,
               DescriptionFunc descFunc);
@@ -28,7 +30,7 @@ private:
 };
 
 template <typename T, typename F>
-Validator eq(const T &lhs, const F &rhs)
+Validator eq(const T& lhs, const F& rhs)
 {
     Validator::ValidateFunc validateFunc = [&]()->bool
     {
@@ -46,7 +48,7 @@ Validator eq(const T &lhs, const F &rhs)
 }
 
 template <typename T, typename F>
-Validator ne(const T &lhs, const F &rhs)
+Validator ne(const T& lhs, const F& rhs)
 {
     Validator::ValidateFunc validateFunc = [&]()->bool
     {
@@ -64,7 +66,7 @@ Validator ne(const T &lhs, const F &rhs)
 }
 
 template <typename T, typename F>
-Validator gt(const T &lhs, const F &rhs)
+Validator gt(const T& lhs, const F& rhs)
 {
     Validator::ValidateFunc validateFunc = [&]()->bool
     {
@@ -82,7 +84,7 @@ Validator gt(const T &lhs, const F &rhs)
 }
 
 template <typename T, typename F>
-Validator ge(const T &lhs, const F &rhs)
+Validator ge(const T& lhs, const F& rhs)
 {
     Validator::ValidateFunc validateFunc = [&]()->bool
     {
@@ -100,7 +102,7 @@ Validator ge(const T &lhs, const F &rhs)
 }
 
 template <typename T, typename F>
-Validator lt(const T &lhs, const F &rhs)
+Validator lt(const T& lhs, const F& rhs)
 {
     Validator::ValidateFunc validateFunc = [&]()->bool
     {
@@ -118,7 +120,7 @@ Validator lt(const T &lhs, const F &rhs)
 }
 
 template <typename T, typename F>
-Validator le(const T &lhs, const F &rhs)
+Validator le(const T& lhs, const F& rhs)
 {
     Validator::ValidateFunc validateFunc = [&]()->bool
     {
@@ -135,11 +137,11 @@ Validator le(const T &lhs, const F &rhs)
     return Validator(validateFunc, descFunc);
 }
 
-Validator operator&&(const Validator &lhs, const Validator &rhs);
+Validator operator&&(const Validator& lhs, const Validator& rhs);
 
-Validator operator||(const Validator &lhs, const Validator &rhs);
+Validator operator||(const Validator& lhs, const Validator& rhs);
 
-Validator operator!(const Validator &v);
+Validator operator!(const Validator& v);
 
 } // end of namespace commonlib
 } // end of namespace mcdane

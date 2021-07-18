@@ -5,8 +5,8 @@ namespace mcdane {
 namespace commonlib {
 
 MyException::MyException(int line,
-                         const char *file,
-                         const char *msg) noexcept:
+                         const char* file,
+                         const char* msg) noexcept:
     line_(line),
     file_(file),
     msg_(msg)
@@ -15,13 +15,13 @@ MyException::MyException(int line,
 }
 
 MyException::MyException(int line,
-                         const char *file,
-                         const std::string &msg) noexcept:
+                         const char* file,
+                         const std::string& msg) noexcept:
     MyException(line, file, msg.c_str())
 {
 }
 
-const char *MyException::what() const noexcept
+const char* MyException::what() const noexcept
 {
     return description_.c_str();
 }
