@@ -9,19 +9,28 @@ set(COMMONLIB_MISC_SRC
     src/misc/commonlib_argument.cpp
     src/misc/commonlib_argument_parser.cpp)
 
+set(COMMONLIB_MATH_SRC
+    src/math/commonlib_math_utils.cpp
+    src/math/commonlib_vector.cpp
+    src/math/commonlib_matrix.cpp)
+
 set(COMMONLIB_SRC
-    ${COMMONLIB_MISC_SRC})
+    ${COMMONLIB_MISC_SRC}
+    ${COMMONLIB_MATH_SRC})
 
 set(TEST_COMMONLIB_SRC
     test/test_commonlib_main.cpp
     test/test_commonlib_validator.cpp
     test/test_commonlib_exception.cpp
     test/test_commonlib_argument.cpp
-    test/test_commonlib_argument_parser.cpp)
+    test/test_commonlib_argument_parser.cpp
+    test/test_commonlib_vector.cpp
+    test/test_commonlib_matrix.cpp)
 
 add_definitions(${CPP_COMPILE_FLAG})
 
-include_directories(src/misc)
+include_directories(src/misc
+                    src/math)
 
 add_library(commonlib STATIC ${COMMONLIB_SRC})
 add_executable(test_commonlib ${TEST_COMMONLIB_SRC})
