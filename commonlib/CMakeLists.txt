@@ -7,7 +7,8 @@ set(COMMONLIB_MISC_SRC
     src/misc/commonlib_validator.cpp
     src/misc/commonlib_parse.cpp
     src/misc/commonlib_argument.cpp
-    src/misc/commonlib_argument_parser.cpp)
+    src/misc/commonlib_argument_parser.cpp
+    src/misc/commonlib_log.cpp)
 
 set(COMMONLIB_MATH_SRC
     src/math/commonlib_math_utils.cpp
@@ -25,7 +26,8 @@ set(TEST_COMMONLIB_SRC
     test/test_commonlib_argument.cpp
     test/test_commonlib_argument_parser.cpp
     test/test_commonlib_vector.cpp
-    test/test_commonlib_matrix.cpp)
+    test/test_commonlib_matrix.cpp
+    test/test_commonlib_log.cpp)
 
 add_definitions(${CPP_COMPILE_FLAG})
 
