@@ -31,7 +31,8 @@ TEST(TestLog, TestOutput)
     LOG_INFO << "Hello world! " << 100 << LOG_END;
     cout << k_logTester.os_.str();
 
-    regex r("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3} \\S+:\\d+ INFO Hello world! 100\n");
+    regex r("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3} \\S+:\\d+ " \
+            "INFO Hello world! 100\n");
     ASSERT_TRUE(regex_match(k_logTester.os_.str(), r));
 }
 

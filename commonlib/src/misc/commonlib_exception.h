@@ -10,11 +10,7 @@ namespace commonlib {
 class MyException: public std::exception {
 public:
     MyException(int line,
-                const char* file,
-                const char* msg) noexcept;
-
-    MyException(int line,
-                const char* file,
+                const std::string& file,
                 const std::string& msg) noexcept;
 
     const char* what() const noexcept override;
@@ -29,30 +25,36 @@ public:
         return file_;
     }
 
-    const std::string& msg() const noexcept
-    {
-        return msg_;
-    }
-
 private:
     int line_;
     std::string file_;
-    std::string msg_;
     std::string description_;
 };
 
 class InvalidArgumentException: public MyException {
 public:
     InvalidArgumentException(int line,
-                             const char* file,
-                             const char* msg) noexcept:
-        MyException(line, file, msg)
+                             const std::string& file,
+                             const std::string& msg) noexcept
+        : MyException(line, file, msg)
     {}
+};
 
-    InvalidArgumentException(int line,
-                             const char* file,
-                             const std::string& msg) noexcept:
-        MyException(line, file, msg)
+class ParseException: public MyException {
+public:
+    ParseException(int line,
+                   const std::string& file,
+                   const std::string& msg) noexcept
+        : MyException(line, file, msg)
+    {}
+};
+
+class FileException: public MyException {
+public:
+    FileException(int line,
+                  const std::string& file,
+                  const std::string& msg) noexcept
+        : MyException(line, file, msg)
     {}
 };
 
