@@ -142,6 +142,14 @@ TEST_F(TestValidator, TestComplexValidator)
     EXPECT_EQ(v_.description(), "((1 <= 2) && ((3 >= 2) || (1 < 3)))");
 }
 
+TEST_F(TestValidator, TestNonempty)
+{
+    v_ = nonempty(std::string("hello"));
+
+    EXPECT_TRUE(v_.validate());
+    EXPECT_EQ(v_.description(), "Non-empty");
+}
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 

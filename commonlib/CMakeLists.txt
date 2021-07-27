@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-set(CPP_COMPILE_FLAG "-g -Wall")
+set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 
 set(COMMONLIB_MISC_SRC
     src/misc/commonlib_exception.cpp
@@ -19,9 +19,14 @@ set(COMMONLIB_MATH_SRC
     src/math/commonlib_vector.cpp
     src/math/commonlib_matrix.cpp)
 
+set(COMMONLIB_APP_SRC
+    src/app/commonlib_app.cpp
+    src/app/commonlib_app_config.cpp)
+
 set(COMMONLIB_SRC
     ${COMMONLIB_MISC_SRC}
-    ${COMMONLIB_MATH_SRC})
+    ${COMMONLIB_MATH_SRC}
+    ${COMMONLIB_APP_SRC})
 
 set(TEST_COMMONLIB_SRC
     test/test_commonlib_main.cpp
@@ -37,7 +42,9 @@ set(TEST_COMMONLIB_SRC
 add_definitions(${CPP_COMPILE_FLAG})
 
 include_directories(src/misc
-                    src/math)
+                    src/math
+                    src/app
+                    src/opengl)
 
 add_library(commonlib STATIC ${COMMONLIB_SRC})
 add_executable(test_commonlib ${TEST_COMMONLIB_SRC})

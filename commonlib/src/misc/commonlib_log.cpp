@@ -22,10 +22,12 @@ std::shared_ptr<Logger> Logger::k_logger;
 void Logger::initInstance(std::ostream& os,
                           LogLevel minLevel)
 {
+#ifdef ENABLE_LOG
     if (!k_logger)
     {
         k_logger.reset(new Logger(os, minLevel));
     }
+#endif
 }
 
 Logger::Logger(std::ostream& os,
@@ -48,6 +50,7 @@ void Logger::setEnabled(bool enabled)
 
 Logger& Logger::logTime()
 {
+#ifdef ENABLE_LOG
     static char buffer[200];
 
 #ifdef _WIN32
@@ -77,12 +80,15 @@ Logger& Logger::logTime()
     os_ << buffer;
 #endif
 
+#endif
     return *this;
 }
 
 void Logger::flush()
 {
+#ifdef ENABLE_LOG
     os_.flush();
+#endif
 }
 
 } // end of namespace commonlib

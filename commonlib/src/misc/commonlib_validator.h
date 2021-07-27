@@ -137,6 +137,22 @@ Validator le(const T& lhs, const F& rhs)
     return Validator(validateFunc, descFunc);
 }
 
+template <typename T>
+Validator nonempty(const T& t)
+{
+    Validator::ValidateFunc validateFunc = [&]()->bool
+    {
+        return t.size() > 0;
+    };
+
+    Validator::DescriptionFunc descFunc = [&]()->std::string
+    {
+        return "Non-empty";
+    };
+
+    return Validator(validateFunc, descFunc);
+}
+
 Validator operator&&(const Validator& lhs, const Validator& rhs);
 
 Validator operator||(const Validator& lhs, const Validator& rhs);

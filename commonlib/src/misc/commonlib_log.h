@@ -20,12 +20,12 @@ public:
         LEVEL_ERROR,
         LEVEL_COUNT
     };
-    
+
     static std::string k_levelStr[LEVEL_COUNT];
     static std::shared_ptr<Logger> k_logger;
 
     static void initInstance(std::ostream& os,
-                             LogLevel minLevel);
+                             LogLevel minLevel=LEVEL_DEBUG);
 
     LogLevel getMinLevel() const
     {
@@ -74,7 +74,8 @@ Logger& operator<<(Logger& logger, const T& t)
     if (LOGGER && LOGGER->getEnabled() && LOGGER->getMinLevel() <= (level)) \
     { \
         LOGGER->logTime() << ' ' << __FILE__ << ':' << __LINE__ << ' ' \
-                          << mcdane::commonlib::Logger::k_levelStr[(level)] << ' '
+                          << mcdane::commonlib::Logger::k_levelStr[(level)] \
+                          << ' '
 
 #define LOG_END \
         '\n'; \
