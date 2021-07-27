@@ -4,7 +4,7 @@
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
 #include <commonlib_app_config.h>
-#include <commonlib_app.h>
+#include <commonlib_bot_app.h>
 
 using namespace mcdane::commonlib;
 
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
         AppConfig::initInstance(args.configFile_);
         initLog();
     }
-    catch(const std::exception& e)
+    catch (const std::exception& e)
     {
         std::cerr << "Exception happened while initializing app: " << e.what()
                   << std::endl;
@@ -56,4 +56,18 @@ int main(int argc, char* argv[])
     }
 
     LOG_INFO << "Initialization complete" << LOG_END;
+
+    try
+    {
+        BotApp app;
+        app.run();
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERROR << "Exception happened while running: " << e.what()
+                  << LOG_END;
+        exit(1);
+    }
+
+    exit(0);
 }

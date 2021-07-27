@@ -21,7 +21,8 @@ set(COMMONLIB_MATH_SRC
 
 set(COMMONLIB_APP_SRC
     src/app/commonlib_app.cpp
-    src/app/commonlib_app_config.cpp)
+    src/app/commonlib_app_config.cpp
+    src/app/commonlib_bot_app.cpp)
 
 set(COMMONLIB_SRC
     ${COMMONLIB_MISC_SRC}

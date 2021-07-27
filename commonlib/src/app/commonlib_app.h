@@ -8,24 +8,33 @@ namespace commonlib {
 
 class App {
 public:
-    App() = default;
-
-    virtual ~App() = default;
+    App();
 
 #ifdef DESKTOP_APP
+    App(unsigned int width,
+        unsigned int height,
+        const std::string& title);
+#endif
+
+    virtual ~App();
+
+    virtual bool preProcess();
+
+    virtual bool process();
+
+    virtual bool postProcess();
+
+#ifdef DESKTOP_APP
+    void setupWindow(unsigned int width,
+                     unsigned int height,
+                     const std::string& title);
+
     GLFWwindow* window()
     {
         return window_;
     }
 
     void run();
-#endif
-
-    void process();
-
-private:
-#ifdef DESKTOP_APP
-
 #endif
 
 private:
