@@ -67,6 +67,15 @@ public:
     {}
 };
 
+class MemoryException: public MyException {
+public:
+    MemoryException(int line,
+                    const std::string& file,
+                    const std::string& msg) noexcept
+        : MyException(line, file, msg)
+    {}
+};
+
 #define THROW_EXCEPT(ExceptionType, msg) \
     throw ExceptionType(__LINE__, __FILE__, msg);
 

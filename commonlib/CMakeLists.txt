@@ -24,10 +24,14 @@ set(COMMONLIB_APP_SRC
     src/app/commonlib_app_config.cpp
     src/app/commonlib_bot_app.cpp)
 
+set(COMMONLIB_STRUCTURE_SRC
+    src/structure/commonlib_object_pool.cpp)
+
 set(COMMONLIB_SRC
     ${COMMONLIB_MISC_SRC}
     ${COMMONLIB_MATH_SRC}
-    ${COMMONLIB_APP_SRC})
+    ${COMMONLIB_APP_SRC}
+    ${COMMONLIB_STRUCTURE_SRC})
 
 set(TEST_COMMONLIB_SRC
     test/test_commonlib_main.cpp
@@ -38,14 +42,16 @@ set(TEST_COMMONLIB_SRC
     test/test_commonlib_vector.cpp
     test/test_commonlib_matrix.cpp
     test/test_commonlib_log.cpp
-    test/test_commonlib_json_param.cpp)
+    test/test_commonlib_json_param.cpp
+    test/test_commonlib_object_pool.cpp)
 
 add_definitions(${CPP_COMPILE_FLAG})
 
 include_directories(src/misc
                     src/math
                     src/app
-                    src/opengl)
+                    src/opengl
+                    src/structure)
 
 add_library(commonlib STATIC ${COMMONLIB_SRC})
 add_executable(test_commonlib ${TEST_COMMONLIB_SRC})
