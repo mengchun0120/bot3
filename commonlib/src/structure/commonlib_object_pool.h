@@ -1,8 +1,6 @@
 #ifndef INCLUDED_COMMONLIB_OBJECT_POOL_H
 #define INCLUDED_COMMONLIB_OBJECT_POOL_H
 
-#include <memory>
-#include <functional>
 #include <commonlib_exception.h>
 
 namespace mcdane {
@@ -13,7 +11,9 @@ class ObjectPool {
 public:
     ObjectPool(unsigned int size);
 
-    std::shared_ptr<T> alloc();
+    T* alloc();
+
+    void free(T* t);
 
     int freeCount() const
     {
@@ -21,14 +21,11 @@ public:
     }
 
 private:
-    void initDeleter();
-
     void initPool(unsigned int size);
 
     void initNext(unsigned int size);
 
 private:
-    std::function<void(T*)> deleter_;
     T* pool_;
     T* upper_;
     std::size_t size_;
@@ -48,24 +45,6 @@ ObjectPool<T>::ObjectPool(unsigned int size)
 
     initPool(size);
     initNext(size);
-    initDeleter();
-}
-
-template <typename T>
-void ObjectPool<T>::initDeleter()
-{
-    deleter_ = [this](T* t)
-    {
-        if (t < pool_ || t > upper_)
-        {
-            THROW_EXCEPT(MemoryException, "Invalid pointer for object pool");
-        }
-
-        int idx = t - pool_;
-        next_[idx] = firstFree_;
-        firstFree_ = idx;
-        ++freeCount_;
-    };
 }
 
 template <typename T>
@@ -90,22 +69,38 @@ void ObjectPool<T>::initNext(unsigned int size)
 }
 
 template <typename T>
-std::shared_ptr<T> ObjectPool<T>::alloc()
+T* ObjectPool<T>::alloc()
 {
-    std::shared_ptr<T> p;
+    T* t;
 
     if (firstFree_ < 0)
     {
-        p.reset(new T());
+        t = new T();
     }
     else
     {
-        p.reset(&pool_[firstFree_], deleter_);
+        t = &pool_[firstFree_];
         firstFree_ = next_[firstFree_];
         --freeCount_;
     }
 
-    return p;
+    return t;
+}
+
+template <typename T>
+void ObjectPool<T>::free(T* t)
+{
+    if (t < pool_ || t > upper_)
+    {
+        delete t;
+    }
+    else
+    {
+        int idx = t - pool_;
+        next_[idx] = firstFree_;
+        firstFree_ = idx;
+        ++freeCount_;
+    }
 }
 
 } // end of namespace commonlib

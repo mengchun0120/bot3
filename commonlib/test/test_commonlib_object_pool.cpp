@@ -13,23 +13,10 @@ TEST(TestObjectPool, FreeCountDecreaseAfterAlloc)
     ObjectPool<int> pool(2);
     ASSERT_EQ(2, pool.freeCount());
 
-    std::shared_ptr<int> p1 = pool.alloc();
-    ASSERT_EQ(1, pool.freeCount());
-}
-
-TEST(TestObjectPool, FreeCountIncreaseAfterReset)
-{
-    ObjectPool<int> pool(2);
-
-    std::shared_ptr<int> p1 = pool.alloc();
-    std::shared_ptr<int> p2 = p1;
-
+    int* p1 = pool.alloc();
     ASSERT_EQ(1, pool.freeCount());
 
-    p1.reset();
-    ASSERT_EQ(1, pool.freeCount());
-
-    p2.reset();
+    pool.free(p1);
     ASSERT_EQ(2, pool.freeCount());
 }
 
@@ -37,12 +24,20 @@ TEST(TestObjectPool, FreeCountRemainZeroWhenPoolIsEmpty)
 {
     ObjectPool<int> pool(2);
 
-    std::shared_ptr<int> p1 = pool.alloc();
-    std::shared_ptr<int> p2 = pool.alloc();
+    int* p1 = pool.alloc();
+    int* p2 = pool.alloc();
 
     ASSERT_EQ(0, pool.freeCount());
 
-    std::shared_ptr<int> p3 = pool.alloc();
+    int* p3 = pool.alloc();
     ASSERT_EQ(0, pool.freeCount());
+
+    pool.free(p3);
+    ASSERT_EQ(0, pool.freeCount());
+
+    pool.free(p1);
+    pool.free(p2);
+
+    ASSERT_EQ(2, pool.freeCount());
 }
 
