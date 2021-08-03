@@ -25,7 +25,8 @@ set(COMMONLIB_APP_SRC
     src/app/commonlib_bot_app.cpp)
 
 set(COMMONLIB_STRUCTURE_SRC
-    src/structure/commonlib_object_pool.cpp)
+    src/structure/commonlib_object_pool.cpp
+    src/structure/commonlib_queue.cpp)
 
 set(COMMONLIB_SRC
     ${COMMONLIB_MISC_SRC}
@@ -43,7 +44,8 @@ set(TEST_COMMONLIB_SRC
     test/test_commonlib_matrix.cpp
     test/test_commonlib_log.cpp
     test/test_commonlib_json_param.cpp
-    test/test_commonlib_object_pool.cpp)
+    test/test_commonlib_object_pool.cpp
+    test/test_commonlib_queue.cpp)
 
 add_definitions(${CPP_COMPILE_FLAG})
 

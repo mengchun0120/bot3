@@ -11,6 +11,8 @@ class ObjectPool {
 public:
     ObjectPool(unsigned int size);
 
+    virtual ~ObjectPool();
+
     T* alloc();
 
     void free(T* t);
@@ -45,6 +47,13 @@ ObjectPool<T>::ObjectPool(unsigned int size)
 
     initPool(size);
     initNext(size);
+}
+
+template <typename T>
+ObjectPool<T>::~ObjectPool()
+{
+    delete[] pool_;
+    delete[] next_;
 }
 
 template <typename T>
