@@ -1,32 +1,47 @@
-#include <commonlib_app_config.h>
 #include <commonlib_bot_app.h>
 
 namespace mcdane {
 namespace commonlib {
 
-BotApp::BotApp()
+std::shared_ptr<BotApp> BotApp::k_botApp;
+
+void BotApp::initInstance(const std::string& configFile)
+{
+    if (!k_botApp)
+    {
+        k_botApp.reset(new BotApp(configFile));
+    }
+}
+
+BotApp::BotApp(const std::string& configFile)
     : App()
 {
-    initApp();
+    init(configFile);
 }
 
 BotApp::~BotApp()
 {
 }
 
-void BotApp::initApp()
+void BotApp::init(const std::string& configFile)
 {
+    cfg_.load(configFile);
 #ifdef DESKTOP_APP
     initWindow();
 #endif
+    inputManager_.init(window(), viewportHeight_, cfg_.inputQueueCapacity());
     setupOpenGL();
 }
 
 #ifdef DESKTOP_APP
 void BotApp::initWindow()
 {
-    const AppConfig& cfg = AppConfig::getInstance();
-    setupWindow(cfg.width(), cfg.height(), cfg.title());
+    setupWindow(cfg_.width(), cfg_.height(), cfg_.title());
+
+    int width, height;
+    glfwGetFramebufferSize(window(), &width, &height);
+    viewportWidth_ = static_cast<float>(width);
+    viewportHeight_ = static_cast<float>(height);
 }
 #endif
 

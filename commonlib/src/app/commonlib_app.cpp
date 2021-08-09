@@ -66,6 +66,8 @@ inline bool running(GLFWwindow *window)
 
 App::App()
     : window_(nullptr)
+    , viewportWidth_(0.0f)
+    , viewportHeight_(0.0f)
 {
 }
 
@@ -73,7 +75,7 @@ App::App()
 App::App(unsigned int width,
          unsigned int height,
          const std::string& title)
-    : window_(nullptr)
+    : App()
 {
     setupWindow(width, height, title);
 }
@@ -99,6 +101,11 @@ void App::setupWindow(unsigned int width,
     window_ = createWindow(width, height, title);
     makeContextCurrent(window_);
     setupInputMode(window_);
+
+    int w, h;
+    glfwGetFramebufferSize(window_, &w, &h);
+    viewportWidth_ = static_cast<float>(w);
+    viewportHeight_ = static_cast<float>(h);
 }
 
 void App::run()

@@ -4,5 +4,6 @@
         "width": 1000,
         "height": 1000,
         "title": "Bot"
-    }
+    },
+    "inputQueueCapacity": 6
 }

@@ -26,13 +26,18 @@ set(COMMONLIB_APP_SRC
 
 set(COMMONLIB_STRUCTURE_SRC
     src/structure/commonlib_object_pool.cpp
-    src/structure/commonlib_queue.cpp)
+    src/structure/commonlib_fixed_queue.cpp)
+
+set(COMMONLIB_INPUT_SRC
+    src/input/commonlib_input_event.cpp
+    src/input/commonlib_input_manager.cpp)
 
 set(COMMONLIB_SRC
     ${COMMONLIB_MISC_SRC}
     ${COMMONLIB_MATH_SRC}
     ${COMMONLIB_APP_SRC}
-    ${COMMONLIB_STRUCTURE_SRC})
+    ${COMMONLIB_STRUCTURE_SRC}
+    ${COMMONLIB_INPUT_SRC})
 
 set(TEST_COMMONLIB_SRC
     test/test_commonlib_main.cpp
@@ -45,7 +50,7 @@ set(TEST_COMMONLIB_SRC
     test/test_commonlib_log.cpp
     test/test_commonlib_json_param.cpp
     test/test_commonlib_object_pool.cpp
-    test/test_commonlib_queue.cpp)
+    test/test_commonlib_fixed_queue.cpp)
 
 add_definitions(${CPP_COMPILE_FLAG})
 
@@ -53,7 +58,8 @@ include_directories(src/misc
                     src/math
                     src/app
                     src/opengl
-                    src/structure)
+                    src/structure
+                    src/input)
 
 add_library(commonlib STATIC ${COMMONLIB_SRC})
 add_executable(test_commonlib ${TEST_COMMONLIB_SRC})

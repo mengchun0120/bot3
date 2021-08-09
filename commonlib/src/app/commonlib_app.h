@@ -1,6 +1,7 @@
 #ifndef INCLUDED_COMMONLIB_APP_H
 #define INCLUDED_COMMONLIB_APP_H
 
+#include <string>
 #include <commonlib_opengl.h>
 
 namespace mcdane {
@@ -29,7 +30,7 @@ public:
                      unsigned int height,
                      const std::string& title);
 
-    GLFWwindow* window()
+    GLFWwindow* window() const
     {
         return window_;
     }
@@ -37,10 +38,22 @@ public:
     void run();
 #endif
 
+    float viewportWidth() const
+    {
+        return viewportWidth_;
+    }
+
+    float viewportHeight() const
+    {
+        return viewportHeight_;
+    }
+
 private:
 #ifdef DESKTOP_APP
     GLFWwindow *window_;
 #endif
+    float viewportWidth_;
+    float viewportHeight_;
 };
 
 } // end of namespace commonlib

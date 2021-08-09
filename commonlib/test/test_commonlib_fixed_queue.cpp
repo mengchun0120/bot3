@@ -1,16 +1,16 @@
 #include <gtest/gtest.h>
-#include <commonlib_queue.h>
+#include <commonlib_fixed_queue.h>
 
 using namespace mcdane::commonlib;
 
 TEST(TestQueue, InvalidCapacityThrowException)
 {
-    ASSERT_THROW(Queue<int> q(0), InvalidArgumentException);
+    ASSERT_THROW(FixedQueue<int> q(0), InvalidArgumentException);
 }
 
 TEST(TestQueue, TestEnqueue)
 {
-    Queue<int> q(2);
+    FixedQueue<int> q(2);
     int t;
 
     ASSERT_TRUE(q.empty());
@@ -24,7 +24,7 @@ TEST(TestQueue, TestEnqueue)
 
 TEST(TestQueue, TestDequeue)
 {
-    Queue<int> q(2);
+    FixedQueue<int> q(2);
     int t;
 
     q.enqueue(1);

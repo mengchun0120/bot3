@@ -27,6 +27,8 @@ public:
     static void initInstance(std::ostream& os,
                              LogLevel minLevel=LEVEL_DEBUG);
 
+    ~Logger() = default;
+
     LogLevel getMinLevel() const
     {
         return minLevel_;

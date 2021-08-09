@@ -9,19 +9,11 @@ namespace commonlib {
 
 class AppConfig {
 public:
-    static void initInstance(const std::string& fileName);
+    AppConfig() = default;
 
-    static const AppConfig& getInstance()
-    {
-        return *k_config;
-    }
+    ~AppConfig() = default;
 
-    ~AppConfig();
-
-    const std::string& logFile() const
-    {
-        return logFile_;
-    }
+    void load(const std::string& fileName);
 
     unsigned int width() const
     {
@@ -38,18 +30,16 @@ public:
         return title_;
     }
 
+    unsigned int inputQueueCapacity() const
+    {
+        return inputQueueCapacity_;
+    }
 private:
-    AppConfig(const std::string& fileName);
-
-    void load(const std::string& fileName);
-
-private:
-    static std::shared_ptr<AppConfig> k_config;
-
     std::string logFile_;
     unsigned int width_;
     unsigned int height_;
     std::string title_;
+    unsigned int inputQueueCapacity_;
 };
 
 } // end of namespace commonlib

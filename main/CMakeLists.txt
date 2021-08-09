@@ -13,7 +13,9 @@ include_directories(src
                     ${COMMONLIB_DIR}/misc
                     ${COMMONLIB_DIR}/math
                     ${COMMONLIB_DIR}/app
-                    ${COMMONLIB_DIR}/opengl)
+                    ${COMMONLIB_DIR}/opengl
+                    ${COMMONLIB_DIR}/structure
+                    ${COMMONLIB_DIR}/input)
 
 add_executable(bot ${BOTMAIN_SRC})
 

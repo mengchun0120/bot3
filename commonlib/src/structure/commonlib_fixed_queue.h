@@ -1,5 +1,5 @@
-#ifndef INCLUDED_COMMONLIB_QUEUE_H
-#define INCLUDED_COMMONLIB_QUEUE_H
+#ifndef INCLUDED_COMMONLIB_FIXED_QUEUE_H
+#define INCLUDED_COMMONLIB_FIXED_QUEUE_H
 
 #include <commonlib_exception.h>
 
@@ -7,11 +7,15 @@ namespace mcdane {
 namespace commonlib {
 
 template <typename T>
-class Queue {
+class FixedQueue {
 public:
-    Queue(unsigned int capacity);
+    FixedQueue();
 
-    virtual ~Queue();
+    FixedQueue(unsigned int capacity);
+
+    virtual ~FixedQueue();
+
+    void init(unsigned int capacity);
 
     bool full() const
     {
@@ -28,6 +32,8 @@ public:
     bool enqueue(const T& t);
 
     bool dequeue(T& t);
+
+    void clear();
 
     int size() const
     {
@@ -47,12 +53,41 @@ private:
     int free_;
 };
 
+
 template <typename T>
-Queue<T>::Queue(unsigned int capacity)
+FixedQueue<T>::FixedQueue()
+    : queue_(nullptr)
+    , capacity_(0)
+    , size_(0)
+    , first_(-1)
+    , free_(-1)
+{
+}
+
+template <typename T>
+FixedQueue<T>::FixedQueue(unsigned int capacity)
+    : FixedQueue()
+{
+    init(capacity);
+}
+
+template <typename T>
+FixedQueue<T>::~FixedQueue()
+{
+    delete[] queue_;
+}
+
+template <typename T>
+void FixedQueue<T>::init(unsigned int capacity)
 {
     if (capacity == 0)
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid capacity");
+    }
+
+    if (queue_)
+    {
+        delete[] queue_;
     }
 
     queue_ = new T[capacity];
@@ -63,13 +98,7 @@ Queue<T>::Queue(unsigned int capacity)
 }
 
 template <typename T>
-Queue<T>::~Queue()
-{
-    delete[] queue_;
-}
-
-template <typename T>
-bool Queue<T>::peek(T& t)
+bool FixedQueue<T>::peek(T& t)
 {
     if (empty())
     {
@@ -81,7 +110,7 @@ bool Queue<T>::peek(T& t)
 }
 
 template <typename T>
-bool Queue<T>::enqueue(const T& t)
+bool FixedQueue<T>::enqueue(const T& t)
 {
     if (full())
     {
@@ -105,7 +134,7 @@ bool Queue<T>::enqueue(const T& t)
 }
 
 template <typename T>
-bool Queue<T>::dequeue(T& t)
+bool FixedQueue<T>::dequeue(T& t)
 {
     if (empty())
     {
@@ -126,6 +155,14 @@ bool Queue<T>::dequeue(T& t)
     }
 
     return true;
+}
+
+template <typename T>
+void FixedQueue<T>::clear()
+{
+    size_ = 0;
+    first_ = -1;
+    free_ = 0;
 }
 
 } // end of namespace commonlib
