@@ -43,11 +43,14 @@ private:
 
     void setupOpenGL();
 
+    bool processInput(const InputEvent& e);
+
 private:
     AppConfig cfg_;
     float viewportWidth_;
     float viewportHeight_;
     InputManager inputManager_;
+    InputProcessor inputProcessor_;
 };
 
 } // end of namespace commonlib

@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <commonlib_bot_app.h>
 
 namespace mcdane {
@@ -25,12 +26,16 @@ BotApp::~BotApp()
 
 void BotApp::init(const std::string& configFile)
 {
+    using namespace std::placeholders;
+
     cfg_.load(configFile);
 #ifdef DESKTOP_APP
     initWindow();
 #endif
-    inputManager_.init(window(), viewportHeight_, cfg_.inputQueueCapacity());
     setupOpenGL();
+    inputProcessor_ = std::bind(&processInput, this, _1);
+    inputManager_.init(window(), viewportHeight_, cfg_.inputQueueCapacity());
+    inputManager_.enable();
 }
 
 #ifdef DESKTOP_APP
@@ -59,12 +64,20 @@ bool BotApp::preProcess()
 
 bool BotApp::process()
 {
+    inputManager_.processInput(inputProcessor_);
+
     return true;
 }
 
 bool BotApp::postProcess()
 {
     return App::postProcess();
+}
+
+bool BotApp::processInput(const InputEvent& e)
+{
+    LOG_INFO << "processed event " << e << LOG_END;
+    return true;
 }
 
 } // end of namespace commonlib

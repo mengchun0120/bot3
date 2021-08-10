@@ -1,12 +1,18 @@
 #ifndef INCLUDED_COMMONLIB_INPUT_EVENT_H
 #define INCLUDED_COMMONLIB_INPUT_EVENT_H
 
+#include <string>
+#include <ostream>
 #include <commonlib_opengl.h>
 
 namespace mcdane {
 namespace commonlib {
 
 #ifdef DESKTOP_APP
+
+std::string buttonStr(int button);
+
+std::string actionStr(int action);
 
 struct MouseButtonEvent {
     void set(float x,
@@ -95,6 +101,24 @@ private:
 
 } // end of namespace commonlib
 } // end of namespace mcdane
+
+namespace std {
+
+#ifdef DESKTOP_APP
+std::ostream& operator<<(std::ostream& os,
+                         const mcdane::commonlib::MouseButtonEvent& e);
+
+std::ostream& operator<<(std::ostream& os,
+                         const mcdane::commonlib::MouseMoveEvent& e);
+
+std::ostream& operator<<(std::ostream& os,
+                         const mcdane::commonlib::KeyEvent& e);
+
+std::ostream& operator<<(std::ostream& os,
+                         const mcdane::commonlib::InputEvent& e);
+#endif
+
+} // end of namespace std
 
 #endif // #ifndef INCLUDED_COMMONLIB_INPUT_EVENT_H
 
