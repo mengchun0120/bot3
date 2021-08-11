@@ -6,11 +6,6 @@ namespace commonlib {
 
 Screen* Screen::create(Type type)
 {
-    if (!isValidScreen(type))
-    {
-        THROW_EXCEPT(MyException, "Invalid screen type");
-    }
-
     Screen* screen = nullptr;
     switch(type)
     {
@@ -20,6 +15,9 @@ Screen* Screen::create(Type type)
         case SCREEN_GAME:
             break;
         case SCREEN_SHOW_MAP:
+            break;
+        default:
+            THROW_EXCEPT(MyException, "Invalid screen type");
             break;
     }
 

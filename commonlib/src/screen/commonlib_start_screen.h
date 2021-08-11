@@ -17,6 +17,15 @@ public:
     void present() override;
 
     bool processInput(const InputEvent &e) override;
+
+private:
+#ifdef DESKTOP_APP
+    bool processMouseButtonEvent(const MouseButtonEvent& e);
+
+    bool processMouseMoveEvent(const MouseMoveEvent& e);
+
+    bool processKeyEvent(const KeyEvent& e);
+#endif
 };
 
 } // end of namespace commonlib
