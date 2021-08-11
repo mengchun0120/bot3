@@ -181,7 +181,6 @@ bool InputManager::addMouseButtonEvent(float x,
     InputEvent e;
     e.setMouseButtonEvent(x, viewportHeight_-y,
                           button, action, mods);
-    LOG_INFO << e << LOG_END;
     return events_.enqueue(e);
 }
 
@@ -190,7 +189,6 @@ bool InputManager::addMouseMoveEvent(float x,
 {
     InputEvent e;
     e.setMouseMoveEvent(x, viewportHeight_-y);
-    LOG_INFO << e << LOG_END;
     return events_.enqueue(e);
 }
 
@@ -201,7 +199,6 @@ bool InputManager::addKeyEvent(int key,
 {
     InputEvent e;
     e.setKeyEvent(key, scancode, action, mods);
-    LOG_INFO << e << LOG_END;
     return events_.enqueue(e);
 }
 #endif

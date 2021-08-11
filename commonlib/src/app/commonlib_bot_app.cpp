@@ -33,9 +33,11 @@ void BotApp::init(const std::string& configFile)
     initWindow();
 #endif
     setupOpenGL();
-    inputProcessor_ = std::bind(&processInput, this, _1);
     inputManager_.init(window(), viewportHeight_, cfg_.inputQueueCapacity());
     inputManager_.enable();
+    screenManager_.init(Screen::SCREEN_START);
+    inputProcessor_ = std::bind(&ScreenManager::processInput,
+                                &screenManager_, _1);
 }
 
 #ifdef DESKTOP_APP
@@ -56,28 +58,26 @@ void BotApp::setupOpenGL()
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-bool BotApp::preProcess()
+void BotApp::preProcess()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    return true;
 }
 
-bool BotApp::process()
+void BotApp::process()
 {
     inputManager_.processInput(inputProcessor_);
 
-    return true;
+    if (running())
+    {
+        screenManager_.update();
+        screenManager_.present();
+    }
 }
 
-bool BotApp::postProcess()
+void BotApp::postProcess()
 {
-    return App::postProcess();
-}
-
-bool BotApp::processInput(const InputEvent& e)
-{
-    LOG_INFO << "processed event " << e << LOG_END;
-    return true;
+    screenManager_.postProcess();
+    App::postProcess();
 }
 
 } // end of namespace commonlib

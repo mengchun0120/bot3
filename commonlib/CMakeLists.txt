@@ -32,12 +32,18 @@ set(COMMONLIB_INPUT_SRC
     src/input/commonlib_input_event.cpp
     src/input/commonlib_input_manager.cpp)
 
+set(COMMONLIB_SCREEN_SRC
+    src/screen/commonlib_screen.cpp
+    src/screen/commonlib_start_screen.cpp
+    src/screen/commonlib_screen_manager.cpp)
+
 set(COMMONLIB_SRC
     ${COMMONLIB_MISC_SRC}
     ${COMMONLIB_MATH_SRC}
     ${COMMONLIB_APP_SRC}
     ${COMMONLIB_STRUCTURE_SRC}
-    ${COMMONLIB_INPUT_SRC})
+    ${COMMONLIB_INPUT_SRC}
+    ${COMMONLIB_SCREEN_SRC})
 
 set(TEST_COMMONLIB_SRC
     test/test_commonlib_main.cpp
@@ -59,7 +65,8 @@ include_directories(src/misc
                     src/app
                     src/opengl
                     src/structure
-                    src/input)
+                    src/input
+                    src/screen)
 
 add_library(commonlib STATIC ${COMMONLIB_SRC})
 add_executable(test_commonlib ${TEST_COMMONLIB_SRC})

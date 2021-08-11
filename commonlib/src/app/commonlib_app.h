@@ -19,11 +19,11 @@ public:
 
     virtual ~App();
 
-    virtual bool preProcess();
+    virtual void preProcess() = 0;
 
-    virtual bool process();
+    virtual void process() = 0;
 
-    virtual bool postProcess();
+    virtual void postProcess();
 
 #ifdef DESKTOP_APP
     void setupWindow(unsigned int width,
@@ -48,12 +48,23 @@ public:
         return viewportHeight_;
     }
 
+    bool running() const
+    {
+        return running_;
+    }
+
+    void setRunning(bool running)
+    {
+        running_ = running;
+    }
+
 private:
 #ifdef DESKTOP_APP
     GLFWwindow *window_;
 #endif
     float viewportWidth_;
     float viewportHeight_;
+    bool running_;
 };
 
 } // end of namespace commonlib

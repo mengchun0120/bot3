@@ -77,6 +77,7 @@ App::App(unsigned int width,
          const std::string& title)
     : App()
 {
+    running_ = false;
     setupWindow(width, height, title);
 }
 #endif
@@ -110,44 +111,31 @@ void App::setupWindow(unsigned int width,
 
 void App::run()
 {
-    while (running(window_))
+    running_ = true;
+    while (0 == glfwWindowShouldClose(window_) && running_)
     {
-        if (!preProcess())
+        preProcess();
+
+        if (running_)
         {
-            break;
+            process();
         }
 
-        if (!process())
+        if (running_)
         {
-            break;
-        }
-
-        if (!postProcess())
-        {
-            break;
+            postProcess();
         }
     }
+    running_ = false;
 }
 #endif
 
-bool App::preProcess()
-{
-    return true;
-}
-
-bool App::process()
-{
-    return true;
-}
-
-bool App::postProcess()
+void App::postProcess()
 {
 #ifdef DESKTOP_APP
     glfwSwapBuffers(window_);
     glfwPollEvents();
 #endif
-
-    return true;
 }
 
 } // end of namespace commonlib

@@ -15,7 +15,8 @@ include_directories(src
                     ${COMMONLIB_DIR}/app
                     ${COMMONLIB_DIR}/opengl
                     ${COMMONLIB_DIR}/structure
-                    ${COMMONLIB_DIR}/input)
+                    ${COMMONLIB_DIR}/input
+                    ${COMMONLIB_DIR}/screen)
 
 add_executable(bot ${BOTMAIN_SRC})
 

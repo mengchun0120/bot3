@@ -4,6 +4,7 @@
 #include <commonlib_app.h>
 #include <commonlib_app_config.h>
 #include <commonlib_input_manager.h>
+#include <commonlib_screen_manager.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -19,15 +20,20 @@ public:
 
     ~BotApp() override;
 
-    bool preProcess() override;
+    void preProcess() override;
 
-    bool process() override;
+    void process() override;
 
-    bool postProcess() override;
+    void postProcess() override;
 
     const AppConfig& config() const
     {
         return cfg_;
+    }
+
+    ScreenManager& screenManager()
+    {
+        return screenManager_;
     }
 
 private:
@@ -43,14 +49,13 @@ private:
 
     void setupOpenGL();
 
-    bool processInput(const InputEvent& e);
-
 private:
     AppConfig cfg_;
     float viewportWidth_;
     float viewportHeight_;
     InputManager inputManager_;
     InputProcessor inputProcessor_;
+    ScreenManager screenManager_;
 };
 
 } // end of namespace commonlib
