@@ -20,9 +20,7 @@ set(COMMONLIB_MATH_SRC
     src/math/commonlib_matrix.cpp)
 
 set(COMMONLIB_APP_SRC
-    src/app/commonlib_app.cpp
-    src/app/commonlib_app_config.cpp
-    src/app/commonlib_bot_app.cpp)
+    src/app/commonlib_app.cpp)
 
 set(COMMONLIB_STRUCTURE_SRC
     src/structure/commonlib_object_pool.cpp
@@ -32,10 +30,10 @@ set(COMMONLIB_INPUT_SRC
     src/input/commonlib_input_event.cpp
     src/input/commonlib_input_manager.cpp)
 
-set(COMMONLIB_SCREEN_SRC
-    src/screen/commonlib_screen.cpp
-    src/screen/commonlib_start_screen.cpp
-    src/screen/commonlib_screen_manager.cpp)
+set(COMMONLIB_OPENGL_SRC
+    src/opengl/commonlib_shader_program.cpp
+    src/opengl/commonlib_buffer_block.cpp
+    src/opengl/commonlib_vertex_array.cpp)
 
 set(COMMONLIB_SRC
     ${COMMONLIB_MISC_SRC}
@@ -43,7 +41,7 @@ set(COMMONLIB_SRC
     ${COMMONLIB_APP_SRC}
     ${COMMONLIB_STRUCTURE_SRC}
     ${COMMONLIB_INPUT_SRC}
-    ${COMMONLIB_SCREEN_SRC})
+    ${COMMONLIB_OPENGL_SRC})
 
 set(TEST_COMMONLIB_SRC
     test/test_commonlib_main.cpp
@@ -60,13 +58,7 @@ set(TEST_COMMONLIB_SRC
 
 add_definitions(${CPP_COMPILE_FLAG})
 
-include_directories(src/misc
-                    src/math
-                    src/app
-                    src/opengl
-                    src/structure
-                    src/input
-                    src/screen)
+include_directories(include)
 
 add_library(commonlib STATIC ${COMMONLIB_SRC})
 add_executable(test_commonlib ${TEST_COMMONLIB_SRC})

@@ -1,15 +1,15 @@
-#ifndef INCLUDED_COMMONLIB_BOT_APP_H
-#define INCLUDED_COMMONLIB_BOT_APP_H
+#ifndef INCLUDED_BOTLIB_BOT_APP_H
+#define INCLUDED_BOTLIB_BOT_APP_H
 
 #include <commonlib_app.h>
-#include <commonlib_app_config.h>
 #include <commonlib_input_manager.h>
-#include <commonlib_screen_manager.h>
+#include <botlib_screen_manager.h>
+#include <botlib_app_config.h>
 
 namespace mcdane {
-namespace commonlib {
+namespace botlib {
 
-class BotApp: public App {
+class BotApp: public commonlib::App {
 public:
     static void initInstance(const std::string& configFile);
 
@@ -53,12 +53,12 @@ private:
     AppConfig cfg_;
     float viewportWidth_;
     float viewportHeight_;
-    InputManager inputManager_;
-    InputProcessor inputProcessor_;
+    commonlib::InputManager inputManager_;
+    commonlib::InputProcessor inputProcessor_;
     ScreenManager screenManager_;
 };
 
-} // end of namespace commonlib
+} // end of namespace botlib
 } // end of namespace mcdane
 
 #endif

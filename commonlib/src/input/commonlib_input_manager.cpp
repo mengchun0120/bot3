@@ -1,6 +1,4 @@
 #include <commonlib_log.h>
-#include <commonlib_bot_app.h>
-#include <commonlib_app_config.h>
 #include <commonlib_input_manager.h>
 
 namespace mcdane {

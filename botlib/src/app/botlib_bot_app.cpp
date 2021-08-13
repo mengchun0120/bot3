@@ -1,8 +1,10 @@
 #include <commonlib_log.h>
-#include <commonlib_bot_app.h>
+#include <botlib_bot_app.h>
+
+using namespace mcdane::commonlib;
 
 namespace mcdane {
-namespace commonlib {
+namespace botlib {
 
 std::shared_ptr<BotApp> BotApp::k_botApp;
 
@@ -80,6 +82,6 @@ void BotApp::postProcess()
     App::postProcess();
 }
 
-} // end of namespace commonlib
+} // end of namespace botlib
 } // end of namespace mcdane
 

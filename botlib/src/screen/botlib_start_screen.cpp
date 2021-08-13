@@ -1,9 +1,11 @@
 #include <commonlib_log.h>
-#include <commonlib_bot_app.h>
-#include <commonlib_start_screen.h>
+#include <botlib_bot_app.h>
+#include <botlib_start_screen.h>
+
+using namespace mcdane::commonlib;
 
 namespace mcdane {
-namespace commonlib {
+namespace botlib {
 
 StartScreen::StartScreen()
 {
@@ -63,6 +65,6 @@ bool StartScreen::processKeyEvent(const KeyEvent& e)
 }
 #endif
 
-} // end of namespace commonlib
+} // end of namespace botlib
 } // end of namespace mcdane
 

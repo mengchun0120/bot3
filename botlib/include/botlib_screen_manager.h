@@ -1,10 +1,10 @@
-#ifndef INCLUDED_COMMONLIB_SCREEN_MANAGER_H
-#define INCLUDED_COMMONLIB_SCREEN_MANAGER_H
+#ifndef INCLUDED_BOTLIB_SCREEN_MANAGER_H
+#define INCLUDED_BOTLIB_SCREEN_MANAGER_H
 
-#include <commonlib_screen.h>
+#include <botlib_screen.h>
 
 namespace mcdane {
-namespace commonlib {
+namespace botlib {
 
 class ScreenManager {
 public:
@@ -18,7 +18,7 @@ public:
 
     void present();
 
-    bool processInput(const InputEvent &e);
+    bool processInput(const commonlib::InputEvent &e);
 
     void switchScreen(Screen::Type type);
 
@@ -35,7 +35,7 @@ private:
     Screen::Type curScreenType_;
 };
 
-} // end of namespace commonlib
+} // end of namespace botlib
 } // end of namespace mcdane
 
 #endif

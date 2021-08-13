@@ -1,11 +1,11 @@
-#ifndef INCLUDED_COMMONLIB_APP_CONFIG_H
-#define INCLUDED_COMMONLIB_APP_CONFIG_H
+#ifndef INCLUDED_BOTLIB_APP_CONFIG_H
+#define INCLUDED_BOTLIB_APP_CONFIG_H
 
 #include <string>
 #include <memory>
 
 namespace mcdane {
-namespace commonlib {
+namespace botlib {
 
 class AppConfig {
 public:
@@ -42,7 +42,7 @@ private:
     unsigned int inputQueueCapacity_;
 };
 
-} // end of namespace commonlib
+} // end of namespace botlib
 } // end of namespace mcdane
 
 #endif

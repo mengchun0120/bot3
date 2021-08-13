@@ -3,10 +3,11 @@
 #include <cstdlib>
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
-#include <commonlib_app_config.h>
-#include <commonlib_bot_app.h>
+#include <botlib_app_config.h>
+#include <botlib_bot_app.h>
 
 using namespace mcdane::commonlib;
+using namespace mcdane::botlib;
 
 struct Arguments {
     std::string configFile_;

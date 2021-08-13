@@ -1,8 +1,8 @@
 #include <commonlib_exception.h>
-#include <commonlib_start_screen.h>
+#include <botlib_start_screen.h>
 
 namespace mcdane {
-namespace commonlib {
+namespace botlib {
 
 Screen* Screen::create(Type type)
 {
@@ -17,13 +17,13 @@ Screen* Screen::create(Type type)
         case SCREEN_SHOW_MAP:
             break;
         default:
-            THROW_EXCEPT(MyException, "Invalid screen type");
+            THROW_EXCEPT(commonlib::MyException, "Invalid screen type");
             break;
     }
 
     return screen;
 }
 
-} // end of namespace commonlib
+} // end of namespace botlib
 } // end of namespace mcdane
 

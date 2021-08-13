@@ -1,10 +1,10 @@
-#ifndef INCLUDED_COMMONLIB_SCREEN_H
-#define INCLUDED_COMMONLIB_SCREEN_H
+#ifndef INCLUDED_BOTLIB_SCREEN_H
+#define INCLUDED_BOTLIB_SCREEN_H
 
 #include <commonlib_input_event.h>
 
 namespace mcdane {
-namespace commonlib {
+namespace botlib {
 
 class Screen {
 public:
@@ -30,11 +30,11 @@ public:
 
     virtual void present() = 0;
 
-    virtual bool processInput(const InputEvent &e) = 0;
+    virtual bool processInput(const commonlib::InputEvent &e) = 0;
 };
 
 
-} // end of namespace commonlib
+} // end of namespace botlib
 } // end of namespace mcdane
 
 #endif

@@ -1,7 +1,7 @@
-#include <commonlib_screen_manager.h>
+#include <botlib_screen_manager.h>
 
 namespace mcdane {
-namespace commonlib {
+namespace botlib {
 
 ScreenManager::ScreenManager()
     : prevScreen_(nullptr)
@@ -39,7 +39,7 @@ void ScreenManager::present()
     }
 }
 
-bool ScreenManager::processInput(const InputEvent &e)
+bool ScreenManager::processInput(const commonlib::InputEvent &e)
 {
     if (!curScreen_)
     {
@@ -70,6 +70,6 @@ void ScreenManager::postProcess()
     }
 }
 
-} // end of namespace commonlib
+} // end of namespace botlib
 } // end of namespace mcdane
 

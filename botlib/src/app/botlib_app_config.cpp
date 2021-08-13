@@ -1,8 +1,10 @@
 #include <commonlib_json_param.h>
-#include <commonlib_app_config.h>
+#include <botlib_app_config.h>
+
+using namespace mcdane::commonlib;
 
 namespace mcdane {
-namespace commonlib {
+namespace botlib {
 
 void AppConfig::load(const std::string& fileName)
 {
@@ -20,6 +22,6 @@ void AppConfig::load(const std::string& fileName)
     parse(params, doc);
 }
 
-} // end of namespace commonlib
+} // end of namespace botlib
 } // end of namespace mcdane
 
