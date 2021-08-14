@@ -5,5 +5,9 @@
         "height": 1000,
         "title": "Bot"
     },
-    "inputQueueCapacity": 6
+    "inputQueueCapacity": 6,
+    "shader": {
+        "simpleVertexShaderFile": "simple_vertex_shader.glsl",
+        "simpleFragShaderFile": "simple_frag_shader.glsl"
+    }
 }

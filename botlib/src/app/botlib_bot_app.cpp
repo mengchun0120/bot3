@@ -1,3 +1,4 @@
+#include <iostream>
 #include <commonlib_log.h>
 #include <botlib_bot_app.h>
 
@@ -8,29 +9,32 @@ namespace botlib {
 
 std::shared_ptr<BotApp> BotApp::k_botApp;
 
-void BotApp::initInstance(const std::string& configFile)
+void BotApp::initInstance(const std::string& configFile,
+                          const std::string& appDir)
 {
     if (!k_botApp)
     {
-        k_botApp.reset(new BotApp(configFile));
+        k_botApp.reset(new BotApp(configFile, appDir));
     }
 }
 
-BotApp::BotApp(const std::string& configFile)
+BotApp::BotApp(const std::string& configFile,
+               const std::string& appDir)
     : App()
 {
-    init(configFile);
+    init(configFile, appDir);
 }
 
 BotApp::~BotApp()
 {
 }
 
-void BotApp::init(const std::string& configFile)
+void BotApp::init(const std::string& configFile,
+                  const std::string& appDir)
 {
     using namespace std::placeholders;
 
-    cfg_.load(configFile);
+    cfg_.load(configFile, appDir);
 #ifdef DESKTOP_APP
     initWindow();
 #endif
@@ -56,6 +60,9 @@ void BotApp::initWindow()
 
 void BotApp::setupOpenGL()
 {
+    simpleShader_.init(cfg_.simpleVertexShaderFile(),
+                       cfg_.simpleFragShaderFile());
+
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }

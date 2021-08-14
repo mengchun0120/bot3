@@ -1,3 +1,5 @@
+#version 450 core
+
 uniform bool useObjRef;
 uniform vec2 objRef;
 uniform vec2 viewportSize;

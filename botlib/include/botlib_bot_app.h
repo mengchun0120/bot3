@@ -5,13 +5,15 @@
 #include <commonlib_input_manager.h>
 #include <botlib_screen_manager.h>
 #include <botlib_app_config.h>
+#include <botlib_simple_shader_program.h>
 
 namespace mcdane {
 namespace botlib {
 
 class BotApp: public commonlib::App {
 public:
-    static void initInstance(const std::string& configFile);
+    static void initInstance(const std::string& configFile,
+                             const std::string& appDir);
 
     static BotApp& getInstance()
     {
@@ -36,12 +38,19 @@ public:
         return screenManager_;
     }
 
+    SimpleShaderProgram& simpleShader()
+    {
+        return simpleShader_;
+    }
+
 private:
     static std::shared_ptr<BotApp> k_botApp;
 
-    BotApp(const std::string& configFile);
+    BotApp(const std::string& configFile,
+           const std::string& appDir);
 
-    void init(const std::string& configFile);
+    void init(const std::string& configFile,
+              const std::string& appDir);
 
 #ifdef DESKTOP_APP
     void initWindow();
@@ -56,6 +65,7 @@ private:
     commonlib::InputManager inputManager_;
     commonlib::InputProcessor inputProcessor_;
     ScreenManager screenManager_;
+    SimpleShaderProgram simpleShader_;
 };
 
 } // end of namespace botlib

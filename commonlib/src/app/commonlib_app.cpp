@@ -102,6 +102,7 @@ void App::setupWindow(unsigned int width,
     window_ = createWindow(width, height, title);
     makeContextCurrent(window_);
     setupInputMode(window_);
+    initGLEW();
 
     int w, h;
     glfwGetFramebufferSize(window_, &w, &h);

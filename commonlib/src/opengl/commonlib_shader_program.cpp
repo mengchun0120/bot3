@@ -1,3 +1,4 @@
+#include <iostream>
 #include <commonlib_exception.h>
 #include <commonlib_shader_program.h>
 
@@ -12,9 +13,9 @@ bool isShaderCompileSuccessful(GLuint shader)
 }
 
 bool compileShader(GLuint shader,
-                   const std::string &src)
+                   const std::string& src)
 {
-    const GLchar *source = src.c_str();
+    const GLchar* source = src.c_str();
     GLint len = src.length();
 
     glShaderSource(shader, 1, static_cast<const GLchar * const*>(&source), &len);
@@ -39,7 +40,7 @@ std::string getShaderInfo(GLuint shader)
 }
 
 GLuint createShader(GLenum type,
-                    const std::string &src)
+                    const std::string& src)
 {
     GLuint shader = glCreateShader(type);
     if (shader == 0)
@@ -131,8 +132,8 @@ ShaderProgram::ShaderProgram():
 {
 }
 
-ShaderProgram::ShaderProgram(const std::string &vertexShaderSrc,
-                             const std::string &fragShaderSrc):
+ShaderProgram::ShaderProgram(const std::string& vertexShaderSrc,
+                             const std::string& fragShaderSrc):
     ShaderProgram()
 {
     load(vertexShaderSrc, fragShaderSrc);
@@ -145,8 +146,8 @@ ShaderProgram::~ShaderProgram()
     destroyProgram(program_);
 }
 
-void ShaderProgram::load(const std::string &vertexShaderSrc,
-                         const std::string &fragShaderSrc)
+void ShaderProgram::load(const std::string& vertexShaderSrc,
+                         const std::string& fragShaderSrc)
 {
     vertexShader_ = createShader(GL_VERTEX_SHADER, vertexShaderSrc);
     fragShader_ = createShader(GL_FRAGMENT_SHADER, fragShaderSrc);

@@ -2,7 +2,7 @@
 #define INCLUDE_COMMONLIB_SHADER_PROGRAM_H
 
 #include <string>
-#include "commonlib_opengl.h"
+#include <commonlib_opengl.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -11,15 +11,15 @@ class ShaderProgram {
 public:
     ShaderProgram();
 
-    ShaderProgram(const std::string &vertexShaderSrc,
-                  const std::string &fragShaderSrc);
+    ShaderProgram(const std::string& vertexShaderSrc,
+                  const std::string& fragShaderSrc);
 
-    ShaderProgram(const ShaderProgram &other) = delete;
+    ShaderProgram(const ShaderProgram& other) = delete;
 
     virtual ~ShaderProgram();
 
-    void load(const std::string &vertexShaderSrc,
-              const std::string &fragShaderSrc);
+    void load(const std::string& vertexShaderSrc,
+              const std::string& fragShaderSrc);
 
     bool valid() const noexcept
     {
@@ -28,7 +28,7 @@ public:
                program_ != 0;
     }
 
-    ShaderProgram& operator=(const ShaderProgram &other) = delete;
+    ShaderProgram& operator=(const ShaderProgram& other) = delete;
 
     void use();
 

@@ -1,2 +1,2 @@
-./build/main/bot -c config/bot_config.json -l log.txt
+./build/main/bot -c config/bot_config.json -l log.txt -a .
 
