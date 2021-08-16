@@ -7,7 +7,7 @@
     },
     "inputQueueCapacity": 6,
     "shader": {
-        "simpleVertexShaderFile": "simple_vertex_shader.glsl",
-        "simpleFragShaderFile": "simple_frag_shader.glsl"
+        "simpleVertexShaderFile": ["res", "glsl", "simple_vertex_shader.glsl"],
+        "simpleFragShaderFile": ["res", "glsl", "simple_frag_shader.glsl"]
     }
 }
