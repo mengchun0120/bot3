@@ -40,12 +40,12 @@ public:
 
     float viewportWidth() const
     {
-        return viewportWidth_;
+        return viewportSize[0];
     }
 
     float viewportHeight() const
     {
-        return viewportHeight_;
+        return viewportSize[1];
     }
 
     bool running() const
@@ -62,8 +62,7 @@ private:
 #ifdef DESKTOP_APP
     GLFWwindow *window_;
 #endif
-    float viewportWidth_;
-    float viewportHeight_;
+    float viewportSize[2];
     bool running_;
 };
 

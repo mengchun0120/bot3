@@ -60,8 +60,6 @@ private:
 
 private:
     AppConfig cfg_;
-    float viewportWidth_;
-    float viewportHeight_;
     commonlib::InputManager inputManager_;
     commonlib::InputProcessor inputProcessor_;
     ScreenManager screenManager_;

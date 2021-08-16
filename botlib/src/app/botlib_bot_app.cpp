@@ -36,27 +36,15 @@ void BotApp::init(const std::string& configFile,
 
     cfg_.load(configFile, appDir);
 #ifdef DESKTOP_APP
-    initWindow();
+    setupWindow(cfg_.width(), cfg_.height(), cfg_.title());
 #endif
     setupOpenGL();
-    inputManager_.init(window(), viewportHeight_, cfg_.inputQueueCapacity());
+    inputManager_.init(window(), viewportHeight(), cfg_.inputQueueCapacity());
     inputManager_.enable();
     screenManager_.init(Screen::SCREEN_START);
     inputProcessor_ = std::bind(&ScreenManager::processInput,
                                 &screenManager_, _1);
 }
-
-#ifdef DESKTOP_APP
-void BotApp::initWindow()
-{
-    setupWindow(cfg_.width(), cfg_.height(), cfg_.title());
-
-    int width, height;
-    glfwGetFramebufferSize(window(), &width, &height);
-    viewportWidth_ = static_cast<float>(width);
-    viewportHeight_ = static_cast<float>(height);
-}
-#endif
 
 void BotApp::setupOpenGL()
 {

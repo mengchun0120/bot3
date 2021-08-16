@@ -66,8 +66,6 @@ inline bool running(GLFWwindow *window)
 
 App::App()
     : window_(nullptr)
-    , viewportWidth_(0.0f)
-    , viewportHeight_(0.0f)
 {
 }
 
@@ -106,8 +104,8 @@ void App::setupWindow(unsigned int width,
 
     int w, h;
     glfwGetFramebufferSize(window_, &w, &h);
-    viewportWidth_ = static_cast<float>(w);
-    viewportHeight_ = static_cast<float>(h);
+    viewportSize[0] = static_cast<float>(w);
+    viewportSize[1] = static_cast<float>(h);
 }
 
 void App::run()
