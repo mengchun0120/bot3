@@ -31,25 +31,24 @@ void VertexArray::BufferDescriptor::init(const BufferBlock &block,
     stride_ = block.stride_;
 }
 
-VertexArray::VertexArray():
-    arrayObj_(0),
-    bufferObj_(0)
+VertexArray::VertexArray()
+    : arrayObj_(0)
+    , bufferObj_(0)
 {
 }
 
 VertexArray::VertexArray(const void *data,
                          unsigned int numVertices,
                          unsigned int vertexSize,
-                         unsigned int stride):
-    VertexArray()
+                         unsigned int stride)
+    : VertexArray()
 {
     load(data, numVertices, vertexSize, stride);
 }
 
-VertexArray::VertexArray(const std::initializer_list<BufferBlock> &blocks):
-    VertexArray()
+VertexArray::VertexArray(std::initializer_list<BufferBlock> blocks)
+    : VertexArray(blocks.begin(), blocks.end())
 {
-    load(blocks);
 }
 
 VertexArray::~VertexArray()
@@ -58,7 +57,7 @@ VertexArray::~VertexArray()
     destroyArrayObj(arrayObj_);
 }
 
-void VertexArray::load(const void *data,
+void VertexArray::load(const void* data,
                        unsigned int numVertices,
                        unsigned int vertexSize,
                        unsigned int stride)
@@ -66,7 +65,7 @@ void VertexArray::load(const void *data,
     load({ BufferBlock{data, numVertices, vertexSize, stride} });
 }
 
-void VertexArray::load(const std::initializer_list<BufferBlock> &blocks)
+void VertexArray::load(std::initializer_list<BufferBlock> blocks)
 {
     load(blocks.begin(), blocks.end());
 }
@@ -92,8 +91,8 @@ void VertexArray::createBufferObj()
     }
 }
 
-void VertexArray::storeBufferBlock(BufferDescriptor &descriptor,
-                                   const BufferBlock &block,
+void VertexArray::storeBufferBlock(BufferDescriptor& descriptor,
+                                   const BufferBlock& block,
                                    unsigned int offset)
 {
     block.validate();

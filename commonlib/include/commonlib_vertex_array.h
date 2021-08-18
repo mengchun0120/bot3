@@ -12,7 +12,7 @@ namespace commonlib {
 class VertexArray {
 
     struct BufferDescriptor {
-        void init(const BufferBlock &block,
+        void init(const BufferBlock& block,
                   unsigned int offset);
 
         unsigned int offset_;
@@ -26,33 +26,33 @@ public:
 
     VertexArray();
 
-    VertexArray(const void *data,
+    VertexArray(const void* data,
                 unsigned int numVertices,
                 unsigned int vertexSize,
                 unsigned int stride=0);
 
-    VertexArray(const std::initializer_list<BufferBlock> &blocks);
+    VertexArray(std::initializer_list<BufferBlock> blocks);
 
     template <typename Iterator>
     VertexArray(Iterator begin,
                 Iterator end);
 
-    VertexArray(const VertexArray &other) = delete;
+    VertexArray(const VertexArray& other) = delete;
 
     virtual ~VertexArray();
 
-    void load(const void *data,
+    void load(const void* data,
               unsigned int numVertices,
               unsigned int vertexSize,
               unsigned int stride=0);
 
-    void load(const std::initializer_list<BufferBlock> &blocks);
+    void load(std::initializer_list<BufferBlock> blocks);
 
     template <typename Iterator>
     void load(Iterator begin,
               Iterator end);
 
-    VertexArray &operator=(const VertexArray &other) = delete;
+    VertexArray& operator=(const VertexArray& other) = delete;
 
     bool valid() const noexcept
     {
@@ -107,8 +107,8 @@ private:
 
     void createBufferObj();
 
-    void storeBufferBlock(BufferDescriptor &descriptor,
-                          const BufferBlock &block,
+    void storeBufferBlock(BufferDescriptor& descriptor,
+                          const BufferBlock& block,
                           unsigned int offset);
 
 private:
@@ -118,8 +118,8 @@ private:
 };
 
 template <typename Iterator>
-VertexArray::VertexArray(Iterator begin, Iterator end):
-    VertexArray()
+VertexArray::VertexArray(Iterator begin, Iterator end)
+    : VertexArray()
 {
     load(begin, end);
 }
