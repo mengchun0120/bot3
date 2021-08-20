@@ -18,11 +18,11 @@ public:
 
     virtual ~Shape() = default;
 
-    void load(commonlib::Point3* positions,
+    virtual void load(commonlib::Point3* positions,
               unsigned int numPositions,
               commonlib::Point2* texPos=nullptr);
 
-    virtual void draw(const commonlib::Point3* pos,
+    virtual void draw(const commonlib::Point2* objRef,
                       const commonlib::Point2* direction,
                       const commonlib::Color* fillColor,
                       const commonlib::Color* borderColor,

@@ -1,5 +1,6 @@
 #include <commonlib_file_utils.h>
 #include <commonlib_exception.h>
+#include <botlib_constants.h>
 #include <botlib_simple_shader_program.h>
 
 using namespace mcdane::commonlib;
@@ -39,13 +40,15 @@ void SimpleShaderProgram::setPositionTexPos(const VertexArray& va)
     glBindVertexArray(va.arrayObj());
     glBindBuffer(GL_ARRAY_BUFFER, va.bufferObj());
 
-    glVertexAttribPointer(positionLoc_, 3, GL_FLOAT, GL_FALSE,
+    glVertexAttribPointer(positionLoc_, Constants::FLOATS_PER_POS,
+                          GL_FLOAT, GL_FALSE,
                           va.stride(0), reinterpret_cast<void *>(0));
     glEnableVertexAttribArray(positionLoc_);
 
     if (va.numBufferBlocks() > 1)
     {
-        glVertexAttribPointer(texPosLoc_, 2, GL_FLOAT, GL_FALSE,
+        glVertexAttribPointer(texPosLoc_, Constants::FLOATS_PER_TEXPOS,
+                              GL_FLOAT, GL_FALSE,
                               va.stride(1),
                               reinterpret_cast<void *>(va.offset(1)));
         glEnableVertexAttribArray(texPosLoc_);

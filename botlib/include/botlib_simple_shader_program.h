@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_SIMPLE_SHADER_PROGRAM_H
 #define INCLUDED_BOTLIB_SIMPLE_SHADER_PROGRAM_H
 
+#include <commonlib_vector.h>
 #include <commonlib_vertex_array.h>
 #include <commonlib_shader_program.h>
 
@@ -16,59 +17,29 @@ public:
     void init(const std::string& vertexShaderFile,
               const std::string& fragShaderFile);
 
-    void setUseObjRef(bool enabled)
-    {
-        glUniform1i(useObjRefLoc_, enabled ? 1 : 0);
-    }
+    inline void setUseObjRef(bool enabled);
 
-    void setObjRef(const float* objRef)
-    {
-        glUniform2fv(objRefLoc_, 1, objRef);
-    }
+    inline void setObjRef(const commonlib::Point2& objRef);
 
-    void setViewportSize(const float* viewportSize)
-    {
-        glUniform2fv(viewportSizeLoc_, 1, viewportSize);
-    }
+    inline void setViewportSize(const commonlib::Point2& viewportSize);
 
-    void setViewportOrigin(const float* viewportOrigin)
-    {
-        glUniform2fv(viewportOriginLoc_, 1, viewportOrigin);
-    }
+    inline void setViewportOrigin(const commonlib::Point2& viewportOrigin);
 
-    void setPositionTexPos(const commonlib::VertexArray& va);
+    void setPositionTexPos(const commonlib::VertexArray& va);;
 
-    void setColor(const float* color)
-    {
-        glUniform4fv(colorLoc_, 1, color);
-    }
+    inline void setColor(const commonlib::Color& color);
 
-    void setUseColor(bool use)
-    {
-        glUniform1i(useColorLoc_, use ? 1 : 0);
-    }
+    inline void setUseColor(bool use);
 
-    void setTexture(GLuint textureId);
+    void setTexture(GLuint textureId);;
 
-    void setUseDirection(bool use)
-    {
-        glUniform1i(useDirectionLoc_, use ? 1 : 0);
-    }
+    inline void setUseDirection(bool use);
 
-    void setDirection(const float* direction)
-    {
-        glUniform2fv(directionLoc_, 1, direction);
-    }
+    inline void setDirection(const commonlib::Point2& direction);
 
-    void setUseTexColor(bool use)
-    {
-        glUniform1i(useTexColorLoc_, use ? 1 : 0);
-    }
+    inline void setUseTexColor(bool use);
 
-    void setTexColor(const float* color)
-    {
-        glUniform4fv(texColorLoc_, 1, color);
-    }
+    inline void setTexColor(const  commonlib::Color& color);
 
 private:
     GLint positionLoc_;
@@ -85,6 +56,61 @@ private:
     GLint useTexColorLoc_;
     GLint texColorLoc_;
 };
+
+void SimpleShaderProgram::setUseObjRef(bool enabled)
+{
+    glUniform1i(useObjRefLoc_, enabled ? 1 : 0);
+}
+
+void SimpleShaderProgram::setObjRef(const commonlib::Point2& objRef)
+{
+    glUniform2fv(objRefLoc_, 1, reinterpret_cast<const GLfloat *>(&objRef));
+}
+
+void SimpleShaderProgram::setViewportSize(
+                                        const commonlib::Point2& viewportSize)
+{
+    glUniform2fv(viewportSizeLoc_, 1,
+                 reinterpret_cast<const GLfloat *>(&viewportSize));
+}
+
+void SimpleShaderProgram::setViewportOrigin(
+                                        const commonlib::Point2& viewportOrigin)
+{
+    glUniform2fv(viewportOriginLoc_, 1,
+                 reinterpret_cast<const GLfloat *>(&viewportOrigin));
+}
+
+void SimpleShaderProgram::setColor(const commonlib::Color& color)
+{
+    glUniform4fv(colorLoc_, 1, reinterpret_cast<const GLfloat *>(&color));
+}
+
+void SimpleShaderProgram::setUseColor(bool use)
+{
+    glUniform1i(useColorLoc_, use ? 1 : 0);
+}
+
+void SimpleShaderProgram::setUseDirection(bool use)
+{
+    glUniform1i(useDirectionLoc_, use ? 1 : 0);
+}
+
+void SimpleShaderProgram::setDirection(const commonlib::Point2& direction)
+{
+    glUniform2fv(directionLoc_, 1,
+                 reinterpret_cast<const GLfloat *>(&direction));
+}
+
+void SimpleShaderProgram::setUseTexColor(bool use)
+{
+    glUniform1i(useTexColorLoc_, use ? 1 : 0);
+}
+
+void SimpleShaderProgram::setTexColor(const  commonlib::Color& color)
+{
+    glUniform4fv(texColorLoc_, 1, reinterpret_cast<const GLfloat *>(&color));
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane
