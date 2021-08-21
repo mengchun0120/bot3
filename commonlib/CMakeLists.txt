@@ -13,7 +13,8 @@ set(COMMONLIB_MISC_SRC
     src/misc/commonlib_string_utils.cpp
     src/misc/commonlib_json_utils.cpp
     src/misc/commonlib_json_param.cpp
-    src/misc/commonlib_file_utils.cpp)
+    src/misc/commonlib_file_utils.cpp
+    src/misc/commonlib_algorithm.cpp)
 
 set(COMMONLIB_MATH_SRC
     src/math/commonlib_math_utils.cpp

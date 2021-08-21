@@ -4,6 +4,7 @@
 #include <initializer_list>
 #include <commonlib_vector.h>
 #include <commonlib_vertex_array.h>
+#include <botlib_simple_shader_program.h>
 
 namespace mcdane {
 namespace botlib {
@@ -12,17 +13,28 @@ class Shape {
 public:
     Shape() = default;
 
+    Shape(std::initializer_list<commonlib::Point3> positions);
+
+    Shape(std::initializer_list<commonlib::Point3> positions,
+          std::initializer_list<commonlib::Point2> texPos);
+
     Shape(commonlib::Point3* positions,
           unsigned int numPositions,
           commonlib::Point2* texPos=nullptr);
 
     virtual ~Shape() = default;
 
-    virtual void load(commonlib::Point3* positions,
-              unsigned int numPositions,
-              commonlib::Point2* texPos=nullptr);
+    virtual void load(std::initializer_list<commonlib::Point3> positions);
 
-    virtual void draw(const commonlib::Point2* objRef,
+    virtual void load(std::initializer_list<commonlib::Point3> positions,
+                      std::initializer_list<commonlib::Point2> texPos);
+
+    virtual void load(commonlib::Point3* positions,
+                      unsigned int numPositions,
+                      commonlib::Point2* texPos=nullptr);
+
+    virtual void draw(SimpleShaderProgram& program,
+                      const commonlib::Point2* objRef,
                       const commonlib::Point2* direction,
                       const commonlib::Color* fillColor,
                       const commonlib::Color* borderColor,

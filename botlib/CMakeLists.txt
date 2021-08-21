@@ -15,7 +15,8 @@ set(BOTLIB_SCREEN_SRC
     src/screen/botlib_screen_manager.cpp)
 
 set(BOTLIB_SHAPE_SRC
-    src/shape/botlib_shape.cpp)
+    src/shape/botlib_shape.cpp
+    src/shape/botlib_polygon.cpp)
 
 set(BOTLIB_MISC_SRC
     src/misc/botlib_constants.cpp)

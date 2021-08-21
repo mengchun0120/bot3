@@ -5,8 +5,8 @@
 #include <ostream>
 #include <istream>
 #include <array>
-#include <algorithm>
 #include <commonlib_math_utils.h>
+#include <commonlib_algorithm.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -15,9 +15,17 @@ template <std::size_t N>
 struct Vector: public std::array<float, N> {
     Vector() = default;
 
+    template <typename Iterator>
+    Vector(Iterator begin, Iterator end) noexcept;
+
     Vector(std::initializer_list<float> l) noexcept;
 
     Vector(const Vector& other) = default;
+
+    template <typename Iterator>
+    void init(Iterator begin, Iterator end) noexcept;
+
+    void init(std::initializer_list<float> l) noexcept;
 
     float norm() const noexcept;
 
@@ -43,13 +51,33 @@ using Point4 = Vector4;
 using Color = Vector4;
 
 template <std::size_t N>
+template <typename Iterator>
+Vector<N>::Vector(Iterator begin, Iterator end) noexcept
+{
+    init(begin, end);
+}
+
+template <std::size_t N>
 Vector<N>::Vector(std::initializer_list<float> l) noexcept
 {
-    auto it = this->begin();
-    for (auto i = l.begin(); it != this->end() && i != l.end(); ++it, ++i)
+    init(l.begin(), l.end());
+}
+
+template <std::size_t N>
+template <typename Iterator>
+void Vector<N>::init(Iterator begin, Iterator end) noexcept
+{
+    std::size_t i = 0;
+    for (auto it = begin; it != end && i < N; ++it, ++i)
     {
-        *it = *i;
+        (*this)[i] = *it;
     }
+}
+
+template <std::size_t N>
+void Vector<N>::init(std::initializer_list<float> l) noexcept
+{
+    init(l.begin(), l.end());
 }
 
 template <std::size_t N>

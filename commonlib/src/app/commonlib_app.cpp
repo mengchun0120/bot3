@@ -104,8 +104,8 @@ void App::setupWindow(unsigned int width,
 
     int w, h;
     glfwGetFramebufferSize(window_, &w, &h);
-    viewportSize[0] = static_cast<float>(w);
-    viewportSize[1] = static_cast<float>(h);
+    viewportSize_[0] = static_cast<float>(w);
+    viewportSize_[1] = static_cast<float>(h);
 }
 
 void App::run()

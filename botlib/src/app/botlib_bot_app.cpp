@@ -37,9 +37,9 @@ void BotApp::init(const std::string& configFile,
     cfg_.load(configFile, appDir);
 #ifdef DESKTOP_APP
     setupWindow(cfg_.width(), cfg_.height(), cfg_.title());
+    inputManager_.init(window(), viewportHeight(), cfg_.inputQueueCapacity());
 #endif
     setupOpenGL();
-    inputManager_.init(window(), viewportHeight(), cfg_.inputQueueCapacity());
     inputManager_.enable();
     screenManager_.init(Screen::SCREEN_START);
     inputProcessor_ = std::bind(&ScreenManager::processInput,

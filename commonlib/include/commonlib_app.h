@@ -2,6 +2,7 @@
 #define INCLUDED_COMMONLIB_APP_H
 
 #include <string>
+#include <commonlib_vector.h>
 #include <commonlib_opengl.h>
 
 namespace mcdane {
@@ -40,12 +41,17 @@ public:
 
     float viewportWidth() const
     {
-        return viewportSize[0];
+        return viewportSize_[0];
     }
 
     float viewportHeight() const
     {
-        return viewportSize[1];
+        return viewportSize_[1];
+    }
+
+    const commonlib::Point2& viewportSize() const
+    {
+        return viewportSize_;
     }
 
     bool running() const
@@ -62,7 +68,7 @@ private:
 #ifdef DESKTOP_APP
     GLFWwindow *window_;
 #endif
-    float viewportSize[2];
+    commonlib::Point2 viewportSize_;
     bool running_;
 };
 

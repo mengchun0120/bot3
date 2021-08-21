@@ -5,4 +5,4 @@ project(bot CXX)
 add_subdirectory(commonlib)
 add_subdirectory(botlib)
 add_subdirectory(main)
-
+add_subdirectory(itest)
