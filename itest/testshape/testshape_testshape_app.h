@@ -2,6 +2,7 @@
 #define INCLUDED_TESTSHAPE_TESTSHAPE_H
 
 #include <commonlib_app.h>
+#include <commonlib_texture.h>
 #include <botlib_app_config.h>
 #include <botlib_simple_shader_program.h>
 #include <botlib_polygon.h>
@@ -27,6 +28,8 @@ private:
 
     void setupShapeColor();
 
+    void setupTexture(const std::string& appDir);
+
 private:
     botlib::AppConfig cfg_;
     botlib::SimpleShaderProgram program_;
@@ -36,6 +39,9 @@ private:
     commonlib::Point2 squarePos_;
     commonlib::Color fillColor_;
     commonlib::Color borderColor_;
+    commonlib::Texture texture_;
+    botlib::Polygon texRect_;
+    commonlib::Point2 texPos_;
 };
 
 } // end of namespace testshape

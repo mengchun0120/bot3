@@ -1,3 +1,5 @@
+#include <vector>
+#include <commonlib_file_utils.h>
 #include <testshape_testshape_app.h>
 
 using namespace mcdane::commonlib;
@@ -15,12 +17,15 @@ TestShapeApp::TestShapeApp(const std::string& configFile,
 
     setupOpenGL();
     setupShapeColor();
+    setupTexture(appDir);
 }
 
 void TestShapeApp::setupOpenGL()
 {
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
 
@@ -57,6 +62,37 @@ void TestShapeApp::setupShapeColor()
     borderColor_.init({0.0f, 0.0f, 0.3f, 1.0f});
 }
 
+void TestShapeApp::setupTexture(const std::string& appDir)
+{
+    std::string imageFile = constructPath(appDir,
+                                          {"itest", "testshape", "baby.png"});
+    texture_.init(imageFile);
+
+    float w = static_cast<float>(texture_.width()) / 4.0f;
+    float h = static_cast<float>(texture_.height()) / 4.0f;
+
+    std::array<Point3,6> positions = {
+        Point3{0.0f, 0.0f, 0.0f},
+        Point3{w, h, 0.0f},
+        Point3{-w, h, 0.0f},
+        Point3{-w, -h, 0.0f},
+        Point3{w, -h, 0.0f},
+        Point3{w, h, 0.0f},
+    };
+
+    std::array<Point2,6> texPos = {
+        Point2{0.5f, 0.5f},
+        Point2{1.0f, 1.0f},
+        Point2{0.0f, 1.0f},
+        Point2{0.0f, 0.0f},
+        Point2{1.0f, 0.0f},
+        Point2{1.0f, 1.0f}
+    };
+
+    texRect_.load(positions.data(), positions.size(), texPos.data());
+    texPos_.init({w, 500.0});
+}
+
 void TestShapeApp::preProcess()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -68,6 +104,8 @@ void TestShapeApp::process()
                    nullptr, 0, nullptr);
     square_.draw(program_, &squarePos_, nullptr, &fillColor_,
                  &borderColor_, 0, nullptr);
+    texRect_.draw(program_, &texPos_, nullptr, nullptr,
+                  nullptr, texture_.id(), nullptr);
 }
 
 void TestShapeApp::postProcess()

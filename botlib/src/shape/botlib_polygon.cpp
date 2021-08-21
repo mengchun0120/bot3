@@ -34,7 +34,6 @@ void Polygon::load(std::initializer_list<commonlib::Point3> positions)
     }
 
     Shape::load(positions);
-    std::cerr << va_.numVertices(0) << std::endl;
 }
 
 void Polygon::load(std::initializer_list<commonlib::Point3> positions,
