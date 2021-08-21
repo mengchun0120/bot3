@@ -1,4 +1,4 @@
-#version 450 core
+#version 150 core
 
 uniform bool useColor;
 uniform bool useTexColor;
@@ -19,11 +19,11 @@ void main()
     {
         if(useTexColor)
         {
-            fragColor = texture(texture, texCoord) * texColor;
+            fragColor = texture2D(texture, texCoord) * texColor;
         }
         else
         {
-            fragColor = texture(texture, texCoord);
+            fragColor = texture2D(texture, texCoord);
         }
     }
 }

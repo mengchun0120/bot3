@@ -10,7 +10,7 @@ TestShapeApp::TestShapeApp(const std::string& configFile,
 {
     cfg_.load(configFile, appDir);
 #ifdef DESKTOP_APP
-    setupWindow(1200, 1200, "Test Shape");
+    setupWindow(1000, 800, "Test Shape");
 #endif
 
     setupOpenGL();
@@ -37,7 +37,8 @@ void TestShapeApp::setupShapeColor()
         Point3{0.0f, 0.0f, 0.0f},
         Point3{0.0f, 100.0f, 0.0f},
         Point3{-100.0f, -50.0f, 0.0f},
-        Point3{100.0f, -50.0f, 0.0f}
+        Point3{100.0f, -50.0f, 0.0f},
+        Point3{0.0f, 100.0f, 0.0f}
     });
 
     square_.load({
@@ -45,14 +46,15 @@ void TestShapeApp::setupShapeColor()
         Point3{-100.0f, 100.0f, 0.0f},
         Point3{-100.0f, -100.0f, 0.0f},
         Point3{100.0f, -100.0f, 0.0f},
-        Point3{100.0f, 100.0f, 0.0f}
+        Point3{100.0f, 100.0f, 0.0f},
+        Point3{-100.0f, 100.0f, 0.0f}
     });
 
     trianglePos_.init({200.0f, 200.0f});
     squarePos_.init({600.0f, 400.0f});
 
     fillColor_.init({1.0f, 0.5f, 0.0f, 1.0f});
-    borderColor_.init({0.0f, 1.0f, 0.3f, 1.0f});
+    borderColor_.init({0.0f, 0.0f, 0.3f, 1.0f});
 }
 
 void TestShapeApp::preProcess()

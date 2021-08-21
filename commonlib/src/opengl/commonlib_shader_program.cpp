@@ -39,6 +39,19 @@ std::string getShaderInfo(GLuint shader)
     return msg;
 }
 
+std::string getShaderName(GLenum type)
+{
+    switch (type)
+    {
+        case GL_VERTEX_SHADER:
+            return "vertex shader";
+        case GL_FRAGMENT_SHADER:
+            return "fragment shader";
+    }
+
+    return "unknown shader";
+}
+
 GLuint createShader(GLenum type,
                     const std::string& src)
 {
@@ -51,7 +64,8 @@ GLuint createShader(GLenum type,
     if (!compileShader(shader, src))
     {
         THROW_EXCEPT(OpenGLException,
-                     "Failed to compile shader: " + getShaderInfo(shader));
+                     "Failed to compile " + getShaderName(type) +
+                     ": " + getShaderInfo(shader));
     }
 
     return shader;

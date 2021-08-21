@@ -8,6 +8,8 @@ namespace botlib {
 
 class Polygon: public Shape {
 public:
+    static constexpr unsigned int MIN_NUM_VERTICES = 4;
+
     Polygon() = default;
 
     Polygon(std::initializer_list<commonlib::Point3> positions);

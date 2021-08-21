@@ -1,3 +1,4 @@
+#include <iostream>
 #include <commonlib_exception.h>
 #include <commonlib_algorithm.h>
 #include <botlib_polygon.h>
@@ -27,18 +28,19 @@ Polygon::Polygon(Point3* positions,
 
 void Polygon::load(std::initializer_list<commonlib::Point3> positions)
 {
-    if (count(positions.begin(), positions.end()) < 4)
+    if (count(positions.begin(), positions.end()) < MIN_NUM_VERTICES)
     {
         THROW_EXCEPT(InvalidArgumentException, "positions size is less than 4");
     }
 
     Shape::load(positions);
+    std::cerr << va_.numVertices(0) << std::endl;
 }
 
 void Polygon::load(std::initializer_list<commonlib::Point3> positions,
                    std::initializer_list<commonlib::Point2> texPos)
 {
-    if (count(positions.begin(), positions.end()) < 4)
+    if (count(positions.begin(), positions.end()) < MIN_NUM_VERTICES)
     {
         THROW_EXCEPT(InvalidArgumentException, "positions size is less than 4");
     }
@@ -50,7 +52,7 @@ void Polygon::load(Point3* positions,
                    unsigned int numPositions,
                    Point2* texPos)
 {
-    if (numPositions < 4)
+    if (numPositions < MIN_NUM_VERTICES)
     {
         THROW_EXCEPT(InvalidArgumentException, "numPositions is less than 3");
     }
