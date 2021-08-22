@@ -7,7 +7,9 @@ set(BOTLIB_APP_SRC
     src/app/botlib_bot_app.cpp)
 
 set(BOTLIB_OPENGL_SRC
-    src/opengl/botlib_simple_shader_program.cpp)
+    src/opengl/botlib_simple_shader_program.cpp
+    src/opengl/botlib_text_size.cpp
+    src/opengl/botlib_text_system.cpp)
 
 set(BOTLIB_SCREEN_SRC
     src/screen/botlib_screen.cpp
@@ -15,8 +17,11 @@ set(BOTLIB_SCREEN_SRC
     src/screen/botlib_screen_manager.cpp)
 
 set(BOTLIB_SHAPE_SRC
+    src/shape/botlib_tex_pos_array.cpp
+    src/shape/botlib_tex_rectangle.cpp
     src/shape/botlib_shape.cpp
-    src/shape/botlib_polygon.cpp)
+    src/shape/botlib_polygon.cpp
+    src/shape/botlib_rectangle.cpp)
 
 set(BOTLIB_MISC_SRC
     src/misc/botlib_constants.cpp)

@@ -10,25 +10,25 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-Shape::Shape(std::initializer_list<commonlib::Point3> positions)
+Shape::Shape(std::initializer_list<Point3> positions)
 {
     load(positions);
 }
 
-Shape::Shape(std::initializer_list<commonlib::Point3> positions,
-             std::initializer_list<commonlib::Point2> texPos)
+Shape::Shape(std::initializer_list<Point3> positions,
+             const TexPosArray& texPosArray)
 {
-    load(positions, texPos);
+    load(positions, texPosArray);
 }
 
-Shape::Shape(Point3* positions,
+Shape::Shape(const Point3* positions,
              unsigned int numPositions,
-             Point2* texPos)
+             const Point2* texPos)
 {
     load(positions, numPositions, texPos);
 }
 
-void Shape::load(std::initializer_list<commonlib::Point3> positions)
+void Shape::load(std::initializer_list<Point3> positions)
 {
     unsigned int numPositions = count(positions.begin(), positions.end());
     if (numPositions == 0)
@@ -42,8 +42,8 @@ void Shape::load(std::initializer_list<commonlib::Point3> positions)
     load(posPtr.get(), numPositions);
 }
 
-void Shape::load(std::initializer_list<commonlib::Point3> positions,
-                 std::initializer_list<commonlib::Point2> texPos)
+void Shape::load(std::initializer_list<Point3> positions,
+                 const TexPosArray& texPosArray)
 {
     unsigned int numPositions = count(positions.begin(), positions.end());
     if (numPositions == 0)
@@ -51,23 +51,21 @@ void Shape::load(std::initializer_list<commonlib::Point3> positions,
         THROW_EXCEPT(InvalidArgumentException, "positions is empty");
     }
 
-    if (numPositions != count(texPos.begin(), texPos.end()))
+    if (numPositions != texPosArray.numVertices())
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "texPos size doesn't match position size");
     }
 
     std::unique_ptr<Point3> posPtr(new Point3[numPositions]);
-    std::unique_ptr<Point2> texPosPtr(new Point2[numPositions]);
 
     std::copy(positions.begin(), positions.end(), posPtr.get());
-    std::copy(texPos.begin(), texPos.end(), texPosPtr.get());
-    load(posPtr.get(), numPositions, texPosPtr.get());
+    load(posPtr.get(), numPositions, texPosArray.texPos());
 }
 
-void Shape::load(Point3* positions,
+void Shape::load(const Point3* positions,
                  unsigned int numPositions,
-                 Point2* texPos)
+                 const Point2* texPos)
 {
     if (!positions)
     {

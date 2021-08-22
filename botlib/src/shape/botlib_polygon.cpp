@@ -14,14 +14,14 @@ Polygon::Polygon(std::initializer_list<commonlib::Point3> positions)
 }
 
 Polygon::Polygon(std::initializer_list<commonlib::Point3> positions,
-                 std::initializer_list<commonlib::Point2> texPos)
+                 const TexPosArray& texPosArray)
 {
-    load(positions, texPos);
+    load(positions, texPosArray);
 }
 
-Polygon::Polygon(Point3* positions,
+Polygon::Polygon(const Point3* positions,
                  unsigned int numPositions,
-                 Point2* texPos)
+                 const Point2* texPos)
 {
     load(positions, numPositions, texPos);
 }
@@ -37,19 +37,19 @@ void Polygon::load(std::initializer_list<commonlib::Point3> positions)
 }
 
 void Polygon::load(std::initializer_list<commonlib::Point3> positions,
-                   std::initializer_list<commonlib::Point2> texPos)
+                   const TexPosArray& texPosArray)
 {
     if (count(positions.begin(), positions.end()) < MIN_NUM_VERTICES)
     {
         THROW_EXCEPT(InvalidArgumentException, "positions size is less than 4");
     }
 
-    Shape::load(positions, texPos);
+    Shape::load(positions, texPosArray);
 }
 
-void Polygon::load(Point3* positions,
+void Polygon::load(const Point3* positions,
                    unsigned int numPositions,
-                   Point2* texPos)
+                   const Point2* texPos)
 {
     if (numPositions < MIN_NUM_VERTICES)
     {

@@ -2,6 +2,7 @@
 #define INCLUDED_BOTLIB_POLYGON_H
 
 #include <botlib_shape.h>
+#include <botlib_tex_pos_array.h>
 
 namespace mcdane {
 namespace botlib {
@@ -15,22 +16,22 @@ public:
     Polygon(std::initializer_list<commonlib::Point3> positions);
 
     Polygon(std::initializer_list<commonlib::Point3> positions,
-            std::initializer_list<commonlib::Point2> texPos);
+            const TexPosArray& texPosArray);
 
-    Polygon(commonlib::Point3* positions,
+    Polygon(const commonlib::Point3* positions,
             unsigned int numPositions,
-            commonlib::Point2* texPos=nullptr);
+            const commonlib::Point2* texPos=nullptr);
 
     ~Polygon() override = default;
 
     void load(std::initializer_list<commonlib::Point3> positions) override;
 
     void load(std::initializer_list<commonlib::Point3> positions,
-              std::initializer_list<commonlib::Point2> texPos) override;
+              const TexPosArray& texPosArray) override;
 
-    void load(commonlib::Point3* positions,
+    void load(const commonlib::Point3* positions,
               unsigned int numPositions,
-              commonlib::Point2* texPos=nullptr) override;
+              const commonlib::Point2* texPos=nullptr) override;
 
     void draw(SimpleShaderProgram& program,
               const commonlib::Point2* objRef,
