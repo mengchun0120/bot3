@@ -39,20 +39,20 @@ void TestShapeApp::setupOpenGL()
 void TestShapeApp::setupShapeColor()
 {
     triangle_.load({
-        Point3{0.0f, 0.0f, 0.0f},
-        Point3{0.0f, 100.0f, 0.0f},
-        Point3{-100.0f, -50.0f, 0.0f},
-        Point3{100.0f, -50.0f, 0.0f},
-        Point3{0.0f, 100.0f, 0.0f}
+        Point2{0.0f, 0.0f},
+        Point2{0.0f, 100.0f},
+        Point2{-100.0f, -50.0f},
+        Point2{100.0f, -50.0f},
+        Point2{0.0f, 100.0f}
     });
 
     square_.load({
-        Point3{0.0f, 0.0f, 0.0f},
-        Point3{-100.0f, 100.0f, 0.0f},
-        Point3{-100.0f, -100.0f, 0.0f},
-        Point3{100.0f, -100.0f, 0.0f},
-        Point3{100.0f, 100.0f, 0.0f},
-        Point3{-100.0f, 100.0f, 0.0f}
+        Point2{0.0f, 0.0f},
+        Point2{-100.0f, 100.0f},
+        Point2{-100.0f, -100.0f},
+        Point2{100.0f, -100.0f},
+        Point2{100.0f, 100.0f},
+        Point2{-100.0f, 100.0f}
     });
 
     trianglePos_.init({200.0f, 200.0f});
@@ -71,13 +71,13 @@ void TestShapeApp::setupTexture(const std::string& appDir)
     float w = static_cast<float>(texture_.width()) / 4.0f;
     float h = static_cast<float>(texture_.height()) / 4.0f;
 
-    std::array<Point3,6> positions = {
-        Point3{0.0f, 0.0f, 0.0f},
-        Point3{w, h, 0.0f},
-        Point3{-w, h, 0.0f},
-        Point3{-w, -h, 0.0f},
-        Point3{w, -h, 0.0f},
-        Point3{w, h, 0.0f},
+    std::array<Point2,6> positions = {
+        Point2{0.0f, 0.0f},
+        Point2{w, h},
+        Point2{-w, h},
+        Point2{-w, -h},
+        Point2{w, -h},
+        Point2{w, h},
     };
 
     std::array<Point2,6> texPos = {
@@ -100,11 +100,11 @@ void TestShapeApp::preProcess()
 
 void TestShapeApp::process()
 {
-    triangle_.draw(program_, &trianglePos_, nullptr, &fillColor_,
+    triangle_.draw(program_, 0.0f, &trianglePos_, nullptr, &fillColor_,
                    nullptr, 0, nullptr);
-    square_.draw(program_, &squarePos_, nullptr, &fillColor_,
+    square_.draw(program_, 0.0f, &squarePos_, nullptr, &fillColor_,
                  &borderColor_, 0, nullptr);
-    texRect_.draw(program_, &texPos_, nullptr, nullptr,
+    texRect_.draw(program_, 0.0f, &texPos_, nullptr, nullptr,
                   nullptr, texture_.id(), nullptr);
 }
 

@@ -12,23 +12,19 @@ public:
     Rectangle();
 
     Rectangle(float width,
-              float height,
-              float z);
+              float height);
 
     Rectangle(float width,
               float height,
-              float z,
               const TexRectangle& texRect);
 
     ~Rectangle() override = default;
 
     void load(float width,
-              float height,
-              float z);
+              float height);
 
     void load(float width,
               float height,
-              float z,
               const TexRectangle& texRect);
 
     float width() const

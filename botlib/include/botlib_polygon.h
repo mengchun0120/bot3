@@ -13,27 +13,28 @@ public:
 
     Polygon() = default;
 
-    Polygon(std::initializer_list<commonlib::Point3> positions);
+    Polygon(std::initializer_list<commonlib::Point2> positions);
 
-    Polygon(std::initializer_list<commonlib::Point3> positions,
+    Polygon(std::initializer_list<commonlib::Point2> positions,
             const TexPosArray& texPosArray);
 
-    Polygon(const commonlib::Point3* positions,
+    Polygon(const commonlib::Point2* positions,
             unsigned int numPositions,
             const commonlib::Point2* texPos=nullptr);
 
     ~Polygon() override = default;
 
-    void load(std::initializer_list<commonlib::Point3> positions) override;
+    void load(std::initializer_list<commonlib::Point2> positions) override;
 
-    void load(std::initializer_list<commonlib::Point3> positions,
+    void load(std::initializer_list<commonlib::Point2> positions,
               const TexPosArray& texPosArray) override;
 
-    void load(const commonlib::Point3* positions,
+    void load(const commonlib::Point2* positions,
               unsigned int numPositions,
               const commonlib::Point2* texPos=nullptr) override;
 
     void draw(SimpleShaderProgram& program,
+              float z,
               const commonlib::Point2* objRef,
               const commonlib::Point2* direction,
               const commonlib::Color* fillColor,

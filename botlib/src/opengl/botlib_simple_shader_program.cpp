@@ -16,6 +16,7 @@ void SimpleShaderProgram::init(const std::string& vertexShaderFile,
 
     load(vertexShaderSrc, fragShaderSrc);
     positionLoc_ = getAttribLocation("position");
+    zLoc_ = getUniformLocation("z");
     useObjRefLoc_ = getUniformLocation("useObjRef");
     objRefLoc_ = getUniformLocation("objRef");
     viewportSizeLoc_ = getUniformLocation("viewportSize");

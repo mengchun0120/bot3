@@ -14,27 +14,28 @@ class Shape {
 public:
     Shape() = default;
 
-    Shape(std::initializer_list<commonlib::Point3> positions);
+    Shape(std::initializer_list<commonlib::Point2> positions);
 
-    Shape(std::initializer_list<commonlib::Point3> positions,
+    Shape(std::initializer_list<commonlib::Point2> positions,
           const TexPosArray& texPosArray);
 
-    Shape(const commonlib::Point3* positions,
+    Shape(const commonlib::Point2* positions,
           unsigned int numPositions,
           const commonlib::Point2* texPos=nullptr);
 
     virtual ~Shape() = default;
 
-    virtual void load(std::initializer_list<commonlib::Point3> positions);
+    virtual void load(std::initializer_list<commonlib::Point2> positions);
 
-    virtual void load(std::initializer_list<commonlib::Point3> positions,
+    virtual void load(std::initializer_list<commonlib::Point2> positions,
                       const TexPosArray& texPosArray);
 
-    virtual void load(const commonlib::Point3* positions,
+    virtual void load(const commonlib::Point2* positions,
                       unsigned int numPositions,
                       const commonlib::Point2* texPos=nullptr);
 
     virtual void draw(SimpleShaderProgram& program,
+                      float z,
                       const commonlib::Point2* objRef,
                       const commonlib::Point2* direction,
                       const commonlib::Color* fillColor,

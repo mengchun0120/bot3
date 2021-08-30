@@ -8,25 +8,25 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-Polygon::Polygon(std::initializer_list<commonlib::Point3> positions)
+Polygon::Polygon(std::initializer_list<commonlib::Point2> positions)
 {
     load(positions);
 }
 
-Polygon::Polygon(std::initializer_list<commonlib::Point3> positions,
+Polygon::Polygon(std::initializer_list<commonlib::Point2> positions,
                  const TexPosArray& texPosArray)
 {
     load(positions, texPosArray);
 }
 
-Polygon::Polygon(const Point3* positions,
+Polygon::Polygon(const Point2* positions,
                  unsigned int numPositions,
                  const Point2* texPos)
 {
     load(positions, numPositions, texPos);
 }
 
-void Polygon::load(std::initializer_list<commonlib::Point3> positions)
+void Polygon::load(std::initializer_list<commonlib::Point2> positions)
 {
     if (count(positions.begin(), positions.end()) < MIN_NUM_VERTICES)
     {
@@ -36,7 +36,7 @@ void Polygon::load(std::initializer_list<commonlib::Point3> positions)
     Shape::load(positions);
 }
 
-void Polygon::load(std::initializer_list<commonlib::Point3> positions,
+void Polygon::load(std::initializer_list<commonlib::Point2> positions,
                    const TexPosArray& texPosArray)
 {
     if (count(positions.begin(), positions.end()) < MIN_NUM_VERTICES)
@@ -47,7 +47,7 @@ void Polygon::load(std::initializer_list<commonlib::Point3> positions,
     Shape::load(positions, texPosArray);
 }
 
-void Polygon::load(const Point3* positions,
+void Polygon::load(const Point2* positions,
                    unsigned int numPositions,
                    const Point2* texPos)
 {
@@ -60,6 +60,7 @@ void Polygon::load(const Point3* positions,
 }
 
 void Polygon::draw(SimpleShaderProgram& program,
+                   float z,
                    const Point2* objRef,
                    const Point2* direction,
                    const Color* fillColor,
@@ -77,6 +78,7 @@ void Polygon::draw(SimpleShaderProgram& program,
         program.setUseObjRef(false);
     }
 
+    program.setz(z);
     program.setPositionTexPos(va_);
     program.setUseColor(textureId == 0);
 

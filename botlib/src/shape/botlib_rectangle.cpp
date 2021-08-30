@@ -21,23 +21,20 @@ void validateParamForRect(float width,
 }
 
 Rectangle::Rectangle(float width,
-                     float height,
-                     float z)
+                     float height)
 {
-    load(width, height, z);
+    load(width, height);
 }
 
 Rectangle::Rectangle(float width,
                      float height,
-                     float z,
                      const TexRectangle& texRect)
 {
-    load(width, height, z, texRect);
+    load(width, height, texRect);
 }
 
 void Rectangle::load(float width,
-                     float height,
-                     float z)
+                     float height)
 {
     validateParamForRect(width, height);
 
@@ -45,18 +42,17 @@ void Rectangle::load(float width,
     float h = height/2.0f;
 
     Polygon::load({
-        Point3{0.0f, 0.0f, z},
-        Point3{w, h, z},
-        Point3{-w, h, z},
-        Point3{-w, -h, z},
-        Point3{w, -h, z},
-        Point3{w, h, z}
+        Point2{0.0f, 0.0f},
+        Point2{w, h},
+        Point2{-w, h},
+        Point2{-w, -h},
+        Point2{w, -h},
+        Point2{w, h}
     });
 }
 
 void Rectangle::load(float width,
                      float height,
-                     float z,
                      const TexRectangle& texRect)
 {
     validateParamForRect(width, height);
@@ -64,13 +60,13 @@ void Rectangle::load(float width,
     float w = width/2.0f;
     float h = height/2.0f;
 
-    std::vector<Point3> positions({
-        Point3{0.0f, 0.0f, z},
-        Point3{w, h, z},
-        Point3{-w, h, z},
-        Point3{-w, -h, z},
-        Point3{w, -h, z},
-        Point3{w, h, z}
+    std::vector<Point2> positions({
+        Point2{0.0f, 0.0f},
+        Point2{w, h},
+        Point2{-w, h},
+        Point2{-w, -h},
+        Point2{w, -h},
+        Point2{w, h}
     });
 
     Polygon::load(positions.data(), positions.size(), texRect.texPos());

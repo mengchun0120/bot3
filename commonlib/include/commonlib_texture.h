@@ -13,6 +13,8 @@ public:
 
     Texture(const std::string& imageFile);
 
+    Texture(const Texture& other) = delete;
+
     virtual ~Texture();
 
     void init(const std::string& imageFile);
