@@ -38,6 +38,9 @@ void Rectangle::load(float width,
 {
     validateParamForRect(width, height);
 
+    width_ = width;
+    height_ = height;
+
     float w = width/2.0f;
     float h = height/2.0f;
 
@@ -56,6 +59,9 @@ void Rectangle::load(float width,
                      const TexRectangle& texRect)
 {
     validateParamForRect(width, height);
+
+    width_ = width;
+    height_ = height;
 
     float w = width/2.0f;
     float h = height/2.0f;

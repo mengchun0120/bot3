@@ -3,6 +3,7 @@
 #include <testshape_testshape_app.h>
 
 using namespace mcdane::commonlib;
+using namespace mcdane::botlib;
 
 namespace mcdane {
 namespace testshape {
@@ -34,6 +35,8 @@ void TestShapeApp::setupOpenGL()
     program_.use();
     program_.setViewportSize(viewportSize());
     program_.setViewportOrigin(viewportOrigin);
+
+    textSys_.load(cfg_.fontDir());
 }
 
 void TestShapeApp::setupShapeColor()
@@ -46,14 +49,7 @@ void TestShapeApp::setupShapeColor()
         Point2{0.0f, 100.0f}
     });
 
-    square_.load({
-        Point2{0.0f, 0.0f},
-        Point2{-100.0f, 100.0f},
-        Point2{-100.0f, -100.0f},
-        Point2{100.0f, -100.0f},
-        Point2{100.0f, 100.0f},
-        Point2{-100.0f, 100.0f}
-    });
+    square_.load(100.0f, 100.0f);
 
     trianglePos_.init({200.0f, 200.0f});
     squarePos_.init({600.0f, 400.0f});
@@ -69,27 +65,8 @@ void TestShapeApp::setupTexture(const std::string& appDir)
     texture_.init(imageFile);
 
     float w = static_cast<float>(texture_.width()) / 4.0f;
-    float h = static_cast<float>(texture_.height()) / 4.0f;
 
-    std::array<Point2,6> positions = {
-        Point2{0.0f, 0.0f},
-        Point2{w, h},
-        Point2{-w, h},
-        Point2{-w, -h},
-        Point2{w, -h},
-        Point2{w, h},
-    };
-
-    std::array<Point2,6> texPos = {
-        Point2{0.5f, 0.5f},
-        Point2{1.0f, 1.0f},
-        Point2{0.0f, 1.0f},
-        Point2{0.0f, 0.0f},
-        Point2{1.0f, 0.0f},
-        Point2{1.0f, 1.0f}
-    };
-
-    texRect_.load(positions.data(), positions.size(), texPos.data());
+    texRect_.load(100.0f, 100.0f, TexRectangle());
     texPos_.init({w, 500.0});
 }
 
@@ -106,6 +83,14 @@ void TestShapeApp::process()
                  &borderColor_, 0, nullptr);
     texRect_.draw(program_, 0.0f, &texPos_, nullptr, nullptr,
                   nullptr, texture_.id(), nullptr);
+    textSys_.draw(program_, "Hello world", Point2{200.0f, 700.0f},
+                  0.0f, TEXT_SIZE_BIG, &fillColor_);
+    textSys_.draw(program_, "Hello world", Point2{200.0f, 600.0f},
+                  0.0f, TEXT_SIZE_MEDIUM, &fillColor_);
+    textSys_.draw(program_, "Hello world", Point2{200.0f, 500.0f},
+                  0.0f, TEXT_SIZE_SMALL, &fillColor_);
+    textSys_.draw(program_, "Hello world", Point2{200.0f, 400.0f},
+                  0.0f, TEXT_SIZE_TINY, &fillColor_);
 }
 
 void TestShapeApp::postProcess()

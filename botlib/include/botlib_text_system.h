@@ -43,15 +43,9 @@ private:
     int getRectWidthForTextSize(std::vector<int>& widths,
                                 int textSize);
 
-    const Rectangle& getRect(int ch, int textSize) const
-    {
-        return fontRects_[textSize][ch-MIN_CHAR];
-    }
+    inline const Rectangle& getRect(int ch, int textSize) const;
 
-    const commonlib::Texture& getTexture(int ch) const
-    {
-        return fontTextures_[ch-MIN_CHAR];
-    }
+    inline const commonlib::Texture& getTexture(int ch) const;
 
 private:
     static const float FONT_SCALE_FACTOR[TEXT_SIZE_COUNT];
@@ -61,6 +55,17 @@ private:
     std::vector<std::vector<int>> fontRectIdx_;
     commonlib::Texture* fontTextures_;
 };
+
+const Rectangle& TextSystem::getRect(int ch, int textSize) const
+{
+    int idx = fontRectIdx_[textSize][ch-MIN_CHAR];
+    return fontRects_[textSize][idx];
+}
+
+const commonlib::Texture& TextSystem::getTexture(int ch) const
+{
+    return fontTextures_[ch-MIN_CHAR];
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

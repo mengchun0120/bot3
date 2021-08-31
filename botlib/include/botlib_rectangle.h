@@ -9,7 +9,7 @@ namespace botlib {
 
 class Rectangle: public Polygon {
 public:
-    Rectangle();
+    Rectangle() = default;
 
     Rectangle(float width,
               float height);

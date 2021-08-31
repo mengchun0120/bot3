@@ -1,6 +1,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <cmath>
+#include <commonlib_log.h>
 #include <commonlib_file_utils.h>
 #include <botlib_text_system.h>
 
@@ -150,6 +151,9 @@ void TextSystem::draw(SimpleShaderProgram& program,
     {
         const Rectangle& curRect = getRect(s[i], size);
         const Texture& texture = getTexture(s[i]);
+
+        LOG_INFO << "draw text p=" << p << " cw=" << curRect.width()
+                 << LOG_END;
 
         curRect.draw(program, z, &p, nullptr, nullptr, nullptr,
                      texture.id(), color);

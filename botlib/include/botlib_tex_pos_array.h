@@ -62,7 +62,7 @@ void TexPosArray::load(Iterator begin, Iterator end)
     unsigned int i = 0;
     for (auto it = begin; it != end; ++it, ++i)
     {
-        validateTexPos(*it);
+        commonlib::validateTexPos(*it);
         texPos_[i] = *it;
     }
 }

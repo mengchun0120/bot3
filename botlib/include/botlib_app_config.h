@@ -46,8 +46,10 @@ public:
         return simpleFragShaderFile_;
     }
 
-private:
-    void completeFilePath(const std::string& appDir);
+    const std::string& fontDir() const
+    {
+        return fontDir_;
+    }
 
 private:
     std::string logFile_;
@@ -57,6 +59,7 @@ private:
     unsigned int inputQueueCapacity_;
     std::string simpleVertexShaderFile_;
     std::string simpleFragShaderFile_;
+    std::string fontDir_;
 };
 
 } // end of namespace botlib

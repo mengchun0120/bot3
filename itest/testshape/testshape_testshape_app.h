@@ -5,7 +5,8 @@
 #include <commonlib_texture.h>
 #include <botlib_app_config.h>
 #include <botlib_simple_shader_program.h>
-#include <botlib_polygon.h>
+#include <botlib_text_system.h>
+#include <botlib_rectangle.h>
 
 namespace mcdane {
 namespace testshape {
@@ -33,14 +34,15 @@ private:
 private:
     botlib::AppConfig cfg_;
     botlib::SimpleShaderProgram program_;
+    botlib::TextSystem textSys_;
     botlib::Polygon triangle_;
-    botlib::Polygon square_;
+    botlib::Rectangle square_;
     commonlib::Point2 trianglePos_;
     commonlib::Point2 squarePos_;
     commonlib::Color fillColor_;
     commonlib::Color borderColor_;
     commonlib::Texture texture_;
-    botlib::Polygon texRect_;
+    botlib::Rectangle texRect_;
     commonlib::Point2 texPos_;
 };
 

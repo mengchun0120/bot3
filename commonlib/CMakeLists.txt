@@ -36,7 +36,8 @@ set(COMMONLIB_OPENGL_SRC
     src/opengl/commonlib_shader_program.cpp
     src/opengl/commonlib_buffer_block.cpp
     src/opengl/commonlib_vertex_array.cpp
-    src/opengl/commonlib_texture.cpp)
+    src/opengl/commonlib_texture.cpp
+    src/opengl/commonlib_opengl_utils.cpp)
 
 set(COMMONLIB_SRC
     ${COMMONLIB_MISC_SRC}

@@ -9,5 +9,6 @@
     "shader": {
         "simpleVertexShaderFile": ["res", "glsl", "simple_vertex_shader.glsl"],
         "simpleFragShaderFile": ["res", "glsl", "simple_frag_shader.glsl"]
-    }
+    },
+    "fontDir": ["res", "fonts"]
 }
