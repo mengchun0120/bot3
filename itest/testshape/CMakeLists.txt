@@ -13,4 +13,9 @@ add_executable(testshape testshape_testshape_app.cpp
 
 set_property(TARGET testshape PROPERTY CXX_STANDARD 11)
 
-target_link_libraries(testshape botlib commonlib opengl32 glfw3 glew32)
+if(UNIX)
+    target_link_libraries(testshape botlib commonlib GL GLEW glfw dl m Xrandr
+                          Xi X11 Xxf86vm Xinerama Xcursor pthread)
+elseif(MINGW)
+    target_link_libraries(testshape botlib commonlib opengl32 glfw3 glew32)
+endif()

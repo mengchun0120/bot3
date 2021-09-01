@@ -1,13 +1,11 @@
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
+#include <regex>
+#include <cassert>
 #include <commonlib_exception.h>
-
-using namespace ::testing;
 
 namespace mcdane {
 namespace commonlib {
 
-TEST(TestMyException, WhatIsCorrectFormat)
+void testMyException()
 {
     try
     {
@@ -15,7 +13,8 @@ TEST(TestMyException, WhatIsCorrectFormat)
     }
     catch(const MyException &e)
     {
-        ASSERT_THAT(e.what(), MatchesRegex("^\\S+\\:\\d+ Failure$"));
+        std::regex r("^\\S+\\:\\d+ Failure$");
+        assert(regex_match(e.what(), r));
     }
 }
 

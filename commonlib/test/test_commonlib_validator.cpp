@@ -1,3 +1,4 @@
+#include <iostream>
 #include <gtest/gtest.h>
 #include <commonlib_validator.h>
 
@@ -6,148 +7,175 @@ using namespace ::testing;
 namespace mcdane {
 namespace commonlib {
 
-class TestValidator: public testing::Test {
-public:
-    Validator v_;
-};
-
-TEST_F(TestValidator, TestDefaultValidator)
+TEST(TestValidator, TestDefaultValidator)
 {
-    EXPECT_TRUE(v_.validate());
-    EXPECT_EQ(v_.description(), "");
+    Validator v;
+    std::string desc = v.description();
+
+    EXPECT_TRUE(v.validate());
+    EXPECT_EQ(desc, "");
 }
 
-TEST_F(TestValidator, TestEq)
+TEST(TestValidator, TestEq)
 {
     int i = 1, j = 1;
-    v_ = eq(i, j);
+    Validator v = eq(i, j);
+    std::string desc1 = v.description();
 
-    EXPECT_TRUE(v_.validate());
-    EXPECT_EQ(v_.description(), "(1 == 1)");
+    EXPECT_TRUE(v.validate());
+    EXPECT_EQ(desc1, "(1 == 1)");
 
     j = 3;
-    EXPECT_FALSE(v_.validate());
-    EXPECT_EQ(v_.description(), "(1 == 3)");
+    std::string desc2 = v.description();
+
+    EXPECT_FALSE(v.validate());
+    EXPECT_EQ(desc2, "(1 == 3)");
 }
 
-TEST_F(TestValidator, TestNe)
+TEST(TestValidator, TestNe)
 {
     int i = 1, j = 2;
-    v_ = ne(i, j);
+    Validator v = ne(i, j);
+    std::string desc1 = v.description();
 
-    EXPECT_TRUE(v_.validate());
-    EXPECT_EQ(v_.description(), "(1 != 2)");
+    EXPECT_TRUE(v.validate());
+    EXPECT_EQ(desc1, "(1 != 2)");
 
     j = 1;
-    EXPECT_FALSE(v_.validate());
-    EXPECT_EQ(v_.description(), "(1 != 1)");
+    std::string desc2 = v.description();
+
+    EXPECT_FALSE(v.validate());
+    EXPECT_EQ(desc2, "(1 != 1)");
 }
 
-TEST_F(TestValidator, TestGt)
+TEST(TestValidator, TestGt)
 {
     int i = 3, j = 2;
-    v_ = gt(i, j);
+    Validator v = gt(i, j);
+    std::string desc1 = v.description();
 
-    EXPECT_TRUE(v_.validate());
-    EXPECT_EQ(v_.description(), "(3 > 2)");
+    EXPECT_TRUE(v.validate());
+    EXPECT_EQ(desc1, "(3 > 2)");
 
     j = 4;
-    EXPECT_FALSE(v_.validate());
-    EXPECT_EQ(v_.description(), "(3 > 4)");
+    std::string desc2 = v.description();
+
+    EXPECT_FALSE(v.validate());
+    EXPECT_EQ(desc2, "(3 > 4)");
 }
 
-TEST_F(TestValidator, TestGe)
+TEST(TestValidator, TestGe)
 {
     int i = 2, j = 1;
-    v_ = ge(i, j);
+    Validator v = ge(i, j);
+    std::string desc1 = v.description();
 
-    EXPECT_TRUE(v_.validate());
-    EXPECT_EQ(v_.description(), "(2 >= 1)");
+    EXPECT_TRUE(v.validate());
+    EXPECT_EQ(desc1, "(2 >= 1)");
 
     j = 4;
-    EXPECT_FALSE(v_.validate());
-    EXPECT_EQ(v_.description(), "(2 >= 4)");
+    std::string desc2 = v.description();
+
+    EXPECT_FALSE(v.validate());
+    EXPECT_EQ(desc2, "(2 >= 4)");
 }
 
-TEST_F(TestValidator, TestLt)
+TEST(TestValidator, TestLt)
 {
     int i = 1, j = 2;
-    v_ = lt(i, j);
+    Validator v = lt(i, j);
+    std::string desc1 = v.description();
 
-    EXPECT_TRUE(v_.validate());
-    EXPECT_EQ(v_.description(), "(1 < 2)");
+    EXPECT_TRUE(v.validate());
+    EXPECT_EQ(desc1, "(1 < 2)");
 
     j = -1;
-    EXPECT_FALSE(v_.validate());
-    EXPECT_EQ(v_.description(), "(1 < -1)");
+    std::string desc2 = v.description();
+
+    EXPECT_FALSE(v.validate());
+    EXPECT_EQ(desc2, "(1 < -1)");
 }
 
-TEST_F(TestValidator, TestLe)
+TEST(TestValidator, TestLe)
 {
     int i = 1, j = 2;
-    v_ = le(i, j);
+    Validator v = le(i, j);
+    std::string desc1 = v.description();
 
-    EXPECT_TRUE(v_.validate());
-    EXPECT_EQ(v_.description(), "(1 <= 2)");
+    EXPECT_TRUE(v.validate());
+    EXPECT_EQ(desc1, "(1 <= 2)");
 
     j = -1;
-    EXPECT_FALSE(v_.validate());
-    EXPECT_EQ(v_.description(), "(1 <= -1)");
+    std::string desc2 = v.description();
+
+    EXPECT_FALSE(v.validate());
+    EXPECT_EQ(desc2, "(1 <= -1)");
 }
 
-TEST_F(TestValidator, TestAnd)
+TEST(TestValidator, TestAnd)
 {
     int i = 1, j = 2, k = 3;
-    v_ = le(i, j) && gt(k, j);
+    Validator v = le(i, j) && gt(k, j);
+    std::string desc1 = v.description();
 
-    EXPECT_TRUE(v_.validate());
-    EXPECT_EQ(v_.description(), "((1 <= 2) && (3 > 2))");
+    EXPECT_TRUE(v.validate());
+    EXPECT_EQ(desc1, "((1 <= 2) && (3 > 2))");
 
     i = 3;
-    EXPECT_FALSE(v_.validate());
-    EXPECT_EQ(v_.description(), "((3 <= 2) && (3 > 2))");
+    std::string desc2 = v.description();
+
+    EXPECT_FALSE(v.validate());
+    EXPECT_EQ(desc2, "((3 <= 2) && (3 > 2))");
 }
 
-TEST_F(TestValidator, TestOr)
+TEST(TestValidator, TestOr)
 {
     int i = 1, j = 2, k = 3;
-    v_ = lt(i, j) || eq(k, j);
+    Validator v = lt(i, j) || eq(k, j);
+    std::string desc1 = v.description();
 
-    EXPECT_TRUE(v_.validate());
-    EXPECT_EQ(v_.description(), "((1 < 2) || (3 == 2))");
+    EXPECT_TRUE(v.validate());
+    EXPECT_EQ(desc1, "((1 < 2) || (3 == 2))");
 
     i = 3;
-    EXPECT_FALSE(v_.validate());
-    EXPECT_EQ(v_.description(), "((3 < 2) || (3 == 2))");
+    std::string desc2 = v.description();
+
+    EXPECT_FALSE(v.validate());
+    EXPECT_EQ(desc2, "((3 < 2) || (3 == 2))");
 }
 
-TEST_F(TestValidator, TestNot)
+TEST(TestValidator, TestNot)
 {
     int i = 1, j = 2;
-    v_ = !lt(j, i);
+    Validator v = !lt(j, i);
+    std::string desc1 = v.description();
 
-    EXPECT_TRUE(v_.validate());
-    EXPECT_EQ(v_.description(), "!(2 < 1)");
+    EXPECT_TRUE(v.validate());
+    EXPECT_EQ(desc1, "!(2 < 1)");
 
     j = 0;
-    EXPECT_FALSE(v_.validate());
-    EXPECT_EQ(v_.description(), "!(0 < 1)");
+    std::string desc2 = v.description();
+
+    EXPECT_FALSE(v.validate());
+    EXPECT_EQ(desc2, "!(0 < 1)");
 }
 
-TEST_F(TestValidator, TestComplexValidator)
+TEST(TestValidator, TestComplexValidator)
 {
-    v_ = le(1, 2) && (ge(3, 2) || lt(1, 3));
+    Validator v = le(1, 2) && (ge(3, 2) || lt(1, 2));
+    std::string desc = v.description();
 
-    EXPECT_TRUE(v_.validate());
-    EXPECT_EQ(v_.description(), "((1 <= 2) && ((3 >= 2) || (1 < 3)))");
+    EXPECT_TRUE(v.validate());
+    EXPECT_EQ(desc, "((1 <= 2) && ((3 >= 2) || (1 < 2)))");
 }
 
-TEST_F(TestValidator, TestNonempty)
+TEST(TestValidator, TestNonempty)
 {
-    v_ = nonempty(std::string("hello"));
+    Validator v = nonempty(std::string("hello"));
+    std::string desc = v.description();
 
-    EXPECT_TRUE(v_.validate());
-    EXPECT_EQ(v_.description(), "Non-empty");
+    EXPECT_TRUE(v.validate());
+    EXPECT_EQ(desc, "Non-empty");
 }
 
 } // end of namespace commonlib

@@ -1,22 +1,29 @@
-#include <gtest/gtest.h>
+#include <cassert>
 #include <commonlib_exception.h>
 #include <commonlib_argument.h>
 
 namespace mcdane {
 namespace commonlib {
 
-class TestArgument: public testing::Test {
-public:
-    Argument::Ptr arg_;
-};
-
-TEST_F(TestArgument, CreateWithValidArgsThrowNoException)
+void testArgument_CreateWithValidArgsThrowNoException()
 {
     std::string name;
-    EXPECT_NO_THROW(arg_ = Argument::create(name, "name", "n", "name", "Name"));
+    bool exceptionHappened = false;
+
+    try
+    {
+        Argument arg = Argument::create(name, "name", "n", "name", "Name");
+    }
+    catch (const MyException& e)
+    {
+        std::cerr << e.what() << std::endl;
+        exceptionHappened = true;
+    }
+
+    assert(!exceptionHappened);
 }
 
-TEST_F(TestArgument, CreateWithEmptyNameThrowException)
+void testArgument_CreateWithEmptyNameThrowException()
 {
     std::string name;
     bool exceptionHappened = false;
@@ -25,16 +32,16 @@ TEST_F(TestArgument, CreateWithEmptyNameThrowException)
     {
         arg_ = Argument::create(name, "", "n", "name", "Name");
     }
-    catch (const InvalidArgumentException &e)
+    catch (const MyArgumentException &e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
     }
 
-    ASSERT_TRUE(exceptionHappened);
+    assert(exceptionHappened);
 }
 
-TEST_F(TestArgument, CreateWithInvalidShortOptionThrowException)
+void testArgument_CreateWithInvalidShortOptionThrowException()
 {
     std::string name;
     bool exceptionHappened = false;
@@ -43,51 +50,65 @@ TEST_F(TestArgument, CreateWithInvalidShortOptionThrowException)
     {
         arg_ = Argument::create(name, "", "-n", "name", "Name");
     }
-    catch (const InvalidArgumentException &e)
+    catch (const MyException &e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
     }
 
-    ASSERT_TRUE(exceptionHappened);
+    assert(exceptionHappened);
 }
 
-TEST_F(TestArgument, CreateWithInvalidLongOptThrowException)
+void testArgument, CreateWithInvalidLongOptThrowException()
 {
     std::string name;
     bool exceptionHappened = false;
 
     try
     {
-        arg_ = Argument::create(name, "", "n", "--name", "Name");
+        Argument::Ptr arg = Argument::create(name, "", "n", "--name", "Name");
     }
-    catch (const InvalidArgumentException &e)
+    catch (const MyException& e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
     }
 
-    ASSERT_TRUE(exceptionHappened);
+    assert(exceptionHappened);
 }
 
-TEST_F(TestArgument, EvalWithoutFailingValidationThrowsNoException)
+void testArgument_EvalWithoutFailingValidationThrowsNoException()
 {
     int count;
 
-    ASSERT_NO_THROW(arg_ = Argument::create(count, "count", "c", "count",
-                                            "Count", true, gt(count, 0)));
-    ASSERT_NO_THROW(arg_->eval("123"));
-    EXPECT_EQ(count, 123);
-    EXPECT_TRUE(arg_->specified());
+    try
+    {
+        Arugment::Ptr arg = Argument::create(count, "count", "c", "count",
+                                        "Count", true, gt(count, 0));
+        arg->eval("123");
+    }
+    catch (const MyException& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
+
+    assert(!exceptionHappened);
+    assert(count == 123);
+    assert(arg->specified());
 }
 
-TEST_F(TestArgument, EvalWithFailingValidationThrowsException)
+void testArgument_EvalWithFailingValidationThrowsException()
 {
     int count;
     bool exceptionHappened = false;
+    Argument::Ptr arg;
 
-    ASSERT_NO_THROW(arg_ = Argument::create(count, "count", "c", "count",
-                                            "Count", true, gt(count, 0)));
+    try
+    {
+        arg = Argument::create(count, "count", "c", "count",
+                               "Count", true, gt(count, 0));
+    }
 
     try
     {

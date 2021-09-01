@@ -101,7 +101,7 @@ void parse(std::array<T,N>& a,
         THROW_EXCEPT(ParseException, "Json object is not an array");
     }
 
-    std::size_t sz = std::min(N, v.Capacity());
+    std::size_t sz = std::min(N, static_cast<std::size_t>(v.Capacity()));
     for (std::size_t i = 0; i < sz; ++i)
     {
         parse(a[i], v[i]);

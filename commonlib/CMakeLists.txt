@@ -70,5 +70,11 @@ add_executable(test_commonlib ${TEST_COMMONLIB_SRC})
 set_property(TARGET commonlib PROPERTY CXX_STANDARD 11)
 set_property(TARGET test_commonlib PROPERTY CXX_STANDARD 11)
 
-target_link_libraries(test_commonlib commonlib gtest gmock)
+if(UNIX)
+    target_link_libraries(test_commonlib commonlib GL GLEW glfw dl m Xrandr
+                          Xi X11 Xxf86vm Xinerama Xcursor pthread gtest gmock)
+elseif(MINGW)
+    target_link_libraries(test_commonlib commonlib opengl32 glfw3 glew32
+                          gtest gmock)
+endif()
 
