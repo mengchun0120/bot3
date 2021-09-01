@@ -1,9 +1,26 @@
 #include <cassert>
-#include <commonlib_exception.h>
+#include <stdexcept>
 #include <commonlib_argument.h>
 
 namespace mcdane {
 namespace commonlib {
+
+void testArgument_CreateWithValidArgsThrowNoException();
+void testArgument_CreateWithEmptyNameThrowException();
+void testArgument_CreateWithInvalidShortOptionThrowException();
+void testArgument_CreateWithInvalidLongOptThrowException();
+void testArgument_EvalWithoutFailingValidationThrowsNoException();
+void testArgument_EvalWithFailingValidationThrowsException();
+
+void testArgument()
+{
+    testArgument_CreateWithValidArgsThrowNoException();
+    testArgument_CreateWithEmptyNameThrowException();
+    testArgument_CreateWithInvalidShortOptionThrowException();
+    testArgument_CreateWithInvalidLongOptThrowException();
+    testArgument_EvalWithoutFailingValidationThrowsNoException();
+    testArgument_EvalWithFailingValidationThrowsException();
+}
 
 void testArgument_CreateWithValidArgsThrowNoException()
 {
@@ -12,9 +29,9 @@ void testArgument_CreateWithValidArgsThrowNoException()
 
     try
     {
-        Argument arg = Argument::create(name, "name", "n", "name", "Name");
+        Argument::Ptr arg = Argument::create(name, "name", "n", "name", "Name");
     }
-    catch (const MyException& e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
@@ -30,9 +47,9 @@ void testArgument_CreateWithEmptyNameThrowException()
 
     try
     {
-        arg_ = Argument::create(name, "", "n", "name", "Name");
+        Argument::Ptr arg = Argument::create(name, "", "n", "name", "Name");
     }
-    catch (const MyArgumentException &e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
@@ -48,9 +65,9 @@ void testArgument_CreateWithInvalidShortOptionThrowException()
 
     try
     {
-        arg_ = Argument::create(name, "", "-n", "name", "Name");
+        Argument::Ptr arg = Argument::create(name, "", "-n", "name", "Name");
     }
-    catch (const MyException &e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
@@ -59,7 +76,7 @@ void testArgument_CreateWithInvalidShortOptionThrowException()
     assert(exceptionHappened);
 }
 
-void testArgument, CreateWithInvalidLongOptThrowException()
+void testArgument_CreateWithInvalidLongOptThrowException()
 {
     std::string name;
     bool exceptionHappened = false;
@@ -68,7 +85,7 @@ void testArgument, CreateWithInvalidLongOptThrowException()
     {
         Argument::Ptr arg = Argument::create(name, "", "n", "--name", "Name");
     }
-    catch (const MyException& e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
@@ -87,13 +104,12 @@ void testArgument_EvalWithoutFailingValidationThrowsNoException()
                                         "Count", true, gt(count, 0));
         arg->eval("123");
     }
-    catch (const MyException& e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         assert(false);
     }
 
-    assert(!exceptionHappened);
     assert(count == 123);
     assert(arg->specified());
 }
@@ -109,18 +125,23 @@ void testArgument_EvalWithFailingValidationThrowsException()
         arg = Argument::create(count, "count", "c", "count",
                                "Count", true, gt(count, 0));
     }
+    catch (const MyException& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 
     try
     {
-        arg_->eval("0");
+        arg->eval("0");
     }
-    catch (const InvalidArgumentException &e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
     }
 
-    ASSERT_TRUE(exceptionHappened);
+    assert(exceptionHappened);
 }
 
 } // end of namespace commonlib
