@@ -6,13 +6,6 @@
 namespace mcdane {
 namespace commonlib {
 
-void testArgumentParser_ValidInitThrowNoException();
-void testArgumentParser_InitWithDuplicateShortOptionThrowsException();
-void testArgumentParser_InitWithDuplicateNameThrowsException();
-void testArgumentParser_InitWithDuplicateLongOptionThrowsException();
-void testArgumentParser_ParseValidShortLongOptionThrowsNoException();
-void testArgumentParser_ParseValidPositionArgThrowsNoException();
-
 void testArgumentParser_ValidInitThrowNoException()
 {
     std::string title, author;
@@ -83,10 +76,11 @@ void testArgumentParser_InitWithDuplicateLongOptionThrowsException()
 {
     int count, sum;
     bool exceptionHappened = false;
+    ArgumentParser parser;
 
     try
     {
-        parser_.init({
+        parser.init({
             Argument::create(count, "count", "c", "count", "Count"),
             Argument::create(sum, "count", "s", "count", "Sum")
         });
@@ -148,216 +142,330 @@ void testArgumentParser_ParseValidPositionArgThrowsNoException()
     }
 }
 
-TEST_F(TestArgumentParser, ParseValidMultipleNonOptionalArgsThrowsNoException)
+void testArgumentParser_ParseValidMultipleNonOptionalArgsThrowsNoException()
 {
     int count;
     std::string mode, name, file;
     float price;
+    ArgumentParser parser;
 
-    ASSERT_NO_THROW(parser_.init({
-        Argument::create(mode, "mode"),
-        Argument::create(count, "count", "c", "count", ""),
-        Argument::create(name, "name", "n", "name", ""),
-        Argument::create(price, "price", "p", "price", ""),
-        Argument::create(file, "file")
-    }));
+    try
+    {
+        parser.init({
+            Argument::create(mode, "mode"),
+            Argument::create(count, "count", "c", "count", ""),
+            Argument::create(name, "name", "n", "name", ""),
+            Argument::create(price, "price", "p", "price", ""),
+            Argument::create(file, "file")
+        });
 
-    const char * const argv[] = {"cmd", "add", "-n", "Dell",
-                                  "--count", "100",
-                                  "-p", "500.0", "output.csv"};
+        const char * const argv[] = {"cmd", "add", "-n", "Dell",
+                                      "--count", "100",
+                                      "-p", "500.0", "output.csv"};
 
-    ASSERT_NO_THROW(parser_.parse(9, argv));
-    EXPECT_EQ(mode, "add");
-    EXPECT_EQ(name, "Dell");
-    EXPECT_EQ(count, 100);
-    EXPECT_EQ(price, 500.0f);
-    EXPECT_EQ(file, "output.csv");
+        parser.parse(9, argv);
+
+        assert(mode == "add");
+        assert(name == "Dell");
+        assert(count == 100);
+        assert(price == 500.0f);
+        assert(file == "output.csv");
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 }
 
-TEST_F(TestArgumentParser, ParseWithoutOptionalArgThrowsNoException)
+void testArgumentParser_ParseWithoutOptionalArgThrowsNoException()
 {
     int count;
     double price;
+    ArgumentParser parser;
 
-    ASSERT_NO_THROW(parser_.init({
-        Argument::create(count, "count", "c", "count", "Count", true),
-        Argument::create(price, "price", "p", "price", "Price")
-    }));
+    try
+    {
+        parser.init({
+            Argument::create(count, "count", "c", "count", "Count", true),
+            Argument::create(price, "price", "p", "price", "Price")
+        });
 
-    const char * const argv[] = {"cmd", "-p", "12.0"};
-    ASSERT_NO_THROW(parser_.parse(3, argv));
-    ASSERT_EQ(price, 12.0);
+        const char * const argv[] = {"cmd", "-p", "12.0"};
+
+        parser.parse(3, argv);
+        assert(price == 12.0);
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 }
 
-TEST_F(TestArgumentParser, ParseWithoutOptionalArgLeavesReferenceUnchanged)
+void testArgumentParser_ParseWithoutOptionalArgLeavesReferenceUnchanged()
 {
     std::string name;
+    ArgumentParser parser;
 
-    ASSERT_NO_THROW(parser_.init({
-        Argument::create(name, "name", "n", "name", "Name", true)
-    }));
+    try
+    {
+        parser.init({
+            Argument::create(name, "name", "n", "name", "Name", true)
+        });
 
-    const char * const argv[] = {"cmd"};
-    ASSERT_NO_THROW(parser_.parse(1, argv));
-    EXPECT_EQ(name, "");
+        const char * const argv[] = {"cmd"};
+
+        parser.parse(1, argv);
+
+        assert(name == "");
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 }
 
-TEST_F(TestArgumentParser, ParseWithZeroArgcThrowsException)
+void testArgumentParser_ParseWithZeroArgcThrowsException()
 {
     std::string name;
     bool exceptionHappened = false;
+    ArgumentParser parser;
 
-    ASSERT_NO_THROW(parser_.init({
-        Argument::create(name, "name", "n", "name", "Name")
-    }));
+    try
+    {
+        parser.init({
+            Argument::create(name, "name", "n", "name", "Name")
+        });
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 
     try
     {
         const char * const argv[] = {"cmd"};
-        parser_.parse(0, argv);
+        parser.parse(0, argv);
     }
-    catch (const InvalidArgumentException &e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
     }
 
-    ASSERT_TRUE(exceptionHappened);
+    assert(exceptionHappened);
 }
 
-TEST_F(TestArgumentParser, ParseWithUnknownShortOptThrowsException)
+void testArgumentParser_ParseWithUnknownShortOptThrowsException()
 {
     std::string name;
     bool exceptionHappened = false;
+    ArgumentParser parser;
 
-    ASSERT_NO_THROW(parser_.init({
-        Argument::create(name, "name", "n", "name", "Name")
-    }));
+    try
+    {
+        parser.init({
+            Argument::create(name, "name", "n", "name", "Name")
+        });
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 
     try
     {
         const char * const argv[] = {"cmd", "-q", "Jack"};
-        parser_.parse(3, argv);
+        parser.parse(3, argv);
     }
-    catch (const InvalidArgumentException &e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
     }
 
-    ASSERT_TRUE(exceptionHappened);
+    assert(exceptionHappened);
 }
 
-TEST_F(TestArgumentParser, ParseWithUnknownLongOptThrowsException)
+void testArgumentParser_ParseWithUnknownLongOptThrowsException()
 {
     std::string name;
     bool exceptionHappened = false;
+    ArgumentParser parser;
 
-    ASSERT_NO_THROW(parser_.init({
-        Argument::create(name, "name", "n", "name", "Name")
-    }));
+    try
+    {
+        parser.init({
+            Argument::create(name, "name", "n", "name", "Name")
+        });
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 
     try
     {
         const char * const argv[] = {"cmd", "--manager", "Jack"};
-        parser_.parse(3, argv);
+        parser.parse(3, argv);
     }
-    catch (const InvalidArgumentException &e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
     }
 
-    ASSERT_TRUE(exceptionHappened);
+    assert(exceptionHappened);
 }
 
-TEST_F(TestArgumentParser, ParseWithDuplicateOptThrowsException)
+void testArgumentParser_ParseWithDuplicateOptThrowsException()
 {
     std::string title;
     bool exceptionHappened = false;
+    ArgumentParser parser;
 
-    ASSERT_NO_THROW(parser_.init({
-        Argument::create(title, "title", "t", "title", "Title of the book"),
-    }));
+    try
+    {
+        parser.init({
+            Argument::create(title, "title", "t", "title", "Title of the book"),
+        });
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 
     try
     {
         const char * const argv[] = {"cmd", "--title", "Haven", "-t", "Zero"};
-        parser_.parse(5, argv);
+        parser.parse(5, argv);
     }
-    catch (const InvalidArgumentException &e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
     }
 
-    ASSERT_TRUE(exceptionHappened);
+    assert(exceptionHappened);
 }
 
-TEST_F(TestArgumentParser, ParseWithoutNonOptionalArgThrowsException)
+void testArgumentParser_ParseWithoutNonOptionalArgThrowsException()
 {
     std::string title, author;
     bool exceptionHappened = false;
+    ArgumentParser parser;
 
-    ASSERT_NO_THROW(parser_.init({
-        Argument::create(title, "title", "t", "title", "Title"),
-        Argument::create(author, "author", "a", "author", "Author", true)
-    }));
+    try
+    {
+        parser.init({
+            Argument::create(title, "title", "t", "title", "Title"),
+            Argument::create(author, "author", "a", "author", "Author", true)
+        });
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 
     try
     {
         const char * const argv[] = {"cmd", "-a", "Jane"};
-        parser_.parse(3, argv);
+        parser.parse(3, argv);
     }
-    catch (const InvalidArgumentException &e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
     }
 
-    ASSERT_TRUE(exceptionHappened);
+    assert(exceptionHappened);
 }
 
-TEST_F(TestArgumentParser, ParseWithoutFailingValidationThrowsNoException)
+void testArgumentParser_ParseWithoutFailingValidationThrowsNoException()
 {
     int count;
+    ArgumentParser parser;
 
-    ASSERT_NO_THROW(parser_.init({
-        Argument::create(count, "count", "c", "count", "Count",
-                         true, gt(count, 0)),
-    }));
+    try
+    {
+        parser.init({
+            Argument::create(count, "count", "c", "count", "Count",
+                             true, gt(count, 0)),
+        });
 
-    const char * const argv[] = {"cmd", "-c", "100"};
+        const char * const argv[] = {"cmd", "-c", "100"};
 
-    ASSERT_NO_THROW(parser_.parse(3, argv));
-    EXPECT_EQ(count, 100);
+        parser.parse(3, argv);
+        assert(count == 100);
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 }
 
-TEST_F(TestArgumentParser, ParseWithFailingValidationThrowsException)
+void testArgumentParser_ParseWithFailingValidationThrowsException()
 {
     int count;
     double price;
     bool exceptionHappened = false;
+    ArgumentParser parser;
 
-    ASSERT_NO_THROW(parser_.init({
-        Argument::create(count, "count", "c", "count", "Count",
-                         true, gt(count, 0)),
-        Argument::create(price, "price", "p", "price", "Price",
-                         true, gt(price, 0.0))
-    }));
+    try
+    {
+        parser.init({
+            Argument::create(count, "count", "c", "count", "Count",
+                             true, gt(count, 0)),
+            Argument::create(price, "price", "p", "price", "Price",
+                             true, gt(price, 0.0))
+        });
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 
     try
     {
         const char * const argv[] = {"cmd", "-c", "0"};
-        parser_.parse(3, argv);
+        parser.parse(3, argv);
     }
-    catch (const InvalidArgumentException &e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         exceptionHappened = true;
     }
 
-    EXPECT_TRUE(exceptionHappened);
+    assert(exceptionHappened);
+}
+
+void testArgumentParser()
+{
+    testArgumentParser_ValidInitThrowNoException();
+    testArgumentParser_InitWithDuplicateShortOptionThrowsException();
+    testArgumentParser_InitWithDuplicateNameThrowsException();
+    testArgumentParser_InitWithDuplicateLongOptionThrowsException();
+    testArgumentParser_ParseValidShortLongOptionThrowsNoException();
+    testArgumentParser_ParseValidPositionArgThrowsNoException();
+    testArgumentParser_ParseValidMultipleNonOptionalArgsThrowsNoException();
+    testArgumentParser_ParseWithoutOptionalArgThrowsNoException();
+    testArgumentParser_ParseWithoutOptionalArgLeavesReferenceUnchanged();
+    testArgumentParser_ParseWithZeroArgcThrowsException();
+    testArgumentParser_ParseWithUnknownShortOptThrowsException();
+    testArgumentParser_ParseWithUnknownLongOptThrowsException();
+    testArgumentParser_ParseWithDuplicateOptThrowsException();
+    testArgumentParser_ParseWithoutNonOptionalArgThrowsException();
+    testArgumentParser_ParseWithoutFailingValidationThrowsNoException();
+    testArgumentParser_ParseWithFailingValidationThrowsException();
 }
 
 } // end of namespace commonlib

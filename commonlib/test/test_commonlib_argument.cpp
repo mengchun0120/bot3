@@ -1,26 +1,10 @@
+#include <iostream>
 #include <cassert>
 #include <stdexcept>
 #include <commonlib_argument.h>
 
 namespace mcdane {
 namespace commonlib {
-
-void testArgument_CreateWithValidArgsThrowNoException();
-void testArgument_CreateWithEmptyNameThrowException();
-void testArgument_CreateWithInvalidShortOptionThrowException();
-void testArgument_CreateWithInvalidLongOptThrowException();
-void testArgument_EvalWithoutFailingValidationThrowsNoException();
-void testArgument_EvalWithFailingValidationThrowsException();
-
-void testArgument()
-{
-    testArgument_CreateWithValidArgsThrowNoException();
-    testArgument_CreateWithEmptyNameThrowException();
-    testArgument_CreateWithInvalidShortOptionThrowException();
-    testArgument_CreateWithInvalidLongOptThrowException();
-    testArgument_EvalWithoutFailingValidationThrowsNoException();
-    testArgument_EvalWithFailingValidationThrowsException();
-}
 
 void testArgument_CreateWithValidArgsThrowNoException()
 {
@@ -100,18 +84,17 @@ void testArgument_EvalWithoutFailingValidationThrowsNoException()
 
     try
     {
-        Arugment::Ptr arg = Argument::create(count, "count", "c", "count",
-                                        "Count", true, gt(count, 0));
+        Argument::Ptr arg = Argument::create(count, "count", "c", "count",
+                                             "Count", true, gt(count, 0));
         arg->eval("123");
+        assert(count == 123);
+        assert(arg->specified());
     }
     catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
         assert(false);
     }
-
-    assert(count == 123);
-    assert(arg->specified());
 }
 
 void testArgument_EvalWithFailingValidationThrowsException()
@@ -142,6 +125,16 @@ void testArgument_EvalWithFailingValidationThrowsException()
     }
 
     assert(exceptionHappened);
+}
+
+void testArgument()
+{
+    testArgument_CreateWithValidArgsThrowNoException();
+    testArgument_CreateWithEmptyNameThrowException();
+    testArgument_CreateWithInvalidShortOptionThrowException();
+    testArgument_CreateWithInvalidLongOptThrowException();
+    testArgument_EvalWithoutFailingValidationThrowsNoException();
+    testArgument_EvalWithFailingValidationThrowsException();
 }
 
 } // end of namespace commonlib
