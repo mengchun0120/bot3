@@ -1,12 +1,13 @@
+#include <cassert>
 #include <sstream>
 #include <iostream>
-#include <gtest/gtest.h>
 #include <commonlib_vector.h>
+#include <test_commonlib.h>
 
 namespace mcdane {
 namespace commonlib {
 
-class TestVector: public ::testing::Test {
+class TestVector {
 public:
     Vector3 v1_, v2_;
 
@@ -16,73 +17,107 @@ public:
     {}
 };
 
-TEST_F(TestVector, VectorPlusVector)
+void testVector_VectorPlusVector()
 {
+    TestVector t;
+
     Vector3 expected{3.0f, 4.0f, 6.0f};
-    EXPECT_EQ(v1_ + v2_, expected);
+    assert(t.v1_ + t.v2_ == expected);
 }
 
-TEST_F(TestVector, VectorMinusVector)
+void testVector_VectorMinusVector()
 {
+    TestVector t;
+
     Vector3 expected{-1.0f, 0.0f, 0.0f};
-    EXPECT_EQ(v1_ - v2_, expected);
+    assert(t.v1_ - t.v2_ == expected);
 }
 
-TEST_F(TestVector, FloatTimesVector)
+void testVector_FloatTimesVector()
 {
+    TestVector t;
+
     Vector3 expected{2.0f, 4.0f, 6.0f};
-    EXPECT_EQ(2.0f * v1_, expected);
+    assert(2.0f * t.v1_ == expected);
 }
 
-TEST_F(TestVector, VectorTimesFloat)
+void testVector_VectorTimesFloat()
 {
+    TestVector t;
+
     Vector3 expected{2.0f, 4.0f, 6.0f};
-    EXPECT_EQ(v1_ * 2.0f, expected);
+    assert(t.v1_ * 2.0f == expected);
 }
 
-TEST_F(TestVector, VectorDividedByFloat)
+void testVector_VectorDividedByFloat()
 {
+    TestVector t;
+
     Vector3 expected{0.5f, 1.0f, 1.5f};
-    EXPECT_EQ(v1_ / 2.0f, expected);
+    assert(t.v1_ / 2.0f == expected);
 }
 
-TEST_F(TestVector, VectorDotVector)
+void testVector_VectorDotVector()
 {
-    EXPECT_EQ(dot(v1_, v2_), 1.0f*2.0f + 2.0f*2.0f + 3.0f*3.0f);
+    TestVector t;
+
+    assert(dot(t.v1_, t.v2_) == 1.0f*2.0f + 2.0f*2.0f + 3.0f*3.0f);
 }
 
-TEST_F(TestVector, VectorCrossVector)
+void testVector_VectorCrossVector()
 {
+    TestVector t;
+
     Vector3 expected{
         2.0f*3.0f - 2.0f*3.0f,
         2.0f*3.0f - 1.0f*3.0f,
         1.0f*2.0f - 2.0f*2.0f
     };
-    EXPECT_EQ(cross(v1_, v2_), expected);
+    assert(cross(t.v1_, t.v2_) == expected);
 }
 
-TEST_F(TestVector, Normalize)
+void testVector_Normalize()
 {
-    v1_.normalize();
+    TestVector t;
+
+    t.v1_.normalize();
     float a = static_cast<float>(sqrt(14.0));
     Vector3 expected{1.0f/a, 2.0f/a, 3.0f/a};
-    EXPECT_TRUE(fuzzyEqual(v1_, expected));
+    assert(fuzzyEqual(t.v1_, expected));
 }
 
-TEST_F(TestVector, OutVector)
+void testVector_OutVector()
 {
+    TestVector t;
+
     std::ostringstream out;
-    out << v1_;
+    out << t.v1_;
     std::cout << out.str() << std::endl;
-    EXPECT_EQ(out.str(), "[1, 2, 3]");
+    assert(out.str() == "[1, 2, 3]");
 }
 
-TEST_F(TestVector, InVector)
+void testVector_InVector()
 {
+    TestVector t;
+
     std::istringstream in("1.0 2.0 3.0");
     Vector3 expected{1.0f, 2.0f, 3.0f};
-    in >> v1_;
-    EXPECT_EQ(v1_, expected);
+    in >> t.v1_;
+    assert(t.v1_ == expected);
+}
+
+void testVector()
+{
+    testVector_VectorPlusVector();
+    testVector_VectorMinusVector();
+    testVector_FloatTimesVector();
+    testVector_VectorTimesFloat();
+    testVector_VectorDividedByFloat();
+    testVector_VectorDotVector();
+    testVector_VectorCrossVector();
+    testVector_Normalize();
+    testVector_OutVector();
+    testVector_InVector();
 }
 
 } // end of namespace commonlib

@@ -1,36 +1,61 @@
-#include <gtest/gtest.h>
+#include <cassert>
+#include <commonlib_exception.h>
 #include <commonlib_fixed_queue.h>
+#include <test_commonlib.h>
 
-using namespace mcdane::commonlib;
+namespace mcdane {
+namespace commonlib {
 
-TEST(TestQueue, InvalidCapacityThrowException)
+void testFixedQueue_InvalidCapacityThrowException()
 {
-    ASSERT_THROW(FixedQueue<int> q(0), InvalidArgumentException);
+    bool exceptionHappened = false;
+
+    try
+    {
+        FixedQueue<int> q(0);
+    }
+    catch (const InvalidArgumentException& e)
+    {
+        exceptionHappened = true;
+    }
+
+    assert(exceptionHappened);
 }
 
-TEST(TestQueue, TestEnqueue)
+void testFixedQueue_TestEnqueue()
 {
     FixedQueue<int> q(2);
     int t;
 
-    ASSERT_TRUE(q.empty());
-    ASSERT_TRUE(q.enqueue(1));
-    ASSERT_TRUE(q.peek(t) && t == 1);
-    ASSERT_EQ(q.size(), 1);
-    ASSERT_TRUE(q.enqueue(2));
-    ASSERT_EQ(q.size(), 2);
-    ASSERT_FALSE(q.enqueue(3));
+    assert(q.empty());
+    assert(q.enqueue(1));
+    assert(q.peek(t) && t == 1);
+    assert(q.size() == 1);
+    assert(q.enqueue(2));
+    assert(q.size() == 2);
+    assert(!q.enqueue(3));
 }
 
-TEST(TestQueue, TestDequeue)
+void testFixedQueue_TestDequeue()
 {
     FixedQueue<int> q(2);
     int t;
 
     q.enqueue(1);
     q.enqueue(2);
-    ASSERT_TRUE(q.dequeue(t) && t == 1);
-    ASSERT_TRUE(q.dequeue(t) && t == 2);
-    ASSERT_TRUE(q.empty());
-    ASSERT_FALSE(q.dequeue(t));
+    assert(q.dequeue(t) && t == 1);
+    assert(q.dequeue(t) && t == 2);
+    assert(q.empty());
+    assert(!q.dequeue(t));
 }
+
+void testFixedQueue()
+{
+    testFixedQueue_InvalidCapacityThrowException();
+    testFixedQueue_TestEnqueue();
+    testFixedQueue_TestDequeue();
+}
+
+} // end of namespace commonlib
+} // end of namespace mcdane
+

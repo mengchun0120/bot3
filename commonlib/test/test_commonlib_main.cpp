@@ -1,7 +1,17 @@
-#include <gtest/gtest.h>
+#include <test_commonlib.h>
 
 int main(int argc, char *argv[])
 {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    using namespace mcdane::commonlib;
+
+    testArgument();
+    testArgumentParser();
+    testMyException();
+    testFixedQueue();
+    testJsonParam();
+    testLog();
+    testMatrix();
+    testObjectPool();
+    testValidator();
+    testVector();
 }

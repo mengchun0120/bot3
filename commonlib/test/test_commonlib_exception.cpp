@@ -1,6 +1,7 @@
 #include <regex>
 #include <cassert>
 #include <commonlib_exception.h>
+#include <test_commonlib.h>
 
 namespace mcdane {
 namespace commonlib {

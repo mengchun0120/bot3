@@ -1,9 +1,10 @@
-#include <gtest/gtest.h>
+#include <cassert>
 #include <iostream>
 #include <sstream>
 #include <regex>
 #define ENABLE_LOG
 #include <commonlib_log.h>
+#include <test_commonlib.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -22,7 +23,7 @@ LogTester::LogTester()
 
 static LogTester k_logTester;
 
-TEST(TestLog, TestOutput)
+void testLog_TestOutput()
 {
     using namespace std;
 
@@ -33,7 +34,12 @@ TEST(TestLog, TestOutput)
 
     regex r("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3} \\S+:\\d+ " \
             "INFO Hello world! 100\n");
-    ASSERT_TRUE(regex_match(k_logTester.os_.str(), r));
+    assert(regex_match(k_logTester.os_.str(), r));
+}
+
+void testLog()
+{
+    testLog_TestOutput();
 }
 
 } // end of namespace commonlib

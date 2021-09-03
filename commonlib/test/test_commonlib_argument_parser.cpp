@@ -2,6 +2,7 @@
 #include <cassert>
 #include <stdexcept>
 #include <commonlib_argument_parser.h>
+#include <test_commonlib.h>
 
 namespace mcdane {
 namespace commonlib {

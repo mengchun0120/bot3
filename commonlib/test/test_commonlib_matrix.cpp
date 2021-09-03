@@ -1,13 +1,13 @@
+#include <cassert>
 #include <sstream>
 #include <iostream>
-#include <gtest/gtest.h>
-#include <gtest/gtest_pred_impl.h>
 #include <commonlib_matrix.h>
+#include <test_commonlib.h>
 
 namespace mcdane {
 namespace commonlib {
 
-class TestMatrix: public ::testing::Test {
+class TestMatrix {
 public:
     Matrix<2,3> m1_;
     Matrix<2,3> m2_;
@@ -17,73 +17,87 @@ public:
     Vector2 v2_;
     Vector4 v4_;
 
-    TestMatrix():
-        m1_{Vector3{1.0f, 2.0f, 3.0f}, Vector3{3.0f, 4.0f, 5.0f}},
-        m2_{Vector3{2.0f, 3.0f, 4.0f}, Vector3{4.0f, 5.0f, 6.0f}},
-        m3_{Vector2{1.0f, 2.0f}, Vector2{2.0f, 3.0f}, Vector2{3.0f, 4.0f}},
-        v1_{1.0f, 2.0f, 3.0f},
-        v2_{3.0f, 4.0f},
-        v4_{1.0f, 2.0f, 3.0f, 1.0f}
+    TestMatrix()
+        : m1_{Vector3{1.0f, 2.0f, 3.0f}, Vector3{3.0f, 4.0f, 5.0f}}
+        , m2_{Vector3{2.0f, 3.0f, 4.0f}, Vector3{4.0f, 5.0f, 6.0f}}
+        , m3_{Vector2{1.0f, 2.0f}, Vector2{2.0f, 3.0f}, Vector2{3.0f, 4.0f}}
+        , v1_{1.0f, 2.0f, 3.0f}
+        , v2_{3.0f, 4.0f}
+        , v4_{1.0f, 2.0f, 3.0f, 1.0f}
     {}
 };
 
-TEST_F(TestMatrix, MatrixPlusMatrix)
+void testTestMatrix_MatrixPlusMatrix()
 {
+    TestMatrix t;
+
     Matrix<2,3> expected{
         Vector3{1.0f+2.0f, 2.0f+3.0f, 3.0f+4.0f},
         Vector3{3.0f+4.0f, 4.0f+5.0f, 5.0f+6.0f}
     };
-    EXPECT_EQ(m1_ + m2_, expected);
+    assert(t.m1_ + t.m2_ == expected);
 }
 
-TEST_F(TestMatrix, MatrixMinusMatrix)
+void testMatrix_MatrixMinusMatrix()
 {
+    TestMatrix t;
+
     Matrix<2,3> expected{
         Vector3{1.0f-2.0f, 2.0f-3.0f, 3.0f-4.0f},
         Vector3{3.0f-4.0f, 4.0f-5.0f, 5.0f-6.0f}
     };
-    EXPECT_EQ(m1_ - m2_, expected);
+    assert(t.m1_ - t.m2_ == expected);
 }
 
-TEST_F(TestMatrix, FloatTimesMatrix)
+void testMatrix_FloatTimesMatrix()
 {
+    TestMatrix t;
+
     Matrix<2,3> expected{
         Vector3{1.0f*2.0f, 2.0f*2.0f, 3.0f*2.0f},
         Vector3{3.0f*2.0f, 4.0f*2.0f, 5.0f*2.0f}
     };
-    EXPECT_EQ(2.0f * m1_, expected);
+    assert(2.0f * t.m1_ == expected);
 }
 
-TEST_F(TestMatrix, MatrixTimesFloat)
+void testMatrix_MatrixTimesFloat()
 {
+    TestMatrix t;
+
     Matrix<2,3> expected{
         Vector3{1.0f*2.0f, 2.0f*2.0f, 3.0f*2.0f},
         Vector3{3.0f*2.0f, 4.0f*2.0f, 5.0f*2.0f}
     };
-    EXPECT_EQ(m1_ * 2.0f, expected);
+    assert(t.m1_ * 2.0f == expected);
 }
 
-TEST_F(TestMatrix, MatrixTimesVector)
+void testMatrix_MatrixTimesVector()
 {
+    TestMatrix t;
+
     Vector2 expected{
         1.0f*1.0f + 2.0f*2.0f + 3.0f*3.0f,
         3.0f*1.0f + 4.0f*2.0f + 5.0f*3.0f
     };
-    EXPECT_EQ(m1_ * v1_, expected);
+    assert(t.m1_ * t.v1_ == expected);
 }
 
-TEST_F(TestMatrix, VectorTimesMatrix)
+void testMatrix_VectorTimesMatrix()
 {
+    TestMatrix t;
+
     Vector3 expected{
         3.0f*1.0f + 4.0f*3.0f,
         3.0f*2.0f + 4.0f*4.0f,
         3.0f*3.0f + 4.0f*5.0f
     };
-    EXPECT_EQ(v2_ * m1_, expected);
+    assert(t.v2_ * t.m1_ == expected);
 }
 
-TEST_F(TestMatrix, MatrixTimesMatrix)
+void testMatrix_MatrixTimesMatrix()
 {
+    TestMatrix t;
+
     Matrix2 expected{
         Vector2{
             1.0f*1.0f + 2.0f*2.0f + 3.0f*3.0f,
@@ -94,39 +108,47 @@ TEST_F(TestMatrix, MatrixTimesMatrix)
             3.0f*2.0f + 4.0f*3.0f + 5.0f*4.0f
         }
     };
-    EXPECT_EQ(m1_ * m3_, expected);
+    assert(t.m1_ * t.m3_ == expected);
 }
 
-TEST_F(TestMatrix, Translate)
+void testMatrix_Translate()
 {
-    m4_ = translate(1.0f, 2.0f, 3.0f);
-    Vector4 actual = m4_ * v4_;
+    TestMatrix t;
+
+    t.m4_ = translate(1.0f, 2.0f, 3.0f);
+    Vector4 actual = t.m4_ * t.v4_;
     Vector4 expected{2.0f, 4.0f, 6.0f, 1.0f};
-    EXPECT_TRUE(fuzzyEqual(actual, expected));
+    assert(fuzzyEqual(actual, expected));
 }
 
-TEST_F(TestMatrix, RotateX)
+void testMatrix_RotateX()
 {
-    m4_ = rotateXDegree(90.0f);
-    Vector4 actual = m4_ * v4_;
+    TestMatrix t;
+
+    t.m4_ = rotateXDegree(90.0f);
+    Vector4 actual = t.m4_ * t.v4_;
     Vector4 expected{1.0f, -3.0f, 2.0f, 1.0f};
-    EXPECT_TRUE(fuzzyEqual(actual, expected));
+    assert(fuzzyEqual(actual, expected));
 }
 
-TEST_F(TestMatrix, RotateY)
+void testMatrix_RotateY()
 {
-    m4_ = rotateYDegree(90.0f);
-    Vector4 actual = m4_ * v4_;
+    TestMatrix t;
+
+    t.m4_ = rotateYDegree(90.0f);
+    Vector4 actual = t.m4_ * t.v4_;
     Vector4 expected{3.0f, 2.0f, -1.0f, 1.0f};
-    EXPECT_TRUE(fuzzyEqual(actual, expected));
+    assert(fuzzyEqual(actual, expected));
 }
 
-TEST_F(TestMatrix, RotateZ)
+void testMatrix_RotateZ()
 {
-    m4_ = rotateZDegree(90.0f);
-    Vector4 actual = m4_ * v4_;
+    TestMatrix t;
+
+    t.m4_ = rotateZDegree(90.0f);
+    Vector4 actual = t.m4_ * t.v4_;
     Vector4 expected{-2.0f, 1.0f, 3.0f, 1.0f};
-    EXPECT_TRUE(fuzzyEqual(actual, expected));
+    assert(fuzzyEqual(actual, expected));
 }
 
 /*
@@ -150,23 +172,36 @@ TEST_F(TestMatrix, Rotate)
 }
 */
 
-TEST_F(TestMatrix, LookAt)
+void testMatrix_LookAt()
 {
     Matrix4 m = lookAt(1.0f, 0.0f, 1.0f,
                        0.0f, 0.0f, 0.0f,
                        0.0f, 1.0f, 0.0f);
-    std::cout << "matrix=" << m << std::endl;
 
     Vector4 v1{1.0f, 0.0f, 1.0f, 1.0f};
     Vector4 actual1 = m * v1;
     Vector4 expected1{0.0f, 0.0f, 0.0f, 1.0f};
-    EXPECT_TRUE(fuzzyEqual(actual1, expected1));
+    assert(fuzzyEqual(actual1, expected1));
 
     Vector4 v2{2.0f, 0.0f, 1.0f, 1.0f};
     Vector4 actual2 = m * v2;
-    std::cout << actual2 << std::endl;
     Vector4 expected2{0.70710678f, 0.0f, 0.70710678f, 1.0f};
-    EXPECT_TRUE(fuzzyEqual(actual2, expected2));
+    assert(fuzzyEqual(actual2, expected2));
+}
+
+void testMatrix()
+{
+    testMatrix_MatrixMinusMatrix();
+    testMatrix_FloatTimesMatrix();
+    testMatrix_MatrixTimesFloat();
+    testMatrix_MatrixTimesVector();
+    testMatrix_VectorTimesMatrix();
+    testMatrix_MatrixTimesMatrix();
+    testMatrix_Translate();
+    testMatrix_RotateX();
+    testMatrix_RotateY();
+    testMatrix_RotateZ();
+    testMatrix_LookAt();
 }
 
 } // end of namespace commonlib

@@ -1,10 +1,15 @@
-#include <gtest/gtest.h>
+#include <cassert>
+#include <iostream>
+#include <stdexcept>
 #include <commonlib_json_param.h>
+#include <test_commonlib.h>
 
-using namespace mcdane::commonlib;
 using namespace rapidjson;
 
-TEST(TestParseJson, ParseSimplePathSuccess)
+namespace mcdane {
+namespace commonlib {
+
+void testJsonParam_ParseSimplePathSuccess()
 {
     const char* json = "{\"count\": 1}";
     Document doc;
@@ -12,11 +17,20 @@ TEST(TestParseJson, ParseSimplePathSuccess)
 
     int i;
     JsonParamPtr param = jsonParam(i, {"count"});
-    ASSERT_NO_THROW(param->parse(doc));
-    ASSERT_EQ(i, 1);
+
+    try
+    {
+        param->parse(doc);
+        assert(i == 1);
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 }
 
-TEST(TestParseJson, ParseComplexPathSuccess)
+void testJsonParam_ParseComplexPathSuccess()
 {
     const char* json = "{\"content\": {\"summary\": {\"amount\": 2.0}}}";
     Document doc;
@@ -24,92 +38,164 @@ TEST(TestParseJson, ParseComplexPathSuccess)
 
     double d;
     JsonParamPtr param = jsonParam(d, {"content", "summary", "amount"});
-    ASSERT_NO_THROW(param->parse(doc));
-    ASSERT_EQ(d, 2.0);
+
+    try
+    {
+        param->parse(doc);
+        assert(d == 2.0);
+    }
+    catch (std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 }
 
-TEST(TestParseJson, ParseArraySuccess)
+void testJsonParam_ParseArraySuccess()
 {
-    const char* json1 = "[\"fish\", \"meat\"]";
-    Document doc1;
-    doc1.Parse(json1);
+    try
+    {
+        const char* json1 = "[\"fish\", \"meat\"]";
+        Document doc1;
+        doc1.Parse(json1);
 
-    std::vector<std::string> strArr;
-    JsonParamPtr param1 = jsonParam(strArr, {});
-    ASSERT_NO_THROW(param1->parse(doc1));
-    ASSERT_EQ(strArr[0], "fish");
-    ASSERT_EQ(strArr[1], "meat");
+        std::vector<std::string> strArr;
+        JsonParamPtr param1 = jsonParam(strArr, {});
+        param1->parse(doc1);
+        assert(strArr[0] == "fish");
+        assert(strArr[1] == "meat");
 
-    const char* json2 = "{\"list\": [1, 2]}";
-    Document doc2;
-    doc2.Parse(json2);
+        const char* json2 = "{\"list\": [1, 2]}";
+        Document doc2;
+        doc2.Parse(json2);
 
-    std::vector<int> intArr;
-    JsonParamPtr param2 = jsonParam(intArr, {"list"});
-    ASSERT_NO_THROW(param2->parse(doc2));
-    ASSERT_EQ(intArr[0], 1);
-    ASSERT_EQ(intArr[1], 2);
+        std::vector<int> intArr;
+        JsonParamPtr param2 = jsonParam(intArr, {"list"});
+        param2->parse(doc2);
+        assert(intArr[0] == 1);
+        assert(intArr[1] == 2);
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 }
 
-TEST(TestParseJson, WrongPathThrowException)
+void testJsonParam_WrongPathThrowException()
 {
-    const char* json = "{\"store\": {\"name\": \"Steak\"}}";
-    Document doc;
-    doc.Parse(json);
+    bool exceptionHappened = false;
 
-    std::string store;
-    JsonParamPtr param = jsonParam(store, {"store", "brand"});
-    ASSERT_THROW(param->parse(doc), MyException);
+    try
+    {
+        const char* json = "{\"store\": {\"name\": \"Steak\"}}";
+        Document doc;
+        doc.Parse(json);
+
+        std::string store;
+        JsonParamPtr param = jsonParam(store, {"store", "brand"});
+        param->parse(doc);
+    }
+    catch (const MyException& e)
+    {
+        std::cerr << e.what() << std::endl;
+        exceptionHappened = true;
+    }
+
+    assert(exceptionHappened);
 }
 
-TEST(TestParseJson, ValidationFailThrowException)
+void testJsonParam_ValidationFailThrowException()
 {
-    const char* json = "{\"hose\": 1}";
-    Document doc;
-    doc.Parse(json);
+    bool exceptionHappened = false;
 
-    int i;
-    JsonParamPtr param = jsonParam(i, {"hose"}, true, gt(i, 1));
-    ASSERT_THROW(param->parse(doc), MyException);
+    try
+    {
+        const char* json = "{\"hose\": 1}";
+        Document doc;
+        doc.Parse(json);
+
+        int i;
+        JsonParamPtr param = jsonParam(i, {"hose"}, true, gt(i, 1));
+        param->parse(doc);
+    }
+    catch (const MyException& e)
+    {
+        std::cerr << e.what() << std::endl;
+        exceptionHappened = true;
+    }
+
+    assert(exceptionHappened);
 }
 
-TEST(TestParseJson, UnrequiedThrowNoException)
+void testJsonParam_UnrequiedThrowNoException()
 {
-    const char* json = "{}";
-    Document doc;
-    doc.Parse(json);
+    try
+    {
+        const char* json = "{}";
+        Document doc;
+        doc.Parse(json);
 
-    int i;
-    JsonParamPtr param = jsonParam(i, {"hose"}, false);
-    ASSERT_NO_THROW(param->parse(doc));
+        int i;
+        JsonParamPtr param = jsonParam(i, {"hose"}, false);
+        param->parse(doc);
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 }
 
-TEST(TestParseJson, ParseComplexJsonSuccess)
+void testJsonParam_ParseComplexJsonSuccess()
 {
-    const char* json = "{" \
-                       "    \"identity\": {" \
-                       "        \"id\": 12345," \
-                       "        \"name\": \"Mary\"" \
-                       "    }," \
-                       "    \"books\": [\"Shoot\", \"Zero\"]" \
-                       "}";
-    Document doc;
-    doc.Parse(json);
+    try
+    {
+        const char* json = "{" \
+                           "    \"identity\": {" \
+                           "        \"id\": 12345," \
+                           "        \"name\": \"Mary\"" \
+                           "    }," \
+                           "    \"books\": [\"Shoot\", \"Zero\"]" \
+                           "}";
+        Document doc;
+        doc.Parse(json);
 
-    int id;
-    std::string name;
-    int age;
-    std::vector<std::string> books;
-    std::vector<JsonParamPtr> params{
-        jsonParam(id, {"identity", "id"}, true, gt(id, 0)),
-        jsonParam(name, {"identity", "name"}),
-        jsonParam(age, {"identity", "age"}, false, gt(age, 0)),
-        jsonParam(books, {"books"})
-    };
+        int id;
+        std::string name;
+        int age;
+        std::vector<std::string> books;
+        std::vector<JsonParamPtr> params{
+            jsonParam(id, {"identity", "id"}, true, gt(id, 0)),
+            jsonParam(name, {"identity", "name"}),
+            jsonParam(age, {"identity", "age"}, false, gt(age, 0)),
+            jsonParam(books, {"books"})
+        };
 
-    ASSERT_NO_THROW(parse(params, doc));
-    ASSERT_EQ(id, 12345);
-    ASSERT_EQ(name, "Mary");
-    ASSERT_EQ(books[0], "Shoot");
-    ASSERT_EQ(books[1], "Zero");
+        parse(params, doc);
+        assert(id == 12345);
+        assert(name == "Mary");
+        assert(books[0] == "Shoot");
+        assert(books[1] == "Zero");
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        assert(false);
+    }
 }
+
+void testJsonParam()
+{
+    testJsonParam_ParseSimplePathSuccess();
+    testJsonParam_ParseComplexPathSuccess();
+    testJsonParam_ParseArraySuccess();
+    testJsonParam_WrongPathThrowException();
+    testJsonParam_ValidationFailThrowException();
+    testJsonParam_UnrequiedThrowNoException();
+    testJsonParam_ParseComplexJsonSuccess();
+}
+
+} // end of namespace commonlib
+} // end of namespace mcdane
+

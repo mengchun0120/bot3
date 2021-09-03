@@ -62,7 +62,7 @@ set(TEST_COMMONLIB_SRC
 
 add_definitions(${CPP_COMPILE_FLAG})
 
-include_directories(include)
+include_directories(include test)
 
 add_library(commonlib STATIC ${COMMONLIB_SRC})
 add_executable(test_commonlib ${TEST_COMMONLIB_SRC})
@@ -71,7 +71,7 @@ set_property(TARGET commonlib PROPERTY CXX_STANDARD 11)
 set_property(TARGET test_commonlib PROPERTY CXX_STANDARD 11)
 
 if(UNIX)
-    target_link_libraries(test_commonlib commonlib GL GLEW glfw dl m Xrandr
+    target_link_libraries(test_commonlib commonlib GL GLEW glfw3 dl m Xrandr
                           Xi X11 Xxf86vm Xinerama Xcursor pthread gtest gmock)
 elseif(MINGW)
     target_link_libraries(test_commonlib commonlib opengl32 glfw3 glew32
