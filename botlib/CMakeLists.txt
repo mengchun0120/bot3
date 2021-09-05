@@ -23,6 +23,10 @@ set(BOTLIB_SHAPE_SRC
     src/shape/botlib_polygon.cpp
     src/shape/botlib_rectangle.cpp)
 
+set(BOTLIB_WIDGET_SRC
+    src/widget/botlib_widget.cpp
+    src/widget/botlib_widget_group.cpp)
+
 set(BOTLIB_MISC_SRC
     src/misc/botlib_constants.cpp)
 
@@ -31,7 +35,8 @@ set(BOTLIB_SRC
     ${BOTLIB_OPENGL_SRC}
     ${BOTLIB_SCREEN_SRC}
     ${BOTLIB_SHAPE_SRC}
-    ${BOTLIB_CONSTANTS_SRC})
+    ${BOTLIB_WIDGET_SRC}
+    ${BOTLIB_MISC_SRC})
 
 add_definitions(${CPP_COMPILE_FLAG})
 
