@@ -17,11 +17,12 @@ Widget::Widget()
 
 void Widget::init(float x,
                   float y,
+                  float z,
                   float width,
                   float height,
-                  GLuint textureId,
                   bool visible,
-                  bool acceptInput)
+                  bool acceptInput,
+                  bool hasTexture)
 {
     if (width <= 0.0f)
     {
@@ -35,11 +36,11 @@ void Widget::init(float x,
                      "Invalid height " + std::to_string(width));
     }
 
-    setPos(x, y);
+    setPos(x, y, z);
     visible_ = visible;
     acceptInput_ = acceptInput;
 
-    if (textureId)
+    if (hasTexture)
     {
         rect_.load(width, height, TexRectangle());
     }
@@ -50,16 +51,18 @@ void Widget::init(float x,
 }
 
 void Widget::setPos(float x,
-                    float y)
+                    float y,
+                    float z)
 {
-    x_ = x;
-    y_ = y;
+    pos_[0] = x;
+    pos_[1] = y;
+    z_ = z;
 }
 
 void Widget::shiftPos(float dx, float dy)
 {
-    x_ += dx;
-    y_ += dy;
+    pos_[0] += dx;
+    pos_[1] += dy;
 }
 
 bool Widget::containPos(float x,
@@ -70,10 +73,10 @@ bool Widget::containPos(float x,
         return false;
     }
 
-    return x_ <= x &&
-           x <= x_ + rect_.width() &&
-           y_ <= y &&
-           y <= y_ + rect_.height();
+    return pos_[0] <= x &&
+           x <= pos_[0] + rect_.width() &&
+           pos_[1] <= y &&
+           y <= pos_[1] + rect_.height();
 }
 
 } // end of namespace botlib

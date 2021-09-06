@@ -3,6 +3,7 @@
 
 #include <string>
 #include <memory>
+#include <botlib_button_config.h>
 
 namespace mcdane {
 namespace botlib {
@@ -16,40 +17,21 @@ public:
     void load(const std::string& fileName,
               const std::string& appDir);
 
-    unsigned int width() const
-    {
-        return width_;
-    }
+    inline unsigned int width() const
 
-    unsigned int height() const
-    {
-        return height_;
-    }
+    inline unsigned int height() const
 
-    const std::string& title() const
-    {
-        return title_;
-    }
+    inline const std::string& title() const
 
-    unsigned int inputQueueCapacity() const
-    {
-        return inputQueueCapacity_;
-    }
+    inline unsigned int inputQueueCapacity() const
 
-    const std::string& simpleVertexShaderFile() const
-    {
-        return simpleVertexShaderFile_;
-    }
+    inline const std::string& simpleVertexShaderFile() const
 
-    const std::string& simpleFragShaderFile() const
-    {
-        return simpleFragShaderFile_;
-    }
+    inline const std::string& simpleFragShaderFile() const
 
-    const std::string& fontDir() const
-    {
-        return fontDir_;
-    }
+    inline const std::string& fontDir() const
+
+    inline const ButtonConfig& buttonConfig() const;
 
 private:
     std::string logFile_;
@@ -60,7 +42,48 @@ private:
     std::string simpleVertexShaderFile_;
     std::string simpleFragShaderFile_;
     std::string fontDir_;
+    ButtonConfig buttonConfig_;
 };
+
+unsigned int AppConfig::width() const
+{
+    return width_;
+}
+
+unsigned int AppConfig::height() const
+{
+    return height_;
+}
+
+const std::string& AppConfig::title() const
+{
+    return title_;
+}
+
+unsigned int AppConfig::inputQueueCapacity() const
+{
+    return inputQueueCapacity_;
+}
+
+const std::string& AppConfig::simpleVertexShaderFile() const
+{
+    return simpleVertexShaderFile_;
+}
+
+const std::string& AppConfig::simpleFragShaderFile() const
+{
+    return simpleFragShaderFile_;
+}
+
+const std::string& AppConfig::fontDir() const
+{
+    return fontDir_;
+}
+
+const ButtonConfig& AppConfig::buttonConfig() const
+{
+    return buttonConfig_;
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

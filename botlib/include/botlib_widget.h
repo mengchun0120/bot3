@@ -4,6 +4,8 @@
 #include <commonlib_opengl.h>
 #include <commonlib_input_event.h>
 #include <botlib_rectangle.h>
+#include <botlib_text_system.h>
+#include <botlib_constants.h>
 
 namespace mcdane {
 namespace botlib {
@@ -16,11 +18,12 @@ public:
 
     void init(float x,
               float y,
+              float z,
               float width,
               float height,
-              GLuint textureId=0,
               bool visible=true,
-              bool acceptInput=false);
+              bool acceptInput=false,
+              bool hasTexture=false);
 
 #ifdef DESKTOP_APP
     virtual inline void process(const commonlib::KeyEvent& e);
@@ -35,12 +38,14 @@ public:
 #endif
 
     virtual void setPos(float x,
-                        float y);
+                        float y
+                        float z);
 
     virtual void shiftPos(float dx,
                           float dy);
 
-    virtual void present() = 0;
+    virtual void present(SimpleShaderProgram& shader,
+                         TextSystem& textSys) const = 0;
 
     inline bool visible() const;
 
@@ -57,12 +62,15 @@ public:
 
     inline float height() const;
 
-    inline float x() const;
+    inline commonlib::Vecotr2& pos() const;
 
-    inline float y() const;
+    inline float z() const;
+
+    inline const Rectangle& rect() const;
 
 protected:
-    float x_, y_;
+    commonlib::Vector2 pos_;
+    float z_;
     Rectangle rect_;
     bool visible_;
     bool acceptInput_;
@@ -120,14 +128,19 @@ float Widget::height() const
     return rect_.height();
 }
 
-float Widget::x() const
+const commonlib::Vector& Widget::pos() const
 {
-    return x_;
+    return pos_;
 }
 
-float Widget::y() const
+float Widget::z() const
 {
-    return y_;
+    return z_;
+}
+
+const Rectangle& Widget::rect() const
+{
+    return rect_;
 }
 
 } // end of namespace botlib

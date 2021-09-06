@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <commonlib_validator.h>
 
 namespace mcdane {
@@ -74,6 +75,26 @@ Validator operator!(const Validator& v)
 
     return Validator(validateFunc, descFunc);
 
+}
+
+Validator check(const Color& color)
+{
+    Validator::ValidateFunc validateFunc = [&]()->bool
+    {
+        return std::all_of(color.begin(),
+                           color.end(),
+                           [=](float f)->bool
+                           {
+                                return f >= 0.0f && f <= 1.0f;
+                           });
+    }
+
+    Validator::DescriptionFunc descFunc = [&]()->std::string
+    {
+        return "check(" + color.toString() + ")";
+    }
+
+    return Validator(validateFunc, descFunc);
 }
 
 } // end of namespace commonlib

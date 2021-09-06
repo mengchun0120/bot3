@@ -14,6 +14,7 @@ void AppConfig::load(const std::string& fileName,
     readJson(doc, fileName);
 
     std::vector<std::string> simpleVertexShaderFile, simpleFragShaderFile;
+    std::vector<std::string> buttonConfigFile;
     std::vector<std::string> fontDir;
 
     std::vector<JsonParamPtr> params{
@@ -26,7 +27,9 @@ void AppConfig::load(const std::string& fileName,
                   true, nonempty(simpleVertexShaderFile)),
         jsonParam(simpleFragShaderFile, {"shader", "simpleFragShaderFile"},
                   true, nonempty(simpleFragShaderFile)),
-        jsonParam(fontDir, {"fontDir"}, true, nonempty(fontDir))
+        jsonParam(fontDir, {"fontDir"}, true, nonempty(fontDir)),
+        jsonParam(buttonConfigFile, {"buttonConfigFile"}, true,
+                  nonempty(buttonConfigFile))
     };
 
     parse(params, doc);
@@ -34,6 +37,9 @@ void AppConfig::load(const std::string& fileName,
     simpleVertexShaderFile_ = constructPath(appDir, simpleVertexShaderFile);
     simpleFragShaderFile_ = constructPath(appDir, simpleFragShaderFile);
     fontDir_ = constructPath(appDir, fontDir);
+
+    buttonConfigFile = constructPath(appDir, buttonConfigFile);
+    buttonConfig.load(appDir, buttonConfigFile);
 }
 
 } // end of namespace botlib
