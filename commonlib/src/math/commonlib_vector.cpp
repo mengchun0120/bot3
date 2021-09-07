@@ -13,7 +13,7 @@ Vector3 cross(const Vector3 &lhs,
     return v;
 }
 
-bool validate(const Color& c)
+bool isValidColor(const Color& c)
 {
     for (int i = 0; i < 4; ++i)
     {

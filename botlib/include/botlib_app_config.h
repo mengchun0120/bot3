@@ -2,7 +2,6 @@
 #define INCLUDED_BOTLIB_APP_CONFIG_H
 
 #include <string>
-#include <memory>
 
 namespace mcdane {
 namespace botlib {

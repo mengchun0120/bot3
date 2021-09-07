@@ -28,8 +28,8 @@ void AppConfig::load(const std::string& fileName,
         jsonParam(simpleFragShaderFile, {"shader", "simpleFragShaderFile"},
                   true, nonempty(simpleFragShaderFile)),
         jsonParam(fontDir, {"fontDir"}, true, nonempty(fontDir)),
-        jsonParam(buttonConfigFile, {"buttonConfigFile"}, true,
-                  nonempty(buttonConfigFile))
+        jsonParam(buttonConfigFile, {"buttonConfigFile"},
+                  true, nonempty(buttonConfigFile))
     };
 
     parse(params, doc);

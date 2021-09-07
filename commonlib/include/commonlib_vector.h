@@ -286,7 +286,7 @@ Vector<N> product(const Vector<N>& v1, const Vector<N>& v2)
 Vector3 cross(const Vector3& lhs,
               const Vector3& rhs);
 
-bool validate(const Color& c);
+bool isValidColor(const Color& c);
 
 } // end of namespace sharedlib
 } // end of namespace mcdane

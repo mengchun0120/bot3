@@ -1,5 +1,4 @@
 #include <commonlib_exception.h>
-#include <commonlib_file_utils.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
 #include <botlib_graphics.h>
@@ -13,24 +12,21 @@ namespace botlib {
 std::vector<Color> Button::k_textColors;
 Texture Button::k_texture;
 
-
-
-void Button::initConfig(const std::string& configFile,
-                        const std::string& appDir)
+void Button::initConfig(const std::string& configFile)
 {
     rapidjson::Document doc;
-    std::string cfgPath = constructPath(appDir, configFile);
-    readJson(doc, cfgPath);
+    readJson(doc, configFile);
 
     std::string textureFile;
-    std::vector<JsonParam> params{
+    std::vector<JsonParamPtr> params{
         jsonParam(k_textColors, {"textColor"}, true, nonempty(k_textColors)),
-        jsonParam(textFile, {"textureFile"}, true, nonempty(textFile))
+        jsonParam(textureFile, {"textureFile"}, true, nonempty(textureFile))
     };
 
     parse(params, doc);
 
     validateTextColor();
+    k_texture.init(textureFile);
 }
 
 void Button::validateTextColor()
@@ -42,10 +38,10 @@ void Button::validateTextColor()
 
     for (std::size_t i = 0; i < k_textColors.size(); ++i)
     {
-        if (!validate(k_textColors[i]))
+        if (!isValidColor(k_textColors[i]))
         {
             THROW_EXCEPT(MyException,
-                         "k_textColors[" + std::to_string(i) + " is invalid");
+                         "k_textColors[" + std::to_string(i) + "] is invalid");
         }
     }
 }
@@ -71,7 +67,7 @@ void Button::init(float x,
         THROW_EXCEPT(InvalidArgumentException, "Invalid textSize");
     }
 
-    init(x, y, z, width, height, visible, acceptInput, true);
+    Widget::init(x, y, z, width, height, visible, acceptInput, true);
     setText(text);
 }
 
@@ -84,10 +80,10 @@ void Button::present() const
 
     Graphics& g = Graphics::getInstance();
 
-    rect_.draw(g.simpleShader(), z_, pos_, nullptr, nullptr, nullptr,
+    rect_.draw(g.simpleShader(), z_, &pos_, nullptr, nullptr, nullptr,
                k_texture.id(), nullptr);
 
-    g.textSys().draw(g.simpleShader(), s, textPos_, z, textSize_,
+    g.textSys().draw(g.simpleShader(), text_, textPos_, z_, textSize_,
                      &k_textColors[state_]);
 }
 
@@ -147,7 +143,7 @@ void Button::process(const MouseMoveEvent &event)
         return;
     }
 
-    state_ == STATE_HOVER;
+    state_ = STATE_HOVER;
 }
 
 void Button::process(const MouseButtonEvent &event)
@@ -159,11 +155,11 @@ void Button::process(const MouseButtonEvent &event)
 
     if (event.button_ == GLFW_MOUSE_BUTTON_LEFT)
     {
-        if (event.state_ == GLFW_PRESS)
+        if (event.action_ == GLFW_PRESS)
         {
-            state_ == STATE_PRESS;
+            state_ = STATE_PRESSED;
         }
-        else if (event.state_ == GLFW_RELEASE && action_)
+        else if (event.action_ == GLFW_RELEASE && action_)
         {
             action_();
         }
@@ -172,7 +168,7 @@ void Button::process(const MouseButtonEvent &event)
 
 void Button::onMouseOut()
 {
-    state_ = STATE_NOMAL;
+    state_ = STATE_NORMAL;
 }
 
 #endif

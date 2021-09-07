@@ -14,8 +14,7 @@ public:
     using ActionFunc = std::function<void()>;
 
 public:
-    static void initConfig(const std::string& configFile,
-                           const std::string& appDir);
+    static void initConfig(const std::string& configFile);
 
     Button();
 
@@ -46,13 +45,13 @@ public:
                   float dy) override;
 
 #ifdef DESKTOP_APP
-    void process(const KeyEvent &event) override;
+    void process(const commonlib::KeyEvent& event) override;
 
-    void process(const MouseMoveEvent &event) override;
+    void process(const commonlib::MouseMoveEvent& event) override;
 
-    void process(const MouseButtonEvent &event) override;
+    void process(const commonlib::MouseButtonEvent& event) override;
 
-void onMouseOut() override;
+    void onMouseOut() override;
 #endif
 
 private:
@@ -72,7 +71,7 @@ private:
     static commonlib::Texture k_texture;
 
     std::string text_;
-    commonlib::Vecotr2 textPos_;
+    commonlib::Vector2 textPos_;
     State state_;
     TextSize textSize_;
     ActionFunc action_;
