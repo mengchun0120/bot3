@@ -87,12 +87,12 @@ Validator check(const Color& color)
                            {
                                 return f >= 0.0f && f <= 1.0f;
                            });
-    }
+    };
 
     Validator::DescriptionFunc descFunc = [&]()->std::string
     {
         return "check(" + color.toString() + ")";
-    }
+    };
 
     return Validator(validateFunc, descFunc);
 }

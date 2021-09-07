@@ -8,9 +8,7 @@ namespace mcdane {
 namespace botlib {
 
 Widget::Widget()
-    : x_(0.0f)
-    , y_(0.0f)
-    , visible_(true)
+    : visible_(true)
     , acceptInput_(false)
 {
 }

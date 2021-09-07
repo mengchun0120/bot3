@@ -32,8 +32,7 @@ public:
               bool visible=true,
               bool acceptInput=true);
 
-    void present(SimpleShaderProgram& shader,
-                 TextSystem& textSys) const override;
+    void present() const override;
 
     void setText(const std::string &text);
 
@@ -46,20 +45,22 @@ public:
     void shiftPos(float dx,
                   float dy) override;
 
+#ifdef DESKTOP_APP
     void process(const KeyEvent &event) override;
 
     void process(const MouseMoveEvent &event) override;
 
     void process(const MouseButtonEvent &event) override;
 
-    void onMouseOut() override;
+void onMouseOut() override;
+#endif
 
-protected:
+private:
+    static void validateTextColor();
+
     void resetTextPos();
 
-    const commonlib::Color* textColor();
-
-protected:
+private:
     enum State {
         STATE_NORMAL,
         STATE_HOVER,
@@ -67,8 +68,8 @@ protected:
         STATE_COUNT
     };
 
-    static commonlib::Color textColors_[STATE_COUNT];
-    static commonlib::Texture texture_;
+    static std::vector<commonlib::Color> k_textColors;
+    static commonlib::Texture k_texture;
 
     std::string text_;
     commonlib::Vecotr2 textPos_;

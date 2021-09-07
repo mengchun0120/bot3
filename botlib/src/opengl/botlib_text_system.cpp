@@ -2,6 +2,7 @@
 #include <unordered_set>
 #include <cmath>
 #include <commonlib_log.h>
+#include <commonlib_exception.h>
 #include <commonlib_file_utils.h>
 #include <botlib_text_system.h>
 
@@ -10,7 +11,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-const float TextSystem::FONT_SCALE_FACTOR[] = {1.0f, 0.75f, 0.5f, 0.36f};
+const float TextSystem::k_scaleFactors[] = {1.0f, 0.75f, 0.5f, 0.36f};
 
 std::string fontTextureFile(const std::string& fontDir,
                             int ch)
@@ -57,7 +58,7 @@ void TextSystem::loadFontHeights()
     fontHeights_.resize(TEXT_SIZE_COUNT);
     for (int s = TEXT_SIZE_BIG; s < TEXT_SIZE_COUNT; ++s)
     {
-        float h = fontTextures_[0].height() * FONT_SCALE_FACTOR[s];
+        float h = fontTextures_[0].height() * k_scaleFactors[s];
         fontHeights_[s] = static_cast<float>(floor(h));
     }
 }
@@ -107,7 +108,7 @@ void TextSystem::loadFontRectForTextSize(Rectangle*& rects,
 int TextSystem::getRectWidthForTextSize(std::vector<int>& widths,
                                         int textSize)
 {
-    float factor = FONT_SCALE_FACTOR[textSize];
+    float factor = k_scaleFactors[textSize];
     std::unordered_set<int> widthSet;
     int count = 0;
 
@@ -137,6 +138,11 @@ void TextSystem::draw(SimpleShaderProgram& program,
                       TextSize size,
                       const Color* color)
 {
+    if (!isValidTextSize(size))
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid size");
+    }
+
     if (s.size() == 0)
     {
         return;
@@ -152,9 +158,6 @@ void TextSystem::draw(SimpleShaderProgram& program,
         const Rectangle& curRect = getRect(s[i], size);
         const Texture& texture = getTexture(s[i]);
 
-        LOG_INFO << "draw text p=" << p << " cw=" << curRect.width()
-                 << LOG_END;
-
         curRect.draw(program, z, &p, nullptr, nullptr, nullptr,
                      texture.id(), color);
 
@@ -164,6 +167,31 @@ void TextSystem::draw(SimpleShaderProgram& program,
             p[0] += (curRect.width() + nextRect.width()) / 2.0f;
         }
     }
+}
+
+commonlib::Vector2 TextSystem::getSize(const std::string& s,
+                                       TextSize size)
+{
+    if (!isValidTextSize(size))
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid size");
+    }
+
+    commonlib::Vector2 sz{0.0f, 0.0f};
+
+    if (s.size() == 0)
+    {
+        return sz;
+    }
+
+    sz[1] = fontHeights_[size];
+
+    for (std::size_t i = 0; i < s.size(); ++i)
+    {
+        sz[0] += getRect(s[i], size).width();
+    }
+
+    return sz;
 }
 
 } // end of namespace botlib

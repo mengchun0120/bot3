@@ -3,7 +3,6 @@
 
 #include <string>
 #include <memory>
-#include <botlib_button_config.h>
 
 namespace mcdane {
 namespace botlib {
@@ -17,21 +16,21 @@ public:
     void load(const std::string& fileName,
               const std::string& appDir);
 
-    inline unsigned int width() const
+    inline unsigned int width() const;
 
-    inline unsigned int height() const
+    inline unsigned int height() const;
 
-    inline const std::string& title() const
+    inline const std::string& title() const;
 
-    inline unsigned int inputQueueCapacity() const
+    inline unsigned int inputQueueCapacity() const;
 
-    inline const std::string& simpleVertexShaderFile() const
+    inline const std::string& simpleVertexShaderFile() const;
 
-    inline const std::string& simpleFragShaderFile() const
+    inline const std::string& simpleFragShaderFile() const;
 
-    inline const std::string& fontDir() const
+    inline const std::string& fontDir() const;
 
-    inline const ButtonConfig& buttonConfig() const;
+    inline const std::string& buttonConfigFile() const;
 
 private:
     std::string logFile_;
@@ -42,7 +41,7 @@ private:
     std::string simpleVertexShaderFile_;
     std::string simpleFragShaderFile_;
     std::string fontDir_;
-    ButtonConfig buttonConfig_;
+    std::string buttonConfigFile_;
 };
 
 unsigned int AppConfig::width() const
@@ -80,9 +79,9 @@ const std::string& AppConfig::fontDir() const
     return fontDir_;
 }
 
-const ButtonConfig& AppConfig::buttonConfig() const
+const std::string& AppConfig::buttonConfigFile() const
 {
-    return buttonConfig_;
+    return buttonConfigFile_;
 }
 
 } // end of namespace botlib

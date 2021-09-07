@@ -72,3 +72,4 @@ void WidgetGroup::setVisible(bool v)
 } // end of namespace mcdane
 
 #endif
+

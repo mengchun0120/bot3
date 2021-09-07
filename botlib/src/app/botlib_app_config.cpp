@@ -38,8 +38,7 @@ void AppConfig::load(const std::string& fileName,
     simpleFragShaderFile_ = constructPath(appDir, simpleFragShaderFile);
     fontDir_ = constructPath(appDir, fontDir);
 
-    buttonConfigFile = constructPath(appDir, buttonConfigFile);
-    buttonConfig.load(appDir, buttonConfigFile);
+    buttonConfigFile_ = constructPath(appDir, buttonConfigFile);
 }
 
 } // end of namespace botlib

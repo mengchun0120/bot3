@@ -2,6 +2,7 @@
 #define INCLUDED_COMMONLIB_VECTOR_H
 
 #include <initializer_list>
+#include <sstream>
 #include <ostream>
 #include <istream>
 #include <array>
@@ -157,10 +158,10 @@ std::string Vector<N>::toString() const
     oss << '[';
     if (N > 0)
     {
-        oss << v[0];
+        oss << (*this)[0];
         for (std::size_t i = 1; i < N; ++i)
         {
-            oss << ", " << v[i];
+            oss << ", " << (*this)[i];
         }
     }
     oss << ']';
@@ -284,6 +285,8 @@ Vector<N> product(const Vector<N>& v1, const Vector<N>& v2)
 
 Vector3 cross(const Vector3& lhs,
               const Vector3& rhs);
+
+bool validate(const Color& c);
 
 } // end of namespace sharedlib
 } // end of namespace mcdane

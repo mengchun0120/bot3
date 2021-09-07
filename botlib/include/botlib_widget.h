@@ -3,6 +3,7 @@
 
 #include <commonlib_opengl.h>
 #include <commonlib_input_event.h>
+#include <commonlib_vector.h>
 #include <botlib_rectangle.h>
 #include <botlib_text_system.h>
 #include <botlib_constants.h>
@@ -38,14 +39,13 @@ public:
 #endif
 
     virtual void setPos(float x,
-                        float y
+                        float y,
                         float z);
 
     virtual void shiftPos(float dx,
                           float dy);
 
-    virtual void present(SimpleShaderProgram& shader,
-                         TextSystem& textSys) const = 0;
+    virtual void present() const = 0;
 
     inline bool visible() const;
 
@@ -62,7 +62,7 @@ public:
 
     inline float height() const;
 
-    inline commonlib::Vecotr2& pos() const;
+    inline const commonlib::Vector2& pos() const;
 
     inline float z() const;
 
@@ -128,7 +128,7 @@ float Widget::height() const
     return rect_.height();
 }
 
-const commonlib::Vector& Widget::pos() const
+const commonlib::Vector2& Widget::pos() const
 {
     return pos_;
 }

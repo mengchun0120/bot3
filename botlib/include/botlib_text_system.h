@@ -29,6 +29,9 @@ public:
               TextSize size,
               const commonlib::Color* color=nullptr);
 
+    commonlib::Vector2 getSize(const std::string& s,
+                               TextSize size);
+
 private:
     void loadFontTextures(const std::string& fontDir);
 
@@ -48,7 +51,7 @@ private:
     inline const commonlib::Texture& getTexture(int ch) const;
 
 private:
-    static const float FONT_SCALE_FACTOR[TEXT_SIZE_COUNT];
+    static const float k_scaleFactors[TEXT_SIZE_COUNT];
 
     std::vector<float> fontHeights_;
     Rectangle** fontRects_;
