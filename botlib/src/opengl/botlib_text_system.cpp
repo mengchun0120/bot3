@@ -1,3 +1,4 @@
+#include <iostream>
 #include <unordered_map>
 #include <unordered_set>
 #include <cmath>
@@ -28,11 +29,14 @@ TextSystem::TextSystem()
 
 TextSystem::~TextSystem()
 {
-    for (int s = TEXT_SIZE_BIG; s < TEXT_SIZE_COUNT; ++s)
+    if (fontRects_)
     {
-        delete[] fontRects_[s];
+        for (int s = TEXT_SIZE_BIG; s < TEXT_SIZE_COUNT; ++s)
+        {
+            delete[] fontRects_[s];
+        }
+        delete[] fontRects_;
     }
-    delete[] fontRects_;
     delete[] fontTextures_;
 }
 
