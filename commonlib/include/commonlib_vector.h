@@ -17,14 +17,16 @@ struct Vector: public std::array<float, N> {
     Vector() = default;
 
     template <typename Iterator>
-    Vector(Iterator begin, Iterator end) noexcept;
+    Vector(Iterator begin,
+           Iterator end) noexcept;
 
     Vector(std::initializer_list<float> l) noexcept;
 
     Vector(const Vector& other) = default;
 
     template <typename Iterator>
-    void init(Iterator begin, Iterator end) noexcept;
+    void init(Iterator begin,
+              Iterator end) noexcept;
 
     void init(std::initializer_list<float> l) noexcept;
 
@@ -51,11 +53,11 @@ using Vector4 = Vector<4>;
 using Point2 = Vector2;
 using Point3 = Vector3;
 using Point4 = Vector4;
-using Color = Vector4;
 
 template <std::size_t N>
 template <typename Iterator>
-Vector<N>::Vector(Iterator begin, Iterator end) noexcept
+Vector<N>::Vector(Iterator begin,
+                  Iterator end) noexcept
 {
     init(begin, end);
 }
@@ -68,7 +70,8 @@ Vector<N>::Vector(std::initializer_list<float> l) noexcept
 
 template <std::size_t N>
 template <typename Iterator>
-void Vector<N>::init(Iterator begin, Iterator end) noexcept
+void Vector<N>::init(Iterator begin,
+                     Iterator end) noexcept
 {
     std::size_t i = 0;
     for (auto it = begin; it != end && i < N; ++it, ++i)
@@ -285,8 +288,6 @@ Vector<N> product(const Vector<N>& v1, const Vector<N>& v2)
 
 Vector3 cross(const Vector3& lhs,
               const Vector3& rhs);
-
-bool isValidColor(const Color& c);
 
 } // end of namespace sharedlib
 } // end of namespace mcdane

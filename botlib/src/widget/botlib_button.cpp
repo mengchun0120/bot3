@@ -1,4 +1,5 @@
 #include <commonlib_exception.h>
+#include <commonlib_file_utils.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
 #include <botlib_graphics.h>
@@ -12,7 +13,8 @@ namespace botlib {
 std::vector<Color> Button::k_textColors;
 Texture Button::k_texture;
 
-void Button::initConfig(const std::string& configFile)
+void Button::initConfig(const std::string& configFile,
+                        const std::string& picDir)
 {
     rapidjson::Document doc;
     readJson(doc, configFile);
@@ -26,6 +28,8 @@ void Button::initConfig(const std::string& configFile)
     parse(params, doc);
 
     validateTextColor();
+
+    textureFile = constructPath(picDir, textureFile);
     k_texture.init(textureFile);
 }
 

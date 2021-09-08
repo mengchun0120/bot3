@@ -14,7 +14,8 @@ public:
     using ActionFunc = std::function<void()>;
 
 public:
-    static void initConfig(const std::string& configFile);
+    static void initConfig(const std::string& configFile,
+                           const std::string& picDir);
 
     Button();
 

@@ -13,19 +13,6 @@ Vector3 cross(const Vector3 &lhs,
     return v;
 }
 
-bool isValidColor(const Color& c)
-{
-    for (int i = 0; i < 4; ++i)
-    {
-        if (c[i] < 0.0f || c[i] > 1.0f)
-        {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 } // end of namespace commonlib
 } // end of namespace mcdane
 
