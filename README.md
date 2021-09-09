@@ -8,7 +8,9 @@ $ sudo apt install git
 $ git clone https://github.com/mengchun0120/bot3.git
 ```
 [Install GCM](https://github.com/microsoft/Git-Credential-Manager-Core).
+
 [Setup GCM](https://github.com/microsoft/Git-Credential-Manager-Core/blob/main/docs/linuxcredstores.md)
+
 [Setup Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
 ### Install Dependencies
