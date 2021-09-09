@@ -88,6 +88,14 @@ void parse(std::string& s,
     s = v.GetString();
 }
 
+void parse(Color& c,
+           const rapidjson::Value& v)
+{
+    std::vector<unsigned int> parts;
+    parse(parts, v);
+    c.init(parts);
+}
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 

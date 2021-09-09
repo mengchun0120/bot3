@@ -2,6 +2,7 @@
 #define INCLUDED_BOTLIB_SIMPLE_SHADER_PROGRAM_H
 
 #include <commonlib_vector.h>
+#include <commonlib_color.h>
 #include <commonlib_vertex_array.h>
 #include <commonlib_shader_program.h>
 

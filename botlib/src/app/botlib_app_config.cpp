@@ -14,8 +14,9 @@ void AppConfig::load(const std::string& fileName,
     readJson(doc, fileName);
 
     std::vector<std::string> simpleVertexShaderFile, simpleFragShaderFile;
-    std::vector<std::string> buttonConfigFile;
     std::vector<std::string> fontDir;
+    std::vector<std::string> picDir;
+    std::vector<std::string> buttonConfigFile;
 
     std::vector<JsonParamPtr> params{
         jsonParam(width_, {"window", "width"}, true, gt(width_, 400)),
@@ -28,6 +29,7 @@ void AppConfig::load(const std::string& fileName,
         jsonParam(simpleFragShaderFile, {"shader", "simpleFragShaderFile"},
                   true, nonempty(simpleFragShaderFile)),
         jsonParam(fontDir, {"fontDir"}, true, nonempty(fontDir)),
+        jsonParam(picDir, {"picDir"}, true, nonempty(picDir)),
         jsonParam(buttonConfigFile, {"buttonConfigFile"},
                   true, nonempty(buttonConfigFile))
     };
@@ -37,6 +39,7 @@ void AppConfig::load(const std::string& fileName,
     simpleVertexShaderFile_ = constructPath(appDir, simpleVertexShaderFile);
     simpleFragShaderFile_ = constructPath(appDir, simpleFragShaderFile);
     fontDir_ = constructPath(appDir, fontDir);
+    picDir_ = constructPath(appDir, picDir);
 
     buttonConfigFile_ = constructPath(appDir, buttonConfigFile);
 }

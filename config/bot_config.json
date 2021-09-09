@@ -10,5 +10,7 @@
         "simpleVertexShaderFile": ["res", "glsl", "simple_vertex_shader.glsl"],
         "simpleFragShaderFile": ["res", "glsl", "simple_frag_shader.glsl"]
     },
-    "fontDir": ["res", "fonts"]
+    "fontDir": ["res", "fonts"],
+    "picDir": ["res", "pics"],
+    "buttonConfigFile": ["config", "button_config.json"]
 }

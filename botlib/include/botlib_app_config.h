@@ -29,6 +29,8 @@ public:
 
     inline const std::string& fontDir() const;
 
+    inline const std::string& picDir() const;
+
     inline const std::string& buttonConfigFile() const;
 
 private:
@@ -40,6 +42,7 @@ private:
     std::string simpleVertexShaderFile_;
     std::string simpleFragShaderFile_;
     std::string fontDir_;
+    std::string picDir_;
     std::string buttonConfigFile_;
 };
 
@@ -76,6 +79,11 @@ const std::string& AppConfig::simpleFragShaderFile() const
 const std::string& AppConfig::fontDir() const
 {
     return fontDir_;
+}
+
+const std::string& AppConfig::picDir() const
+{
+    return picDir_;
 }
 
 const std::string& AppConfig::buttonConfigFile() const

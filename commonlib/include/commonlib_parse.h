@@ -6,6 +6,7 @@
 #include <array>
 #include <rapidjson/document.h>
 #include <commonlib_exception.h>
+#include <commonlib_color.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -108,6 +109,8 @@ void parse(std::array<T,N>& a,
     }
 }
 
+void parse(Color& c,
+           const rapidjson::Value& v);
 
 } // end of namespace commonlib
 } // end of namespace mcdane

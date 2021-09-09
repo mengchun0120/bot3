@@ -160,8 +160,6 @@ Validator operator||(const Validator& lhs, const Validator& rhs);
 
 Validator operator!(const Validator& v);
 
-Validator check(const Color& color);
-
 } // end of namespace commonlib
 } // end of namespace mcdane
 

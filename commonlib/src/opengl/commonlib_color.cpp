@@ -11,7 +11,7 @@ Color::Color(unsigned int red,
     init(red, green, blue, alpha);
 }
 
-Color::Color(std::initializer<unsigned int> c)
+Color::Color(std::initializer_list<unsigned int> c)
 {
     init(c);
 }
@@ -29,7 +29,7 @@ void Color::init(unsigned int red,
     init({red, green, blue, alpha});
 }
 
-void Color::init(std::initializer<unsigned int> c)
+void Color::init(std::initializer_list<unsigned int> c)
 {
     init(c.begin(), c.end());
 }

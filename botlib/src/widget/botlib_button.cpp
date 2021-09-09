@@ -29,7 +29,7 @@ void Button::initConfig(const std::string& configFile,
 
     validateTextColor();
 
-    textureFile = constructPath(picDir, textureFile);
+    textureFile = constructPath({picDir, textureFile});
     k_texture.init(textureFile);
 }
 
@@ -38,15 +38,6 @@ void Button::validateTextColor()
     if (k_textColors.size() != STATE_COUNT)
     {
         THROW_EXCEPT(MyException, "Size of textColor is invalid");
-    }
-
-    for (std::size_t i = 0; i < k_textColors.size(); ++i)
-    {
-        if (!isValidColor(k_textColors[i]))
-        {
-            THROW_EXCEPT(MyException,
-                         "k_textColors[" + std::to_string(i) + "] is invalid");
-        }
     }
 }
 

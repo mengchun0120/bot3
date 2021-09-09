@@ -22,7 +22,7 @@ struct Color: public Vector<4> {
           unsigned int blue,
           unsigned int alpha);
 
-    Color(std::initializer<unsigned int> c);
+    Color(std::initializer_list<unsigned int> c);
 
     Color(const std::vector<unsigned int>& c);
 
@@ -35,7 +35,7 @@ struct Color: public Vector<4> {
               unsigned int blue,
               unsigned int alpha);
 
-    void init(std::initializer<unsigned int> c);
+    void init(std::initializer_list<unsigned int> c);
 
     void init(const std::vector<unsigned int>& c);
 
@@ -52,11 +52,12 @@ struct Color: public Vector<4> {
     inline float alpha() const noexcept;
 };
 
-static_assert(std::is_standard_layout<Color>, "Color must be standard layout");
+static_assert(std::is_standard_layout<Color>::value,
+              "Color must be standard layout");
 
 bool Color::isValidComponent(unsigned int c)
 {
-    return c < 255;
+    return c <= 255;
 }
 
 float Color::toFloat(unsigned int c)
@@ -66,16 +67,16 @@ float Color::toFloat(unsigned int c)
 
 template <typename Iterator>
 Color::Color(Iterator begin,
-                       Iterator end)
+             Iterator end)
 {
     init(begin, end);
 }
 
 template <typename Iterator>
 void Color::init(Iterator begin,
-                           Iterator end)
+                 Iterator end)
 {
-    unsigned int num = count(c.begin(), c.end());
+    unsigned int num = count(begin, end);
     if (num != 4)
     {
         THROW_EXCEPT(InvalidArgumentException,
@@ -83,12 +84,12 @@ void Color::init(Iterator begin,
     }
 
     unsigned int i = 0;
-    for (auto it = c.begin(); it != c.end(); ++it, ++i)
+    for (auto it = begin; it != end; ++it, ++i)
     {
         if (!isValidComponent(*it))
         {
             THROW_EXCEPT(InvalidArgumentException,
-                         "Invalid component " + std::to_string(i));
+                         "Invalid component " + std::to_string(*it));
         }
 
         (*this)[i] = toFloat(*it);

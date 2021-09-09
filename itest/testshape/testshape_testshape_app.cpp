@@ -54,8 +54,8 @@ void TestShapeApp::setupShapeColor()
     trianglePos_.init({200.0f, 200.0f});
     squarePos_.init({600.0f, 400.0f});
 
-    fillColor_.init({1.0f, 0.5f, 0.0f, 1.0f});
-    borderColor_.init({0.0f, 0.0f, 0.3f, 1.0f});
+    fillColor_.init({255, 125, 0, 255});
+    borderColor_.init({0, 0, 100, 255});
 }
 
 void TestShapeApp::setupTexture(const std::string& appDir)
