@@ -34,7 +34,6 @@ void Widget::init(float x,
                      "Invalid height " + std::to_string(width));
     }
 
-    setPos(x, y, z);
     visible_ = visible;
     acceptInput_ = acceptInput;
 
@@ -46,6 +45,8 @@ void Widget::init(float x,
     {
         rect_.load(width, height);
     }
+
+    setPos(x, y, z);
 }
 
 void Widget::setPos(float x,

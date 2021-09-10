@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_file_utils.h>
 #include <commonlib_json_utils.h>
@@ -22,7 +23,7 @@ void Button::initConfig(const std::string& configFile,
     std::string textureFile;
     std::vector<JsonParamPtr> params{
         jsonParam(k_textColors, {"textColor"}, true, nonempty(k_textColors)),
-        jsonParam(textureFile, {"textureFile"}, true, nonempty(textureFile))
+        jsonParam(textureFile, {"texture"}, true, nonempty(textureFile))
     };
 
     parse(params, doc);
@@ -31,6 +32,8 @@ void Button::initConfig(const std::string& configFile,
 
     textureFile = constructPath({picDir, textureFile});
     k_texture.init(textureFile);
+
+    LOG_INFO << "Button::initConfig finished successfully" << LOG_END;
 }
 
 void Button::validateTextColor()
@@ -45,6 +48,19 @@ Button::Button()
     : state_(STATE_NORMAL)
     , textSize_(TEXT_SIZE_INVALID)
 {
+}
+
+Button::Button(float x,
+               float y,
+               float z,
+               float width,
+               float height,
+               const std::string& text,
+               TextSize textSize,
+               bool visible,
+               bool acceptInput)
+{
+    init(x, y, z, width, height, text, textSize, visible, acceptInput);
 }
 
 void Button::init(float x,
@@ -62,8 +78,10 @@ void Button::init(float x,
         THROW_EXCEPT(InvalidArgumentException, "Invalid textSize");
     }
 
+    text_ = text;
+    textSize_ = textSize;
+    state_ = STATE_NORMAL;
     Widget::init(x, y, z, width, height, visible, acceptInput, true);
-    setText(text);
 }
 
 void Button::present() const
@@ -78,7 +96,7 @@ void Button::present() const
     rect_.draw(g.simpleShader(), z_, &pos_, nullptr, nullptr, nullptr,
                k_texture.id(), nullptr);
 
-    g.textSys().draw(g.simpleShader(), text_, textPos_, z_, textSize_,
+    g.textSys().draw(g.simpleShader(), text_, textPos_, z_ - 1.0f, textSize_,
                      &k_textColors[state_]);
 }
 
@@ -173,11 +191,8 @@ void Button::resetTextPos()
     Graphics& g = Graphics::getInstance();
     commonlib::Vector2 sz = g.textSys().getSize(text_, textSize_);
 
-    float marginX = (rect_.width() - sz[0]) / 2.0f;
-    float marginY = (rect_.height() - sz[1]) / 2.0f;
-
-    textPos_[0] = pos_[0] + marginX;
-    textPos_[1] = pos_[1] + marginY;
+    textPos_[0] = pos_[0] - sz[0]/2.0f;
+    textPos_[1] = pos_[1] - sz[1]/2.0f;
 }
 
 } // end of namespace botlib

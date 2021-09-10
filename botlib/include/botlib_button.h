@@ -20,8 +20,17 @@ public:
 
     Button();
 
-    virtual ~Button()
-    {}
+    Button(float x,
+           float y,
+           float z,
+           float width,
+           float height,
+           const std::string& text,
+           TextSize textSize=TEXT_SIZE_MEDIUM,
+           bool visible=true,
+           bool acceptInput=true);
+
+    virtual ~Button() override = default;
 
     void init(float x,
               float y,

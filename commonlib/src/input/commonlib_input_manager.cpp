@@ -4,23 +4,19 @@
 namespace mcdane {
 namespace commonlib {
 
-static InputManager* k_inputManager=nullptr;
+namespace {
 
 bool validateInputManager(const std::string& func)
 {
-    if (!k_inputManager)
-    {
-        LOG_WARN << func << ": InputManager is not initialized" << LOG_END;
-        return false;
-    }
+    InputManager& mgr = InputManager::getInstance();
 
-    if (!k_inputManager->enabled())
+    if (!mgr.enabled())
     {
         LOG_WARN << func << ": InputManager is disabled" << LOG_END;
         return false;
     }
 
-    if (k_inputManager->eventsFull())
+    if (mgr.eventsFull())
     {
         LOG_WARN << "Input-event queue is full" << LOG_END;
         return false;
@@ -43,9 +39,9 @@ void handleMouseButton(GLFWwindow* window,
     double x, y;
     glfwGetCursorPos(window, &x, &y);
 
-    k_inputManager->addMouseButtonEvent(static_cast<float>(x),
-                                        static_cast<float>(y),
-                                        button, action, mods);
+    InputManager::getInstance().addMouseButtonEvent(
+        static_cast<float>(x), static_cast<float>(y), button, action, mods
+    );
 }
 
 void handleMouseMove(GLFWwindow *window,
@@ -57,8 +53,9 @@ void handleMouseMove(GLFWwindow *window,
         return;
     }
 
-    k_inputManager->addMouseMoveEvent(static_cast<float>(x),
-                                      static_cast<float>(y));
+    InputManager::getInstance().addMouseMoveEvent(
+        static_cast<float>(x), static_cast<float>(y)
+    );
 }
 
 void handleKey(GLFWwindow* window,
@@ -72,36 +69,31 @@ void handleKey(GLFWwindow* window,
         return;
     }
 
-    k_inputManager->addKeyEvent(key, scancode, action, mods);
+    InputManager::getInstance().addKeyEvent(key, scancode, action, mods);
 }
-#endif
 
-InputManager::InputManager()
+} // end of unnamed namespace
+
+std::shared_ptr<InputManager> InputManager::k_inputManager;
+
+void InputManager::initInstance(GLFWwindow* window,
+                                float viewportHeight,
+                                unsigned int inputQueueCapacity)
 {
     if (k_inputManager)
     {
-        THROW_EXCEPT(MyException, "The InputManager has already been created");
+        LOG_WARN << "InputManger already initialized" << LOG_END;
+        return;
     }
 
-#ifdef DESKTOP_APP
-    window_ = nullptr;
-#endif
-
-    enabled_ = false;
-    viewportHeight_ = 0.0f;
-    k_inputManager = this;
+    k_inputManager.reset(
+        new InputManager(window, viewportHeight, inputQueueCapacity)
+    );
 }
 
-InputManager::~InputManager()
-{
-    disable();
-    k_inputManager = nullptr;
-}
-
-#ifdef DESKTOP_APP
-void InputManager::init(GLFWwindow* window,
-                        float viewportHeight,
-                        unsigned int inputQueueCapacity)
+InputManager::InputManager(GLFWwindow* window,
+                           float viewportHeight,
+                           unsigned int inputQueueCapacity)
 {
     if (!window)
     {
@@ -114,11 +106,16 @@ void InputManager::init(GLFWwindow* window,
     }
 
     window_ = window;
-    events_.init(inputQueueCapacity);
     enabled_ = false;
     viewportHeight_ = viewportHeight;
+    events_.init(inputQueueCapacity);
 }
 #endif
+
+InputManager::~InputManager()
+{
+    disable();
+}
 
 void InputManager::enable()
 {

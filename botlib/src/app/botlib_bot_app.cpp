@@ -32,18 +32,12 @@ BotApp::~BotApp()
 void BotApp::init(const std::string& configFile,
                   const std::string& appDir)
 {
-    using namespace std::placeholders;
-
     cfg_.load(configFile, appDir);
 #ifdef DESKTOP_APP
     setupWindow(cfg_.width(), cfg_.height(), cfg_.title());
-    inputManager_.init(window(), viewportHeight(), cfg_.inputQueueCapacity());
 #endif
     setupOpenGL();
-    inputManager_.enable();
     screenManager_.init(Screen::SCREEN_START);
-    inputProcessor_ = std::bind(&ScreenManager::processInput,
-                                &screenManager_, _1);
 }
 
 void BotApp::setupOpenGL()
@@ -62,8 +56,6 @@ void BotApp::preProcess()
 
 void BotApp::process()
 {
-    inputManager_.processInput(inputProcessor_);
-
     if (running())
     {
         screenManager_.update();

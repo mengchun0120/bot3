@@ -13,20 +13,17 @@ using InputProcessor = std::function<bool(const InputEvent&)>;
 
 class InputManager {
 public:
-    InputManager();
+    inline static InputManager& getInstance();
+
+#ifdef DESKTOP_APP
+    static void initInstance(GLFWwindow* window,
+                             float viewportHeight,
+                             unsigned int inputQueueCapacity);
+#endif
 
     ~InputManager();
 
-#ifdef DESKTOP_APP
-    void init(GLFWwindow* window,
-              float viewportHeight,
-              unsigned int inputQueueCapacity);
-#endif
-
-    bool enabled() const
-    {
-        return enabled_;
-    }
+    inline bool enabled() const;
 
     void enable();
 
@@ -34,10 +31,7 @@ public:
 
     void clear();
 
-    bool eventsFull() const
-    {
-        return events_.full();
-    }
+    inline bool eventsFull() const;
 
     void processInput(InputProcessor& processor);
 
@@ -59,12 +53,36 @@ public:
 
 private:
 #ifdef DESKTOP_APP
+    InputManager(GLFWwindow* window,
+                 float viewportHeight,
+                 unsigned int inputQueueCapacity);
+#endif
+
+private:
+    static std::shared_ptr<InputManager> k_inputManager;
+
+#ifdef DESKTOP_APP
     GLFWwindow* window_;
 #endif
     FixedQueue<InputEvent> events_;
     bool enabled_;
     float viewportHeight_;
 };
+
+InputManager& InputManager::getInstance()
+{
+    return *k_inputManager;
+}
+
+bool InputManager::enabled() const
+{
+    return enabled_;
+}
+
+bool InputManager::eventsFull() const
+{
+    return events_.full();
+}
 
 } // end of namespace commonlib
 } // end of namespace mcdane

@@ -2,7 +2,6 @@
 #define INCLUDED_BOTLIB_BOT_APP_H
 
 #include <commonlib_app.h>
-#include <commonlib_input_manager.h>
 #include <botlib_screen_manager.h>
 #include <botlib_app_config.h>
 #include <botlib_simple_shader_program.h>
@@ -60,8 +59,6 @@ private:
 
 private:
     AppConfig cfg_;
-    commonlib::InputManager inputManager_;
-    commonlib::InputProcessor inputProcessor_;
     ScreenManager screenManager_;
     SimpleShaderProgram simpleShader_;
 };
