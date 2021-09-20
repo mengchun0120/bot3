@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <commonlib_file_utils.h>
 #include <commonlib_exception.h>
 #include <botlib_constants.h>
@@ -13,6 +14,8 @@ void SimpleShaderProgram::init(const std::string& vertexShaderFile,
 {
     std::string vertexShaderSrc = readTextFile(vertexShaderFile);
     std::string fragShaderSrc = readTextFile(fragShaderFile);
+
+    LOG_INFO << vertexShaderFile << ' ' << fragShaderFile << LOG_END;
 
     load(vertexShaderSrc, fragShaderSrc);
     positionLoc_ = getAttribLocation("position");

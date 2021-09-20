@@ -1,5 +1,7 @@
 #include <vector>
 #include <commonlib_file_utils.h>
+#include <botlib_app_config.h>
+#include <botlib_graphics.h>
 #include <testshape_testshape_app.h>
 
 using namespace mcdane::commonlib;
@@ -11,7 +13,8 @@ namespace testshape {
 TestShapeApp::TestShapeApp(const std::string& configFile,
                            const std::string& appDir)
 {
-    cfg_.load(configFile, appDir);
+    AppConfig::initInstance(configFile, appDir);
+
 #ifdef DESKTOP_APP
     setupWindow(1000, 800, "Test Shape");
 #endif
@@ -23,20 +26,23 @@ TestShapeApp::TestShapeApp(const std::string& configFile,
 
 void TestShapeApp::setupOpenGL()
 {
+    const AppConfig& cfg = AppConfig::getInstance();
+
+    Graphics::initInstance(cfg.simpleVertexShaderFile(),
+                           cfg.simpleFragShaderFile(),
+                           cfg.fontDir());
+
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
+    SimpleShaderProgram& program = Graphics::getInstance().simpleShader();
 
-    program_.init(cfg_.simpleVertexShaderFile(),
-                 cfg_.simpleFragShaderFile());
-    program_.use();
-    program_.setViewportSize(viewportSize());
-    program_.setViewportOrigin(viewportOrigin);
-
-    textSys_.load(cfg_.fontDir());
+    program.use();
+    program.setViewportSize(viewportSize());
+    program.setViewportOrigin(viewportOrigin);
 }
 
 void TestShapeApp::setupShapeColor()
@@ -77,20 +83,26 @@ void TestShapeApp::preProcess()
 
 void TestShapeApp::process()
 {
-    triangle_.draw(program_, 0.0f, &trianglePos_, nullptr, &fillColor_,
+    Graphics& graphics = Graphics::getInstance();
+    SimpleShaderProgram& program = graphics.simpleShader();
+    TextSystem& textSys = graphics.textSys();
+
+    triangle_.draw(program, 0.0f, &trianglePos_, nullptr, &fillColor_,
                    nullptr, 0, nullptr);
-    square_.draw(program_, 0.0f, &squarePos_, nullptr, &fillColor_,
+    square_.draw(program, 0.0f, &squarePos_, nullptr, &fillColor_,
                  &borderColor_, 0, nullptr);
-    texRect_.draw(program_, 0.0f, &texPos_, nullptr, nullptr,
+    texRect_.draw(program, 0.0f, &texPos_, nullptr, nullptr,
                   nullptr, texture_.id(), nullptr);
-    textSys_.draw(program_, "Hello world", Point2{200.0f, 700.0f},
-                  0.0f, TEXT_SIZE_BIG, &fillColor_);
-    textSys_.draw(program_, "Hello world", Point2{200.0f, 600.0f},
-                  0.0f, TEXT_SIZE_MEDIUM, &fillColor_);
-    textSys_.draw(program_, "Hello world", Point2{200.0f, 500.0f},
-                  0.0f, TEXT_SIZE_SMALL, &fillColor_);
-    textSys_.draw(program_, "Hello world", Point2{200.0f, 400.0f},
-                  0.0f, TEXT_SIZE_TINY, &fillColor_);
+    textSys.draw(program, "Hello world", Point2{200.0f, 700.0f},
+                 0.0f, TEXT_SIZE_BIG, &fillColor_);
+    textSys.draw(program, "Hello world", Point2{200.0f, 600.0f},
+                 0.0f, TEXT_SIZE_MEDIUM, &fillColor_);
+    textSys.draw(program, "Hello world", Point2{200.0f, 500.0f},
+                 0.0f, TEXT_SIZE_SMALL, &fillColor_);
+    textSys.draw(program, "Hello world", Point2{200.0f, 400.0f},
+                 0.0f, TEXT_SIZE_TINY, &fillColor_);
+
+    glFlush();
 }
 
 void TestShapeApp::postProcess()

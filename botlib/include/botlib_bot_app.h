@@ -3,8 +3,6 @@
 
 #include <commonlib_app.h>
 #include <botlib_screen_manager.h>
-#include <botlib_app_config.h>
-#include <botlib_simple_shader_program.h>
 
 namespace mcdane {
 namespace botlib {
@@ -27,19 +25,9 @@ public:
 
     void postProcess() override;
 
-    const AppConfig& config() const
-    {
-        return cfg_;
-    }
-
     ScreenManager& screenManager()
     {
         return screenManager_;
-    }
-
-    SimpleShaderProgram& simpleShader()
-    {
-        return simpleShader_;
     }
 
 private:
@@ -58,9 +46,7 @@ private:
     void setupOpenGL();
 
 private:
-    AppConfig cfg_;
     ScreenManager screenManager_;
-    SimpleShaderProgram simpleShader_;
 };
 
 } // end of namespace botlib

@@ -3,7 +3,6 @@
 
 #include <commonlib_app.h>
 #include <commonlib_input_manager.h>
-#include <botlib_app_config.h>
 #include <botlib_widget_group.h>
 
 namespace mcdane {
@@ -32,7 +31,6 @@ private:
     void setupInput();
 
 private:
-    botlib::AppConfig cfg_;
     botlib::WidgetGroup widgets_;
     commonlib::InputProcessor inputProcessor_;
 };

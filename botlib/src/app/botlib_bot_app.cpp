@@ -1,5 +1,7 @@
 #include <iostream>
 #include <commonlib_log.h>
+#include <botlib_app_config.h>
+#include <botlib_graphics.h>
 #include <botlib_bot_app.h>
 
 using namespace mcdane::commonlib;
@@ -32,9 +34,10 @@ BotApp::~BotApp()
 void BotApp::init(const std::string& configFile,
                   const std::string& appDir)
 {
-    cfg_.load(configFile, appDir);
+    AppConfig::initInstance(configFile, appDir);
+    const AppConfig& cfg = AppConfig::getInstance();
 #ifdef DESKTOP_APP
-    setupWindow(cfg_.width(), cfg_.height(), cfg_.title());
+    setupWindow(cfg.width(), cfg.height(), cfg.title());
 #endif
     setupOpenGL();
     screenManager_.init(Screen::SCREEN_START);
@@ -42,8 +45,10 @@ void BotApp::init(const std::string& configFile,
 
 void BotApp::setupOpenGL()
 {
-    simpleShader_.init(cfg_.simpleVertexShaderFile(),
-                       cfg_.simpleFragShaderFile());
+    const AppConfig& cfg = AppConfig::getInstance();
+    Graphics::initInstance(cfg.simpleVertexShaderFile(),
+                           cfg.simpleFragShaderFile(),
+                           cfg.fontDir());
 
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

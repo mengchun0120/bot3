@@ -1,4 +1,5 @@
 #include <iostream>
+#include <botlib_app_config.h>
 #include <botlib_graphics.h>
 #include <botlib_button.h>
 #include <testwidget_testwidget_app.h>
@@ -12,18 +13,21 @@ namespace testwidget {
 TestWidgetApp::TestWidgetApp(const std::string& configFile,
                            const std::string& appDir)
 {
-    cfg_.load(configFile, appDir);
+    AppConfig::initInstance(configFile, appDir);
+
     setupWindow(1000, 800, "test widgets");
 
-    Graphics::initInstance(cfg_.simpleVertexShaderFile(),
-                           cfg_.simpleFragShaderFile(),
-                           cfg_.fontDir());
+    const AppConfig& cfg = AppConfig::getInstance();
+    Graphics::initInstance(cfg.simpleVertexShaderFile(),
+                           cfg.simpleFragShaderFile(),
+                           cfg.fontDir());
 
-    Button::initConfig(cfg_.buttonConfigFile(),
-                       cfg_.picDir());
+    Button::initConfig(cfg.buttonConfigFile(),
+                       cfg.picDir());
 
     setupOpenGL();
     setupWidgets();
+    setupInput();
 }
 
 void TestWidgetApp::setupOpenGL()
@@ -75,9 +79,9 @@ void TestWidgetApp::setupInput()
 {
     using namespace std::placeholders;
 
-    InputManager::initInstance(
-        window(), viewportHeight(), cfg_.inputQueueCapacity()
-    );
+    const AppConfig& cfg = AppConfig::getInstance();
+    InputManager::initInstance(window(), viewportHeight(),
+                               cfg.inputQueueCapacity());
 
     inputProcessor_ = std::bind(&TestWidgetApp::processInput, this, _1);
 
@@ -94,6 +98,8 @@ void TestWidgetApp::process()
     InputManager::getInstance().processInput(inputProcessor_);
 
     widgets_.present();
+
+    glFlush();
 }
 
 void TestWidgetApp::postProcess()

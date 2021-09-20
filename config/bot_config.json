@@ -1,16 +1,22 @@
 {
-    "logFile": "log.txt",
     "window": {
         "width": 1000,
         "height": 800,
         "title": "Bot"
     },
     "inputQueueCapacity": 6,
-    "shader": {
-        "simpleVertexShaderFile": ["res", "glsl", "simple_vertex_shader.glsl"],
-        "simpleFragShaderFile": ["res", "glsl", "simple_frag_shader.glsl"]
+    "directories": {
+        "fontDir": ["res", "fonts"],
+        "picDir": ["res", "pics"],
+        "glslDir": ["res", "glsl"],
+        "configDir": ["config"]
     },
-    "fontDir": ["res", "fonts"],
-    "picDir": ["res", "pics"],
-    "buttonConfigFile": ["config", "button_config.json"]
+    "shaders": {
+        "simpleVertexShaderFile": "simple_vertex_shader.glsl",
+        "simpleFragShaderFile": "simple_frag_shader.glsl"
+    },
+    "configs": {
+        "buttonConfigFile": "button_config.json",
+        "startScreenConfigFile": "start_screen_config.json"
+    }
 }

@@ -5,7 +5,6 @@
 #include <commonlib_input_event.h>
 #include <commonlib_vector.h>
 #include <botlib_rectangle.h>
-#include <botlib_text_system.h>
 #include <botlib_constants.h>
 
 namespace mcdane {

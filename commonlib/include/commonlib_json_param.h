@@ -5,6 +5,7 @@
 #include <vector>
 #include <initializer_list>
 #include <memory>
+#include <vector>
 #include <rapidjson/document.h>
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
@@ -81,7 +82,8 @@ void TypedJsonParam<T>::parse(const rapidjson::Document& doc)
     if (!validator_.validate())
     {
         THROW_EXCEPT(ParseException,
-                     "Validation failed: " + validator_.description());
+                     "Validation failed for " + toString(path_) +
+                     ": " + validator_.description());
     }
 }
 

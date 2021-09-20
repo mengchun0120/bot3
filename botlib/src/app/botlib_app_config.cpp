@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <commonlib_json_param.h>
 #include <commonlib_file_utils.h>
 #include <botlib_app_config.h>
@@ -7,41 +8,96 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void AppConfig::load(const std::string& fileName,
+std::shared_ptr<AppConfig> AppConfig::k_instance;
+
+void AppConfig::initInstance(const std::string& fileName,
+                             const std::string& appDir)
+{
+    if (k_instance)
+    {
+        LOG_WARN << "AppConfig instance already initialized" << LOG_END;
+        return;
+    }
+
+    k_instance.reset(new AppConfig(fileName, appDir));
+}
+
+AppConfig::AppConfig(const std::string& fileName,
                      const std::string& appDir)
 {
     rapidjson::Document doc;
     readJson(doc, fileName);
 
-    std::vector<std::string> simpleVertexShaderFile, simpleFragShaderFile;
-    std::vector<std::string> fontDir;
-    std::vector<std::string> picDir;
-    std::vector<std::string> buttonConfigFile;
+    loadBasics(doc);
+    loadDirectories(doc, appDir);
+    loadShaderFiles(doc);
+    loadConfigFiles(doc);
+}
 
+void AppConfig::loadBasics(const rapidjson::Document& doc)
+{
     std::vector<JsonParamPtr> params{
-        jsonParam(width_, {"window", "width"}, true, gt(width_, 400)),
-        jsonParam(height_, {"window", "height"}, true, gt(height_, 400)),
+        jsonParam(width_, {"window", "width"}, true, gt(width_, 0u)),
+        jsonParam(height_, {"window", "height"}, true, gt(height_, 0u)),
         jsonParam(title_, {"window", "title"}, true, nonempty(title_)),
         jsonParam(inputQueueCapacity_, {"inputQueueCapacity"}, true,
-                  gt(inputQueueCapacity_, 0)),
-        jsonParam(simpleVertexShaderFile, {"shader", "simpleVertexShaderFile"},
-                  true, nonempty(simpleVertexShaderFile)),
-        jsonParam(simpleFragShaderFile, {"shader", "simpleFragShaderFile"},
-                  true, nonempty(simpleFragShaderFile)),
-        jsonParam(fontDir, {"fontDir"}, true, nonempty(fontDir)),
-        jsonParam(picDir, {"picDir"}, true, nonempty(picDir)),
-        jsonParam(buttonConfigFile, {"buttonConfigFile"},
-                  true, nonempty(buttonConfigFile))
+                  gt(inputQueueCapacity_, 0u))
+    };
+
+    parse(params, doc);
+}
+
+
+void AppConfig::loadDirectories(const rapidjson::Document& doc,
+                                const std::string& appDir)
+{
+    std::vector<std::string> fontDir, picDir, glslDir, configDir;
+    std::vector<JsonParamPtr> params{
+        jsonParam(fontDir, {"directories", "fontDir"}, true, nonempty(fontDir)),
+        jsonParam(picDir, {"directories", "picDir"}, true, nonempty(picDir)),
+        jsonParam(glslDir, {"directories", "glslDir"}, true, nonempty(glslDir)),
+        jsonParam(configDir, {"directories", "configDir"}, true,
+                  nonempty(configDir)),
     };
 
     parse(params, doc);
 
-    simpleVertexShaderFile_ = constructPath(appDir, simpleVertexShaderFile);
-    simpleFragShaderFile_ = constructPath(appDir, simpleFragShaderFile);
     fontDir_ = constructPath(appDir, fontDir);
     picDir_ = constructPath(appDir, picDir);
+    glslDir_ = constructPath(appDir, glslDir);
+    configDir_ = constructPath(appDir, configDir);
+}
 
-    buttonConfigFile_ = constructPath(appDir, buttonConfigFile);
+void AppConfig::loadShaderFiles(const rapidjson::Document& doc)
+{
+    std::vector<JsonParamPtr> params{
+        jsonParam(simpleVertexShaderFile_, {"shaders", "simpleVertexShaderFile"},
+                  true, nonempty(simpleVertexShaderFile_)),
+        jsonParam(simpleFragShaderFile_, {"shaders", "simpleFragShaderFile"},
+                  true, nonempty(simpleFragShaderFile_)
+        )
+    };
+
+    parse(params, doc);
+
+    simpleVertexShaderFile_ = constructPath({glslDir_, simpleVertexShaderFile_});
+    simpleFragShaderFile_ = constructPath({glslDir_, simpleFragShaderFile_});
+}
+
+void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
+{
+    std::vector<JsonParamPtr> params{
+        jsonParam(buttonConfigFile_, {"configs", "buttonConfigFile"},
+                  true, nonempty(buttonConfigFile_)),
+        jsonParam(startScreenConfigFile_, {"configs", "startScreenConfigFile"},
+                  true, nonempty(startScreenConfigFile_))
+    };
+
+    parse(params, doc);
+
+    buttonConfigFile_ = constructPath({configDir_, buttonConfigFile_});
+    startScreenConfigFile_ = constructPath({configDir_, startScreenConfigFile_});
+
 }
 
 } // end of namespace botlib
