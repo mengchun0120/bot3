@@ -72,10 +72,13 @@ bool Widget::containPos(float x,
         return false;
     }
 
-    return pos_[0] <= x &&
-           x <= pos_[0] + rect_.width() &&
-           pos_[1] <= y &&
-           y <= pos_[1] + rect_.height();
+    float w = rect_.width() / 2.0f;
+    float h = rect_.height() / 2.0f;
+
+    return pos_[0] - w <= x &&
+           pos_[0] + w >= x &&
+           pos_[1] - h <= y &&
+           pos_[1] + h >= y;
 }
 
 } // end of namespace botlib

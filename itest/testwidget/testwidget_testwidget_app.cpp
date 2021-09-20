@@ -49,7 +49,9 @@ void TestWidgetApp::setupWidgets()
 {
     constexpr unsigned int BUTTON_COUNT = 3;
     float buttonWidth = 200.0f, buttonHeight = 50.0f;
-    float buttonX = 100.0f, buttonY = 100.0f, buttonZ = 0.0f;
+    float buttonX = viewportWidth() / 2.0f;
+    float buttonY = 100.0f;
+    float buttonZ = 0.0f;
     float incrY = 200.0f;
     std::string buttonTexts[] = {
         "Start Game",
