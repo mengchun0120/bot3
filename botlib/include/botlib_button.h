@@ -4,6 +4,8 @@
 #include <functional>
 #include <string>
 #include <commonlib_color.h>
+#include <commonlib_texture.h>
+#include <botlib_text_size.h>
 #include <botlib_constants.h>
 #include <botlib_widget.h>
 

@@ -2,6 +2,7 @@
 #define INCLUDED_BOTLIB_BOT_APP_H
 
 #include <commonlib_app.h>
+#include <commonlib_input_manager.h>
 #include <botlib_screen_manager.h>
 
 namespace mcdane {
@@ -45,8 +46,13 @@ private:
 
     void setupOpenGL();
 
+    void setupScreen();
+
+void setupInput();
+
 private:
     ScreenManager screenManager_;
+    commonlib::InputProcessor inputProcessor_;
 };
 
 } // end of namespace botlib

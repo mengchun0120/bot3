@@ -1,8 +1,10 @@
 #include <iostream>
+#include <functional>
 #include <commonlib_log.h>
 #include <botlib_app_config.h>
 #include <botlib_graphics.h>
 #include <botlib_bot_app.h>
+#include <botlib_start_screen.h>
 
 using namespace mcdane::commonlib;
 
@@ -40,18 +42,43 @@ void BotApp::init(const std::string& configFile,
     setupWindow(cfg.width(), cfg.height(), cfg.title());
 #endif
     setupOpenGL();
-    screenManager_.init(Screen::SCREEN_START);
+    setupScreen();
+    setupInput();
 }
 
 void BotApp::setupOpenGL()
 {
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_DEPTH_TEST);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
     const AppConfig& cfg = AppConfig::getInstance();
     Graphics::initInstance(cfg.simpleVertexShaderFile(),
                            cfg.simpleFragShaderFile(),
                            cfg.fontDir());
+}
 
-    glEnable(GL_DEPTH_TEST);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+void BotApp::setupScreen()
+{
+    const AppConfig& cfg = AppConfig::getInstance();
+    StartScreen::initConfig(cfg.startScreenConfigFile());
+
+    screenManager_.init(Screen::SCREEN_START);
+}
+
+void BotApp::setupInput()
+{
+    using namespace std::placeholders;
+
+    const AppConfig& cfg = AppConfig::getInstance();
+    InputManager::initInstance(window(),
+                               viewportHeight(),
+                               cfg.inputQueueCapacity());
+
+    inputProcessor_ = std::bind(&ScreenManager::processInput,
+                                &screenManager_,
+                                _1);
 }
 
 void BotApp::preProcess()
@@ -61,6 +88,8 @@ void BotApp::preProcess()
 
 void BotApp::process()
 {
+    InputManager::getInstance().processInput(inputProcessor_);
+
     if (running())
     {
         screenManager_.update();
