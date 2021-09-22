@@ -1,10 +1,13 @@
 #ifndef INCLUDED_BOTLIB_SCREEN_H
 #define INCLUDED_BOTLIB_SCREEN_H
 
+#include <commonlib_vector.h>
 #include <commonlib_input_event.h>
 
 namespace mcdane {
 namespace botlib {
+
+class ScreenManager;
 
 class Screen {
 public:
@@ -15,7 +18,9 @@ public:
         SCREEN_NONE
     };
 
-    static Screen* create(Type type);
+    static Screen* create(Type type,
+                          const commonlib::Vector2& viewportSize,
+                          ScreenManager* screenMgr);
 
     static bool isValidScreen(Type type)
     {

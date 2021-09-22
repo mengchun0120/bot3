@@ -46,9 +46,11 @@ private:
 
     void setupOpenGL();
 
+    void setupWidget();
+
     void setupScreen();
 
-void setupInput();
+    void setupInput();
 
 private:
     ScreenManager screenManager_;

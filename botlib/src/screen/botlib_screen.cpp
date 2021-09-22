@@ -4,13 +4,15 @@
 namespace mcdane {
 namespace botlib {
 
-Screen* Screen::create(Type type)
+Screen* Screen::create(Type type,
+                       const commonlib::Vector2& viewportSize,
+                       ScreenManager* screenMgr)
 {
     Screen* screen = nullptr;
     switch(type)
     {
         case SCREEN_START:
-            screen = new StartScreen();
+            screen = new StartScreen(viewportSize, screenMgr);
             break;
         case SCREEN_GAME:
             break;

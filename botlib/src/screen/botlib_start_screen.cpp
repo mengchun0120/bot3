@@ -3,9 +3,9 @@
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
 #include <botlib_button.h>
-#include <botlib_bot_app.h>
 #include <botlib_graphics.h>
 #include <botlib_start_screen.h>
+#include <botlib_screen_manager.h>
 
 using namespace mcdane::commonlib;
 
@@ -33,10 +33,23 @@ void StartScreen::initConfig(const std::string& configFile)
     parse(params, doc);
 }
 
-StartScreen::StartScreen()
+StartScreen::StartScreen(const commonlib::Vector2& viewportSize,
+                         ScreenManager* screenMgr)
+    : screenMgr_(screenMgr)
 {
-    initWidgets();
-    prepareShader();
+    if (viewportSize[0] <= 0.0f || viewportSize[1] <= 0.0f)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Invalid viewportSize " + toString(viewportSize));
+    }
+
+    if (!screenMgr)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "screenMgr is null");
+    }
+
+    initWidgets(viewportSize);
+    prepareShader(viewportSize);
 }
 
 StartScreen::~StartScreen()
@@ -59,9 +72,8 @@ bool StartScreen::processInput(const InputEvent &e)
     return true;
 }
 
-void StartScreen::initWidgets()
+void StartScreen::initWidgets(const commonlib::Vector2& viewportSize)
 {
-    const BotApp& app = BotApp::getInstance();
     std::vector<std::string> buttonTexts{
         "Start Game",
         "Settings",
@@ -75,8 +87,8 @@ void StartScreen::initWidgets()
     unsigned int numButtons = buttonTexts.size();
     float totalHeight = numButtons * k_buttonHeight +
                         (numButtons - 1.0f) * k_buttonSpacing;
-    float y = (app.viewportHeight() + totalHeight - k_buttonHeight) / 2.0f;
-    float x = app.viewportWidth() / 2.0f;
+    float x = viewportSize[0] / 2.0f;
+    float y = (viewportSize[1] + totalHeight - k_buttonHeight) / 2.0f;
     float z = 0.0f;
     float deltaY = k_buttonHeight + k_buttonSpacing;
 
@@ -92,13 +104,12 @@ void StartScreen::initWidgets()
     }
 }
 
-void StartScreen::prepareShader()
+void StartScreen::prepareShader(const commonlib::Vector2& viewportSize)
 {
-    const BotApp& app = BotApp::getInstance();
     SimpleShaderProgram& shader = Graphics::getInstance().simpleShader();
 
-    shader.setViewportOrigin(app.viewportSize() / 2.0f);
-    shader.setViewportSize(app.viewportSize());
+    shader.setViewportOrigin(viewportSize / 2.0f);
+    shader.setViewportSize(viewportSize);
     shader.use();
 }
 

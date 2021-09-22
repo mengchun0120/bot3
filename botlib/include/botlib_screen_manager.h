@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_SCREEN_MANAGER_H
 #define INCLUDED_BOTLIB_SCREEN_MANAGER_H
 
+#include <commonlib_vector.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -12,7 +13,8 @@ public:
 
     ~ScreenManager();
 
-    void init(Screen::Type startScreenType);
+    void init(Screen::Type startScreenType,
+              const commonlib::Vector2& viewportSize);
 
     void update();
 

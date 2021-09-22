@@ -16,10 +16,11 @@ ScreenManager::~ScreenManager()
     delete curScreen_;
 }
 
-void ScreenManager::init(Screen::Type startScreenType)
+void ScreenManager::init(Screen::Type startScreenType,
+                         const commonlib::Vector2& viewportSize)
 {
     prevScreen_ = nullptr;
-    curScreen_ = Screen::create(startScreenType);
+    curScreen_ = Screen::create(startScreenType, viewportSize, this);
     curScreenType_ = startScreenType;
 }
 

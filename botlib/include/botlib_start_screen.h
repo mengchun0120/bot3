@@ -12,7 +12,8 @@ class StartScreen: public Screen {
 public:
     static void initConfig(const std::string& configFile);
 
-    StartScreen();
+    StartScreen(const commonlib::Vector2& viewportSize,
+                ScreenManager* screenMgr);
 
     ~StartScreen() override;
 
@@ -23,9 +24,9 @@ public:
     bool processInput(const commonlib::InputEvent &e) override;
 
 private:
-    void initWidgets();
+    void initWidgets(const commonlib::Vector2& viewportSize);
 
-    void prepareShader();
+    void prepareShader(const commonlib::Vector2& viewportSize);
 
     void startGame();
 
@@ -46,6 +47,7 @@ private:
     static float k_buttonHeight;
     static float k_buttonSpacing;
 
+    ScreenManager* screenMgr_;
     WidgetGroup widgets_;
 };
 
