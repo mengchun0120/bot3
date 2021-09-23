@@ -58,13 +58,20 @@ void StartScreen::update()
 
 void StartScreen::present()
 {
-    std::cerr << "present" << std::endl;
     widgets_.present();
     glFlush();
 }
 
 bool StartScreen::processInput(const InputEvent &e)
 {
+    if (e.type() == InputEvent::ET_KEY)
+    {
+        if (!processKeyEvent(e.keyEvent()))
+        {
+            return false;
+        }
+    }
+
     widgets_.process(e);
     return true;
 }
@@ -105,21 +112,24 @@ void StartScreen::prepareShader(const commonlib::Vector2& viewportSize)
 {
     SimpleShaderProgram& shader = Graphics::getInstance().simpleShader();
 
+    shader.use();
     shader.setViewportOrigin(viewportSize / 2.0f);
     shader.setViewportSize(viewportSize);
-    shader.use();
 }
 
 void StartScreen::startGame()
 {
+    std::cerr << "Start Game" << std::endl;
 }
 
 void StartScreen::showSettings()
 {
+    std::cerr << "Show Settings" << std::endl;
 }
 
 void StartScreen::exitGame()
 {
+    actions_.exitAction_();
 }
 
 #ifdef DESKTOP_APP

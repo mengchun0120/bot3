@@ -88,6 +88,16 @@ void BotApp::setupWidget(const AppConfig& cfg)
     Button::initConfig(cfg.buttonConfigFile(), cfg.picDir());
 }
 
+void BotApp::setupActions()
+{
+    using namespace std::placeholders;
+
+    actions_.exitAction_ = std::bind(&BotApp::exitApp, this);
+    actions_.switchAction_ = std::bind(&ScreenManager::switchScreen,
+                                       &screenManager_, _1);
+}
+
+
 void BotApp::setupScreen(const AppConfig& cfg)
 {
     StartScreen::initConfig(cfg.startScreenConfigFile());
@@ -106,15 +116,8 @@ void BotApp::setupInput(const AppConfig& cfg)
     inputProcessor_ = std::bind(&ScreenManager::processInput,
                                 &screenManager_,
                                 _1);
-}
 
-void BotApp::setupActions()
-{
-    using namespace std::placeholders;
-
-    actions_.exitAction_ = std::bind(&BotApp::exitApp, this);
-    actions_.switchAction_ = std::bind(&ScreenManager::switchScreen,
-                                       &screenManager_, _1);
+    InputManager::getInstance().enable();
 }
 
 void BotApp::exitApp()
