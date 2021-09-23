@@ -4,6 +4,7 @@
 #include <commonlib_app.h>
 #include <commonlib_input_manager.h>
 #include <botlib_screen_manager.h>
+#include <botlib_app_actions.h>
 
 namespace mcdane {
 namespace botlib {
@@ -44,17 +45,22 @@ private:
     void initWindow();
 #endif
 
-    void setupOpenGL();
+    void setupOpenGL(const AppConfig& cfg);
 
-    void setupWidget();
+    void setupWidget(const AppConfig& cfg);
 
-    void setupScreen();
+    void setupActions();
 
-    void setupInput();
+    void setupScreen(const AppConfig& cfg);
+
+    void setupInput(const AppConfig& cfg);
+
+    void exitApp();
 
 private:
     ScreenManager screenManager_;
     commonlib::InputProcessor inputProcessor_;
+    AppActions actions_;
 };
 
 } // end of namespace botlib

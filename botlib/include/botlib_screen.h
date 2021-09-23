@@ -3,31 +3,18 @@
 
 #include <commonlib_vector.h>
 #include <commonlib_input_event.h>
+#include <botlib_app_actions.h>
 
 namespace mcdane {
 namespace botlib {
 
-class ScreenManager;
-
 class Screen {
 public:
-    enum Type {
-        SCREEN_START,
-        SCREEN_GAME,
-        SCREEN_SHOW_MAP,
-        SCREEN_NONE
-    };
-
-    static Screen* create(Type type,
+    static Screen* create(ScreenType type,
                           const commonlib::Vector2& viewportSize,
-                          ScreenManager* screenMgr);
+                          const AppActions& actions);
 
-    static bool isValidScreen(Type type)
-    {
-        return type >= SCREEN_START && type < SCREEN_NONE;
-    }
-
-    Screen() = default;
+    Screen(const AppActions& actions);
 
     virtual ~Screen() = default;
 
@@ -36,6 +23,9 @@ public:
     virtual void present() = 0;
 
     virtual bool processInput(const commonlib::InputEvent &e) = 0;
+
+protected:
+    AppActions actions_;
 };
 
 

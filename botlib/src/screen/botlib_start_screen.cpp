@@ -1,3 +1,4 @@
+#include <iostream>
 #include <functional>
 #include <commonlib_log.h>
 #include <commonlib_json_utils.h>
@@ -34,18 +35,13 @@ void StartScreen::initConfig(const std::string& configFile)
 }
 
 StartScreen::StartScreen(const commonlib::Vector2& viewportSize,
-                         ScreenManager* screenMgr)
-    : screenMgr_(screenMgr)
+                         const AppActions& actions)
+    : Screen(actions)
 {
     if (viewportSize[0] <= 0.0f || viewportSize[1] <= 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Invalid viewportSize " + toString(viewportSize));
-    }
-
-    if (!screenMgr)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "screenMgr is null");
     }
 
     initWidgets(viewportSize);
@@ -62,6 +58,7 @@ void StartScreen::update()
 
 void StartScreen::present()
 {
+    std::cerr << "present" << std::endl;
     widgets_.present();
     glFlush();
 }
@@ -138,11 +135,9 @@ bool StartScreen::processMouseMoveEvent(const MouseMoveEvent& e)
 
 bool StartScreen::processKeyEvent(const KeyEvent& e)
 {
-    BotApp& app = BotApp::getInstance();
-
     if (GLFW_KEY_ESCAPE == e.key_)
     {
-        app.setRunning(false);
+        actions_.exitAction_();
         return false;
     }
     return true;

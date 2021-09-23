@@ -4,7 +4,8 @@ set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 
 set(BOTLIB_APP_SRC
     src/app/botlib_app_config.cpp
-    src/app/botlib_bot_app.cpp)
+    src/app/botlib_bot_app.cpp
+    src/app/botlib_app_actions.cpp)
 
 set(BOTLIB_OPENGL_SRC
     src/opengl/botlib_simple_shader_program.cpp
@@ -13,6 +14,7 @@ set(BOTLIB_OPENGL_SRC
     src/opengl/botlib_graphics.cpp)
 
 set(BOTLIB_SCREEN_SRC
+    src/screen/botlib_screen_type.cpp
     src/screen/botlib_screen.cpp
     src/screen/botlib_start_screen.cpp
     src/screen/botlib_screen_manager.cpp)

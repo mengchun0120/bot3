@@ -1,4 +1,7 @@
+#include <commonlib_exception.h>
 #include <botlib_screen_manager.h>
+
+using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
@@ -6,7 +9,7 @@ namespace botlib {
 ScreenManager::ScreenManager()
     : prevScreen_(nullptr)
     , curScreen_(nullptr)
-    , curScreenType_(Screen::SCREEN_NONE)
+    , curScreenType_(ScreenType::NONE)
 {
 }
 
@@ -16,12 +19,15 @@ ScreenManager::~ScreenManager()
     delete curScreen_;
 }
 
-void ScreenManager::init(Screen::Type startScreenType,
-                         const commonlib::Vector2& viewportSize)
+void ScreenManager::init(ScreenType startScreenType,
+                         const commonlib::Vector2& viewportSize,
+                         const AppActions& actions)
 {
     prevScreen_ = nullptr;
-    curScreen_ = Screen::create(startScreenType, viewportSize, this);
+    curScreen_ = Screen::create(startScreenType, viewportSize, actions);
     curScreenType_ = startScreenType;
+    viewportSize_ = viewportSize;
+    actions_ = actions;
 }
 
 void ScreenManager::update()
@@ -50,15 +56,20 @@ bool ScreenManager::processInput(const commonlib::InputEvent &e)
     return curScreen_->processInput(e);
 }
 
-void ScreenManager::switchScreen(Screen::Type type)
+void ScreenManager::switchScreen(ScreenType type)
 {
+    if (type == ScreenType::NONE)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "ScreenType is none");
+    }
+
     if (curScreenType_ == type)
     {
         return;
     }
 
     prevScreen_ = curScreen_;
-    curScreen_ = Screen::create(type);
+    curScreen_ = Screen::create(type, viewportSize_, actions_);
     curScreenType_ = type;
 }
 

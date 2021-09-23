@@ -1,5 +1,4 @@
 #include <iostream>
-#include <functional>
 #include <commonlib_log.h>
 #include <botlib_app_config.h>
 #include <botlib_graphics.h>
@@ -65,39 +64,41 @@ void BotApp::init(const std::string& configFile,
 #ifdef DESKTOP_APP
     setupWindow(cfg.width(), cfg.height(), cfg.title());
 #endif
-    setupOpenGL();
-    setupScreen();
-    setupInput();
+    setupOpenGL(cfg);
+    setupWidget(cfg);
+    setupActions();
+    setupScreen(cfg);
+    setupInput(cfg);
 }
 
-void BotApp::setupOpenGL()
+void BotApp::setupOpenGL(const AppConfig& cfg)
 {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-    const AppConfig& cfg = AppConfig::getInstance();
     Graphics::initInstance(cfg.simpleVertexShaderFile(),
                            cfg.simpleFragShaderFile(),
                            cfg.fontDir());
 }
 
-void setupWidget();
-
-void BotApp::setupScreen()
+void BotApp::setupWidget(const AppConfig& cfg)
 {
-    const AppConfig& cfg = AppConfig::getInstance();
-    StartScreen::initConfig(cfg.startScreenConfigFile());
-
-    screenManager_.init(Screen::SCREEN_START, viewportSize());
+    Button::initConfig(cfg.buttonConfigFile(), cfg.picDir());
 }
 
-void BotApp::setupInput()
+void BotApp::setupScreen(const AppConfig& cfg)
+{
+    StartScreen::initConfig(cfg.startScreenConfigFile());
+
+    screenManager_.init(ScreenType::START, viewportSize(), actions_);
+}
+
+void BotApp::setupInput(const AppConfig& cfg)
 {
     using namespace std::placeholders;
 
-    const AppConfig& cfg = AppConfig::getInstance();
     InputManager::initInstance(window(),
                                viewportHeight(),
                                cfg.inputQueueCapacity());
@@ -105,6 +106,20 @@ void BotApp::setupInput()
     inputProcessor_ = std::bind(&ScreenManager::processInput,
                                 &screenManager_,
                                 _1);
+}
+
+void BotApp::setupActions()
+{
+    using namespace std::placeholders;
+
+    actions_.exitAction_ = std::bind(&BotApp::exitApp, this);
+    actions_.switchAction_ = std::bind(&ScreenManager::switchScreen,
+                                       &screenManager_, _1);
+}
+
+void BotApp::exitApp()
+{
+    setRunning(false);
 }
 
 } // end of namespace botlib

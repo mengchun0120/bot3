@@ -4,19 +4,19 @@
 namespace mcdane {
 namespace botlib {
 
-Screen* Screen::create(Type type,
+Screen* Screen::create(ScreenType type,
                        const commonlib::Vector2& viewportSize,
-                       ScreenManager* screenMgr)
+                       const AppActions& actions)
 {
     Screen* screen = nullptr;
     switch(type)
     {
-        case SCREEN_START:
-            screen = new StartScreen(viewportSize, screenMgr);
+        case ScreenType::START:
+            screen = new StartScreen(viewportSize, actions);
             break;
-        case SCREEN_GAME:
+        case ScreenType::GAME:
             break;
-        case SCREEN_SHOW_MAP:
+        case ScreenType::SHOW_MAP:
             break;
         default:
             THROW_EXCEPT(commonlib::MyException, "Invalid screen type");
@@ -24,6 +24,11 @@ Screen* Screen::create(Type type,
     }
 
     return screen;
+}
+
+Screen::Screen(const AppActions& actions)
+    : actions_(actions)
+{
 }
 
 } // end of namespace botlib

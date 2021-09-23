@@ -13,7 +13,7 @@ public:
     static void initConfig(const std::string& configFile);
 
     StartScreen(const commonlib::Vector2& viewportSize,
-                ScreenManager* screenMgr);
+                const AppActions& actions);
 
     ~StartScreen() override;
 
@@ -47,7 +47,6 @@ private:
     static float k_buttonHeight;
     static float k_buttonSpacing;
 
-    ScreenManager* screenMgr_;
     WidgetGroup widgets_;
 };
 

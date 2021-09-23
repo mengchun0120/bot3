@@ -13,8 +13,9 @@ public:
 
     ~ScreenManager();
 
-    void init(Screen::Type startScreenType,
-              const commonlib::Vector2& viewportSize);
+    void init(ScreenType startScreenType,
+              const commonlib::Vector2& viewportSize,
+              const AppActions& actions);
 
     void update();
 
@@ -22,7 +23,7 @@ public:
 
     bool processInput(const commonlib::InputEvent &e);
 
-    void switchScreen(Screen::Type type);
+    void switchScreen(ScreenType type);
 
     void postProcess();
 
@@ -34,7 +35,9 @@ public:
 private:
     Screen* prevScreen_;
     Screen* curScreen_;
-    Screen::Type curScreenType_;
+    ScreenType curScreenType_;
+    commonlib::Vector2 viewportSize_;
+    AppActions actions_;
 };
 
 } // end of namespace botlib
