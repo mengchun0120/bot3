@@ -57,17 +57,17 @@ void WidgetGroup::process(const commonlib::InputEvent& event)
 #ifdef DESKTOP_APP
     switch (event.type())
     {
-        case InputEvent::ET_KEY:
+        case EventType::KEY:
         {
             process(event.keyEvent());
             break;
         }
-        case InputEvent::ET_MOUSE_MOVE:
+        case EventType::MOUSE_MOVE:
         {
             process(event.mouseMoveEvent());
             break;
         }
-        case InputEvent::ET_MOUSE_BUTTON:
+        case EventType::MOUSE_BUTTON:
         {
             process(event.mouseButtonEvent());
             break;

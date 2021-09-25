@@ -94,13 +94,13 @@ void TestShapeApp::process()
     texRect_.draw(program, 0.0f, &texPos_, nullptr, nullptr,
                   nullptr, texture_.id(), nullptr);
     textSys.draw(program, "Hello world", Point2{200.0f, 700.0f},
-                 0.0f, TEXT_SIZE_BIG, &fillColor_);
+                 0.0f, TextSize::BIG, &fillColor_);
     textSys.draw(program, "Hello world", Point2{200.0f, 600.0f},
-                 0.0f, TEXT_SIZE_MEDIUM, &fillColor_);
+                 0.0f, TextSize::MEDIUM, &fillColor_);
     textSys.draw(program, "Hello world", Point2{200.0f, 500.0f},
-                 0.0f, TEXT_SIZE_SMALL, &fillColor_);
+                 0.0f, TextSize::SMALL, &fillColor_);
     textSys.draw(program, "Hello world", Point2{200.0f, 400.0f},
-                 0.0f, TEXT_SIZE_TINY, &fillColor_);
+                 0.0f, TextSize::TINY, &fillColor_);
 
     glFlush();
 }

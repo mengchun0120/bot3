@@ -6,18 +6,29 @@
 namespace mcdane {
 namespace botlib {
 
-enum TextSize {
-    TEXT_SIZE_BIG = 0,
-    TEXT_SIZE_MEDIUM,
-    TEXT_SIZE_SMALL,
-    TEXT_SIZE_TINY,
-    TEXT_SIZE_COUNT,
-    TEXT_SIZE_INVALID
+enum class TextSize {
+    BIG = 0,
+    MEDIUM,
+    SMALL,
+    TINY,
+    COUNT,
+    INVALID = COUNT,
 };
+
+constexpr int firstTextSize()
+{
+    return static_cast<int>(TextSize::BIG);
+}
+
+constexpr int textSizeCount()
+{
+    return static_cast<int>(TextSize::COUNT);
+}
 
 inline bool isValidTextSize(TextSize sz)
 {
-    return sz >= TEXT_SIZE_BIG && sz < TEXT_SIZE_COUNT;
+    int intSize = static_cast<int>(sz);
+    return intSize >= firstTextSize()  && intSize < textSizeCount();
 }
 
 TextSize toTextSize(const std::string &s);

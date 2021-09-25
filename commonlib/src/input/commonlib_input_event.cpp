@@ -1,4 +1,5 @@
 #include <commonlib_exception.h>
+#include <commonlib_string_utils.h>
 #include <commonlib_input_event.h>
 
 namespace mcdane {
@@ -66,7 +67,7 @@ void KeyEvent::set(int key,
 }
 
 InputEvent::InputEvent()
-    : type_(ET_UNKNOWN)
+    : type_(EventType::UNKNOWN)
 {
 }
 
@@ -75,17 +76,19 @@ InputEvent& InputEvent::operator=(const InputEvent& e)
     type_ = e.type_;
     switch (e.type_)
     {
-        case ET_MOUSE_BUTTON:
+        case EventType::MOUSE_BUTTON:
             mouseButtonEvent_ = e.mouseButtonEvent_;
             break;
-        case ET_MOUSE_MOVE:
+        case EventType::MOUSE_MOVE:
             mouseMoveEvent_ = e.mouseMoveEvent_;
             break;
-        case ET_KEY:
+        case EventType::KEY:
             keyEvent_ = e.keyEvent_;
             break;
         default:
-            break;
+            THROW_EXCEPT(InvalidArgumentException,
+                        "Invalid EventType " +
+                            toString(static_cast<int>(e.type_)));
     }
 
     return *this;
@@ -97,14 +100,14 @@ void InputEvent::setMouseButtonEvent(float x,
                                      int action,
                                      int mods)
 {
-    type_ = ET_MOUSE_BUTTON;
+    type_ = EventType::MOUSE_BUTTON;
     mouseButtonEvent_.set(x, y, button, action, mods);
 }
 
 void InputEvent::setMouseMoveEvent(float x,
                                    float y)
 {
-    type_ = ET_MOUSE_MOVE;
+    type_ = EventType::MOUSE_MOVE;
     mouseMoveEvent_.set(x, y);
 }
 
@@ -113,13 +116,13 @@ void InputEvent::setKeyEvent(int key,
                              int scancode,
                              int mods)
 {
-    type_ = ET_KEY;
+    type_ = EventType::KEY;
     keyEvent_.set(key, action, scancode, mods);
 }
 
 const MouseButtonEvent& InputEvent::mouseButtonEvent() const
 {
-    if (type_ != ET_MOUSE_BUTTON)
+    if (type_ != EventType::MOUSE_BUTTON)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Event is not a mouse-button event");
@@ -130,7 +133,7 @@ const MouseButtonEvent& InputEvent::mouseButtonEvent() const
 
 const MouseMoveEvent& InputEvent::mouseMoveEvent() const
 {
-    if (type_ != ET_MOUSE_MOVE)
+    if (type_ != EventType::MOUSE_MOVE)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Event is not a mouse-move event");
@@ -141,7 +144,7 @@ const MouseMoveEvent& InputEvent::mouseMoveEvent() const
 
 const KeyEvent& InputEvent::keyEvent() const
 {
-    if (type_ != ET_KEY)
+    if (type_ != EventType::KEY)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Event is not key event");
@@ -198,14 +201,15 @@ std::ostream& operator<<(std::ostream& os,
 
     switch(e.type())
     {
-        case InputEvent::ET_MOUSE_BUTTON:
+        case EventType::MOUSE_BUTTON:
             return os << e.mouseButtonEvent();
-        case InputEvent::ET_MOUSE_MOVE:
+        case EventType::MOUSE_MOVE:
             return os << e.mouseMoveEvent();
-        case InputEvent::ET_KEY:
+        case EventType::KEY:
             return os << e.keyEvent();
     }
-    os << "Unknown Event";
+    THROW_EXCEPT(InvalidArgumentException,
+                 "Invalid EventType " + toString(static_cast<int>(e.type())));
     return os;
 }
 

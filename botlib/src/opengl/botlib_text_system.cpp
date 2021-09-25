@@ -31,7 +31,7 @@ TextSystem::~TextSystem()
 {
     if (fontRects_)
     {
-        for (int s = TEXT_SIZE_BIG; s < TEXT_SIZE_COUNT; ++s)
+        for (int s = firstTextSize(); s < textSizeCount(); ++s)
         {
             delete[] fontRects_[s];
         }
@@ -59,8 +59,8 @@ void TextSystem::loadFontTextures(const std::string& fontDir)
 
 void TextSystem::loadFontHeights()
 {
-    fontHeights_.resize(TEXT_SIZE_COUNT);
-    for (int s = TEXT_SIZE_BIG; s < TEXT_SIZE_COUNT; ++s)
+    fontHeights_.resize(textSizeCount());
+    for (int s = firstTextSize(); s < textSizeCount(); ++s)
     {
         float h = fontTextures_[0].height() * k_scaleFactors[s];
         fontHeights_[s] = static_cast<float>(floor(h));
@@ -69,10 +69,10 @@ void TextSystem::loadFontHeights()
 
 void TextSystem::loadFontRect()
 {
-    fontRects_ = new Rectangle*[TEXT_SIZE_COUNT];
-    fontRectIdx_.resize(TEXT_SIZE_COUNT);
+    fontRects_ = new Rectangle*[textSizeCount()];
+    fontRectIdx_.resize(textSizeCount());
 
-    for (int s = TEXT_SIZE_BIG; s < TEXT_SIZE_COUNT; ++s)
+    for (int s = firstTextSize(); s < textSizeCount(); ++s)
     {
         loadFontRectForTextSize(fontRects_[s], fontRectIdx_[s], s);
     }
@@ -154,7 +154,7 @@ void TextSystem::draw(SimpleShaderProgram& program,
 
     Point2 p{
         pos[0] + getRect(s[0], size).width()/2.0f,
-        pos[1] + fontHeights_[size]/2.0f
+        pos[1] + fontHeights_[static_cast<int>(size)]/2.0f
     };
 
     for (std::size_t i = 0; i < s.size(); ++i)
@@ -188,7 +188,7 @@ commonlib::Vector2 TextSystem::getSize(const std::string& s,
         return sz;
     }
 
-    sz[1] = fontHeights_[size];
+    sz[1] = fontHeights_[static_cast<int>(size)];
 
     for (std::size_t i = 0; i < s.size(); ++i)
     {

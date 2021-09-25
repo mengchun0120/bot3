@@ -46,7 +46,7 @@ void Button::validateTextColor()
 
 Button::Button()
     : state_(STATE_NORMAL)
-    , textSize_(TEXT_SIZE_INVALID)
+    , textSize_(TextSize::INVALID)
 {
 }
 

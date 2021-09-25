@@ -28,7 +28,7 @@ public:
            float width,
            float height,
            const std::string& text,
-           TextSize textSize=TEXT_SIZE_MEDIUM,
+           TextSize textSize=TextSize::MEDIUM,
            bool visible=true,
            bool acceptInput=true);
 
@@ -40,7 +40,7 @@ public:
               float width,
               float height,
               const std::string& text,
-              TextSize textSize=TEXT_SIZE_MEDIUM,
+              TextSize textSize=TextSize::MEDIUM,
               bool visible=true,
               bool acceptInput=true);
 

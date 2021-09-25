@@ -7,22 +7,22 @@ TextSize toTextSize(const std::string &s)
 {
     if (s == "big")
     {
-        return TEXT_SIZE_BIG;
+        return TextSize::BIG;
     }
     else if (s == "medium")
     {
-        return TEXT_SIZE_MEDIUM;
+        return TextSize::MEDIUM;
     }
     else if (s == "small")
     {
-        return TEXT_SIZE_SMALL;
+        return TextSize::SMALL;
     }
     else if (s == "tiny")
     {
-        return TEXT_SIZE_TINY;
+        return TextSize::TINY;
     }
 
-    return TEXT_SIZE_INVALID;
+    return TextSize::INVALID;
 }
 
 } // end of namespace botlib

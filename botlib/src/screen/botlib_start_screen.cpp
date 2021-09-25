@@ -64,7 +64,7 @@ void StartScreen::present()
 
 bool StartScreen::processInput(const InputEvent &e)
 {
-    if (e.type() == InputEvent::ET_KEY)
+    if (e.type() == EventType::KEY)
     {
         if (!processKeyEvent(e.keyEvent()))
         {

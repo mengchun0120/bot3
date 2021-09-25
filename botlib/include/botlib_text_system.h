@@ -46,12 +46,12 @@ private:
     int getRectWidthForTextSize(std::vector<int>& widths,
                                 int textSize);
 
-    inline const Rectangle& getRect(int ch, int textSize) const;
+    inline const Rectangle& getRect(int ch, TextSize textSize) const;
 
     inline const commonlib::Texture& getTexture(int ch) const;
 
 private:
-    static const float k_scaleFactors[TEXT_SIZE_COUNT];
+    static const float k_scaleFactors[textSizeCount()];
 
     std::vector<float> fontHeights_;
     Rectangle** fontRects_;
@@ -59,10 +59,10 @@ private:
     commonlib::Texture* fontTextures_;
 };
 
-const Rectangle& TextSystem::getRect(int ch, int textSize) const
+const Rectangle& TextSystem::getRect(int ch, TextSize textSize) const
 {
-    int idx = fontRectIdx_[textSize][ch-MIN_CHAR];
-    return fontRects_[textSize][idx];
+    int idx = fontRectIdx_[static_cast<int>(textSize)][ch-MIN_CHAR];
+    return fontRects_[static_cast<int>(textSize)][idx];
 }
 
 const commonlib::Texture& TextSystem::getTexture(int ch) const

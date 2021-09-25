@@ -48,14 +48,15 @@ struct KeyEvent {
     int mods_;
 };
 
+enum class EventType {
+    MOUSE_BUTTON,
+    MOUSE_MOVE,
+    KEY,
+    UNKNOWN
+};
+
 class InputEvent {
 public:
-    enum EventType {
-        ET_MOUSE_BUTTON,
-        ET_MOUSE_MOVE,
-        ET_KEY,
-        ET_UNKNOWN
-    };
 
     InputEvent();
 
