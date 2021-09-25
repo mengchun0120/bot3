@@ -2,13 +2,13 @@
 #include <commonlib_file_utils.h>
 #include <botlib_app_config.h>
 #include <botlib_graphics.h>
-#include <testshape_testshape_app.h>
+#include <itest_testshape_app.h>
 
 using namespace mcdane::commonlib;
 using namespace mcdane::botlib;
 
 namespace mcdane {
-namespace testshape {
+namespace itest {
 
 TestShapeApp::TestShapeApp(const std::string& configFile,
                            const std::string& appDir)
@@ -110,6 +110,6 @@ void TestShapeApp::postProcess()
     App::postProcess();
 }
 
-} // end of namespace testshape
+} // end of namespace itest
 } // end of namespace mcdane
 

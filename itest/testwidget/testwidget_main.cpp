@@ -3,10 +3,10 @@
 #include <cstdlib>
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
-#include <testwidget_testwidget_app.h>
+#include <itest_testwidget_app.h>
 
 using namespace mcdane::commonlib;
-using namespace mcdane::testwidget;
+using namespace mcdane::itest;
 
 struct Arguments {
     std::string configFile_;

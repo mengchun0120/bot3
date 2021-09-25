@@ -2,13 +2,13 @@
 #include <botlib_app_config.h>
 #include <botlib_graphics.h>
 #include <botlib_button.h>
-#include <testwidget_testwidget_app.h>
+#include <itest_testwidget_app.h>
 
 using namespace mcdane::commonlib;
 using namespace mcdane::botlib;
 
 namespace mcdane {
-namespace testwidget {
+namespace itest {
 
 TestWidgetApp::TestWidgetApp(const std::string& configFile,
                            const std::string& appDir)
@@ -115,6 +115,6 @@ bool TestWidgetApp::processInput(const commonlib::InputEvent& e)
     return true;
 }
 
-} // end of namespace testwidget
+} // end of namespace itest
 } // end of namespace mcdane
 

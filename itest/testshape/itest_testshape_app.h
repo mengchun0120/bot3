@@ -1,12 +1,12 @@
-#ifndef INCLUDED_TESTSHAPE_TESTSHAPE_H
-#define INCLUDED_TESTSHAPE_TESTSHAPE_H
+#ifndef INCLUDED_ITEST_TESTSHAPE_APP_H
+#define INCLUDED_ITEST_TESTSHAPE_APP_H
 
 #include <commonlib_app.h>
 #include <commonlib_texture.h>
 #include <botlib_rectangle.h>
 
 namespace mcdane {
-namespace testshape {
+namespace itest {
 
 class TestShapeApp: public commonlib::App {
 public:
@@ -40,7 +40,7 @@ private:
     commonlib::Point2 texPos_;
 };
 
-} // end of namespace testshape
+} // end of namespace itest
 } // end of namespace mcdane
 
 #endif

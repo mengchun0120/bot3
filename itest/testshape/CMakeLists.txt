@@ -8,7 +8,7 @@ include_directories(${CMAKE_SOURCE_DIR}/commonlib/include
                     ${CMAKE_SOURCE_DIR}/botlib/include
                     ${CMAKE_SOURCE_DIR}/itest/testshape)
 
-add_executable(testshape testshape_testshape_app.cpp
+add_executable(testshape itest_testshape_app.cpp
                          testshape_main.cpp)
 
 set_property(TARGET testshape PROPERTY CXX_STANDARD 11)

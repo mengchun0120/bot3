@@ -1,12 +1,12 @@
-#ifndef INCLUDED_TESTWIDGET_TESTWIDGET_APP_H
-#define INCLUDED_TESTWIDGET_TESTWIDGET_APP_H
+#ifndef INCLUDED_ITEST_TESTWIDGET_APP_H
+#define INCLUDED_ITEST_TESTWIDGET_APP_H
 
 #include <commonlib_app.h>
 #include <commonlib_input_manager.h>
 #include <botlib_widget_group.h>
 
 namespace mcdane {
-namespace testwidget {
+namespace itest {
 
 class TestWidgetApp: public commonlib::App {
 public:
@@ -35,7 +35,7 @@ private:
     commonlib::InputProcessor inputProcessor_;
 };
 
-} // end of namespace testwidget
+} // end of namespace itest
 } // end of namespace mcdane
 
 #endif

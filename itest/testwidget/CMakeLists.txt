@@ -8,7 +8,7 @@ include_directories(${CMAKE_SOURCE_DIR}/commonlib/include
                     ${CMAKE_SOURCE_DIR}/botlib/include
                     ${CMAKE_SOURCE_DIR}/itest/testwidget)
 
-add_executable(testwidget testwidget_testwidget_app.cpp
+add_executable(testwidget itest_testwidget_app.cpp
                           testwidget_main.cpp)
 
 set_property(TARGET testwidget PROPERTY CXX_STANDARD 11)
