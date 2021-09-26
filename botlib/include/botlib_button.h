@@ -32,7 +32,7 @@ public:
            bool visible=true,
            bool acceptInput=true);
 
-    virtual ~Button() override = default;
+    ~Button() override = default;
 
     void init(float x,
               float y,

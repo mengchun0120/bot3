@@ -41,6 +41,8 @@ public:
 
     inline const std::string& buttonConfigFile() const;
 
+    inline const std::string& labelConfigFile() const;
+
     inline const std::string& startScreenConfigFile() const;
 
 private:
@@ -72,6 +74,7 @@ private:
     std::string simpleVertexShaderFile_;
     std::string simpleFragShaderFile_;
     std::string buttonConfigFile_;
+    std::string labelConfigFile_;
     std::string startScreenConfigFile_;
 };
 
@@ -133,6 +136,11 @@ const std::string& AppConfig::simpleFragShaderFile() const
 const std::string& AppConfig::buttonConfigFile() const
 {
     return buttonConfigFile_;
+}
+
+const std::string& AppConfig::labelConfigFile() const
+{
+    return labelConfigFile_;
 }
 
 const std::string& AppConfig::startScreenConfigFile() const

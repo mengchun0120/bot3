@@ -17,6 +17,7 @@
     },
     "configs": {
         "buttonConfigFile": "button_config.json",
+        "labelConfigFile": "label_config.json",
         "startScreenConfigFile": "start_screen_config.json"
     }
 }

@@ -47,6 +47,92 @@ void TextSystem::load(const std::string& fontDir)
     loadFontRect();
 }
 
+void TextSystem::draw(SimpleShaderProgram& program,
+                      const std::string& s,
+                      const Point2& pos,
+                      float z,
+                      TextSize size,
+                      const Color* color) const
+{
+    if (!isValidTextSize(size))
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid size");
+    }
+
+    if (s.size() == 0)
+    {
+        return;
+    }
+
+    Point2 p{
+        pos[0] + getRect(s[0], size).width()/2.0f,
+        pos[1] + fontHeights_[static_cast<int>(size)]/2.0f
+    };
+
+    for (std::size_t i = 0; i < s.size(); ++i)
+    {
+        const Rectangle& curRect = getRect(s[i], size);
+        const Texture& texture = getTexture(s[i]);
+
+        curRect.draw(program, z, &p, nullptr, nullptr, nullptr,
+                     texture.id(), color);
+
+        if (i < s.size() - 1)
+        {
+            const Rectangle& nextRect = getRect(s[i+1], size);
+            p[0] += (curRect.width() + nextRect.width()) / 2.0f;
+        }
+    }
+}
+
+commonlib::Vector2 TextSystem::getSize(const std::string& s,
+                                       TextSize size) const
+{
+    commonlib::Vector2 sz{0.0f, 0.0f};
+
+    if (s.size() == 0)
+    {
+        return sz;
+    }
+
+    sz[0] = getWidth(s, size);
+    sz[1] = getHeight(size);
+
+    return sz;
+}
+
+float TextSystem::getWidth(const std::string& s,
+                           TextSize size) const
+{
+    if (!isValidTextSize(size))
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid size");
+    }
+
+    if (s.size() == 0)
+    {
+        return 0.0f;
+    }
+
+    float width = 0.0f;
+    for (std::size_t i = 0; i < s.size(); ++i)
+    {
+        width += getRect(s[i], size).width();
+    }
+
+    return width;
+}
+
+float TextSystem::getHeight(TextSize size) const
+{
+    if (!isValidTextSize(size))
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid size");
+    }
+
+    return fontHeights_[static_cast<int>(size)];
+}
+
 void TextSystem::loadFontTextures(const std::string& fontDir)
 {
     fontTextures_ = new Texture[CHAR_COUNT];
@@ -133,69 +219,6 @@ int TextSystem::getRectWidthForTextSize(std::vector<int>& widths,
     }
 
     return count;
-}
-
-void TextSystem::draw(SimpleShaderProgram& program,
-                      const std::string& s,
-                      const Point2& pos,
-                      float z,
-                      TextSize size,
-                      const Color* color)
-{
-    if (!isValidTextSize(size))
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid size");
-    }
-
-    if (s.size() == 0)
-    {
-        return;
-    }
-
-    Point2 p{
-        pos[0] + getRect(s[0], size).width()/2.0f,
-        pos[1] + fontHeights_[static_cast<int>(size)]/2.0f
-    };
-
-    for (std::size_t i = 0; i < s.size(); ++i)
-    {
-        const Rectangle& curRect = getRect(s[i], size);
-        const Texture& texture = getTexture(s[i]);
-
-        curRect.draw(program, z, &p, nullptr, nullptr, nullptr,
-                     texture.id(), color);
-
-        if (i < s.size() - 1)
-        {
-            const Rectangle& nextRect = getRect(s[i+1], size);
-            p[0] += (curRect.width() + nextRect.width()) / 2.0f;
-        }
-    }
-}
-
-commonlib::Vector2 TextSystem::getSize(const std::string& s,
-                                       TextSize size)
-{
-    if (!isValidTextSize(size))
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid size");
-    }
-
-    commonlib::Vector2 sz{0.0f, 0.0f};
-
-    if (s.size() == 0)
-    {
-        return sz;
-    }
-
-    sz[1] = fontHeights_[static_cast<int>(size)];
-
-    for (std::size_t i = 0; i < s.size(); ++i)
-    {
-        sz[0] += getRect(s[i], size).width();
-    }
-
-    return sz;
 }
 
 } // end of namespace botlib

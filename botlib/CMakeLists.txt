@@ -17,6 +17,7 @@ set(BOTLIB_SCREEN_SRC
     src/screen/botlib_screen_type.cpp
     src/screen/botlib_screen.cpp
     src/screen/botlib_start_screen.cpp
+    src/screen/botlib_game_screen.cpp
     src/screen/botlib_screen_manager.cpp)
 
 set(BOTLIB_SHAPE_SRC
@@ -27,9 +28,11 @@ set(BOTLIB_SHAPE_SRC
     src/shape/botlib_rectangle.cpp)
 
 set(BOTLIB_WIDGET_SRC
+    src/widget/botlib_align.cpp
     src/widget/botlib_widget.cpp
     src/widget/botlib_widget_group.cpp
-    src/widget/botlib_button.cpp)
+    src/widget/botlib_button.cpp
+    src/widget/botlib_label.cpp)
 
 set(BOTLIB_MISC_SRC
     src/misc/botlib_constants.cpp)

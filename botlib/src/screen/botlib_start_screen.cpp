@@ -119,7 +119,7 @@ void StartScreen::prepareShader(const commonlib::Vector2& viewportSize)
 
 void StartScreen::startGame()
 {
-    std::cerr << "Start Game" << std::endl;
+    actions_.switchAction_(ScreenType::GAME);
 }
 
 void StartScreen::showSettings()

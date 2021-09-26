@@ -27,10 +27,15 @@ public:
               const commonlib::Point2& pos,
               float z,
               TextSize size,
-              const commonlib::Color* color=nullptr);
+              const commonlib::Color* color=nullptr) const;
 
     commonlib::Vector2 getSize(const std::string& s,
-                               TextSize size);
+                               TextSize size) const;
+
+    float getWidth(const std::string& s,
+                   TextSize size) const;
+
+    float getHeight(TextSize size) const;
 
 private:
     void loadFontTextures(const std::string& fontDir);

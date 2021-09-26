@@ -89,6 +89,8 @@ void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
     std::vector<JsonParamPtr> params{
         jsonParam(buttonConfigFile_, {"configs", "buttonConfigFile"},
                   true, nonempty(buttonConfigFile_)),
+        jsonParam(labelConfigFile_, {"configs", "labelConfigFile"},
+                  true, nonempty(labelConfigFile_)),
         jsonParam(startScreenConfigFile_, {"configs", "startScreenConfigFile"},
                   true, nonempty(startScreenConfigFile_))
     };
@@ -96,8 +98,8 @@ void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
     parse(params, doc);
 
     buttonConfigFile_ = constructPath({configDir_, buttonConfigFile_});
+    labelConfigFile_ = constructPath({configDir_, labelConfigFile_});
     startScreenConfigFile_ = constructPath({configDir_, startScreenConfigFile_});
-
 }
 
 } // end of namespace botlib

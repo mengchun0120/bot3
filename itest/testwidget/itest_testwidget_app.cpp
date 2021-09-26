@@ -2,6 +2,7 @@
 #include <botlib_app_config.h>
 #include <botlib_graphics.h>
 #include <botlib_button.h>
+#include <botlib_label.h>
 #include <itest_testwidget_app.h>
 
 using namespace mcdane::commonlib;
@@ -24,6 +25,8 @@ TestWidgetApp::TestWidgetApp(const std::string& configFile,
 
     Button::initConfig(cfg.buttonConfigFile(),
                        cfg.picDir());
+
+    Label::initConfig(cfg.labelConfigFile());
 
     setupOpenGL();
     setupWidgets();
@@ -59,7 +62,7 @@ void TestWidgetApp::setupWidgets()
         "Exit"
     };
 
-    widgets_.init(BUTTON_COUNT);
+    widgets_.init(BUTTON_COUNT+3);
     for (unsigned int i = 0; i < BUTTON_COUNT; ++i)
     {
         Button* button = new Button(buttonX, buttonY, buttonZ,
@@ -75,6 +78,15 @@ void TestWidgetApp::setupWidgets()
         widgets_.setWidget(i, button);
         buttonY += incrY;
     }
+
+    Label* label = new Label(150.0f, 200.0f, 0.0f, 200.0f, 70.0f, "Label One");
+    widgets_.setWidget(BUTTON_COUNT, label);
+    label = new Label(150.0f, 400.0f, 0.0f, 200.0f, 70.0f, "Label Two",
+                      TextSize::SMALL, HAlign::MIDDLE, VAlign::MIDDLE);
+    widgets_.setWidget(BUTTON_COUNT+1, label);
+    label = new Label(150.0f, 600.0f, 0.0f, 200.0f, 70.0f, "Label Three",
+                      TextSize::SMALL, HAlign::RIGHT, VAlign::BOTTOM);
+    widgets_.setWidget(BUTTON_COUNT+2, label);
 }
 
 void TestWidgetApp::setupInput()
