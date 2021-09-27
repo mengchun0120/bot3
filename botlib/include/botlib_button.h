@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <string>
+#include <rapidjson/document.h>
 #include <commonlib_color.h>
 #include <commonlib_texture.h>
 #include <botlib_text_size.h>
@@ -17,7 +18,7 @@ public:
     using ActionFunc = std::function<void()>;
 
 public:
-    static void initConfig(const std::string& configFile,
+    static void initConfig(const rapidjson::Value& cfg,
                            const std::string& picDir);
 
     Button();

@@ -4,11 +4,11 @@ namespace mcdane {
 namespace commonlib {
 
 void parse(std::vector<JsonParamPtr>& params,
-           const rapidjson::Document& doc)
+           const rapidjson::Value& v)
 {
     for (auto it = params.begin(); it != params.end(); ++it)
     {
-        (*it)->parse(doc);
+        (*it)->parse(v);
     }
 }
 

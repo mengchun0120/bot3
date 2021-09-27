@@ -26,7 +26,7 @@ public:
         , validator_(v)
     {}
 
-    virtual void parse(const rapidjson::Document& doc) = 0;
+    virtual void parse(const rapidjson::Value& doc) = 0;
 
 protected:
     std::vector<std::string> path_;
@@ -47,7 +47,7 @@ public:
         , var_(var)
     {}
 
-    void parse(const rapidjson::Document& doc) override;
+    void parse(const rapidjson::Value& doc) override;
 
 protected:
     T& var_;
@@ -63,9 +63,9 @@ JsonParamPtr jsonParam(T& var,
 }
 
 template <typename T>
-void TypedJsonParam<T>::parse(const rapidjson::Document& doc)
+void TypedJsonParam<T>::parse(const rapidjson::Value& value)
 {
-    const rapidjson::Value* v = findJson(doc, path_);
+    const rapidjson::Value* v = findJson(value, path_);
     if (!v)
     {
         if (required_)
@@ -88,7 +88,7 @@ void TypedJsonParam<T>::parse(const rapidjson::Document& doc)
 }
 
 void parse(std::vector<JsonParamPtr>& params,
-           const rapidjson::Document& doc);
+           const rapidjson::Value& v);
 
 } // end of namespace commonlib
 } // end of namespace mcdane

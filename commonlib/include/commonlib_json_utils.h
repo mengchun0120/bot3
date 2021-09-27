@@ -11,7 +11,7 @@ namespace commonlib {
 void readJson(rapidjson::Document& doc,
               const std::string& fileName);
 
-const rapidjson::Value* findJson(const rapidjson::Document& doc,
+const rapidjson::Value* findJson(const rapidjson::Value& json,
                                  const std::vector<std::string>& path);
 
 } // end of namespace commonlib

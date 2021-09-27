@@ -23,11 +23,6 @@ TestWidgetApp::TestWidgetApp(const std::string& configFile,
                            cfg.simpleFragShaderFile(),
                            cfg.fontDir());
 
-    Button::initConfig(cfg.buttonConfigFile(),
-                       cfg.picDir());
-
-    Label::initConfig(cfg.labelConfigFile());
-
     setupOpenGL();
     setupWidgets();
     setupInput();

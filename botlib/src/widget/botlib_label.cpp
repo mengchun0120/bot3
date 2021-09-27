@@ -1,5 +1,4 @@
 #include <commonlib_exception.h>
-#include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
 #include <botlib_graphics.h>
 #include <botlib_label.h>
@@ -13,10 +12,12 @@ Color Label::k_defaultTextColor;
 Color Label::k_defaultBackgroundColor;
 Color Label::k_defaultBorderColor;
 
-void Label::initConfig(const std::string& configFile)
+void Label::initConfig(const rapidjson::Value& cfg)
 {
-    rapidjson::Document doc;
-    readJson(doc, configFile);
+    if (!cfg.IsObject())
+    {
+        THROW_EXCEPT(InvalidArgumentException, "cfg must be an object");
+    }
 
     std::vector<JsonParamPtr> params{
         jsonParam(k_defaultTextColor, {"defaultTextColor"}, true,
@@ -27,7 +28,7 @@ void Label::initConfig(const std::string& configFile)
                   nonempty(k_defaultBorderColor))
     };
 
-    parse(params, doc);
+    parse(params, cfg);
 }
 
 Label::Label(float x,

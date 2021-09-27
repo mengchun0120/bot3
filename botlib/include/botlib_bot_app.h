@@ -47,8 +47,6 @@ private:
 
     void setupOpenGL(const AppConfig& cfg);
 
-    void setupWidget(const AppConfig& cfg);
-
     void setupActions();
 
     void setupScreen(const AppConfig& cfg);

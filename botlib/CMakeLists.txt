@@ -32,7 +32,8 @@ set(BOTLIB_WIDGET_SRC
     src/widget/botlib_widget.cpp
     src/widget/botlib_widget_group.cpp
     src/widget/botlib_button.cpp
-    src/widget/botlib_label.cpp)
+    src/widget/botlib_label.cpp
+    src/widget/botlib_message_box.cpp)
 
 set(BOTLIB_MISC_SRC
     src/misc/botlib_constants.cpp)

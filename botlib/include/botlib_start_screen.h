@@ -2,6 +2,7 @@
 #define INCLUDED_BOTLIB_START_SCREEN_H
 
 #include <string>
+#include <rapidjson/document.h>
 #include <botlib_widget_group.h>
 #include <botlib_screen.h>
 
@@ -10,7 +11,7 @@ namespace botlib {
 
 class StartScreen: public Screen {
 public:
-    static void initConfig(const std::string& configFile);
+    static void initConfig(const rapidjson::Value& cfg);
 
     StartScreen(const commonlib::Vector2& viewportSize,
                 const AppActions& actions);

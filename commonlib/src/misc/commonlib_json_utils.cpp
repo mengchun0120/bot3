@@ -28,10 +28,10 @@ void readJson(rapidjson::Document& doc,
     }
 }
 
-const rapidjson::Value* findJson(const rapidjson::Document& doc,
+const rapidjson::Value* findJson(const rapidjson::Value& json,
                                  const std::vector<std::string>& path)
 {
-    const rapidjson::Value* v = &doc;
+    const rapidjson::Value* v = &json;
 
     for (std::size_t i = 0; i < path.size(); ++i)
     {

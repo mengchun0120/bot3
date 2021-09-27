@@ -2,6 +2,7 @@
 #define INCLUDED_BOTLIB_LABEL_H
 
 #include <string>
+#include <rapidjson/document.h>
 #include <commonlib_color.h>
 #include <botlib_text_size.h>
 #include <botlib_align.h>
@@ -12,7 +13,7 @@ namespace botlib {
 
 class Label: public Widget {
 public:
-    static void initConfig(const std::string& configFile);
+    static void initConfig(const rapidjson::Value& cfg);
 
     Label() = default;
 

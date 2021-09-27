@@ -1,6 +1,10 @@
 #include <commonlib_log.h>
 #include <commonlib_json_param.h>
 #include <commonlib_file_utils.h>
+#include <botlib_button.h>
+#include <botlib_label.h>
+#include <botlib_start_screen.h>
+#include <botlib_message_box.h>
 #include <botlib_app_config.h>
 
 using namespace mcdane::commonlib;
@@ -31,7 +35,7 @@ AppConfig::AppConfig(const std::string& fileName,
     loadBasics(doc);
     loadDirectories(doc, appDir);
     loadShaderFiles(doc);
-    loadConfigFiles(doc);
+    loadConfig(doc);
 }
 
 void AppConfig::loadBasics(const rapidjson::Document& doc)
@@ -84,22 +88,35 @@ void AppConfig::loadShaderFiles(const rapidjson::Document& doc)
     simpleFragShaderFile_ = constructPath({glslDir_, simpleFragShaderFile_});
 }
 
-void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
+void AppConfig::loadConfig(const rapidjson::Document& doc)
 {
-    std::vector<JsonParamPtr> params{
-        jsonParam(buttonConfigFile_, {"configs", "buttonConfigFile"},
-                  true, nonempty(buttonConfigFile_)),
-        jsonParam(labelConfigFile_, {"configs", "labelConfigFile"},
-                  true, nonempty(labelConfigFile_)),
-        jsonParam(startScreenConfigFile_, {"configs", "startScreenConfigFile"},
-                  true, nonempty(startScreenConfigFile_))
-    };
+    const rapidjson::Value* v = findJson(doc, {"buttonConfig"});
+    if (!v)
+    {
+        THROW_EXCEPT(ParseException, "buttonConfig is missing");
+    }
+    Button::initConfig(*v, picDir_);
 
-    parse(params, doc);
+    v = findJson(doc, {"labelConfig"});
+    if (!v)
+    {
+        THROW_EXCEPT(ParseException, "labelConfig is missing");
+    }
+    Label::initConfig(*v);
 
-    buttonConfigFile_ = constructPath({configDir_, buttonConfigFile_});
-    labelConfigFile_ = constructPath({configDir_, labelConfigFile_});
-    startScreenConfigFile_ = constructPath({configDir_, startScreenConfigFile_});
+    v = findJson(doc, {"messageBoxConfig"});
+    if (!v)
+    {
+        THROW_EXCEPT(ParseException, "messageBoxConfig is missing");
+    }
+    MessageBox::initConfig(*v);
+
+    v = findJson(doc, {"startScreenConfig"});
+    if (!v)
+    {
+        THROW_EXCEPT(ParseException, "startScreenConfig is missing");
+    }
+    StartScreen::initConfig(*v);
 }
 
 } // end of namespace botlib
