@@ -2,7 +2,6 @@
 #define INCLUDED_BOTLIB_MESSAGE_BOX_H
 
 #include <string>
-#include <rapidjson/document.h>
 #include <botlib_widget_group.h>
 
 namespace mcdane {
@@ -15,7 +14,7 @@ public:
         BUTTON_CANCEL = 2
     };
 
-    static void initConfig(const rapidjson::Value& cfg);
+    static void initConfig(const std::string& configFile);
 
     MessageBox() = default;
 
@@ -46,8 +45,35 @@ public:
     inline bool visible() const;
 
 private:
+    void initBack(int& idx,
+                  float x,
+                  float y,
+                  float z,
+                  float width,
+                  float height);
+
+    void initMessage(int& idx,
+                     float x,
+                     float y
+                     float z,
+                     float width,
+                     float height,
+                     const std::string& msg);
+
+    void initButtons(int& idx,
+                     float x,
+                     float y,
+                     float z,
+                     float width,
+                     float height,
+                     int buttons);
+
+    int getButtonCount(int buttons);
+
+private:
     static float k_messageMarginX;
     static float k_messageMarginY;
+    static float k_messageHeight;
     static float k_buttonMarginY;
     static float k_buttonSpacing;
     static float k_buttonWidth;

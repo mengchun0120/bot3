@@ -43,6 +43,8 @@ public:
 
     inline const std::string& labelConfigFile() const;
 
+    inline const std::string& messageBoxConfigFile() const;
+
     inline const std::string& startScreenConfigFile() const;
 
 private:
@@ -75,6 +77,7 @@ private:
     std::string simpleFragShaderFile_;
     std::string buttonConfigFile_;
     std::string labelConfigFile_;
+    std::string messageBoxConfigFile_;
     std::string startScreenConfigFile_;
 };
 
@@ -141,6 +144,11 @@ const std::string& AppConfig::buttonConfigFile() const
 const std::string& AppConfig::labelConfigFile() const
 {
     return labelConfigFile_;
+}
+
+const std::string& AppConfig::messageBoxConfigFile() const
+{
+    return messageBoxConfigFile_;
 }
 
 const std::string& AppConfig::startScreenConfigFile() const
