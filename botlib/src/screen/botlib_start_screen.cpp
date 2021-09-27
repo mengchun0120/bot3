@@ -1,6 +1,7 @@
 #include <iostream>
 #include <functional>
 #include <commonlib_log.h>
+#include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
 #include <botlib_button.h>
 #include <botlib_graphics.h>
@@ -16,12 +17,10 @@ float StartScreen::k_buttonWidth;
 float StartScreen::k_buttonHeight;
 float StartScreen::k_buttonSpacing;
 
-void StartScreen::initConfig(const rapidjson::Value& cfg)
+void StartScreen::initConfig(const std::string& configFile)
 {
-    if (!cfg.IsObject())
-    {
-        THROW_EXCEPT(InvalidArgumentException, "cfg must be an object");
-    }
+    rapidjson::Document doc;
+    readJson(doc, configFile);
 
     std::vector<JsonParamPtr> params{
         jsonParam(k_buttonWidth, {"buttonWidth"}, true,
@@ -32,7 +31,7 @@ void StartScreen::initConfig(const rapidjson::Value& cfg)
                   gt(k_buttonSpacing, 0.0f))
     };
 
-    parse(params, cfg);
+    parse(params, doc);
 }
 
 StartScreen::StartScreen(const commonlib::Vector2& viewportSize,

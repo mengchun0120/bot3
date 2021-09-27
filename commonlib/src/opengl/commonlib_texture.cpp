@@ -30,6 +30,11 @@ Texture::~Texture()
 void Texture::init(const std::string& imageFile)
 {
     glGenTextures(1, &id_);
+    if (id_ == 0)
+    {
+        THROW_EXCEPT(OpenGLException, "glGenTextures failed");
+    }
+
     glBindTexture(GL_TEXTURE_2D, id_);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

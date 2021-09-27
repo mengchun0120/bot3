@@ -65,6 +65,7 @@ void BotApp::init(const std::string& configFile,
     setupWindow(cfg.width(), cfg.height(), cfg.title());
 #endif
     setupOpenGL(cfg);
+    setupWidget(cfg);
     setupActions();
     setupScreen(cfg);
     setupInput(cfg);
@@ -82,6 +83,11 @@ void BotApp::setupOpenGL(const AppConfig& cfg)
                            cfg.fontDir());
 }
 
+void BotApp::setupWidget(const AppConfig& cfg)
+{
+    Button::initConfig(cfg.buttonConfigFile(), cfg.picDir());
+}
+
 void BotApp::setupActions()
 {
     using namespace std::placeholders;
@@ -94,6 +100,8 @@ void BotApp::setupActions()
 
 void BotApp::setupScreen(const AppConfig& cfg)
 {
+    StartScreen::initConfig(cfg.startScreenConfigFile());
+
     screenManager_.init(ScreenType::START, viewportSize(), actions_);
 }
 

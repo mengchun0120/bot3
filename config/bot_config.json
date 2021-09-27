@@ -15,30 +15,9 @@
         "simpleVertexShaderFile": "simple_vertex_shader.glsl",
         "simpleFragShaderFile": "simple_frag_shader.glsl"
     },
-    "buttonConfig": {
-        "texture": "button.png",
-        "textColor": [
-            [0, 0, 135, 255],
-            [0, 255, 0, 255],
-            [255, 128, 0, 255]
-        ]
-    },
-    "labelConfig": {
-        "defaultTextColor": [0, 0, 0, 255],
-        "defaultBackgroundColor": [211, 211, 211, 255],
-        "defaultBorderColor": [70, 70, 70, 255]
-    },
-    "messageBoxConfig": {
-        "messageMarginX": 20.0,
-        "messageMarginY": 10.0,
-        "buttonMarginY": 20.0,
-        "buttonSpacing": 20.0,
-        "buttonWidth": 100.0,
-        "buttonHeight": 60.0
-    },
-    "startScreenConfig": {
-        "buttonWidth": 300.0,
-        "buttonHeight": 80.0,
-        "buttonSpacing": 50.0
+    "configs": {
+        "buttonConfigFile": "button_config.json",
+        "labelConfigFile": "label_config.json",
+        "startScreenConfigFile": "start_screen_config.json"
     }
 }

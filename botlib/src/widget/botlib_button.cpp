@@ -1,6 +1,7 @@
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_file_utils.h>
+#include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
 #include <botlib_graphics.h>
 #include <botlib_button.h>
@@ -13,13 +14,11 @@ namespace botlib {
 std::vector<Color> Button::k_textColors;
 Texture Button::k_texture;
 
-void Button::initConfig(const rapidjson::Value& cfg,
+void Button::initConfig(const std::string& configFile,
                         const std::string& picDir)
 {
-    if (!cfg.IsObject())
-    {
-        THROW_EXCEPT(InvalidArgumentException, "cfg must be an object");
-    }
+    rapidjson::Document doc;
+    readJson(doc, configFile);
 
     std::string textureFile;
     std::vector<JsonParamPtr> params{
@@ -27,7 +26,7 @@ void Button::initConfig(const rapidjson::Value& cfg,
         jsonParam(textureFile, {"texture"}, true, nonempty(textureFile))
     };
 
-    parse(params, cfg);
+    parse(params, doc);
 
     validateTextColor();
 

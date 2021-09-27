@@ -53,7 +53,7 @@ private:
 
     void loadShaderFiles(const rapidjson::Document& doc);
 
-    void loadConfig(const rapidjson::Document& doc);
+    void loadConfigFiles(const rapidjson::Document& doc);
 
 private:
     AppConfig(const std::string& fileName,
@@ -73,6 +73,9 @@ private:
     std::string configDir_;
     std::string simpleVertexShaderFile_;
     std::string simpleFragShaderFile_;
+    std::string buttonConfigFile_;
+    std::string labelConfigFile_;
+    std::string startScreenConfigFile_;
 };
 
 const AppConfig& AppConfig::getInstance()
@@ -128,6 +131,21 @@ const std::string& AppConfig::simpleVertexShaderFile() const
 const std::string& AppConfig::simpleFragShaderFile() const
 {
     return simpleFragShaderFile_;
+}
+
+const std::string& AppConfig::buttonConfigFile() const
+{
+    return buttonConfigFile_;
+}
+
+const std::string& AppConfig::labelConfigFile() const
+{
+    return labelConfigFile_;
+}
+
+const std::string& AppConfig::startScreenConfigFile() const
+{
+    return startScreenConfigFile_;
 }
 
 } // end of namespace botlib
