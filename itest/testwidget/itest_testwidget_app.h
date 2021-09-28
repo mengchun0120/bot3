@@ -3,7 +3,7 @@
 
 #include <commonlib_app.h>
 #include <commonlib_input_manager.h>
-#include <botlib_widget_group.h>
+#include <botlib_message_box.h>
 
 namespace mcdane {
 namespace itest {
@@ -30,8 +30,11 @@ private:
 
     void setupInput();
 
+    bool isEscPressed(const commonlib::InputEvent& e);
+
 private:
     botlib::WidgetGroup widgets_;
+    botlib::MessageBox msgBox_;
     commonlib::InputProcessor inputProcessor_;
 };
 

@@ -9,7 +9,8 @@ namespace botlib {
 
 class MessageBox {
 public:
-    enum {
+    enum ButtonState {
+        BUTTON_NONE = 0,
         BUTTON_OK = 1,
         BUTTON_CANCEL = 2
     };
@@ -40,35 +41,42 @@ public:
 
     void present();
 
-    int processInput(const commonlib::InputEvent& e);
+    void process(const commonlib::InputEvent& e);
 
     inline bool visible() const;
 
+    inline ButtonState buttonClicked() const;
+
 private:
-    void initBack(int& idx,
+    void initBack(int idx,
                   float x,
                   float y,
                   float z,
                   float width,
                   float height);
 
-    void initMessage(int& idx,
-                     float x,
-                     float y
-                     float z,
-                     float width,
-                     float height,
-                     const std::string& msg);
-
-    void initButtons(int& idx,
+    void initMessage(int idx,
                      float x,
                      float y,
                      float z,
                      float width,
                      float height,
+                     const std::string& msg);
+
+    void initButtons(int idx,
+                     float x,
+                     float y,
+                     float z,
+                     float width,
+                     float height,
+                     int buttonCount,
                      int buttons);
 
     int getButtonCount(int buttons);
+
+    void onOKClicked();
+
+    void onCancelClicked();
 
 private:
     static float k_messageMarginX;
@@ -81,11 +89,17 @@ private:
 
     WidgetGroup widgets_;
     bool visible_;
+    ButtonState buttonClicked_;
 };
 
 bool MessageBox::visible() const
 {
     return visible_;
+}
+
+MessageBox::ButtonState MessageBox::buttonClicked() const
+{
+    return buttonClicked_;
 }
 
 } // end of namespace botlib

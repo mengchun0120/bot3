@@ -27,10 +27,57 @@ TestWidgetApp::TestWidgetApp(const std::string& configFile,
                        cfg.picDir());
 
     Label::initConfig(cfg.labelConfigFile());
+    MessageBox::initConfig(cfg.messageBoxConfigFile());
 
     setupOpenGL();
     setupWidgets();
     setupInput();
+}
+
+void TestWidgetApp::preProcess()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void TestWidgetApp::process()
+{
+    InputManager::getInstance().processInput(inputProcessor_);
+
+    widgets_.present();
+
+    glFlush();
+}
+
+void TestWidgetApp::postProcess()
+{
+    App::postProcess();
+}
+
+bool TestWidgetApp::processInput(const commonlib::InputEvent& e)
+{
+    if (msgBox_.visible())
+    {
+        msgBox_.process(e);
+        if (msgBox_.buttonClicked() == MessageBox::BUTTON_OK)
+        {
+            std::cerr << "OK clicked" << std::endl;
+        }
+        else if(msgBox_.buttonClicked() == MessageBox::BUTTON_CANCEL)
+        {
+            std::cerr << "Cancel clicked" << std::endl;
+        }
+    }
+    else if (isEscPressed(e))
+    {
+        std::cerr << "Esc pressed" << std::endl;
+        msgBox_.setVisible(true);
+    }
+    else
+    {
+        widgets_.process(e);
+    }
+
+    return true;
 }
 
 void TestWidgetApp::setupOpenGL()
@@ -87,6 +134,9 @@ void TestWidgetApp::setupWidgets()
     label = new Label(150.0f, 600.0f, 0.0f, 200.0f, 70.0f, "Label Three",
                       TextSize::SMALL, HAlign::RIGHT, VAlign::BOTTOM);
     widgets_.setWidget(BUTTON_COUNT+2, label);
+
+    msgBox_.init(500.0f, 400.0f, -0.5f, 200.0f, 150.0f, "Test MessageBox.",
+                 MessageBox::BUTTON_OK | MessageBox::BUTTON_CANCEL);
 }
 
 void TestWidgetApp::setupInput()
@@ -102,29 +152,15 @@ void TestWidgetApp::setupInput()
     InputManager::getInstance().enable();
 }
 
-void TestWidgetApp::preProcess()
+bool TestWidgetApp::isEscPressed(const commonlib::InputEvent& e)
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
+    if (e.type() != EventType::KEY)
+    {
+        return false;
+    }
 
-void TestWidgetApp::process()
-{
-    InputManager::getInstance().processInput(inputProcessor_);
-
-    widgets_.present();
-
-    glFlush();
-}
-
-void TestWidgetApp::postProcess()
-{
-    App::postProcess();
-}
-
-bool TestWidgetApp::processInput(const commonlib::InputEvent& e)
-{
-    widgets_.process(e);
-    return true;
+    const KeyEvent& k = e.keyEvent();
+    return k.action_ == GLFW_RELEASE && k.key_ == GLFW_KEY_ESCAPE;
 }
 
 } // end of namespace itest

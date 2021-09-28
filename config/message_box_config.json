@@ -1,6 +1,7 @@
 {
     "messageMarginX": 20.0,
     "messageMarginY": 10.0,
+    "messageHeight": 50.0,
     "buttonMarginY": 20.0,
     "buttonSpacing": 20.0,
     "buttonWidth": 100.0,

@@ -91,7 +91,7 @@ void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
                   true, nonempty(buttonConfigFile_)),
         jsonParam(labelConfigFile_, {"configs", "labelConfigFile"},
                   true, nonempty(labelConfigFile_)),
-        jsonParam(messageBoxConfigFile_, {"configs", "messageBoxConfigFile"}
+        jsonParam(messageBoxConfigFile_, {"configs", "messageBoxConfigFile"},
                   true, nonempty(messageBoxConfigFile_)),
         jsonParam(startScreenConfigFile_, {"configs", "startScreenConfigFile"},
                   true, nonempty(startScreenConfigFile_))
