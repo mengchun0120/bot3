@@ -14,6 +14,12 @@ class Label: public Widget {
 public:
     static void initConfig(const std::string& configFile);
 
+    inline static const commonlib::Color& defaultTextColor();
+
+    inline static const commonlib::Color& defaultBackColor();
+
+    inline static const commonlib::Color& defaultBorderColor();
+
     Label() = default;
 
     Label(float x,
@@ -26,11 +32,11 @@ public:
           HAlign halign = HAlign::LEFT,
           VAlign valign = VAlign::TOP,
           const commonlib::Color& textColor = k_defaultTextColor,
-          const commonlib::Color& backgroundColor = k_defaultBackgroundColor,
-          const commonlib::Color& borderColor = k_defaultBorderColor,
+          const commonlib::Color* backColor = &k_defaultBackColor,
+          const commonlib::Color* borderColor = &k_defaultBorderColor,
           bool visible = true);
 
-    ~Label() override = default;
+    ~Label() override;
 
     void init(float x,
               float y,
@@ -42,8 +48,8 @@ public:
               HAlign halign = HAlign::LEFT,
               VAlign valign = VAlign::TOP,
               const commonlib::Color& textColor = k_defaultTextColor,
-              const commonlib::Color& backgroundColor = k_defaultBackgroundColor,
-              const commonlib::Color& borderColor = k_defaultBorderColor,
+              const commonlib::Color* backColor = &k_defaultBackColor,
+              const commonlib::Color* borderColor = &k_defaultBorderColor,
               bool visible = true);
 
     void setPos(float x,
@@ -72,7 +78,7 @@ private:
 
 private:
     static commonlib::Color k_defaultTextColor;
-    static commonlib::Color k_defaultBackgroundColor;
+    static commonlib::Color k_defaultBackColor;
     static commonlib::Color k_defaultBorderColor;
 
     std::string text_;
@@ -81,9 +87,24 @@ private:
     HAlign halign_;
     VAlign valign_;
     commonlib::Color textColor_;
-    commonlib::Color backgroundColor_;
-    commonlib::Color borderColor_;
+    commonlib::Color* backColor_;
+    commonlib::Color* borderColor_;
 };
+
+const commonlib::Color& Label::defaultTextColor()
+{
+    return k_defaultTextColor;
+}
+
+const commonlib::Color& Label::defaultBackColor()
+{
+    return k_defaultBackColor;
+}
+
+const commonlib::Color& Label::defaultBorderColor()
+{
+    return k_defaultBorderColor;
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

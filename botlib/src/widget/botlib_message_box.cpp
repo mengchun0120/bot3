@@ -67,8 +67,8 @@ void MessageBox::init(float x,
 
     widgets_.init(widgetCount);
     initBack(0, x, y, z, width, height);
-    initMessage(1, x, y, z, width, height, msg);
-    initButtons(2, x, y, z, width, height, buttonCount, buttons);
+    initMessage(1, x, y, z-0.01f, width, height, msg);
+    initButtons(2, x, y, z-0.02f, width, height, buttonCount, buttons);
     visible_ = false;
     buttonClicked_ = BUTTON_NONE;
 }
@@ -117,7 +117,9 @@ void MessageBox::initMessage(int idx,
     float msgY = y + height/2.0f - k_messageMarginY - k_messageHeight/2.0f;
     float msgWidth = width - 2.0f * k_messageMarginX;
     float msgZ = z - 0.2f;
-    Label* box = new Label(x, msgY, msgZ, msgWidth, k_messageHeight, msg);
+    Label* box = new Label(x, msgY, msgZ, msgWidth, k_messageHeight, msg,
+                           TextSize::SMALL, HAlign::MIDDLE, VAlign::MIDDLE,
+                           Label::defaultTextColor(), nullptr, nullptr);
     widgets_.setWidget(idx, box);
 }
 

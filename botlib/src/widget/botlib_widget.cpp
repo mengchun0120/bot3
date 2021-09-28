@@ -46,7 +46,7 @@ void Widget::init(float x,
         rect_.load(width, height);
     }
 
-    setPos(x, y, z);
+    Widget::setPos(x, y, z);
 }
 
 void Widget::setPos(float x,

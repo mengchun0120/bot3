@@ -193,7 +193,7 @@ bool InputManager::addKeyEvent(int key,
                                int mods)
 {
     InputEvent e;
-    e.setKeyEvent(key, scancode, action, mods);
+    e.setKeyEvent(key, action, scancode, mods);
     return events_.enqueue(e);
 }
 #endif

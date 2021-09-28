@@ -44,6 +44,10 @@ void TestWidgetApp::process()
     InputManager::getInstance().processInput(inputProcessor_);
 
     widgets_.present();
+    if (msgBox_.visible())
+    {
+        msgBox_.present();
+    }
 
     glFlush();
 }
@@ -101,7 +105,7 @@ void TestWidgetApp::setupWidgets()
     float buttonWidth = 200.0f, buttonHeight = 50.0f;
     float buttonX = viewportWidth() / 2.0f;
     float buttonY = 100.0f;
-    float buttonZ = 0.0f;
+    float buttonZ = 0.5f;
     float incrY = 200.0f;
     std::string buttonTexts[] = {
         "Start Game",
@@ -126,16 +130,16 @@ void TestWidgetApp::setupWidgets()
         buttonY += incrY;
     }
 
-    Label* label = new Label(150.0f, 200.0f, 0.0f, 200.0f, 70.0f, "Label One");
+    Label* label = new Label(150.0f, 200.0f, 0.5f, 200.0f, 70.0f, "Label One");
     widgets_.setWidget(BUTTON_COUNT, label);
-    label = new Label(150.0f, 400.0f, 0.0f, 200.0f, 70.0f, "Label Two",
+    label = new Label(150.0f, 400.0f, 0.5f, 200.0f, 70.0f, "Label Two",
                       TextSize::SMALL, HAlign::MIDDLE, VAlign::MIDDLE);
     widgets_.setWidget(BUTTON_COUNT+1, label);
-    label = new Label(150.0f, 600.0f, 0.0f, 200.0f, 70.0f, "Label Three",
+    label = new Label(150.0f, 600.0f, 0.5f, 200.0f, 70.0f, "Label Three",
                       TextSize::SMALL, HAlign::RIGHT, VAlign::BOTTOM);
     widgets_.setWidget(BUTTON_COUNT+2, label);
 
-    msgBox_.init(500.0f, 400.0f, -0.5f, 200.0f, 150.0f, "Test MessageBox.",
+    msgBox_.init(500.0f, 400.0f, 0.0f, 300.0f, 150.0f, "Test MessageBox.",
                  MessageBox::BUTTON_OK | MessageBox::BUTTON_CANCEL);
 }
 

@@ -4,6 +4,7 @@
 #include <cmath>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
+#include <commonlib_string_utils.h>
 #include <commonlib_file_utils.h>
 #include <botlib_text_system.h>
 
@@ -127,7 +128,8 @@ float TextSystem::getHeight(TextSize size) const
 {
     if (!isValidTextSize(size))
     {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid size");
+        THROW_EXCEPT(InvalidArgumentException, "Invalid size" +
+                     toString(static_cast<int>(size)));
     }
 
     return fontHeights_[static_cast<int>(size)];

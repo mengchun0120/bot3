@@ -82,6 +82,7 @@ void Button::init(float x,
     textSize_ = textSize;
     state_ = STATE_NORMAL;
     Widget::init(x, y, z, width, height, visible, acceptInput, true);
+    resetTextPos();
 }
 
 void Button::present() const
@@ -96,7 +97,7 @@ void Button::present() const
     rect_.draw(g.simpleShader(), z_, &pos_, nullptr, nullptr, nullptr,
                k_texture.id(), nullptr);
 
-    g.textSys().draw(g.simpleShader(), text_, textPos_, z_ - 1.0f, textSize_,
+    g.textSys().draw(g.simpleShader(), text_, textPos_, z_-0.001f, textSize_,
                      &k_textColors[state_]);
 }
 

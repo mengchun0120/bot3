@@ -1,5 +1,5 @@
 {
     "defaultTextColor": [0, 0, 0, 255],
-    "defaultBackgroundColor": [211, 211, 211, 255],
+    "defaultBackColor": [211, 211, 211, 255],
     "defaultBorderColor": [70, 70, 70, 255]
 }

@@ -10,7 +10,7 @@ namespace mcdane {
 namespace botlib {
 
 Color Label::k_defaultTextColor;
-Color Label::k_defaultBackgroundColor;
+Color Label::k_defaultBackColor;
 Color Label::k_defaultBorderColor;
 
 void Label::initConfig(const std::string& configFile)
@@ -21,8 +21,8 @@ void Label::initConfig(const std::string& configFile)
     std::vector<JsonParamPtr> params{
         jsonParam(k_defaultTextColor, {"defaultTextColor"}, true,
                   nonempty(k_defaultTextColor)),
-        jsonParam(k_defaultBackgroundColor, {"defaultBackgroundColor"}, true,
-                  nonempty(k_defaultBackgroundColor)),
+        jsonParam(k_defaultBackColor, {"defaultBackColor"}, true,
+                  nonempty(k_defaultBackColor)),
         jsonParam(k_defaultBorderColor, {"defaultBorderColor"}, true,
                   nonempty(k_defaultBorderColor))
     };
@@ -40,12 +40,18 @@ Label::Label(float x,
              HAlign halign,
              VAlign valign,
              const Color& textColor,
-             const Color& backgroundColor,
-             const Color& borderColor,
+             const Color* backColor,
+             const Color* borderColor,
              bool visible)
 {
     init(x, y, z, width, height, text, textSize, halign, valign,
-         textColor, backgroundColor, borderColor, visible);
+         textColor, backColor, borderColor, visible);
+}
+
+Label::~Label()
+{
+    delete backColor_;
+    delete borderColor_;
 }
 
 void Label::init(float x,
@@ -58,8 +64,8 @@ void Label::init(float x,
                  HAlign halign,
                  VAlign valign,
                  const Color& textColor,
-                 const Color& backgroundColor,
-                 const Color& borderColor,
+                 const Color* backColor,
+                 const Color* borderColor,
                  bool visible)
 {
     if (!isValidTextSize(textSize))
@@ -84,8 +90,24 @@ void Label::init(float x,
     valign_ = valign;
     updateTextPos();
     textColor_ = textColor;
-    backgroundColor_ = backgroundColor;
-    borderColor_ = borderColor;
+
+    if (backColor)
+    {
+        backColor_ = new Color(*backColor);
+    }
+    else
+    {
+        backColor_ = nullptr;
+    }
+
+    if (borderColor)
+    {
+        borderColor_ = new Color(*borderColor);
+    }
+    else
+    {
+        borderColor_ = nullptr;
+    }
 }
 
 void Label::setPos(float x,
@@ -108,11 +130,13 @@ void Label::present() const
 {
     Graphics& g = Graphics::getInstance();
 
-    rect_.draw(g.simpleShader(), z(), &pos_, nullptr, &backgroundColor_,
-               &borderColor_, 0, nullptr);
-
-    g.textSys().draw(g.simpleShader(), text_, textPos_, z()-0.5f, textSize_,
-                     &textColor_);
+    rect_.draw(g.simpleShader(), z(), &pos_, nullptr, backColor_,
+               borderColor_, 0, nullptr);
+    if (text_.size() > 0)
+    {
+        g.textSys().draw(g.simpleShader(), text_, textPos_, z()-0.001f,
+                         textSize_, &textColor_);
+    }
 }
 
 void Label::setText(const std::string& text)
