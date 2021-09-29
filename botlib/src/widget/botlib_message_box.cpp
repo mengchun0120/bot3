@@ -1,8 +1,6 @@
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
-#include <botlib_button.h>
-#include <botlib_label.h>
 #include <botlib_message_box.h>
 
 using namespace mcdane::commonlib;
@@ -60,20 +58,31 @@ void MessageBox::init(float x,
                       const std::string& msg,
                       int buttons)
 {
-    int buttonCount = getButtonCount(buttons);
-    int widgetCount = 2 + buttonCount;
-
-    widgets_.init(widgetCount);
-    initBack(0, x, y, width, height);
-    initMessage(1, x, y, width, height, msg);
-    initButtons(2, x, y, width, height, buttonCount, buttons);
+    pos_[0] = x;
+    pos_[1] = y;
+    size_[0] = width;
+    size_[1] = height;
+    widgets_.init(WIDGET_COUNT);
+    initBack();
+    initMessage(msg);
+    initButtons(buttons);
     visible_ = false;
     buttonClicked_ = BUTTON_NONE;
 }
 
 void MessageBox::setVisible(bool v)
 {
-    visible_ = true;
+    visible_ = v;
+}
+
+void MessageBox::setText(const std::string& text)
+{
+    getMsg().setText(text);
+}
+
+void MessageBox::setButtons(int buttons)
+{
+    configButtons(buttons);
 }
 
 void MessageBox::present()
@@ -93,70 +102,38 @@ void MessageBox::process(const InputEvent& e)
     }
 }
 
-void MessageBox::initBack(int idx,
-                          float x,
-                          float y,
-                          float width,
-                          float height)
+void MessageBox::initBack()
 {
-    Label* back = new Label(x, y, width, height);
-    widgets_.setWidget(idx, back);
+    Label* back = new Label(x(), y(), width(), height());
+    widgets_.setWidget(IDX_BACK, back);
 }
 
-void MessageBox::initMessage(int idx,
-                             float x,
-                             float y,
-                             float width,
-                             float height,
-                             const std::string& msg)
+void MessageBox::initMessage(const std::string& msg)
 {
-    float msgY = y + height/2.0f - k_messageMarginY - k_messageHeight/2.0f;
-    float msgWidth = width - 2.0f * k_messageMarginX;
-    Label* box = new Label(x, msgY, msgWidth, k_messageHeight, msg,
+    float msgY = y() + height()/2.0f - k_messageMarginY - k_messageHeight/2.0f;
+    float msgWidth = width() - 2.0f * k_messageMarginX;
+    Label* box = new Label(x(), msgY, msgWidth, k_messageHeight, msg,
                            TextSize::SMALL, HAlign::MIDDLE, VAlign::MIDDLE,
                            Label::defaultTextColor(), nullptr, nullptr);
-    widgets_.setWidget(idx, box);
+    widgets_.setWidget(IDX_MSG, box);
 }
 
-void MessageBox::initButtons(int idx,
-                             float x,
-                             float y,
-                             float width,
-                             float height,
-                             int buttonCount,
-                             int buttons)
+void MessageBox::initButtons(int buttons)
 {
-    if (buttonCount == 0)
-    {
-        return;
-    }
+    Button* okButton = new Button(0.0f, 0.0f, k_buttonWidth, k_buttonHeight,
+                                  "OK", TextSize::SMALL, false);
+    Button::ActionFunc okAct = std::bind(&MessageBox::onOKClicked, this);
+    okButton->setActionFunc(okAct);
+    widgets_.setWidget(IDX_OK, okButton);
 
-    float buttonY = y - height/2.0f + k_buttonMarginY + k_buttonHeight/2.0f;
-    float buttonMarginX = (width - buttonCount * k_buttonWidth -
-                           (buttonCount - 1) * k_buttonSpacing) / 2.0f;
-    float buttonX = x - width/2.0f + buttonMarginX + k_buttonWidth / 2.0f;
+    Button* cancelButton = new Button(0.0f, 0.0f, k_buttonWidth, k_buttonHeight,
+                                      "Cancel", TextSize::SMALL, false);
+    Button::ActionFunc cancelAct = std::bind(&MessageBox::onCancelClicked,
+                                             this);
+    cancelButton->setActionFunc(cancelAct);
+    widgets_.setWidget(IDX_CANCEL, cancelButton);
 
-    if (buttons & BUTTON_OK)
-    {
-        Button* okButton = new Button(buttonX, buttonY, k_buttonWidth,
-                                      k_buttonHeight, "OK", TextSize::SMALL);
-        Button::ActionFunc okAct = std::bind(&MessageBox::onOKClicked, this);
-        okButton->setActionFunc(okAct);
-        widgets_.setWidget(idx, okButton);
-        buttonX += k_buttonWidth + k_buttonSpacing;
-        ++idx;
-    }
-
-    if (buttons & BUTTON_CANCEL)
-    {
-        Button* cancelButton = new Button(buttonX, buttonY,
-                                          k_buttonWidth, k_buttonHeight,
-                                          "Cancel", TextSize::SMALL);
-        Button::ActionFunc cancelAct = std::bind(&MessageBox::onCancelClicked,
-                                                 this);
-        cancelButton->setActionFunc(cancelAct);
-        widgets_.setWidget(idx, cancelButton);
-    }
+    configButtons(buttons);
 }
 
 int MessageBox::getButtonCount(int buttons)
@@ -185,6 +162,49 @@ void MessageBox::onCancelClicked()
 {
     visible_ = false;
     buttonClicked_ = BUTTON_CANCEL;
+}
+
+void MessageBox::configButtons(int buttons)
+{
+    int buttonCount = getButtonCount(buttons);
+    float buttonY = y() - height()/2.0f + k_buttonMarginY + k_buttonHeight/2.0f;
+    float buttonMarginX = (width() - buttonCount * k_buttonWidth -
+                           (buttonCount - 1) * k_buttonSpacing) / 2.0f;
+    float buttonX = x() - width()/2.0f + buttonMarginX + k_buttonWidth / 2.0f;
+
+    if (buttons & BUTTON_OK)
+    {
+        showButton(IDX_OK, buttonX, buttonY);
+        buttonX += k_buttonWidth + k_buttonSpacing;
+    }
+    else
+    {
+        hideButton(IDX_OK);
+    }
+
+    if (buttons & BUTTON_CANCEL)
+    {
+        showButton(IDX_CANCEL, buttonX, buttonY);
+    }
+    else
+    {
+        hideButton(IDX_CANCEL);
+    }
+}
+
+void MessageBox::showButton(unsigned int idx,
+                            float x,
+                            float y)
+{
+    Button& button = getButton(idx);
+    button.setPos(x, y);
+    button.setVisible(true);
+}
+
+void MessageBox::hideButton(unsigned int idx)
+{
+    Button& button = getButton(idx);
+    button.setVisible(false);
 }
 
 } // end of namespace botlib

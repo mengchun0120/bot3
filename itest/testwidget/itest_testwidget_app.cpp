@@ -71,11 +71,6 @@ bool TestWidgetApp::processInput(const commonlib::InputEvent& e)
             std::cerr << "Cancel clicked" << std::endl;
         }
     }
-    else if (isEscPressed(e))
-    {
-        std::cerr << "Esc pressed" << std::endl;
-        msgBox_.setVisible(true);
-    }
     else
     {
         widgets_.process(e);
@@ -110,20 +105,19 @@ void TestWidgetApp::setupWidgets()
         "Setting",
         "Exit"
     };
+    Button::ActionFunc actions[] = {
+        std::bind(&TestWidgetApp::onStartGameClicked, this),
+        std::bind(&TestWidgetApp::onSettingClicked, this),
+        std::bind(&TestWidgetApp::onExitClicked, this)
+    };
+
 
     widgets_.init(BUTTON_COUNT+3);
     for (unsigned int i = 0; i < BUTTON_COUNT; ++i)
     {
         Button* button = new Button(buttonX, buttonY,
                                     buttonWidth, buttonHeight, buttonTexts[i]);
-
-        button->setActionFunc(
-            [=]()
-            {
-                std::cerr << buttonTexts[i] << " Clicked " << std::endl;
-            }
-        );
-
+        button->setActionFunc(actions[i]);
         widgets_.setWidget(i, button);
         buttonY += incrY;
     }
@@ -137,8 +131,7 @@ void TestWidgetApp::setupWidgets()
                       TextSize::SMALL, HAlign::RIGHT, VAlign::BOTTOM);
     widgets_.setWidget(BUTTON_COUNT+2, label);
 
-    msgBox_.init(500.0f, 400.0f, 300.0f, 150.0f, "Test MessageBox.",
-                 MessageBox::BUTTON_OK | MessageBox::BUTTON_CANCEL);
+    msgBox_.init(500.0f, 400.0f, 300.0f, 150.0f, "", MessageBox::BUTTON_NONE);
 }
 
 void TestWidgetApp::setupInput()
@@ -154,15 +147,25 @@ void TestWidgetApp::setupInput()
     InputManager::getInstance().enable();
 }
 
-bool TestWidgetApp::isEscPressed(const commonlib::InputEvent& e)
+void TestWidgetApp::onStartGameClicked()
 {
-    if (e.type() != EventType::KEY)
-    {
-        return false;
-    }
+    msgBox_.setText("You clicked start game");
+    msgBox_.setButtons(MessageBox::BUTTON_OK | MessageBox::BUTTON_CANCEL);
+    msgBox_.setVisible(true);
+}
 
-    const KeyEvent& k = e.keyEvent();
-    return k.action_ == GLFW_RELEASE && k.key_ == GLFW_KEY_ESCAPE;
+void TestWidgetApp::onSettingClicked()
+{
+    msgBox_.setText("You clicked Setting");
+    msgBox_.setButtons(MessageBox::BUTTON_OK);
+    msgBox_.setVisible(true);
+}
+
+void TestWidgetApp::onExitClicked()
+{
+    msgBox_.setText("You clicked Exit");
+    msgBox_.setButtons(MessageBox::BUTTON_CANCEL);
+    msgBox_.setVisible(true);
 }
 
 } // end of namespace itest

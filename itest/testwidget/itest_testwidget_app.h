@@ -30,7 +30,11 @@ private:
 
     void setupInput();
 
-    bool isEscPressed(const commonlib::InputEvent& e);
+    void onStartGameClicked();
+
+    void onSettingClicked();
+
+    void onExitClicked();
 
 private:
     botlib::WidgetGroup widgets_;
