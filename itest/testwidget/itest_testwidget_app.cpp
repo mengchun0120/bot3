@@ -36,7 +36,7 @@ TestWidgetApp::TestWidgetApp(const std::string& configFile,
 
 void TestWidgetApp::preProcess()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void TestWidgetApp::process()
@@ -86,7 +86,6 @@ bool TestWidgetApp::processInput(const commonlib::InputEvent& e)
 
 void TestWidgetApp::setupOpenGL()
 {
-    glEnable(GL_DEPTH_TEST);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -105,7 +104,6 @@ void TestWidgetApp::setupWidgets()
     float buttonWidth = 200.0f, buttonHeight = 50.0f;
     float buttonX = viewportWidth() / 2.0f;
     float buttonY = 100.0f;
-    float buttonZ = 0.5f;
     float incrY = 200.0f;
     std::string buttonTexts[] = {
         "Start Game",
@@ -116,7 +114,7 @@ void TestWidgetApp::setupWidgets()
     widgets_.init(BUTTON_COUNT+3);
     for (unsigned int i = 0; i < BUTTON_COUNT; ++i)
     {
-        Button* button = new Button(buttonX, buttonY, buttonZ,
+        Button* button = new Button(buttonX, buttonY,
                                     buttonWidth, buttonHeight, buttonTexts[i]);
 
         button->setActionFunc(
@@ -130,16 +128,16 @@ void TestWidgetApp::setupWidgets()
         buttonY += incrY;
     }
 
-    Label* label = new Label(150.0f, 200.0f, 0.5f, 200.0f, 70.0f, "Label One");
+    Label* label = new Label(150.0f, 200.0f, 200.0f, 70.0f, "Label One");
     widgets_.setWidget(BUTTON_COUNT, label);
-    label = new Label(150.0f, 400.0f, 0.5f, 200.0f, 70.0f, "Label Two",
+    label = new Label(150.0f, 400.0f, 200.0f, 70.0f, "Label Two",
                       TextSize::SMALL, HAlign::MIDDLE, VAlign::MIDDLE);
     widgets_.setWidget(BUTTON_COUNT+1, label);
-    label = new Label(150.0f, 600.0f, 0.5f, 200.0f, 70.0f, "Label Three",
+    label = new Label(150.0f, 600.0f, 200.0f, 70.0f, "Label Three",
                       TextSize::SMALL, HAlign::RIGHT, VAlign::BOTTOM);
     widgets_.setWidget(BUTTON_COUNT+2, label);
 
-    msgBox_.init(500.0f, 400.0f, 0.0f, 300.0f, 150.0f, "Test MessageBox.",
+    msgBox_.init(500.0f, 400.0f, 300.0f, 150.0f, "Test MessageBox.",
                  MessageBox::BUTTON_OK | MessageBox::BUTTON_CANCEL);
 }
 

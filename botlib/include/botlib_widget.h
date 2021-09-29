@@ -18,7 +18,6 @@ public:
 
     void init(float x,
               float y,
-              float z,
               float width,
               float height,
               bool visible=true,
@@ -38,8 +37,7 @@ public:
 #endif
 
     virtual void setPos(float x,
-                        float y,
-                        float z);
+                        float y);
 
     virtual void shiftPos(float dx,
                           float dy);
@@ -63,13 +61,10 @@ public:
 
     inline const commonlib::Vector2& pos() const;
 
-    inline float z() const;
-
     inline const Rectangle& rect() const;
 
 protected:
     commonlib::Vector2 pos_;
-    float z_;
     Rectangle rect_;
     bool visible_;
     bool acceptInput_;
@@ -130,11 +125,6 @@ float Widget::height() const
 const commonlib::Vector2& Widget::pos() const
 {
     return pos_;
-}
-
-float Widget::z() const
-{
-    return z_;
 }
 
 const Rectangle& Widget::rect() const

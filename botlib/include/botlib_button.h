@@ -24,7 +24,6 @@ public:
 
     Button(float x,
            float y,
-           float z,
            float width,
            float height,
            const std::string& text,
@@ -36,7 +35,6 @@ public:
 
     void init(float x,
               float y,
-              float z,
               float width,
               float height,
               const std::string& text,
@@ -51,8 +49,7 @@ public:
     void setActionFunc(const ActionFunc &actionFunc);
 
     void setPos(float x,
-                float y,
-                float z) override;
+                float y) override;
 
     void shiftPos(float dx,
                   float dy) override;

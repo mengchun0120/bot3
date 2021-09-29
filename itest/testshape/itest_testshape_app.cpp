@@ -32,7 +32,6 @@ void TestShapeApp::setupOpenGL()
                            cfg.simpleFragShaderFile(),
                            cfg.fontDir());
 
-    glEnable(GL_DEPTH_TEST);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -78,7 +77,7 @@ void TestShapeApp::setupTexture(const std::string& appDir)
 
 void TestShapeApp::preProcess()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void TestShapeApp::process()
@@ -87,20 +86,20 @@ void TestShapeApp::process()
     SimpleShaderProgram& program = graphics.simpleShader();
     TextSystem& textSys = graphics.textSys();
 
-    triangle_.draw(program, 0.0f, &trianglePos_, nullptr, &fillColor_,
+    triangle_.draw(program, &trianglePos_, nullptr, &fillColor_,
                    nullptr, 0, nullptr);
-    square_.draw(program, 0.0f, &squarePos_, nullptr, &fillColor_,
+    square_.draw(program, &squarePos_, nullptr, &fillColor_,
                  &borderColor_, 0, nullptr);
-    texRect_.draw(program, 0.0f, &texPos_, nullptr, nullptr,
+    texRect_.draw(program, &texPos_, nullptr, nullptr,
                   nullptr, texture_.id(), nullptr);
     textSys.draw(program, "Hello world", Point2{200.0f, 700.0f},
-                 0.0f, TextSize::BIG, &fillColor_);
+                 TextSize::BIG, &fillColor_);
     textSys.draw(program, "Hello world", Point2{200.0f, 600.0f},
-                 0.0f, TextSize::MEDIUM, &fillColor_);
+                 TextSize::MEDIUM, &fillColor_);
     textSys.draw(program, "Hello world", Point2{200.0f, 500.0f},
-                 0.0f, TextSize::SMALL, &fillColor_);
+                 TextSize::SMALL, &fillColor_);
     textSys.draw(program, "Hello world", Point2{200.0f, 400.0f},
-                 0.0f, TextSize::TINY, &fillColor_);
+                 TextSize::TINY, &fillColor_);
 
     glFlush();
 }

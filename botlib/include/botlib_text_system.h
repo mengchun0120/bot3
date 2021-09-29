@@ -25,7 +25,6 @@ public:
     void draw(SimpleShaderProgram& program,
               const std::string& s,
               const commonlib::Point2& pos,
-              float z,
               TextSize size,
               const commonlib::Color* color=nullptr) const;
 

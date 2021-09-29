@@ -35,7 +35,6 @@ public:
                       const commonlib::Point2* texPos=nullptr);
 
     virtual void draw(SimpleShaderProgram& program,
-                      float z,
                       const commonlib::Point2* objRef,
                       const commonlib::Point2* direction,
                       const commonlib::Color* fillColor,

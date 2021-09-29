@@ -51,7 +51,6 @@ void TextSystem::load(const std::string& fontDir)
 void TextSystem::draw(SimpleShaderProgram& program,
                       const std::string& s,
                       const Point2& pos,
-                      float z,
                       TextSize size,
                       const Color* color) const
 {
@@ -75,7 +74,7 @@ void TextSystem::draw(SimpleShaderProgram& program,
         const Rectangle& curRect = getRect(s[i], size);
         const Texture& texture = getTexture(s[i]);
 
-        curRect.draw(program, z, &p, nullptr, nullptr, nullptr,
+        curRect.draw(program, &p, nullptr, nullptr, nullptr,
                      texture.id(), color);
 
         if (i < s.size() - 1)

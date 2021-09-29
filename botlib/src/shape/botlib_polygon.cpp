@@ -60,7 +60,6 @@ void Polygon::load(const Point2* positions,
 }
 
 void Polygon::draw(SimpleShaderProgram& program,
-                   float z,
                    const Point2* objRef,
                    const Point2* direction,
                    const Color* fillColor,
@@ -78,7 +77,6 @@ void Polygon::draw(SimpleShaderProgram& program,
         program.setUseObjRef(false);
     }
 
-    program.setz(z);
     program.setPositionTexPos(va_);
     program.setUseColor(textureId == 0);
 

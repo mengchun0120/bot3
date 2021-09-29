@@ -15,11 +15,8 @@ void SimpleShaderProgram::init(const std::string& vertexShaderFile,
     std::string vertexShaderSrc = readTextFile(vertexShaderFile);
     std::string fragShaderSrc = readTextFile(fragShaderFile);
 
-    LOG_INFO << vertexShaderFile << ' ' << fragShaderFile << LOG_END;
-
     load(vertexShaderSrc, fragShaderSrc);
     positionLoc_ = getAttribLocation("position");
-    zLoc_ = getUniformLocation("z");
     useObjRefLoc_ = getUniformLocation("useObjRef");
     objRefLoc_ = getUniformLocation("objRef");
     viewportSizeLoc_ = getUniformLocation("viewportSize");
@@ -32,6 +29,8 @@ void SimpleShaderProgram::init(const std::string& vertexShaderFile,
     directionLoc_ = getUniformLocation("direction");
     useTexColorLoc_ = getUniformLocation("useTexColor");
     texColorLoc_ = getUniformLocation("texColor");
+
+    LOG_INFO << "SimpleShaderProgram initialized" << LOG_END;
 }
 
 void SimpleShaderProgram::setPositionTexPos(const VertexArray& va)

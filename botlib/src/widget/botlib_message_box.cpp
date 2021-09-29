@@ -45,18 +45,16 @@ void MessageBox::initConfig(const std::string& configFile)
 
 MessageBox::MessageBox(float x,
                        float y,
-                       float z,
                        float width,
                        float height,
                        const std::string& msg,
                        int buttons)
 {
-    init(x, y, z, width, height, msg, buttons);
+    init(x, y, width, height, msg, buttons);
 }
 
 void MessageBox::init(float x,
                       float y,
-                      float z,
                       float width,
                       float height,
                       const std::string& msg,
@@ -66,9 +64,9 @@ void MessageBox::init(float x,
     int widgetCount = 2 + buttonCount;
 
     widgets_.init(widgetCount);
-    initBack(0, x, y, z, width, height);
-    initMessage(1, x, y, z-0.01f, width, height, msg);
-    initButtons(2, x, y, z-0.02f, width, height, buttonCount, buttons);
+    initBack(0, x, y, width, height);
+    initMessage(1, x, y, width, height, msg);
+    initButtons(2, x, y, width, height, buttonCount, buttons);
     visible_ = false;
     buttonClicked_ = BUTTON_NONE;
 }
@@ -98,26 +96,23 @@ void MessageBox::process(const InputEvent& e)
 void MessageBox::initBack(int idx,
                           float x,
                           float y,
-                          float z,
                           float width,
                           float height)
 {
-    Label* back = new Label(x, y, z, width, height);
+    Label* back = new Label(x, y, width, height);
     widgets_.setWidget(idx, back);
 }
 
 void MessageBox::initMessage(int idx,
                              float x,
                              float y,
-                             float z,
                              float width,
                              float height,
                              const std::string& msg)
 {
     float msgY = y + height/2.0f - k_messageMarginY - k_messageHeight/2.0f;
     float msgWidth = width - 2.0f * k_messageMarginX;
-    float msgZ = z - 0.2f;
-    Label* box = new Label(x, msgY, msgZ, msgWidth, k_messageHeight, msg,
+    Label* box = new Label(x, msgY, msgWidth, k_messageHeight, msg,
                            TextSize::SMALL, HAlign::MIDDLE, VAlign::MIDDLE,
                            Label::defaultTextColor(), nullptr, nullptr);
     widgets_.setWidget(idx, box);
@@ -126,7 +121,6 @@ void MessageBox::initMessage(int idx,
 void MessageBox::initButtons(int idx,
                              float x,
                              float y,
-                             float z,
                              float width,
                              float height,
                              int buttonCount,
@@ -141,11 +135,10 @@ void MessageBox::initButtons(int idx,
     float buttonMarginX = (width - buttonCount * k_buttonWidth -
                            (buttonCount - 1) * k_buttonSpacing) / 2.0f;
     float buttonX = x - width/2.0f + buttonMarginX + k_buttonWidth / 2.0f;
-    float buttonZ = z - 0.4f;
 
     if (buttons & BUTTON_OK)
     {
-        Button* okButton = new Button(buttonX, buttonY, buttonZ, k_buttonWidth,
+        Button* okButton = new Button(buttonX, buttonY, k_buttonWidth,
                                       k_buttonHeight, "OK", TextSize::SMALL);
         Button::ActionFunc okAct = std::bind(&MessageBox::onOKClicked, this);
         okButton->setActionFunc(okAct);
@@ -156,7 +149,7 @@ void MessageBox::initButtons(int idx,
 
     if (buttons & BUTTON_CANCEL)
     {
-        Button* cancelButton = new Button(buttonX, buttonY, buttonZ,
+        Button* cancelButton = new Button(buttonX, buttonY,
                                           k_buttonWidth, k_buttonHeight,
                                           "Cancel", TextSize::SMALL);
         Button::ActionFunc cancelAct = std::bind(&MessageBox::onCancelClicked,

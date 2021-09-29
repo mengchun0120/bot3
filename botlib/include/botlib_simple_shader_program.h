@@ -22,8 +22,6 @@ public:
 
     inline void setObjRef(const commonlib::Point2& objRef);
 
-    inline void setz(float z);
-
     inline void setViewportSize(const commonlib::Point2& viewportSize);
 
     inline void setViewportOrigin(const commonlib::Point2& viewportOrigin);
@@ -46,7 +44,6 @@ public:
 
 private:
     GLint positionLoc_;
-    GLint zLoc_;
     GLint useObjRefLoc_;
     GLint objRefLoc_;
     GLint viewportSizeLoc_;
@@ -69,11 +66,6 @@ void SimpleShaderProgram::setUseObjRef(bool enabled)
 void SimpleShaderProgram::setObjRef(const commonlib::Point2& objRef)
 {
     glUniform2fv(objRefLoc_, 1, reinterpret_cast<const GLfloat *>(&objRef));
-}
-
-void SimpleShaderProgram::setz(float z)
-{
-    glUniform1f(zLoc_, z);
 }
 
 void SimpleShaderProgram::setViewportSize(

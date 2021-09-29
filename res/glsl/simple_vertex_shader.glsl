@@ -6,7 +6,6 @@ uniform vec2 viewportSize;
 uniform vec2 viewportOrigin;
 uniform vec2 direction;
 uniform bool useDirection;
-uniform float z;
 
 in vec2 position;
 in vec2 texPos;
@@ -30,7 +29,7 @@ void main()
 
     pos -= viewportOrigin;
 
-    gl_Position = vec4(pos * 2.0 / viewportSize, z, 1.0);
+    gl_Position = vec4(pos * 2.0 / viewportSize, 0.0, 1.0);
 
     texCoord = texPos;
 }

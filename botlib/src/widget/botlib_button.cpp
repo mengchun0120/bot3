@@ -52,7 +52,6 @@ Button::Button()
 
 Button::Button(float x,
                float y,
-               float z,
                float width,
                float height,
                const std::string& text,
@@ -60,12 +59,11 @@ Button::Button(float x,
                bool visible,
                bool acceptInput)
 {
-    init(x, y, z, width, height, text, textSize, visible, acceptInput);
+    init(x, y, width, height, text, textSize, visible, acceptInput);
 }
 
 void Button::init(float x,
                   float y,
-                  float z,
                   float width,
                   float height,
                   const std::string& text,
@@ -81,7 +79,7 @@ void Button::init(float x,
     text_ = text;
     textSize_ = textSize;
     state_ = STATE_NORMAL;
-    Widget::init(x, y, z, width, height, visible, acceptInput, true);
+    Widget::init(x, y, width, height, visible, acceptInput, true);
     resetTextPos();
 }
 
@@ -94,10 +92,10 @@ void Button::present() const
 
     Graphics& g = Graphics::getInstance();
 
-    rect_.draw(g.simpleShader(), z_, &pos_, nullptr, nullptr, nullptr,
+    rect_.draw(g.simpleShader(), &pos_, nullptr, nullptr, nullptr,
                k_texture.id(), nullptr);
 
-    g.textSys().draw(g.simpleShader(), text_, textPos_, z_-0.001f, textSize_,
+    g.textSys().draw(g.simpleShader(), text_, textPos_, textSize_,
                      &k_textColors[state_]);
 }
 
@@ -113,10 +111,9 @@ void Button::setActionFunc(const ActionFunc &actionFunc)
 }
 
 void Button::setPos(float x,
-                    float y,
-                    float z)
+                    float y)
 {
-    Widget::setPos(x, y, z);
+    Widget::setPos(x, y);
     resetTextPos();
 }
 

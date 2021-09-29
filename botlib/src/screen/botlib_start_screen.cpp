@@ -93,13 +93,12 @@ void StartScreen::initWidgets(const commonlib::Vector2& viewportSize)
                         (numButtons - 1.0f) * k_buttonSpacing;
     float x = viewportSize[0] / 2.0f;
     float y = (viewportSize[1] + totalHeight - k_buttonHeight) / 2.0f;
-    float z = 0.0f;
     float deltaY = k_buttonHeight + k_buttonSpacing;
 
     widgets_.init(numButtons);
     for (unsigned int i = 0; i < numButtons; ++i)
     {
-        Button* button = new Button(x, y, z, k_buttonWidth, k_buttonHeight,
+        Button* button = new Button(x, y, k_buttonWidth, k_buttonHeight,
                                     buttonTexts[i]);
         button->setActionFunc(actions[i]);
         widgets_.setWidget(i, button);

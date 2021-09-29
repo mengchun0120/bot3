@@ -32,7 +32,6 @@ void Label::initConfig(const std::string& configFile)
 
 Label::Label(float x,
              float y,
-             float z,
              float width,
              float height,
              const std::string text,
@@ -44,7 +43,7 @@ Label::Label(float x,
              const Color* borderColor,
              bool visible)
 {
-    init(x, y, z, width, height, text, textSize, halign, valign,
+    init(x, y, width, height, text, textSize, halign, valign,
          textColor, backColor, borderColor, visible);
 }
 
@@ -56,7 +55,6 @@ Label::~Label()
 
 void Label::init(float x,
                  float y,
-                 float z,
                  float width,
                  float height,
                  const std::string text,
@@ -83,7 +81,7 @@ void Label::init(float x,
         THROW_EXCEPT(InvalidArgumentException, "Invalid valign");
     }
 
-    Widget::init(x, y, z, width, height, visible, false, false);
+    Widget::init(x, y, width, height, visible, false, false);
     text_ = text;
     textSize_ = textSize;
     halign_ = halign;
@@ -111,10 +109,9 @@ void Label::init(float x,
 }
 
 void Label::setPos(float x,
-                   float y,
-                   float z)
+                   float y)
 {
-    Widget::setPos(x, y, z);
+    Widget::setPos(x, y);
     updateTextPos();
 }
 
@@ -130,11 +127,11 @@ void Label::present() const
 {
     Graphics& g = Graphics::getInstance();
 
-    rect_.draw(g.simpleShader(), z(), &pos_, nullptr, backColor_,
+    rect_.draw(g.simpleShader(), &pos_, nullptr, backColor_,
                borderColor_, 0, nullptr);
     if (text_.size() > 0)
     {
-        g.textSys().draw(g.simpleShader(), text_, textPos_, z()-0.001f,
+        g.textSys().draw(g.simpleShader(), text_, textPos_,
                          textSize_, &textColor_);
     }
 }

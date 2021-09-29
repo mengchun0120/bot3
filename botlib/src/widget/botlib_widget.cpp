@@ -15,7 +15,6 @@ Widget::Widget()
 
 void Widget::init(float x,
                   float y,
-                  float z,
                   float width,
                   float height,
                   bool visible,
@@ -46,16 +45,14 @@ void Widget::init(float x,
         rect_.load(width, height);
     }
 
-    Widget::setPos(x, y, z);
+    Widget::setPos(x, y);
 }
 
 void Widget::setPos(float x,
-                    float y,
-                    float z)
+                    float y)
 {
     pos_[0] = x;
     pos_[1] = y;
-    z_ = z;
 }
 
 void Widget::shiftPos(float dx, float dy)

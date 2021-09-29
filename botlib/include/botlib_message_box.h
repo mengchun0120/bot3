@@ -21,7 +21,6 @@ public:
 
     MessageBox(float x,
                float y,
-               float z,
                float width,
                float height,
                const std::string& msg,
@@ -31,7 +30,6 @@ public:
 
     void init(float x,
               float y,
-              float z,
               float width,
               float height,
               const std::string& msg,
@@ -51,14 +49,12 @@ private:
     void initBack(int idx,
                   float x,
                   float y,
-                  float z,
                   float width,
                   float height);
 
     void initMessage(int idx,
                      float x,
                      float y,
-                     float z,
                      float width,
                      float height,
                      const std::string& msg);
@@ -66,7 +62,6 @@ private:
     void initButtons(int idx,
                      float x,
                      float y,
-                     float z,
                      float width,
                      float height,
                      int buttonCount,
