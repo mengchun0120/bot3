@@ -17,9 +17,14 @@ public:
 
     void present() override;
 
-    bool processInput(const commonlib::InputEvent &e) override;
+    bool processInput(const commonlib::InputEvent& e) override;
 
 private:
+    bool processMouseButton(const commonlib::MouseButtonEvent& e);
+
+    bool processMouseMove(const commonlib::MouseMoveEvent& e);
+
+    bool processKey(const commonlib::KeyEvent& e);
 };
 
 } // end of namespace botlib

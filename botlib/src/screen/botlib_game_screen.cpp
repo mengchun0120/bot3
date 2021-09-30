@@ -1,3 +1,4 @@
+#include <iostream>
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
 #include <botlib_game_screen.h>
@@ -31,6 +32,35 @@ void GameScreen::present()
 }
 
 bool GameScreen::processInput(const commonlib::InputEvent &e)
+{
+    switch (e.type())
+    {
+        case EventType::MOUSE_BUTTON:
+            return processMouseButton(e.mouseButtonEvent());
+        case EventType::MOUSE_MOVE:
+            return processMouseMove(e.mouseMoveEvent());
+        case EventType::KEY:
+            return processKey(e.keyEvent());
+        default:
+            THROW_EXCEPT(InvalidArgumentException,
+                         "Invalid event-type: " +
+                            toString(static_cast<int>(e.type())));
+    }
+
+    return true;
+}
+
+bool GameScreen::processMouseButton(const commonlib::MouseButtonEvent& e)
+{
+    return true;
+}
+
+bool GameScreen::processMouseMove(const commonlib::MouseMoveEvent& e)
+{
+    return true;
+}
+
+bool GameScreen::processKey(const commonlib::KeyEvent& e)
 {
     return true;
 }

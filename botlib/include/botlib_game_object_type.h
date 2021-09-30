@@ -8,8 +8,15 @@ enum class GameObjectType {
     TILE,
     ROBOT,
     BULLET,
-    EFFECT
+    EFFECT,
+    INVALID
 };
+
+inline bool isValidGameObjectType(GameObjectType t)
+{
+    return static_cast<int>(GameObjectType::TILE) <= static_cast<int>(t) &&
+           static_cast<int>(GameObjectType::INVALID) > static_cast<int>(t);
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

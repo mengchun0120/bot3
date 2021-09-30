@@ -2,27 +2,38 @@
 #define INCLUDED_BOTLIB_GAME_OBJECT_TEMPLATE_H
 
 #include <rapidjson/document.h>
+#include <botlib_game_object_type.h>
 
 namespace mcdane {
 namespace botlib {
 
 class GameObjectTemplate {
 public:
-    GameObjectTemplate(const rapidjson::Value& v);
+    GameObjectTemplate(GameObjectType t,
+                       const rapidjson::Value& v);
 
     virtual ~GameObjectTemplate() = default;
+
+    inline GameObjectType type() const;
 
     inline bool invincible() const;
 
     inline float collideBreath() const;
 
 private:
-    void init(const rapidjson::Value& v);
+    void init(GameObjectType t,
+              const rapidjson::Value& v);
 
 protected:
+    GameObjectType type_;
     bool invincible_;
     float collideBreath_;
 };
+
+GameObjectType GameObjectTemplate::type() const
+{
+    return type_;
+}
 
 bool GameObjectTemplate::invincible() const
 {
