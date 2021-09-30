@@ -24,14 +24,14 @@ void GameObjectTemplate::init(GameObjectType t,
                      "Invalid type " + toString(static_cast<int>(t)));
     }
 
-    std::vector<JsonParam> params{
+    std::vector<JsonParamPtr> params{
         jsonParam(invincible_, {"invincible"}, false),
         jsonParam(collideBreath_, {"collideBreath"}, false,
                   ge(collideBreath_, 0.0f))
     };
 
     parse(params, v);
-    type_ = type;
+    type_ = t;
 }
 
 } // end of namespace botlib

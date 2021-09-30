@@ -35,6 +35,13 @@ set(BOTLIB_WIDGET_SRC
     src/widget/botlib_label.cpp
     src/widget/botlib_message_box.cpp)
 
+set(BOTLIB_GAMEOBJ_SRC
+    src/gameobj/botlib_game_object_type.cpp
+    src/gameobj/botlib_game_object_template.cpp
+    src/gameobj/botlib_tile_template.cpp
+    src/gameobj/botlib_game_object.cpp
+    src/gameobj/botlib_tile.cpp)
+
 set(BOTLIB_MISC_SRC
     src/misc/botlib_constants.cpp)
 
@@ -44,6 +51,7 @@ set(BOTLIB_SRC
     ${BOTLIB_SCREEN_SRC}
     ${BOTLIB_SHAPE_SRC}
     ${BOTLIB_WIDGET_SRC}
+    ${BOTLIB_GAMEOBJ_SRC}
     ${BOTLIB_MISC_SRC})
 
 add_definitions(${CPP_COMPILE_FLAG})
