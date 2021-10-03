@@ -14,4 +14,5 @@ int main(int argc, char *argv[])
     testObjectPool();
     testValidator();
     testVector();
+    testNamedMap();
 }
