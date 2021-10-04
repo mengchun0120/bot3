@@ -1,5 +1,5 @@
-#include <commonlib_json_param.h>
-#include <commonlib_file_utils.h>
+#include <commonlib_exception.h>
+#include <commonlib_string_utils.h>
 #include <botlib_tile_template.h>
 
 using namespace mcdane::commonlib;
@@ -7,32 +7,41 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-TileTemplate::TileTemplate(const rapidjson::Value& v,
-                           const std::string& picDir)
-    : GameObjectTemplate(GameObjectType::TILE, v)
+TileTemplate::TileTemplate(float width,
+                           float height,
+                           float collideBreath,
+                           float hp,
+                           const commonlib::Texture* tex,
+                           const Rectangle* r,
+                           bool invincible)
+    : GameObjectTemplate(GameObjectType::TILE, width, height, collideBreath,
+                         invincible)
 {
-    init(v, picDir);
+    init(hp, tex, r);
 }
 
-void TileTemplate::init(const rapidjson::Value& v,
-                        const std::string& picDir)
+void TileTemplate::init(float hp,
+                        const commonlib::Texture* tex,
+                        const Rectangle* r)
 {
-    float width, height;
-    std::string textureFile;
+    if (hp < 0.0f)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid hp " + toString(hp));
+    }
 
-    std::vector<JsonParamPtr> params{
-        jsonParam(width, {"width"}, true, gt(width, 0.0f)),
-        jsonParam(height, {"height"}, true, gt(height, 0.0f)),
-        jsonParam(textureFile, {"texture"}, true, nonempty(textureFile)),
-        jsonParam(hp_, {"hp"}, true, ge(hp_, 0.0f))
-    };
+    if (!tex)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "tex is null");
+    }
 
-    parse(params, v);
+    if (!r)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "r is null");
+    }
 
-    rect_.load(width, height, TexRectangle());
-
-    textureFile = constructPath({picDir, textureFile});
-    texture_.init(textureFile);
+    hp_ = hp;
+    texture_ = tex;
+    rect_ = r;
 }
 
 } // end of namespace botlib

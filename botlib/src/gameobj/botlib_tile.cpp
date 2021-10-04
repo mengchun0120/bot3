@@ -27,8 +27,8 @@ void Tile::present()
     const TileTemplate* t = getTemplate();
     Graphics& g = Graphics::getInstance();
 
-    t->rect().draw(g.simpleShader(), &pos_, nullptr, nullptr, nullptr,
-                    t->texture().id(), nullptr);
+    t->rect()->draw(g.simpleShader(), &pos_, nullptr, nullptr, nullptr,
+                    t->texture()->id(), nullptr);
 }
 
 void Tile::addHP(float delta)

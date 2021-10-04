@@ -1,5 +1,4 @@
 #include <commonlib_exception.h>
-#include <commonlib_json_param.h>
 #include <commonlib_string_utils.h>
 #include <botlib_game_object_template.h>
 
@@ -9,14 +8,19 @@ namespace mcdane {
 namespace botlib {
 
 GameObjectTemplate::GameObjectTemplate(GameObjectType t,
-                                       const rapidjson::Value& v)
-    : invincible_(false)
-    , collideBreath_(0.0f)
+                                       float width,
+                                       float height,
+                                       float collideBreath,
+                                       bool invincible)
 {
+    init(t, width, height, collideBreath, invincible);
 }
 
 void GameObjectTemplate::init(GameObjectType t,
-                              const rapidjson::Value& v)
+                              float width,
+                              float height,
+                              float collideBreath,
+                              bool invincible)
 {
     if (!isValidGameObjectType(t))
     {
@@ -24,14 +28,23 @@ void GameObjectTemplate::init(GameObjectType t,
                      "Invalid type " + toString(static_cast<int>(t)));
     }
 
-    std::vector<JsonParamPtr> params{
-        jsonParam(invincible_, {"invincible"}, false),
-        jsonParam(collideBreath_, {"collideBreath"}, false,
-                  ge(collideBreath_, 0.0f))
-    };
+    if (width <= 0.0f)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Invalid width " + toString(width));
+    }
 
-    parse(params, v);
+    if (height <= 0.0f)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Invalid height " + toString(height));
+    }
+
     type_ = t;
+    width_ = width;
+    height_ = height;
+    collideBreath_ = collideBreath;
+    invincible_ = invincible;
 }
 
 } // end of namespace botlib

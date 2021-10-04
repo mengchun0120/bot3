@@ -1,7 +1,6 @@
 #ifndef INCLUDED_BOTLIB_GAME_OBJECT_TEMPLATE_H
 #define INCLUDED_BOTLIB_GAME_OBJECT_TEMPLATE_H
 
-#include <rapidjson/document.h>
 #include <botlib_game_object_type.h>
 
 namespace mcdane {
@@ -10,29 +9,51 @@ namespace botlib {
 class GameObjectTemplate {
 public:
     GameObjectTemplate(GameObjectType t,
-                       const rapidjson::Value& v);
+                       float width,
+                       float height,
+                       float collideBreath,
+                       bool invincible=false);
 
     virtual ~GameObjectTemplate() = default;
 
     inline GameObjectType type() const;
 
-    inline bool invincible() const;
+    inline float width() const;
+
+    inline float height() const;
 
     inline float collideBreath() const;
 
+    inline bool invincible() const;
+
 private:
     void init(GameObjectType t,
-              const rapidjson::Value& v);
+              float width,
+              float height,
+              float collideBreath,
+              bool invincible=false);
 
 protected:
     GameObjectType type_;
-    bool invincible_;
+    float width_;
+    float height_;
     float collideBreath_;
+    bool invincible_;
 };
 
 GameObjectType GameObjectTemplate::type() const
 {
     return type_;
+}
+
+float GameObjectTemplate::width() const
+{
+    return width_;
+}
+
+float GameObjectTemplate::height() const
+{
+    return height_;
 }
 
 bool GameObjectTemplate::invincible() const
