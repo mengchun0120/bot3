@@ -1,4 +1,4 @@
-#version 110 core
+#version 130
 
 uniform bool useObjRef;
 uniform vec2 objRef;

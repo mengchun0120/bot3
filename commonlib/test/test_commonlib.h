@@ -15,6 +15,7 @@ void testObjectPool();
 void testValidator();
 void testVector();
 void testNamedMap();
+void testLinkedList();
 
 } // end of namespace commonlib
 } // end of namespace mcdane
