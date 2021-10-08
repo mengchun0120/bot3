@@ -27,10 +27,17 @@ public:
 
     void present() override;
 
+    void setPos(float x,
+                float y) override;
+
     void addHP(float delta);
 
 private:
+    void updateRefPos();
+
+private:
     float hp_;
+    commonlib::Vector2 refPos_;
 };
 
 float Tile::hp() const

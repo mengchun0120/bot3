@@ -6,6 +6,7 @@ namespace botlib {
 
 class GameMap {
 public:
+    
 
 private:
 };

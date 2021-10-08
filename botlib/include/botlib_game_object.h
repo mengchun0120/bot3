@@ -31,6 +31,10 @@ public:
 
     inline const commonlib::Vector2 pos() const;
 
+    inline float width() const;
+
+    inline float height() const;
+
     inline bool alive() const;
 
     inline virtual void update();
@@ -69,6 +73,16 @@ float GameObject::y() const
 const commonlib::Vector2 GameObject::pos() const
 {
     return pos_;
+}
+
+float GameObject::width() const
+{
+    return t_->width();
+}
+
+float GameObject::height() const
+{
+    return t_->height();
 }
 
 bool GameObject::alive() const

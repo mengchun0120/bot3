@@ -1,7 +1,7 @@
 #ifndef INCLUDED_COMMOLIB_LINKED_LIST_H
 #define INCLUDED_COMMOLIB_LINKED_LIST_H
 
-#include <functional>
+#include <memory>
 
 namespace mcdane {
 namespace commonlib {
@@ -9,8 +9,18 @@ namespace commonlib {
 template <typename T>
 class DefaultDeleter {
 public:
+    DefaultDeleter() = default;
+
+    ~DefaultDeleter() = default;
+
     inline void operator()(T* t);
+
+public:
+    static DefaultDeleter k_instance;
 };
+
+template <typename T>
+DefaultDeleter<T> DefaultDeleter<T>::k_instance;
 
 template <typename T>
 void DefaultDeleter<T>::operator()(T* t)
@@ -21,7 +31,7 @@ void DefaultDeleter<T>::operator()(T* t)
 template <typename T, typename DELETER=DefaultDeleter<T>>
 class LinkedList {
 public:
-    LinkedList(DELETER deleter=DefaultDeleter<T>());
+    LinkedList(DELETER& deleter=DefaultDeleter<T>::k_instance);
 
     ~LinkedList();
 
@@ -38,12 +48,12 @@ public:
     void clear();
 
 private:
-    DELETER deleter_;
+    DELETER& deleter_;
     T* first_;
 };
 
 template <typename T, typename DELETER>
-LinkedList<T,DELETER>::LinkedList(DELETER deleter)
+LinkedList<T,DELETER>::LinkedList(DELETER& deleter)
     : deleter_(deleter)
     , first_(nullptr)
 {

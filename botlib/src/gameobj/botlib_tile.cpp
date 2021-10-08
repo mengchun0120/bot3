@@ -20,6 +20,7 @@ void Tile::init(const TileTemplate* t,
                 float y)
 {
     GameObject::init(t, x, y);
+    updateRefPos();
 }
 
 void Tile::present()
@@ -27,8 +28,15 @@ void Tile::present()
     const TileTemplate* t = getTemplate();
     Graphics& g = Graphics::getInstance();
 
-    t->rect()->draw(g.simpleShader(), &pos_, nullptr, nullptr, nullptr,
+    t->rect()->draw(g.simpleShader(), &refPos_, nullptr, nullptr, nullptr,
                     t->texture()->id(), nullptr);
+}
+
+void Tile::setPos(float x,
+                  float y)
+{
+    GameObject::setPos(x, y);
+    updateRefPos();
 }
 
 void Tile::addHP(float delta)
@@ -45,6 +53,13 @@ void Tile::addHP(float delta)
     {
         alive_ = false;
     }
+}
+
+void Tile::updateRefPos()
+{
+    const TileTemplate* t = getTemplate();
+    refPos_[0] = pos_[0] + t->rect()->width() / 2.0f;
+    refPos_[1] = pos_[1] + t->rect()->height() / 2.0f;
 }
 
 } // end of namespace botlib
