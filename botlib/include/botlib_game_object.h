@@ -42,7 +42,7 @@ public:
 
     inline virtual void update();
 
-    virtual void present() = 0;
+    virtual void present() const = 0;
 
     virtual void setPos(float x,
                         float y);

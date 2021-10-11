@@ -1,6 +1,8 @@
 #include <commonlib_exception.h>
 #include <botlib_game_map_item.h>
 
+using namespace mcdane::commonlib;
+
 namespace mcdane {
 namespace botlib {
 
@@ -11,7 +13,8 @@ GameMapItem::GameMapItem()
 {
 }
 
-void GameMapItem::init(GameObject* o)
+void GameMapItem::init(GameObject* o,
+                       GameObject::Deleter* deleter)
 {
     if (!o)
     {
@@ -19,6 +22,7 @@ void GameMapItem::init(GameObject* o)
     }
 
     obj_ = o;
+    deleter_ = deleter;
     next_ = nullptr;
     prev_ = nullptr;
 }

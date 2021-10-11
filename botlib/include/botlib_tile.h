@@ -25,7 +25,7 @@ public:
 
     inline const TileTemplate* getTemplate() const;
 
-    void present() override;
+    void present() const override;
 
     void setPos(float x,
                 float y) override;

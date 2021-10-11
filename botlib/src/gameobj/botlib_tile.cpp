@@ -23,7 +23,7 @@ void Tile::init(const TileTemplate* t,
     updateRefPos();
 }
 
-void Tile::present()
+void Tile::present() const
 {
     const TileTemplate* t = getTemplate();
     Graphics& g = Graphics::getInstance();
