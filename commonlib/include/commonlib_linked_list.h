@@ -1,37 +1,20 @@
 #ifndef INCLUDED_COMMOLIB_LINKED_LIST_H
 #define INCLUDED_COMMOLIB_LINKED_LIST_H
 
-#include <memory>
+#include <functional>
+#include <ostream>
+#include <commonlib_exception.h>
 
 namespace mcdane {
 namespace commonlib {
 
 template <typename T>
-class DefaultDeleter {
-public:
-    DefaultDeleter() = default;
-
-    ~DefaultDeleter() = default;
-
-    inline void operator()(T* t);
-
-public:
-    static DefaultDeleter k_instance;
-};
-
-template <typename T>
-DefaultDeleter<T> DefaultDeleter<T>::k_instance;
-
-template <typename T>
-void DefaultDeleter<T>::operator()(T* t)
-{
-    delete t;
-}
-
-template <typename T, typename DELETER=DefaultDeleter<T>>
 class LinkedList {
 public:
-    LinkedList(DELETER& deleter=DefaultDeleter<T>::k_instance);
+    using Deleter = typename std::function<void(T*)>;
+
+public:
+    LinkedList(Deleter* deleter=nullptr);
 
     ~LinkedList();
 
@@ -39,87 +22,372 @@ public:
 
     inline const T* first() const;
 
+    inline T* last();
+
+    inline const T* last() const;
+
     inline bool empty() const;
 
-    void add(T* t);
+    inline unsigned int size() const;
 
-    void remove(T* prev, T* t);
+    inline void setDeleter(Deleter* deleter);
+
+    void pushFront(T* t);
+
+    void pushBack(T* t);
+
+    void insertAfter(T* ref, T* t);
+
+    void insertBefore(T* ref, T* t);
+
+    T* unlinkFront();
+
+    T* unlinkBack();
+
+    void unlink(T* t);
+
+    void removeFront();
+
+    void removeBack();
+
+    void remove(T* t);
 
     void clear();
 
+public:
+    static Deleter k_defaultDeleter;
+
 private:
-    DELETER& deleter_;
+    Deleter* deleter_;
     T* first_;
+    T* last_;
+    unsigned int size_;
 };
 
-template <typename T, typename DELETER>
-LinkedList<T,DELETER>::LinkedList(DELETER& deleter)
+template<typename T>
+typename LinkedList<T>::Deleter LinkedList<T>::k_defaultDeleter = [](T* t)->void
+{
+    delete t;
+};
+
+template <typename T>
+LinkedList<T>::LinkedList(LinkedList<T>::Deleter* deleter)
     : deleter_(deleter)
     , first_(nullptr)
+    , last_(nullptr)
+    , size_(0)
 {
 }
 
-template <typename T, typename DELETER>
-LinkedList<T,DELETER>::~LinkedList()
+template <typename T>
+LinkedList<T>::~LinkedList()
 {
     clear();
 }
 
-template <typename T, typename DELETER>
-T* LinkedList<T,DELETER>::first()
+template <typename T>
+T* LinkedList<T>::first()
 {
     return first_;
 }
 
-template <typename T, typename DELETER>
-const T* LinkedList<T,DELETER>::first() const
+template <typename T>
+const T* LinkedList<T>::first() const
 {
     return first_;
 }
 
-template <typename T, typename DELETER>
-bool LinkedList<T,DELETER>::empty() const
+template <typename T>
+T* LinkedList<T>::last()
 {
-    return first_ == nullptr;
+    return last_;
 }
 
-template <typename T, typename DELETER>
-void LinkedList<T,DELETER>::add(T* t)
+template <typename T>
+const T* LinkedList<T>::last() const
 {
-    t->setNext(first_);
-    first_ = t;
+    return last_;
 }
 
-template <typename T, typename DELETER>
-void LinkedList<T,DELETER>::remove(T* prev, T* t)
+template <typename T>
+bool LinkedList<T>::empty() const
 {
-    if (t == first_)
+    return size() == 0;
+}
+
+template <typename T>
+unsigned int LinkedList<T>::size() const
+{
+    return size_;
+}
+
+template <typename T>
+void LinkedList<T>::setDeleter(Deleter* deleter)
+{
+    deleter_ = deleter;
+}
+
+template <typename T>
+void LinkedList<T>::pushFront(T* t)
+{
+    if (!t)
     {
-        first_ = t->next();
+        THROW_EXCEPT(InvalidArgumentException, "t is null");
+    }
+
+    t->setNext(first_);
+    t->setPrev(nullptr);
+
+    if (first_ != nullptr)
+    {
+        first_->setPrev(t);
     }
     else
     {
-        prev->setNext(t->next());
+        last_ = t;
     }
 
-    deleter_(t);
+    first_ = t;
+    ++size_;
 }
 
-template <typename T, typename DELETER>
-void LinkedList<T,DELETER>::clear()
+template <typename T>
+void LinkedList<T>::pushBack(T* t)
 {
-    T* next;
-    for (T* cur = first_; cur; cur = next)
+    if (!t)
     {
-        next = cur->next();
-        deleter_(cur);
+        THROW_EXCEPT(InvalidArgumentException, "t is null");
+    }
+
+    t->setNext(nullptr);
+    t->setPrev(last_);
+
+    if (last_ != nullptr)
+    {
+        last_->setNext(t);
+    }
+    else
+    {
+        first_ = t;
+    }
+
+    last_ = t;
+    ++size_;
+}
+
+template <typename T>
+void LinkedList<T>::insertAfter(T* ref, T* t)
+{
+    if (ref)
+    {
+        if (ref->next())
+        {
+            ref->next()->setPrev(t);
+        }
+        else
+        {
+            last_ = t;
+        }
+
+        t->setNext(ref->next());
+        t->setPrev(ref);
+        ref->setNext(t);
+
+        ++size_;
+    }
+    else
+    {
+        pushBack(t);
+    }
+}
+
+template <typename T>
+void LinkedList<T>::insertBefore(T* ref, T* t)
+{
+    if (ref)
+    {
+        if (ref->prev())
+        {
+            ref->prev()->setNext(t);
+        }
+        else
+        {
+            first_ = t;
+        }
+
+        t->setNext(ref);
+        t->setPrev(ref->prev());
+        ref->setPrev(t);
+
+        ++size_;
+    }
+    else
+    {
+        pushFront(t);
+    }
+}
+
+template <typename T>
+T* LinkedList<T>::unlinkFront()
+{
+    if (empty())
+    {
+        return nullptr;
+    }
+
+    T* tmp = first_;
+
+    if (first_ != last_)
+    {
+        first_ = first_->next();
+        first_->setPrev(nullptr);
+    }
+    else
+    {
+        first_ = nullptr;
+        last_ = nullptr;
+    }
+
+    --size_;
+
+    return tmp;
+}
+
+template <typename T>
+T* LinkedList<T>::unlinkBack()
+{
+    if (empty())
+    {
+        return nullptr;
+    }
+
+    T* tmp = last_;
+
+    if (first_ != last_)
+    {
+        last_ = last_->prev();
+        last_->setNext(nullptr);
+    }
+    else
+    {
+        first_ = nullptr;
+        last_ = nullptr;
+    }
+
+    --size_;
+
+    return tmp;
+}
+
+template <typename T>
+void LinkedList<T>::unlink(T* t)
+{
+    if (empty())
+    {
+        THROW_EXCEPT(InvalidArgumentException, "List is empty");
+    }
+
+    if (t->prev())
+    {
+        t->prev()->setNext(t->next());
+    }
+    else
+    {
+        first_ = t->next();
+    }
+
+    if (t->next())
+    {
+        t->next()->setPrev(t->prev());
+    }
+    else
+    {
+        last_ = t->prev();
+    }
+
+    --size_;
+}
+
+template <typename T>
+void LinkedList<T>::removeFront()
+{
+    T* t = unlinkFront();
+    if (t && deleter_)
+    {
+        (*deleter_)(t);
+    }
+}
+
+template <typename T>
+void LinkedList<T>::removeBack()
+{
+    T* t = unlinkBack();
+    if (t && deleter_)
+    {
+        (*deleter_)(t);
+    }
+}
+
+template <typename T>
+void LinkedList<T>::remove(T* t)
+{
+    if (!t)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "t is null");
+    }
+
+    unlink(t);
+
+    if (deleter_)
+    {
+        (*deleter_)(t);
+    }
+}
+
+template <typename T>
+void LinkedList<T>::clear()
+{
+    if (deleter_)
+    {
+        T* next;
+        for (T* cur = first_; cur; cur = next)
+        {
+            next = cur->next();
+            (*deleter_)(cur);
+        }
     }
 
     first_ = nullptr;
+    last_ = nullptr;
+    size_ = 0;
 }
 
 } // end of namespace commonlib
 } // end of namespace mcdane
+
+namespace std {
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os,
+                         const mcdane::commonlib::LinkedList<T>& list)
+{
+    os << '[';
+    if (!list.empty())
+    {
+        const T* t = list.first();
+        os << *t;
+
+        for (t = t->next(); t; t = t->next())
+        {
+            os << ", " << *t;
+        }
+    }
+    os << ']';
+
+    return os;
+}
+
+} // end of namespace std
 
 #endif
 

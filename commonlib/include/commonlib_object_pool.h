@@ -9,9 +9,13 @@ namespace commonlib {
 template <typename T>
 class ObjectPool {
 public:
+    ObjectPool();
+
     ObjectPool(unsigned int size);
 
     virtual ~ObjectPool();
+
+    void init(unsigned int size);
 
     T* alloc();
 
@@ -37,16 +41,18 @@ private:
 };
 
 template <typename T>
+ObjectPool<T>::ObjectPool()
+    : pool_(nullptr)
+    , upper_(nullptr)
+    , size_(0)
+    , next_(nullptr)
+{
+}
+
+template <typename T>
 ObjectPool<T>::ObjectPool(unsigned int size)
 {
-    if (size == 0)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid size: " + std::to_string(size));
-    }
-
-    initPool(size);
-    initNext(size);
+    init(size);
 }
 
 template <typename T>
@@ -57,24 +63,16 @@ ObjectPool<T>::~ObjectPool()
 }
 
 template <typename T>
-void ObjectPool<T>::initPool(unsigned int size)
+void ObjectPool<T>::init(unsigned int size)
 {
-    size_ = size;
-    pool_ = new T[size];
-    upper_ = pool_ + (size-1);
-    firstFree_ = 0;
-    freeCount_ = size;
-}
-
-template <typename T>
-void ObjectPool<T>::initNext(unsigned int size)
-{
-    next_ = new int[size];
-    for (unsigned int i = 0; i < size - 1; ++i)
+    if (size == 0)
     {
-        next_[i] = i+1;
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Invalid size: " + std::to_string(size));
     }
-    next_[size-1] = -1;
+
+    initPool(size);
+    initNext(size);
 }
 
 template <typename T>
@@ -111,6 +109,28 @@ void ObjectPool<T>::free(T* t)
         ++freeCount_;
     }
 }
+
+template <typename T>
+void ObjectPool<T>::initPool(unsigned int size)
+{
+    size_ = size;
+    pool_ = new T[size];
+    upper_ = pool_ + (size-1);
+    firstFree_ = 0;
+    freeCount_ = size;
+}
+
+template <typename T>
+void ObjectPool<T>::initNext(unsigned int size)
+{
+    next_ = new int[size];
+    for (unsigned int i = 0; i < size - 1; ++i)
+    {
+        next_[i] = i+1;
+    }
+    next_[size-1] = -1;
+}
+
 
 } // end of namespace commonlib
 } // end of namespace mcdane
