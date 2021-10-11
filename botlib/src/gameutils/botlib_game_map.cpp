@@ -8,15 +8,15 @@ namespace mcdane {
 namespace botlib {
 
 GameMap::GameMap()
-    : itemDeleter_(itemPool_)
 {
+    initItemDeleter();
 }
 
 GameMap::GameMap(unsigned int rows,
                  unsigned int cols,
                  unsigned int poolSize)
-    : itemDeleter_(itemPool_)
 {
+    initItemDeleter();
     init(rows, cols, poolSize);
 }
 
@@ -39,10 +39,15 @@ void GameMap::init(unsigned int rows,
     }
 
     itemPool_.init(poolSize);
+
     map_.resize(rows);
     for (auto it = map_.begin(); it != map_.end(); ++it)
     {
         it->resize(cols);
+        for (auto itemIt = it->begin(); itemIt != it->end(); ++itemIt)
+        {
+            itemIt->setDeleter(&itemDeleter);
+        }
     }
 }
 
@@ -50,8 +55,18 @@ void GameMap::present() const
 {
 }
 
-void GameMap::addObj(GameObject* o)
+void GameMap::addObj(GameObject* o,
+                     GameObject::Deleter* deleter)
 {
+}
+
+void GameMap::initItemDeleter()
+{
+    itemDeleter_ = [this](GameMapItem* item)->void
+    {
+        item->deleteObj();
+        itemPool_.free(item);
+    };
 }
 
 } // end of namespace botlib

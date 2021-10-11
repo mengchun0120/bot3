@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_GAME_OBJECT_H
 #define INCLUDED_BOTLIB_GAME_OBJECT_H
 
+#include <functional>
 #include <commonlib_vector.h>
 #include <botlib_game_object_template.h>
 
@@ -9,6 +10,8 @@ namespace botlib {
 
 class GameObject {
 public:
+    using Deleter = std::function<void(GameObject*)>;
+
     GameObject();
 
     GameObject(const GameObjectTemplate* t,
@@ -43,6 +46,9 @@ public:
 
     virtual void setPos(float x,
                         float y);
+
+public:
+    static Deleter k_defaultDeleter;
 
 protected:
     const GameObjectTemplate* t_;

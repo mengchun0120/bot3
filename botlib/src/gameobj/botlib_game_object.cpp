@@ -6,6 +6,11 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+GameObject::Deleter GameObject::k_defaultDeleter = [](GameObject* o)->void
+{
+    delete o;
+};
+
 GameObject::GameObject()
     : t_(nullptr)
     , alive_(true)
