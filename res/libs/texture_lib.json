@@ -1,0 +1,22 @@
+[
+    {
+        "name": "steel_tile",
+        "file": "steel_tile.png"
+    },
+    {
+        "name": "ice_tile",
+        "file": "ice_tile.png"
+    },
+    {
+        "name": "clay_tile",
+        "file": "clay_tile.png"
+    },
+    {
+        "name": "fireland_tile",
+        "file": "firelan_tile.png"
+    },
+    {
+        "name": "bush_tile",
+        "file": "bush_tile.png"
+    }
+]

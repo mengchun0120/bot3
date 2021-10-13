@@ -9,6 +9,7 @@
         "fontDir": ["res", "fonts"],
         "picDir": ["res", "pics"],
         "glslDir": ["res", "glsl"],
+        "libDir": ["res", "libs"],
         "configDir": ["config"]
     },
     "shaders": {
@@ -20,5 +21,10 @@
         "labelConfigFile": "label_config.json",
         "messageBoxConfigFile": "message_box_config.json",
         "startScreenConfigFile": "start_screen_config.json"
+    },
+    "libraries": {
+        "textureLibFile": "texture_lib.json",
+        "rectLibFile": "rect_lib.json",
+        "tileTemplateLibFile": "tile_lib.json"
     }
 }

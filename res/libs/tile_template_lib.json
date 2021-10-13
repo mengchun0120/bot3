@@ -1,0 +1,52 @@
+[
+    {
+        "name": "steel_tile",
+        "width": 40.0,
+        "height": 40.0,
+        "collideBreath": 15.0,
+        "invincible": true,
+        "hp": 0.0,
+        "texture": "steel_tile",
+        "rect": "tile"
+    },
+    {
+        "name": "ice_tile",
+        "width": 40.0,
+        "height": 40.0,
+        "collideBreath": 15.0,
+        "invincible": true,
+        "hp": 20.0,
+        "texture": "ice_tile",
+        "rect": "tile"
+    },
+    {
+        "name": "clay_tile",
+        "width": 40.0,
+        "height": 40.0,
+        "collideBreath": 15.0,
+        "invincible": true,
+        "hp": 30.0,
+        "texture": "clay_tile",
+        "rect": "tile"
+    },
+    {
+        "name": "fireland_tile",
+        "width": 40.0,
+        "height": 40.0,
+        "collideBreath": 15.0,
+        "invincible": true,
+        "hp": 40.0,
+        "texture": "fireland_tile",
+        "rect": "tile"
+    },
+    {
+        "name": "bush_tile",
+        "width": 40.0,
+        "height": 40.0,
+        "collideBreath": 15.0,
+        "invincible": true,
+        "hp": 50.0,
+        "texture": "bush_tile",
+        "rect": "tile"
+    }
+]

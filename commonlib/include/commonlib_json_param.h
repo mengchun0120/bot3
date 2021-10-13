@@ -6,6 +6,7 @@
 #include <initializer_list>
 #include <memory>
 #include <vector>
+#include <iostream>
 #include <rapidjson/document.h>
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
@@ -45,7 +46,9 @@ public:
                    Validator v=Validator()) noexcept
         : JsonParam(path, required, v)
         , var_(var)
-    {}
+    {
+        std::cerr << "TypedJsonParam " << &var << ' ' << &var_ << std::endl;
+    }
 
     void parse(const rapidjson::Value& doc) override;
 
@@ -59,6 +62,7 @@ JsonParamPtr jsonParam(T& var,
                        bool required=true,
                        Validator v=Validator())
 {
+    std::cerr << "jsonParam " << &var << std::endl;
     return JsonParamPtr(new TypedJsonParam<T>(var, path, required, v));
 }
 
@@ -78,6 +82,7 @@ void TypedJsonParam<T>::parse(const rapidjson::Value& value)
     }
 
     mcdane::commonlib::parse(var_, *v);
+    std::cerr << &var_ << " parse var_=" << var_ << std::endl;
 
     if (!validator_.validate())
     {

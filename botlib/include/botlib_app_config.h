@@ -35,6 +35,8 @@ public:
 
     inline const std::string& configDir() const;
 
+    inline const std::string& libDir() const;
+
     inline const std::string& simpleVertexShaderFile() const;
 
     inline const std::string& simpleFragShaderFile() const;
@@ -47,6 +49,12 @@ public:
 
     inline const std::string& startScreenConfigFile() const;
 
+    inline const std::string textureLibFile() const;
+
+    inline const std::string rectLibFile() const;
+
+    inline const std::string tileTemplateLibFile() const;
+
 private:
     void loadBasics(const rapidjson::Document& doc);
 
@@ -56,6 +64,8 @@ private:
     void loadShaderFiles(const rapidjson::Document& doc);
 
     void loadConfigFiles(const rapidjson::Document& doc);
+
+    void loadLibFiles(const rapidjson::Document& doc);
 
 private:
     AppConfig(const std::string& fileName,
@@ -73,12 +83,16 @@ private:
     std::string picDir_;
     std::string glslDir_;
     std::string configDir_;
+    std::string libDir_;
     std::string simpleVertexShaderFile_;
     std::string simpleFragShaderFile_;
     std::string buttonConfigFile_;
     std::string labelConfigFile_;
     std::string messageBoxConfigFile_;
     std::string startScreenConfigFile_;
+    std::string textureLibFile_;
+    std::string rectLibFile_;
+    std::string tileTemplateLibFile_;
 };
 
 const AppConfig& AppConfig::getInstance()
@@ -126,6 +140,11 @@ const std::string& AppConfig::configDir() const
     return configDir_;
 }
 
+const std::string& AppConfig::libDir() const
+{
+    return libDir_;
+}
+
 const std::string& AppConfig::simpleVertexShaderFile() const
 {
     return simpleVertexShaderFile_;
@@ -154,6 +173,21 @@ const std::string& AppConfig::messageBoxConfigFile() const
 const std::string& AppConfig::startScreenConfigFile() const
 {
     return startScreenConfigFile_;
+}
+
+const std::string AppConfig::textureLibFile() const
+{
+    return textureLibFile_;
+}
+
+const std::string AppConfig::rectLibFile() const
+{
+    return rectLibFile_;
+}
+
+const std::string AppConfig::tileTemplateLibFile() const
+{
+    return tileTemplateLibFile_;
 }
 
 } // end of namespace botlib

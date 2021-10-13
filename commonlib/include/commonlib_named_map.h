@@ -3,6 +3,7 @@
 
 #include <list>
 #include <vector>
+#include <iostream>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
@@ -89,6 +90,7 @@ void NamedMap<T>::load(const std::string& fileName,
     for (int i = 0; i < numObjects; ++i)
     {
         parse(params, arr[i]);
+        std::cerr << "name=" << name << std::endl;
         T* t = parser(arr[i]);
         add(name, t);
         objs_[i] = t;

@@ -1,3 +1,4 @@
+#include <iostream>
 #include <commonlib_exception.h>
 #include <commonlib_json_param.h>
 #include <commonlib_file_utils.h>
@@ -18,6 +19,7 @@ Texture* TextureLibParser::operator()(const rapidjson::Value& v)
 {
     parse(params_, v);
     std::string path = constructPath({picDir_, fileName_});
+    std::cerr << &fileName_ << " '" << fileName_ << "'" << std::endl;
     return new Texture(path);
 }
 

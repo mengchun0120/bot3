@@ -32,6 +32,7 @@ AppConfig::AppConfig(const std::string& fileName,
     loadDirectories(doc, appDir);
     loadShaderFiles(doc);
     loadConfigFiles(doc);
+    loadLibFiles(doc);
 }
 
 void AppConfig::loadBasics(const rapidjson::Document& doc)
@@ -51,13 +52,14 @@ void AppConfig::loadBasics(const rapidjson::Document& doc)
 void AppConfig::loadDirectories(const rapidjson::Document& doc,
                                 const std::string& appDir)
 {
-    std::vector<std::string> fontDir, picDir, glslDir, configDir;
+    std::vector<std::string> fontDir, picDir, glslDir, configDir, libDir;
     std::vector<JsonParamPtr> params{
         jsonParam(fontDir, {"directories", "fontDir"}, true, nonempty(fontDir)),
         jsonParam(picDir, {"directories", "picDir"}, true, nonempty(picDir)),
         jsonParam(glslDir, {"directories", "glslDir"}, true, nonempty(glslDir)),
         jsonParam(configDir, {"directories", "configDir"}, true,
                   nonempty(configDir)),
+        jsonParam(libDir, {"directories", "libDir"}, true, nonempty(libDir))
     };
 
     parse(params, doc);
@@ -66,6 +68,7 @@ void AppConfig::loadDirectories(const rapidjson::Document& doc,
     picDir_ = constructPath(appDir, picDir);
     glslDir_ = constructPath(appDir, glslDir);
     configDir_ = constructPath(appDir, configDir);
+    libDir_ = constructPath(appDir, libDir);
 }
 
 void AppConfig::loadShaderFiles(const rapidjson::Document& doc)
@@ -103,6 +106,24 @@ void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
     labelConfigFile_ = constructPath({configDir_, labelConfigFile_});
     messageBoxConfigFile_ = constructPath({configDir_, messageBoxConfigFile_});
     startScreenConfigFile_ = constructPath({configDir_, startScreenConfigFile_});
+}
+
+void AppConfig::loadLibFiles(const rapidjson::Document& doc)
+{
+    std::vector<JsonParamPtr> params{
+        jsonParam(textureLibFile_, {"libraries", "textureLibFile"},
+                  true, nonempty(textureLibFile_)),
+        jsonParam(rectLibFile_, {"libraries", "rectLibFile"},
+                  true, nonempty(rectLibFile_)),
+        jsonParam(tileTemplateLibFile_, {"libraries", "tileTemplateLibFile"},
+                  true, nonempty(tileTemplateLibFile_))
+    };
+
+    parse(params, doc);
+
+    textureLibFile_ = constructPath({libDir_, textureLibFile_});
+    rectLibFile_ = constructPath({libDir_, rectLibFile_});
+    tileTemplateLibFile_ = constructPath({libDir_, tileTemplateLibFile_});
 }
 
 } // end of namespace botlib

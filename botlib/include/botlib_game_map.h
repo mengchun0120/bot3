@@ -14,7 +14,7 @@ namespace botlib {
 
 class GameMap {
 public:
-    static constexpr float k_cellBreath = 50.0f;
+    static constexpr float k_cellBreath = 40.0f;
 
     inline static int getCellIdx(float x);
 
