@@ -18,6 +18,7 @@ TestMapApp::TestMapApp(const std::string& configFile,
     setupWindow(1000, 800, "test game map");
 
     const AppConfig& cfg = AppConfig::getInstance();
+
     Graphics::initInstance(cfg.simpleVertexShaderFile(),
                            cfg.simpleFragShaderFile(),
                            cfg.fontDir());
@@ -52,12 +53,12 @@ void TestMapApp::setupOpenGL()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
+/*    Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
     SimpleShaderProgram& shader = Graphics::getInstance().simpleShader();
 
     shader.use();
     shader.setViewportSize(viewportSize());
-    shader.setViewportOrigin(viewportOrigin);
+    shader.setViewportOrigin(viewportOrigin);*/
 }
 
 void TestMapApp::setupMap()

@@ -21,7 +21,7 @@ public:
 
     template <typename PARSER>
     void load(const std::string& fileName,
-              PARSER parser);
+              PARSER& parser);
 
     bool add(const std::string& name,
              T* t);
@@ -68,7 +68,7 @@ NamedMap<T>::~NamedMap()
 template <typename T>
 template <typename PARSER>
 void NamedMap<T>::load(const std::string& fileName,
-                       PARSER parser)
+                       PARSER& parser)
 {
     rapidjson::Document doc;
     readJson(doc, fileName);
@@ -90,7 +90,6 @@ void NamedMap<T>::load(const std::string& fileName,
     for (int i = 0; i < numObjects; ++i)
     {
         parse(params, arr[i]);
-        std::cerr << "name=" << name << std::endl;
         T* t = parser(arr[i]);
         add(name, t);
         objs_[i] = t;

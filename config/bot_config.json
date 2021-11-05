@@ -25,6 +25,6 @@
     "libraries": {
         "textureLibFile": "texture_lib.json",
         "rectLibFile": "rect_lib.json",
-        "tileTemplateLibFile": "tile_lib.json"
+        "tileTemplateLibFile": "tile_template_lib.json"
     }
 }

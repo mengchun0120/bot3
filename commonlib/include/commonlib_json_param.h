@@ -21,11 +21,7 @@ class JsonParam {
 public:
     JsonParam(std::initializer_list<std::string> path,
               bool required=true,
-              const Validator& v=Validator()) noexcept
-        : path_(path)
-        , required_(required)
-        , validator_(v)
-    {}
+              const Validator& v=Validator()) noexcept;
 
     virtual void parse(const rapidjson::Value& doc) = 0;
 
@@ -43,12 +39,7 @@ public:
     TypedJsonParam(T& var,
                    const std::initializer_list<std::string> path,
                    bool required=true,
-                   Validator v=Validator()) noexcept
-        : JsonParam(path, required, v)
-        , var_(var)
-    {
-        std::cerr << "TypedJsonParam " << &var << ' ' << &var_ << std::endl;
-    }
+                   const Validator& v=Validator()) noexcept;
 
     void parse(const rapidjson::Value& doc) override;
 
@@ -57,12 +48,21 @@ protected:
 };
 
 template <typename T>
+TypedJsonParam<T>::TypedJsonParam(T& var,
+                                  const std::initializer_list<std::string> path,
+                                  bool required,
+                                  const Validator& v) noexcept
+    : JsonParam(path, required, v)
+    , var_(var)
+{
+}
+
+template <typename T>
 JsonParamPtr jsonParam(T& var,
                        const std::initializer_list<std::string> path,
                        bool required=true,
                        Validator v=Validator())
 {
-    std::cerr << "jsonParam " << &var << std::endl;
     return JsonParamPtr(new TypedJsonParam<T>(var, path, required, v));
 }
 
@@ -82,7 +82,6 @@ void TypedJsonParam<T>::parse(const rapidjson::Value& value)
     }
 
     mcdane::commonlib::parse(var_, *v);
-    std::cerr << &var_ << " parse var_=" << var_ << std::endl;
 
     if (!validator_.validate())
     {

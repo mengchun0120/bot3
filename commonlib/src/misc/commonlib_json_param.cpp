@@ -3,6 +3,16 @@
 namespace mcdane {
 namespace commonlib {
 
+JsonParam::JsonParam(std::initializer_list<std::string> path,
+                     bool required,
+                     const Validator& v) noexcept
+    : path_(path)
+    , required_(required)
+    , validator_(v)
+{
+}
+
+
 void parse(std::vector<JsonParamPtr>& params,
            const rapidjson::Value& v)
 {
