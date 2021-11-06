@@ -3,11 +3,11 @@
 if [ ! -d "build" ]; then
     mkdir build
     cd build
-    cmake ..
-    make
+    cmake -G Ninja ..
+    ninja
     cd ..
 else
     cd build
-    make
+    ninja
     cd ..
 fi

@@ -1,5 +1,6 @@
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
+#include <botlib_graphics.h>
 #include <botlib_game_map.h>
 
 using namespace mcdane::commonlib;
@@ -18,12 +19,10 @@ GameMap::GameMap(unsigned int poolSize,
                  unsigned int rows,
                  unsigned int cols,
                  float viewportWidth,
-                 float viewportHeight,
-                 float originX,
-                 float originY)
+                 float viewportHeight)
 {
     initItemDeleter();
-    init(rows, cols, poolSize, viewportWidth, viewportHeight, originX, originY);
+    init(rows, cols, poolSize, viewportWidth, viewportHeight);
 }
 
 GameMap::~GameMap()
@@ -34,18 +33,21 @@ void GameMap::init(unsigned int poolSize,
                    unsigned int rows,
                    unsigned int cols,
                    float viewportWidth,
-                   float viewportHeight,
-                   float originX,
-                   float originY)
+                   float viewportHeight)
 {
     maxObjWidth_ = 0.0f;
     maxObjHeight_ = 0.0f;
     initPool(poolSize);
-    initMap(rows, cols, viewportWidth, viewportHeight, originX, originY);
+    initMap(rows, cols, viewportWidth, viewportHeight);
 }
 
 void GameMap::present() const
 {
+    Graphics& g = Graphics::getInstance();
+    SimpleShaderProgram& program = g.simpleShader();
+    program.use();
+    program.setViewportOrigin(viewportOrigin_);
+
     int startRow, endRow, startCol, endCol;
 
     getPresentArea(startRow, endRow, startCol, endCol);
@@ -101,11 +103,12 @@ void GameMap::addObj(GameObject* o,
     }
 }
 
-void GameMap::setOrigin(float originX,
-                        float originY)
+void GameMap::setViewportOrigin(float x,
+                                float y)
 {
-    originX_ = clamp(originX, 0.0f, maxOriginX_);
-    originY_ = clamp(originY, 0.0f, maxOriginY_);
+    viewportOrigin_[0] = clamp(x, minViewportOrigin_[0], maxViewportOrigin_[0]);
+    viewportOrigin_[1] = clamp(y, minViewportOrigin_[1], maxViewportOrigin_[1]);
+    viewportAnchor_ = viewportOrigin_ - viewportHalfSize_;
 }
 
 void GameMap::initItemDeleter()
@@ -131,20 +134,42 @@ void GameMap::initPool(unsigned int poolSize)
 void GameMap::initMap(unsigned int rows,
                       unsigned int cols,
                       float viewportWidth,
-                      float viewportHeight,
-                      float originX,
-                      float originY)
+                      float viewportHeight)
 {
-    if (rows == 0)
+    setMapSize(rows, cols);
+    setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
+
+    map_.resize(rows);
+    for (auto it = map_.begin(); it != map_.end(); ++it)
+    {
+        it->resize(cols);
+        for (auto itemIt = it->begin(); itemIt != it->end(); ++itemIt)
+        {
+            itemIt->setDeleter(&itemDeleter_);
+        }
+    }
+}
+
+void GameMap::setMapSize(unsigned int rows,
+                         unsigned int cols)
+{
+    if (rows < k_minMapRows)
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid rows " + toString(rows));
     }
 
-    if (cols == 0)
+    if (cols < k_minMapCols)
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid cols " + toString(cols));
     }
 
+    width_ = rows * k_cellBreath;
+    height_ = cols * k_cellBreath;
+}
+
+void GameMap::setViewportSize(float viewportWidth,
+                              float viewportHeight)
+{
     if (viewportWidth <= 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
@@ -157,24 +182,11 @@ void GameMap::initMap(unsigned int rows,
                      "Invalid viewportHeight " + toString(viewportHeight));
     }
 
-    width_ = rows * k_cellBreath;
-    height_ = cols * k_cellBreath;
-    viewportWidth_ = viewportWidth;
-    viewportHeight_ = viewportHeight;
-    maxOriginX_ = width_ - viewportWidth_;
-    maxOriginY_ = height_ - viewportHeight_;
-
-    setOrigin(originX, originY);
-
-    map_.resize(rows);
-    for (auto it = map_.begin(); it != map_.end(); ++it)
-    {
-        it->resize(cols);
-        for (auto itemIt = it->begin(); itemIt != it->end(); ++itemIt)
-        {
-            itemIt->setDeleter(&itemDeleter_);
-        }
-    }
+    viewportSize_.init({viewportWidth, viewportHeight});
+    viewportHalfSize_ = viewportSize_ / 2.0f;
+    minViewportOrigin_ = viewportHalfSize_;
+    maxViewportOrigin_.init({width_ - viewportHalfSize_[0],
+                             height_ - viewportHalfSize_[1]});
 
 }
 
@@ -183,25 +195,25 @@ void GameMap::getPresentArea(int& startRow,
                              int& startCol,
                              int& endCol) const
 {
-    startRow = getCellIdx(originY_ - maxObjHeight_);
+    startRow = getCellIdx(viewportAnchor_[1] - maxObjHeight_);
     if (startRow < 0)
     {
         startRow = 0;
     }
 
-    endRow = getCellIdx(originY_ + viewportHeight_);
+    endRow = getCellIdx(viewportAnchor_[1] + viewportSize_[1]);
     if (endRow >= rowCount())
     {
         endRow = rowCount() - 1;
     }
 
-    startCol = getCellIdx(originX_ - maxObjWidth_);
+    startCol = getCellIdx(viewportAnchor_[0] - maxObjWidth_);
     if (startCol < 0)
     {
         startCol = 0;
     }
 
-    endCol = getCellIdx(originX_ + viewportWidth_);
+    endCol = getCellIdx(viewportAnchor_[0] + viewportSize_[0]);
     if (endCol >= colCount())
     {
         endCol = colCount() - 1;

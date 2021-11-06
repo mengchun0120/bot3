@@ -15,6 +15,8 @@ namespace botlib {
 class GameMap {
 public:
     static constexpr float k_cellBreath = 40.0f;
+    static constexpr unsigned int k_minMapRows = 30;
+    static constexpr unsigned int k_minMapCols = 40;
 
     inline static int getCellIdx(float x);
 
@@ -24,9 +26,7 @@ public:
             unsigned int rows,
             unsigned int cols,
             float viewportWidth,
-            float viewportHeight,
-            float originX,
-            float originY);
+            float viewportHeight);
 
     ~GameMap();
 
@@ -34,9 +34,7 @@ public:
               unsigned int rows,
               unsigned int cols,
               float viewportWidth,
-              float viewportHeight,
-              float originX,
-              float originY);
+              float viewportHeight);
 
     void present() const;
 
@@ -51,8 +49,10 @@ public:
 
     inline float height() const;
 
-    void setOrigin(float originX,
-                   float originY);
+    inline const commonlib::Vector2& getViewportOrigin() const;
+
+    void setViewportOrigin(float x,
+                           float y);
 
 private:
     void initItemDeleter();
@@ -62,9 +62,13 @@ private:
     void initMap(unsigned int rows,
                  unsigned int cols,
                  float viewportWidth,
-                 float viewportHeight,
-                 float originX,
-                 float originY);
+                 float viewportHeight);
+
+    void setMapSize(unsigned int rows,
+                    unsigned int cols);
+
+    void setViewportSize(float viewportWidth,
+                         float viewportHeight);
 
     void getPresentArea(int& startRow,
                         int& endRow,
@@ -80,12 +84,12 @@ private:
     std::vector<std::vector<ItemList>> map_;
     float width_;
     float height_;
-    float viewportWidth_;
-    float viewportHeight_;
-    float maxOriginX_;
-    float maxOriginY_;
-    float originX_;
-    float originY_;
+    commonlib::Vector2 viewportSize_;
+    commonlib::Vector2 viewportHalfSize_;
+    commonlib::Vector2 minViewportOrigin_;
+    commonlib::Vector2 maxViewportOrigin_;
+    commonlib::Vector2 viewportOrigin_;
+    commonlib::Vector2 viewportAnchor_;
     float maxObjWidth_;
     float maxObjHeight_;
 };
@@ -113,6 +117,11 @@ float GameMap::width() const
 float GameMap::height() const
 {
     return height_;
+}
+
+const commonlib::Vector2& GameMap::getViewportOrigin() const
+{
+    return viewportOrigin_;
 }
 
 } // end of namespace botlib
