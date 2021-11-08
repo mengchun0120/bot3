@@ -40,7 +40,7 @@ public:
     void present() const;
 
     void addObj(GameObject* obj,
-                GameObject::Deleter* deleter);
+                GameObject::Deleter* deleter=&GameObject::k_defaultDeleter);
 
     inline int rowCount() const;
 

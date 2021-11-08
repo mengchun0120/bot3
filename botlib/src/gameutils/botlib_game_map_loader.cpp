@@ -1,8 +1,8 @@
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
 #include <commonlib_json_utils.h>
-#include <commonlib_json_param.h>
 #include <botlib_game_lib.h>
+#include <botlib_tile.h>
 #include <botlib_game_map_loader.h>
 
 using namespace mcdane::commonlib;
@@ -13,6 +13,12 @@ namespace botlib {
 GameMapLoader::GameMapLoader(unsigned int poolSize,
                              float viewportWidth,
                              float viewportHeight)
+    : params_{
+          jsonParam(typeStr_, "type", true, nonempty(typeStr_)),
+          jsonParam(templateStr_, "template", true, nonempty(templateStr_)),
+          jsonParam(x_, "x"),
+          jsonParam(y_, "y")
+      }
 {
     if (poolSize == 0)
     {
@@ -42,23 +48,21 @@ void GameMapLoader::load(GameMap& map,
     rapidjson::Document doc;
     readJson(doc, fileName);
 
-    unsigned int rows, cols;
-    loadMapDimensions(rows, cols, doc);
-
-    map.init(poolSize_, rows, cols, viewportWidth_, viewportHeight_);
+    loadMapDimension(map, doc);
     loadObjects(map, doc);
 }
 
-void GameMapLoader::loadMapDimesion(unsigned int& rows,
-                                    unsigned int& cols,
-                                    const rapidjson::Document& doc)
+void GameMapLoader::loadMapDimension(GameMap& map,
+                                     const rapidjson::Document& doc)
 {
+    unsigned int rows, cols;
     std::vector<JsonParamPtr> params{
         jsonParam(rows, "rows", true, ge(rows, GameMap::k_minRows)),
         jsonParam(cols, "cols", true, ge(cols, GameMap::k_minCols))
     };
 
     parse(params, doc);
+    map.init(poolSize_, rows, cols, viewportWidth_, viewportHeight_);
 }
 
 void GameMapLoader::loadObjects(GameMap& map,
@@ -69,13 +73,46 @@ void GameMapLoader::loadObjects(GameMap& map,
         THROW_EXCEPT(ParseException, "Missing objects");
     }
 
-    rapidjson::Value objects = doc["objects"];
+    const rapidjson::Value& objects = doc["objects"];
     if (!objects.IsArray())
     {
         THROW_EXCEPT(ParseException, "Invalid map format");
     }
 
+    int numObjects = objects.Capacity();
+    for (int i = 0; i < numObjects; ++i)
+    {
+        parseAddObject(map, objects[i]);
+    }
+}
 
+void GameMapLoader::parseAddObject(GameMap& map,
+                                   const rapidjson::Value& v)
+{
+    parse(params_, v);
+
+    if (typeStr_ == "tile")
+    {
+        addTile(map);
+    }
+    else
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid type " + typeStr_);
+    }
+}
+
+void GameMapLoader::addTile(GameMap& map)
+{
+    const GameLib& lib = GameLib::getInstance();
+
+    const TileTemplate* t = lib.findTileTemplate(templateStr_);
+    if (!t)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Failed to find TileTemplate " + templateStr_);
+    }
+
+    Tile* tile = new Tile(t, x_, y_);
+    map.addObj(tile);
 }
 
 } // end of namespace botlib

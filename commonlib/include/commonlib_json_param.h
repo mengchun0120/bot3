@@ -3,10 +3,9 @@
 
 #include <string>
 #include <vector>
-#include <initializer_list>
 #include <memory>
-#include <vector>
 #include <iostream>
+#include <initializer_list>
 #include <rapidjson/document.h>
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
@@ -19,7 +18,7 @@ namespace commonlib {
 
 class JsonParam {
 public:
-    JsonParam(std::initializer_list<std::string> path,
+    JsonParam(const std::vector<std::string>& path,
               bool required=true,
               const Validator& v=Validator()) noexcept;
 
@@ -37,7 +36,7 @@ template <typename T>
 class TypedJsonParam: public JsonParam {
 public:
     TypedJsonParam(T& var,
-                   const std::initializer_list<std::string> path,
+                   const std::vector<std::string>& path,
                    bool required=true,
                    const Validator& v=Validator()) noexcept;
 
@@ -49,7 +48,7 @@ protected:
 
 template <typename T>
 TypedJsonParam<T>::TypedJsonParam(T& var,
-                                  const std::initializer_list<std::string> path,
+                                  const std::vector<std::string>& path,
                                   bool required,
                                   const Validator& v) noexcept
     : JsonParam(path, required, v)
@@ -59,11 +58,29 @@ TypedJsonParam<T>::TypedJsonParam(T& var,
 
 template <typename T>
 JsonParamPtr jsonParam(T& var,
-                       const std::initializer_list<std::string> path,
+                       const std::vector<std::string>& path,
                        bool required=true,
                        Validator v=Validator())
 {
     return JsonParamPtr(new TypedJsonParam<T>(var, path, required, v));
+}
+
+template <typename T>
+JsonParamPtr jsonParam(T& var,
+                       std::initializer_list<std::string> path,
+                       bool required=true,
+                       Validator v=Validator())
+{
+    return jsonParam(var, std::vector<std::string>(path), required, v);
+}
+
+template <typename T>
+JsonParamPtr jsonParam(T& var,
+                       const std::string& name,
+                       bool required=true,
+                       Validator v=Validator())
+{
+    return JsonParamPtr(new TypedJsonParam<T>(var, {name}, required, v));
 }
 
 template <typename T>
