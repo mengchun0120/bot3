@@ -1,5 +1,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
+#include <commonlib_json_utils.h>
+#include <commonlib_json_param.h>
 #include <botlib_graphics.h>
 #include <botlib_game_map.h>
 
@@ -153,12 +155,12 @@ void GameMap::initMap(unsigned int rows,
 void GameMap::setMapSize(unsigned int rows,
                          unsigned int cols)
 {
-    if (rows < k_minMapRows)
+    if (rows < k_minRows)
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid rows " + toString(rows));
     }
 
-    if (cols < k_minMapCols)
+    if (cols < k_minCols)
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid cols " + toString(cols));
     }

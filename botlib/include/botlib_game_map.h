@@ -4,6 +4,7 @@
 #include <vector>
 #include <functional>
 #include <cmath>
+#include <string>
 #include <commonlib_vector.h>
 #include <commonlib_linked_list.h>
 #include <commonlib_object_pool.h>
@@ -15,8 +16,8 @@ namespace botlib {
 class GameMap {
 public:
     static constexpr float k_cellBreath = 40.0f;
-    static constexpr unsigned int k_minMapRows = 30;
-    static constexpr unsigned int k_minMapCols = 40;
+    static constexpr unsigned int k_minRows = 30;
+    static constexpr unsigned int k_minCols = 40;
 
     inline static int getCellIdx(float x);
 
