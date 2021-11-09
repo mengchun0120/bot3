@@ -49,11 +49,13 @@ public:
 
     inline const std::string& startScreenConfigFile() const;
 
-    inline const std::string textureLibFile() const;
+    inline const std::string& textureLibFile() const;
 
-    inline const std::string rectLibFile() const;
+    inline const std::string& rectLibFile() const;
 
-    inline const std::string tileTemplateLibFile() const;
+    inline const std::string& tileTemplateLibFile() const;
+
+    inline float mapPoolSizeFactor() const;
 
 private:
     void loadBasics(const rapidjson::Document& doc);
@@ -66,6 +68,8 @@ private:
     void loadConfigFiles(const rapidjson::Document& doc);
 
     void loadLibFiles(const rapidjson::Document& doc);
+
+    void loadGameSettings(const rapidjson::Document& doc);
 
 private:
     AppConfig(const std::string& fileName,
@@ -93,6 +97,7 @@ private:
     std::string textureLibFile_;
     std::string rectLibFile_;
     std::string tileTemplateLibFile_;
+    float mapPoolSizeFactor_;
 };
 
 const AppConfig& AppConfig::getInstance()
@@ -175,19 +180,24 @@ const std::string& AppConfig::startScreenConfigFile() const
     return startScreenConfigFile_;
 }
 
-const std::string AppConfig::textureLibFile() const
+const std::string& AppConfig::textureLibFile() const
 {
     return textureLibFile_;
 }
 
-const std::string AppConfig::rectLibFile() const
+const std::string& AppConfig::rectLibFile() const
 {
     return rectLibFile_;
 }
 
-const std::string AppConfig::tileTemplateLibFile() const
+const std::string& AppConfig::tileTemplateLibFile() const
 {
     return tileTemplateLibFile_;
+}
+
+float AppConfig::mapPoolSizeFactor() const
+{
+    return mapPoolSizeFactor_;
 }
 
 } // end of namespace botlib

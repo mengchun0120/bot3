@@ -126,6 +126,16 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
     tileTemplateLibFile_ = constructPath({libDir_, tileTemplateLibFile_});
 }
 
+void AppConfig::loadGameSettings(const rapidjson::Document& doc)
+{
+    std::vector<JsonParamPtr> params{
+        jsonParam(mapPoolSizeFactor_, {"game", "mapPoolSizeFactor"},
+                  true, gt(mapPoolSizeFactor_, 0.0f))
+    };
+
+    parse(params, doc);
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

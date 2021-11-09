@@ -10,7 +10,7 @@ namespace botlib {
 
 class GameMapLoader {
 public:
-    GameMapLoader(unsigned int poolSize,
+    GameMapLoader(float poolSizeFactor,
                   float viewportWidth,
                   float viewportHeight);
 
@@ -30,7 +30,7 @@ private:
     void addTile(GameMap& map);
 
 private:
-    unsigned int poolSize_;
+    float poolSizeFactor_;
     float viewportWidth_;
     float viewportHeight_;
     std::string typeStr_;

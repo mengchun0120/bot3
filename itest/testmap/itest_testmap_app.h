@@ -10,7 +10,8 @@ namespace itest {
 class TestMapApp: public commonlib::App {
 public:
     TestMapApp(const std::string& configFile,
-                  const std::string& appDir);
+               const std::string& appDir,
+               const std::string& mapFile);
 
     ~TestMapApp() override = default;
 
@@ -23,7 +24,7 @@ public:
 private:
     void setupOpenGL();
 
-    void setupMap();
+    void setupMap(const std::string& mapFile);
 
 private:
     botlib::GameMap map_;

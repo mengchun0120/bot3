@@ -10,7 +10,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-GameMapLoader::GameMapLoader(unsigned int poolSize,
+GameMapLoader::GameMapLoader(float poolSizeFactor,
                              float viewportWidth,
                              float viewportHeight)
     : params_{
@@ -20,9 +20,10 @@ GameMapLoader::GameMapLoader(unsigned int poolSize,
           jsonParam(y_, "y")
       }
 {
-    if (poolSize == 0)
+    if (poolSizeFactor <= 0.0f || poolSizeFactor > 1.0f)
     {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid poolSize");
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Invalid poolSizeFactor " + toString(poolSizeFactor));
     }
 
     if (viewportWidth <= 0.0f)
@@ -37,7 +38,7 @@ GameMapLoader::GameMapLoader(unsigned int poolSize,
                      "Invalid viewportHeight " + toString(viewportHeight));
     }
 
-    poolSize_ = poolSize;
+    poolSizeFactor_ = poolSizeFactor;
     viewportWidth_ = viewportWidth;
     viewportHeight_ = viewportHeight;
 }
@@ -62,7 +63,9 @@ void GameMapLoader::loadMapDimension(GameMap& map,
     };
 
     parse(params, doc);
-    map.init(poolSize_, rows, cols, viewportWidth_, viewportHeight_);
+
+    unsigned int poolSize = static_cast<unsigned int>(floor(rows * cols * poolSizeFactor_));
+    map.init(poolSize, rows, cols, viewportWidth_, viewportHeight_);
 }
 
 void GameMapLoader::loadObjects(GameMap& map,

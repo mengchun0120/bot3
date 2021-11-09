@@ -2,6 +2,7 @@
 #include <botlib_app_config.h>
 #include <botlib_graphics.h>
 #include <botlib_game_lib.h>
+#include <botlib_game_map_loader.h>
 #include <itest_testmap_app.h>
 
 using namespace mcdane::commonlib;
@@ -11,7 +12,8 @@ namespace mcdane {
 namespace itest {
 
 TestMapApp::TestMapApp(const std::string& configFile,
-                       const std::string& appDir)
+                       const std::string& appDir,
+                       const std::string& mapFile)
 {
     AppConfig::initInstance(configFile, appDir);
 
@@ -45,6 +47,7 @@ void TestMapApp::process()
 void TestMapApp::postProcess()
 {
     App::postProcess();
+    map_.present();
 }
 
 void TestMapApp::setupOpenGL()
@@ -53,16 +56,16 @@ void TestMapApp::setupOpenGL()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-/*    Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
-    SimpleShaderProgram& shader = Graphics::getInstance().simpleShader();
-
     shader.use();
     shader.setViewportSize(viewportSize());
-    shader.setViewportOrigin(viewportOrigin);*/
 }
 
-void TestMapApp::setupMap()
+void TestMapApp::setupMap(const std::string& mapFile)
 {
+    const AppConfig& cfg = AppConfig::getInstance();
+
+    GameMapLoader loader(cfg.mapPoolSizeFactor(), viewportWidth(), viewportHeight());
+    loader.load(map_, mapFile);
 }
 
 } // end of namespace itest
