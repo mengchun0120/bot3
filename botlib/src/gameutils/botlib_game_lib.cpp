@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <botlib_lib_parser.h>
 #include <botlib_game_lib.h>
 

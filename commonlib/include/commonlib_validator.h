@@ -4,6 +4,7 @@
 #include <string>
 #include <functional>
 #include <sstream>
+#include <commonlib_log.h>
 #include <commonlib_vector.h>
 
 namespace mcdane {

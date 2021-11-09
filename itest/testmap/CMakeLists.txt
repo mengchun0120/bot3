@@ -11,7 +11,7 @@ include_directories(${CMAKE_SOURCE_DIR}/commonlib/include
 add_executable(testmap itest_testmap_app.cpp
                        testmap_main.cpp)
 
-set_property(TARGET testwidget PROPERTY CXX_STANDARD 11)
+set_property(TARGET testmap PROPERTY CXX_STANDARD 11)
 
 if(UNIX)
     target_link_libraries(testmap botlib commonlib GL GLEW glfw3 dl m Xrandr

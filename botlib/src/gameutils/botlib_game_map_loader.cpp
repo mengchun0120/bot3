@@ -58,8 +58,8 @@ void GameMapLoader::loadMapDimension(GameMap& map,
 {
     unsigned int rows, cols;
     std::vector<JsonParamPtr> params{
-        jsonParam(rows, "rows", true, ge(rows, GameMap::k_minRows)),
-        jsonParam(cols, "cols", true, ge(cols, GameMap::k_minCols))
+        jsonParam(rows, "rows"),
+        jsonParam(cols, "cols")
     };
 
     parse(params, doc);

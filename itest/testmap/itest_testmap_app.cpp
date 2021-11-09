@@ -31,7 +31,7 @@ TestMapApp::TestMapApp(const std::string& configFile,
                           cfg.picDir());
 
     setupOpenGL();
-    setupMap();
+    setupMap(mapFile);
 }
 
 void TestMapApp::preProcess()
@@ -56,6 +56,7 @@ void TestMapApp::setupOpenGL()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    SimpleShaderProgram& shader = Graphics::getInstance().simpleShader();
     shader.use();
     shader.setViewportSize(viewportSize());
 }

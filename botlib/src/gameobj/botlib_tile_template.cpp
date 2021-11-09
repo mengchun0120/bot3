@@ -24,7 +24,7 @@ void TileTemplate::init(float hp,
                         const commonlib::Texture* tex,
                         const Rectangle* r)
 {
-    if (hp < 0.0f)
+    if (hp <= 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid hp " + toString(hp));
     }
