@@ -31,15 +31,13 @@ Argument::Argument(const std::string& name,
                    const std::string& shortOpt,
                    const std::string& longOpt,
                    const std::string& description,
-                   bool optional,
-                   Validator validator):
-    name_(name),
-    shortOpt_(shortOpt),
-    longOpt_(longOpt),
-    description_(description),
-    optional_(optional),
-    validator_(validator),
-    specified_(false)
+                   bool optional)
+    : name_(name)
+    , shortOpt_(shortOpt)
+    , longOpt_(longOpt)
+    , description_(description)
+    , optional_(optional)
+    , specified_(false)
 {
     if (!validateName(name_))
     {
@@ -61,6 +59,11 @@ Argument::Argument(const std::string& name,
         THROW_EXCEPT(InvalidArgumentException,
                      "Position argument cannot be optional");
     }
+}
+
+void Argument::setSpecified(bool v) noexcept
+{
+    specified_ = v;
 }
 
 } // end of namespace commonlib

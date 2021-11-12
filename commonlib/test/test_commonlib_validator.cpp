@@ -7,173 +7,110 @@ namespace commonlib {
 
 void testValidator_TestDefaultValidator()
 {
-    Validator v;
-    std::string desc = v.description();
-
-    assert(v.validate());
-    assert(desc == "");
+    Validator<int> v;
+    assert(v.validate(0));
+    assert(v.description(0) == "");
 }
 
 void testValidator_TestEq()
 {
-    int i = 1, j = 1;
-    Validator v = eq(i, j);
-    std::string desc1 = v.description();
+    auto v = eq(1);
 
-    assert(v.validate());
-    assert(desc1 == "(1 == 1)");
-
-    j = 3;
-    std::string desc2 = v.description();
-
-    assert(!v.validate());
-    assert(desc2 == "(1 == 3)");
+    assert(v.validate(1));
+    assert(!v.validate(2));
+    assert(v.description(1) == "(1 == 1)");
 }
 
 void testValidator_TestNe()
 {
-    int i = 1, j = 2;
-    Validator v = ne(i, j);
-    std::string desc1 = v.description();
+    auto v = ne(1);
 
-    assert(v.validate());
-    assert(desc1 == "(1 != 2)");
-
-    j = 1;
-    std::string desc2 = v.description();
-
-    assert(!v.validate());
-    assert(desc2 == "(1 != 1)");
+    assert(v.validate(2));
+    assert(!v.validate(1));
+    assert(v.description(2) == "(2 != 1)");
 }
 
 void testValidator_TestGt()
 {
-    int i = 3, j = 2;
-    Validator v = gt(i, j);
-    std::string desc1 = v.description();
+    auto v = gt(0);
 
-    assert(v.validate());
-    assert(desc1 == "(3 > 2)");
-
-    j = 4;
-    std::string desc2 = v.description();
-
-    assert(!v.validate());
-    assert(desc2 == "(3 > 4)");
+    assert(v.validate(3));
+    assert(!v.validate(0));
+    assert(v.description(3) == "(3 > 0)");
 }
 
 void testValidator_TestGe()
 {
-    int i = 2, j = 1;
-    Validator v = ge(i, j);
-    std::string desc1 = v.description();
+    auto v = ge(0);
 
-    assert(v.validate());
-    assert(desc1 == "(2 >= 1)");
-
-    j = 4;
-    std::string desc2 = v.description();
-
-    assert(!v.validate());
-    assert(desc2 == "(2 >= 4)");
+    assert(v.validate(0));
+    assert(v.validate(1));
+    assert(!v.validate(-1));
+    assert(v.description(2) == "(2 >= 0)");
 }
 
 void testValidator_TestLt()
 {
-    int i = 1, j = 2;
-    Validator v = lt(i, j);
-    std::string desc1 = v.description();
+    auto v = lt(2);
 
-    assert(v.validate());
-    assert(desc1 == "(1 < 2)");
-
-    j = -1;
-    std::string desc2 = v.description();
-
-    assert(!v.validate());
-    assert(desc2 == "(1 < -1)");
+    assert(v.validate(1));
+    assert(!v.validate(2));
+    assert(v.description(1) == "(1 < 2)");
 }
 
 void testValidator_TestLe()
 {
-    int i = 1, j = 2;
-    Validator v = le(i, j);
-    std::string desc1 = v.description();
+    auto v = le(2);
 
-    assert(v.validate());
-    assert(desc1 == "(1 <= 2)");
-
-    j = -1;
-    std::string desc2 = v.description();
-
-    assert(!v.validate());
-    assert(desc2 == "(1 <= -1)");
+    assert(v.validate(2));
+    assert(!v.validate(3));
+    assert(v.description(1) == "(1 <= 2)");
 }
 
 void testValidator_TestAnd()
 {
-    int i = 1, j = 2, k = 3;
-    Validator v = le(i, j) && gt(k, j);
-    std::string desc1 = v.description();
+    auto v = le(2) && gt(0);
 
-    assert(v.validate());
-    assert(desc1 == "((1 <= 2) && (3 > 2))");
-
-    i = 3;
-    std::string desc2 = v.description();
-
-    assert(!v.validate());
-    assert(desc2 == "((3 <= 2) && (3 > 2))");
+    assert(v.validate(1));
+    assert(!v.validate(3));
+    assert(v.description(1) == "((1 <= 2) && (1 > 0))");
 }
 
 void testValidator_TestOr()
 {
-    int i = 1, j = 2, k = 3;
-    Validator v = lt(i, j) || eq(k, j);
-    std::string desc1 = v.description();
+    auto v = lt(1) || eq(2);
 
-    assert(v.validate());
-    assert(desc1 == "((1 < 2) || (3 == 2))");
-
-    i = 3;
-    std::string desc2 = v.description();
-
-    assert(!v.validate());
-    assert(desc2 == "((3 < 2) || (3 == 2))");
+    assert(v.validate(2));
+    assert(v.validate(0));
+    assert(!v.validate(3));
+    assert(v.description(1) == "((1 < 1) || (1 == 2))");
 }
 
 void testValidator_TestNot()
 {
-    int i = 1, j = 2;
-    Validator v = !lt(j, i);
-    std::string desc1 = v.description();
+    auto v = !lt(1);
 
-    assert(v.validate());
-    assert(desc1 == "!(2 < 1)");
-
-    j = 0;
-    std::string desc2 = v.description();
-
-    assert(!v.validate());
-    assert(desc2 == "!(0 < 1)");
+    assert(v.validate(1));
+    assert(!v.validate(0));
+    assert(v.description(2) == "!(2 < 1)");
 }
 
 void testValidator_TestComplexValidator()
 {
-    Validator v = le(1, 2) && (ge(3, 2) || lt(1, 2));
-    std::string desc = v.description();
+    auto v = ge(0) && (eq(2) || lt(1));
 
-    assert(v.validate());
-    assert(desc == "((1 <= 2) && ((3 >= 2) || (1 < 2)))");
+    assert(v.validate(0));
+    assert(v.validate(2));
+    assert(!v.validate(4));
+    assert(v.description(0) == "((0 >= 0) && ((0 == 2) || (0 < 1)))");
 }
 
 void testValidator_TestNonempty()
 {
-    Validator v = nonempty(std::string("hello"));
-    std::string desc = v.description();
+    auto v = nonempty<std::string>();
 
-    assert(v.validate());
-    assert(desc == "Non-empty");
+    assert(v.validate("hello"));
+    assert(v.description("") == "Non-empty");
 }
 
 void testValidator()

@@ -4,11 +4,9 @@ namespace mcdane {
 namespace commonlib {
 
 JsonParam::JsonParam(const std::vector<std::string>& path,
-                     bool required,
-                     const Validator& v) noexcept
+                     bool required) noexcept
     : path_(path)
     , required_(required)
-    , validator_(v)
 {
 }
 

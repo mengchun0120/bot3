@@ -4,78 +4,14 @@
 namespace mcdane {
 namespace commonlib {
 
-Validator::Validator(ValidateFunc validateFunc,
-                     DescriptionFunc descFunc):
-    validateFunc_(validateFunc),
-    descFunc_(descFunc)
-{
-}
-
-bool Validator::validate() const
-{
-    if (validateFunc_)
-    {
-        return validateFunc_();
-    }
-
-    return true;
-}
-
-std::string Validator::description() const
-{
-    if (descFunc_)
-    {
-        return descFunc_();
-    }
-
-    return std::string();
-}
-
-Validator operator&&(const Validator& lhs, const Validator& rhs)
-{
-    Validator::ValidateFunc validateFunc = [=]()->bool
-    {
-        return lhs.validate() && rhs.validate();
-    };
-
-    Validator::DescriptionFunc descFunc = [=]()->std::string
-    {
-        return "(" + lhs.description() + " && " + rhs.description() + ")";
-    };
-
-    return Validator(validateFunc, descFunc);
-}
-
-Validator operator||(const Validator& lhs, const Validator& rhs)
-{
-    Validator::ValidateFunc validateFunc = [=]()->bool
-    {
-        return lhs.validate() || rhs.validate();
-    };
-
-    Validator::DescriptionFunc descFunc = [=]()->std::string
-    {
-        return "(" + lhs.description() + " || " + rhs.description() + ")";
-    };
-
-    return Validator(validateFunc, descFunc);
-}
-
-Validator operator!(const Validator& v)
-{
-    Validator::ValidateFunc validateFunc = [=]()->bool
-    {
-        return !v.validate();
-    };
-
-    Validator::DescriptionFunc descFunc = [=]()->std::string
-    {
-        return "!" + v.description();
-    };
-
-    return Validator(validateFunc, descFunc);
-
-}
+Validator<std::string> k_nonEmptyStrV = nonempty<std::string>();
+Validator<std::vector<std::string>> k_nonEmptyStrVecV = nonEmptyVec<std::string>();
+Validator<std::vector<int>> k_nonEmptyIntVecV = nonEmptyVec<int>();
+Validator<std::vector<unsigned int>> k_nonEmptyUIntVecV = nonEmptyVec<unsigned int>();
+Validator<std::vector<short>> k_nonEmptyShortVecV = nonEmptyVec<short>();
+Validator<std::vector<long>> k_nonEmptyLongVecV = nonEmptyVec<long>();
+Validator<std::vector<float>> k_nonEmptyFloatVecV = nonEmptyVec<float>();
+Validator<std::vector<double>> k_nonEmptyDoubleVecV = nonEmptyVec<double>();
 
 } // end of namespace commonlib
 } // end of namespace mcdane

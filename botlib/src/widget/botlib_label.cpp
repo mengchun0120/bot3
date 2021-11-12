@@ -19,12 +19,9 @@ void Label::initConfig(const std::string& configFile)
     readJson(doc, configFile);
 
     std::vector<JsonParamPtr> params{
-        jsonParam(k_defaultTextColor, {"defaultTextColor"}, true,
-                  nonempty(k_defaultTextColor)),
-        jsonParam(k_defaultBackColor, {"defaultBackColor"}, true,
-                  nonempty(k_defaultBackColor)),
-        jsonParam(k_defaultBorderColor, {"defaultBorderColor"}, true,
-                  nonempty(k_defaultBorderColor))
+        jsonParam(k_defaultTextColor, {"defaultTextColor"}),
+        jsonParam(k_defaultBackColor, {"defaultBackColor"}),
+        jsonParam(k_defaultBorderColor, {"defaultBorderColor"})
     };
 
     parse(params, doc);

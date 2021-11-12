@@ -21,7 +21,7 @@ public:
                       const std::string& longOpt="",
                       const std::string& description="",
                       bool optional=false,
-                      Validator validator=Validator());
+                      Validator<T> validator=Validator<T>());
 
     static bool validateName(const std::string& name);
 
@@ -35,8 +35,7 @@ public:
              const std::string& shortOpt="",
              const std::string& longOpt="",
              const std::string& description="",
-             bool optional=false,
-             Validator validator=Validator());
+             bool optional=false);
 
     Argument(const Argument& other) noexcept = default;
 
@@ -49,60 +48,30 @@ public:
 
     Argument& operator=(Argument&& other) noexcept = default;
 
-    const std::string& name() const noexcept
-    {
-        return name_;
-    }
+    inline const std::string& name() const noexcept;
 
-    bool isPosArg() const noexcept
-    {
-        return shortOpt_.empty() && longOpt_.empty();
-    }
+    inline bool isPosArg() const noexcept;
 
-    const std::string& shortOpt() const noexcept
-    {
-        return shortOpt_;
-    }
+    inline const std::string& shortOpt() const noexcept;
 
-    const std::string& longOpt() const noexcept
-    {
-        return longOpt_;
-    }
+    inline const std::string& longOpt() const noexcept;
 
-    const std::string& description() const noexcept
-    {
-        return description_;
-    }
+    inline const std::string& description() const noexcept;
 
-    bool optional() const noexcept
-    {
-        return optional_;
-    }
+    inline bool optional() const noexcept;
 
-    const Validator& validator() const noexcept
-    {
-        return validator_;
-    }
+    inline bool specified() const noexcept;
+
+    void setSpecified(bool v) noexcept;
 
     virtual void eval(const std::string& s) = 0;
 
-    bool& specified() noexcept
-    {
-        return specified_;
-    }
-
-    bool specified() const noexcept
-    {
-        return specified_;
-    }
-
-private:
+protected:
     std::string name_;
     std::string shortOpt_;
     std::string longOpt_;
     std::string description_;
     bool optional_;
-    Validator validator_;
     bool specified_;
 };
 
@@ -115,7 +84,7 @@ public:
                   const std::string& longOpt="",
                   const std::string& description="",
                   bool optional=false,
-                  Validator validator=Validator());
+                  Validator<T> validator=Validator<T>());
 
     TypedArgument(const TypedArgument& other) noexcept = default;
 
@@ -139,6 +108,7 @@ public:
 
 private:
     T& arg_;
+    Validator<T> validator_;
 };
 
 template <typename T>
@@ -148,11 +118,46 @@ Argument::Ptr Argument::create(T& arg,
                                const std::string& longOpt,
                                const std::string& description,
                                bool optional,
-                               Validator validator)
+                               Validator<T> validator)
 {
     return Ptr(new TypedArgument<T>(arg, name, shortOpt,
                                     longOpt, description,
                                     optional, validator));
+}
+
+const std::string& Argument::name() const noexcept
+{
+    return name_;
+}
+
+bool Argument::isPosArg() const noexcept
+{
+    return shortOpt_.empty() && longOpt_.empty();
+}
+
+const std::string& Argument::shortOpt() const noexcept
+{
+    return shortOpt_;
+}
+
+const std::string& Argument::longOpt() const noexcept
+{
+    return longOpt_;
+}
+
+const std::string& Argument::description() const noexcept
+{
+    return description_;
+}
+
+bool Argument::optional() const noexcept
+{
+    return optional_;
+}
+
+bool Argument::specified() const noexcept
+{
+    return specified_;
 }
 
 template <typename T>
@@ -162,21 +167,22 @@ TypedArgument<T>::TypedArgument(T& arg,
                                 const std::string& longOpt,
                                 const std::string& description,
                                 bool optional,
-                                Validator validator):
-    Argument(name, shortOpt, longOpt, description, optional, validator),
-    arg_(arg)
+                                Validator<T> validator)
+    : Argument(name, shortOpt, longOpt, description, optional)
+    , arg_(arg)
+    , validator_(validator)
 {}
 
 template <typename T>
 void TypedArgument<T>::eval(const std::string& s)
 {
     parse(arg_, s);
-    if (!validator().validate())
+    if (!validator_.validate(arg_))
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Validation failed: " + validator().description());
+                     "Validation failed: " + validator_.description(arg_));
     }
-    specified() = true;
+    specified_ = true;
 }
 
 } // end of namespace commonlib

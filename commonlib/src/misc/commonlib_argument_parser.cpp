@@ -164,7 +164,7 @@ void ArgumentParser::resetArgs()
 {
     for (auto it = nameArgMap_.begin(); it != nameArgMap_.end(); ++it)
     {
-        it->second->specified() = false;
+        it->second->setSpecified(false);
     }
 }
 

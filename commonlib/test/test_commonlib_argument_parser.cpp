@@ -398,7 +398,7 @@ void testArgumentParser_ParseWithoutFailingValidationThrowsNoException()
     {
         parser.init({
             Argument::create(count, "count", "c", "count", "Count",
-                             true, gt(count, 0)),
+                             true, gt(0)),
         });
 
         const char * const argv[] = {"cmd", "-c", "100"};
@@ -424,9 +424,9 @@ void testArgumentParser_ParseWithFailingValidationThrowsException()
     {
         parser.init({
             Argument::create(count, "count", "c", "count", "Count",
-                             true, gt(count, 0)),
+                             true, gt(0)),
             Argument::create(price, "price", "p", "price", "Price",
-                             true, gt(price, 0.0))
+                             true, gt(0.0))
         });
     }
     catch (const std::exception& e)

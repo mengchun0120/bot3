@@ -116,7 +116,7 @@ void testJsonParam_ValidationFailThrowException()
         doc.Parse(json);
 
         int i;
-        JsonParamPtr param = jsonParam(i, {"hose"}, true, gt(i, 1));
+        JsonParamPtr param = jsonParam(i, {"hose"}, true, gt(1));
         param->parse(doc);
     }
     catch (const MyException& e)
@@ -166,9 +166,9 @@ void testJsonParam_ParseComplexJsonSuccess()
         int age;
         std::vector<std::string> books;
         std::vector<JsonParamPtr> params{
-            jsonParam(id, {"identity", "id"}, true, gt(id, 0)),
+            jsonParam(id, {"identity", "id"}, true, gt(0)),
             jsonParam(name, {"identity", "name"}),
-            jsonParam(age, {"identity", "age"}, false, gt(age, 0)),
+            jsonParam(age, {"identity", "age"}, false, gt(0)),
             jsonParam(books, {"books"})
         };
 

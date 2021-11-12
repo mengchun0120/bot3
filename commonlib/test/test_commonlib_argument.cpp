@@ -86,7 +86,7 @@ void testArgument_EvalWithoutFailingValidationThrowsNoException()
     try
     {
         Argument::Ptr arg = Argument::create(count, "count", "c", "count",
-                                             "Count", true, gt(count, 0));
+                                             "Count", true, gt(0));
         arg->eval("123");
         assert(count == 123);
         assert(arg->specified());
@@ -107,7 +107,7 @@ void testArgument_EvalWithFailingValidationThrowsException()
     try
     {
         arg = Argument::create(count, "count", "c", "count",
-                               "Count", true, gt(count, 0));
+                               "Count", true, gt(0));
     }
     catch (const MyException& e)
     {

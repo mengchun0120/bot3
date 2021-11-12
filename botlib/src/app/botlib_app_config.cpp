@@ -38,11 +38,10 @@ AppConfig::AppConfig(const std::string& fileName,
 void AppConfig::loadBasics(const rapidjson::Document& doc)
 {
     std::vector<JsonParamPtr> params{
-        jsonParam(width_, {"window", "width"}, true, gt(width_, 0u)),
-        jsonParam(height_, {"window", "height"}, true, gt(height_, 0u)),
-        jsonParam(title_, {"window", "title"}, true, nonempty(title_)),
-        jsonParam(inputQueueCapacity_, {"inputQueueCapacity"}, true,
-                  gt(inputQueueCapacity_, 0u))
+        jsonParam(width_, {"window", "width"}, true, gt(0u)),
+        jsonParam(height_, {"window", "height"}, true, gt(0u)),
+        jsonParam(title_, {"window", "title"}, true, k_nonEmptyStrV),
+        jsonParam(inputQueueCapacity_, {"inputQueueCapacity"}, true, gt(0u))
     };
 
     parse(params, doc);
@@ -54,12 +53,11 @@ void AppConfig::loadDirectories(const rapidjson::Document& doc,
 {
     std::vector<std::string> fontDir, picDir, glslDir, configDir, libDir;
     std::vector<JsonParamPtr> params{
-        jsonParam(fontDir, {"directories", "fontDir"}, true, nonempty(fontDir)),
-        jsonParam(picDir, {"directories", "picDir"}, true, nonempty(picDir)),
-        jsonParam(glslDir, {"directories", "glslDir"}, true, nonempty(glslDir)),
-        jsonParam(configDir, {"directories", "configDir"}, true,
-                  nonempty(configDir)),
-        jsonParam(libDir, {"directories", "libDir"}, true, nonempty(libDir))
+        jsonParam(fontDir, {"directories", "fontDir"}, true, k_nonEmptyStrVecV),
+        jsonParam(picDir, {"directories", "picDir"}, true, k_nonEmptyStrVecV),
+        jsonParam(glslDir, {"directories", "glslDir"}, true, k_nonEmptyStrVecV),
+        jsonParam(configDir, {"directories", "configDir"}, true, k_nonEmptyStrVecV),
+        jsonParam(libDir, {"directories", "libDir"}, true, k_nonEmptyStrVecV)
     };
 
     parse(params, doc);
@@ -75,10 +73,9 @@ void AppConfig::loadShaderFiles(const rapidjson::Document& doc)
 {
     std::vector<JsonParamPtr> params{
         jsonParam(simpleVertexShaderFile_, {"shaders", "simpleVertexShaderFile"},
-                  true, nonempty(simpleVertexShaderFile_)),
+                  true, k_nonEmptyStrV),
         jsonParam(simpleFragShaderFile_, {"shaders", "simpleFragShaderFile"},
-                  true, nonempty(simpleFragShaderFile_)
-        )
+                  true, k_nonEmptyStrV)
     };
 
     parse(params, doc);
@@ -91,13 +88,13 @@ void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
 {
     std::vector<JsonParamPtr> params{
         jsonParam(buttonConfigFile_, {"configs", "buttonConfigFile"},
-                  true, nonempty(buttonConfigFile_)),
+                  true, k_nonEmptyStrV),
         jsonParam(labelConfigFile_, {"configs", "labelConfigFile"},
-                  true, nonempty(labelConfigFile_)),
+                  true, k_nonEmptyStrV),
         jsonParam(messageBoxConfigFile_, {"configs", "messageBoxConfigFile"},
-                  true, nonempty(messageBoxConfigFile_)),
+                  true, k_nonEmptyStrV),
         jsonParam(startScreenConfigFile_, {"configs", "startScreenConfigFile"},
-                  true, nonempty(startScreenConfigFile_))
+                  true, k_nonEmptyStrV)
     };
 
     parse(params, doc);
@@ -112,11 +109,11 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
 {
     std::vector<JsonParamPtr> params{
         jsonParam(textureLibFile_, {"libraries", "textureLibFile"},
-                  true, nonempty(textureLibFile_)),
+                  true, k_nonEmptyStrV),
         jsonParam(rectLibFile_, {"libraries", "rectLibFile"},
-                  true, nonempty(rectLibFile_)),
+                  true, k_nonEmptyStrV),
         jsonParam(tileTemplateLibFile_, {"libraries", "tileTemplateLibFile"},
-                  true, nonempty(tileTemplateLibFile_))
+                  true, k_nonEmptyStrV)
     };
 
     parse(params, doc);
@@ -130,7 +127,7 @@ void AppConfig::loadGameSettings(const rapidjson::Document& doc)
 {
     std::vector<JsonParamPtr> params{
         jsonParam(mapPoolSizeFactor_, {"game", "mapPoolSizeFactor"},
-                  true, gt(mapPoolSizeFactor_, 0.0f))
+                  true, gt(0.0f))
     };
 
     parse(params, doc);

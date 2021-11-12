@@ -20,13 +20,13 @@ void parseArguments(Arguments& args, int argc, char* argv[])
     ArgumentParser parser;
     parser.init({
         Argument::create(args.configFile_, "configFile", "c", "config",
-                         "Config file", false, nonempty(args.configFile_)),
+                         "Config file", false, k_nonEmptyStrV),
         Argument::create(args.logFile_, "logFile", "l", "log",
-                         "Log file", false, nonempty(args.logFile_)),
+                         "Log file", false, k_nonEmptyStrV),
         Argument::create(args.appDir_, "appDir", "a", "appDir",
-                         "App directory", false, nonempty(args.appDir_)),
+                         "App directory", false, k_nonEmptyStrV),
         Argument::create(args.mapFile_, "mapFile", "m", "mapFile",
-                         "Map file", false, nonempty(args.mapFile_))
+                         "Map file", false, k_nonEmptyStrV)
     });
 
     parser.parse(argc, argv);

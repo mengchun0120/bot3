@@ -12,7 +12,7 @@ namespace botlib {
 
 TextureLibParser::TextureLibParser(const std::string& picDir)
     : picDir_(picDir)
-    , params_{jsonParam(fileName_, {"file"}, true, nonempty(fileName_))}
+    , params_{jsonParam(fileName_, "file", true, k_nonEmptyStrV)}
 {
 }
 
@@ -25,9 +25,9 @@ Texture* TextureLibParser::operator()(const rapidjson::Value& v)
 
 RectLibParser::RectLibParser()
     : params_{
-        jsonParam(width_, {"width"}, true, gt(width_, 0.0f)),
-        jsonParam(height_, {"height"}, true, gt(height_, 0.0f)),
-        jsonParam(hasTexture_, {"hasTexture"})
+        jsonParam(width_, "width", true, gt(0.0f)),
+        jsonParam(height_, "height", true, gt(0.0f)),
+        jsonParam(hasTexture_, "hasTexture")
       }
 {
 }
@@ -43,11 +43,10 @@ Rectangle* RectLibParser::operator()(const rapidjson::Value& v)
 GameObjectTemplateParser::GameObjectTemplateParser()
     : invincible_(false)
     , params_{
-        jsonParam(width_, {"width"}, true, gt(width_, 0.0f)),
-        jsonParam(height_, {"height"}, true, gt(height_, 0.0f)),
-        jsonParam(collideBreath_, {"collideBreath"}, true,
-                  ge(collideBreath_, 0.0f)),
-        jsonParam(invincible_, {"invincible"}, false)
+        jsonParam(width_, "width", true, gt(0.0f)),
+        jsonParam(height_, "height", true, gt(0.0f)),
+        jsonParam(collideBreath_, "collideBreath", true, ge(0.0f)),
+        jsonParam(invincible_, "invincible", false)
       }
 {
 }
@@ -64,9 +63,9 @@ TileTemplateLibParser::TileTemplateLibParser(
     : textureLib_(textureLib)
     , rectLib_(rectLib)
     , params_{
-        jsonParam(hp_, {"hp"}, true, ge(hp_, 0.0f)),
-        jsonParam(textureName_, {"texture"}, true, nonempty(textureName_)),
-        jsonParam(rectName_, {"rect"}, true, nonempty(rectName_))
+        jsonParam(hp_, "hp", true, ge(0.0f)),
+        jsonParam(textureName_, "texture", true, k_nonEmptyStrV),
+        jsonParam(rectName_, "rect", true, k_nonEmptyStrV)
       }
 {
 }

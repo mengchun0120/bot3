@@ -22,8 +22,8 @@ void Button::initConfig(const std::string& configFile,
 
     std::string textureFile;
     std::vector<JsonParamPtr> params{
-        jsonParam(k_textColors, {"textColor"}, true, nonempty(k_textColors)),
-        jsonParam(textureFile, {"texture"}, true, nonempty(textureFile))
+        jsonParam(k_textColors, {"textColor"}),
+        jsonParam(textureFile, {"texture"}, true, k_nonEmptyStrV)
     };
 
     parse(params, doc);

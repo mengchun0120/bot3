@@ -81,7 +81,7 @@ void NamedMap<T>::load(const std::string& fileName,
     const rapidjson::Value& arr = doc.GetArray();
     std::string name;
     std::vector<JsonParamPtr> params{
-        jsonParam(name, {"name"}, true, nonempty(name))
+        jsonParam(name, {"name"}, true, k_nonEmptyStrV)
     };
     int numObjects = arr.Capacity();
 

@@ -14,8 +14,8 @@ GameMapLoader::GameMapLoader(float poolSizeFactor,
                              float viewportWidth,
                              float viewportHeight)
     : params_{
-          jsonParam(typeStr_, "type", true, nonempty(typeStr_)),
-          jsonParam(templateStr_, "template", true, nonempty(templateStr_)),
+          jsonParam(typeStr_, "type", true, k_nonEmptyStrV),
+          jsonParam(templateStr_, "template", true, k_nonEmptyStrV),
           jsonParam(x_, "x"),
           jsonParam(y_, "y")
       }

@@ -23,12 +23,9 @@ void StartScreen::initConfig(const std::string& configFile)
     readJson(doc, configFile);
 
     std::vector<JsonParamPtr> params{
-        jsonParam(k_buttonWidth, {"buttonWidth"}, true,
-                  gt(k_buttonWidth, 0.0f)),
-        jsonParam(k_buttonHeight, {"buttonHeight"}, true,
-                  gt(k_buttonHeight, 0.0f)),
-        jsonParam(k_buttonSpacing, {"buttonSpacing"}, true,
-                  gt(k_buttonSpacing, 0.0f))
+        jsonParam(k_buttonWidth, {"buttonWidth"}, true, gt(0.0f)),
+        jsonParam(k_buttonHeight, {"buttonHeight"}, true, gt(0.0f)),
+        jsonParam(k_buttonSpacing, {"buttonSpacing"}, true, gt(0.0f))
     };
 
     parse(params, doc);
