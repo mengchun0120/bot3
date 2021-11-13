@@ -1,6 +1,9 @@
 #ifndef INCLUDED_BOTLIB_GAME_OBJECT_TYPE_H
 #define INCLUDED_BOTLIB_GAME_OBJECT_TYPE_H
 
+#include <string>
+#include <ostream>
+
 namespace mcdane {
 namespace botlib {
 
@@ -20,6 +23,12 @@ inline bool isValidGameObjectType(GameObjectType t)
 
 } // end of namespace botlib
 } // end of namespace mcdane
+
+namespace std {
+
+ostream& operator<<(ostream& os, mcdane::botlib::GameObjectType t);
+
+} // end of namespace std
 
 #endif
 

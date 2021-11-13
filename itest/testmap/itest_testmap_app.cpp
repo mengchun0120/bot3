@@ -41,13 +41,13 @@ void TestMapApp::preProcess()
 
 void TestMapApp::process()
 {
+    map_.present();
     glFlush();
 }
 
 void TestMapApp::postProcess()
 {
     App::postProcess();
-    map_.present();
 }
 
 void TestMapApp::setupOpenGL()

@@ -35,8 +35,7 @@ private:
     float viewportHeight_;
     std::string typeStr_;
     std::string templateStr_;
-    float x_;
-    float y_;
+    commonlib::Vector2 pos_;
     std::vector<mcdane::commonlib::JsonParamPtr> params_;
 };
 

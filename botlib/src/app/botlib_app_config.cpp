@@ -33,6 +33,7 @@ AppConfig::AppConfig(const std::string& fileName,
     loadShaderFiles(doc);
     loadConfigFiles(doc);
     loadLibFiles(doc);
+    loadGameSettings(doc);
 }
 
 void AppConfig::loadBasics(const rapidjson::Document& doc)

@@ -1,4 +1,5 @@
 #include <commonlib_exception.h>
+#include <commonlib_log.h>
 #include <commonlib_string_utils.h>
 #include <commonlib_json_utils.h>
 #include <botlib_game_lib.h>
@@ -16,8 +17,7 @@ GameMapLoader::GameMapLoader(float poolSizeFactor,
     : params_{
           jsonParam(typeStr_, "type", true, k_nonEmptyStrV),
           jsonParam(templateStr_, "template", true, k_nonEmptyStrV),
-          jsonParam(x_, "x"),
-          jsonParam(y_, "y")
+          jsonParam(pos_, "pos")
       }
 {
     if (poolSizeFactor <= 0.0f || poolSizeFactor > 1.0f)
@@ -114,7 +114,7 @@ void GameMapLoader::addTile(GameMap& map)
         THROW_EXCEPT(InvalidArgumentException, "Failed to find TileTemplate " + templateStr_);
     }
 
-    Tile* tile = new Tile(t, x_, y_);
+    Tile* tile = new Tile(t, pos_[0], pos_[1]);
     map.addObj(tile);
 }
 

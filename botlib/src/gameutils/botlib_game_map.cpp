@@ -1,4 +1,5 @@
 #include <commonlib_exception.h>
+#include <commonlib_log.h>
 #include <commonlib_string_utils.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
@@ -48,6 +49,7 @@ void GameMap::present() const
     Graphics& g = Graphics::getInstance();
     SimpleShaderProgram& program = g.simpleShader();
     program.use();
+    program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
 
     int startRow, endRow, startCol, endCol;
@@ -103,6 +105,9 @@ void GameMap::addObj(GameObject* o,
     {
         maxObjHeight_ = o->height();
     }
+
+    LOG_INFO << "addObj " << o->type() << " row=" << rowIdx
+             << " col=" << colIdx << LOG_END;
 }
 
 void GameMap::setViewportOrigin(float x,
@@ -139,6 +144,7 @@ void GameMap::initMap(unsigned int rows,
                       float viewportHeight)
 {
     setMapSize(rows, cols);
+    setViewportSize(viewportWidth, viewportHeight);
     setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
 
     map_.resize(rows);
