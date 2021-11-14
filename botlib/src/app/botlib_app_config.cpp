@@ -34,6 +34,8 @@ AppConfig::AppConfig(const std::string& fileName,
     loadConfigFiles(doc);
     loadLibFiles(doc);
     loadGameSettings(doc);
+
+    LOG_INFO << "AppConfig initialized successfully" << LOG_END;
 }
 
 void AppConfig::loadBasics(const rapidjson::Document& doc)

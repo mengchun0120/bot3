@@ -1,4 +1,5 @@
 #include <commonlib_exception.h>
+#include <commonlib_log.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
 #include <botlib_message_box.h>
@@ -32,6 +33,8 @@ void MessageBox::initConfig(const std::string& configFile)
     };
 
     parse(params, doc);
+
+    LOG_INFO << "MessageBox config initialized successfully" << LOG_END;
 }
 
 MessageBox::MessageBox(float x,

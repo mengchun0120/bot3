@@ -33,7 +33,7 @@ void Button::initConfig(const std::string& configFile,
     textureFile = constructPath({picDir, textureFile});
     k_texture.init(textureFile);
 
-    LOG_INFO << "Button::initConfig finished successfully" << LOG_END;
+    LOG_INFO << "Button config finished successfully" << LOG_END;
 }
 
 void Button::validateTextColor()

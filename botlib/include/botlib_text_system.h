@@ -37,6 +37,9 @@ public:
     float getHeight(TextSize size) const;
 
 private:
+    static std::string fontTextureFile(const std::string& fontDir,
+                                       int ch);
+
     void loadFontTextures(const std::string& fontDir);
 
     void loadFontHeights();

@@ -32,6 +32,8 @@ void GameLib::load(const std::string& textureLibFile,
 
     TileTemplateLibParser tileTemplateParser(textureLib_, rectLib_);
     tileTemplateLib_.load(tileTemplateLibFile, tileTemplateParser);
+
+    LOG_INFO << "GameLib loaded successfull" << LOG_END;
 }
 
 } // end of namespace botlib

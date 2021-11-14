@@ -29,6 +29,8 @@ void StartScreen::initConfig(const std::string& configFile)
     };
 
     parse(params, doc);
+
+    LOG_INFO << "StartScreen config initialized successfully" << LOG_END;
 }
 
 StartScreen::StartScreen(const commonlib::Vector2& viewportSize,

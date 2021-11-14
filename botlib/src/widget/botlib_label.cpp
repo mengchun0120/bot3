@@ -1,4 +1,5 @@
 #include <commonlib_exception.h>
+#include <commonlib_log.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
 #include <botlib_graphics.h>
@@ -25,6 +26,8 @@ void Label::initConfig(const std::string& configFile)
     };
 
     parse(params, doc);
+
+    LOG_INFO << "Label config initialized successfully" << LOG_END;
 }
 
 Label::Label(float x,

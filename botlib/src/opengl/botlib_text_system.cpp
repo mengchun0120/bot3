@@ -15,8 +15,8 @@ namespace botlib {
 
 const float TextSystem::k_scaleFactors[] = {1.0f, 0.75f, 0.5f, 0.36f};
 
-std::string fontTextureFile(const std::string& fontDir,
-                            int ch)
+std::string TextSystem::fontTextureFile(const std::string& fontDir,
+                                        int ch)
 {
     std::string file = "ascii_" + std::to_string(ch) + ".png";
     return constructPath({fontDir, file});
@@ -46,6 +46,8 @@ void TextSystem::load(const std::string& fontDir)
     loadFontTextures(fontDir);
     loadFontHeights();
     loadFontRect();
+
+    LOG_INFO << "TextSystem loaded successfully" << LOG_END;
 }
 
 void TextSystem::draw(SimpleShaderProgram& program,
