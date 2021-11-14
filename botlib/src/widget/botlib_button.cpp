@@ -90,13 +90,13 @@ void Button::present() const
         return;
     }
 
-    Graphics& g = Graphics::getInstance();
+    SimpleShaderProgram& program = Graphics::simpleShader();
+    TextSystem& textSys = Graphics::textSys();
 
-    rect_.draw(g.simpleShader(), &pos_, nullptr, nullptr, nullptr,
+    rect_.draw(program, &pos_, nullptr, nullptr, nullptr,
                k_texture.id(), nullptr);
 
-    g.textSys().draw(g.simpleShader(), text_, textPos_, textSize_,
-                     &k_textColors[state_]);
+    textSys.draw(program, text_, textPos_, textSize_, &k_textColors[state_]);
 }
 
 void Button::setText(const std::string &text)
@@ -186,8 +186,8 @@ void Button::onMouseOut()
 
 void Button::resetTextPos()
 {
-    Graphics& g = Graphics::getInstance();
-    commonlib::Vector2 sz = g.textSys().getSize(text_, textSize_);
+    TextSystem& textSys = Graphics::textSys();
+    commonlib::Vector2 sz = textSys.getSize(text_, textSize_);
 
     textPos_[0] = pos_[0] - sz[0]/2.0f;
     textPos_[1] = pos_[1] - sz[1]/2.0f;

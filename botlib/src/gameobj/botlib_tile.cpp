@@ -26,9 +26,9 @@ void Tile::init(const TileTemplate* t,
 void Tile::present() const
 {
     const TileTemplate* t = getTemplate();
-    Graphics& g = Graphics::getInstance();
+    SimpleShaderProgram& program = Graphics::simpleShader();
 
-    t->rect()->draw(g.simpleShader(), &refPos_, nullptr, nullptr, nullptr,
+    t->rect()->draw(program, &refPos_, nullptr, nullptr, nullptr,
                     t->texture()->id(), nullptr);
 }
 

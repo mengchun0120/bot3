@@ -46,10 +46,8 @@ void GameMap::init(unsigned int poolSize,
 
 void GameMap::present() const
 {
-    Graphics& g = Graphics::getInstance();
-    SimpleShaderProgram& program = g.simpleShader();
+    SimpleShaderProgram& program = Graphics::simpleShader();
     program.use();
-    program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
 
     int startRow, endRow, startCol, endCol;
@@ -78,14 +76,14 @@ void GameMap::addObj(GameObject* o,
         THROW_EXCEPT(InvalidArgumentException, "o is null");
     }
 
-    int rowIdx = getCellIdx(o->x());
+    int rowIdx = getCellIdx(o->y());
     if (rowIdx < 0 || rowIdx >= rowCount())
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "o->x is out of range: " + toString(o->x()));
     }
 
-    int colIdx = getCellIdx(o->y());
+    int colIdx = getCellIdx(o->x());
     if (colIdx < 0 || colIdx >= colCount())
     {
         THROW_EXCEPT(InvalidArgumentException,

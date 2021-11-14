@@ -10,17 +10,15 @@ namespace botlib {
 
 class Graphics {
 public:
-    inline static Graphics& getInstance();
+    inline static SimpleShaderProgram& simpleShader();
+
+    inline static TextSystem& textSys();
 
     static void initInstance(const std::string& simpleVertexShaderFile,
                              const std::string& simpleFragShaderFile,
                              const std::string& fontDir);
 
     ~Graphics() = default;
-
-    inline SimpleShaderProgram& simpleShader();
-
-    inline TextSystem& textSys();
 
 private:
     Graphics(const std::string& simpleVertexShaderFile,
@@ -34,19 +32,14 @@ private:
     TextSystem textSys_;
 };
 
-Graphics& Graphics::getInstance()
-{
-    return *k_instance;
-}
-
 SimpleShaderProgram& Graphics::simpleShader()
 {
-    return simpleShader_;
+    return k_instance->simpleShader_;
 }
 
 TextSystem& Graphics::textSys()
 {
-    return textSys_;
+    return k_instance->textSys_;
 }
 
 } // end of namespace botlib
