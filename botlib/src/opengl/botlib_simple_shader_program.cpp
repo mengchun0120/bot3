@@ -12,10 +12,8 @@ namespace botlib {
 void SimpleShaderProgram::init(const std::string& vertexShaderFile,
                                const std::string& fragShaderFile)
 {
-    std::string vertexShaderSrc = readTextFile(vertexShaderFile);
-    std::string fragShaderSrc = readTextFile(fragShaderFile);
+    load(vertexShaderFile, fragShaderFile);
 
-    load(vertexShaderSrc, fragShaderSrc);
     positionLoc_ = getAttribLocation("position");
     useObjRefLoc_ = getUniformLocation("useObjRef");
     objRefLoc_ = getUniformLocation("objRef");

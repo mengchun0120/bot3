@@ -27,8 +27,10 @@ bool isShaderCompileSuccessful(GLuint shader)
 }
 
 bool compileShader(GLuint shader,
-                   const std::string& src)
+                   const std::string& fileName)
 {
+    std::string src = readTextFile(fileName);
+
     const GLchar* source = src.c_str();
     GLint len = src.length();
 
@@ -67,7 +69,7 @@ std::string getShaderName(GLenum type)
 }
 
 GLuint createShader(GLenum type,
-                    const std::string& src)
+                    const std::string& fileName)
 {
     GLuint shader = glCreateShader(type);
     if (shader == 0)
@@ -75,7 +77,7 @@ GLuint createShader(GLenum type,
         THROW_EXCEPT(OpenGLException, "glCreateShader failed");
     }
 
-    if (!compileShader(shader, src))
+    if (!compileShader(shader, fileName))
     {
         THROW_EXCEPT(OpenGLException,
                      "Failed to compile " + getShaderName(type) +

@@ -11,15 +11,15 @@ class ShaderProgram {
 public:
     ShaderProgram();
 
-    ShaderProgram(const std::string& vertexShaderSrc,
-                  const std::string& fragShaderSrc);
+    ShaderProgram(const std::string& vertexShaderFile,
+                  const std::string& fragShaderFile);
 
     ShaderProgram(const ShaderProgram& other) = delete;
 
     virtual ~ShaderProgram();
 
-    void load(const std::string& vertexShaderSrc,
-              const std::string& fragShaderSrc);
+    void load(const std::string& vertexShaderFile,
+              const std::string& fragShaderFile);
 
     bool valid() const noexcept
     {

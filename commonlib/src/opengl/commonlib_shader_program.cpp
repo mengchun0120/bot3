@@ -13,11 +13,11 @@ ShaderProgram::ShaderProgram():
 {
 }
 
-ShaderProgram::ShaderProgram(const std::string& vertexShaderSrc,
-                             const std::string& fragShaderSrc):
+ShaderProgram::ShaderProgram(const std::string& vertexShaderFile,
+                             const std::string& fragShaderFile):
     ShaderProgram()
 {
-    load(vertexShaderSrc, fragShaderSrc);
+    load(vertexShaderFile, fragShaderFile);
 }
 
 ShaderProgram::~ShaderProgram()
@@ -27,11 +27,11 @@ ShaderProgram::~ShaderProgram()
     destroyProgram(program_);
 }
 
-void ShaderProgram::load(const std::string& vertexShaderSrc,
-                         const std::string& fragShaderSrc)
+void ShaderProgram::load(const std::string& vertexShaderFile,
+                         const std::string& fragShaderFile)
 {
-    vertexShader_ = createShader(GL_VERTEX_SHADER, vertexShaderSrc);
-    fragShader_ = createShader(GL_FRAGMENT_SHADER, fragShaderSrc);
+    vertexShader_ = createShader(GL_VERTEX_SHADER, vertexShaderFile);
+    fragShader_ = createShader(GL_FRAGMENT_SHADER, fragShaderFile);
     program_ = createProgram(vertexShader_, fragShader_);
 }
 

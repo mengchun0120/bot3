@@ -23,12 +23,6 @@ std::string getShaderName(GLenum type);
 GLuint createShader(GLenum type,
                     const std::string& fileName);
 
-GLuint createShader(GLenum type,
-                    std::initializer_list<std::string> fileNames);
-
-GLuint createShader(GLenum type,
-                    const std::vector<std::string>& fileNames);
-
 bool isProgramLinkSuccessful(GLuint program);
 
 bool linkProgram(GLuint program,
