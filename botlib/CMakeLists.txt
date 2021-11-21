@@ -37,6 +37,7 @@ set(BOTLIB_WIDGET_SRC
 
 set(BOTLIB_GAMEOBJ_SRC
     src/gameobj/botlib_component_template.cpp
+    src/gameobj/botlib_component.cpp
     src/gameobj/botlib_game_object_type.cpp
     src/gameobj/botlib_game_object_template.cpp
     src/gameobj/botlib_tile_template.cpp
