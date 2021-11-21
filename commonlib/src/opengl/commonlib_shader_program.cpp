@@ -6,18 +6,25 @@
 namespace mcdane {
 namespace commonlib {
 
-ShaderProgram::ShaderProgram():
-    vertexShader_(0),
-    fragShader_(0),
-    program_(0)
+ShaderProgram::ShaderProgram()
+    : vertexShader_(0)
+    , fragShader_(0)
+    , program_(0)
 {
 }
 
-ShaderProgram::ShaderProgram(const std::string& vertexShaderFile,
-                             const std::string& fragShaderFile):
-    ShaderProgram()
+ShaderProgram::ShaderProgram(std::initializer_list<std::string> vertexShaderFiles,
+                             std::initializer_list<std::string> fragShaderFiles)
+    : ShaderProgram()
 {
-    load(vertexShaderFile, fragShaderFile);
+    load(vertexShaderFiles, fragShaderFiles);
+}
+
+ShaderProgram::ShaderProgram(const std::vector<std::string>& vertexShaderFiles,
+                             const std::vector<std::string>& fragShaderFiles)
+    : ShaderProgram()
+{
+    load(vertexShaderFiles, fragShaderFiles);
 }
 
 ShaderProgram::~ShaderProgram()
@@ -27,11 +34,19 @@ ShaderProgram::~ShaderProgram()
     destroyProgram(program_);
 }
 
-void ShaderProgram::load(const std::string& vertexShaderFile,
-                         const std::string& fragShaderFile)
+void ShaderProgram::load(std::initializer_list<std::string> vertexShaderFiles,
+                         std::initializer_list<std::string> fragShaderFiles)
 {
-    vertexShader_ = createShader(GL_VERTEX_SHADER, vertexShaderFile);
-    fragShader_ = createShader(GL_FRAGMENT_SHADER, fragShaderFile);
+    vertexShader_ = createShader(GL_VERTEX_SHADER, vertexShaderFiles);
+    fragShader_ = createShader(GL_FRAGMENT_SHADER, fragShaderFiles);
+    program_ = createProgram(vertexShader_, fragShader_);
+}
+
+void ShaderProgram::load(const std::vector<std::string>& vertexShaderFiles,
+                         const std::vector<std::string>& fragShaderFiles)
+{
+    vertexShader_ = createShader(GL_VERTEX_SHADER, vertexShaderFiles);
+    fragShader_ = createShader(GL_FRAGMENT_SHADER, fragShaderFiles);
     program_ = createProgram(vertexShader_, fragShader_);
 }
 

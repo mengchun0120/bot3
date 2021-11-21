@@ -1,6 +1,7 @@
 #ifndef INCLUDE_COMMONLIB_SHADER_PROGRAM_H
 #define INCLUDE_COMMONLIB_SHADER_PROGRAM_H
 
+#include <initializer_list>
 #include <string>
 #include <commonlib_opengl.h>
 
@@ -11,15 +12,21 @@ class ShaderProgram {
 public:
     ShaderProgram();
 
-    ShaderProgram(const std::string& vertexShaderFile,
-                  const std::string& fragShaderFile);
+    ShaderProgram(std::initializer_list<std::string> vertexShaderFiles,
+                  std::initializer_list<std::string> fragShaderFiles);
+
+    ShaderProgram(const std::vector<std::string>& vertexShaderFiles,
+                  const std::vector<std::string>& fragShaderFiles);
 
     ShaderProgram(const ShaderProgram& other) = delete;
 
     virtual ~ShaderProgram();
 
-    void load(const std::string& vertexShaderFile,
-              const std::string& fragShaderFile);
+    void load(std::initializer_list<std::string> vertexShaderFiles,
+              std::initializer_list<std::string> fragShaderFiles);
+
+    void load(const std::vector<std::string>& vertexShaderFiles,
+              const std::vector<std::string>& fragShaderFiles);
 
     bool valid() const noexcept
     {

@@ -14,15 +14,16 @@ public:
 
     inline static TextSystem& textSys();
 
-    static void initInstance(const std::string& simpleVertexShaderFile,
-                             const std::string& simpleFragShaderFile,
-                             const std::string& fontDir);
+    static void initInstance(
+                        const std::vector<std::string>& simpleVertexShaderFiles,
+                        const std::vector<std::string>& simpleFragShaderFiles,
+                        const std::string& fontDir);
 
     ~Graphics() = default;
 
 private:
-    Graphics(const std::string& simpleVertexShaderFile,
-             const std::string& simpleFragShaderFile,
+    Graphics(const std::vector<std::string>& simpleVertexShaderFiles,
+             const std::vector<std::string>& simpleFragShaderFiles,
              const std::string& fontDir);
 
 private:

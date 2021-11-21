@@ -3,6 +3,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 #include <rapidjson/document.h>
 
 namespace mcdane {
@@ -37,9 +38,9 @@ public:
 
     inline const std::string& libDir() const;
 
-    inline const std::string& simpleVertexShaderFile() const;
+    inline const std::vector<std::string>& simpleVertexShaderFiles() const;
 
-    inline const std::string& simpleFragShaderFile() const;
+    inline const std::vector<std::string>& simpleFragShaderFiles() const;
 
     inline const std::string& buttonConfigFile() const;
 
@@ -88,8 +89,8 @@ private:
     std::string glslDir_;
     std::string configDir_;
     std::string libDir_;
-    std::string simpleVertexShaderFile_;
-    std::string simpleFragShaderFile_;
+    std::vector<std::string> simpleVertexShaderFiles_;
+    std::vector<std::string> simpleFragShaderFiles_;
     std::string buttonConfigFile_;
     std::string labelConfigFile_;
     std::string messageBoxConfigFile_;
@@ -150,14 +151,14 @@ const std::string& AppConfig::libDir() const
     return libDir_;
 }
 
-const std::string& AppConfig::simpleVertexShaderFile() const
+const std::vector<std::string>& AppConfig::simpleVertexShaderFiles() const
 {
-    return simpleVertexShaderFile_;
+    return simpleVertexShaderFiles_;
 }
 
-const std::string& AppConfig::simpleFragShaderFile() const
+const std::vector<std::string>& AppConfig::simpleFragShaderFiles() const
 {
-    return simpleFragShaderFile_;
+    return simpleFragShaderFiles_;
 }
 
 const std::string& AppConfig::buttonConfigFile() const

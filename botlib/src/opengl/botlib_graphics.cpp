@@ -6,9 +6,10 @@ namespace botlib {
 
 std::shared_ptr<Graphics> Graphics::k_instance;
 
-void Graphics::initInstance(const std::string& simpleVertexShaderFile,
-                            const std::string& simpleFragShaderFile,
-                            const std::string& fontDir)
+void Graphics::initInstance(
+                    const std::vector<std::string>& simpleVertexShaderFiles,
+                    const std::vector<std::string>& simpleFragShaderFiles,
+                    const std::string& fontDir)
 {
     if (k_instance)
     {
@@ -16,16 +17,16 @@ void Graphics::initInstance(const std::string& simpleVertexShaderFile,
         return;
     }
 
-    Graphics* g = new Graphics(simpleVertexShaderFile, simpleFragShaderFile,
+    Graphics* g = new Graphics(simpleVertexShaderFiles, simpleFragShaderFiles,
                                fontDir);
     k_instance.reset(g);
 }
 
-Graphics::Graphics(const std::string& simpleVertexShaderFile,
-                   const std::string& simpleFragShaderFile,
+Graphics::Graphics(const std::vector<std::string>& simpleVertexShaderFiles,
+                   const std::vector<std::string>& simpleFragShaderFiles,
                    const std::string& fontDir)
 {
-    simpleShader_.init(simpleVertexShaderFile, simpleFragShaderFile);
+    simpleShader_.init(simpleVertexShaderFiles, simpleFragShaderFiles);
     textSys_.load(fontDir);
 }
 

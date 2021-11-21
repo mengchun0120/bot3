@@ -28,8 +28,8 @@ void TestShapeApp::setupOpenGL()
 {
     const AppConfig& cfg = AppConfig::getInstance();
 
-    Graphics::initInstance(cfg.simpleVertexShaderFile(),
-                           cfg.simpleFragShaderFile(),
+    Graphics::initInstance(cfg.simpleVertexShaderFiles(),
+                           cfg.simpleFragShaderFiles(),
                            cfg.fontDir());
 
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

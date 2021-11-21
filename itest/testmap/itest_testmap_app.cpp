@@ -21,8 +21,8 @@ TestMapApp::TestMapApp(const std::string& configFile,
 
     const AppConfig& cfg = AppConfig::getInstance();
 
-    Graphics::initInstance(cfg.simpleVertexShaderFile(),
-                           cfg.simpleFragShaderFile(),
+    Graphics::initInstance(cfg.simpleVertexShaderFiles(),
+                           cfg.simpleFragShaderFiles(),
                            cfg.fontDir());
 
     GameLib::initInstance(cfg.textureLibFile(),

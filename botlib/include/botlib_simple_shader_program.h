@@ -15,8 +15,8 @@ public:
 
     ~SimpleShaderProgram() override = default;
 
-    void init(const std::string& vertexShaderFile,
-              const std::string& fragShaderFile);
+    void init(const std::vector<std::string>& vertexShaderFiles,
+              const std::vector<std::string>& fragShaderFiles);
 
     inline void setUseObjRef(bool enabled);
 
@@ -41,6 +41,9 @@ public:
     inline void setUseTexColor(bool use);
 
     inline void setTexColor(const  commonlib::Color& color);
+
+private:
+    void initLocations();
 
 private:
     GLint positionLoc_;

@@ -19,8 +19,8 @@ TestWidgetApp::TestWidgetApp(const std::string& configFile,
     setupWindow(1000, 800, "test widgets");
 
     const AppConfig& cfg = AppConfig::getInstance();
-    Graphics::initInstance(cfg.simpleVertexShaderFile(),
-                           cfg.simpleFragShaderFile(),
+    Graphics::initInstance(cfg.simpleVertexShaderFiles(),
+                           cfg.simpleFragShaderFiles(),
                            cfg.fontDir());
 
     Button::initConfig(cfg.buttonConfigFile(),

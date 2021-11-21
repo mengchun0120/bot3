@@ -8,6 +8,17 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+void marshalFileNames(std::vector<std::string>& newFileNames,
+                      const std::vector<std::string>& oldFileNames,
+                      const std::string& folder)
+{
+    newFileNames.resize(oldFileNames.size());
+    for (std::size_t i = 0; i < newFileNames.size(); ++i)
+    {
+        newFileNames[i] = constructPath({folder, oldFileNames[i]});
+    }
+}
+
 std::shared_ptr<AppConfig> AppConfig::k_instance;
 
 void AppConfig::initInstance(const std::string& fileName,
@@ -74,17 +85,19 @@ void AppConfig::loadDirectories(const rapidjson::Document& doc,
 
 void AppConfig::loadShaderFiles(const rapidjson::Document& doc)
 {
+    std::vector<std::string> vertexShaderFiles, fragShaderFiles;
+
     std::vector<JsonParamPtr> params{
-        jsonParam(simpleVertexShaderFile_, {"shaders", "simpleVertexShaderFile"},
-                  true, k_nonEmptyStrV),
-        jsonParam(simpleFragShaderFile_, {"shaders", "simpleFragShaderFile"},
-                  true, k_nonEmptyStrV)
+        jsonParam(vertexShaderFiles, {"shaders", "simpleVertexShaderFiles"},
+                  true, k_nonEmptyStrVecV),
+        jsonParam(fragShaderFiles, {"shaders", "simpleFragShaderFiles"},
+                  true, k_nonEmptyStrVecV)
     };
 
     parse(params, doc);
 
-    simpleVertexShaderFile_ = constructPath({glslDir_, simpleVertexShaderFile_});
-    simpleFragShaderFile_ = constructPath({glslDir_, simpleFragShaderFile_});
+    marshalFileNames(simpleVertexShaderFiles_, vertexShaderFiles, glslDir_);
+    marshalFileNames(simpleFragShaderFiles_, fragShaderFiles, glslDir_);
 }
 
 void AppConfig::loadConfigFiles(const rapidjson::Document& doc)

@@ -1,6 +1,7 @@
 #ifndef INCLUDED_COMMONLIB_OPENGL_UTILS_H
 #define INCLUDED_COMMONLIB_OPENGL_UTILS_H
 
+#include <string>
 #include <vector>
 #include <initializer_list>
 #include <commonlib_opengl.h>
@@ -22,6 +23,12 @@ std::string getShaderName(GLenum type);
 
 GLuint createShader(GLenum type,
                     const std::string& fileName);
+
+GLuint createShader(GLenum type,
+                    std::initializer_list<std::string> fileNames);
+
+GLuint createShader(GLenum type,
+                    const std::vector<std::string>& fileNames);
 
 bool isProgramLinkSuccessful(GLuint program);
 

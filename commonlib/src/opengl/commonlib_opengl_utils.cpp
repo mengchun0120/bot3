@@ -37,7 +37,11 @@ bool compileShader(GLuint shader,
     glShaderSource(shader, 1, static_cast<const GLchar * const*>(&source), &len);
     glCompileShader(shader);
 
-    return isShaderCompileSuccessful(shader);
+    bool result = isShaderCompileSuccessful(shader);
+
+    LOG_INFO << "Compilation  " << (result ? "successful" : "failed") << LOG_END;
+
+    return result;
 }
 
 std::string getShaderInfo(GLuint shader)
@@ -71,13 +75,37 @@ std::string getShaderName(GLenum type)
 GLuint createShader(GLenum type,
                     const std::string& fileName)
 {
+    return createShader(type, {fileName});
+}
+
+GLuint createShader(GLenum type,
+                    std::initializer_list<std::string> fileNames)
+{
+    return createShader(type, std::vector<std::string>(fileNames));
+}
+
+GLuint createShader(GLenum type,
+                    const std::vector<std::string>& fileNames)
+{
     GLuint shader = glCreateShader(type);
     if (shader == 0)
     {
         THROW_EXCEPT(OpenGLException, "glCreateShader failed");
     }
 
-    if (!compileShader(shader, fileName))
+    auto it = fileNames.begin();
+    for (; it != fileNames.end(); ++it)
+    {
+        LOG_INFO << "Compiling " << getShaderName(type) << " from "
+                 << *it << LOG_END;
+
+        if (compileShader(shader, *it))
+        {
+            break;
+        }
+    }
+
+    if (it == fileNames.end())
     {
         THROW_EXCEPT(OpenGLException,
                      "Failed to compile " + getShaderName(type) +

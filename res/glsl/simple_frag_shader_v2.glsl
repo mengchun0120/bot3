@@ -19,11 +19,11 @@ void main()
     {
         if(useTexColor)
         {
-            fragColor = texture2D(texture, texCoord) * texColor;
+            fragColor = texture(texture, texCoord) * texColor;
         }
         else
         {
-            fragColor = texture2D(texture, texCoord);
+            fragColor = texture(texture, texCoord);
         }
     }
 }

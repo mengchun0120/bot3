@@ -78,8 +78,8 @@ void BotApp::setupOpenGL(const AppConfig& cfg)
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-    Graphics::initInstance(cfg.simpleVertexShaderFile(),
-                           cfg.simpleFragShaderFile(),
+    Graphics::initInstance(cfg.simpleVertexShaderFiles(),
+                           cfg.simpleFragShaderFiles(),
                            cfg.fontDir());
 }
 

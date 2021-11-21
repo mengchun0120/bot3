@@ -9,24 +9,11 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void SimpleShaderProgram::init(const std::string& vertexShaderFile,
-                               const std::string& fragShaderFile)
+void SimpleShaderProgram::init(const std::vector<std::string>& vertexShaderFiles,
+                               const std::vector<std::string>& fragShaderFiles)
 {
-    load(vertexShaderFile, fragShaderFile);
-
-    positionLoc_ = getAttribLocation("position");
-    useObjRefLoc_ = getUniformLocation("useObjRef");
-    objRefLoc_ = getUniformLocation("objRef");
-    viewportSizeLoc_ = getUniformLocation("viewportSize");
-    viewportOriginLoc_ = getUniformLocation("viewportOrigin");
-    colorLoc_ = getUniformLocation("color");
-    useColorLoc_ = getUniformLocation("useColor");
-    texPosLoc_ = getAttribLocation("texPos");
-    textureLoc_ = getUniformLocation("texture");
-    useDirectionLoc_ = getUniformLocation("useDirection");
-    directionLoc_ = getUniformLocation("direction");
-    useTexColorLoc_ = getUniformLocation("useTexColor");
-    texColorLoc_ = getUniformLocation("texColor");
+    load(vertexShaderFiles, fragShaderFiles);
+    initLocations();
 
     LOG_INFO << "SimpleShaderProgram initialized" << LOG_END;
 }
@@ -61,6 +48,23 @@ void SimpleShaderProgram::setTexture(GLuint textureId)
     glUniform1i(textureLoc_, 0);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
+}
+
+void SimpleShaderProgram::initLocations()
+{
+    positionLoc_ = getAttribLocation("position");
+    useObjRefLoc_ = getUniformLocation("useObjRef");
+    objRefLoc_ = getUniformLocation("objRef");
+    viewportSizeLoc_ = getUniformLocation("viewportSize");
+    viewportOriginLoc_ = getUniformLocation("viewportOrigin");
+    colorLoc_ = getUniformLocation("color");
+    useColorLoc_ = getUniformLocation("useColor");
+    texPosLoc_ = getAttribLocation("texPos");
+    textureLoc_ = getUniformLocation("texture");
+    useDirectionLoc_ = getUniformLocation("useDirection");
+    directionLoc_ = getUniformLocation("direction");
+    useTexColorLoc_ = getUniformLocation("useTexColor");
+    texColorLoc_ = getUniformLocation("texColor");
 }
 
 } // end of namespace botlib

@@ -13,8 +13,11 @@
         "configDir": ["config"]
     },
     "shaders": {
-        "simpleVertexShaderFile": "simple_vertex_shader.glsl",
-        "simpleFragShaderFile": "simple_frag_shader.glsl"
+        "simpleVertexShaderFiles": ["simple_vertex_shader.glsl"],
+        "simpleFragShaderFiles": [
+            "simple_frag_shader.glsl",
+            "simple_frag_shader_v2.glsl"
+        ]
     },
     "configs": {
         "buttonConfigFile": "button_config.json",
