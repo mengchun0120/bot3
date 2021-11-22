@@ -4,6 +4,7 @@
 #include <commonlib_named_map.h>
 #include <commonlib_texture.h>
 #include <botlib_rectangle.h>
+#include <botlib_component_template.h>
 #include <botlib_tile_template.h>
 
 namespace mcdane {
@@ -13,6 +14,7 @@ class GameLib {
 public:
     static void initInstance(const std::string& textureLibFile,
                              const std::string& rectLibFile,
+                             const std::string& componentTemplateLibFile,
                              const std::string& tileTemplateLibFile,
                              const std::string& picDir);
 
@@ -24,6 +26,9 @@ public:
 
     inline const Rectangle* findRect(const std::string& name) const;
 
+    inline const ComponentTemplate* findComponentTemplate(
+                                                const std::string& name) const;
+
     inline const TileTemplate* findTileTemplate(const std::string& name) const;
 
 private:
@@ -31,6 +36,7 @@ private:
 
     void load(const std::string& textureLibFile,
               const std::string& rectLibFile,
+              const std::string& componentTemplateLibFile,
               const std::string& tileTemplateLibFile,
               const std::string& picDir);
 
@@ -39,6 +45,7 @@ private:
 
     commonlib::NamedMap<commonlib::Texture> textureLib_;
     commonlib::NamedMap<Rectangle> rectLib_;
+    commonlib::NamedMap<ComponentTemplate> componentTemplateLib_;
     commonlib::NamedMap<TileTemplate> tileTemplateLib_;
 };
 
@@ -55,6 +62,12 @@ const commonlib::Texture* GameLib::findTexture(const std::string& name) const
 const Rectangle* GameLib::findRect(const std::string& name) const
 {
     return rectLib_.search(name);
+}
+
+const ComponentTemplate* GameLib::findComponentTemplate(
+                                                const std::string& name) const
+{
+    return componentTemplateLib_.search(name);
 }
 
 const TileTemplate* GameLib::findTileTemplate(const std::string& name) const

@@ -27,6 +27,7 @@ TestMapApp::TestMapApp(const std::string& configFile,
 
     GameLib::initInstance(cfg.textureLibFile(),
                           cfg.rectLibFile(),
+                          cfg.componentTemplateLibFile(),
                           cfg.tileTemplateLibFile(),
                           cfg.picDir());
 

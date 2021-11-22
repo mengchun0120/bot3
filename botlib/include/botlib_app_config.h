@@ -54,6 +54,8 @@ public:
 
     inline const std::string& rectLibFile() const;
 
+    inline const std::string& componentTemplateLibFile() const;
+
     inline const std::string& tileTemplateLibFile() const;
 
     inline float mapPoolSizeFactor() const;
@@ -97,6 +99,7 @@ private:
     std::string startScreenConfigFile_;
     std::string textureLibFile_;
     std::string rectLibFile_;
+    std::string componentTemplateLibFile_;
     std::string tileTemplateLibFile_;
     float mapPoolSizeFactor_;
 };
@@ -189,6 +192,11 @@ const std::string& AppConfig::textureLibFile() const
 const std::string& AppConfig::rectLibFile() const
 {
     return rectLibFile_;
+}
+
+const std::string& AppConfig::componentTemplateLibFile() const
+{
+    return componentTemplateLibFile_;
 }
 
 const std::string& AppConfig::tileTemplateLibFile() const

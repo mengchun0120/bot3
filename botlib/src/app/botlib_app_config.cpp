@@ -128,6 +128,9 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
                   true, k_nonEmptyStrV),
         jsonParam(rectLibFile_, {"libraries", "rectLibFile"},
                   true, k_nonEmptyStrV),
+        jsonParam(componentTemplateLibFile_,
+                  {"libraries", "componentTemplateLibFile"},
+                  true, k_nonEmptyStrV),
         jsonParam(tileTemplateLibFile_, {"libraries", "tileTemplateLibFile"},
                   true, k_nonEmptyStrV)
     };
@@ -136,6 +139,7 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
 
     textureLibFile_ = constructPath({libDir_, textureLibFile_});
     rectLibFile_ = constructPath({libDir_, rectLibFile_});
+    componentTemplateLibFile_ = constructPath({libDir_, componentTemplateLibFile_});
     tileTemplateLibFile_ = constructPath({libDir_, tileTemplateLibFile_});
 }
 

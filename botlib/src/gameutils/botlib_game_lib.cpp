@@ -11,16 +11,19 @@ std::shared_ptr<GameLib> GameLib::k_gameLib;
 
 void GameLib::initInstance(const std::string& textureLibFile,
                            const std::string& rectLibFile,
+                           const std::string& componentTemplateLibFile,
                            const std::string& tileTemplateLibFile,
                            const std::string& picDir)
 {
     GameLib* lib = new GameLib();
-    lib->load(textureLibFile, rectLibFile, tileTemplateLibFile, picDir);
+    lib->load(textureLibFile, rectLibFile, componentTemplateLibFile,
+              tileTemplateLibFile, picDir);
     k_gameLib.reset(lib);
 }
 
 void GameLib::load(const std::string& textureLibFile,
                    const std::string& rectLibFile,
+                   const std::string& componentTemplateLibFile,
                    const std::string& tileTemplateLibFile,
                    const std::string& picDir)
 {
@@ -29,6 +32,10 @@ void GameLib::load(const std::string& textureLibFile,
 
     RectLibParser rectLibParser;
     rectLib_.load(rectLibFile, rectLibParser);
+
+    ComponentTemplateParser componentTemplateParser(textureLib_, rectLib_);
+    componentTemplateLib_.load(componentTemplateLibFile,
+                               componentTemplateParser);
 
     TileTemplateLibParser tileTemplateParser(textureLib_, rectLib_);
     tileTemplateLib_.load(tileTemplateLibFile, tileTemplateParser);

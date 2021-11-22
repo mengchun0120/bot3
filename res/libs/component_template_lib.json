@@ -1,0 +1,27 @@
+[
+    {
+        "name": "steel_tile",
+        "texture": "steel_tile",
+        "rect": "tile"
+    },
+    {
+        "name": "ice_tile",
+        "texture": "ice_tile",
+        "rect": "tile"
+    },
+    {
+        "name": "clay_tile",
+        "texture": "clay_tile",
+        "rect": "tile"
+    },
+    {
+        "name": "fireland_tile",
+        "texture": "fireland_tile",
+        "rect": "tile"
+    },
+    {
+        "name": "bush_tile",
+        "texture": "bush_tile",
+        "rect": "tile"
+    }
+]
