@@ -27,17 +27,17 @@ void GameLib::load(const std::string& textureLibFile,
                    const std::string& tileTemplateLibFile,
                    const std::string& picDir)
 {
-    TextureLibParser textureLibParser(picDir);
-    textureLib_.load(textureLibFile, textureLibParser);
+    TextureParser textureParser(picDir);
+    textureLib_.load(textureLibFile, textureParser);
 
-    RectLibParser rectLibParser;
-    rectLib_.load(rectLibFile, rectLibParser);
+    RectParser rectParser;
+    rectLib_.load(rectLibFile, rectParser);
 
     ComponentTemplateParser componentTemplateParser(textureLib_, rectLib_);
     componentTemplateLib_.load(componentTemplateLibFile,
                                componentTemplateParser);
 
-    TileTemplateLibParser tileTemplateParser(textureLib_, rectLib_);
+    TileTemplateParser tileTemplateParser(componentTemplateLib_);
     tileTemplateLib_.load(tileTemplateLibFile, tileTemplateParser);
 
     LOG_INFO << "GameLib loaded successfull" << LOG_END;

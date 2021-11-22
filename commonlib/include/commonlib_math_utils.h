@@ -33,6 +33,11 @@ T clamp(const T& t, const T& min, const T& max)
     return t;
 }
 
+void rotate(float& x,
+            float& y,
+            float directionX,
+            float directionY);
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 

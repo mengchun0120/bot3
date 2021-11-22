@@ -40,8 +40,10 @@ set(BOTLIB_GAMEOBJ_SRC
     src/gameobj/botlib_component.cpp
     src/gameobj/botlib_game_object_type.cpp
     src/gameobj/botlib_game_object_template.cpp
+    src/gameobj/botlib_composite_object_template.cpp
     src/gameobj/botlib_tile_template.cpp
     src/gameobj/botlib_game_object.cpp
+    src/gameobj/botlib_composite_object.cpp
     src/gameobj/botlib_tile.cpp)
 
 set(BOTLIB_GAMEUTILS_SRC

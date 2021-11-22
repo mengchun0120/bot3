@@ -5,12 +5,14 @@
         {
             "type": "tile",
             "template": "steel_tile",
-            "pos": [80.0, 80.0]
+            "pos": [80.0, 80.0],
+            "direction": [1.0, 0.0]
         },
         {
             "type": "tile",
             "template": "ice_tile",
-            "pos": [120.0, 80.0]
+            "pos": [120.0, 80.0],
+            "direction": [1.0, 0.0]
         }
     ]
 }

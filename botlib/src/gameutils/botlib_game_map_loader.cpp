@@ -17,7 +17,8 @@ GameMapLoader::GameMapLoader(float poolSizeFactor,
     : params_{
           jsonParam(typeStr_, "type", true, k_nonEmptyStrV),
           jsonParam(templateStr_, "template", true, k_nonEmptyStrV),
-          jsonParam(pos_, "pos")
+          jsonParam(pos_, "pos"),
+          jsonParam(direction_, "direction")
       }
 {
     if (poolSizeFactor <= 0.0f || poolSizeFactor > 1.0f)
@@ -64,7 +65,8 @@ void GameMapLoader::loadMapDimension(GameMap& map,
 
     parse(params, doc);
 
-    unsigned int poolSize = static_cast<unsigned int>(floor(rows * cols * poolSizeFactor_));
+    unsigned int poolSize =
+        static_cast<unsigned int>(floor(rows * cols * poolSizeFactor_));
     map.init(poolSize, rows, cols, viewportWidth_, viewportHeight_);
 }
 
@@ -111,10 +113,12 @@ void GameMapLoader::addTile(GameMap& map)
     const TileTemplate* t = lib.findTileTemplate(templateStr_);
     if (!t)
     {
-        THROW_EXCEPT(InvalidArgumentException, "Failed to find TileTemplate " + templateStr_);
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Failed to find TileTemplate " + templateStr_);
     }
 
-    Tile* tile = new Tile(t, pos_[0], pos_[1]);
+    Tile* tile = new Tile();
+    tile->init(t, pos_, direction_);
     map.addObj(tile);
 }
 

@@ -25,7 +25,7 @@ void Component::init(const ComponentTemplate* t,
                      float directionX,
                      float directionY)
 {
-    if (!t_)
+    if (!t)
     {
         THROW_EXCEPT(InvalidArgumentException, "ComponentTemplate is null");
     }

@@ -9,8 +9,7 @@ namespace botlib {
 class GameObjectTemplate {
 public:
     GameObjectTemplate(GameObjectType t,
-                       float width,
-                       float height,
+                       float span,
                        float collideBreath,
                        bool invincible=false);
 
@@ -18,9 +17,7 @@ public:
 
     inline GameObjectType type() const;
 
-    inline float width() const;
-
-    inline float height() const;
+    inline float span() const;
 
     inline float collideBreath() const;
 
@@ -28,15 +25,13 @@ public:
 
 private:
     void init(GameObjectType t,
-              float width,
-              float height,
+              float span,
               float collideBreath,
               bool invincible=false);
 
 protected:
     GameObjectType type_;
-    float width_;
-    float height_;
+    float span_;
     float collideBreath_;
     bool invincible_;
 };
@@ -46,24 +41,19 @@ GameObjectType GameObjectTemplate::type() const
     return type_;
 }
 
-float GameObjectTemplate::width() const
+float GameObjectTemplate::span() const
 {
-    return width_;
-}
-
-float GameObjectTemplate::height() const
-{
-    return height_;
-}
-
-bool GameObjectTemplate::invincible() const
-{
-    return invincible_;
+    return span_;
 }
 
 float GameObjectTemplate::collideBreath() const
 {
     return collideBreath_;
+}
+
+bool GameObjectTemplate::invincible() const
+{
+    return invincible_;
 }
 
 } // end of namespace botlib

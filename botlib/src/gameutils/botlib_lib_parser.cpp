@@ -1,4 +1,4 @@
-#include <iostream>
+#include <utility>
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
 #include <commonlib_json_param.h>
@@ -10,20 +10,20 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-TextureLibParser::TextureLibParser(const std::string& picDir)
+TextureParser::TextureParser(const std::string& picDir)
     : picDir_(picDir)
     , params_{jsonParam(fileName_, "file", true, k_nonEmptyStrV)}
 {
 }
 
-Texture* TextureLibParser::operator()(const rapidjson::Value& v)
+Texture* TextureParser::operator()(const rapidjson::Value& v)
 {
     parse(params_, v);
     std::string path = constructPath({picDir_, fileName_});
     return new Texture(path);
 }
 
-RectLibParser::RectLibParser()
+RectParser::RectParser()
     : params_{
         jsonParam(width_, "width", true, gt(0.0f)),
         jsonParam(height_, "height", true, gt(0.0f)),
@@ -32,7 +32,7 @@ RectLibParser::RectLibParser()
 {
 }
 
-Rectangle* RectLibParser::operator()(const rapidjson::Value& v)
+Rectangle* RectParser::operator()(const rapidjson::Value& v)
 {
     hasTexture_ = false;
     parse(params_, v);
@@ -102,8 +102,6 @@ void ComponentParser::initComponent(Component& c,
 GameObjectTemplateParser::GameObjectTemplateParser()
     : invincible_(false)
     , params_{
-        jsonParam(width_, "width", true, gt(0.0f)),
-        jsonParam(height_, "height", true, gt(0.0f)),
         jsonParam(collideBreath_, "collideBreath", true, ge(0.0f)),
         jsonParam(invincible_, "invincible", false)
       }
@@ -116,43 +114,56 @@ void GameObjectTemplateParser::load(const rapidjson::Value& v)
     parse(params_, v);
 }
 
-TileTemplateLibParser::TileTemplateLibParser(
-                            const NamedMap<commonlib::Texture>& textureLib,
-                            const NamedMap<Rectangle>& rectLib)
-    : textureLib_(textureLib)
-    , rectLib_(rectLib)
+CompositeObjectTemplateParser::CompositeObjectTemplateParser(
+                    const commonlib::NamedMap<ComponentTemplate>& componentLib)
+    : componentParser_(componentLib)
+{
+}
+
+void CompositeObjectTemplateParser::load(const rapidjson::Value& v)
+{
+    const rapidjson::Value* a = findJson(v, {"components"});
+    if (!a)
+    {
+        THROW_EXCEPT(ParseException, "Failed to find components");
+    }
+
+    if (!a->IsArray())
+    {
+        THROW_EXCEPT(ParseException, "components is not array");
+    }
+
+    if (a->Capacity() == 0)
+    {
+        THROW_EXCEPT(ParseException, "components is empty");
+    }
+
+    components_.resize(a->Capacity());
+    for (unsigned int i = 0; i < a->Capacity(); ++i)
+    {
+        componentParser_.initComponent(components_[i], (*a)[i]);
+    }
+}
+
+TileTemplateParser::TileTemplateParser(
+                        const NamedMap<ComponentTemplate>& componentTemplateLib)
+    : compositeObjTemplateParser_(componentTemplateLib)
     , params_{
-        jsonParam(hp_, "hp", true, ge(0.0f)),
-        jsonParam(textureName_, "texture", true, k_nonEmptyStrV),
-        jsonParam(rectName_, "rect", true, k_nonEmptyStrV)
+        jsonParam(hp_, "hp", true, ge(0.0f))
       }
 {
 }
 
-TileTemplate* TileTemplateLibParser::operator()(const rapidjson::Value& v)
+TileTemplate* TileTemplateParser::operator()(const rapidjson::Value& v)
 {
-    gameObjParser_.load(v);
+    gameObjTemplateParser_.load(v);
+    compositeObjTemplateParser_.load(v);
     parse(params_, v);
 
-    const Texture* texture = textureLib_.search(textureName_);
-    if (!texture)
-    {
-        THROW_EXCEPT(ParseException, "Failed to find texture " + textureName_);
-    }
-
-    const Rectangle* rect = rectLib_.search(rectName_);
-    if (!rect)
-    {
-        THROW_EXCEPT(ParseException, "Failed to find rectangle " + rectName_);
-    }
-
-    return new TileTemplate(gameObjParser_.width_,
-                            gameObjParser_.height_,
-                            gameObjParser_.collideBreath_,
+    return new TileTemplate(gameObjTemplateParser_.collideBreath_,
                             hp_,
-                            texture,
-                            rect,
-                            gameObjParser_.invincible_);
+                            gameObjTemplateParser_.invincible_,
+                            std::move(compositeObjTemplateParser_.components_));
 }
 
 } // end of namespace botlib

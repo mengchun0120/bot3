@@ -14,8 +14,8 @@
 namespace mcdane {
 namespace botlib {
 
-struct TextureLibParser {
-    TextureLibParser(const std::string& picDir);
+struct TextureParser {
+    TextureParser(const std::string& picDir);
 
     commonlib::Texture* operator()(const rapidjson::Value& v);
 
@@ -24,8 +24,8 @@ struct TextureLibParser {
     std::vector<commonlib::JsonParamPtr> params_;
 };
 
-struct RectLibParser {
-    RectLibParser();
+struct RectParser {
+    RectParser();
 
     Rectangle* operator()(const rapidjson::Value& v);
 
@@ -68,26 +68,30 @@ struct GameObjectTemplateParser {
 
     void load(const rapidjson::Value& v);
 
-    float width_;
-    float height_;
     float collideBreath_;
     bool invincible_;
     std::vector<commonlib::JsonParamPtr> params_;
 };
 
-struct TileTemplateLibParser {
-    TileTemplateLibParser(
-            const commonlib::NamedMap<commonlib::Texture>& textureLib,
-            const commonlib::NamedMap<Rectangle>& rectLib);
+struct CompositeObjectTemplateParser {
+    CompositeObjectTemplateParser(
+            const commonlib::NamedMap<ComponentTemplate>& componentLib);
+
+    void load(const rapidjson::Value& v);
+
+    ComponentParser componentParser_;
+    std::vector<Component> components_;
+};
+
+struct TileTemplateParser {
+    TileTemplateParser(
+            const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib);
 
     TileTemplate* operator()(const rapidjson::Value& v);
 
-    GameObjectTemplateParser gameObjParser_;
-    const commonlib::NamedMap<commonlib::Texture>& textureLib_;
-    const commonlib::NamedMap<Rectangle>& rectLib_;
+    GameObjectTemplateParser gameObjTemplateParser_;
+    CompositeObjectTemplateParser compositeObjTemplateParser_;
     float hp_;
-    std::string textureName_;
-    std::string rectName_;
     std::vector<commonlib::JsonParamPtr> params_;
 };
 

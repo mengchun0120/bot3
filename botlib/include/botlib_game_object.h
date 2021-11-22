@@ -26,6 +26,8 @@ public:
 
     inline GameObjectType type() const;
 
+    inline float span() const;
+
     inline float collideBreath() const;
 
     inline float x() const;
@@ -34,18 +36,17 @@ public:
 
     inline const commonlib::Vector2 pos() const;
 
-    inline float width() const;
-
-    inline float height() const;
-
     inline bool alive() const;
 
-    inline virtual void update();
+    virtual void update();
 
     virtual void present() const = 0;
 
     virtual void setPos(float x,
                         float y);
+
+    virtual void shiftPos(float deltaX,
+                          float deltaY);
 
 public:
     static Deleter k_defaultDeleter;
@@ -59,6 +60,11 @@ protected:
 GameObjectType GameObject::type() const
 {
     return t_->type();
+}
+
+float GameObject::span() const
+{
+    return t_->span();
 }
 
 float GameObject::collideBreath() const
@@ -81,23 +87,9 @@ const commonlib::Vector2 GameObject::pos() const
     return pos_;
 }
 
-float GameObject::width() const
-{
-    return t_->width();
-}
-
-float GameObject::height() const
-{
-    return t_->height();
-}
-
 bool GameObject::alive() const
 {
     return alive_;
-}
-
-void GameObject::update()
-{
 }
 
 } // end of namespace botlib

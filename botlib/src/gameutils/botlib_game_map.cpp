@@ -12,8 +12,7 @@ namespace mcdane {
 namespace botlib {
 
 GameMap::GameMap()
-    : maxObjWidth_(0.0f)
-    , maxObjHeight_(0.0f)
+    : maxObjSpan_(0.0f)
 {
     initItemDeleter();
 }
@@ -38,8 +37,7 @@ void GameMap::init(unsigned int poolSize,
                    float viewportWidth,
                    float viewportHeight)
 {
-    maxObjWidth_ = 0.0f;
-    maxObjHeight_ = 0.0f;
+    maxObjSpan_ = 0.0f;
     initPool(poolSize);
     initMap(rows, cols, viewportWidth, viewportHeight);
 }
@@ -94,14 +92,9 @@ void GameMap::addObj(GameObject* o,
     item->init(o, deleter);
     map_[rowIdx][colIdx].pushFront(item);
 
-    if (o->width() > maxObjWidth_)
+    if (o->span() > maxObjSpan_)
     {
-        maxObjWidth_ = o->width();
-    }
-
-    if (o->height() > maxObjHeight_)
-    {
-        maxObjHeight_ = o->height();
+        maxObjSpan_ = o->span();
     }
 
     LOG_INFO << "addObj " << o->type() << " row=" << rowIdx
@@ -201,25 +194,25 @@ void GameMap::getPresentArea(int& startRow,
                              int& startCol,
                              int& endCol) const
 {
-    startRow = getCellIdx(viewportAnchor_[1] - maxObjHeight_);
+    startRow = getCellIdx(viewportAnchor_[1] - maxObjSpan_);
     if (startRow < 0)
     {
         startRow = 0;
     }
 
-    endRow = getCellIdx(viewportAnchor_[1] + viewportSize_[1]);
+    endRow = getCellIdx(viewportAnchor_[1] + viewportSize_[1] + maxObjSpan_);
     if (endRow >= rowCount())
     {
         endRow = rowCount() - 1;
     }
 
-    startCol = getCellIdx(viewportAnchor_[0] - maxObjWidth_);
+    startCol = getCellIdx(viewportAnchor_[0] - maxObjSpan_);
     if (startCol < 0)
     {
         startCol = 0;
     }
 
-    endCol = getCellIdx(viewportAnchor_[0] + viewportSize_[0]);
+    endCol = getCellIdx(viewportAnchor_[0] + viewportSize_[0] + maxObjSpan_);
     if (endCol >= colCount())
     {
         endCol = colCount() - 1;

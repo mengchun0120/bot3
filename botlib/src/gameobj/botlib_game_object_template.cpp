@@ -8,17 +8,15 @@ namespace mcdane {
 namespace botlib {
 
 GameObjectTemplate::GameObjectTemplate(GameObjectType t,
-                                       float width,
-                                       float height,
+                                       float span,
                                        float collideBreath,
                                        bool invincible)
 {
-    init(t, width, height, collideBreath, invincible);
+    init(t, span, collideBreath, invincible);
 }
 
 void GameObjectTemplate::init(GameObjectType t,
-                              float width,
-                              float height,
+                              float span,
                               float collideBreath,
                               bool invincible)
 {
@@ -28,21 +26,14 @@ void GameObjectTemplate::init(GameObjectType t,
                      "Invalid type " + toString(static_cast<int>(t)));
     }
 
-    if (width <= 0.0f)
+    if (span < 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid width " + toString(width));
-    }
-
-    if (height <= 0.0f)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid height " + toString(height));
+                     "Invalid span " + toString(span));
     }
 
     type_ = t;
-    width_ = width;
-    height_ = height;
+    span_ = span;
     collideBreath_ = collideBreath;
     invincible_ = invincible;
 }

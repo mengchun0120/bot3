@@ -91,8 +91,7 @@ private:
     commonlib::Vector2 maxViewportOrigin_;
     commonlib::Vector2 viewportOrigin_;
     commonlib::Vector2 viewportAnchor_;
-    float maxObjWidth_;
-    float maxObjHeight_;
+    float maxObjSpan_;
 };
 
 int GameMap::getCellIdx(float x)

@@ -36,6 +36,7 @@ private:
     std::string typeStr_;
     std::string templateStr_;
     commonlib::Vector2 pos_;
+    commonlib::Vector2 direction_;
     std::vector<mcdane::commonlib::JsonParamPtr> params_;
 };
 

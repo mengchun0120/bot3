@@ -38,11 +38,22 @@ void GameObject::init(const GameObjectTemplate* t,
     alive_ = true;
 }
 
+void GameObject::update()
+{
+}
+
 void GameObject::setPos(float x,
                         float y)
 {
     pos_[0] = x;
     pos_[1] = y;
+}
+
+void GameObject::shiftPos(float deltaX,
+                          float deltaY)
+{
+    pos_[0] += deltaX;
+    pos_[1] += deltaY;
 }
 
 } // end of namespace botlib

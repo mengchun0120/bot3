@@ -3,53 +3,29 @@
 
 #include <commonlib_texture.h>
 #include <botlib_rectangle.h>
-#include <botlib_game_object_template.h>
+#include <botlib_composite_object.h>
 
 namespace mcdane {
 namespace botlib {
 
-class TileTemplate: public GameObjectTemplate {
+class TileTemplate: public CompositeObjectTemplate {
 public:
-    TileTemplate(float width,
-                 float height,
-                 float collideBreath,
+    TileTemplate(float collideBreath,
                  float hp,
-                 const commonlib::Texture* tex,
-                 const Rectangle* r,
-                 bool invincible=false);
+                 bool invincible,
+                 std::vector<Component>&& components);
 
     ~TileTemplate() override = default;
 
     inline float hp() const;
 
-    inline const commonlib::Texture* texture() const;
-
-    inline const Rectangle* rect() const;
-
-private:
-    void init(float hp,
-              const commonlib::Texture* tex,
-              const Rectangle* r);
-
 protected:
     float hp_;
-    const commonlib::Texture* texture_;
-    const Rectangle* rect_;
 };
 
 float TileTemplate::hp() const
 {
     return hp_;
-}
-
-const commonlib::Texture* TileTemplate::texture() const
-{
-    return texture_;
-}
-
-const Rectangle* TileTemplate::rect() const
-{
-    return rect_;
 }
 
 } // end of namespace botlib

@@ -8,35 +8,22 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-Tile::Tile(const TileTemplate* t,
-           float x,
-           float y)
+void Tile::init(const TileTemplate* t,
+                float x,
+                float y,
+                float directionX,
+                float directionY)
 {
-    init(t, x, y);
+    CompositeObject::init(t, x, y, directionX, directionY);
+    hp_ = t->hp();
 }
 
 void Tile::init(const TileTemplate* t,
-                float x,
-                float y)
+                const commonlib::Vector2& pos,
+                const commonlib::Vector2& direction)
 {
-    GameObject::init(t, x, y);
-    updateRefPos();
-}
-
-void Tile::present() const
-{
-    const TileTemplate* t = getTemplate();
-    SimpleShaderProgram& program = Graphics::simpleShader();
-
-    t->rect()->draw(program, &refPos_, nullptr, nullptr, nullptr,
-                    t->texture()->id(), nullptr);
-}
-
-void Tile::setPos(float x,
-                  float y)
-{
-    GameObject::setPos(x, y);
-    updateRefPos();
+    CompositeObject::init(t, pos, direction);
+    hp_ = t->hp();
 }
 
 void Tile::addHP(float delta)
@@ -53,13 +40,6 @@ void Tile::addHP(float delta)
     {
         alive_ = false;
     }
-}
-
-void Tile::updateRefPos()
-{
-    const TileTemplate* t = getTemplate();
-    refPos_[0] = pos_[0] + t->rect()->width() / 2.0f;
-    refPos_[1] = pos_[1] + t->rect()->height() / 2.0f;
 }
 
 } // end of namespace botlib
