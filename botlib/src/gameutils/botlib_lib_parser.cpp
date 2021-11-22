@@ -40,6 +40,65 @@ Rectangle* RectLibParser::operator()(const rapidjson::Value& v)
                          new Rectangle(width_, height_);
 }
 
+ComponentTemplateParser::ComponentTemplateParser(
+            const commonlib::NamedMap<commonlib::Texture>& textureLib,
+            const commonlib::NamedMap<Rectangle>& rectLib)
+    : textureLib_(textureLib)
+    , rectLib_(rectLib)
+    , params_{
+        jsonParam(textureName_, "texture", true, k_nonEmptyStrV),
+        jsonParam(rectName_, "rect", true, k_nonEmptyStrV)
+      }
+{
+}
+
+ComponentTemplate* ComponentTemplateParser::operator()(const rapidjson::Value& v)
+{
+    parse(params_, v);
+
+    const Texture* texture = textureLib_.search(textureName_);
+    if (!texture)
+    {
+        THROW_EXCEPT(ParseException,
+                     "Failed to find texture " + textureName_);
+    }
+
+    const Rectangle* rect = rectLib_.search(rectName_);
+    if (!rect)
+    {
+        THROW_EXCEPT(ParseException,
+                     "Failed to find rect " + rectName_);
+    }
+
+    return new ComponentTemplate(texture, rect);
+}
+
+ComponentParser::ComponentParser(
+        const commonlib::NamedMap<ComponentTemplate>& componentLib)
+    : componentLib_(componentLib)
+    , params_{
+        jsonParam(templateName_, "template", true, k_nonEmptyStrV),
+        jsonParam(pos_, "pos"),
+        jsonParam(direction_, "direction")
+      }
+{
+}
+
+void ComponentParser::initComponent(Component& c,
+                                    const rapidjson::Value& v)
+{
+    parse(params_, v);
+
+    ComponentTemplate* t = componentLib_.search(templateName_);
+    if (!t)
+    {
+        THROW_EXCEPT(ParseException,
+                     "Failed to find ComponentTemplate " + templateName_);
+    }
+
+    c.init(t, pos_, direction_);
+}
+
 GameObjectTemplateParser::GameObjectTemplateParser()
     : invincible_(false)
     , params_{
