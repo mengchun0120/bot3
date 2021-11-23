@@ -15,7 +15,7 @@ public:
                             bool invincible,
                             std::vector<Component>&& components);
 
-    ~CompositeObjectTemplate() = default;
+    ~CompositeObjectTemplate() override = default;
 
     inline unsigned int numComponents() const;
 

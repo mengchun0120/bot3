@@ -41,8 +41,8 @@ Rectangle* RectParser::operator()(const rapidjson::Value& v)
 }
 
 ComponentTemplateParser::ComponentTemplateParser(
-            const commonlib::NamedMap<commonlib::Texture>& textureLib,
-            const commonlib::NamedMap<Rectangle>& rectLib)
+                            const NamedMap<Texture>& textureLib,
+                            const NamedMap<Rectangle>& rectLib)
     : textureLib_(textureLib)
     , rectLib_(rectLib)
     , params_{
@@ -74,7 +74,7 @@ ComponentTemplate* ComponentTemplateParser::operator()(const rapidjson::Value& v
 }
 
 ComponentParser::ComponentParser(
-        const commonlib::NamedMap<ComponentTemplate>& componentLib)
+        const NamedMap<ComponentTemplate>& componentLib)
     : componentLib_(componentLib)
     , params_{
         jsonParam(templateName_, "template", true, k_nonEmptyStrV),
@@ -115,7 +115,7 @@ void GameObjectTemplateParser::load(const rapidjson::Value& v)
 }
 
 CompositeObjectTemplateParser::CompositeObjectTemplateParser(
-                    const commonlib::NamedMap<ComponentTemplate>& componentLib)
+                    const NamedMap<ComponentTemplate>& componentLib)
     : componentParser_(componentLib)
 {
 }
