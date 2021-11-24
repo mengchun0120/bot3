@@ -16,10 +16,10 @@ RobotTemplate::RobotTemplate(float hp,
                              std::vector<Component>&& components,
                              std::vector<commonlib::Vector2>&& firePoints)
     : CompositeObjectTemplate(
-            GameObjectType::ROBOT,
-            collideBreath,
-            false,
-            std::forward<std::vector<Component>>(components))
+        GameObjectType::ROBOT,
+        collideBreath,
+        false,
+        std::forward<std::vector<Component>>(components))
     , hp_(hp)
     , armor_(armor)
     , energy_(energy)

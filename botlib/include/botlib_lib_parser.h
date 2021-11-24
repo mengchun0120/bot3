@@ -14,34 +14,40 @@
 namespace mcdane {
 namespace botlib {
 
-struct TextureParser {
+class TextureParser {
+public:
     TextureParser(const std::string& picDir);
 
     commonlib::Texture* operator()(const rapidjson::Value& v);
 
+private:
     std::string picDir_;
     std::string fileName_;
     std::vector<commonlib::JsonParamPtr> params_;
 };
 
-struct RectParser {
+class RectParser {
+public:
     RectParser();
 
     Rectangle* operator()(const rapidjson::Value& v);
 
+private:
     float width_;
     float height_;
     bool hasTexture_;
     std::vector<commonlib::JsonParamPtr> params_;
 };
 
-struct ComponentTemplateParser {
+class ComponentTemplateParser {
+public:
     ComponentTemplateParser(
             const commonlib::NamedMap<commonlib::Texture>& textureLib,
             const commonlib::NamedMap<Rectangle>& rectLib);
 
     ComponentTemplate* operator()(const rapidjson::Value& v);
 
+private:
     const commonlib::NamedMap<commonlib::Texture>& textureLib_;
     const commonlib::NamedMap<Rectangle>& rectLib_;
     std::string textureName_;
@@ -49,13 +55,15 @@ struct ComponentTemplateParser {
     std::vector<commonlib::JsonParamPtr> params_;
 };
 
-struct ComponentParser {
+class ComponentParser {
+public:
     ComponentParser(
             const commonlib::NamedMap<ComponentTemplate>& componentLib);
 
     void initComponent(Component& c,
                        const rapidjson::Value& v);
 
+private:
     const commonlib::NamedMap<ComponentTemplate>& componentLib_;
     std::string templateName_;
     commonlib::Vector2 pos_;
@@ -63,34 +71,38 @@ struct ComponentParser {
     std::vector<commonlib::JsonParamPtr> params_;
 };
 
-struct GameObjectTemplateParser {
+class GameObjectTemplateParser {
+public:
     GameObjectTemplateParser();
 
     void load(const rapidjson::Value& v);
 
+protected:
     float collideBreath_;
     bool invincible_;
     std::vector<commonlib::JsonParamPtr> params_;
 };
 
-struct CompositeObjectTemplateParser {
+class CompositeObjectTemplateParser: public GameObjectTemplateParser {
+public:
     CompositeObjectTemplateParser(
             const commonlib::NamedMap<ComponentTemplate>& componentLib);
 
     void load(const rapidjson::Value& v);
 
+protected:
     ComponentParser componentParser_;
     std::vector<Component> components_;
 };
 
-struct TileTemplateParser {
+class TileTemplateParser: public CompositeObjectTemplateParser {
+public:
     TileTemplateParser(
             const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib);
 
     TileTemplate* operator()(const rapidjson::Value& v);
 
-    GameObjectTemplateParser gameObjTemplateParser_;
-    CompositeObjectTemplateParser compositeObjTemplateParser_;
+private:
     float hp_;
     std::vector<commonlib::JsonParamPtr> params_;
 };

@@ -122,6 +122,8 @@ CompositeObjectTemplateParser::CompositeObjectTemplateParser(
 
 void CompositeObjectTemplateParser::load(const rapidjson::Value& v)
 {
+    GameObjectTemplateParser::load(v);
+
     const rapidjson::Value* a = findJson(v, {"components"});
     if (!a)
     {
@@ -147,7 +149,7 @@ void CompositeObjectTemplateParser::load(const rapidjson::Value& v)
 
 TileTemplateParser::TileTemplateParser(
                         const NamedMap<ComponentTemplate>& componentTemplateLib)
-    : compositeObjTemplateParser_(componentTemplateLib)
+    : CompositeObjectTemplateParser(componentTemplateLib)
     , params_{
         jsonParam(hp_, "hp", true, ge(0.0f))
       }
@@ -156,14 +158,13 @@ TileTemplateParser::TileTemplateParser(
 
 TileTemplate* TileTemplateParser::operator()(const rapidjson::Value& v)
 {
-    gameObjTemplateParser_.load(v);
-    compositeObjTemplateParser_.load(v);
+    CompositeObjectTemplateParser::load(v);
     parse(params_, v);
 
-    return new TileTemplate(gameObjTemplateParser_.collideBreath_,
+    return new TileTemplate(collideBreath_,
                             hp_,
-                            gameObjTemplateParser_.invincible_,
-                            std::move(compositeObjTemplateParser_.components_));
+                            invincible_,
+                            std::move(components_));
 }
 
 } // end of namespace botlib
