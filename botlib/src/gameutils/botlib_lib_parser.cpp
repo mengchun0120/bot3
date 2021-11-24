@@ -158,13 +158,31 @@ TileTemplateParser::TileTemplateParser(
 
 TileTemplate* TileTemplateParser::operator()(const rapidjson::Value& v)
 {
-    CompositeObjectTemplateParser::load(v);
+    load(v);
     parse(params_, v);
 
     return new TileTemplate(collideBreath_,
                             hp_,
                             invincible_,
                             std::move(components_));
+}
+
+RobotTemplateParser::RobotTemplateParser(
+            const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib)
+    : CompositeObjectTemplateParser(componentTemplateLib)
+    , params_{
+        jsonParam(hp_, "hp", true, ge(0.0f)),
+        jsonParam(armor_, "armor", true, ge(0.0f)),
+        jsonParam(energy_, "energy", true, ge(0.0f)),
+        jsonParam(rechargeRate_, "rechargeRate", true, ge(0.0f))
+      }
+{
+}
+
+void RobotTemplateParser::load(const rapidjson::Value& v)
+{
+    load(v);
+    parse(params_, v);
 }
 
 } // end of namespace botlib

@@ -10,6 +10,7 @@
 #include <botlib_component_template.h>
 #include <botlib_component.h>
 #include <botlib_tile_template.h>
+#include <botlib_robot_template.h>
 
 namespace mcdane {
 namespace botlib {
@@ -104,6 +105,21 @@ public:
 
 private:
     float hp_;
+    std::vector<commonlib::JsonParamPtr> params_;
+};
+
+class RobotTemplateParser: public CompositeObjectTemplateParser {
+public:
+    RobotTemplateParser(
+            const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib);
+
+    void load(const rapidjson::Value& v);
+
+protected:
+    float hp_;
+    float armor_;
+    float energy_;
+    float rechargeRate_;
     std::vector<commonlib::JsonParamPtr> params_;
 };
 
