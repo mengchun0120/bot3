@@ -13,11 +13,20 @@ Robot::Robot()
 }
 
 void Robot::init(const RobotTemplate* t,
+                 float x,
+                 float y,
+                 float directionX,
+                 float directionY)
+{
+    CompositeObject::init(t, x, y, directionX, directionY);
+    initFirePointsAndDirections();
+}
+
+void Robot::init(const RobotTemplate* t,
                  const commonlib::Vector2& pos,
                  const commonlib::Vector2& direction)
 {
-    CompositeObject::init(t, pos, direction);
-    initFirePointsAndDirections();
+    init(t, pos[0], pos[1], direction[0], direction[1]);
 }
 
 void Robot::shiftPos(float deltaX,

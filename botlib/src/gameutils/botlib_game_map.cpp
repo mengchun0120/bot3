@@ -88,6 +88,8 @@ void GameMap::addObj(GameObject* o,
                      "o->y is out of range: " + toString(o->y()));
     }
 
+    o->setMapPos(rowIdx, colIdx);
+
     GameMapItem* item = itemPool_.alloc();
     item->init(o, deleter);
     map_[rowIdx][colIdx].pushFront(item);

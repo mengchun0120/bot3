@@ -14,14 +14,9 @@ GameObject::Deleter GameObject::k_defaultDeleter = [](GameObject* o)->void
 GameObject::GameObject()
     : t_(nullptr)
     , alive_(true)
+    , row_(0)
+    , col_(0)
 {
-}
-
-GameObject::GameObject(const GameObjectTemplate* t,
-                       float x,
-                       float y)
-{
-    init(t, x, y);
 }
 
 void GameObject::init(const GameObjectTemplate* t,
@@ -54,6 +49,13 @@ void GameObject::shiftPos(float deltaX,
 {
     pos_[0] += deltaX;
     pos_[1] += deltaY;
+}
+
+void GameObject::setMapPos(unsigned int r,
+                           unsigned int c)
+{
+    row_ = r;
+    col_ = c;
 }
 
 } // end of namespace botlib

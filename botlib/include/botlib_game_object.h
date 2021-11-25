@@ -14,10 +14,6 @@ public:
 
     GameObject();
 
-    GameObject(const GameObjectTemplate* t,
-               float x,
-               float y);
-
     virtual ~GameObject() = default;
 
     void init(const GameObjectTemplate* t,
@@ -38,6 +34,10 @@ public:
 
     inline bool alive() const;
 
+    inline unsigned int row() const;
+
+    inline unsigned int col() const;
+
     virtual void update();
 
     virtual void present() const = 0;
@@ -48,6 +48,9 @@ public:
     virtual void shiftPos(float deltaX,
                           float deltaY);
 
+    void setMapPos(unsigned int r,
+                   unsigned int c);
+
 public:
     static Deleter k_defaultDeleter;
 
@@ -55,6 +58,8 @@ protected:
     const GameObjectTemplate* t_;
     commonlib::Vector2 pos_;
     bool alive_;
+    unsigned int row_;
+    unsigned int col_;
 };
 
 GameObjectType GameObject::type() const
@@ -90,6 +95,16 @@ const commonlib::Vector2 GameObject::pos() const
 bool GameObject::alive() const
 {
     return alive_;
+}
+
+unsigned int GameObject::row() const
+{
+    return row_;
+}
+
+unsigned int GameObject::col() const
+{
+    return col_;
 }
 
 } // end of namespace botlib

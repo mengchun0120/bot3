@@ -22,8 +22,7 @@ void Tile::init(const TileTemplate* t,
                 const commonlib::Vector2& pos,
                 const commonlib::Vector2& direction)
 {
-    CompositeObject::init(t, pos, direction);
-    hp_ = t->hp();
+    init(t, pos[0], pos[1], direction[0], direction[1]);
 }
 
 void Tile::addHP(float delta)

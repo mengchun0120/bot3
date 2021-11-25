@@ -14,6 +14,12 @@ public:
     ~Robot() override = default;
 
     void init(const RobotTemplate* t,
+              float x,
+              float y,
+              float directionX,
+              float directionY);
+
+    void init(const RobotTemplate* t,
               const commonlib::Vector2& pos,
               const commonlib::Vector2& direction);
 
