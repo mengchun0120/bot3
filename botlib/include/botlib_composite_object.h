@@ -35,14 +35,11 @@ public:
 
     void present() const override;
 
-    void setPos(float x,
-                float y) override;
-
     void shiftPos(float deltaX,
                   float deltaY) override;
 
-    void setDirection(float directionX,
-                      float directionY);
+    virtual void setDirection(float directionX,
+                              float directionY);
 
 private:
     void initComponents();

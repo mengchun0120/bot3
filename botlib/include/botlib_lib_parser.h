@@ -118,8 +118,11 @@ public:
 protected:
     float hp_;
     float armor_;
+    float speed_;
     float energy_;
     float rechargeRate_;
+    std::vector<commonlib::Vector2> firePoints_;
+    std::vector<commonlib::Vector2> fireDirections_;
     std::vector<commonlib::JsonParamPtr> params_;
 };
 

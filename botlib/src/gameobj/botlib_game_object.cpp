@@ -34,7 +34,8 @@ void GameObject::init(const GameObjectTemplate* t,
     }
 
     t_ = t;
-    GameObject::setPos(x, y);
+    pos_[0] = x;
+    pos_[1] = y;
     alive_ = true;
 }
 
@@ -45,8 +46,7 @@ void GameObject::update()
 void GameObject::setPos(float x,
                         float y)
 {
-    pos_[0] = x;
-    pos_[1] = y;
+    shiftPos(x - pos_[0], y - pos_[1]);
 }
 
 void GameObject::shiftPos(float deltaX,

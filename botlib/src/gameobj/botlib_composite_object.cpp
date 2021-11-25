@@ -40,12 +40,6 @@ void CompositeObject::present() const
     }
 }
 
-void CompositeObject::setPos(float x,
-                             float y)
-{
-    shiftPos(x - pos_[0], y - pos_[1]);
-}
-
 void CompositeObject::shiftPos(float deltaX,
                                float deltaY)
 {

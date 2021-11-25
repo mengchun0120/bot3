@@ -174,15 +174,26 @@ RobotTemplateParser::RobotTemplateParser(
         jsonParam(hp_, "hp", true, ge(0.0f)),
         jsonParam(armor_, "armor", true, ge(0.0f)),
         jsonParam(energy_, "energy", true, ge(0.0f)),
-        jsonParam(rechargeRate_, "rechargeRate", true, ge(0.0f))
+        jsonParam(speed_, "speed", true, ge(0.0f)),
+        jsonParam(rechargeRate_, "rechargeRate", true, ge(0.0f)),
+        jsonParam(firePoints_, "firePoints", true,
+                  nonempty<std::vector<commonlib::Vector2>>()),
+        jsonParam(fireDirections_, "fireDirections", true,
+                  nonempty<std::vector<commonlib::Vector2>>())
       }
 {
 }
 
 void RobotTemplateParser::load(const rapidjson::Value& v)
 {
-    load(v);
+    CompositeObjectTemplateParser::load(v);
     parse(params_, v);
+
+    if (firePoints_.size() != fireDirections_.size())
+    {
+        THROW_EXCEPT(ParseException,
+                     "firePoints size doens't match fireDirections size");
+    }
 }
 
 } // end of namespace botlib
