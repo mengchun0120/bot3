@@ -19,18 +19,9 @@ public:
     static constexpr unsigned int k_minRows = 30;
     static constexpr unsigned int k_minCols = 40;
 
-    inline static int getCellIdx(float x);
+    GameMap() = default;
 
-    GameMap();
-
-    GameMap(unsigned int poolSize,
-            unsigned int rows,
-            unsigned int cols,
-            float viewportWidth,
-            float viewportHeight,
-            float maxObjSpan);
-
-    ~GameMap();
+    ~GameMap() = default;
 
     void init(unsigned int poolSize,
               unsigned int rows,
@@ -54,13 +45,15 @@ public:
 
     inline const commonlib::Vector2& getViewportOrigin() const;
 
+    inline int getCellIdx(float x) const;
+
     void setViewportOrigin(float x,
                            float y);
 
 private:
     void initItemDeleter();
 
-    void initMaxObjSpan(float maxObjSpan);
+    void initBoundaryCells(float maxObjSpan);
 
     void initPool(unsigned int poolSize);
 
@@ -96,12 +89,8 @@ private:
     commonlib::Vector2 viewportOrigin_;
     commonlib::Vector2 viewportAnchor_;
     float maxObjSpan_;
+    int boundaryCells_;
 };
-
-int GameMap::getCellIdx(float x)
-{
-    return static_cast<int>(floor(x / k_cellBreath));
-}
 
 int GameMap::rowCount() const
 {
@@ -126,6 +115,11 @@ float GameMap::height() const
 const commonlib::Vector2& GameMap::getViewportOrigin() const
 {
     return viewportOrigin_;
+}
+
+int GameMap::getCellIdx(float x) const
+{
+    return static_cast<int>(floor(x / k_cellBreath)) + boundaryCells_;
 }
 
 } // end of namespace botlib

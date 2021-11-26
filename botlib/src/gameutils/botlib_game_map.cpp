@@ -11,27 +11,6 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-GameMap::GameMap()
-    : maxObjSpan_(0.0f)
-{
-    initItemDeleter();
-}
-
-GameMap::GameMap(unsigned int poolSize,
-                 unsigned int rows,
-                 unsigned int cols,
-                 float viewportWidth,
-                 float viewportHeight,
-                 float maxObjSpan)
-{
-    initItemDeleter();
-    init(rows, cols, poolSize, viewportWidth, viewportHeight, maxObjSpan);
-}
-
-GameMap::~GameMap()
-{
-}
-
 void GameMap::init(unsigned int poolSize,
                    unsigned int rows,
                    unsigned int cols,
@@ -39,7 +18,8 @@ void GameMap::init(unsigned int poolSize,
                    float viewportHeight,
                    float maxObjSpan)
 {
-    initMaxObjSpan(maxObjSpan);
+    initItemDeleter();
+    initBoundaryCells(maxObjSpan);
     initPool(poolSize);
     initMap(rows, cols, viewportWidth, viewportHeight);
 }
@@ -117,7 +97,7 @@ void GameMap::initItemDeleter()
     };
 }
 
-void GameMap::initMaxObjSpan(float maxObjSpan)
+void GameMap::initBoundaryCells(float maxObjSpan)
 {
     if (maxObjSpan <= 0.0f)
     {
@@ -126,6 +106,11 @@ void GameMap::initMaxObjSpan(float maxObjSpan)
     }
 
     maxObjSpan_ = maxObjSpan;
+    boundaryCells_ = static_cast<int>(floor(maxObjSpan_ / k_cellBreath));
+    if (boundaryCells_ <= 0)
+    {
+        boundaryCells_ = 1;
+    }
 }
 
 void GameMap::initPool(unsigned int poolSize)
@@ -144,14 +129,17 @@ void GameMap::initMap(unsigned int rows,
                       float viewportWidth,
                       float viewportHeight)
 {
-    setMapSize(rows, cols);
+    unsigned int rowCount = rows + 2*boundaryCells_;
+    unsigned int colCount = cols + 2*boundaryCells_;
+
+    setMapSize(rowCount, colCount);
     setViewportSize(viewportWidth, viewportHeight);
     setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
 
-    map_.resize(rows);
+    map_.resize(rowCount);
     for (auto it = map_.begin(); it != map_.end(); ++it)
     {
-        it->resize(cols);
+        it->resize(colCount);
         for (auto itemIt = it->begin(); itemIt != it->end(); ++itemIt)
         {
             itemIt->setDeleter(&itemDeleter_);
