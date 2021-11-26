@@ -4,6 +4,7 @@
 #include <list>
 #include <vector>
 #include <iostream>
+#include <functional>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
@@ -15,6 +16,8 @@ namespace commonlib {
 template <typename T>
 class NamedMap {
 public:
+    using NodeAccessor = std::function<bool(const T*)>;
+
     NamedMap();
 
     virtual ~NamedMap();
@@ -39,6 +42,8 @@ public:
     void clear();
 
     void log() const;
+
+    void traverse(NodeAccessor accessor);
 
 private:
     struct Node {
@@ -301,6 +306,18 @@ void NamedMap<T>::log() const
         if (n->right_)
         {
             q.push_back(n->right_);
+        }
+    }
+}
+
+template <typename T>
+void NamedMap<T>::traverse(NodeAccessor accessor)
+{
+    for (auto it = objs_.cbegin(); it != objs_.cend(); ++it)
+    {
+        if (!accessor(*it))
+        {
+            break;
         }
     }
 }

@@ -27,7 +27,8 @@ public:
             unsigned int rows,
             unsigned int cols,
             float viewportWidth,
-            float viewportHeight);
+            float viewportHeight,
+            float maxObjSpan);
 
     ~GameMap();
 
@@ -35,7 +36,8 @@ public:
               unsigned int rows,
               unsigned int cols,
               float viewportWidth,
-              float viewportHeight);
+              float viewportHeight,
+              float maxObjSpan);
 
     void present() const;
 
@@ -57,6 +59,8 @@ public:
 
 private:
     void initItemDeleter();
+
+    void initMaxObjSpan(float maxObjSpan);
 
     void initPool(unsigned int poolSize);
 

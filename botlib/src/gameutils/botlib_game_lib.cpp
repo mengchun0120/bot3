@@ -40,7 +40,28 @@ void GameLib::load(const std::string& textureLibFile,
     TileTemplateParser tileTemplateParser(componentTemplateLib_);
     tileTemplateLib_.load(tileTemplateLibFile, tileTemplateParser);
 
+    calculateMaxObjSpan();
+
     LOG_INFO << "GameLib loaded successfull" << LOG_END;
+}
+
+void GameLib::calculateMaxObjSpan()
+{
+    maxObjSpan_ = 0.0f;
+
+    auto accessor = [this](const GameObjectTemplate* t)->bool
+    {
+        if (t->span() > maxObjSpan_)
+        {
+            maxObjSpan_ = t->span();
+        }
+
+        return true;
+    };
+
+    tileTemplateLib_.traverse(accessor);
+
+    LOG_INFO << "maxObjSpan=" << maxObjSpan_ << LOG_END;
 }
 
 } // end of namespace botlib

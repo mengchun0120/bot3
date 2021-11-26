@@ -31,6 +31,8 @@ public:
 
     inline const TileTemplate* findTileTemplate(const std::string& name) const;
 
+    inline float maxObjSpan() const;
+
 private:
     GameLib() = default;
 
@@ -40,6 +42,8 @@ private:
               const std::string& tileTemplateLibFile,
               const std::string& picDir);
 
+    void calculateMaxObjSpan();
+
 private:
     static std::shared_ptr<GameLib> k_gameLib;
 
@@ -47,6 +51,7 @@ private:
     commonlib::NamedMap<Rectangle> rectLib_;
     commonlib::NamedMap<ComponentTemplate> componentTemplateLib_;
     commonlib::NamedMap<TileTemplate> tileTemplateLib_;
+    float maxObjSpan_;
 };
 
 const GameLib& GameLib::getInstance()
@@ -73,6 +78,11 @@ const ComponentTemplate* GameLib::findComponentTemplate(
 const TileTemplate* GameLib::findTileTemplate(const std::string& name) const
 {
     return tileTemplateLib_.search(name);
+}
+
+float GameLib::maxObjSpan() const
+{
+    return maxObjSpan_;
 }
 
 } // end of namespace botlib

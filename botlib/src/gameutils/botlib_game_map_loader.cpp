@@ -65,9 +65,9 @@ void GameMapLoader::loadMapDimension(GameMap& map,
 
     parse(params, doc);
 
-    unsigned int poolSize =
-        static_cast<unsigned int>(floor(rows * cols * poolSizeFactor_));
-    map.init(poolSize, rows, cols, viewportWidth_, viewportHeight_);
+    unsigned int poolSize = getPoolSize(rows, cols);
+    map.init(poolSize, rows, cols, viewportWidth_, viewportHeight_,
+             GameLib::getInstance().maxObjSpan());
 }
 
 void GameMapLoader::loadObjects(GameMap& map,
@@ -120,6 +120,12 @@ void GameMapLoader::addTile(GameMap& map)
     Tile* tile = new Tile();
     tile->init(t, pos_, direction_);
     map.addObj(tile);
+}
+
+unsigned int GameMapLoader::getPoolSize(unsigned int rows,
+                                        unsigned int cols)
+{
+    return static_cast<unsigned int>(floor(rows * cols * poolSizeFactor_));
 }
 
 } // end of namespace botlib

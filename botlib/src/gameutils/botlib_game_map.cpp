@@ -21,10 +21,11 @@ GameMap::GameMap(unsigned int poolSize,
                  unsigned int rows,
                  unsigned int cols,
                  float viewportWidth,
-                 float viewportHeight)
+                 float viewportHeight,
+                 float maxObjSpan)
 {
     initItemDeleter();
-    init(rows, cols, poolSize, viewportWidth, viewportHeight);
+    init(rows, cols, poolSize, viewportWidth, viewportHeight, maxObjSpan);
 }
 
 GameMap::~GameMap()
@@ -35,9 +36,10 @@ void GameMap::init(unsigned int poolSize,
                    unsigned int rows,
                    unsigned int cols,
                    float viewportWidth,
-                   float viewportHeight)
+                   float viewportHeight,
+                   float maxObjSpan)
 {
-    maxObjSpan_ = 0.0f;
+    initMaxObjSpan(maxObjSpan);
     initPool(poolSize);
     initMap(rows, cols, viewportWidth, viewportHeight);
 }
@@ -94,11 +96,6 @@ void GameMap::addObj(GameObject* o,
     item->init(o, deleter);
     map_[rowIdx][colIdx].pushFront(item);
 
-    if (o->span() > maxObjSpan_)
-    {
-        maxObjSpan_ = o->span();
-    }
-
     LOG_INFO << "addObj " << o->type() << " row=" << rowIdx
              << " col=" << colIdx << LOG_END;
 }
@@ -118,6 +115,17 @@ void GameMap::initItemDeleter()
         item->deleteObj();
         itemPool_.free(item);
     };
+}
+
+void GameMap::initMaxObjSpan(float maxObjSpan)
+{
+    if (maxObjSpan <= 0.0f)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Invalid maxObjSpan " + toString(maxObjSpan));
+    }
+
+    maxObjSpan_ = maxObjSpan;
 }
 
 void GameMap::initPool(unsigned int poolSize)

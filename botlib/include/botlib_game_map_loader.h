@@ -29,6 +29,9 @@ private:
 
     void addTile(GameMap& map);
 
+    unsigned int getPoolSize(unsigned int rows,
+                             unsigned int cols);
+
 private:
     float poolSizeFactor_;
     float viewportWidth_;
