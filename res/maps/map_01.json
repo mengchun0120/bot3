@@ -13,6 +13,24 @@
             "template": "ice_tile",
             "pos": [120.0, 80.0],
             "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [-0.0, -0.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [0.0, 0.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [1000.0, 0.0],
+            "direction": [1.0, 0.0]
         }
     ]
 }

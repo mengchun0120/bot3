@@ -50,6 +50,9 @@ public:
     void setViewportOrigin(float x,
                            float y);
 
+    bool withinBoundary(float x,
+                        float y);
+
 private:
     void initItemDeleter();
 
@@ -90,6 +93,10 @@ private:
     commonlib::Vector2 viewportAnchor_;
     float maxObjSpan_;
     int boundaryCells_;
+    float boundaryLeft_;
+    float boundaryRight_;
+    float boundaryBottom_;
+    float boundaryTop_;
 };
 
 int GameMap::rowCount() const

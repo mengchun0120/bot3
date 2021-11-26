@@ -88,6 +88,15 @@ void GameMap::setViewportOrigin(float x,
     viewportAnchor_ = viewportOrigin_ - viewportHalfSize_;
 }
 
+bool GameMap::withinBoundary(float x,
+                             float y)
+{
+    return x > boundaryLeft_ &&
+           x < boundaryRight_ &&
+           y > boundaryBottom_ &&
+           y < boundaryTop_;
+}
+
 void GameMap::initItemDeleter()
 {
     itemDeleter_ = [this](GameMapItem* item)->void
@@ -162,6 +171,10 @@ void GameMap::setMapSize(unsigned int rows,
 
     width_ = rows * k_cellBreath;
     height_ = cols * k_cellBreath;
+    boundaryLeft_ = -maxObjSpan_;
+    boundaryRight_ = width_ + maxObjSpan_;
+    boundaryBottom_ = -maxObjSpan_;
+    boundaryTop_ = height_ + maxObjSpan_;
 }
 
 void GameMap::setViewportSize(float viewportWidth,

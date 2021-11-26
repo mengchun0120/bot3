@@ -119,7 +119,17 @@ void GameMapLoader::addTile(GameMap& map)
 
     Tile* tile = new Tile();
     tile->init(t, pos_, direction_);
-    map.addObj(tile);
+
+    if (map.withinBoundary(tile->x(), tile->y()))
+    {
+        map.addObj(tile);
+    }
+    else
+    {
+        delete tile;
+
+        LOG_WARN << "Tile out of boundary" << LOG_END;
+    }
 }
 
 unsigned int GameMapLoader::getPoolSize(unsigned int rows,
