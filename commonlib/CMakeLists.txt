@@ -63,7 +63,8 @@ set(TEST_COMMONLIB_SRC
     test/test_commonlib_object_pool.cpp
     test/test_commonlib_fixed_queue.cpp
     test/test_commonlib_named_map.cpp
-    test/test_commonlib_linked_list.cpp)
+    test/test_commonlib_linked_list.cpp
+    test/test_commonlib_collide.cpp)
 
 add_definitions(${CPP_COMPILE_FLAG})
 
