@@ -29,6 +29,8 @@ private:
 
     void addTile(GameMap& map);
 
+    void addRobot(GameMap& map);
+
     unsigned int getPoolSize(unsigned int rows,
                              unsigned int cols);
 

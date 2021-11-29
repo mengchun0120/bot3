@@ -4,6 +4,7 @@
 #include <commonlib_json_utils.h>
 #include <botlib_game_lib.h>
 #include <botlib_tile.h>
+#include <botlib_ai_robot.h>
 #include <botlib_game_map_loader.h>
 
 using namespace mcdane::commonlib;
@@ -100,6 +101,10 @@ void GameMapLoader::parseAddObject(GameMap& map,
     {
         addTile(map);
     }
+    else if(typeStr_ == "robot")
+    {
+        addRobot(map);
+    }
     else
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid type " + typeStr_);
@@ -129,6 +134,32 @@ void GameMapLoader::addTile(GameMap& map)
         delete tile;
 
         LOG_WARN << "Tile out of boundary" << LOG_END;
+    }
+}
+
+void GameMapLoader::addRobot(GameMap& map)
+{
+    const GameLib& lib = GameLib::getInstance();
+
+    const AIRobotTemplate* t = lib.findAIRobotTemplate(templateStr_);
+    if (!t)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Failed to find AIRobotTemplate " + templateStr_);
+    }
+
+    AIRobot* robot = new AIRobot();
+    robot->init(t, pos_, direction_);
+
+    if (map.withinBoundary(robot->x(), robot->y()))
+    {
+        map.addObj(robot);
+    }
+    else
+    {
+        delete robot;
+
+        LOG_WARN << "AI Robot out of boundary" << LOG_END;
     }
 }
 

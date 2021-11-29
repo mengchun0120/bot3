@@ -31,6 +31,12 @@
             "template": "bush_tile",
             "pos": [1000.0, 0.0],
             "direction": [1.0, 0.0]
+        },
+        {
+            "type": "robot",
+            "template": "red_robot",
+            "pos": [400.0, 400.0],
+            "direction": [0.70710678, 0.70710678]
         }
     ]
 }
