@@ -17,7 +17,9 @@ public:
 
     void start();
 
-    float getTimeDelta();
+    void updateTimeDelta();
+
+    inline float curTimeDelta() const;
 
 private:
     std::vector<float> timeDeltaHistory_;
@@ -25,7 +27,13 @@ private:
     unsigned int totalSlots_;
     unsigned int lastSlot_;
     commonlib::TimePoint prevTime_;
+    float curTimeDelta_;
 };
+
+float TimeDeltaSmoother::curTimeDelta() const
+{
+    return curTimeDelta_;
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

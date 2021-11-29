@@ -10,6 +10,7 @@ TimeDeltaSmoother::TimeDeltaSmoother()
     : timeDeltaSum_(0.0f)
     , totalSlots_(0)
     , lastSlot_(0)
+    , curTimeDelta_(0.0f)
 {
 }
 
@@ -40,7 +41,7 @@ void TimeDeltaSmoother::start()
     lastSlot_ = 0;
 }
 
-float TimeDeltaSmoother::getTimeDelta()
+void TimeDeltaSmoother::updateTimeDelta()
 {
     using namespace std::chrono;
 
@@ -64,7 +65,7 @@ float TimeDeltaSmoother::getTimeDelta()
     lastSlot_ = (lastSlot_ + 1) % histSize;
     prevTime_ = curTime;
 
-    return timeDeltaSum_ / totalSlots_;
+    curTimeDelta_ = timeDeltaSum_ / totalSlots_;
 }
 
 } // end of namespace botlib
