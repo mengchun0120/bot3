@@ -6,17 +6,19 @@
 #include <botlib_rectangle.h>
 #include <botlib_component_template.h>
 #include <botlib_tile_template.h>
+#include <botlib_ai_robot_template.h>
 
 namespace mcdane {
 namespace botlib {
 
 class GameLib {
 public:
-    static void initInstance(const std::string& textureLibFile,
+    static void initInstance(const std::string& picDir,
+                             const std::string& textureLibFile,
                              const std::string& rectLibFile,
                              const std::string& componentTemplateLibFile,
                              const std::string& tileTemplateLibFile,
-                             const std::string& picDir);
+                             const std::string& aiRobotTemplateLibFile);
 
     inline static const GameLib& getInstance();
 
@@ -31,16 +33,20 @@ public:
 
     inline const TileTemplate* findTileTemplate(const std::string& name) const;
 
+    inline const AIRobotTemplate* findAIRobotTemplate(
+                                                const std::string& name) const;
+
     inline float maxObjSpan() const;
 
 private:
     GameLib() = default;
 
-    void load(const std::string& textureLibFile,
+    void load(const std::string& picDir,
+              const std::string& textureLibFile,
               const std::string& rectLibFile,
               const std::string& componentTemplateLibFile,
               const std::string& tileTemplateLibFile,
-              const std::string& picDir);
+              const std::string& aiRobotTemplateLibFile);
 
     void calculateMaxObjSpan();
 
@@ -51,6 +57,7 @@ private:
     commonlib::NamedMap<Rectangle> rectLib_;
     commonlib::NamedMap<ComponentTemplate> componentTemplateLib_;
     commonlib::NamedMap<TileTemplate> tileTemplateLib_;
+    commonlib::NamedMap<AIRobotTemplate> aiRobotTemplateLib_;
     float maxObjSpan_;
 };
 
@@ -78,6 +85,12 @@ const ComponentTemplate* GameLib::findComponentTemplate(
 const TileTemplate* GameLib::findTileTemplate(const std::string& name) const
 {
     return tileTemplateLib_.search(name);
+}
+
+const AIRobotTemplate* GameLib::findAIRobotTemplate(
+                                                const std::string& name) const
+{
+    return aiRobotTemplateLib_.search(name);
 }
 
 float GameLib::maxObjSpan() const

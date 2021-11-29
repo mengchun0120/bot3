@@ -10,7 +10,7 @@
 #include <botlib_component_template.h>
 #include <botlib_component.h>
 #include <botlib_tile_template.h>
-#include <botlib_robot_template.h>
+#include <botlib_ai_robot_template.h>
 
 namespace mcdane {
 namespace botlib {
@@ -124,6 +124,14 @@ protected:
     std::vector<commonlib::Vector2> firePoints_;
     std::vector<commonlib::Vector2> fireDirections_;
     std::vector<commonlib::JsonParamPtr> params_;
+};
+
+class AIRobotTemplateParser: public RobotTemplateParser {
+public:
+    AIRobotTemplateParser(
+            const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib);
+
+    AIRobotTemplate* operator()(const rapidjson::Value& v);
 };
 
 } // end of namespace botlib

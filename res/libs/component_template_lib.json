@@ -23,5 +23,15 @@
         "name": "bush_tile",
         "texture": "bush_tile",
         "rect": "tile"
+    },
+    {
+        "name": "red_base",
+        "texture": "red_base",
+        "rect": "base"
+    },
+    {
+        "name": "red_gun",
+        "texture": "red_gun",
+        "rect": "gun"
     }
 ]

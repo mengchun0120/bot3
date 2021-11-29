@@ -29,7 +29,8 @@
         "textureLibFile": "texture_lib.json",
         "rectLibFile": "rect_lib.json",
         "componentTemplateLibFile": "component_template_lib.json",
-        "tileTemplateLibFile": "tile_template_lib.json"
+        "tileTemplateLibFile": "tile_template_lib.json",
+        "aiRobotTemplateLibFile": "ai_robot_template_lib.json"
     },
     "game": {
         "mapPoolSizeFactor": 0.75

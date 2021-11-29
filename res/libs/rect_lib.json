@@ -4,5 +4,17 @@
         "width": 40.0,
         "height": 40.0,
         "hasTexture": true
+    },
+    {
+        "name": "base",
+        "width": 60.0,
+        "height": 60.0,
+        "hasTexture": true
+    },
+    {
+        "name": "gun",
+        "width": 20.0,
+        "height": 20.0,
+        "hasTexture": true
     }
 ]

@@ -196,6 +196,22 @@ void RobotTemplateParser::load(const rapidjson::Value& v)
     }
 }
 
+AIRobotTemplateParser::AIRobotTemplateParser(
+            const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib)
+    : RobotTemplateParser(componentTemplateLib)
+{
+}
+
+AIRobotTemplate* AIRobotTemplateParser::operator()(const rapidjson::Value& v)
+{
+    RobotTemplateParser::load(v);
+
+    return new AIRobotTemplate(hp_, armor_, speed_, energy_, rechargeRate_,
+                               collideBreath_, std::move(components_),
+                               std::move(firePoints_),
+                               std::move(fireDirections_));
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

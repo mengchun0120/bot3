@@ -132,6 +132,9 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
                   {"libraries", "componentTemplateLibFile"},
                   true, k_nonEmptyStrV),
         jsonParam(tileTemplateLibFile_, {"libraries", "tileTemplateLibFile"},
+                  true, k_nonEmptyStrV),
+        jsonParam(aiRobotTemplateLibFile_,
+                  {"libraries", "aiRobotTemplateLibFile"},
                   true, k_nonEmptyStrV)
     };
 
@@ -141,6 +144,7 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
     rectLibFile_ = constructPath({libDir_, rectLibFile_});
     componentTemplateLibFile_ = constructPath({libDir_, componentTemplateLibFile_});
     tileTemplateLibFile_ = constructPath({libDir_, tileTemplateLibFile_});
+    aiRobotTemplateLibFile_ = constructPath({libDir_, aiRobotTemplateLibFile_});
 }
 
 void AppConfig::loadGameSettings(const rapidjson::Document& doc)

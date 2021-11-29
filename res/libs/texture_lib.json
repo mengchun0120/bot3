@@ -18,5 +18,13 @@
     {
         "name": "bush_tile",
         "file": "bush_tile.png"
+    },
+    {
+        "name": "red_base",
+        "file": "red_base.png"
+    },
+    {
+        "name": "red_gun",
+        "file": "red_gun.png"
     }
 ]

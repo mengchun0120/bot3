@@ -58,6 +58,8 @@ public:
 
     inline const std::string& tileTemplateLibFile() const;
 
+    inline const std::string& aiRobotTemplateLibFile() const;
+
     inline float mapPoolSizeFactor() const;
 
 private:
@@ -101,6 +103,7 @@ private:
     std::string rectLibFile_;
     std::string componentTemplateLibFile_;
     std::string tileTemplateLibFile_;
+    std::string aiRobotTemplateLibFile_;
     float mapPoolSizeFactor_;
 };
 
@@ -202,6 +205,11 @@ const std::string& AppConfig::componentTemplateLibFile() const
 const std::string& AppConfig::tileTemplateLibFile() const
 {
     return tileTemplateLibFile_;
+}
+
+const std::string& AppConfig::aiRobotTemplateLibFile() const
+{
+    return aiRobotTemplateLibFile_;
 }
 
 float AppConfig::mapPoolSizeFactor() const

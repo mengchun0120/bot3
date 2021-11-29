@@ -9,23 +9,25 @@ namespace botlib {
 
 std::shared_ptr<GameLib> GameLib::k_gameLib;
 
-void GameLib::initInstance(const std::string& textureLibFile,
+void GameLib::initInstance(const std::string& picDir,
+                           const std::string& textureLibFile,
                            const std::string& rectLibFile,
                            const std::string& componentTemplateLibFile,
                            const std::string& tileTemplateLibFile,
-                           const std::string& picDir)
+                           const std::string& aiRobotTemplateLibFile)
 {
     GameLib* lib = new GameLib();
-    lib->load(textureLibFile, rectLibFile, componentTemplateLibFile,
-              tileTemplateLibFile, picDir);
+    lib->load(picDir, textureLibFile, rectLibFile, componentTemplateLibFile,
+              tileTemplateLibFile, aiRobotTemplateLibFile);
     k_gameLib.reset(lib);
 }
 
-void GameLib::load(const std::string& textureLibFile,
+void GameLib::load(const std::string& picDir,
+                   const std::string& textureLibFile,
                    const std::string& rectLibFile,
                    const std::string& componentTemplateLibFile,
                    const std::string& tileTemplateLibFile,
-                   const std::string& picDir)
+                   const std::string& aiRobotTemplateLibFile)
 {
     TextureParser textureParser(picDir);
     textureLib_.load(textureLibFile, textureParser);
@@ -39,6 +41,9 @@ void GameLib::load(const std::string& textureLibFile,
 
     TileTemplateParser tileTemplateParser(componentTemplateLib_);
     tileTemplateLib_.load(tileTemplateLibFile, tileTemplateParser);
+
+    AIRobotTemplateParser aiRobotTemplateParser(componentTemplateLib_);
+    aiRobotTemplateLib_.load(aiRobotTemplateLibFile, aiRobotTemplateParser);
 
     calculateMaxObjSpan();
 
@@ -60,6 +65,7 @@ void GameLib::calculateMaxObjSpan()
     };
 
     tileTemplateLib_.traverse(accessor);
+    aiRobotTemplateLib_.traverse(accessor);
 
     LOG_INFO << "maxObjSpan=" << maxObjSpan_ << LOG_END;
 }

@@ -25,11 +25,12 @@ TestMapApp::TestMapApp(const std::string& configFile,
                            cfg.simpleFragShaderFiles(),
                            cfg.fontDir());
 
-    GameLib::initInstance(cfg.textureLibFile(),
+    GameLib::initInstance(cfg.picDir(),
+                          cfg.textureLibFile(),
                           cfg.rectLibFile(),
                           cfg.componentTemplateLibFile(),
                           cfg.tileTemplateLibFile(),
-                          cfg.picDir());
+                          cfg.aiRobotTemplateLibFile());
 
     setupOpenGL();
     setupMap(mapFile);
