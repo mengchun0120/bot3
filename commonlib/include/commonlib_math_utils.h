@@ -61,6 +61,15 @@ bool checkRectCollide(float left1,
                       float bottom2,
                       float top2);
 
+bool checkRectWithinBoundary(float left,
+                             float right,
+                             float bottom,
+                             float top,
+                             float boundaryLeft,
+                             float boundaryRight,
+                             float boundaryBottom,
+                             float boundaryTop);
+
 bool checkRectCollide(float& adjustedDeltaX,
                       float& adjustedDeltaY,
                       float left1,

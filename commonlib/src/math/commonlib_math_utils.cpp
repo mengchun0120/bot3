@@ -44,6 +44,21 @@ bool checkRectCollide(float left1,
            checkLineOverlap(bottom1, top1, bottom2, top2);
 }
 
+bool checkRectWithinBoundary(float left,
+                             float right,
+                             float bottom,
+                             float top,
+                             float boundaryLeft,
+                             float boundaryRight,
+                             float boundaryBottom,
+                             float boundaryTop)
+{
+    return left >= boundaryLeft &&
+           right <= boundaryRight &&
+           bottom >= boundaryBottom &&
+           top <= boundaryTop;
+}
+
 bool checkRectCollide(float& adjustedDeltaX,
                       float& adjustedDeltaY,
                       float left1,

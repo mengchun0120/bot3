@@ -16,6 +16,20 @@ void testCollide_LineNotOverlap()
     assert(!checkLineOverlap(0.0f, 2.0f, 2.0f, 3.0f));
 }
 
+void testCollide_RectWithinBoundary()
+{
+    assert(checkRectWithinBoundary(0.0f, 2.0f, 0.0f, 2.0f,
+                                   0.0f, 100.0f, 0.0f, 100.0f));
+}
+
+void testCollide_RectOutsideBoundary()
+{
+    assert(!checkRectWithinBoundary(-1.0f, 1.0f, 0.0f, 2.0f,
+                                    0.0f, 100.0f, 0.0f, 100.0f));
+    assert(!checkRectWithinBoundary(99.0f, 101.0f, 0.0f, 2.0f,
+                                    0.0f, 100.0f, 0.0f, 100.0f));
+}
+
 void testCollide_RectCollide()
 {
     float left = 1.0f, bottom = 1.0f, right = 2.0f, top = 2.0f;
@@ -94,7 +108,10 @@ void testCollide()
 {
     testCollide_LineOverlap();
     testCollide_LineNotOverlap();
+    testCollide_RectWithinBoundary();
+    testCollide_RectOutsideBoundary();
     testCollide_RectCollide();
+    testCollide_RectNotCollide();
 }
 
 } // end of namespace commonlib
