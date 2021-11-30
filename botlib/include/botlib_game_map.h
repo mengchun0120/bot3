@@ -50,20 +50,21 @@ public:
     void setViewportOrigin(float x,
                            float y);
 
-    bool withinBoundary(float x,
-                        float y);
+    bool withinBoundary(float left,
+                        float right,
+                        float bottom,
+                        float top);
 
 private:
     void initItemDeleter();
-
-    void initBoundaryCells(float maxObjSpan);
 
     void initPool(unsigned int poolSize);
 
     void initMap(unsigned int rows,
                  unsigned int cols,
                  float viewportWidth,
-                 float viewportHeight);
+                 float viewportHeight,
+                 float maxObjSpan);
 
     void setMapSize(unsigned int rows,
                     unsigned int cols);
@@ -92,11 +93,6 @@ private:
     commonlib::Vector2 viewportOrigin_;
     commonlib::Vector2 viewportAnchor_;
     float maxObjSpan_;
-    int boundaryCells_;
-    float boundaryLeft_;
-    float boundaryRight_;
-    float boundaryBottom_;
-    float boundaryTop_;
 };
 
 int GameMap::rowCount() const
@@ -126,7 +122,7 @@ const commonlib::Vector2& GameMap::getViewportOrigin() const
 
 int GameMap::getCellIdx(float x) const
 {
-    return static_cast<int>(floor(x / k_cellBreath)) + boundaryCells_;
+    return static_cast<int>(floor(x / k_cellBreath));
 }
 
 } // end of namespace botlib

@@ -1,8 +1,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
 #include <commonlib_string_utils.h>
-#include <commonlib_json_utils.h>
-#include <commonlib_json_param.h>
+#include <commonlib_math_utils.h>
 #include <botlib_graphics.h>
 #include <botlib_game_map.h>
 
@@ -19,9 +18,8 @@ void GameMap::init(unsigned int poolSize,
                    float maxObjSpan)
 {
     initItemDeleter();
-    initBoundaryCells(maxObjSpan);
     initPool(poolSize);
-    initMap(rows, cols, viewportWidth, viewportHeight);
+    initMap(rows, cols, viewportWidth, viewportHeight, maxObjSpan);
 }
 
 void GameMap::present() const
@@ -56,20 +54,15 @@ void GameMap::addObj(GameObject* o,
         THROW_EXCEPT(InvalidArgumentException, "o is null");
     }
 
+    bool outsideMap = !withinBoundary(o->x() - o->span(), o->x() + o->span(),
+                                      o->y() - o->span(), o->y() + o->span());
+    if (outsideMap)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "o is outside map");
+    }
+
     int rowIdx = getCellIdx(o->y());
-    if (rowIdx < 0 || rowIdx >= rowCount())
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "o->x is out of range: " + toString(o->x()));
-    }
-
     int colIdx = getCellIdx(o->x());
-    if (colIdx < 0 || colIdx >= colCount())
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "o->y is out of range: " + toString(o->y()));
-    }
-
     o->setMapPos(rowIdx, colIdx);
 
     GameMapItem* item = itemPool_.alloc();
@@ -88,13 +81,13 @@ void GameMap::setViewportOrigin(float x,
     viewportAnchor_ = viewportOrigin_ - viewportHalfSize_;
 }
 
-bool GameMap::withinBoundary(float x,
-                             float y)
+bool GameMap::withinBoundary(float left,
+                             float right,
+                             float bottom,
+                             float top)
 {
-    return x > boundaryLeft_ &&
-           x < boundaryRight_ &&
-           y > boundaryBottom_ &&
-           y < boundaryTop_;
+    return checkRectWithinBoundary(left, right, bottom, top,
+                                   0.0f, width_, 0.0f, height_);
 }
 
 void GameMap::initItemDeleter()
@@ -104,22 +97,6 @@ void GameMap::initItemDeleter()
         item->deleteObj();
         itemPool_.free(item);
     };
-}
-
-void GameMap::initBoundaryCells(float maxObjSpan)
-{
-    if (maxObjSpan <= 0.0f)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid maxObjSpan " + toString(maxObjSpan));
-    }
-
-    maxObjSpan_ = maxObjSpan;
-    boundaryCells_ = static_cast<int>(floor(maxObjSpan_ / k_cellBreath));
-    if (boundaryCells_ <= 0)
-    {
-        boundaryCells_ = 1;
-    }
 }
 
 void GameMap::initPool(unsigned int poolSize)
@@ -136,24 +113,24 @@ void GameMap::initPool(unsigned int poolSize)
 void GameMap::initMap(unsigned int rows,
                       unsigned int cols,
                       float viewportWidth,
-                      float viewportHeight)
+                      float viewportHeight,
+                      float maxObjSpan)
 {
-    unsigned int rowCount = rows + 2*boundaryCells_;
-    unsigned int colCount = cols + 2*boundaryCells_;
-
-    setMapSize(rowCount, colCount);
+    setMapSize(rows, cols);
     setViewportSize(viewportWidth, viewportHeight);
     setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
 
-    map_.resize(rowCount);
+    map_.resize(rows);
     for (auto it = map_.begin(); it != map_.end(); ++it)
     {
-        it->resize(colCount);
+        it->resize(cols);
         for (auto itemIt = it->begin(); itemIt != it->end(); ++itemIt)
         {
             itemIt->setDeleter(&itemDeleter_);
         }
     }
+
+    maxObjSpan_ = maxObjSpan;
 }
 
 void GameMap::setMapSize(unsigned int rows,
@@ -171,10 +148,6 @@ void GameMap::setMapSize(unsigned int rows,
 
     width_ = rows * k_cellBreath;
     height_ = cols * k_cellBreath;
-    boundaryLeft_ = -maxObjSpan_;
-    boundaryRight_ = width_ + maxObjSpan_;
-    boundaryBottom_ = -maxObjSpan_;
-    boundaryTop_ = height_ + maxObjSpan_;
 }
 
 void GameMap::setViewportSize(float viewportWidth,

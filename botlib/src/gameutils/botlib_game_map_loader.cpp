@@ -125,16 +125,7 @@ void GameMapLoader::addTile(GameMap& map)
     Tile* tile = new Tile();
     tile->init(t, pos_, direction_);
 
-    if (map.withinBoundary(tile->x(), tile->y()))
-    {
-        map.addObj(tile);
-    }
-    else
-    {
-        delete tile;
-
-        LOG_WARN << "Tile out of boundary" << LOG_END;
-    }
+    map.addObj(tile);
 }
 
 void GameMapLoader::addRobot(GameMap& map)
@@ -151,16 +142,7 @@ void GameMapLoader::addRobot(GameMap& map)
     AIRobot* robot = new AIRobot();
     robot->init(t, pos_, direction_);
 
-    if (map.withinBoundary(robot->x(), robot->y()))
-    {
-        map.addObj(robot);
-    }
-    else
-    {
-        delete robot;
-
-        LOG_WARN << "AI Robot out of boundary" << LOG_END;
-    }
+    map.addObj(robot);
 }
 
 unsigned int GameMapLoader::getPoolSize(unsigned int rows,
