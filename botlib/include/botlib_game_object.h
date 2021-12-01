@@ -8,8 +8,16 @@
 namespace mcdane {
 namespace botlib {
 
+class GameMap;
+
 class GameObject {
 public:
+    enum Flag {
+        FLAG_ALIVE = 0x00000001,
+        FLAG_INVINCIBLE = 0x00000002,
+        FLAG_UPDATED = 0x00000004
+    };
+
     using Deleter = std::function<void(GameObject*)>;
 
     GameObject();
@@ -34,11 +42,16 @@ public:
 
     inline bool alive() const;
 
+    inline bool invincible() const;
+
+    inline bool updated() const;
+
     inline unsigned int row() const;
 
     inline unsigned int col() const;
 
-    virtual void update();
+    virtual void update(GameMap& map,
+                        float timeDelta);
 
     virtual void present() const = 0;
 
@@ -51,13 +64,25 @@ public:
     void setMapPos(unsigned int r,
                    unsigned int c);
 
+    void clearFlags();
+
+    void setAlive(bool b);
+
+    void setInvincible(bool b);
+
+    void setUpdated(bool b);
+
 public:
     static Deleter k_defaultDeleter;
 
 protected:
+    void setFlag(Flag flag,
+                 bool b);
+
+protected:
     const GameObjectTemplate* t_;
     commonlib::Vector2 pos_;
-    bool alive_;
+    int flags_;
     unsigned int row_;
     unsigned int col_;
 };
@@ -94,7 +119,17 @@ const commonlib::Vector2 GameObject::pos() const
 
 bool GameObject::alive() const
 {
-    return alive_;
+    return flags_ & FLAG_ALIVE;
+}
+
+bool GameObject::invincible() const
+{
+    return flags_ & FLAG_INVINCIBLE;
+}
+
+bool GameObject::updated() const
+{
+    return flags_ & FLAG_UPDATED;
 }
 
 unsigned int GameObject::row() const

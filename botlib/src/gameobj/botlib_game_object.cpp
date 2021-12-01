@@ -13,7 +13,7 @@ GameObject::Deleter GameObject::k_defaultDeleter = [](GameObject* o)->void
 
 GameObject::GameObject()
     : t_(nullptr)
-    , alive_(true)
+    , flags_(0)
     , row_(0)
     , col_(0)
 {
@@ -31,11 +31,13 @@ void GameObject::init(const GameObjectTemplate* t,
     t_ = t;
     pos_[0] = x;
     pos_[1] = y;
-    alive_ = true;
+    setAlive(true);
 }
 
-void GameObject::update()
+void GameObject::update(GameMap& map,
+                        float timeDelta)
 {
+    setUpdated(true);
 }
 
 void GameObject::setPos(float x,
@@ -56,6 +58,39 @@ void GameObject::setMapPos(unsigned int r,
 {
     row_ = r;
     col_ = c;
+}
+
+void GameObject::clearFlags()
+{
+    flags_ = 0;
+}
+
+void GameObject::setAlive(bool b)
+{
+    setFlag(FLAG_ALIVE, b);
+}
+
+void GameObject::setInvincible(bool b)
+{
+    setFlag(FLAG_INVINCIBLE, b);
+}
+
+void GameObject::setUpdated(bool b)
+{
+    setFlag(FLAG_UPDATED, b);
+}
+
+void GameObject::setFlag(Flag flag,
+                         bool b)
+{
+    if (b)
+    {
+        flags_ |= flag;
+    }
+    else
+    {
+        flags_ &= ~flag;
+    }
 }
 
 } // end of namespace botlib

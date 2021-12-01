@@ -15,6 +15,7 @@ void Tile::init(const TileTemplate* t,
                 float directionY)
 {
     CompositeObject::init(t, x, y, directionX, directionY);
+    setInvincible(t->invincible());
     hp_ = t->hp();
 }
 
@@ -29,7 +30,7 @@ void Tile::addHP(float delta)
 {
     const TileTemplate* t = getTemplate();
 
-    if (t->invincible())
+    if (invincible())
     {
         return;
     }
@@ -37,7 +38,7 @@ void Tile::addHP(float delta)
     hp_ = clamp(hp_+delta, 0.0f, t->hp());
     if (hp_ <= 0.0f)
     {
-        alive_ = false;
+        setAlive(false);
     }
 }
 
