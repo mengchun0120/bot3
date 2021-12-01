@@ -29,6 +29,12 @@ void Robot::init(const RobotTemplate* t,
     init(t, pos[0], pos[1], direction[0], direction[1]);
 }
 
+void Robot::update(GameMap& map,
+                   float timeDelta)
+{
+    GameObject::update(map, timeDelta);
+}
+
 void Robot::shiftPos(float deltaX,
                      float deltaY)
 {
@@ -41,6 +47,11 @@ void Robot::setDirection(float directionX,
 {
     CompositeObject::setDirection(directionX, directionY);
     resetFirePointsAndDirections();
+}
+
+void Robot::setMoving(bool b)
+{
+    moving_ = b;
 }
 
 void Robot::initFirePointsAndDirections()
@@ -78,6 +89,12 @@ void Robot::resetFirePointsAndDirections()
         rotate(d[0], d[1], direction_[0], direction_[1]);
         fireDirections_[i] = d;
     }
+}
+
+void Robot::updatePos(GameMap& map,
+                      float timeDelta)
+{
+    
 }
 
 } // end of namespace botlib
