@@ -20,7 +20,8 @@ set(COMMONLIB_MISC_SRC
 set(COMMONLIB_MATH_SRC
     src/math/commonlib_math_utils.cpp
     src/math/commonlib_vector.cpp
-    src/math/commonlib_matrix.cpp)
+    src/math/commonlib_matrix.cpp
+    src/math/commonlib_collide.cpp)
 
 set(COMMONLIB_APP_SRC
     src/app/commonlib_app.cpp)

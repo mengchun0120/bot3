@@ -50,11 +50,6 @@ public:
     void setViewportOrigin(float x,
                            float y);
 
-    bool withinBoundary(float left,
-                        float right,
-                        float bottom,
-                        float top);
-
 private:
     void initItemDeleter();
 

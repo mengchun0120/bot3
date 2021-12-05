@@ -1,7 +1,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
 #include <commonlib_string_utils.h>
-#include <commonlib_math_utils.h>
+#include <commonlib_collide.h>
 #include <botlib_graphics.h>
 #include <botlib_game_map.h>
 
@@ -54,13 +54,6 @@ void GameMap::addObj(GameObject* o,
         THROW_EXCEPT(InvalidArgumentException, "o is null");
     }
 
-    bool outsideMap = !withinBoundary(o->x() - o->span(), o->x() + o->span(),
-                                      o->y() - o->span(), o->y() + o->span());
-    if (outsideMap)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "o is outside map");
-    }
-
     int rowIdx = getCellIdx(o->y());
     int colIdx = getCellIdx(o->x());
     o->setMapPos(rowIdx, colIdx);
@@ -79,15 +72,6 @@ void GameMap::setViewportOrigin(float x,
     viewportOrigin_[0] = clamp(x, minViewportOrigin_[0], maxViewportOrigin_[0]);
     viewportOrigin_[1] = clamp(y, minViewportOrigin_[1], maxViewportOrigin_[1]);
     viewportAnchor_ = viewportOrigin_ - viewportHalfSize_;
-}
-
-bool GameMap::withinBoundary(float left,
-                             float right,
-                             float bottom,
-                             float top)
-{
-    return checkRectWithinBoundary(left, right, bottom, top,
-                                   0.0f, width_, 0.0f, height_);
 }
 
 void GameMap::initItemDeleter()

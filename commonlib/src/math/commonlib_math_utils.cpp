@@ -14,6 +14,16 @@ void rotate(float& x,
     y = y1;
 }
 
+float sign(float x)
+{
+    if (x == 0.0f)
+    {
+        return 0.0f;
+    }
+
+    return x < 0.0f ? -1.0f : 1.0f;
+}
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 
