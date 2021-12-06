@@ -14,6 +14,9 @@ namespace mcdane {
 namespace botlib {
 
 class GameMap {
+
+    using ItemList = commonlib::LinkedList<GameMapItem>;
+
 public:
     static constexpr float k_cellBreath = 40.0f;
     static constexpr unsigned int k_minRows = 30;
@@ -78,8 +81,9 @@ private:
                         int& startCol,
                         int& endCol) const;
 
+    void presentCell(const ItemList& cell) const;
+
 private:
-    using ItemList = commonlib::LinkedList<GameMapItem>;
 
     ItemList::Deleter itemDeleter_;
     commonlib::ObjectPool<GameMapItem> itemPool_;

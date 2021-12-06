@@ -37,11 +37,7 @@ void GameMap::present() const
 
         for (int col = startCol; col <= endCol; ++col)
         {
-            const GameMapItem* item;
-            for (item = r[col].first(); item; item = item->next())
-            {
-                item->obj()->present();
-            }
+            presentCell(r[col]);
         }
     }
 }
@@ -225,6 +221,28 @@ void GameMap::getPresentArea(int& startRow,
     if (endCol >= colCount())
     {
         endCol = colCount() - 1;
+    }
+}
+
+void GameMap::presentCell(const ItemList& cell) const
+{
+    static GameObjectType presentOrder[] = {
+        GameObjectType::TILE,
+        GameObjectType::MISSILE,
+        GameObjectType::ROBOT,
+        GameObjectType::EFFECT
+    };
+
+    for (unsigned int i = 0; i < k_gameObjTypeCount; ++i)
+    {
+        for (const GameMapItem* t = cell.first(); t; t = t->next())
+        {
+            const GameObject* o = t->obj();
+            if (o->type() == presentOrder[i])
+            {
+                o->present();
+            }
+        }
     }
 }
 

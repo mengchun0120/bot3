@@ -13,7 +13,7 @@ ostream& operator<<(ostream& os, mcdane::botlib::GameObjectType t)
     static std::string typeStr[] = {
         "tile",
         "robot",
-        "bullet",
+        "missile",
         "effect"
     };
 

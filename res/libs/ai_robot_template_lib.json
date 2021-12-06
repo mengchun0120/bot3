@@ -1,7 +1,7 @@
 [
     {
         "name": "red_robot",
-        "collideBreath": 30.0,
+        "collideBreath": 25.0,
         "invincible": false,
         "hp": 120.0,
         "armor": 100.0,

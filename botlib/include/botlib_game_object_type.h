@@ -10,10 +10,12 @@ namespace botlib {
 enum class GameObjectType {
     TILE,
     ROBOT,
-    BULLET,
+    MISSILE,
     EFFECT,
     INVALID
 };
+
+constexpr unsigned int k_gameObjTypeCount = 4;
 
 inline bool isValidGameObjectType(GameObjectType t)
 {
