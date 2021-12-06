@@ -35,7 +35,7 @@ public:
 
     inline float rechargeRate() const;
 
-    inline bool moving() const;
+    inline bool movingEnabled() const;
 
     void update(GameMap& map,
                 float timeDelta) override;
@@ -46,7 +46,7 @@ public:
     void setDirection(float directionX,
                       float directionY) override;
 
-    void setMoving(bool b);
+    void setMovingEnabled(bool b);
 
 protected:
     void initFirePointsAndDirections();
@@ -56,6 +56,8 @@ protected:
 
     void resetFirePointsAndDirections();
 
+    void resetSpeed();
+
     void updatePos(GameMap& map,
                    float timeDelta);
 
@@ -64,7 +66,9 @@ protected:
     float energy_;
     std::vector<commonlib::Vector2> firePoints_;
     std::vector<commonlib::Vector2> fireDirections_;
-    bool moving_;
+    bool movingEnabled_;
+    float speedX_;
+    float speedY_;
 };
 
 const RobotTemplate* Robot::getTemplate() const
@@ -97,9 +101,9 @@ float Robot::rechargeRate() const
     return getTemplate()->rechargeRate();
 }
 
-bool Robot::moving() const
+bool Robot::movingEnabled() const
 {
-    return moving_;
+    return movingEnabled_;
 }
 
 } // end of namespace botlib

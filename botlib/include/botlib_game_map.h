@@ -35,6 +35,8 @@ public:
     void addObj(GameObject* obj,
                 GameObject::Deleter* deleter=&GameObject::k_defaultDeleter);
 
+    void repositionObj(GameObject* o);
+
     inline int rowCount() const;
 
     inline int colCount() const;
@@ -49,6 +51,10 @@ public:
 
     void setViewportOrigin(float x,
                            float y);
+
+    GameMapItem* searchObj(GameObject* o);
+
+    GameMapItem* unlinkObj(GameObject* o);
 
 private:
     void initItemDeleter();
@@ -75,7 +81,6 @@ private:
 private:
     using ItemList = commonlib::LinkedList<GameMapItem>;
 
-private:
     ItemList::Deleter itemDeleter_;
     commonlib::ObjectPool<GameMapItem> itemPool_;
     std::vector<std::vector<ItemList>> map_;

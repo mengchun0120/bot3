@@ -66,12 +66,53 @@ void GameMap::addObj(GameObject* o,
              << " col=" << colIdx << LOG_END;
 }
 
+void GameMap::repositionObj(GameObject* o)
+{
+    if (!o)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "o is null");
+    }
+
+    unsigned int rowIdx = getCellIdx(o->y());
+    unsigned int colIdx = getCellIdx(o->x());
+
+    if (rowIdx == o->row() && colIdx == o->col())
+    {
+        return;
+    }
+
+    GameMapItem* item = unlinkObj(o);
+    map_[rowIdx][colIdx].pushFront(item);
+    o->setMapPos(rowIdx, colIdx);
+}
+
 void GameMap::setViewportOrigin(float x,
                                 float y)
 {
     viewportOrigin_[0] = clamp(x, minViewportOrigin_[0], maxViewportOrigin_[0]);
     viewportOrigin_[1] = clamp(y, minViewportOrigin_[1], maxViewportOrigin_[1]);
     viewportAnchor_ = viewportOrigin_ - viewportHalfSize_;
+}
+
+GameMapItem* GameMap::searchObj(GameObject* o)
+{
+    ItemList& cell = map_[o->row()][o->col()];
+    for (GameMapItem* i = cell.first(); i; i = i->next())
+    {
+        if (i->obj() == o)
+        {
+            return i;
+        }
+    }
+
+    return nullptr;
+}
+
+GameMapItem* GameMap::unlinkObj(GameObject* o)
+{
+    GameMapItem* item = searchObj(o);
+    map_[o->row()][o->col()].unlink(item);
+    return item;
 }
 
 void GameMap::initItemDeleter()

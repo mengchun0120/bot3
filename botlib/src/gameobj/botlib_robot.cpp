@@ -1,4 +1,5 @@
-#include <commonlib_math_utils.h>
+#include <commonlib_collide.h>
+#include <botlib_game_map.h>
 #include <botlib_robot.h>
 
 using namespace mcdane::commonlib;
@@ -9,6 +10,7 @@ namespace botlib {
 Robot::Robot()
     : hp_(0.0f)
     , energy_(0.0f)
+    , movingEnabled_(false)
 {
 }
 
@@ -20,6 +22,7 @@ void Robot::init(const RobotTemplate* t,
 {
     CompositeObject::init(t, x, y, directionX, directionY);
     initFirePointsAndDirections();
+    resetSpeed();
 }
 
 void Robot::init(const RobotTemplate* t,
@@ -32,6 +35,8 @@ void Robot::init(const RobotTemplate* t,
 void Robot::update(GameMap& map,
                    float timeDelta)
 {
+    updatePos(map, timeDelta);
+
     GameObject::update(map, timeDelta);
 }
 
@@ -47,11 +52,12 @@ void Robot::setDirection(float directionX,
 {
     CompositeObject::setDirection(directionX, directionY);
     resetFirePointsAndDirections();
+    resetSpeed();
 }
 
-void Robot::setMoving(bool b)
+void Robot::setMovingEnabled(bool b)
 {
-    moving_ = b;
+    movingEnabled_ = b;
 }
 
 void Robot::initFirePointsAndDirections()
@@ -91,10 +97,36 @@ void Robot::resetFirePointsAndDirections()
     }
 }
 
+void Robot::resetSpeed()
+{
+    speedX_ = speed() * direction_[0];
+    speedY_ = speed() * direction_[1];
+}
+
 void Robot::updatePos(GameMap& map,
                       float timeDelta)
 {
-    
+    if (!movingEnabled())
+    {
+        return;
+    }
+
+    float adjustedDeltaX, adjustedDeltaY;
+
+    bool collide = checkRectCollideBoundary(adjustedDeltaX, adjustedDeltaY,
+                                            x()-span(), x()+span(),
+                                            y()-span(), y()+span(),
+                                            0.0f, map.width(),
+                                            0.0f, map.height(),
+                                            speedX_*timeDelta, speedY_*timeDelta);
+
+    if (collide)
+    {
+        setMovingEnabled(false);
+    }
+
+    shiftPos(adjustedDeltaX, adjustedDeltaY);
+    map.repositionObj(this);
 }
 
 } // end of namespace botlib
