@@ -33,6 +33,7 @@
         "aiRobotTemplateLibFile": "ai_robot_template_lib.json"
     },
     "game": {
-        "mapPoolSizeFactor": 0.75
+        "mapPoolSizeFactor": 0.75,
+        "timeDeltaHistoryLen": 10
     }
 }

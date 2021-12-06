@@ -112,12 +112,14 @@ void Robot::updatePos(GameMap& map,
     }
 
     float adjustedDeltaX, adjustedDeltaY;
+    float left = x() - collideBreath();
+    float right = x() + collideBreath();
+    float bottom = y() - collideBreath();
+    float top = y() + collideBreath();
 
     bool collide = checkRectCollideBoundary(adjustedDeltaX, adjustedDeltaY,
-                                            x()-span(), x()+span(),
-                                            y()-span(), y()+span(),
-                                            0.0f, map.width(),
-                                            0.0f, map.height(),
+                                            left, right, bottom, top,
+                                            0.0f, map.width(), 0.0f, map.height(),
                                             speedX_*timeDelta, speedY_*timeDelta);
 
     if (collide)

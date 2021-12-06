@@ -62,6 +62,8 @@ public:
 
     inline float mapPoolSizeFactor() const;
 
+    inline unsigned int timeDeltaHistoryLen() const;
+
 private:
     void loadBasics(const rapidjson::Document& doc);
 
@@ -105,6 +107,7 @@ private:
     std::string tileTemplateLibFile_;
     std::string aiRobotTemplateLibFile_;
     float mapPoolSizeFactor_;
+    unsigned int timeDeltaHistoryLen_;
 };
 
 const AppConfig& AppConfig::getInstance()
@@ -215,6 +218,11 @@ const std::string& AppConfig::aiRobotTemplateLibFile() const
 float AppConfig::mapPoolSizeFactor() const
 {
     return mapPoolSizeFactor_;
+}
+
+unsigned int AppConfig::timeDeltaHistoryLen() const
+{
+    return timeDeltaHistoryLen_;
 }
 
 } // end of namespace botlib

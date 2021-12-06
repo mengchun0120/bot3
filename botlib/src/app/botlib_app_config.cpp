@@ -151,7 +151,9 @@ void AppConfig::loadGameSettings(const rapidjson::Document& doc)
 {
     std::vector<JsonParamPtr> params{
         jsonParam(mapPoolSizeFactor_, {"game", "mapPoolSizeFactor"},
-                  true, gt(0.0f))
+                  true, gt(0.0f)),
+        jsonParam(timeDeltaHistoryLen_, {"game", "timeDeltaHistoryLen"},
+                  true, gt(0u))
     };
 
     parse(params, doc);
