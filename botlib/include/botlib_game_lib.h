@@ -38,6 +38,8 @@ public:
 
     inline float maxObjSpan() const;
 
+    inline float maxCollideBreath() const;
+
 private:
     GameLib() = default;
 
@@ -50,6 +52,8 @@ private:
 
     void calculateMaxObjSpan();
 
+    void calculateMaxCollideBreath();
+
 private:
     static std::shared_ptr<GameLib> k_gameLib;
 
@@ -59,6 +63,7 @@ private:
     commonlib::NamedMap<TileTemplate> tileTemplateLib_;
     commonlib::NamedMap<AIRobotTemplate> aiRobotTemplateLib_;
     float maxObjSpan_;
+    float maxCollideBreath_;
 };
 
 const GameLib& GameLib::getInstance()
@@ -96,6 +101,11 @@ const AIRobotTemplate* GameLib::findAIRobotTemplate(
 float GameLib::maxObjSpan() const
 {
     return maxObjSpan_;
+}
+
+float GameLib::maxCollideBreath() const
+{
+    return maxCollideBreath_;
 }
 
 } // end of namespace botlib

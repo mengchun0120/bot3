@@ -67,8 +67,10 @@ void GameMapLoader::loadMapDimension(GameMap& map,
     parse(params, doc);
 
     unsigned int poolSize = getPoolSize(rows, cols);
+    const GameLib& lib = GameLib::getInstance();
+
     map.init(poolSize, rows, cols, viewportWidth_, viewportHeight_,
-             GameLib::getInstance().maxObjSpan());
+             lib.maxObjSpan(), lib.maxCollideBreath());
 }
 
 void GameMapLoader::loadObjects(GameMap& map,

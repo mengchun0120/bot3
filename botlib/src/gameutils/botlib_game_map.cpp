@@ -15,11 +15,13 @@ void GameMap::init(unsigned int poolSize,
                    unsigned int cols,
                    float viewportWidth,
                    float viewportHeight,
-                   float maxObjSpan)
+                   float maxObjSpan,
+                   float maxCollideBreath)
 {
     initItemDeleter();
     initPool(poolSize);
-    initMap(rows, cols, viewportWidth, viewportHeight, maxObjSpan);
+    initMap(rows, cols, viewportWidth, viewportHeight,
+            maxObjSpan, maxCollideBreath);
 }
 
 void GameMap::present() const
@@ -135,7 +137,8 @@ void GameMap::initMap(unsigned int rows,
                       unsigned int cols,
                       float viewportWidth,
                       float viewportHeight,
-                      float maxObjSpan)
+                      float maxObjSpan,
+                      float maxCollideBreath)
 {
     setMapSize(rows, cols);
     setViewportSize(viewportWidth, viewportHeight);
@@ -152,6 +155,7 @@ void GameMap::initMap(unsigned int rows,
     }
 
     maxObjSpan_ = maxObjSpan;
+    maxCollideBreath_ = maxCollideBreath;
 }
 
 void GameMap::setMapSize(unsigned int rows,

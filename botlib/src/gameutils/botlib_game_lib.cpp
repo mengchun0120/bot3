@@ -46,6 +46,7 @@ void GameLib::load(const std::string& picDir,
     aiRobotTemplateLib_.load(aiRobotTemplateLibFile, aiRobotTemplateParser);
 
     calculateMaxObjSpan();
+    calculateMaxCollideBreath();
 
     LOG_INFO << "GameLib loaded successfull" << LOG_END;
 }
@@ -68,6 +69,26 @@ void GameLib::calculateMaxObjSpan()
     aiRobotTemplateLib_.traverse(accessor);
 
     LOG_INFO << "maxObjSpan=" << maxObjSpan_ << LOG_END;
+}
+
+void GameLib::calculateMaxCollideBreath()
+{
+    maxCollideBreath_ = 0.0f;
+
+    auto accessor = [this](const GameObjectTemplate* t)->bool
+    {
+        if (t->collideBreath() > maxCollideBreath_)
+        {
+            maxCollideBreath_ = t->collideBreath();
+        }
+
+        return true;
+    };
+
+    tileTemplateLib_.traverse(accessor);
+    aiRobotTemplateLib_.traverse(accessor);
+
+    LOG_INFO << "maxCollideBreath=" << maxCollideBreath_ << LOG_END;
 }
 
 } // end of namespace botlib

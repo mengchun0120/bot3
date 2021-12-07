@@ -84,7 +84,7 @@ void TestGameApp::setupMap()
             static_cast<unsigned int>(rows * cols * cfg.mapPoolSizeFactor());
 
     map_.init(poolSize, rows, cols, viewportWidth(), viewportHeight(),
-              lib.maxObjSpan());
+              lib.maxObjSpan(), lib.maxCollideBreath());
 }
 
 void TestGameApp::setupObjects()

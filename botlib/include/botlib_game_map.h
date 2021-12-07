@@ -31,7 +31,8 @@ public:
               unsigned int cols,
               float viewportWidth,
               float viewportHeight,
-              float maxObjSpan);
+              float maxObjSpan,
+              float maxCollideBreath);
 
     void present() const;
 
@@ -68,7 +69,8 @@ private:
                  unsigned int cols,
                  float viewportWidth,
                  float viewportHeight,
-                 float maxObjSpan);
+                 float maxObjSpan,
+                 float maxCollideBreath);
 
     void setMapSize(unsigned int rows,
                     unsigned int cols);
@@ -97,6 +99,7 @@ private:
     commonlib::Vector2 viewportOrigin_;
     commonlib::Vector2 viewportAnchor_;
     float maxObjSpan_;
+    float maxCollideBreath_;
 };
 
 int GameMap::rowCount() const
