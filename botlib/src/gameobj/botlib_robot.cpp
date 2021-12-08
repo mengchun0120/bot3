@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <botlib_game_map.h>
 #include <botlib_robot.h>
@@ -35,7 +36,10 @@ void Robot::init(const RobotTemplate* t,
 void Robot::update(GameMap& map,
                    float timeDelta)
 {
-    updatePos(map, timeDelta);
+    if (movingEnabled_)
+    {
+        updatePos(map, timeDelta);
+    }
 
     GameObject::update(map, timeDelta);
 }
@@ -106,23 +110,23 @@ void Robot::resetSpeed()
 void Robot::updatePos(GameMap& map,
                       float timeDelta)
 {
-    if (!movingEnabled())
-    {
-        return;
-    }
-
     float adjustedDeltaX, adjustedDeltaY;
     float left = x() - collideBreath();
     float right = x() + collideBreath();
     float bottom = y() - collideBreath();
     float top = y() + collideBreath();
 
-    bool collide = checkRectCollideBoundary(adjustedDeltaX, adjustedDeltaY,
+    bool collideBoundary = checkRectCollideBoundary(adjustedDeltaX, adjustedDeltaY,
                                             left, right, bottom, top,
                                             0.0f, map.width(), 0.0f, map.height(),
                                             speedX_*timeDelta, speedY_*timeDelta);
 
-    if (collide)
+    bool collideObjs = map.checkCollideNonPassthrough(
+                                                adjustedDeltaX, adjustedDeltaY,
+                                                this,
+                                                adjustedDeltaX, adjustedDeltaY);
+
+    if (collideBoundary || collideObjs)
     {
         setMovingEnabled(false);
     }

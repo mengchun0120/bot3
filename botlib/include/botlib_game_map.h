@@ -60,6 +60,12 @@ public:
 
     GameMapItem* unlinkObj(GameObject* o);
 
+    bool checkCollideNonPassthrough(float& adjustedDeltaX,
+                                    float& adjustedDeltaY,
+                                    const GameObject* o,
+                                    float deltaX,
+                                    float deltaY) const;
+
 private:
     void initItemDeleter();
 
@@ -83,10 +89,18 @@ private:
                         int& startCol,
                         int& endCol) const;
 
-    void presentCell(const ItemList& cell) const;
+    void presentCell(const ItemList& cell,
+                     GameObjectType type) const;
+
+    void getCollideArea(int& startRow,
+                        int& endRow,
+                        int& startCol,
+                        int& endCol,
+                        const GameObject* o,
+                        float deltaX,
+                        float deltaY) const;
 
 private:
-
     ItemList::Deleter itemDeleter_;
     commonlib::ObjectPool<GameMapItem> itemPool_;
     std::vector<std::vector<ItemList>> map_;

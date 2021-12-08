@@ -12,7 +12,8 @@ namespace itest {
 class TestGameApp: public commonlib::App {
 public:
     TestGameApp(const std::string& configFile,
-               const std::string& appDir);
+                const std::string& appDir,
+                const std::string& mapFile);
 
     ~TestGameApp() override = default;
 
@@ -27,7 +28,7 @@ private:
 
     void setupDeltaSmoother();
 
-    void setupMap();
+    void setupMap(const std::string& mapFile);
 
     void setupObjects();
 

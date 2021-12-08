@@ -12,6 +12,7 @@ struct Arguments {
     std::string configFile_;
     std::string logFile_;
     std::string appDir_;
+    std::string mapFile_;
 };
 
 void parseArguments(Arguments& args, int argc, char* argv[])
@@ -23,7 +24,9 @@ void parseArguments(Arguments& args, int argc, char* argv[])
         Argument::create(args.logFile_, "logFile", "l", "log",
                          "Log file", false, k_nonEmptyStrV),
         Argument::create(args.appDir_, "appDir", "a", "appDir",
-                         "App directory", false, k_nonEmptyStrV)
+                         "App directory", false, k_nonEmptyStrV),
+        Argument::create(args.mapFile_, "mapFile", "m", "mapFile",
+                         "Map file", false, k_nonEmptyStrV)
     });
 
     parser.parse(argc, argv);
@@ -63,7 +66,7 @@ int main(int argc, char* argv[])
 
     try
     {
-        TestGameApp app(args.configFile_, args.appDir_);
+        TestGameApp app(args.configFile_, args.appDir_, args.mapFile_);
         app.run();
     }
     catch (const std::exception& e)

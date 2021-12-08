@@ -1,6 +1,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
 #include <commonlib_string_utils.h>
+#include <commonlib_math_utils.h>
 #include <commonlib_collide.h>
 #include <botlib_graphics.h>
 #include <botlib_game_map.h>
@@ -26,6 +27,13 @@ void GameMap::init(unsigned int poolSize,
 
 void GameMap::present() const
 {
+    static GameObjectType presentOrder[] = {
+        GameObjectType::TILE,
+        GameObjectType::MISSILE,
+        GameObjectType::ROBOT,
+        GameObjectType::EFFECT
+    };
+
     SimpleShaderProgram& program = Graphics::simpleShader();
     program.use();
     program.setViewportOrigin(viewportOrigin_);
@@ -33,13 +41,15 @@ void GameMap::present() const
     int startRow, endRow, startCol, endCol;
 
     getPresentArea(startRow, endRow, startCol, endCol);
-    for (int row = startRow; row <= endRow; ++row)
+    for (unsigned int i = 0; i < k_gameObjTypeCount; ++i)
     {
-        auto& r = map_[row];
-
-        for (int col = startCol; col <= endCol; ++col)
+        for (int row = startRow; row <= endRow; ++row)
         {
-            presentCell(r[col]);
+            auto& r = map_[row];
+            for (int col = startCol; col <= endCol; ++col)
+            {
+                presentCell(r[col], presentOrder[i]);
+            }
         }
     }
 }
@@ -79,6 +89,9 @@ void GameMap::repositionObj(GameObject* o)
         return;
     }
 
+    LOG_INFO << "reposition r=" << rowIdx << " c=" << colIdx
+             << " x=" << o->x() << " y=" << o->y() << LOG_END;
+
     GameMapItem* item = unlinkObj(o);
     map_[rowIdx][colIdx].pushFront(item);
     o->setMapPos(rowIdx, colIdx);
@@ -111,6 +124,54 @@ GameMapItem* GameMap::unlinkObj(GameObject* o)
     GameMapItem* item = searchObj(o);
     map_[o->row()][o->col()].unlink(item);
     return item;
+}
+
+bool GameMap::checkCollideNonPassthrough(float& adjustedDeltaX,
+                                         float& adjustedDeltaY,
+                                         const GameObject* o,
+                                         float deltaX,
+                                         float deltaY) const
+{
+    int startRow, endRow, startCol, endCol;
+    float left = o->collideLeft(), right = o->collideRight();
+    float bottom = o->collideBottom(), top = o->collideTop();
+    bool collide = false;
+
+    getCollideArea(startRow, endRow, startCol, endCol, o, deltaX, deltaY);
+    adjustedDeltaX = deltaX;
+    adjustedDeltaY = deltaY;
+    for (int r = startRow; r <= endRow; ++r)
+    {
+        auto& row = map_[r];
+
+        for (int c = startCol; c <= endCol; ++c)
+        {
+            for (const GameMapItem* i = row[c].first(); i; i = i->next())
+            {
+                const GameObject* o1 = i->obj();
+                bool dontCheck = o1 == o ||
+                                 !o1->alive() ||
+                                 !isNonPassthroughObjType(o->type());
+                if (dontCheck)
+                {
+                    continue;
+                }
+
+                bool collide1 = checkRectCollideRect(
+                                        adjustedDeltaX, adjustedDeltaY,
+                                        left, right, bottom, top,
+                                        o1->collideLeft(), o1->collideRight(),
+                                        o1->collideBottom(), o1->collideTop(),
+                                        adjustedDeltaX, adjustedDeltaY);
+                if (collide1)
+                {
+                    collide = true;
+                }
+            }
+        }
+    }
+
+    return collide;
 }
 
 void GameMap::initItemDeleter()
@@ -228,26 +289,56 @@ void GameMap::getPresentArea(int& startRow,
     }
 }
 
-void GameMap::presentCell(const ItemList& cell) const
+void GameMap::presentCell(const ItemList& cell,
+                          GameObjectType type) const
 {
-    static GameObjectType presentOrder[] = {
-        GameObjectType::TILE,
-        GameObjectType::MISSILE,
-        GameObjectType::ROBOT,
-        GameObjectType::EFFECT
-    };
-
-    for (unsigned int i = 0; i < k_gameObjTypeCount; ++i)
+    for (const GameMapItem* t = cell.first(); t; t = t->next())
     {
-        for (const GameMapItem* t = cell.first(); t; t = t->next())
+        const GameObject* o = t->obj();
+        if (o->type() == type)
         {
-            const GameObject* o = t->obj();
-            if (o->type() == presentOrder[i])
-            {
-                o->present();
-            }
+            o->present();
         }
     }
+}
+
+void GameMap::getCollideArea(int& startRow,
+                             int& endRow,
+                             int& startCol,
+                             int& endCol,
+                             const GameObject* o,
+                             float deltaX,
+                             float deltaY) const
+{
+    float startX, endX, startY, endY;
+    float collideMargin = o->collideBreath() + maxCollideBreath_;
+
+    if (std::signbit(deltaX))
+    {
+        startX = o->x() + deltaX - collideMargin;
+        endX = o->x() + collideMargin;
+    }
+    else
+    {
+        startX = o->x() - collideMargin;
+        endX = o->x() + deltaX + collideMargin;
+    }
+
+    if (std::signbit(deltaY))
+    {
+        startY = o->y() + deltaY - collideMargin;
+        endY = o->y() + collideMargin;
+    }
+    else
+    {
+        startY = o->y() - collideMargin;
+        endY = o->y() + deltaY + collideMargin;
+    }
+
+    startRow = clamp(getCellIdx(startY), 0, rowCount()-1);
+    endRow = clamp(getCellIdx(endY), 0, rowCount()-1);
+    startCol = clamp(getCellIdx(startX), 0, colCount()-1);
+    endCol = clamp(getCellIdx(endX), 0, colCount()-1);
 }
 
 } // end of namespace botlib

@@ -40,6 +40,14 @@ public:
 
     inline const commonlib::Vector2 pos() const;
 
+    inline float collideLeft() const;
+
+    inline float collideRight() const;
+
+    inline float collideBottom() const;
+
+    inline float collideTop() const;
+
     inline bool alive() const;
 
     inline bool invincible() const;
@@ -115,6 +123,26 @@ float GameObject::y() const
 const commonlib::Vector2 GameObject::pos() const
 {
     return pos_;
+}
+
+float GameObject::collideLeft() const
+{
+    return x() - collideBreath();
+}
+
+float GameObject::collideRight() const
+{
+    return x() + collideBreath();
+}
+
+float GameObject::collideBottom() const
+{
+    return y() - collideBreath();
+}
+
+float GameObject::collideTop() const
+{
+    return y() + collideBreath();
 }
 
 bool GameObject::alive() const

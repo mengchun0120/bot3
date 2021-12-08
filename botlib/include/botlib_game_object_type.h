@@ -23,6 +23,12 @@ inline bool isValidGameObjectType(GameObjectType t)
            static_cast<int>(GameObjectType::INVALID) > static_cast<int>(t);
 }
 
+inline bool isNonPassthroughObjType(GameObjectType t)
+{
+    return t == GameObjectType::TILE ||
+           t == GameObjectType::ROBOT;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

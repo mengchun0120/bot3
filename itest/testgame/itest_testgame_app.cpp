@@ -1,6 +1,7 @@
 #include <botlib_app_config.h>
 #include <botlib_game_lib.h>
 #include <botlib_graphics.h>
+#include <botlib_game_map_loader.h>
 #include <itest_testgame_app.h>
 
 using namespace mcdane::commonlib;
@@ -10,7 +11,8 @@ namespace mcdane {
 namespace itest {
 
 TestGameApp::TestGameApp(const std::string& configFile,
-                         const std::string& appDir)
+                         const std::string& appDir,
+                         const std::string& mapFile)
 {
     AppConfig::initInstance(configFile, appDir);
 
@@ -31,7 +33,7 @@ TestGameApp::TestGameApp(const std::string& configFile,
 
     setupOpenGL();
     setupDeltaSmoother();
-    setupMap();
+    setupMap(mapFile);
     setupObjects();
 }
 
@@ -75,16 +77,12 @@ void TestGameApp::setupDeltaSmoother()
     deltaSmoother_.start();
 }
 
-void TestGameApp::setupMap()
+void TestGameApp::setupMap(const std::string& mapFile)
 {
     const AppConfig& cfg = AppConfig::getInstance();
-    const GameLib& lib = GameLib::getInstance();
-    unsigned int rows = 40, cols = 40;
-    unsigned int poolSize =
-            static_cast<unsigned int>(rows * cols * cfg.mapPoolSizeFactor());
-
-    map_.init(poolSize, rows, cols, viewportWidth(), viewportHeight(),
-              lib.maxObjSpan(), lib.maxCollideBreath());
+    GameMapLoader mapLoader(cfg.mapPoolSizeFactor(), viewportWidth(),
+                            viewportHeight());
+    mapLoader.load(map_, mapFile);
 }
 
 void TestGameApp::setupObjects()
@@ -93,7 +91,7 @@ void TestGameApp::setupObjects()
 
     const AIRobotTemplate* t = lib.findAIRobotTemplate("red_robot");
     robot_ = new AIRobot();
-    robot_->init(t, 200.0f, 200.0f, -1.0f, 0.0f);
+    robot_->init(t, 80.0f, 80.0f, 0.707106781f, 0.707106781f);
     robot_->setMovingEnabled(true);
 
     map_.addObj(robot_);

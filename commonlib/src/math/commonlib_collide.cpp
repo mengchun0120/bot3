@@ -1,4 +1,5 @@
 #include <cmath>
+#include <commonlib_log.h>
 #include <commonlib_math_utils.h>
 #include <commonlib_collide.h>
 
@@ -152,10 +153,15 @@ bool checkRectCollideRect(float& adjustedDeltaX,
         absAdjustedDeltaX = lineDistX;
         absAdjustedDeltaY = leftSide / absDeltaX;
     }
-    else
+    else if (absDeltaY > 0.0f)
     {
         absAdjustedDeltaX = rightSide / absDeltaY;
         absAdjustedDeltaY = lineDistY;
+    }
+    else
+    {
+        absAdjustedDeltaX = lineDistX;
+        absAdjustedDeltaY = 0.0f;
     }
 
     adjustedDeltaX = std::signbit(deltaX) ? -absAdjustedDeltaX : absAdjustedDeltaX;
