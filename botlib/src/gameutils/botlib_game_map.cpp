@@ -174,6 +174,54 @@ bool GameMap::checkCollideNonPassthrough(float& adjustedDeltaX,
     return collide;
 }
 
+bool GameMap::checkObjCollide(float x,
+                              float y,
+                              float collideBreath) const
+{
+    float left = x - collideBreath, right = x + collideBreath;
+    float bottom = y - collideBreath, top = y + collideBreath;
+
+    bool collideBoundary = checkRectCollideBoundary(left, right, bottom, top,
+                                                    0.0, width_, 0.0, height_);
+
+    if (collideBoundary)
+    {
+        return true;
+    }
+
+    int startRow, endRow, startCol, endCol;
+
+    getCollideArea(startRow, endRow, startCol, endCol, x, y, collideBreath);
+    for (int r = startRow; r <= endRow; ++r)
+    {
+        auto& row = map_[r];
+        for (int c = startCol; c <= endCol; ++c)
+        {
+            for (const GameMapItem* i = row[c].first(); i; i = i->next())
+            {
+                const GameObject* o = i->obj();
+                if (!o->alive() || !isNonPassthroughObjType(o->type()))
+                {
+                    continue;
+                }
+
+                bool collideObj = checkRectCollideRect(
+                                        left, right, bottom, top,
+                                        o->x() - o->collideBreath(),
+                                        o->x() + o->collideBreath(),
+                                        o->y() - o->collideBreath(),
+                                        o->y() + o->collideBreath());
+                if (collideObj)
+                {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
 void GameMap::initItemDeleter()
 {
     itemDeleter_ = [this](GameMapItem* item)->void
@@ -334,6 +382,26 @@ void GameMap::getCollideArea(int& startRow,
         startY = o->y() - collideMargin;
         endY = o->y() + deltaY + collideMargin;
     }
+
+    startRow = clamp(getCellIdx(startY), 0, rowCount()-1);
+    endRow = clamp(getCellIdx(endY), 0, rowCount()-1);
+    startCol = clamp(getCellIdx(startX), 0, colCount()-1);
+    endCol = clamp(getCellIdx(endX), 0, colCount()-1);
+}
+
+void GameMap::getCollideArea(int& startRow,
+                             int& endRow,
+                             int& startCol,
+                             int& endCol,
+                             float x,
+                             float y,
+                             float collideBreath) const
+{
+    float collideMargin = collideBreath + maxCollideBreath_;
+    float startX = x - collideMargin;
+    float endX = x + collideMargin;
+    float startY = y - collideMargin;
+    float endY = y + collideMargin;
 
     startRow = clamp(getCellIdx(startY), 0, rowCount()-1);
     endRow = clamp(getCellIdx(endY), 0, rowCount()-1);

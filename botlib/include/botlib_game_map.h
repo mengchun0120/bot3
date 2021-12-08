@@ -66,6 +66,10 @@ public:
                                     float deltaX,
                                     float deltaY) const;
 
+    bool checkObjCollide(float x,
+                         float y,
+                         float collideBreath) const;
+
 private:
     void initItemDeleter();
 
@@ -99,6 +103,14 @@ private:
                         const GameObject* o,
                         float deltaX,
                         float deltaY) const;
+
+    void getCollideArea(int& startRow,
+                        int& endRow,
+                        int& startCol,
+                        int& endCol,
+                        float x,
+                        float y,
+                        float collideBreath) const;
 
 private:
     ItemList::Deleter itemDeleter_;
