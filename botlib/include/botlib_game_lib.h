@@ -6,6 +6,7 @@
 #include <botlib_rectangle.h>
 #include <botlib_component_template.h>
 #include <botlib_tile_template.h>
+#include <botlib_missile_template.h>
 #include <botlib_ai_robot_template.h>
 
 namespace mcdane {
@@ -18,6 +19,7 @@ public:
                              const std::string& rectLibFile,
                              const std::string& componentTemplateLibFile,
                              const std::string& tileTemplateLibFile,
+                             const std::string& missileTemplateLibFile,
                              const std::string& aiRobotTemplateLibFile);
 
     inline static const GameLib& getInstance();
@@ -32,6 +34,9 @@ public:
                                                 const std::string& name) const;
 
     inline const TileTemplate* findTileTemplate(const std::string& name) const;
+
+    inline const MissileTemplate* findMissileTemplate(
+                                                const std::string& name) const;
 
     inline const AIRobotTemplate* findAIRobotTemplate(
                                                 const std::string& name) const;
@@ -48,6 +53,7 @@ private:
               const std::string& rectLibFile,
               const std::string& componentTemplateLibFile,
               const std::string& tileTemplateLibFile,
+              const std::string& missileTemplateLibFile,
               const std::string& aiRobotTemplateLibFile);
 
     void calculateMaxObjSpan();
@@ -61,6 +67,7 @@ private:
     commonlib::NamedMap<Rectangle> rectLib_;
     commonlib::NamedMap<ComponentTemplate> componentTemplateLib_;
     commonlib::NamedMap<TileTemplate> tileTemplateLib_;
+    commonlib::NamedMap<MissileTemplate> missileTemplateLib_;
     commonlib::NamedMap<AIRobotTemplate> aiRobotTemplateLib_;
     float maxObjSpan_;
     float maxCollideBreath_;
@@ -90,6 +97,12 @@ const ComponentTemplate* GameLib::findComponentTemplate(
 const TileTemplate* GameLib::findTileTemplate(const std::string& name) const
 {
     return tileTemplateLib_.search(name);
+}
+
+const MissileTemplate* GameLib::findMissileTemplate(
+                                                const std::string& name) const
+{
+    return missileTemplateLib_.search(name);
 }
 
 const AIRobotTemplate* GameLib::findAIRobotTemplate(

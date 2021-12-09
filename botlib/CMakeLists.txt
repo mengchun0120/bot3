@@ -42,6 +42,7 @@ set(BOTLIB_GAMEOBJ_SRC
     src/gameobj/botlib_game_object_template.cpp
     src/gameobj/botlib_composite_object_template.cpp
     src/gameobj/botlib_tile_template.cpp
+    src/gameobj/botlib_missile_template.cpp
     src/gameobj/botlib_robot_template.cpp
     src/gameobj/botlib_ai_robot_template.cpp
     src/gameobj/botlib_game_object.cpp

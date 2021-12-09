@@ -14,11 +14,12 @@ void GameLib::initInstance(const std::string& picDir,
                            const std::string& rectLibFile,
                            const std::string& componentTemplateLibFile,
                            const std::string& tileTemplateLibFile,
+                           const std::string& missileTemplateLibFile,
                            const std::string& aiRobotTemplateLibFile)
 {
     GameLib* lib = new GameLib();
     lib->load(picDir, textureLibFile, rectLibFile, componentTemplateLibFile,
-              tileTemplateLibFile, aiRobotTemplateLibFile);
+              tileTemplateLibFile, missileTemplateLibFile, aiRobotTemplateLibFile);
     k_gameLib.reset(lib);
 }
 
@@ -27,6 +28,7 @@ void GameLib::load(const std::string& picDir,
                    const std::string& rectLibFile,
                    const std::string& componentTemplateLibFile,
                    const std::string& tileTemplateLibFile,
+                   const std::string& missileTemplateLibFile,
                    const std::string& aiRobotTemplateLibFile)
 {
     TextureParser textureParser(picDir);
@@ -41,6 +43,9 @@ void GameLib::load(const std::string& picDir,
 
     TileTemplateParser tileTemplateParser(componentTemplateLib_);
     tileTemplateLib_.load(tileTemplateLibFile, tileTemplateParser);
+
+    MissileTemplateParser missileTemplateParser(componentTemplateLib_);
+    missileTemplateLib_.load(missileTemplateLibFile, missileTemplateParser);
 
     AIRobotTemplateParser aiRobotTemplateParser(componentTemplateLib_);
     aiRobotTemplateLib_.load(aiRobotTemplateLibFile, aiRobotTemplateParser);
@@ -66,6 +71,7 @@ void GameLib::calculateMaxObjSpan()
     };
 
     tileTemplateLib_.traverse(accessor);
+    missileTemplateLib_.traverse(accessor);
     aiRobotTemplateLib_.traverse(accessor);
 
     LOG_INFO << "maxObjSpan=" << maxObjSpan_ << LOG_END;
@@ -86,6 +92,7 @@ void GameLib::calculateMaxCollideBreath()
     };
 
     tileTemplateLib_.traverse(accessor);
+    missileTemplateLib_.traverse(accessor);
     aiRobotTemplateLib_.traverse(accessor);
 
     LOG_INFO << "maxCollideBreath=" << maxCollideBreath_ << LOG_END;

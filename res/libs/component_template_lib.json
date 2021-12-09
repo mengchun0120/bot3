@@ -33,5 +33,10 @@
         "name": "red_gun",
         "texture": "red_gun",
         "rect": "gun"
+    },
+    {
+        "name": "red_missile",
+        "texture": "red_missile",
+        "rect": "missile"
     }
 ]

@@ -167,6 +167,27 @@ TileTemplate* TileTemplateParser::operator()(const rapidjson::Value& v)
                             std::move(components_));
 }
 
+MissileTemplateParser::MissileTemplateParser(
+            const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib)
+    : CompositeObjectTemplateParser(componentTemplateLib)
+    , params_{
+        jsonParam(damage_, "damage", true, gt(0.0f)),
+        jsonParam(speed_, "speed", true, gt(0.0f))
+      }
+{
+}
+
+MissileTemplate* MissileTemplateParser::operator()(const rapidjson::Value& v)
+{
+    CompositeObjectTemplateParser::load(v);
+    parse(params_, v);
+
+    return new MissileTemplate(collideBreath_,
+                               damage_,
+                               speed_,
+                               std::move(components_));
+}
+
 RobotTemplateParser::RobotTemplateParser(
             const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib)
     : CompositeObjectTemplateParser(componentTemplateLib)

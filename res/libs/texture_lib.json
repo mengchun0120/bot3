@@ -26,5 +26,9 @@
     {
         "name": "red_gun",
         "file": "red_gun.png"
+    },
+    {
+        "name": "red_missile",
+        "file": "red_missile.png"
     }
 ]

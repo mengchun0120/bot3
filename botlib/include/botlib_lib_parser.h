@@ -10,6 +10,7 @@
 #include <botlib_component_template.h>
 #include <botlib_component.h>
 #include <botlib_tile_template.h>
+#include <botlib_missile_template.h>
 #include <botlib_ai_robot_template.h>
 
 namespace mcdane {
@@ -105,6 +106,19 @@ public:
 
 private:
     float hp_;
+    std::vector<commonlib::JsonParamPtr> params_;
+};
+
+class MissileTemplateParser: public CompositeObjectTemplateParser {
+public:
+    MissileTemplateParser(
+            const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib);
+
+    MissileTemplate* operator()(const rapidjson::Value& v);
+
+private:
+    float damage_;
+    float speed_;
     std::vector<commonlib::JsonParamPtr> params_;
 };
 

@@ -30,6 +30,7 @@ TestMapApp::TestMapApp(const std::string& configFile,
                           cfg.rectLibFile(),
                           cfg.componentTemplateLibFile(),
                           cfg.tileTemplateLibFile(),
+                          cfg.missileTemplateLibFile(),
                           cfg.aiRobotTemplateLibFile());
 
     setupOpenGL();
