@@ -14,8 +14,9 @@ namespace mcdane {
 namespace botlib {
 
 class GameMap {
-
+public:
     using ItemList = commonlib::LinkedList<GameMapItem>;
+    using Accessor = std::function<bool(GameObject*)>;
 
 public:
     static constexpr float k_cellBreath = 40.0f;
@@ -60,15 +61,31 @@ public:
 
     GameMapItem* unlinkObj(GameObject* o);
 
-    bool checkCollideNonPassthrough(float& adjustedDeltaX,
-                                    float& adjustedDeltaY,
-                                    const GameObject* o,
-                                    float deltaX,
-                                    float deltaY) const;
+    void getCollideArea(int& startRow,
+                        int& endRow,
+                        int& startCol,
+                        int& endCol,
+                        float left,
+                        float right,
+                        float bottom,
+                        float top,
+                        float deltaX,
+                        float deltaY) const;
 
-    bool checkObjCollide(float x,
-                         float y,
-                         float collideBreath) const;
+    void getCollideArea(int& startRow,
+                        int& endRow,
+                        int& startCol,
+                        int& endCol,
+                        float left,
+                        float right,
+                        float bottom,
+                        float top) const;
+
+    void accessRegion(int startRow,
+                      int endRow,
+                      int startCol,
+                      int endCol,
+                      Accessor& accessor);
 
 private:
     void initItemDeleter();
@@ -100,7 +117,10 @@ private:
                         int& endRow,
                         int& startCol,
                         int& endCol,
-                        const GameObject* o,
+                        float left,
+                        float right,
+                        float bottom,
+                        float top,
                         float deltaX,
                         float deltaY) const;
 
@@ -108,9 +128,21 @@ private:
                         int& endRow,
                         int& startCol,
                         int& endCol,
-                        float x,
-                        float y,
-                        float collideBreath) const;
+                        float left,
+                        float right,
+                        float bottom,
+                        float top) const;
+
+    void GameMap::accessRegion(int startRow,
+                               int endRow,
+                               int startCol,
+                               int endCol,
+                               Accessor& accessor)
+
+    bool checkObjCollide(float left,
+                         float right,
+                         float bottom,
+                         float top) const
 
 private:
     ItemList::Deleter itemDeleter_;

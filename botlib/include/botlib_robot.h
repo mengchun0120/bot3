@@ -61,7 +61,14 @@ protected:
     void updatePos(GameMap& map,
                    float timeDelta);
 
+    bool checkCollideRobotTile(GameMap& map,
+                               float deltaX,
+                               float deltaY);
+
 protected:
+
+protected:
+    static GameMap::Accessor k_collideRobotTileChecker;
     float hp_;
     float energy_;
     std::vector<commonlib::Vector2> firePoints_;
