@@ -124,7 +124,11 @@ void GameMapLoader::addTile(GameMap& map)
                      "Failed to find TileTemplate " + templateStr_);
     }
 
-    if (map.checkObjCollide(pos_[0], pos_[1], t->collideBreath()))
+    bool collide = map.checkRectCollide(pos_[0] - t->collideBreath(),
+                                        pos_[0] + t->collideBreath(),
+                                        pos_[1] - t->collideBreath(),
+                                        pos_[1] + t->collideBreath());
+    if (collide)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Tile " + templateStr_ + " cannot be placed in map");
@@ -147,7 +151,12 @@ void GameMapLoader::addRobot(GameMap& map)
                      "Failed to find AIRobotTemplate " + templateStr_);
     }
 
-    if (map.checkObjCollide(pos_[0], pos_[1], t->collideBreath()))
+    bool collide = map.checkRectCollide(pos_[0] - t->collideBreath(),
+                                        pos_[0] + t->collideBreath(),
+                                        pos_[1] - t->collideBreath(),
+                                        pos_[1] + t->collideBreath());
+
+    if (collide)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Robot " + templateStr_ + " cannot be placed in map");

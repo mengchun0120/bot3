@@ -1,14 +1,13 @@
 #include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <botlib_game_map.h>
+#include <botlib_nonpassthrough_collide_checker.h>
 #include <botlib_robot.h>
 
 using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
-
-Robot::CollideRobotTileChecker Robot::k_collideRobotTileChecker;
 
 Robot::Robot()
     : hp_(0.0f)
@@ -122,34 +121,44 @@ void Robot::updatePos(GameMap& map,
                                         0.0f, map.width(), 0.0f, map.height(),
                                         deltaX, deltaY);
 
-    bool collideObjs = checkCollideRobotTile(map, deltaX, deltaY);
+    bool collideObjs = checkNonpassthroughCollide(deltaX, deltaY, map,
+                                                  deltaX, deltaY);
     if (collideBoundary || collideObjs)
     {
         setMovingEnabled(false);
     }
 
+    shiftPos(deltaX, deltaY);
     map.repositionObj(this);
 }
 
-bool Robot::checkCollideRobotTile(GameMap& map,
-                                  float deltaX,
-                                  float deltaY)
+bool Robot::checkNonpassthroughCollide(float& adjustedDeltaX,
+                                       float& adjustedDeltaY,
+                                       GameMap& map,
+                                       float deltaX,
+                                       float deltaY)
 {
+    using namespace std::placeholders;
+
+    static NonpassthroughCollideChecker checker;
+    static GameMap::Accessor accessor = std::bind(
+                                            &NonpassthroughCollideChecker::run,
+                                            &checker, _1);
+
     int startRow, endRow, startCol, endCol;
-    float adjustedDeltaX, adjustedDeltaY;
 
     map.getCollideArea(startRow, endRow, startCol, endCol,
                        collideLeft(), collideRight(),
                        collideBottom(), collideTop(),
                        deltaX, deltaY);
 
-    k_collideRobotTileChecker.reset(this, deltaX, deltaY);
-    map.accessRegion(startRow, endRow, startCol, endCol, k_collideRobotTileChecker);
+    checker.reset(this, deltaX, deltaY);
+    map.accessRegion(startRow, endRow, startCol, endCol, accessor);
 
-    shiftPos(k_collisionChecker.adjustedDeltaX(),
-             k_collisionChecker.adjustedDeltaY());
+    adjustedDeltaX = checker.adjustedDeltaX();
+    adjustedDeltaY = checker.adjustedDeltaY();
 
-    return k_collisionChecker.collide();
+    return checker.collide();
 }
 
 } // end of namespace botlib

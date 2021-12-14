@@ -87,6 +87,11 @@ public:
                       int endCol,
                       Accessor& accessor);
 
+    bool checkRectCollide(float left,
+                          float right,
+                          float bottom,
+                          float top) const;
+
 private:
     void initItemDeleter();
 
@@ -112,37 +117,6 @@ private:
 
     void presentCell(const ItemList& cell,
                      GameObjectType type) const;
-
-    void getCollideArea(int& startRow,
-                        int& endRow,
-                        int& startCol,
-                        int& endCol,
-                        float left,
-                        float right,
-                        float bottom,
-                        float top,
-                        float deltaX,
-                        float deltaY) const;
-
-    void getCollideArea(int& startRow,
-                        int& endRow,
-                        int& startCol,
-                        int& endCol,
-                        float left,
-                        float right,
-                        float bottom,
-                        float top) const;
-
-    void GameMap::accessRegion(int startRow,
-                               int endRow,
-                               int startCol,
-                               int endCol,
-                               Accessor& accessor)
-
-    bool checkObjCollide(float left,
-                         float right,
-                         float bottom,
-                         float top) const
 
 private:
     ItemList::Deleter itemDeleter_;

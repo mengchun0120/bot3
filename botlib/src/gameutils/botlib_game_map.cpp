@@ -209,14 +209,11 @@ void GameMap::accessRegion(int startRow,
     }
 }
 
-bool GameMap::checkObjCollide(float left,
-                              float right,
-                              float bottom,
-                              float top) const
+bool GameMap::checkRectCollide(float left,
+                               float right,
+                               float bottom,
+                               float top) const
 {
-    float left = x - collideBreath, right = x + collideBreath;
-    float bottom = y - collideBreath, top = y + collideBreath;
-
     bool collideBoundary = checkRectCollideBoundary(left, right, bottom, top,
                                                     0.0, width_, 0.0, height_);
 
@@ -227,7 +224,7 @@ bool GameMap::checkObjCollide(float left,
 
     int startRow, endRow, startCol, endCol;
 
-    getCollideArea(startRow, endRow, startCol, endCol, x, y, collideBreath);
+    getCollideArea(startRow, endRow, startCol, endCol, left, right, bottom, top);
     for (int r = startRow; r <= endRow; ++r)
     {
         auto& row = map_[r];

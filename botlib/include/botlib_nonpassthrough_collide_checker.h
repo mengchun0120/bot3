@@ -1,19 +1,20 @@
-#ifndef INCLUDED_BOTLIB_COLLIDE_ROBOT_TILE_CHECKER_H
-#define INCLUDED_BOTLIB_COLLIDE_ROBOT_TILE_CHECKER_H
+#ifndef INCLUDED_BOTLIB_NONPASSTHROUGH_COLLIDE_CHECKER_H
+#define INCLUDED_BOTLIB_NONPASSTHROUGH_COLLIDE_CHECKER_H
 
 #include <botlib_game_object.h>
 
 namespace mcdane {
 namespace botlib {
 
-class CollideRobotTileChecker {
+class NonpassthroughCollideChecker {
 public:
+    NonpassthroughCollideChecker() = default;
 
-    void reset();
+    ~NonpassthroughCollideChecker() = default;
 
-    void setObj(GameObject* o,
-                float deltaX,
-                float deltaY);
+    void reset(GameObject* o,
+               float deltaX,
+               float deltaY);
 
     inline bool collide() const;
 
@@ -21,14 +22,12 @@ public:
 
     inline float adjustedDeltaY() const;
 
-    bool operator()(GameObject* o);
+    inline bool check(GameObject* o) const;
+
+    bool run(GameObject* o);
 
 private:
-    bool check(GameObject* o) const;
-
-private:
-    static CollideRobotTileChecker k_checker;
-    float obj_;
+    GameObject* obj_;
     float left_;
     float right_;
     float bottom_;
@@ -38,22 +37,22 @@ private:
     float adjustedDeltaY_;
 };
 
-bool CollideRobotTileChecker::collide() const
+bool NonpassthroughCollideChecker::collide() const
 {
     return collide_;
 }
 
-float CollideRobotTileChecker::adjustedDeltaX() const
+float NonpassthroughCollideChecker::adjustedDeltaX() const
 {
     return adjustedDeltaX_;
 }
 
-float CollideRobotTileChecker::adjustedDeltaY() const
+float NonpassthroughCollideChecker::adjustedDeltaY() const
 {
     return adjustedDeltaY_;
 }
 
-bool CollideRobotTileChecker::check(GameObject* o)
+bool NonpassthroughCollideChecker::check(GameObject* o) const
 {
     return o != obj_ &&
            o->alive() &&
