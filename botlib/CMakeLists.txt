@@ -58,7 +58,8 @@ set(BOTLIB_GAMEUTILS_SRC
     src/gameutils/botlib_game_map.cpp
     src/gameutils/botlib_game_map_loader.cpp
     src/gameutils/botlib_time_delta_smoother.cpp
-    src/gameutils/botlib_nonpassthrough_collide_checker.cpp)
+    src/gameutils/botlib_nonpassthrough_collide_checker.cpp
+    src/gameutils/botlib_game_object_presenter.cpp)
 
 set(BOTLIB_MISC_SRC
     src/misc/botlib_constants.cpp)

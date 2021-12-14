@@ -35,7 +35,7 @@ public:
               float maxObjSpan,
               float maxCollideBreath);
 
-    void present() const;
+    void present();
 
     void addObj(GameObject* obj,
                 GameObject::Deleter* deleter=&GameObject::k_defaultDeleter);

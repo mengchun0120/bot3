@@ -4,6 +4,7 @@
 #include <commonlib_math_utils.h>
 #include <commonlib_collide.h>
 #include <botlib_graphics.h>
+#include <botlib_game_object_presenter.h>
 #include <botlib_game_map.h>
 
 using namespace mcdane::commonlib;
@@ -25,14 +26,19 @@ void GameMap::init(unsigned int poolSize,
             maxObjSpan, maxCollideBreath);
 }
 
-void GameMap::present() const
+void GameMap::present()
 {
+    using namespace std::placeholders;
+
     static GameObjectType presentOrder[] = {
         GameObjectType::TILE,
         GameObjectType::MISSILE,
         GameObjectType::ROBOT,
         GameObjectType::EFFECT
     };
+    static GameObjectPresenter presenter;
+    static Accessor accessor = std::bind(&GameObjectPresenter::present,
+                                         &presenter, _1);
 
     SimpleShaderProgram& program = Graphics::simpleShader();
     program.use();
@@ -43,14 +49,8 @@ void GameMap::present() const
     getPresentArea(startRow, endRow, startCol, endCol);
     for (unsigned int i = 0; i < k_gameObjTypeCount; ++i)
     {
-        for (int row = startRow; row <= endRow; ++row)
-        {
-            auto& r = map_[row];
-            for (int col = startCol; col <= endCol; ++col)
-            {
-                presentCell(r[col], presentOrder[i]);
-            }
-        }
+        presenter.reset(presentOrder[i]);
+        accessRegion(startRow, endRow, startCol, endCol, accessor);
     }
 }
 
