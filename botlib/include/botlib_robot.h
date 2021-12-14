@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_ROBOT_H
 #define INCLUDED_BOTLIB_ROBOT_H
 
+#include <botlib_side.h>
 #include <botlib_robot_template.h>
 #include <botlib_composite_object.h>
 
@@ -14,16 +15,20 @@ public:
     ~Robot() override = default;
 
     void init(const RobotTemplate* t,
+              Side side,
               float x,
               float y,
               float directionX,
               float directionY);
 
     void init(const RobotTemplate* t,
+              Side side,
               const commonlib::Vector2& pos,
               const commonlib::Vector2& direction);
 
     inline const RobotTemplate* getTemplate() const;
+
+    inline Side side() const;
 
     inline float hp() const;
 
@@ -68,6 +73,7 @@ protected:
                                     float deltaY);
 
 protected:
+    Side side_;
     float hp_;
     float energy_;
     std::vector<commonlib::Vector2> firePoints_;
@@ -80,6 +86,11 @@ protected:
 const RobotTemplate* Robot::getTemplate() const
 {
     return static_cast<const RobotTemplate*>(t_);
+}
+
+Side Robot::side() const
+{
+    return side_;
 }
 
 float Robot::hp() const

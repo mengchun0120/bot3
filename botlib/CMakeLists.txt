@@ -49,7 +49,8 @@ set(BOTLIB_GAMEOBJ_SRC
     src/gameobj/botlib_composite_object.cpp
     src/gameobj/botlib_tile.cpp
     src/gameobj/botlib_robot.cpp
-    src/gameobj/botlib_ai_robot.cpp)
+    src/gameobj/botlib_ai_robot.cpp
+    src/gameobj/botlib_side.cpp)
 
 set(BOTLIB_GAMEUTILS_SRC
     src/gameutils/botlib_lib_parser.cpp
