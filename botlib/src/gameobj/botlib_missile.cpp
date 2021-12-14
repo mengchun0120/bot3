@@ -4,29 +4,32 @@ namespace mcdane {
 namespace botlib {
 
 void Missile::init(const MissileTemplate* t,
+                   Side side,
                    float x,
                    float y,
                    float directionX,
                    float directionY)
 {
     CompositeObject::init(t, x, y, directionX, directionY);
+    side_ = side;
     resetSpeed();
 }
 
 void Missile::init(const MissileTemplate* t,
+                   Side side,
                    const commonlib::Vector2& pos,
                    const commonlib::Vector2& direction)
 {
-    init(t, pos[0], pos[1], direction[0], direction[1]);
+    init(t, side, pos[0], pos[1], direction[0], direction[1]);
 }
 
 void Missile::update(GameMap& map,
-                     float timeDelta) override
+                     float timeDelta)
 {
 }
 
 void Missile::setDirection(float directionX,
-                           float directionY) override
+                           float directionY)
 {
     CompositeObject::setDirection(directionX, directionY);
     resetSpeed();
@@ -34,8 +37,8 @@ void Missile::setDirection(float directionX,
 
 void Missile::resetSpeed()
 {
-    speedX_ = speed() * directionX_;
-    speedY_ = speed() * directionY_;
+    speedX_ = speed() * direction_[0];
+    speedY_ = speed() * direction_[1];
 }
 
 } // end of namespace botlib

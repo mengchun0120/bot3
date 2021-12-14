@@ -50,6 +50,7 @@ set(BOTLIB_GAMEOBJ_SRC
     src/gameobj/botlib_tile.cpp
     src/gameobj/botlib_robot.cpp
     src/gameobj/botlib_ai_robot.cpp
+    src/gameobj/botlib_missile.cpp
     src/gameobj/botlib_side.cpp)
 
 set(BOTLIB_GAMEUTILS_SRC

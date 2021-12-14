@@ -3,6 +3,7 @@
 
 #include <botlib_missile_template.h>
 #include <botlib_composite_object.h>
+#include <botlib_side.h>
 
 namespace mcdane {
 namespace botlib {
@@ -14,16 +15,20 @@ public:
     ~Missile() override = default;
 
     void init(const MissileTemplate* t,
+              Side side,
               float x,
               float y,
               float directionX,
               float directionY);
 
     void init(const MissileTemplate* t,
+              Side side,
               const commonlib::Vector2& pos,
               const commonlib::Vector2& direction);
 
     inline const MissileTemplate* getTemplate() const;
+
+    inline Side side() const;
 
     inline float speed() const;
 
@@ -43,6 +48,7 @@ private:
     void resetSpeed();
 
 private:
+    Side side_;
     float speedX_;
     float speedY_;
 };
@@ -50,6 +56,11 @@ private:
 const MissileTemplate* Missile::getTemplate() const
 {
     return static_cast<const MissileTemplate*>(t_);
+}
+
+Side Missile::side() const
+{
+    return side_;
 }
 
 float Missile::speed() const

@@ -32,8 +32,8 @@ void GameMap::present()
 
     static GameObjectType presentOrder[] = {
         GameObjectType::TILE,
-        GameObjectType::MISSILE,
         GameObjectType::ROBOT,
+        GameObjectType::MISSILE,
         GameObjectType::EFFECT
     };
     static GameObjectPresenter presenter;
