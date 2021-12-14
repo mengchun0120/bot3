@@ -56,7 +56,7 @@ bool NonpassthroughCollideChecker::check(GameObject* o) const
 {
     return o != obj_ &&
            o->alive() &&
-           (o->type() == GameObjectType::ROBOT &&
+           (o->type() == GameObjectType::ROBOT ||
             o->type() == GameObjectType::TILE);
 }
 

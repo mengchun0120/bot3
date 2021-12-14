@@ -1,7 +1,7 @@
 [
     {
         "name": "red_missile",
-        "collideBreath": 5.0,
+        "collideBreath": 8.0,
         "damage": 10.0,
         "speed": 150.0,
         "components": [

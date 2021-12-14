@@ -19,8 +19,8 @@
     },
     {
         "name": "missile",
-        "width": 10.0,
-        "height": 10.0,
+        "width": 16.0,
+        "height": 16.0,
         "hasTexture": true
     }
 ]

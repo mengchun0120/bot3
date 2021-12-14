@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <botlib_nonpassthrough_collide_checker.h>
 
