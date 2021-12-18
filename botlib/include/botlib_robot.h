@@ -53,6 +53,8 @@ public:
 
     void setMovingEnabled(bool b);
 
+    void addHP(float delta);
+
 protected:
     void initFirePointsAndDirections();
 

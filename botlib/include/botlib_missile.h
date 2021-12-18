@@ -47,10 +47,13 @@ public:
 private:
     void resetSpeed();
 
+    bool checkCollideObjs(GameMap& map);
+
 private:
     Side side_;
     float speedX_;
     float speedY_;
+    float damage_;
 };
 
 const MissileTemplate* Missile::getTemplate() const
@@ -80,7 +83,7 @@ float Missile::speedY() const
 
 float Missile::damage() const
 {
-    return getTemplate()->damage();
+    return damage_;
 }
 
 } // end of namespace botlib

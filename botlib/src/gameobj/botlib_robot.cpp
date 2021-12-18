@@ -164,6 +164,22 @@ bool Robot::checkNonpassthroughCollide(float& adjustedDeltaX,
     return checker.collide();
 }
 
+void Robot::addHP(float delta)
+{
+    const RobotTemplate* t = getTemplate();
+
+    if (invincible())
+    {
+        return;
+    }
+
+    hp_ = clamp(hp_+delta, 0.0f, t->hp());
+    if (hp_ <= 0.0f)
+    {
+        setAlive(false);
+    }
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 
