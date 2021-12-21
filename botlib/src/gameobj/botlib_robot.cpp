@@ -114,32 +114,25 @@ void Robot::resetSpeed()
 void Robot::updatePos(GameMap& map,
                       float timeDelta)
 {
-    float deltaX = speedX_ * timeDelta;
-    float deltaY = speedY_ * timeDelta;
+    Vector2 delta{speedX_ * timeDelta, speedY_ * timeDelta};
 
-    bool collideBoundary = checkRectCollideBoundary(
-                                        deltaX, deltaY,
-                                        collideLeft(), collideRight(),
-                                        collideBottom(), collideTop(),
-                                        0.0f, map.width(), 0.0f, map.height(),
-                                        deltaX, deltaY);
+    bool collideBoundary = checkRectCollideBoundary(delta,
+                                                    collideRegion(),
+                                                    map.boundary(),
+                                                    delta);
 
-    bool collideObjs = checkNonpassthroughCollide(deltaX, deltaY, map,
-                                                  deltaX, deltaY);
+    bool collideObjs = checkNonpassthroughCollide(delta, map);
     if (collideBoundary || collideObjs)
     {
         setMovingEnabled(false);
     }
 
-    shiftPos(deltaX, deltaY);
+    shiftPos(delta[0], delta[1]);
     map.repositionObj(this);
 }
 
-bool Robot::checkNonpassthroughCollide(float& adjustedDeltaX,
-                                       float& adjustedDeltaY,
-                                       GameMap& map,
-                                       float deltaX,
-                                       float deltaY)
+bool Robot::checkNonpassthroughCollide(commonlib::Vector2& delta,
+                                       GameMap& map)
 {
     using namespace std::placeholders;
 
@@ -148,18 +141,12 @@ bool Robot::checkNonpassthroughCollide(float& adjustedDeltaX,
                                             &NonpassthroughCollideChecker::run,
                                             &checker, _1);
 
-    int startRow, endRow, startCol, endCol;
+    Region<int> area = map.getCollideArea(collideRegion(), delta[0], delta[1]);
 
-    map.getCollideArea(startRow, endRow, startCol, endCol,
-                       collideLeft(), collideRight(),
-                       collideBottom(), collideTop(),
-                       deltaX, deltaY);
+    checker.reset(this, delta);
+    map.accessRegion(area, accessor);
 
-    checker.reset(this, deltaX, deltaY);
-    map.accessRegion(startRow, endRow, startCol, endCol, accessor);
-
-    adjustedDeltaX = checker.adjustedDeltaX();
-    adjustedDeltaY = checker.adjustedDeltaY();
+    delta = checker.delta();
 
     return checker.collide();
 }

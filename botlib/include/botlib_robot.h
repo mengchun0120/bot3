@@ -68,11 +68,8 @@ protected:
     void updatePos(GameMap& map,
                    float timeDelta);
 
-    bool checkNonpassthroughCollide(float& adjustedDeltaX,
-                                    float& adjustedDeltaY,
-                                    GameMap& map,
-                                    float deltaX,
-                                    float deltaY);
+    bool checkNonpassthroughCollide(commonlib::Vector2& delta,
+                                    GameMap& map);
 
 protected:
     Side side_;

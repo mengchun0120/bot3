@@ -8,17 +8,11 @@ namespace mcdane {
 namespace botlib {
 
 void NonpassthroughCollideChecker::reset(GameObject* o,
-                                         float deltaX,
-                                         float deltaY)
+                                         const commonlib::Vector2& delta)
 {
     obj_ = o;
     collide_ = false;
-    left_ = o->collideLeft();
-    right_ = o->collideRight();
-    bottom_ = o->collideBottom();
-    top_ = o->collideTop();
-    adjustedDeltaX_ = deltaX;
-    adjustedDeltaY_ = deltaY;
+    delta_ = delta;
 }
 
 bool NonpassthroughCollideChecker::run(GameObject* o)
@@ -28,11 +22,10 @@ bool NonpassthroughCollideChecker::run(GameObject* o)
         return true;
     }
 
-    bool collide = checkRectCollideRect(adjustedDeltaX_, adjustedDeltaY_,
-                                        left_, right_, bottom_, top_,
-                                        o->collideLeft(), o->collideRight(),
-                                        o->collideBottom(), o->collideTop(),
-                                        adjustedDeltaX_, adjustedDeltaY_);
+    bool collide = checkRectCollideRect(delta_,
+                                        obj_->collideRegion(),
+                                        o->collideRegion(),
+                                        delta_);
 
     if (collide)
     {

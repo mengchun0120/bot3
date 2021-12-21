@@ -13,14 +13,11 @@ public:
     ~NonpassthroughCollideChecker() = default;
 
     void reset(GameObject* o,
-               float deltaX,
-               float deltaY);
+               const commonlib::Vector2& delta);
 
     inline bool collide() const;
 
-    inline float adjustedDeltaX() const;
-
-    inline float adjustedDeltaY() const;
+    inline const commonlib::Vector2& delta() const;
 
     inline bool check(GameObject* o) const;
 
@@ -28,13 +25,8 @@ public:
 
 private:
     GameObject* obj_;
-    float left_;
-    float right_;
-    float bottom_;
-    float top_;
     bool collide_;
-    float adjustedDeltaX_;
-    float adjustedDeltaY_;
+    commonlib::Vector2 delta_;
 };
 
 bool NonpassthroughCollideChecker::collide() const
@@ -42,14 +34,9 @@ bool NonpassthroughCollideChecker::collide() const
     return collide_;
 }
 
-float NonpassthroughCollideChecker::adjustedDeltaX() const
+const commonlib::Vector2& NonpassthroughCollideChecker::delta() const
 {
-    return adjustedDeltaX_;
-}
-
-float NonpassthroughCollideChecker::adjustedDeltaY() const
-{
-    return adjustedDeltaY_;
+    return delta_;
 }
 
 bool NonpassthroughCollideChecker::check(GameObject* o) const
