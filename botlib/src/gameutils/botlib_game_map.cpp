@@ -45,13 +45,10 @@ void GameMap::present()
     program.use();
     program.setViewportOrigin(viewportOrigin_);
 
-    int startRow, endRow, startCol, endCol;
-
-    getPresentArea(startRow, endRow, startCol, endCol);
     for (unsigned int i = 0; i < presentTypeCount; ++i)
     {
         presenter.reset(presentOrder[i]);
-        accessRegion(startRow, endRow, startCol, endCol, accessor);
+        accessRegion(presentArea_, accessor);
     }
 }
 
@@ -101,6 +98,7 @@ void GameMap::setViewportOrigin(float x,
     viewportOrigin_[0] = clamp(x, minViewportOrigin_[0], maxViewportOrigin_[0]);
     viewportOrigin_[1] = clamp(y, minViewportOrigin_[1], maxViewportOrigin_[1]);
     viewportAnchor_ = viewportOrigin_ - viewportHalfSize_;
+    updatePresentArea();
 }
 
 GameMapItem* GameMap::searchObj(GameObject* o)
@@ -350,10 +348,6 @@ void GameMap::initMap(unsigned int rows,
                       float maxObjSpan,
                       float maxCollideBreath)
 {
-    setBoundary(rows, cols);
-    setViewportSize(viewportWidth, viewportHeight);
-    setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
-
     map_.resize(rows);
     for (auto it = map_.begin(); it != map_.end(); ++it)
     {
@@ -364,6 +358,9 @@ void GameMap::initMap(unsigned int rows,
         }
     }
 
+    setBoundary(rows, cols);
+    setViewportSize(viewportWidth, viewportHeight);
+    setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
     maxObjSpan_ = maxObjSpan;
     maxCollideBreath_ = maxCollideBreath;
 }
@@ -407,47 +404,33 @@ void GameMap::setViewportSize(float viewportWidth,
 
 }
 
-void GameMap::getPresentArea(int& startRow,
-                             int& endRow,
-                             int& startCol,
-                             int& endCol) const
+void GameMap::updatePresentArea()
 {
-    startRow = getCellIdx(viewportAnchor_[1] - maxObjSpan_);
+    int startRow = getCellIdx(viewportAnchor_[1] - maxObjSpan_);
     if (startRow < 0)
     {
         startRow = 0;
     }
 
-    endRow = getCellIdx(viewportAnchor_[1] + viewportSize_[1] + maxObjSpan_);
+    int endRow = getCellIdx(viewportAnchor_[1] + viewportSize_[1] + maxObjSpan_);
     if (endRow >= rowCount())
     {
         endRow = rowCount() - 1;
     }
 
-    startCol = getCellIdx(viewportAnchor_[0] - maxObjSpan_);
+    int startCol = getCellIdx(viewportAnchor_[0] - maxObjSpan_);
     if (startCol < 0)
     {
         startCol = 0;
     }
 
-    endCol = getCellIdx(viewportAnchor_[0] + viewportSize_[0] + maxObjSpan_);
+    int endCol = getCellIdx(viewportAnchor_[0] + viewportSize_[0] + maxObjSpan_);
     if (endCol >= colCount())
     {
         endCol = colCount() - 1;
     }
-}
 
-void GameMap::presentCell(const ItemList& cell,
-                          GameObjectType type) const
-{
-    for (const GameMapItem* t = cell.first(); t; t = t->next())
-    {
-        const GameObject* o = t->obj();
-        if (o->type() == type)
-        {
-            o->present();
-        }
-    }
+    presentArea_.init(startCol, endCol, startRow, endRow);
 }
 
 } // end of namespace botlib

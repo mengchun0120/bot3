@@ -122,13 +122,7 @@ private:
     void setViewportSize(float viewportWidth,
                          float viewportHeight);
 
-    void getPresentArea(int& startRow,
-                        int& endRow,
-                        int& startCol,
-                        int& endCol) const;
-
-    void presentCell(const ItemList& cell,
-                     GameObjectType type) const;
+    void updatePresentArea();
 
 private:
     ItemList::Deleter itemDeleter_;
@@ -141,6 +135,7 @@ private:
     commonlib::Vector2 maxViewportOrigin_;
     commonlib::Vector2 viewportOrigin_;
     commonlib::Vector2 viewportAnchor_;
+    commonlib::Region<int> presentArea_;
     float maxObjSpan_;
     float maxCollideBreath_;
 };
