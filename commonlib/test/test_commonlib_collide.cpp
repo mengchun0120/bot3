@@ -20,124 +20,118 @@ void testCollide_LineNotOverlap()
 
 void testCollide_RectCollideBoundary()
 {
-    float boundaryLeft = 0.0f, boundaryRight = 100.0f;
-    float boundaryBottom = 0.0f, boundaryTop = 100.0f;
-    float adjustedDeltaX, adjustedDeltaY;
+    Region<float> boundary{0.0f, 100.0f, 0.0f, 100.0f};
+    Vector2 adjustedDelta;
     bool collide;
 
-    collide = checkRectCollideBoundary(adjustedDeltaX, adjustedDeltaY,
-                                       10.0f, 20.0f, 20.0f, 30.0f,
-                                       boundaryLeft, boundaryRight,
-                                       boundaryBottom, boundaryTop,
-                                       -20.0f, 0.0f);
+    collide = checkRectCollideBoundary(adjustedDelta,
+                                       {10.0f, 20.0f, 20.0f, 30.0f},
+                                       boundary,
+                                       {-20.0f, 0.0f});
     assert(collide);
-    assert(fuzzyEqual(adjustedDeltaX, -10.0f));
-    assert(fuzzyEqual(adjustedDeltaY, 0.0f));
+    assert(fuzzyEqual(adjustedDelta[0], -10.0f));
+    assert(fuzzyEqual(adjustedDelta[1], 0.0f));
 
-    collide = checkRectCollideBoundary(adjustedDeltaX, adjustedDeltaY,
-                                       80.0f, 90.0f, 20.0f, 30.0f,
-                                       boundaryLeft, boundaryRight,
-                                       boundaryBottom, boundaryTop,
-                                       0.0f, -30.0f);
+    collide = checkRectCollideBoundary(adjustedDelta,
+                                       {80.0f, 90.0f, 20.0f, 30.0f},
+                                       boundary,
+                                       {0.0f, -30.0f});
     assert(collide);
-    assert(fuzzyEqual(adjustedDeltaX, 0.0f));
-    assert(fuzzyEqual(adjustedDeltaY, -20.0f));
+    assert(fuzzyEqual(adjustedDelta[0], 0.0f));
+    assert(fuzzyEqual(adjustedDelta[1], -20.0f));
 
-    collide = checkRectCollideBoundary(adjustedDeltaX, adjustedDeltaY,
-                                       10.0f, 20.0f, 70.0f, 80.0f,
-                                       boundaryLeft, boundaryRight,
-                                       boundaryBottom, boundaryTop,
-                                       -20.0f, 30.0f);
+    collide = checkRectCollideBoundary(adjustedDelta,
+                                       {10.0f, 20.0f, 70.0f, 80.0f},
+                                       boundary,
+                                       {-20.0f, 30.0f});
     assert(collide);
-    assert(fuzzyEqual(adjustedDeltaX, -10.0f));
-    assert(fuzzyEqual(adjustedDeltaY, 15.0f));
+    assert(fuzzyEqual(adjustedDelta[0], -10.0f));
+    assert(fuzzyEqual(adjustedDelta[1], 15.0f));
 }
 
 void testCollide_RectNotCollideBoundary()
 {
-    float boundaryLeft = 0.0f, boundaryRight = 100.0f;
-    float boundaryBottom = 0.0f, boundaryTop = 100.0f;
-    float adjustedDeltaX, adjustedDeltaY;
+    Region<float> boundary{0.0f, 100.0f, 0.0f, 100.0f};
+    Vector2 adjustedDelta;
     bool collide;
 
-    collide = checkRectCollideBoundary(adjustedDeltaX, adjustedDeltaY,
-                                       10.0f, 20.0f, 20.0f, 30.0f,
-                                       boundaryLeft, boundaryRight,
-                                       boundaryBottom, boundaryTop,
-                                       -5.0f, 5.0f);
+    collide = checkRectCollideBoundary(adjustedDelta,
+                                       {10.0f, 20.0f, 20.0f, 30.0f},
+                                       boundary,
+                                       {-5.0f, 5.0f});
     assert(!collide);
-    assert(fuzzyEqual(adjustedDeltaX, -5.0f));
-    assert(fuzzyEqual(adjustedDeltaY, 5.0f));
+    assert(fuzzyEqual(adjustedDelta[0], -5.0f));
+    assert(fuzzyEqual(adjustedDelta[1], 5.0f));
 }
 
 void testCollide_RectCollideRect()
 {
-    float left = 1.0f, bottom = 1.0f, right = 2.0f, top = 2.0f;
-    float adjustedDeltaX, adjustedDeltaY;
+    Region<float> rect2{1.0f, 2.0f, 1.0f, 2.0f};
+    Vector2 adjustedDelta;
     bool collide;
 
-    collide = checkRectCollideRect(adjustedDeltaX, adjustedDeltaY,
-                                   0.0f, 0.5f, 0.0f, 0.5f,
-                                   left, right, bottom, top,
-                                   0.6f, 0.6f);
+    collide = checkRectCollideRect(adjustedDelta,
+                                   {0.0f, 0.5f, 0.0f, 0.5f},
+                                   rect2,
+                                   {0.6f, 0.6f});
     assert(collide);
-    assert(fuzzyEqual(adjustedDeltaX, 0.5f));
-    assert(fuzzyEqual(adjustedDeltaY, 0.5f));
+    assert(fuzzyEqual(adjustedDelta[0], 0.5f));
+    assert(fuzzyEqual(adjustedDelta[1], 0.5f));
 
-    collide = checkRectCollideRect(adjustedDeltaX, adjustedDeltaY,
-                                   0.0f, 1.2f, 0.0f, 0.8f,
-                                   left, right, bottom, top,
-                                   0.3f, 0.4f);
+    collide = checkRectCollideRect(adjustedDelta,
+                                   {0.0f, 1.2f, 0.0f, 0.8f},
+                                   rect2,
+                                   {0.3f, 0.4f});
     assert(collide);
-    assert(fuzzyEqual(adjustedDeltaX, 0.2f*0.3f/0.4f));
-    assert(fuzzyEqual(adjustedDeltaY, 0.2f));
+    assert(fuzzyEqual(adjustedDelta[0], 0.2f*0.3f/0.4f));
+    assert(fuzzyEqual(adjustedDelta[1], 0.2f));
 
-    collide = checkRectCollideRect(adjustedDeltaX, adjustedDeltaY,
-                                   2.2f, 3.0f, 0.0f, 0.9f,
-                                   left, right, bottom, top,
-                                   -0.3f, 0.4f);
+    collide = checkRectCollideRect(adjustedDelta,
+                                   {2.2f, 3.0f, 0.0f, 0.9f},
+                                   rect2,
+                                   {-0.3f, 0.4f});
     assert(collide);
-    assert(fuzzyEqual(adjustedDeltaX, -0.2f));
-    assert(fuzzyEqual(adjustedDeltaY, 0.2f*0.4f/0.3f));
+    assert(fuzzyEqual(adjustedDelta[0], -0.2f));
+    assert(fuzzyEqual(adjustedDelta[1], 0.2f*0.4f/0.3f));
 
-    collide = checkRectCollideRect(adjustedDeltaX, adjustedDeltaY,
-                                   2.1f, 3.1f, 2.2f, 3.2f,
-                                   left, right, bottom, top,
-                                   -0.3f, -0.4f);
+    collide = checkRectCollideRect(adjustedDelta,
+                                   {2.1f, 3.1f, 2.2f, 3.2f},
+                                   rect2,
+                                   {-0.3f, -0.4f});
     assert(collide);
-    assert(fuzzyEqual(adjustedDeltaX, -0.2f*0.3f/0.4f));
-    assert(fuzzyEqual(adjustedDeltaY, -0.2f));
+    assert(fuzzyEqual(adjustedDelta[0], -0.2f*0.3f/0.4f));
+    assert(fuzzyEqual(adjustedDelta[1], -0.2f));
 
-    collide = checkRectCollideRect(adjustedDeltaX, adjustedDeltaY,
-                                   1.4f, 2.4f, 2.2f, 3.2f,
-                                   left, right, bottom, top,
-                                   -0.3f, -0.4f);
+    collide = checkRectCollideRect(adjustedDelta,
+                                   {1.4f, 2.4f, 2.2f, 3.2f},
+                                   rect2,
+                                   {-0.3f, -0.4f});
     assert(collide);
-    assert(fuzzyEqual(adjustedDeltaX, -0.2f*0.3f/0.4f));
-    assert(fuzzyEqual(adjustedDeltaY, -0.2f));
+    assert(fuzzyEqual(adjustedDelta[0], -0.2f*0.3f/0.4f));
+    assert(fuzzyEqual(adjustedDelta[1], -0.2f));
 }
 
 void testCollide_RectNotCollideRect()
 {
-    float left = 1.0f, bottom = 1.0f, right = 2.0f, top = 2.0f;
-    float adjustedDeltaX, adjustedDeltaY;
+    Region<float> rect2{1.0f, 2.0f, 1.0f, 2.0f};
+    Vector2 adjustedDelta;
     bool collide;
 
-    collide = checkRectCollideRect(adjustedDeltaX, adjustedDeltaY,
-                                   0.0f, 0.8f, 0.0f, 0.8f,
-                                   left, right, bottom, top,
-                                   0.1f, 0.1f);
+    collide = checkRectCollideRect(adjustedDelta,
+                                   {0.0f, 0.8f, 0.0f, 0.8f},
+                                   rect2,
+                                   {0.1f, 0.1f});
     assert(!collide);
-    assert(fuzzyEqual(adjustedDeltaX, 0.1f));
-    assert(fuzzyEqual(adjustedDeltaY, 0.1f));
+    assert(fuzzyEqual(adjustedDelta[0], 0.1f));
+    assert(fuzzyEqual(adjustedDelta[1], 0.1f));
 
-    collide = checkRectCollideRect(adjustedDeltaX, adjustedDeltaY,
-                                   1.0f, 2.0f, 0.0f, 0.8f,
-                                   left, right, bottom, top,
-                                   -0.1f, -0.1f);
+    collide = checkRectCollideRect(adjustedDelta,
+                                   {1.0f, 2.0f, 0.0f, 0.8f},
+                                   rect2,
+                                   {-0.1f, -0.1f});
     assert(!collide);
-    assert(fuzzyEqual(adjustedDeltaX, -0.1f));
-    assert(fuzzyEqual(adjustedDeltaY, -0.1f));
+    assert(fuzzyEqual(adjustedDelta[0], -0.1f));
+    assert(fuzzyEqual(adjustedDelta[1], -0.1f));
 }
 
 void testCollide()

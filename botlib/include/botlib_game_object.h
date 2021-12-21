@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <commonlib_vector.h>
+#include <commonlib_region.h>
 #include <botlib_game_object_template.h>
 
 namespace mcdane {
@@ -47,6 +48,8 @@ public:
     inline float collideBottom() const;
 
     inline float collideTop() const;
+
+    inline commonlib::Region<float> collideRegion() const;
 
     inline bool alive() const;
 
@@ -143,6 +146,14 @@ float GameObject::collideBottom() const
 float GameObject::collideTop() const
 {
     return y() + collideBreath();
+}
+
+commonlib::Region<float> GameObject::collideRegion() const
+{
+    return commonlib::Region<float>(collideLeft(),
+                                    collideRight(),
+                                    collideBottom(),
+                                    collideTop());
 }
 
 bool GameObject::alive() const

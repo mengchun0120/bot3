@@ -7,6 +7,7 @@
 #include <string>
 #include <commonlib_vector.h>
 #include <commonlib_linked_list.h>
+#include <commonlib_region.h>
 #include <commonlib_object_pool.h>
 #include <botlib_game_map_item.h>
 
@@ -50,6 +51,8 @@ public:
 
     inline float height() const;
 
+    inline commonlib::Region<float> boundingArea() const;
+
     inline const commonlib::Vector2& getViewportOrigin() const;
 
     inline int getCellIdx(float x) const;
@@ -72,6 +75,10 @@ public:
                         float deltaX,
                         float deltaY) const;
 
+    commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r,
+                                          float deltaX,
+                                          float deltaY) const;
+
     void getCollideArea(int& startRow,
                         int& endRow,
                         int& startCol,
@@ -81,10 +88,15 @@ public:
                         float bottom,
                         float top) const;
 
+    commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r) const;
+
     void accessRegion(int startRow,
                       int endRow,
                       int startCol,
                       int endCol,
+                      Accessor& accessor);
+
+    void accessRegion(const commonlib::Region<int>& r,
                       Accessor& accessor);
 
     bool checkRectCollide(float left,
@@ -152,6 +164,11 @@ float GameMap::width() const
 float GameMap::height() const
 {
     return height_;
+}
+
+commonlib::Region<float> GameMap::boundingArea() const
+{
+    return commonlib::Region<float>(0.0f, width_, 0.0f, height_);
 }
 
 const commonlib::Vector2& GameMap::getViewportOrigin() const

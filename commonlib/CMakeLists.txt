@@ -30,7 +30,8 @@ set(COMMONLIB_STRUCTURE_SRC
     src/structure/commonlib_object_pool.cpp
     src/structure/commonlib_fixed_queue.cpp
     src/structure/commonlib_named_map.cpp
-    src/structure/commonlib_linked_list.cpp)
+    src/structure/commonlib_linked_list.cpp
+    src/structure/commonlib_region.cpp)
 
 set(COMMONLIB_INPUT_SRC
     src/input/commonlib_input_event.cpp

@@ -1,8 +1,11 @@
-#ifndef INCLUDED_BOTLIB_REGION_H
-#define INCLUDED_BOTLIB_REGION_H
+#ifndef INCLUDED_COMMONLIB_REGION_H
+#define INCLUDED_COMMONLIB_REGION_H
+
+#include <vector>
+#include <commonlib_exception.h>
 
 namespace mcdane {
-namespace botlib {
+namespace commonlib {
 
 template <typename T>
 class Region {
@@ -10,6 +13,10 @@ public:
     Region() = default;
 
     Region(const Region& other) = default;
+
+    Region(std::initializer_list<T> i);
+
+    Region(const std::vector<T>& v);
 
     Region(T left1,
            T right1,
@@ -52,6 +59,17 @@ private:
 };
 
 template <typename T>
+Region<T> shift(const Region<T>& r,
+                T deltaX,
+                T deltaY)
+{
+    return Region<T>(r.left() + deltaX,
+                     r.right() + deltaX,
+                     r.bottom() + deltaY,
+                     r.top() + deltaY);
+}
+
+template <typename T>
 Region<T>::Region(T left1,
                   T right1,
                   T bottom1,
@@ -61,6 +79,43 @@ Region<T>::Region(T left1,
     , bottom_(bottom1)
     , top_(top1)
 {
+}
+
+template <typename T>
+Region<T>::Region(std::initializer_list<T> i)
+{
+    if (i.size() != 4)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Initializer-list has wrong size");
+    }
+
+    T t[4];
+    int k = 0;
+
+    for(auto it = i.begin(); it != i.end(); ++it, ++k)
+    {
+        t[k] = *it;
+    }
+
+    left_ = t[0];
+    right_ = t[1];
+    bottom_ = t[2];
+    top_ = t[3];
+}
+
+template <typename T>
+Region<T>::Region(const std::vector<T>& v)
+{
+    if (v.size() != 4)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "v has wrong size");
+    }
+
+    left_ = v[0];
+    right_ = v[1];
+    bottom_ = v[2];
+    top_ = v[3];
 }
 
 template <typename T>
@@ -143,7 +198,7 @@ void Region<T>::shift(T deltaX,
     top_ += deltaY;
 }
 
-} // end of namespace botlib
+} // end of namespace commonlib
 } // end of namespace mcdane
 
 #endif
