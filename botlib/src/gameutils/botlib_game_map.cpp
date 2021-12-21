@@ -122,47 +122,6 @@ GameMapItem* GameMap::unlinkObj(GameObject* o)
     return item;
 }
 
-void GameMap::getCollideArea(int& startRow,
-                             int& endRow,
-                             int& startCol,
-                             int& endCol,
-                             float left,
-                             float right,
-                             float bottom,
-                             float top,
-                             float deltaX,
-                             float deltaY) const
-{
-    float startX, endX, startY, endY;
-
-    if (std::signbit(deltaX))
-    {
-        startX = left + deltaX - maxCollideBreath_;
-        endX = right + maxCollideBreath_;
-    }
-    else
-    {
-        startX = left - maxCollideBreath_;
-        endX = right + deltaX + maxCollideBreath_;
-    }
-
-    if (std::signbit(deltaY))
-    {
-        startY = bottom + deltaY - maxCollideBreath_;
-        endY = top + maxCollideBreath_;
-    }
-    else
-    {
-        startY = bottom - maxCollideBreath_;
-        endY = top + deltaY + maxCollideBreath_;
-    }
-
-    startRow = clamp(getCellIdx(startY), 0, rowCount()-1);
-    endRow = clamp(getCellIdx(endY), 0, rowCount()-1);
-    startCol = clamp(getCellIdx(startX), 0, colCount()-1);
-    endCol = clamp(getCellIdx(endX), 0, colCount()-1);
-}
-
 Region<int> GameMap::getCollideArea(const Region<float>& r,
                                     float deltaX,
                                     float deltaY) const
@@ -199,26 +158,6 @@ Region<int> GameMap::getCollideArea(const Region<float>& r,
     return Region<int>(left, right, bottom, top);
 }
 
-void GameMap::getCollideArea(int& startRow,
-                             int& endRow,
-                             int& startCol,
-                             int& endCol,
-                             float left,
-                             float right,
-                             float bottom,
-                             float top) const
-{
-    float startX = left - maxCollideBreath_;
-    float endX = right + maxCollideBreath_;
-    float startY = bottom - maxCollideBreath_;
-    float endY = top + maxCollideBreath_;
-
-    startRow = clamp(getCellIdx(startY), 0, rowCount()-1);
-    endRow = clamp(getCellIdx(endY), 0, rowCount()-1);
-    startCol = clamp(getCellIdx(startX), 0, colCount()-1);
-    endCol = clamp(getCellIdx(endX), 0, colCount()-1);
-}
-
 Region<int> GameMap::getCollideArea(const Region<float>& r) const
 {
     float startX = r.left() - maxCollideBreath_;
@@ -232,28 +171,6 @@ Region<int> GameMap::getCollideArea(const Region<float>& r) const
     int right = clamp(getCellIdx(endX), 0, colCount()-1);
 
     return Region<int>(left, right, bottom, top);
-}
-
-void GameMap::accessRegion(int startRow,
-                           int endRow,
-                           int startCol,
-                           int endCol,
-                           Accessor& accessor)
-{
-    for (int r = startRow; r <= endRow; ++r)
-    {
-        auto& row = map_[r];
-        for (int c = startCol; c <= endCol; ++c)
-        {
-            for (GameMapItem* i = row[c].first(); i; i = i->next())
-            {
-                if (!accessor(i->obj()))
-                {
-                    return;
-                }
-            }
-        }
-    }
 }
 
 void GameMap::accessRegion(const Region<int>& r,
@@ -288,13 +205,11 @@ bool GameMap::checkRectCollide(float left,
         return true;
     }
 
-    int startRow, endRow, startCol, endCol;
-
-    getCollideArea(startRow, endRow, startCol, endCol, left, right, bottom, top);
-    for (int r = startRow; r <= endRow; ++r)
+    Region<int> r = getCollideArea(Region<float>{left, right, bottom, top});
+    for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
     {
-        auto& row = map_[r];
-        for (int c = startCol; c <= endCol; ++c)
+        auto& row = map_[rowIdx];
+        for (int c = r.left(); c <= r.right(); ++c)
         {
             for (const GameMapItem* i = row[c].first(); i; i = i->next())
             {

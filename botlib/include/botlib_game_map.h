@@ -64,37 +64,11 @@ public:
 
     GameMapItem* unlinkObj(GameObject* o);
 
-    void getCollideArea(int& startRow,
-                        int& endRow,
-                        int& startCol,
-                        int& endCol,
-                        float left,
-                        float right,
-                        float bottom,
-                        float top,
-                        float deltaX,
-                        float deltaY) const;
-
     commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r,
                                           float deltaX,
                                           float deltaY) const;
 
-    void getCollideArea(int& startRow,
-                        int& endRow,
-                        int& startCol,
-                        int& endCol,
-                        float left,
-                        float right,
-                        float bottom,
-                        float top) const;
-
     commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r) const;
-
-    void accessRegion(int startRow,
-                      int endRow,
-                      int startCol,
-                      int endCol,
-                      Accessor& accessor);
 
     void accessRegion(const commonlib::Region<int>& r,
                       Accessor& accessor);
