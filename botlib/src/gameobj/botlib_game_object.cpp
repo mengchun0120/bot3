@@ -32,6 +32,8 @@ void GameObject::init(const GameObjectTemplate* t,
     pos_[0] = x;
     pos_[1] = y;
     setAlive(true);
+    collideRegion_.init(x-collideBreath(), x+collideBreath(),
+                        y-collideBreath(), y+collideBreath());
 }
 
 void GameObject::update(GameMap& map,
@@ -51,6 +53,7 @@ void GameObject::shiftPos(float deltaX,
 {
     pos_[0] += deltaX;
     pos_[1] += deltaY;
+    collideRegion_.shift(deltaX, deltaY);
 }
 
 void GameObject::setMapPos(unsigned int r,

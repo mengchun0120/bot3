@@ -70,7 +70,7 @@ void GameMap::addObj(GameObject* o,
     item->init(o, deleter);
     map_[rowIdx][colIdx].pushFront(item);
 
-    LOG_INFO << "addObj " << o->type() << " row=" << rowIdx
+    LOG_DEBUG << "addObj " << o->type() << " row=" << rowIdx
              << " col=" << colIdx << LOG_END;
 }
 
@@ -88,9 +88,6 @@ void GameMap::repositionObj(GameObject* o)
     {
         return;
     }
-
-    LOG_INFO << "reposition r=" << rowIdx << " c=" << colIdx
-             << " x=" << o->x() << " y=" << o->y() << LOG_END;
 
     GameMapItem* item = unlinkObj(o);
     map_[rowIdx][colIdx].pushFront(item);
@@ -285,7 +282,7 @@ bool GameMap::checkRectCollide(float left,
                                float top) const
 {
     bool collideBoundary = checkRectCollideBoundary(left, right, bottom, top,
-                                                    0.0, width_, 0.0, height_);
+                                                    0.0, width(), 0.0, height());
 
     if (collideBoundary)
     {
@@ -352,7 +349,7 @@ void GameMap::initMap(unsigned int rows,
                       float maxObjSpan,
                       float maxCollideBreath)
 {
-    setMapSize(rows, cols);
+    setBoundary(rows, cols);
     setViewportSize(viewportWidth, viewportHeight);
     setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
 
@@ -370,8 +367,8 @@ void GameMap::initMap(unsigned int rows,
     maxCollideBreath_ = maxCollideBreath;
 }
 
-void GameMap::setMapSize(unsigned int rows,
-                         unsigned int cols)
+void GameMap::setBoundary(unsigned int rows,
+                          unsigned int cols)
 {
     if (rows < k_minRows)
     {
@@ -383,8 +380,7 @@ void GameMap::setMapSize(unsigned int rows,
         THROW_EXCEPT(InvalidArgumentException, "Invalid cols " + toString(cols));
     }
 
-    width_ = rows * k_cellBreath;
-    height_ = cols * k_cellBreath;
+    boundary_.init(0.0f, rows * k_cellBreath, 0.0f, cols * k_cellBreath);
 }
 
 void GameMap::setViewportSize(float viewportWidth,
@@ -405,8 +401,8 @@ void GameMap::setViewportSize(float viewportWidth,
     viewportSize_.init({viewportWidth, viewportHeight});
     viewportHalfSize_ = viewportSize_ / 2.0f;
     minViewportOrigin_ = viewportHalfSize_;
-    maxViewportOrigin_.init({width_ - viewportHalfSize_[0],
-                             height_ - viewportHalfSize_[1]});
+    maxViewportOrigin_.init({width() - viewportHalfSize_[0],
+                             height() - viewportHalfSize_[1]});
 
 }
 

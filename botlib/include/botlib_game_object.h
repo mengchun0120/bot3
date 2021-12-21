@@ -49,7 +49,7 @@ public:
 
     inline float collideTop() const;
 
-    inline commonlib::Region<float> collideRegion() const;
+    inline const commonlib::Region<float>& collideRegion() const;
 
     inline bool alive() const;
 
@@ -96,6 +96,7 @@ protected:
     int flags_;
     unsigned int row_;
     unsigned int col_;
+    commonlib::Region<float> collideRegion_;
 };
 
 GameObjectType GameObject::type() const
@@ -148,12 +149,9 @@ float GameObject::collideTop() const
     return y() + collideBreath();
 }
 
-commonlib::Region<float> GameObject::collideRegion() const
+const commonlib::Region<float>& GameObject::collideRegion() const
 {
-    return commonlib::Region<float>(collideLeft(),
-                                    collideRight(),
-                                    collideBottom(),
-                                    collideTop());
+    return collideRegion_;
 }
 
 bool GameObject::alive() const

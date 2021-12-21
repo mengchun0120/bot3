@@ -51,7 +51,7 @@ public:
 
     inline float height() const;
 
-    inline commonlib::Region<float> boundingArea() const;
+    inline const commonlib::Region<float>& boundary() const;
 
     inline const commonlib::Vector2& getViewportOrigin() const;
 
@@ -116,8 +116,8 @@ private:
                  float maxObjSpan,
                  float maxCollideBreath);
 
-    void setMapSize(unsigned int rows,
-                    unsigned int cols);
+    void setBoundary(unsigned int rows,
+                     unsigned int cols);
 
     void setViewportSize(float viewportWidth,
                          float viewportHeight);
@@ -134,8 +134,7 @@ private:
     ItemList::Deleter itemDeleter_;
     commonlib::ObjectPool<GameMapItem> itemPool_;
     std::vector<std::vector<ItemList>> map_;
-    float width_;
-    float height_;
+    commonlib::Region<float> boundary_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 viewportHalfSize_;
     commonlib::Vector2 minViewportOrigin_;
@@ -158,17 +157,17 @@ int GameMap::colCount() const
 
 float GameMap::width() const
 {
-    return width_;
+    return boundary_.right();
 }
 
 float GameMap::height() const
 {
-    return height_;
+    return boundary_.top();
 }
 
-commonlib::Region<float> GameMap::boundingArea() const
+const commonlib::Region<float>& GameMap::boundary() const
 {
-    return commonlib::Region<float>(0.0f, width_, 0.0f, height_);
+    return boundary_;
 }
 
 const commonlib::Vector2& GameMap::getViewportOrigin() const
