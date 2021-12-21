@@ -23,10 +23,6 @@ private:
 private:
     bool collide_;
     Missile* missile_;
-    float left_;
-    float right_;
-    float bottom_;
-    float top_;
 };
 
 bool MissileHitChecker::collide() const

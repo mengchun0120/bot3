@@ -37,17 +37,12 @@ void Missile::update(GameMap& map,
         return;
     }
 
-    float deltaX = speedX_ * timeDelta;
-    float deltaY = speedY_ * timeDelta;
+    Vector2 delta{speedX_ * timeDelta, speedY_ * timeDelta};
 
-    bool collideBoundary = checkRectCollideBoundary(
-                                        deltaX, deltaY,
-                                        collideLeft(), collideRight(),
-                                        collideBottom(), collideTop(),
-                                        0.0f, map.width(), 0.0f, map.height(),
-                                        deltaX, deltaY);
+    bool collideBoundary = checkRectCollideBoundary(delta, collideRegion(),
+                                                    map.boundary(), delta);
 
-    shiftPos(deltaX, deltaY);
+    shiftPos(delta[0], delta[1]);
     map.repositionObj(this);
 
     bool collideObjs = checkCollideObjs(map);
@@ -79,13 +74,10 @@ bool Missile::checkCollideObjs(GameMap& map)
     static GameMap::Accessor accessor = std::bind(&MissileHitChecker::run,
                                                   &checker, _1);
 
-    int startRow, endRow, startCol, endCol;
-    map.getCollideArea(startRow, endRow, startCol, endCol,
-                       collideLeft(), collideRight(),
-                       collideBottom(), collideTop());
+    Region<int> area = map.getCollideArea(collideRegion());
 
     checker.reset(this);
-    map.accessRegion(startRow, endRow, startCol, endCol, accessor);
+    map.accessRegion(area, accessor);
 
     return checker.collide();
 }

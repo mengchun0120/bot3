@@ -11,10 +11,6 @@ void MissileHitChecker::reset(Missile* missile)
 {
     collide_ = false;
     missile_ = missile;
-    left_ = missile_->collideLeft();
-    right_ = missile_->collideRight();
-    bottom_ = missile_->collideBottom();
-    top_ = missile_->collideTop();
 }
 
 bool MissileHitChecker::run(GameObject* o)
@@ -24,9 +20,8 @@ bool MissileHitChecker::run(GameObject* o)
         return true;
     }
 
-    bool collide1 = checkRectCollideRect(left_, right_, bottom_, top_,
-                                         o->collideLeft(), o->collideRight(),
-                                         o->collideBottom(), o->collideTop());
+    bool collide1 = checkRectCollideRect(missile_->collideRegion(),
+                                         o->collideRegion());
     if (collide1)
     {
         collide_ = true;
