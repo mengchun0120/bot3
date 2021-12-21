@@ -192,50 +192,6 @@ void GameMap::accessRegion(const Region<int>& r,
     }
 }
 
-bool GameMap::checkRectCollide(float left,
-                               float right,
-                               float bottom,
-                               float top) const
-{
-    bool collideBoundary = checkRectCollideBoundary(left, right, bottom, top,
-                                                    0.0, width(), 0.0, height());
-
-    if (collideBoundary)
-    {
-        return true;
-    }
-
-    Region<int> r = getCollideArea(Region<float>{left, right, bottom, top});
-    for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
-    {
-        auto& row = map_[rowIdx];
-        for (int c = r.left(); c <= r.right(); ++c)
-        {
-            for (const GameMapItem* i = row[c].first(); i; i = i->next())
-            {
-                const GameObject* o = i->obj();
-                if (!o->alive() || !isNonPassthroughObjType(o->type()))
-                {
-                    continue;
-                }
-
-                bool collideObj = checkRectCollideRect(
-                                        left, right, bottom, top,
-                                        o->x() - o->collideBreath(),
-                                        o->x() + o->collideBreath(),
-                                        o->y() - o->collideBreath(),
-                                        o->y() + o->collideBreath());
-                if (collideObj)
-                {
-                    return true;
-                }
-            }
-        }
-    }
-
-    return false;
-}
-
 void GameMap::initItemDeleter()
 {
     itemDeleter_ = [this](GameMapItem* item)->void

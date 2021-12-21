@@ -34,6 +34,9 @@ private:
     unsigned int getPoolSize(unsigned int rows,
                              unsigned int cols);
 
+    bool checkCollide(GameMap& map,
+                      float collideBreath);
+
 private:
     float poolSizeFactor_;
     float viewportWidth_;

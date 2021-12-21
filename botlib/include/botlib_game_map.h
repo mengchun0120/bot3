@@ -73,11 +73,6 @@ public:
     void accessRegion(const commonlib::Region<int>& r,
                       Accessor& accessor);
 
-    bool checkRectCollide(float left,
-                          float right,
-                          float bottom,
-                          float top) const;
-
 private:
     void initItemDeleter();
 

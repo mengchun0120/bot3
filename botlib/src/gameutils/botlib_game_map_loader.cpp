@@ -2,9 +2,11 @@
 #include <commonlib_log.h>
 #include <commonlib_string_utils.h>
 #include <commonlib_json_utils.h>
+#include <commonlib_collide.h>
 #include <botlib_game_lib.h>
 #include <botlib_tile.h>
 #include <botlib_ai_robot.h>
+#include <botlib_add_object_checker.h>
 #include <botlib_game_map_loader.h>
 
 using namespace mcdane::commonlib;
@@ -124,10 +126,7 @@ void GameMapLoader::addTile(GameMap& map)
                      "Failed to find TileTemplate " + templateStr_);
     }
 
-    bool collide = map.checkRectCollide(pos_[0] - t->collideBreath(),
-                                        pos_[0] + t->collideBreath(),
-                                        pos_[1] - t->collideBreath(),
-                                        pos_[1] + t->collideBreath());
+    bool collide = checkCollide(map, t->collideBreath());
     if (collide)
     {
         THROW_EXCEPT(InvalidArgumentException,
@@ -151,10 +150,7 @@ void GameMapLoader::addRobot(GameMap& map)
                      "Failed to find AIRobotTemplate " + templateStr_);
     }
 
-    bool collide = map.checkRectCollide(pos_[0] - t->collideBreath(),
-                                        pos_[0] + t->collideBreath(),
-                                        pos_[1] - t->collideBreath(),
-                                        pos_[1] + t->collideBreath());
+    bool collide = checkCollide(map, t->collideBreath());
 
     if (collide)
     {
@@ -172,6 +168,30 @@ unsigned int GameMapLoader::getPoolSize(unsigned int rows,
                                         unsigned int cols)
 {
     return static_cast<unsigned int>(floor(rows * cols * poolSizeFactor_));
+}
+
+bool GameMapLoader::checkCollide(GameMap& map,
+                                 float collideBreath)
+{
+    using namespace std::placeholders;
+
+    static AddObjectChecker checker;
+    static GameMap::Accessor accessor = std::bind(&AddObjectChecker::run,
+                                                  &checker, _1);
+
+    Region<float> r{pos_[0]-collideBreath, pos_[0]+collideBreath,
+                    pos_[1]-collideBreath, pos_[1]+collideBreath};
+
+    if (checkRectCollideBoundary(r, map.boundary()))
+    {
+        return true;
+    }
+
+    checker.reset(r);
+    Region<int> area = map.getCollideArea(r);
+    map.accessRegion(area, accessor);
+
+    return checker.collide();
 }
 
 } // end of namespace botlib
