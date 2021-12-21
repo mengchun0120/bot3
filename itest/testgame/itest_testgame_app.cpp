@@ -49,6 +49,7 @@ void TestGameApp::process()
     float delta = deltaSmoother_.curTimeDelta();
 
     robot_->update(map_, delta);
+    missile_->update(map_, delta);
 
     map_.present();
     glFlush();
@@ -90,12 +91,16 @@ void TestGameApp::setupObjects()
 {
     const GameLib& lib = GameLib::getInstance();
 
-    const AIRobotTemplate* t = lib.findAIRobotTemplate("red_robot");
+    const AIRobotTemplate* robotTemplate = lib.findAIRobotTemplate("red_robot");
     robot_ = new AIRobot();
-    robot_->init(t, 80.0f, 80.0f, 0.707106781f, 0.707106781f);
+    robot_->init(robotTemplate, 80.0f, 80.0f, 0.707106781f, 0.707106781f);
     robot_->setMovingEnabled(true);
-
     map_.addObj(robot_);
+
+    const MissileTemplate* missileTemplate = lib.findMissileTemplate("red_missile");
+    missile_ = new Missile();
+    missile_->init(missileTemplate, Side::AI, 800.0f, 800.0f, -1.0f, 0.0f);
+    map_.addObj(missile_);
 }
 
 } // end of namespace itest

@@ -4,6 +4,7 @@
 #include <commonlib_app.h>
 #include <botlib_time_delta_smoother.h>
 #include <botlib_game_map.h>
+#include <botlib_missile.h>
 #include <botlib_ai_robot.h>
 
 namespace mcdane {
@@ -34,6 +35,7 @@ private:
 
 private:
     botlib::AIRobot* robot_;
+    botlib::Missile* missile_;
     botlib::GameMap map_;
     botlib::TimeDeltaSmoother deltaSmoother_;
 };

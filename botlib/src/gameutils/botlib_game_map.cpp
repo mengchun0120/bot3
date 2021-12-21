@@ -36,6 +36,7 @@ void GameMap::present()
         GameObjectType::MISSILE,
         GameObjectType::EFFECT
     };
+    constexpr int presentTypeCount = 4;
     static GameObjectPresenter presenter;
     static Accessor accessor = std::bind(&GameObjectPresenter::present,
                                          &presenter, _1);
@@ -47,7 +48,7 @@ void GameMap::present()
     int startRow, endRow, startCol, endCol;
 
     getPresentArea(startRow, endRow, startCol, endCol);
-    for (unsigned int i = 0; i < k_gameObjTypeCount; ++i)
+    for (unsigned int i = 0; i < presentTypeCount; ++i)
     {
         presenter.reset(presentOrder[i]);
         accessRegion(startRow, endRow, startCol, endCol, accessor);
@@ -71,7 +72,7 @@ void GameMap::addObj(GameObject* o,
     map_[rowIdx][colIdx].pushFront(item);
 
     LOG_DEBUG << "addObj " << o->type() << " row=" << rowIdx
-             << " col=" << colIdx << LOG_END;
+              << " col=" << colIdx << LOG_END;
 }
 
 void GameMap::repositionObj(GameObject* o)
