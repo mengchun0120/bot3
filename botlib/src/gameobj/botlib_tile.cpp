@@ -9,21 +9,12 @@ namespace mcdane {
 namespace botlib {
 
 void Tile::init(const TileTemplate* t,
-                float x,
-                float y,
-                float directionX,
-                float directionY)
-{
-    CompositeObject::init(t, x, y, directionX, directionY);
-    setInvincible(t->invincible());
-    hp_ = t->hp();
-}
-
-void Tile::init(const TileTemplate* t,
                 const commonlib::Vector2& pos,
                 const commonlib::Vector2& direction)
 {
-    init(t, pos[0], pos[1], direction[0], direction[1]);
+    CompositeObject::init(t, pos, direction);
+    setInvincible(t->invincible());
+    hp_ = t->hp();
 }
 
 void Tile::addHP(float delta)

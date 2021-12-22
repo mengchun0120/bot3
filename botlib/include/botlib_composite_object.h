@@ -14,12 +14,6 @@ public:
     ~CompositeObject() override = default;
 
     void init(const CompositeObjectTemplate* t,
-              float x,
-              float y,
-              float directionX,
-              float directionY);
-
-    void init(const CompositeObjectTemplate* t,
               const commonlib::Vector2& pos,
               const commonlib::Vector2& direction);
 

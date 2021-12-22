@@ -93,13 +93,13 @@ void TestGameApp::setupObjects()
 
     const AIRobotTemplate* robotTemplate = lib.findAIRobotTemplate("red_robot");
     robot_ = new AIRobot();
-    robot_->init(robotTemplate, 80.0f, 80.0f, 0.707106781f, 0.707106781f);
+    robot_->init(robotTemplate, {80.0f, 80.0f}, {0.707106781f, 0.707106781f});
     robot_->setMovingEnabled(true);
     map_.addObj(robot_);
 
     const MissileTemplate* missileTemplate = lib.findMissileTemplate("red_missile");
     missile_ = new Missile();
-    missile_->init(missileTemplate, Side::AI, 800.0f, 800.0f, -1.0f, 0.0f);
+    missile_->init(missileTemplate, Side::AI, {800.0f, 800.0f}, {-1.0f, 0.0f});
     map_.addObj(missile_);
 }
 

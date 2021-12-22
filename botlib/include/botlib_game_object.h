@@ -26,8 +26,7 @@ public:
     virtual ~GameObject() = default;
 
     void init(const GameObjectTemplate* t,
-              float x,
-              float y);
+              const commonlib::Vector2& pos);
 
     inline GameObjectType type() const;
 

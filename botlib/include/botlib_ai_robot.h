@@ -14,12 +14,6 @@ public:
     ~AIRobot() override = default;
 
     void init(const AIRobotTemplate* t,
-              float x,
-              float y,
-              float directionX,
-              float directionY);
-
-    void init(const AIRobotTemplate* t,
               const commonlib::Vector2& pos,
               const commonlib::Vector2& direction);
 

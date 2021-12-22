@@ -18,23 +18,13 @@ Robot::Robot()
 
 void Robot::init(const RobotTemplate* t,
                  Side side,
-                 float x,
-                 float y,
-                 float directionX,
-                 float directionY)
-{
-    CompositeObject::init(t, x, y, directionX, directionY);
-    side_ = side;
-    initFirePointsAndDirections();
-    resetSpeed();
-}
-
-void Robot::init(const RobotTemplate* t,
-                 Side side,
                  const commonlib::Vector2& pos,
                  const commonlib::Vector2& direction)
 {
-    init(t, side, pos[0], pos[1], direction[0], direction[1]);
+    CompositeObject::init(t, pos, direction);
+    side_ = side;
+    initFirePointsAndDirections();
+    resetSpeed();
 }
 
 void Robot::update(GameMap& map,

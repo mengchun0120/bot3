@@ -4,15 +4,6 @@ namespace mcdane {
 namespace botlib {
 
 void AIRobot::init(const AIRobotTemplate* t,
-                   float x,
-                   float y,
-                   float directionX,
-                   float directionY)
-{
-    Robot::init(t, Side::AI, x, y, directionX, directionY);
-}
-
-void AIRobot::init(const AIRobotTemplate* t,
                    const commonlib::Vector2& pos,
                    const commonlib::Vector2& direction)
 {

@@ -20,8 +20,7 @@ GameObject::GameObject()
 }
 
 void GameObject::init(const GameObjectTemplate* t,
-                      float x,
-                      float y)
+                      const Vector2& pos)
 {
     if (!t)
     {
@@ -29,11 +28,10 @@ void GameObject::init(const GameObjectTemplate* t,
     }
 
     t_ = t;
-    pos_[0] = x;
-    pos_[1] = y;
+    pos_ = pos;
     setAlive(true);
-    collideRegion_.init(x-collideBreath(), x+collideBreath(),
-                        y-collideBreath(), y+collideBreath());
+    collideRegion_.init(x()-collideBreath(), x()+collideBreath(),
+                        y()-collideBreath(), y()+collideBreath());
 }
 
 void GameObject::update(GameMap& map,

@@ -14,22 +14,12 @@ CompositeObject::CompositeObject()
 }
 
 void CompositeObject::init(const CompositeObjectTemplate* t,
-                           float x,
-                           float y,
-                           float directionX,
-                           float directionY)
-{
-    GameObject::init(t, x, y);
-    direction_[0] = directionX;
-    direction_[1] = directionY;
-    initComponents();
-}
-
-void CompositeObject::init(const CompositeObjectTemplate* t,
                            const commonlib::Vector2& pos,
                            const commonlib::Vector2& direction)
 {
-    init(t, pos[0], pos[1], direction[0], direction[1]);
+    GameObject::init(t, pos);
+    direction_ = direction;
+    initComponents();
 }
 
 void CompositeObject::present() const

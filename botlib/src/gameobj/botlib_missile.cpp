@@ -10,23 +10,13 @@ namespace botlib {
 
 void Missile::init(const MissileTemplate* t,
                    Side side,
-                   float x,
-                   float y,
-                   float directionX,
-                   float directionY)
-{
-    CompositeObject::init(t, x, y, directionX, directionY);
-    side_ = side;
-    damage_ = t->damage();
-    resetSpeed();
-}
-
-void Missile::init(const MissileTemplate* t,
-                   Side side,
                    const commonlib::Vector2& pos,
                    const commonlib::Vector2& direction)
 {
-    init(t, side, pos[0], pos[1], direction[0], direction[1]);
+    CompositeObject::init(t, pos, direction);
+    side_ = side;
+    damage_ = t->damage();
+    resetSpeed();
 }
 
 void Missile::update(GameMap& map,
