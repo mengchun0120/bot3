@@ -98,14 +98,13 @@ void Robot::resetFirePointsAndDirections()
 
 void Robot::resetSpeed()
 {
-    speedX_ = speed() * direction_[0];
-    speedY_ = speed() * direction_[1];
+    speed_ = speedNorm() * direction_;
 }
 
 void Robot::updatePos(GameMap& map,
                       float timeDelta)
 {
-    Vector2 delta{speedX_ * timeDelta, speedY_ * timeDelta};
+    Vector2 delta = speed_ * timeDelta;
 
     bool collideBoundary = checkRectCollideBoundary(delta,
                                                     collideRegion(),

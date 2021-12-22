@@ -27,7 +27,7 @@ void Missile::update(GameMap& map,
         return;
     }
 
-    Vector2 delta{speedX_ * timeDelta, speedY_ * timeDelta};
+    Vector2 delta = speed_ * timeDelta;
 
     bool collideBoundary = checkRectCollideBoundary(delta, collideRegion(),
                                                     map.boundary(), delta);
@@ -51,8 +51,7 @@ void Missile::setDirection(const commonlib::Vector2& direction1)
 
 void Missile::resetSpeed()
 {
-    speedX_ = speed() * direction_[0];
-    speedY_ = speed() * direction_[1];
+    speed_ = speedNorm() * direction_;
 }
 
 bool Missile::checkCollideObjs(GameMap& map)

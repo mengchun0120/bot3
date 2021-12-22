@@ -27,7 +27,9 @@ public:
 
     inline float armor() const;
 
-    inline float speed() const;
+    inline float speedNorm() const;
+
+    inline const commonlib::Vector2& speed() const;
 
     inline float energy() const;
 
@@ -70,8 +72,7 @@ protected:
     std::vector<commonlib::Vector2> firePoints_;
     std::vector<commonlib::Vector2> fireDirections_;
     bool movingEnabled_;
-    float speedX_;
-    float speedY_;
+    commonlib::Vector2 speed_;
 };
 
 const RobotTemplate* Robot::getTemplate() const
@@ -94,9 +95,14 @@ float Robot::armor() const
     return getTemplate()->armor();
 }
 
-float Robot::speed() const
+float Robot::speedNorm() const
 {
     return getTemplate()->speed();
+}
+
+const commonlib::Vector2& Robot::speed() const
+{
+    return speed_;
 }
 
 float Robot::energy() const

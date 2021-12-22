@@ -23,11 +23,9 @@ public:
 
     inline Side side() const;
 
-    inline float speed() const;
+    inline float speedNorm() const;
 
-    inline float speedX() const;
-
-    inline float speedY() const;
+    inline const commonlib::Vector2& speed() const;
 
     inline float damage() const;
 
@@ -43,8 +41,7 @@ private:
 
 private:
     Side side_;
-    float speedX_;
-    float speedY_;
+    commonlib::Vector2 speed_;
     float damage_;
 };
 
@@ -58,19 +55,14 @@ Side Missile::side() const
     return side_;
 }
 
-float Missile::speed() const
+float Missile::speedNorm() const
 {
     return getTemplate()->speed();
 }
 
-float Missile::speedX() const
+const commonlib::Vector2& Missile::speed() const
 {
-    return speedX_;
-}
-
-float Missile::speedY() const
-{
-    return speedY_;
+    return speed_;
 }
 
 float Missile::damage() const
