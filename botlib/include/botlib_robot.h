@@ -16,8 +16,8 @@ public:
 
     void init(const RobotTemplate* t,
               Side side,
-              const commonlib::Vector2& pos,
-              const commonlib::Vector2& direction);
+              const commonlib::Vector2& pos1,
+              const commonlib::Vector2& direction1);
 
     inline const RobotTemplate* getTemplate() const;
 
@@ -38,11 +38,11 @@ public:
     void update(GameMap& map,
                 float timeDelta) override;
 
-    void shiftPos(float deltaX,
-                  float deltaY) override;
+    void setPos(const commonlib::Vector2& pos1) override;
 
-    void setDirection(float directionX,
-                      float directionY) override;
+    void shiftPos(const commonlib::Vector2& delta) override;
+
+    void setDirection(const commonlib::Vector2& direction1) override;
 
     void setMovingEnabled(bool b);
 
@@ -51,8 +51,7 @@ public:
 protected:
     void initFirePointsAndDirections();
 
-    void shiftFirePoints(float deltaX,
-                         float deltaY);
+    void shiftFirePoints(const commonlib::Vector2& delta);
 
     void resetFirePointsAndDirections();
 

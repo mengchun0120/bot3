@@ -20,10 +20,8 @@ Component::Component(const Component& other)
 }
 
 void Component::init(const ComponentTemplate* t,
-                     float x,
-                     float y,
-                     float directionX,
-                     float directionY)
+                     const commonlib::Vector2& pos1,
+                     const commonlib::Vector2& direction1)
 {
     if (!t)
     {
@@ -31,17 +29,8 @@ void Component::init(const ComponentTemplate* t,
     }
 
     t_ = t;
-    pos_[0] = x;
-    pos_[1] = y;
-    direction_[0] = directionX;
-    direction_[1] = directionY;
-}
-
-void Component::init(const ComponentTemplate* t,
-                     const commonlib::Vector2& pos,
-                     const commonlib::Vector2& direction)
-{
-    init(t, pos[0], pos[1], direction[0], direction[1]);
+    pos_ = pos1;
+    direction_ = direction1;
 }
 
 Component& Component::operator=(const Component& other)
@@ -62,35 +51,19 @@ void Component::setTemplate(const ComponentTemplate* t)
     t_ = t;
 }
 
-void Component::setPos(float x,
-                       float y)
+void Component::setPos(const commonlib::Vector2& pos1)
 {
-    pos_[0] = x;
-    pos_[1] = y;
+    pos_ = pos1;
 }
 
-void Component::setPos(const commonlib::Vector2& p)
+void Component::shiftPos(const commonlib::Vector2& delta)
 {
-    pos_ = p;
+    pos_ += delta;
 }
 
-void Component::shiftPos(float deltaX,
-                         float deltaY)
+void Component::setDirection(const commonlib::Vector2& direction1)
 {
-    pos_[0] += deltaX;
-    pos_[1] += deltaY;
-}
-
-void Component::setDirection(float directionX,
-                             float directionY)
-{
-    direction_[0] = directionX;
-    direction_[1] = directionY;
-}
-
-void Component::setDirection(const commonlib::Vector2& d)
-{
-    direction_ = d;
+    direction_ = direction1;
 }
 
 void Component::present() const

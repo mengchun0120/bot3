@@ -14,8 +14,8 @@ public:
     ~CompositeObject() override = default;
 
     void init(const CompositeObjectTemplate* t,
-              const commonlib::Vector2& pos,
-              const commonlib::Vector2& direction);
+              const commonlib::Vector2& pos1,
+              const commonlib::Vector2& direction1);
 
     inline const CompositeObjectTemplate* getTemplate() const;
 
@@ -29,19 +29,16 @@ public:
 
     void present() const override;
 
-    void shiftPos(float deltaX,
-                  float deltaY) override;
+    void shiftPos(const commonlib::Vector2& delta) override;
 
-    virtual void setDirection(float directionX,
-                              float directionY);
+    virtual void setDirection(const commonlib::Vector2& direction1);
 
 private:
     void initComponents();
 
     void repositionComponents();
 
-    void shiftComponents(float deltaX,
-                         float deltaY);
+    void shiftComponents(const commonlib::Vector2& delta);
 
 protected:
     commonlib::Vector2 direction_;

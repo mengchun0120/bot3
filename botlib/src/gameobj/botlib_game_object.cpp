@@ -20,7 +20,7 @@ GameObject::GameObject()
 }
 
 void GameObject::init(const GameObjectTemplate* t,
-                      const Vector2& pos)
+                      const Vector2& pos1)
 {
     if (!t)
     {
@@ -28,7 +28,7 @@ void GameObject::init(const GameObjectTemplate* t,
     }
 
     t_ = t;
-    pos_ = pos;
+    pos_ = pos1;
     setAlive(true);
     collideRegion_.init(x()-collideBreath(), x()+collideBreath(),
                         y()-collideBreath(), y()+collideBreath());
@@ -40,25 +40,22 @@ void GameObject::update(GameMap& map,
     setUpdated(true);
 }
 
-void GameObject::setPos(float x,
-                        float y)
+void GameObject::setPos(const commonlib::Vector2& pos1)
 {
-    shiftPos(x - pos_[0], y - pos_[1]);
+    shiftPos(pos1 - pos_);
 }
 
-void GameObject::shiftPos(float deltaX,
-                          float deltaY)
+void GameObject::shiftPos(const commonlib::Vector2& delta)
 {
-    pos_[0] += deltaX;
-    pos_[1] += deltaY;
-    collideRegion_.shift(deltaX, deltaY);
+    pos_ += delta;
+    collideRegion_.shift(delta[0], delta[1]);
 }
 
-void GameObject::setMapPos(unsigned int r,
-                           unsigned int c)
+void GameObject::setMapPos(unsigned int row1,
+                           unsigned int col1)
 {
-    row_ = r;
-    col_ = c;
+    row_ = row1;
+    col_ = col1;
 }
 
 void GameObject::clearFlags()

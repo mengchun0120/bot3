@@ -18,10 +18,10 @@ Robot::Robot()
 
 void Robot::init(const RobotTemplate* t,
                  Side side,
-                 const commonlib::Vector2& pos,
-                 const commonlib::Vector2& direction)
+                 const commonlib::Vector2& pos1,
+                 const commonlib::Vector2& direction1)
 {
-    CompositeObject::init(t, pos, direction);
+    CompositeObject::init(t, pos1, direction1);
     side_ = side;
     initFirePointsAndDirections();
     resetSpeed();
@@ -38,17 +38,20 @@ void Robot::update(GameMap& map,
     GameObject::update(map, timeDelta);
 }
 
-void Robot::shiftPos(float deltaX,
-                     float deltaY)
+void Robot::setPos(const commonlib::Vector2& pos1)
 {
-    CompositeObject::shiftPos(deltaX, deltaY);
+    shiftPos(pos1 - pos_);
+}
+
+void Robot::shiftPos(const Vector2& delta)
+{
+    CompositeObject::shiftPos(delta);
     resetFirePointsAndDirections();
 }
 
-void Robot::setDirection(float directionX,
-                         float directionY)
+void Robot::setDirection(const Vector2& direction1)
 {
-    CompositeObject::setDirection(directionX, directionY);
+    CompositeObject::setDirection(direction1);
     resetFirePointsAndDirections();
     resetSpeed();
 }
@@ -67,13 +70,11 @@ void Robot::initFirePointsAndDirections()
     resetFirePointsAndDirections();
 }
 
-void Robot::shiftFirePoints(float deltaX,
-                            float deltaY)
+void Robot::shiftFirePoints(const Vector2& delta)
 {
     for (std::size_t i = 0; i < firePoints_.size(); ++i)
     {
-        firePoints_[i][0] += deltaX;
-        firePoints_[i][1] += deltaY;
+        firePoints_[i] += delta;
     }
 }
 
@@ -117,7 +118,7 @@ void Robot::updatePos(GameMap& map,
         setMovingEnabled(false);
     }
 
-    shiftPos(delta[0], delta[1]);
+    shiftPos(delta);
     map.repositionObj(this);
 }
 

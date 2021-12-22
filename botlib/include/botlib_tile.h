@@ -14,8 +14,8 @@ public:
     ~Tile() override = default;
 
     void init(const TileTemplate* t,
-              const commonlib::Vector2& pos,
-              const commonlib::Vector2& direction);
+              const commonlib::Vector2& pos1,
+              const commonlib::Vector2& direction1);
 
     inline float hp() const;
 

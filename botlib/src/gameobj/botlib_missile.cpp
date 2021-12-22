@@ -10,10 +10,10 @@ namespace botlib {
 
 void Missile::init(const MissileTemplate* t,
                    Side side,
-                   const commonlib::Vector2& pos,
-                   const commonlib::Vector2& direction)
+                   const commonlib::Vector2& pos1,
+                   const commonlib::Vector2& direction1)
 {
-    CompositeObject::init(t, pos, direction);
+    CompositeObject::init(t, pos1, direction1);
     side_ = side;
     damage_ = t->damage();
     resetSpeed();
@@ -32,7 +32,7 @@ void Missile::update(GameMap& map,
     bool collideBoundary = checkRectCollideBoundary(delta, collideRegion(),
                                                     map.boundary(), delta);
 
-    shiftPos(delta[0], delta[1]);
+    shiftPos(delta);
     map.repositionObj(this);
 
     bool collideObjs = checkCollideObjs(map);
@@ -43,10 +43,9 @@ void Missile::update(GameMap& map,
     }
 }
 
-void Missile::setDirection(float directionX,
-                           float directionY)
+void Missile::setDirection(const commonlib::Vector2& direction1)
 {
-    CompositeObject::setDirection(directionX, directionY);
+    CompositeObject::setDirection(direction1);
     resetSpeed();
 }
 

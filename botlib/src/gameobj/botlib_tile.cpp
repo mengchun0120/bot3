@@ -9,10 +9,10 @@ namespace mcdane {
 namespace botlib {
 
 void Tile::init(const TileTemplate* t,
-                const commonlib::Vector2& pos,
-                const commonlib::Vector2& direction)
+                const commonlib::Vector2& pos1,
+                const commonlib::Vector2& direction1)
 {
-    CompositeObject::init(t, pos, direction);
+    CompositeObject::init(t, pos1, direction1);
     setInvincible(t->invincible());
     hp_ = t->hp();
 }

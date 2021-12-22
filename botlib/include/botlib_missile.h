@@ -16,8 +16,8 @@ public:
 
     void init(const MissileTemplate* t,
               Side side,
-              const commonlib::Vector2& pos,
-              const commonlib::Vector2& direction);
+              const commonlib::Vector2& pos1,
+              const commonlib::Vector2& direction1);
 
     inline const MissileTemplate* getTemplate() const;
 
@@ -34,8 +34,7 @@ public:
     void update(GameMap& map,
                 float timeDelta) override;
 
-    void setDirection(float directionX,
-                      float directionY) override;
+    void setDirection(const commonlib::Vector2& direction1) override;
 
 private:
     void resetSpeed();

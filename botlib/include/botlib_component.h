@@ -14,14 +14,8 @@ public:
     Component(const Component& other);
 
     void init(const ComponentTemplate* t,
-              float x,
-              float y,
-              float directionX,
-              float directionY);
-
-    void init(const ComponentTemplate* t,
-              const commonlib::Vector2& pos,
-              const commonlib::Vector2& direction);
+              const commonlib::Vector2& pos1,
+              const commonlib::Vector2& direction1);
 
     inline const ComponentTemplate* getTemplate() const;
 
@@ -41,18 +35,11 @@ public:
 
     void setTemplate(const ComponentTemplate* t);
 
-    void setPos(float x,
-                float y);
+    void setPos(const commonlib::Vector2& pos1);
 
-    void setPos(const commonlib::Vector2& p);
+    void shiftPos(const commonlib::Vector2& delta);
 
-    void shiftPos(float deltaX,
-                  float deltaY);
-
-    void setDirection(float directionX,
-                      float directionY);
-
-    void setDirection(const commonlib::Vector2& d);
+    void setDirection(const commonlib::Vector2& direction1);
 
     void present() const;
 

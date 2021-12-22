@@ -26,7 +26,7 @@ public:
     virtual ~GameObject() = default;
 
     void init(const GameObjectTemplate* t,
-              const commonlib::Vector2& pos);
+              const commonlib::Vector2& pos1);
 
     inline GameObjectType type() const;
 
@@ -65,14 +65,12 @@ public:
 
     virtual void present() const = 0;
 
-    virtual void setPos(float x,
-                        float y);
+    virtual void setPos(const commonlib::Vector2& pos1);
 
-    virtual void shiftPos(float deltaX,
-                          float deltaY);
+    virtual void shiftPos(const commonlib::Vector2& delta);
 
-    void setMapPos(unsigned int r,
-                   unsigned int c);
+    void setMapPos(unsigned int row1,
+                   unsigned int col1);
 
     void clearFlags();
 

@@ -14,11 +14,11 @@ CompositeObject::CompositeObject()
 }
 
 void CompositeObject::init(const CompositeObjectTemplate* t,
-                           const commonlib::Vector2& pos,
-                           const commonlib::Vector2& direction)
+                           const commonlib::Vector2& pos1,
+                           const commonlib::Vector2& direction1)
 {
-    GameObject::init(t, pos);
-    direction_ = direction;
+    GameObject::init(t, pos1);
+    direction_ = direction1;
     initComponents();
 }
 
@@ -30,18 +30,15 @@ void CompositeObject::present() const
     }
 }
 
-void CompositeObject::shiftPos(float deltaX,
-                               float deltaY)
+void CompositeObject::shiftPos(const Vector2& delta)
 {
-    GameObject::shiftPos(deltaX, deltaY);
-    shiftComponents(deltaX, deltaY);
+    GameObject::shiftPos(delta);
+    shiftComponents(delta);
 }
 
-void CompositeObject::setDirection(float directionX,
-                                   float directionY)
+void CompositeObject::setDirection(const Vector2& direction1)
 {
-    direction_[0] = directionX;
-    direction_[1] = directionY;
+    direction_ = direction1;
     repositionComponents();
 }
 
@@ -77,12 +74,11 @@ void CompositeObject::repositionComponents()
     }
 }
 
-void CompositeObject::shiftComponents(float deltaX,
-                                      float deltaY)
+void CompositeObject::shiftComponents(const Vector2& delta)
 {
     for (std::size_t i = 0; i < components_.size(); ++i)
     {
-        components_[i].shiftPos(deltaX, deltaY);
+        components_[i].shiftPos(delta);
     }
 }
 
