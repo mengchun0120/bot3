@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <botlib_game_map.h>
 #include <botlib_missile_hit_checker.h>

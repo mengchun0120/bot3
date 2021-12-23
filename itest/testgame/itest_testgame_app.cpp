@@ -101,7 +101,8 @@ void TestGameApp::setupObjects()
 
     const MissileTemplate* missileTemplate = lib.findMissileTemplate("red_missile");
     missile_ = new Missile();
-    missile_->init(missileTemplate, Side::AI, {800.0f, 800.0f}, {-1.0f, 0.0f});
+    missile_->init(missileTemplate, Side::AI, {100.0f, 20.0f},
+                   {0.0f, 1.0f});
     map_.addObj(missile_);
 }
 

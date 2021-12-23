@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <botlib_tile.h>
 #include <botlib_missile_hit_checker.h>
@@ -22,10 +23,12 @@ bool MissileHitChecker::run(GameObject* o)
 
     bool collide1 = checkRectCollideRect(missile_->collideRegion(),
                                          o->collideRegion());
-    if (collide1)
+    if (!collide1)
     {
-        collide_ = true;
+        return true;
     }
+
+    collide_ = true;
 
     if (o->type() == GameObjectType::ROBOT)
     {
