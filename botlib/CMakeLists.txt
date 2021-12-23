@@ -51,7 +51,8 @@ set(BOTLIB_GAMEOBJ_SRC
     src/gameobj/botlib_robot.cpp
     src/gameobj/botlib_ai_robot.cpp
     src/gameobj/botlib_missile.cpp
-    src/gameobj/botlib_side.cpp)
+    src/gameobj/botlib_side.cpp
+    src/gameobj/botlib_hp_indicator.cpp)
 
 set(BOTLIB_GAMEUTILS_SRC
     src/gameutils/botlib_lib_parser.cpp
