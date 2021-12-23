@@ -3,6 +3,7 @@
 
 #include <string>
 #include <commonlib_vector.h>
+#include <commonlib_color.h>
 #include <botlib_text_size.h>
 
 namespace mcdane {
@@ -16,16 +17,12 @@ public:
 
     ~HPIndicator() = default;
 
-    void init(const commonlib::Vector2& pos,
-              float hpPercent);
+    void reset(const commonlib::Vector2& pos,
+               float hpPercent);
 
-    void setPos(const commonlib::Vector2& pos);
+    void present() const;
 
     void shiftPos(const commonlib::Vector2& delta);
-
-    void setHPPercent(float hpPercent);
-
-    void present();
 
 private:
     static void readColors(const std::string& cfgFile);
@@ -34,11 +31,15 @@ private:
 
     static void initSize();
 
+    void setPos(const commonlib::Vector2& pos);
+
+    void setHPPercent(float hpPercent);
+
     void resetColor(float hpPercent);
 
 private:
     static std::vector<commonlib::Color> k_colors;
-    static constexpr TextSize k_textSize = TextSize::SMALL;
+    static constexpr TextSize k_textSize = TextSize::TINY;
     static constexpr int k_hpLevelCount = 3;
     static float k_hpLevels[];
     static float k_halfHeight;

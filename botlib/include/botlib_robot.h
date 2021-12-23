@@ -2,6 +2,7 @@
 #define INCLUDED_BOTLIB_ROBOT_H
 
 #include <botlib_side.h>
+#include <botlib_hp_indicator.h>
 #include <botlib_robot_template.h>
 #include <botlib_composite_object.h>
 
@@ -37,10 +38,12 @@ public:
 
     inline bool movingEnabled() const;
 
+    inline float hpRatio() const;
+
+    void present() const override;
+
     void update(GameMap& map,
                 float timeDelta) override;
-
-    void setPos(const commonlib::Vector2& pos1) override;
 
     void shiftPos(const commonlib::Vector2& delta) override;
 
@@ -65,6 +68,7 @@ protected:
     bool checkNonpassthroughCollide(commonlib::Vector2& delta,
                                     GameMap& map);
 
+
 protected:
     Side side_;
     float hp_;
@@ -73,6 +77,7 @@ protected:
     std::vector<commonlib::Vector2> fireDirections_;
     bool movingEnabled_;
     commonlib::Vector2 speed_;
+    HPIndicator hpIndicator_;
 };
 
 const RobotTemplate* Robot::getTemplate() const
@@ -118,6 +123,11 @@ float Robot::rechargeRate() const
 bool Robot::movingEnabled() const
 {
     return movingEnabled_;
+}
+
+float Robot::hpRatio() const
+{
+    return hp_ / getTemplate()->hp();
 }
 
 } // end of namespace botlib

@@ -23,8 +23,16 @@ void Robot::init(const RobotTemplate* t,
 {
     CompositeObject::init(t, pos1, direction1);
     side_ = side;
+    hp_ = getTemplate()->hp();
     initFirePointsAndDirections();
     resetSpeed();
+    hpIndicator_.reset(pos(), hpRatio());
+}
+
+void Robot::present() const
+{
+    CompositeObject::present();
+    hpIndicator_.present();
 }
 
 void Robot::update(GameMap& map,
@@ -38,15 +46,11 @@ void Robot::update(GameMap& map,
     GameObject::update(map, timeDelta);
 }
 
-void Robot::setPos(const commonlib::Vector2& pos1)
-{
-    shiftPos(pos1 - pos_);
-}
-
 void Robot::shiftPos(const Vector2& delta)
 {
     CompositeObject::shiftPos(delta);
     resetFirePointsAndDirections();
+    hpIndicator_.shiftPos(delta);
 }
 
 void Robot::setDirection(const Vector2& direction1)
@@ -59,6 +63,24 @@ void Robot::setDirection(const Vector2& direction1)
 void Robot::setMovingEnabled(bool b)
 {
     movingEnabled_ = b;
+}
+
+void Robot::addHP(float delta)
+{
+    const RobotTemplate* t = getTemplate();
+
+    if (invincible())
+    {
+        return;
+    }
+
+    hp_ = clamp(hp_+delta, 0.0f, t->hp());
+    if (hp_ <= 0.0f)
+    {
+        setAlive(false);
+    }
+
+    hpIndicator_.reset(pos(), hpRatio());
 }
 
 void Robot::initFirePointsAndDirections()
@@ -139,22 +161,6 @@ bool Robot::checkNonpassthroughCollide(commonlib::Vector2& delta,
     delta = checker.delta();
 
     return checker.collide();
-}
-
-void Robot::addHP(float delta)
-{
-    const RobotTemplate* t = getTemplate();
-
-    if (invincible())
-    {
-        return;
-    }
-
-    hp_ = clamp(hp_+delta, 0.0f, t->hp());
-    if (hp_ <= 0.0f)
-    {
-        setAlive(false);
-    }
 }
 
 } // end of namespace botlib

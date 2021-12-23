@@ -53,11 +53,22 @@ void HPIndicator::initSize()
     k_halfHeight = Graphics::textSys().getHeight(k_textSize) / 2.0f;
 }
 
-void HPIndicator::init(const commonlib::Vector2& pos,
-                       float hpPercent)
+void HPIndicator::reset(const commonlib::Vector2& pos,
+                        float hpPercent)
 {
     setHPPercent(hpPercent);
     setPos(pos);
+}
+
+void HPIndicator::present() const
+{
+    Graphics::textSys().draw(Graphics::simpleShader(), hpPercentStr_, pos_,
+                             k_textSize, color_);
+}
+
+void HPIndicator::shiftPos(const commonlib::Vector2& delta)
+{
+    pos_ += delta;
 }
 
 void HPIndicator::setPos(const commonlib::Vector2& pos)
@@ -66,11 +77,6 @@ void HPIndicator::setPos(const commonlib::Vector2& pos)
 
     float width = Graphics::textSys().getWidth(hpPercentStr_, k_textSize);
     pos_[0] = pos[0] - width/2.0f;
-}
-
-void HPIndicator::shiftPos(const commonlib::Vector2& delta)
-{
-    pos_ += delta;
 }
 
 void HPIndicator::setHPPercent(float hpPercent)
@@ -83,16 +89,10 @@ void HPIndicator::setHPPercent(float hpPercent)
 
     std::ostringstream oss;
 
-    oss << std::setprecision(0) << (hpPercent * 100.0f);
+    oss << std::fixed << std::setprecision(0) << (hpPercent * 100.0f) << '%';
     hpPercentStr_ = oss.str();
 
     resetColor(hpPercent);
-}
-
-void HPIndicator::present()
-{
-    Graphics::textSys().draw(Graphics::simpleShader(), hpPercentStr_, pos_,
-                             k_textSize, color_);
 }
 
 void HPIndicator::resetColor(float hpPercent)

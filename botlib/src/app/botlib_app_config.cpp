@@ -110,6 +110,8 @@ void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
         jsonParam(messageBoxConfigFile_, {"configs", "messageBoxConfigFile"},
                   true, k_nonEmptyStrV),
         jsonParam(startScreenConfigFile_, {"configs", "startScreenConfigFile"},
+                  true, k_nonEmptyStrV),
+        jsonParam(hpIndicatorConfigFile_, {"configs", "hpIndicatorConfigFile"},
                   true, k_nonEmptyStrV)
     };
 
@@ -119,6 +121,7 @@ void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
     labelConfigFile_ = constructPath({configDir_, labelConfigFile_});
     messageBoxConfigFile_ = constructPath({configDir_, messageBoxConfigFile_});
     startScreenConfigFile_ = constructPath({configDir_, startScreenConfigFile_});
+    hpIndicatorConfigFile_ = constructPath({configDir_, hpIndicatorConfigFile_});
 }
 
 void AppConfig::loadLibFiles(const rapidjson::Document& doc)

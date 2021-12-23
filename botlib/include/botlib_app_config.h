@@ -50,6 +50,8 @@ public:
 
     inline const std::string& startScreenConfigFile() const;
 
+    inline const std::string& hpIndicatorConfigFile() const;
+
     inline const std::string& textureLibFile() const;
 
     inline const std::string& rectLibFile() const;
@@ -103,6 +105,7 @@ private:
     std::string labelConfigFile_;
     std::string messageBoxConfigFile_;
     std::string startScreenConfigFile_;
+    std::string hpIndicatorConfigFile_;
     std::string textureLibFile_;
     std::string rectLibFile_;
     std::string componentTemplateLibFile_;
@@ -191,6 +194,11 @@ const std::string& AppConfig::messageBoxConfigFile() const
 const std::string& AppConfig::startScreenConfigFile() const
 {
     return startScreenConfigFile_;
+}
+
+const std::string& AppConfig::hpIndicatorConfigFile() const
+{
+    return hpIndicatorConfigFile_;
 }
 
 const std::string& AppConfig::textureLibFile() const

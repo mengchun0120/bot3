@@ -2,6 +2,7 @@
 #include <botlib_app_config.h>
 #include <botlib_graphics.h>
 #include <botlib_game_lib.h>
+#include <botlib_hp_indicator.h>
 #include <botlib_game_map_loader.h>
 #include <itest_testmap_app.h>
 
@@ -32,6 +33,8 @@ TestMapApp::TestMapApp(const std::string& configFile,
                           cfg.tileTemplateLibFile(),
                           cfg.missileTemplateLibFile(),
                           cfg.aiRobotTemplateLibFile());
+
+    HPIndicator::initConfig(cfg.hpIndicatorConfigFile());
 
     setupOpenGL();
     setupMap(mapFile);

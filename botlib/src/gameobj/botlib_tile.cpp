@@ -15,6 +15,13 @@ void Tile::init(const TileTemplate* t,
     CompositeObject::init(t, pos1, direction1);
     setInvincible(t->invincible());
     hp_ = t->hp();
+    hpIndicator_.reset(pos(), hpRatio());
+}
+
+void Tile::present() const
+{
+    CompositeObject::present();
+    hpIndicator_.present();
 }
 
 void Tile::addHP(float delta)
@@ -31,6 +38,8 @@ void Tile::addHP(float delta)
     {
         setAlive(false);
     }
+
+    hpIndicator_.reset(pos(), hpRatio());
 }
 
 } // end of namespace botlib

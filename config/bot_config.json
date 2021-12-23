@@ -23,7 +23,8 @@
         "buttonConfigFile": "button_config.json",
         "labelConfigFile": "label_config.json",
         "messageBoxConfigFile": "message_box_config.json",
-        "startScreenConfigFile": "start_screen_config.json"
+        "startScreenConfigFile": "start_screen_config.json",
+        "hpIndicatorConfigFile": "hp_indicator_config.json"
     },
     "libraries": {
         "textureLibFile": "texture_lib.json",

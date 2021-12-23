@@ -32,6 +32,8 @@ TestGameApp::TestGameApp(const std::string& configFile,
                           cfg.missileTemplateLibFile(),
                           cfg.aiRobotTemplateLibFile());
 
+    HPIndicator::initConfig(cfg.hpIndicatorConfigFile());
+
     setupOpenGL();
     setupDeltaSmoother();
     setupMap(mapFile);

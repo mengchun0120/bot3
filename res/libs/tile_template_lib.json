@@ -3,7 +3,7 @@
         "name": "steel_tile",
         "collideBreath": 15.0,
         "invincible": true,
-        "hp": 0.0,
+        "hp": 100.0,
         "components": [
             {
                 "template": "steel_tile",

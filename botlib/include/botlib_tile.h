@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_TILE_H
 #define INCLUDED_BOTLIB_TILE_H
 
+#include <botlib_hp_indicator.h>
 #include <botlib_composite_object.h>
 #include <botlib_tile_template.h>
 
@@ -21,10 +22,15 @@ public:
 
     inline const TileTemplate* getTemplate() const;
 
+    inline float hpRatio() const;
+
+    void present() const override;
+
     void addHP(float delta);
 
 private:
     float hp_;
+    HPIndicator hpIndicator_;
 };
 
 float Tile::hp() const
@@ -35,6 +41,11 @@ float Tile::hp() const
 const TileTemplate* Tile::getTemplate() const
 {
     return static_cast<const TileTemplate*>(t_);
+}
+
+float Tile::hpRatio() const
+{
+    return hp_ / getTemplate()->hp();
 }
 
 } // end of namespace botlib
