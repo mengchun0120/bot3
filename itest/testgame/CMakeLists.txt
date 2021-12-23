@@ -9,7 +9,7 @@ include_directories(${CMAKE_SOURCE_DIR}/commonlib/include
                     ${CMAKE_SOURCE_DIR}/itest/testgame)
 
 add_executable(testgame itest_testgame_app.cpp
-                       testgame_main.cpp)
+                        testgame_main.cpp)
 
 set_property(TARGET testgame PROPERTY CXX_STANDARD 11)
 
