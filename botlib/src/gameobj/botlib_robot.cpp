@@ -14,13 +14,15 @@ Robot::Robot()
     : hp_(0.0f)
     , energy_(0.0f)
     , movingEnabled_(false)
+    , shootingEnabled_(false)
+    , lastShootTime_(Clock::now())
 {
 }
 
 void Robot::init(const RobotTemplate* t,
                  Side side,
-                 const commonlib::Vector2& pos1,
-                 const commonlib::Vector2& direction1)
+                 const Vector2& pos1,
+                 const Vector2& direction1)
 {
     CompositeObject::init(t, pos1, direction1);
     side_ = side;
@@ -146,7 +148,7 @@ void Robot::updatePos(GameMap& map,
     checkCollideMissile(map);
 }
 
-bool Robot::checkNonpassthroughCollide(commonlib::Vector2& delta,
+bool Robot::checkNonpassthroughCollide(Vector2& delta,
                                        GameMap& map)
 {
     using namespace std::placeholders;
@@ -177,6 +179,28 @@ void Robot::checkCollideMissile(GameMap& map)
     Region<int> r = map.getCollideArea(collideRegion());
     checker.reset(this);
     map.accessRegion(r, accessor);
+}
+
+void Robot::updateShooting(GameMap& map)
+{
+    TimePoint thisTime = Clock::now();
+
+    if (!canShoot(thisTime))
+    {
+        return;
+    }
+
+    shoot(map, thisTime);
+}
+
+bool Robot::canShoot(const TimePoint& t)
+{
+    return timeDistMs(t, lastShootTime_) >= fireIntervalMS();
+}
+
+void Robot::shoot(GameMap& map,
+                  const TimePoint& t)
+{
 }
 
 } // end of namespace botlib

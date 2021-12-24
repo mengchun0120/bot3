@@ -47,7 +47,8 @@ void GameLib::load(const std::string& picDir,
     MissileTemplateParser missileTemplateParser(componentTemplateLib_);
     missileTemplateLib_.load(missileTemplateLibFile, missileTemplateParser);
 
-    AIRobotTemplateParser aiRobotTemplateParser(componentTemplateLib_);
+    AIRobotTemplateParser aiRobotTemplateParser(missileTemplateLib_,
+                                                componentTemplateLib_);
     aiRobotTemplateLib_.load(aiRobotTemplateLibFile, aiRobotTemplateParser);
 
     calculateMaxObjSpan();

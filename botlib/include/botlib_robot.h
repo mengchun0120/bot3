@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_ROBOT_H
 #define INCLUDED_BOTLIB_ROBOT_H
 
+#include <commonlib_time_utils.h>
 #include <botlib_side.h>
 #include <botlib_hp_indicator.h>
 #include <botlib_robot_template.h>
@@ -40,6 +41,10 @@ public:
 
     inline float hpRatio() const;
 
+    inline float fireIntervalMS() const;
+
+    inline bool shootingEnabled() const;
+
     void present() const override;
 
     void update(GameMap& map,
@@ -52,6 +57,8 @@ public:
     void setMovingEnabled(bool b);
 
     void addHP(float delta);
+
+    void setShootingEnabled(bool b);
 
 protected:
     void initFirePointsAndDirections();
@@ -70,6 +77,13 @@ protected:
 
     void checkCollideMissile(GameMap& map);
 
+    void updateShooting(GameMap& map);
+
+    bool canShoot(const commonlib::TimePoint& t);
+
+    void shoot(GameMap& map,
+               const commonlib::TimePoint& t);
+
 protected:
     Side side_;
     float hp_;
@@ -79,6 +93,8 @@ protected:
     bool movingEnabled_;
     commonlib::Vector2 speed_;
     HPIndicator hpIndicator_;
+    bool shootingEnabled_;
+    commonlib::TimePoint lastShootTime_;
 };
 
 const RobotTemplate* Robot::getTemplate() const
@@ -129,6 +145,16 @@ bool Robot::movingEnabled() const
 float Robot::hpRatio() const
 {
     return hp_ / getTemplate()->hp();
+}
+
+float Robot::fireIntervalMS() const
+{
+    return getTemplate()->fireIntervalMS();
+}
+
+bool Robot::shootingEnabled() const
+{
+    return shootingEnabled_;
 }
 
 } // end of namespace botlib

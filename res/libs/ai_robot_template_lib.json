@@ -8,6 +8,7 @@
         "speed": 200.0,
         "energy": 100.0,
         "rechargeRate": 20.0,
+        "missile": "red_missile",
         "fireIntervalMS": 1500.0,
         "components": [
             {

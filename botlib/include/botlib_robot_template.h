@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_ROBOT_TEMPLATE_H
 #define INCLUDED_BOTLIB_ROBOT_TEMPLATE_H
 
+#include <botlib_missile_template.h>
 #include <botlib_composite_object_template.h>
 
 namespace mcdane {
@@ -14,6 +15,7 @@ public:
                   float energy1,
                   float rechargeRate1,
                   float collideBreath1,
+                  const MissileTemplate* missileTemplate,
                   float fireIntervalMS1,
                   std::vector<Component>&& components,
                   std::vector<commonlib::Vector2>&& firePoints,
@@ -31,6 +33,8 @@ public:
 
     inline float rechargeRate() const;
 
+    inline const MissileTemplate* missileTemplate() const;
+
     inline float fireIntervalMS() const;
 
     inline unsigned int numFirePoints() const;
@@ -45,6 +49,7 @@ protected:
     float speed_;
     float energy_;
     float rechargeRate_;
+    const MissileTemplate* missileTemplate_;
     float fireIntervalMS_;
     std::vector<commonlib::Vector2> firePoints_;
     std::vector<commonlib::Vector2> fireDirections_;
@@ -73,6 +78,11 @@ float RobotTemplate::energy() const
 float RobotTemplate::rechargeRate() const
 {
     return rechargeRate_;
+}
+
+const MissileTemplate* RobotTemplate::missileTemplate() const
+{
+    return missileTemplate_;
 }
 
 float RobotTemplate::fireIntervalMS() const

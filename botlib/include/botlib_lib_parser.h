@@ -125,6 +125,7 @@ private:
 class RobotTemplateParser: public CompositeObjectTemplateParser {
 public:
     RobotTemplateParser(
+            const commonlib::NamedMap<MissileTemplate>& missileTemplateLib,
             const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib);
 
     void load(const rapidjson::Value& v);
@@ -135,15 +136,19 @@ protected:
     float speed_;
     float energy_;
     float rechargeRate_;
+    const MissileTemplate* missileTemplate_;
+    std::string missileName_;
     float fireIntervalMS_;
     std::vector<commonlib::Vector2> firePoints_;
     std::vector<commonlib::Vector2> fireDirections_;
     std::vector<commonlib::JsonParamPtr> params_;
+    const commonlib::NamedMap<MissileTemplate>& missileTemplateLib_;
 };
 
 class AIRobotTemplateParser: public RobotTemplateParser {
 public:
     AIRobotTemplateParser(
+            const commonlib::NamedMap<MissileTemplate>& missileTemplateLib,
             const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib);
 
     AIRobotTemplate* operator()(const rapidjson::Value& v);

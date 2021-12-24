@@ -14,6 +14,7 @@ public:
                     float energy1,
                     float rechargeRate1,
                     float collideBreath1,
+                    const MissileTemplate* missileTemplate1,
                     float fireIntervalMS1,
                     std::vector<Component>&& components,
                     std::vector<commonlib::Vector2>&& firePoints,

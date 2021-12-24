@@ -189,6 +189,7 @@ MissileTemplate* MissileTemplateParser::operator()(const rapidjson::Value& v)
 }
 
 RobotTemplateParser::RobotTemplateParser(
+            const commonlib::NamedMap<MissileTemplate>& missileTemplateLib,
             const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib)
     : CompositeObjectTemplateParser(componentTemplateLib)
     , params_{
@@ -197,12 +198,14 @@ RobotTemplateParser::RobotTemplateParser(
         jsonParam(energy_, "energy", true, ge(0.0f)),
         jsonParam(speed_, "speed", true, ge(0.0f)),
         jsonParam(rechargeRate_, "rechargeRate", true, ge(0.0f)),
+        jsonParam(missileName_, "missile", true, k_nonEmptyStrV),
         jsonParam(fireIntervalMS_, "fireIntervalMS", true, gt(0.0f)),
         jsonParam(firePoints_, "firePoints", true,
                   nonempty<std::vector<commonlib::Vector2>>()),
         jsonParam(fireDirections_, "fireDirections", true,
                   nonempty<std::vector<commonlib::Vector2>>())
       }
+    , missileTemplateLib_(missileTemplateLib)
 {
 }
 
@@ -210,6 +213,13 @@ void RobotTemplateParser::load(const rapidjson::Value& v)
 {
     CompositeObjectTemplateParser::load(v);
     parse(params_, v);
+
+    missileTemplate_ = missileTemplateLib_.search(missileName_);
+    if (!missileTemplate_)
+    {
+        THROW_EXCEPT(ParseException,
+                     "Cannot find MissileTemplate " + missileName_);
+    }
 
     if (firePoints_.size() != fireDirections_.size())
     {
@@ -219,8 +229,10 @@ void RobotTemplateParser::load(const rapidjson::Value& v)
 }
 
 AIRobotTemplateParser::AIRobotTemplateParser(
+            const commonlib::NamedMap<MissileTemplate>& missileTemplateLib,
             const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib)
-    : RobotTemplateParser(componentTemplateLib)
+    : RobotTemplateParser(missileTemplateLib,
+                          componentTemplateLib)
 {
 }
 
@@ -228,8 +240,14 @@ AIRobotTemplate* AIRobotTemplateParser::operator()(const rapidjson::Value& v)
 {
     RobotTemplateParser::load(v);
 
-    return new AIRobotTemplate(hp_, armor_, speed_, energy_, rechargeRate_,
-                               collideBreath_, fireIntervalMS_,
+    return new AIRobotTemplate(hp_,
+                               armor_,
+                               speed_,
+                               energy_,
+                               rechargeRate_,
+                               collideBreath_,
+                               missileTemplate_,
+                               fireIntervalMS_,
                                std::move(components_),
                                std::move(firePoints_),
                                std::move(fireDirections_));
