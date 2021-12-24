@@ -51,7 +51,7 @@ void TestGameApp::process()
     float delta = deltaSmoother_.curTimeDelta();
 
     robot_->update(map_, delta);
-    missile_->update(map_, delta);
+    //missile_->update(map_, delta);
 
     map_.present();
     glFlush();
@@ -101,7 +101,7 @@ void TestGameApp::setupObjects()
 
     const MissileTemplate* missileTemplate = lib.findMissileTemplate("red_missile");
     missile_ = new Missile();
-    missile_->init(missileTemplate, Side::AI, {100.0f, 20.0f},
+    missile_->init(missileTemplate, Side::PLAYER, {160.0f, 160.0f},
                    {0.0f, 1.0f});
     map_.addObj(missile_);
 }

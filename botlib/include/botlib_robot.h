@@ -68,6 +68,7 @@ protected:
     bool checkNonpassthroughCollide(commonlib::Vector2& delta,
                                     GameMap& map);
 
+    void checkCollideMissile(GameMap& map);
 
 protected:
     Side side_;

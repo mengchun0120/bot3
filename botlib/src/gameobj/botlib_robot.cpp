@@ -2,6 +2,7 @@
 #include <commonlib_collide.h>
 #include <botlib_game_map.h>
 #include <botlib_nonpassthrough_collide_checker.h>
+#include <botlib_robot_hit_missile_checker.h>
 #include <botlib_robot.h>
 
 using namespace mcdane::commonlib;
@@ -141,6 +142,8 @@ void Robot::updatePos(GameMap& map,
 
     shiftPos(delta);
     map.repositionObj(this);
+
+    checkCollideMissile(map);
 }
 
 bool Robot::checkNonpassthroughCollide(commonlib::Vector2& delta,
@@ -161,6 +164,19 @@ bool Robot::checkNonpassthroughCollide(commonlib::Vector2& delta,
     delta = checker.delta();
 
     return checker.collide();
+}
+
+void Robot::checkCollideMissile(GameMap& map)
+{
+    using namespace std::placeholders;
+
+    static RobotHitMissileChecker checker;
+    static GameMap::Accessor accessor = std::bind(&RobotHitMissileChecker::run,
+                                                  &checker, _1);
+
+    Region<int> r = map.getCollideArea(collideRegion());
+    checker.reset(this);
+    map.accessRegion(r, accessor);
 }
 
 } // end of namespace botlib
