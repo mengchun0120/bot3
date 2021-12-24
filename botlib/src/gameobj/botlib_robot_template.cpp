@@ -8,29 +8,31 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-RobotTemplate::RobotTemplate(float hp,
-                             float armor,
-                             float speed,
-                             float energy,
-                             float rechargeRate,
-                             float collideBreath,
+RobotTemplate::RobotTemplate(float hp1,
+                             float armor1,
+                             float speed1,
+                             float energy1,
+                             float rechargeRate1,
+                             float collideBreath1,
+                             float fireIntervalMS1,
                              std::vector<Component>&& components,
                              std::vector<commonlib::Vector2>&& firePoints,
                              std::vector<commonlib::Vector2>&& fireDirections)
     : CompositeObjectTemplate(
         GameObjectType::ROBOT,
-        collideBreath,
+        collideBreath1,
         false,
         std::forward<std::vector<Component>>(components))
-    , hp_(hp)
-    , armor_(armor)
-    , speed_(speed)
-    , energy_(energy)
-    , rechargeRate_(rechargeRate)
+    , hp_(hp1)
+    , armor_(armor1)
+    , speed_(speed1)
+    , energy_(energy1)
+    , rechargeRate_(rechargeRate1)
+    , fireIntervalMS_(fireIntervalMS1)
     , firePoints_(firePoints)
     , fireDirections_(fireDirections)
 {
-    if (hp_ < 0.0f)
+    if (hp_ <= 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Invalid hp " + toString(hp_));
@@ -58,6 +60,12 @@ RobotTemplate::RobotTemplate(float hp,
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Invalid recharge-rate " + toString(rechargeRate_));
+    }
+
+    if (fireIntervalMS_ <= 0.0f)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Invalid fireIntervalMS " + toString(fireIntervalMS_));
     }
 
     if (firePoints_.empty())

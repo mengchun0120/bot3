@@ -135,6 +135,7 @@ protected:
     float speed_;
     float energy_;
     float rechargeRate_;
+    float fireIntervalMS_;
     std::vector<commonlib::Vector2> firePoints_;
     std::vector<commonlib::Vector2> fireDirections_;
     std::vector<commonlib::JsonParamPtr> params_;

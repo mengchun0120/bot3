@@ -197,6 +197,7 @@ RobotTemplateParser::RobotTemplateParser(
         jsonParam(energy_, "energy", true, ge(0.0f)),
         jsonParam(speed_, "speed", true, ge(0.0f)),
         jsonParam(rechargeRate_, "rechargeRate", true, ge(0.0f)),
+        jsonParam(fireIntervalMS_, "fireIntervalMS", true, gt(0.0f)),
         jsonParam(firePoints_, "firePoints", true,
                   nonempty<std::vector<commonlib::Vector2>>()),
         jsonParam(fireDirections_, "fireDirections", true,
@@ -228,7 +229,8 @@ AIRobotTemplate* AIRobotTemplateParser::operator()(const rapidjson::Value& v)
     RobotTemplateParser::load(v);
 
     return new AIRobotTemplate(hp_, armor_, speed_, energy_, rechargeRate_,
-                               collideBreath_, std::move(components_),
+                               collideBreath_, fireIntervalMS_,
+                               std::move(components_),
                                std::move(firePoints_),
                                std::move(fireDirections_));
 }

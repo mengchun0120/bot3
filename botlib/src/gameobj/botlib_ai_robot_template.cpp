@@ -6,16 +6,18 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-AIRobotTemplate::AIRobotTemplate(float hp,
-                                 float armor,
-                                 float speed,
-                                 float energy,
-                                 float rechargeRate,
-                                 float collideBreath,
+AIRobotTemplate::AIRobotTemplate(float hp1,
+                                 float armor1,
+                                 float speed1,
+                                 float energy1,
+                                 float rechargeRate1,
+                                 float collideBreath1,
+                                 float fireIntervalMS1,
                                  std::vector<Component>&& components,
                                  std::vector<Vector2>&& firePoints,
                                  std::vector<Vector2>&& fireDirections)
-    : RobotTemplate(hp, armor, speed, energy, rechargeRate, collideBreath,
+    : RobotTemplate(hp1, armor1, speed1, energy1, rechargeRate1,
+                    collideBreath1, fireIntervalMS1,
                     std::forward<std::vector<Component>>(components),
                     std::forward<std::vector<Vector2>>(firePoints),
                     std::forward<std::vector<Vector2>>(fireDirections))

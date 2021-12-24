@@ -8,12 +8,13 @@ namespace botlib {
 
 class AIRobotTemplate: public RobotTemplate {
 public:
-    AIRobotTemplate(float hp,
-                    float armor,
-                    float speed,
-                    float energy,
-                    float rechargeRate,
-                    float collideBreath,
+    AIRobotTemplate(float hp1,
+                    float armor1,
+                    float speed1,
+                    float energy1,
+                    float rechargeRate1,
+                    float collideBreath1,
+                    float fireIntervalMS1,
                     std::vector<Component>&& components,
                     std::vector<commonlib::Vector2>&& firePoints,
                     std::vector<commonlib::Vector2>&& fireDirections);

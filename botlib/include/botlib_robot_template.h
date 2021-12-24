@@ -8,12 +8,13 @@ namespace botlib {
 
 class RobotTemplate: public CompositeObjectTemplate {
 public:
-    RobotTemplate(float hp,
-                  float armor,
-                  float speed,
-                  float energy,
-                  float rechargeRate,
-                  float collideBreath,
+    RobotTemplate(float hp1,
+                  float armor1,
+                  float speed1,
+                  float energy1,
+                  float rechargeRate1,
+                  float collideBreath1,
+                  float fireIntervalMS1,
                   std::vector<Component>&& components,
                   std::vector<commonlib::Vector2>&& firePoints,
                   std::vector<commonlib::Vector2>&& fireDirections);
@@ -30,6 +31,8 @@ public:
 
     inline float rechargeRate() const;
 
+    inline float fireIntervalMS() const;
+
     inline unsigned int numFirePoints() const;
 
     inline const commonlib::Vector2& firePoint(unsigned int i) const;
@@ -42,6 +45,7 @@ protected:
     float speed_;
     float energy_;
     float rechargeRate_;
+    float fireIntervalMS_;
     std::vector<commonlib::Vector2> firePoints_;
     std::vector<commonlib::Vector2> fireDirections_;
 };
@@ -69,6 +73,11 @@ float RobotTemplate::energy() const
 float RobotTemplate::rechargeRate() const
 {
     return rechargeRate_;
+}
+
+float RobotTemplate::fireIntervalMS() const
+{
+    return fireIntervalMS_;
 }
 
 unsigned int RobotTemplate::numFirePoints() const
