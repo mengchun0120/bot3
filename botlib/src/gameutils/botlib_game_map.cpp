@@ -99,6 +99,7 @@ void GameMap::setViewportOrigin(float x,
     viewportOrigin_[0] = clamp(x, minViewportOrigin_[0], maxViewportOrigin_[0]);
     viewportOrigin_[1] = clamp(y, minViewportOrigin_[1], maxViewportOrigin_[1]);
     viewportAnchor_ = viewportOrigin_ - viewportHalfSize_;
+    resetViewableRegion();
     resetPresentArea();
 }
 
@@ -285,31 +286,20 @@ void GameMap::setViewportSize(float viewportWidth,
 
 }
 
+void GameMap::resetViewableRegion()
+{
+    viewableRegion_.init(viewportAnchor_[0] - maxObjSpan_,
+                         viewportAnchor_[0] + viewportSize_[0] + maxObjSpan_,
+                         viewportAnchor_[1] - maxObjSpan_,
+                         viewportAnchor_[1] + viewportSize_[1] + maxObjSpan_);
+}
+
 void GameMap::resetPresentArea()
 {
-    int startRow = getCellIdx(viewportAnchor_[1] - maxObjSpan_);
-    if (startRow < 0)
-    {
-        startRow = 0;
-    }
-
-    int endRow = getCellIdx(viewportAnchor_[1] + viewportSize_[1] + maxObjSpan_);
-    if (endRow >= rowCount())
-    {
-        endRow = rowCount() - 1;
-    }
-
-    int startCol = getCellIdx(viewportAnchor_[0] - maxObjSpan_);
-    if (startCol < 0)
-    {
-        startCol = 0;
-    }
-
-    int endCol = getCellIdx(viewportAnchor_[0] + viewportSize_[0] + maxObjSpan_);
-    if (endCol >= colCount())
-    {
-        endCol = colCount() - 1;
-    }
+    int startRow = clamp(getCellIdx(viewableRegion_.bottom()), 0, rowCount()-1);
+    int endRow = clamp(getCellIdx(viewableRegion_.top()), 0, rowCount()-1);
+    int startCol = clamp(getCellIdx(viewableRegion_.left()), 0, colCount()-1);
+    int endCol = clamp(getCellIdx(viewableRegion_.right()), 0, colCount()-1);
 
     presentArea_.init(startCol, endCol, startRow, endRow);
 }

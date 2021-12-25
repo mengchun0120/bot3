@@ -51,11 +51,11 @@ public:
 
     inline float height() const;
 
+    inline const commonlib::Vector2& viewportOrigin() const;
+
     inline const commonlib::Region<float>& boundary() const;
 
-    inline const commonlib::Region<float>& updateRegion() const;
-
-    inline const commonlib::Vector2& getViewportOrigin() const;
+    inline const commonlib::Region<float>& viewableRegion() const;
 
     inline int getCellIdx(float x) const;
 
@@ -96,6 +96,8 @@ private:
     void setViewportSize(float viewportWidth,
                          float viewportHeight);
 
+    void resetViewableRegion();
+
     void resetPresentArea();
 
 private:
@@ -105,15 +107,16 @@ private:
     float maxCollideBreath_;
     int extraCell_;
     std::vector<std::vector<ItemList>> map_;
-    commonlib::Region<float> boundary_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 viewportHalfSize_;
     commonlib::Vector2 minViewportOrigin_;
     commonlib::Vector2 maxViewportOrigin_;
     commonlib::Vector2 viewportOrigin_;
     commonlib::Vector2 viewportAnchor_;
+    commonlib::Region<float> boundary_;
+    commonlib::Region<float> viewableRegion_;
     commonlib::Region<int> presentArea_;
-};
+ };
 
 int GameMap::rowCount() const
 {
@@ -135,14 +138,19 @@ float GameMap::height() const
     return boundary_.top();
 }
 
+const commonlib::Vector2& GameMap::viewportOrigin() const
+{
+    return viewportOrigin_;
+}
+
 const commonlib::Region<float>& GameMap::boundary() const
 {
     return boundary_;
 }
 
-const commonlib::Vector2& GameMap::getViewportOrigin() const
+const commonlib::Region<float>& GameMap::viewableRegion() const
 {
-    return viewportOrigin_;
+    return viewableRegion_;
 }
 
 int GameMap::getCellIdx(float x) const
