@@ -1,3 +1,4 @@
+#include <cmath>
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
 #include <commonlib_string_utils.h>
@@ -98,7 +99,7 @@ void GameMap::setViewportOrigin(float x,
     viewportOrigin_[0] = clamp(x, minViewportOrigin_[0], maxViewportOrigin_[0]);
     viewportOrigin_[1] = clamp(y, minViewportOrigin_[1], maxViewportOrigin_[1]);
     viewportAnchor_ = viewportOrigin_ - viewportHalfSize_;
-    updatePresentArea();
+    resetPresentArea();
 }
 
 GameMapItem* GameMap::searchObj(GameObject* o)
@@ -219,21 +220,30 @@ void GameMap::initMap(unsigned int rows,
                       float maxObjSpan,
                       float maxCollideBreath)
 {
-    map_.resize(rows);
+    maxObjSpan_ = maxObjSpan;
+    maxCollideBreath_ = maxCollideBreath;
+    extraCell_ = static_cast<int>(ceil(maxObjSpan_ / k_cellBreath));
+    initMapCells(rows, cols);
+    setBoundary(rows, cols);
+    setViewportSize(viewportWidth, viewportHeight);
+    setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
+}
+
+void GameMap::initMapCells(unsigned int rows,
+                           unsigned int cols)
+{
+    unsigned int rowCount = rows + extraCell_*2;
+    unsigned int colCount = cols + extraCell_*2;
+
+    map_.resize(rowCount);
     for (auto it = map_.begin(); it != map_.end(); ++it)
     {
-        it->resize(cols);
+        it->resize(colCount);
         for (auto itemIt = it->begin(); itemIt != it->end(); ++itemIt)
         {
             itemIt->setDeleter(&itemDeleter_);
         }
     }
-
-    setBoundary(rows, cols);
-    setViewportSize(viewportWidth, viewportHeight);
-    setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
-    maxObjSpan_ = maxObjSpan;
-    maxCollideBreath_ = maxCollideBreath;
 }
 
 void GameMap::setBoundary(unsigned int rows,
@@ -275,7 +285,7 @@ void GameMap::setViewportSize(float viewportWidth,
 
 }
 
-void GameMap::updatePresentArea()
+void GameMap::resetPresentArea()
 {
     int startRow = getCellIdx(viewportAnchor_[1] - maxObjSpan_);
     if (startRow < 0)

@@ -53,6 +53,8 @@ public:
 
     inline const commonlib::Region<float>& boundary() const;
 
+    inline const commonlib::Region<float>& updateRegion() const;
+
     inline const commonlib::Vector2& getViewportOrigin() const;
 
     inline int getCellIdx(float x) const;
@@ -85,17 +87,23 @@ private:
                  float maxObjSpan,
                  float maxCollideBreath);
 
+    void initMapCells(unsigned int rows,
+                      unsigned int cols);
+
     void setBoundary(unsigned int rows,
                      unsigned int cols);
 
     void setViewportSize(float viewportWidth,
                          float viewportHeight);
 
-    void updatePresentArea();
+    void resetPresentArea();
 
 private:
     ItemList::Deleter itemDeleter_;
     commonlib::ObjectPool<GameMapItem> itemPool_;
+    float maxObjSpan_;
+    float maxCollideBreath_;
+    int extraCell_;
     std::vector<std::vector<ItemList>> map_;
     commonlib::Region<float> boundary_;
     commonlib::Vector2 viewportSize_;
@@ -105,8 +113,6 @@ private:
     commonlib::Vector2 viewportOrigin_;
     commonlib::Vector2 viewportAnchor_;
     commonlib::Region<int> presentArea_;
-    float maxObjSpan_;
-    float maxCollideBreath_;
 };
 
 int GameMap::rowCount() const
@@ -141,7 +147,7 @@ const commonlib::Vector2& GameMap::getViewportOrigin() const
 
 int GameMap::getCellIdx(float x) const
 {
-    return static_cast<int>(floor(x / k_cellBreath));
+    return static_cast<int>(floor(x / k_cellBreath)) + extraCell_;
 }
 
 } // end of namespace botlib
