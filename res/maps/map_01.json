@@ -18,7 +18,8 @@
             "type": "robot",
             "template": "red_robot",
             "pos": [80.0, 80.0],
-            "direction": [0.707106781, 0.707106781]
+            "direction": [0.707106781, 0.707106781],
+            "movingEnabled": true
         }
     ]
 }

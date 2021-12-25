@@ -17,11 +17,17 @@ namespace botlib {
 GameMapLoader::GameMapLoader(float poolSizeFactor,
                              float viewportWidth,
                              float viewportHeight)
-    : params_{
-          jsonParam(typeStr_, "type", true, k_nonEmptyStrV),
-          jsonParam(templateStr_, "template", true, k_nonEmptyStrV),
-          jsonParam(pos_, "pos"),
-          jsonParam(direction_, "direction")
+    : commonParams_{
+        jsonParam(typeStr_, "type", true, k_nonEmptyStrV),
+        jsonParam(templateStr_, "template", true, k_nonEmptyStrV),
+        jsonParam(pos_, "pos", true)
+      }
+    , tileParams_{
+        jsonParam(direction_, "direction", true)
+      }
+    , robotParams_{
+        jsonParam(direction_, "direction", true),
+        jsonParam(movingEnabled_, "movingEnabled")
       }
 {
     if (poolSizeFactor <= 0.0f || poolSizeFactor > 1.0f)
@@ -99,14 +105,16 @@ void GameMapLoader::loadObjects(GameMap& map,
 void GameMapLoader::parseAddObject(GameMap& map,
                                    const rapidjson::Value& v)
 {
-    parse(params_, v);
+    parse(commonParams_, v);
 
     if (typeStr_ == "tile")
     {
+        parse(tileParams_, v);
         addTile(map);
     }
     else if(typeStr_ == "robot")
     {
+        parse(robotParams_, v);
         addRobot(map);
     }
     else
@@ -160,6 +168,11 @@ void GameMapLoader::addRobot(GameMap& map)
 
     AIRobot* robot = new AIRobot();
     robot->init(t, pos_, direction_);
+
+    if (movingEnabled_)
+    {
+        robot->setMovingEnabled(true);
+    }
 
     map.addObj(robot);
 }

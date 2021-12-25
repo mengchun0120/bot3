@@ -45,7 +45,10 @@ private:
     std::string templateStr_;
     commonlib::Vector2 pos_;
     commonlib::Vector2 direction_;
-    std::vector<mcdane::commonlib::JsonParamPtr> params_;
+    bool movingEnabled_;
+    std::vector<commonlib::JsonParamPtr> commonParams_;
+    std::vector<commonlib::JsonParamPtr> tileParams_;
+    std::vector<commonlib::JsonParamPtr> robotParams_;
 };
 
 } // end of namespace botlib
