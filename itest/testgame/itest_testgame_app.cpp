@@ -2,6 +2,7 @@
 #include <botlib_game_lib.h>
 #include <botlib_graphics.h>
 #include <botlib_game_map_loader.h>
+#include <botlib_hp_indicator.h>
 #include <itest_testgame_app.h>
 
 using namespace mcdane::commonlib;
@@ -37,7 +38,7 @@ TestGameApp::TestGameApp(const std::string& configFile,
     setupOpenGL();
     setupDeltaSmoother();
     setupMap(mapFile);
-    setupObjects();
+    setupGameObjUpdater();
 }
 
 void TestGameApp::preProcess()
@@ -48,11 +49,7 @@ void TestGameApp::preProcess()
 
 void TestGameApp::process()
 {
-    float delta = deltaSmoother_.curTimeDelta();
-
-    robot_->update(map_, delta);
-    //missile_->update(map_, delta);
-
+    update();
     map_.present();
     glFlush();
 }
@@ -89,21 +86,18 @@ void TestGameApp::setupMap(const std::string& mapFile)
     mapLoader.load(map_, mapFile);
 }
 
-void TestGameApp::setupObjects()
+void TestGameApp::setupGameObjUpdater()
 {
-    const GameLib& lib = GameLib::getInstance();
+    using namespace std::placeholders;
 
-    const AIRobotTemplate* robotTemplate = lib.findAIRobotTemplate("red_robot");
-    robot_ = new AIRobot();
-    robot_->init(robotTemplate, {80.0f, 80.0f}, {0.707106781f, 0.707106781f});
-    robot_->setMovingEnabled(true);
-    map_.addObj(robot_);
+    gameObjUpdater_.setMap(&map_);
+    updater_ = std::bind(&GameObjectUpdater::run, &gameObjUpdater_, _1);
+}
 
-    const MissileTemplate* missileTemplate = lib.findMissileTemplate("red_missile");
-    missile_ = new Missile();
-    missile_->init(missileTemplate, Side::PLAYER, {160.0f, 160.0f},
-                   {0.0f, 1.0f});
-    map_.addObj(missile_);
+void TestGameApp::update()
+{
+    gameObjUpdater_.setDelta(deltaSmoother_.curTimeDelta());
+    map_.accessRegion(map_.presentArea(), updater_);
 }
 
 } // end of namespace itest

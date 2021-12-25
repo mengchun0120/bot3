@@ -43,7 +43,6 @@ void GameMap::present()
                                          &presenter, _1);
 
     SimpleShaderProgram& program = Graphics::simpleShader();
-    program.use();
     program.setViewportOrigin(viewportOrigin_);
 
     for (unsigned int i = 0; i < presentTypeCount; ++i)

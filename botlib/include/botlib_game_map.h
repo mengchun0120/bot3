@@ -57,6 +57,8 @@ public:
 
     inline const commonlib::Region<float>& viewableRegion() const;
 
+    inline const commonlib::Region<int>& presentArea() const;
+
     inline int getCellIdx(float x) const;
 
     void setViewportOrigin(float x,
@@ -151,6 +153,11 @@ const commonlib::Region<float>& GameMap::boundary() const
 const commonlib::Region<float>& GameMap::viewableRegion() const
 {
     return viewableRegion_;
+}
+
+const commonlib::Region<int>& GameMap::presentArea() const
+{
+    return presentArea_;
 }
 
 int GameMap::getCellIdx(float x) const

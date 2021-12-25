@@ -33,6 +33,7 @@ set(BOTLIB_GAMEUTILS_SRC
     src/gameutils/botlib_game_map_item.cpp
     src/gameutils/botlib_game_map_loader.cpp
     src/gameutils/botlib_game_object_presenter.cpp
+    src/gameutils/botlib_game_object_updater.cpp
     src/gameutils/botlib_game_utils.cpp
     src/gameutils/botlib_lib_parser.cpp
     src/gameutils/botlib_missile_hit_checker.cpp
