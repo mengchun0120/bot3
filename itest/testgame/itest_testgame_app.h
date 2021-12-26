@@ -5,6 +5,7 @@
 #include <botlib_time_delta_smoother.h>
 #include <botlib_game_map.h>
 #include <botlib_game_object_updater.h>
+#include <botlib_game_object_flag_resetter.h>
 
 namespace mcdane {
 namespace itest {
@@ -32,6 +33,8 @@ private:
 
     void setupGameObjUpdater();
 
+    void setupFlagAccessor();
+
     void update();
 
 private:
@@ -39,6 +42,8 @@ private:
     botlib::TimeDeltaSmoother deltaSmoother_;
     botlib::GameObjectUpdater gameObjUpdater_;
     botlib::GameMap::Accessor updater_;
+    botlib::GameObjectFlagResetter flagResetter_;
+    botlib::GameMap::Accessor flagAccessor_;
 };
 
 } // end of namespace itest

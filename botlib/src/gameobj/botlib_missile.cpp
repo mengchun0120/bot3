@@ -42,6 +42,8 @@ void Missile::update(GameMap& map,
     {
         setAlive(false);
     }
+
+    GameObject::update(map, timeDelta);
 }
 
 void Missile::setDirection(const commonlib::Vector2& direction1)

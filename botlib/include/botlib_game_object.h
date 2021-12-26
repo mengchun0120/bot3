@@ -80,13 +80,13 @@ public:
 
     void setUpdated(bool b);
 
+    void setFlag(Flag flag,
+                 bool b);
+
 public:
     static Deleter k_defaultDeleter;
 
 protected:
-    void setFlag(Flag flag,
-                 bool b);
-
 protected:
     const GameObjectTemplate* t_;
     commonlib::Vector2 pos_;

@@ -16,9 +16,17 @@ public:
     bool run(GameObject* o);
 
 private:
+    inline bool check(GameObject* o) const;
+
+private:
     GameMap* map_;
     float delta_;
 };
+
+bool GameObjectUpdater::check(GameObject* o) const
+{
+    return o->alive() && !o->updated();
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

@@ -16,6 +16,11 @@ void GameObjectUpdater::setDelta(float delta)
 
 bool GameObjectUpdater::run(GameObject* o)
 {
+    if (!check(o))
+    {
+        return true;
+    }
+
     o->update(*map_, delta_);
     return true;
 }

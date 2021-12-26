@@ -177,14 +177,18 @@ Region<int> GameMap::getCollideArea(const Region<float>& r) const
 void GameMap::accessRegion(const Region<int>& r,
                            Accessor& accessor)
 {
+    GameMapItem* item, * next;
+
     for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
     {
         auto& row = map_[rowIdx];
         for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
         {
-            for (GameMapItem* i = row[colIdx].first(); i; i = i->next())
+            for (item = row[colIdx].first(); item; item = next)
             {
-                if (!accessor(i->obj()))
+                next = item->next();
+
+                if (!accessor(item->obj()))
                 {
                     return;
                 }

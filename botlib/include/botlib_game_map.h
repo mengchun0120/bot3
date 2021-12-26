@@ -118,7 +118,7 @@ private:
     commonlib::Region<float> boundary_;
     commonlib::Region<float> viewableRegion_;
     commonlib::Region<int> presentArea_;
- };
+};
 
 int GameMap::rowCount() const
 {
