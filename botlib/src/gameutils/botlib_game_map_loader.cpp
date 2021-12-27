@@ -5,6 +5,7 @@
 #include <commonlib_collide.h>
 #include <botlib_game_lib.h>
 #include <botlib_tile.h>
+#include <botlib_missile.h>
 #include <botlib_ai_robot.h>
 #include <botlib_add_object_checker.h>
 #include <botlib_game_map_loader.h>
@@ -24,6 +25,10 @@ GameMapLoader::GameMapLoader(float poolSizeFactor,
       }
     , tileParams_{
         jsonParam(direction_, "direction", true)
+      }
+    , missileParams_{
+        jsonParam(direction_, "direction", true),
+        jsonParam(sideStr_, "side", true)
       }
     , robotParams_{
         jsonParam(direction_, "direction", true),
@@ -109,13 +114,15 @@ void GameMapLoader::parseAddObject(GameMap& map,
 
     if (typeStr_ == "tile")
     {
-        parse(tileParams_, v);
-        addTile(map);
+        addTile(map, v);
     }
-    else if(typeStr_ == "robot")
+    else if (typeStr_ == "missile")
     {
-        parse(robotParams_, v);
-        addRobot(map);
+        addMissile(map, v);
+    }
+    else if (typeStr_ == "robot")
+    {
+        addRobot(map, v);
     }
     else
     {
@@ -123,7 +130,8 @@ void GameMapLoader::parseAddObject(GameMap& map,
     }
 }
 
-void GameMapLoader::addTile(GameMap& map)
+void GameMapLoader::addTile(GameMap& map,
+                            const rapidjson::Value& v)
 {
     const GameLib& lib = GameLib::getInstance();
 
@@ -141,13 +149,49 @@ void GameMapLoader::addTile(GameMap& map)
                      "Tile " + templateStr_ + " cannot be placed in map");
     }
 
+    parse(tileParams_, v);
+
     Tile* tile = new Tile();
     tile->init(t, pos_, direction_);
 
     map.addObj(tile);
 }
 
-void GameMapLoader::addRobot(GameMap& map)
+void GameMapLoader::addMissile(GameMap& map,
+                               const rapidjson::Value& v)
+{
+    const GameLib& lib = GameLib::getInstance();
+
+    const MissileTemplate* t = lib.findMissileTemplate(templateStr_);
+    if (!t)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Failed to find MissileTemplate " + templateStr_);
+    }
+
+    bool collide = checkCollide(map, t->collideBreath());
+    if (collide)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Missile " + templateStr_ + " cannot be placed in map");
+    }
+
+    parse(missileParams_, v);
+
+    Side side = strToSide(sideStr_);
+    if (side == Side::UNKNOWN)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid side " + sideStr_);
+    }
+
+    Missile* missile = new Missile();
+    missile->init(t, side, pos_, direction_);
+
+    map.addObj(missile);
+}
+
+void GameMapLoader::addRobot(GameMap& map,
+                             const rapidjson::Value& v)
 {
     const GameLib& lib = GameLib::getInstance();
 
@@ -165,6 +209,8 @@ void GameMapLoader::addRobot(GameMap& map)
         THROW_EXCEPT(InvalidArgumentException,
                      "Robot " + templateStr_ + " cannot be placed in map");
     }
+
+    parse(robotParams_, v);
 
     AIRobot* robot = new AIRobot();
     robot->init(t, pos_, direction_);

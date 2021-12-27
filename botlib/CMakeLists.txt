@@ -28,6 +28,7 @@ set(BOTLIB_GAMEOBJ_SRC
 
 set(BOTLIB_GAMEUTILS_SRC
     src/gameutils/botlib_add_object_checker.cpp
+    src/gameutils/botlib_dead_object_remover.cpp
     src/gameutils/botlib_game_lib.cpp
     src/gameutils/botlib_game_map.cpp
     src/gameutils/botlib_game_map_accessor.cpp

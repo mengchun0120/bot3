@@ -4,6 +4,20 @@
 namespace mcdane {
 namespace botlib {
 
+Side strToSide(const std::string& s)
+{
+    if (s == "ai")
+    {
+        return Side::AI;
+    }
+    else if (s == "player")
+    {
+        return Side::PLAYER;
+    }
+
+    return Side::UNKNOWN;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

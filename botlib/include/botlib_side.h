@@ -2,14 +2,18 @@
 #define INCLUDED_BOTLIB_SIDE_H
 
 #include <ostream>
+#include <string>
 
 namespace mcdane {
 namespace botlib {
 
 enum class Side {
     AI,
-    PLAYER
+    PLAYER,
+    UNKNOWN
 };
+
+Side strToSide(const std::string& s);
 
 } // end of namespace botlib
 } // end of namespace mcdane

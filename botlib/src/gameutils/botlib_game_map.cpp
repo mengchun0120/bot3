@@ -64,7 +64,7 @@ void GameMap::addObj(GameObject* o,
     item->init(o, deleter);
     map_[rowIdx][colIdx].pushFront(item);
 
-    LOG_DEBUG << "addObj " << o->type() << " row=" << rowIdx
+    LOG_DEBUG << "addObj " << o->type() << " " << o << " row=" << rowIdx
               << " col=" << colIdx << LOG_END;
 }
 

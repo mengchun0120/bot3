@@ -6,6 +6,7 @@
 #include <botlib_game_map.h>
 #include <botlib_game_object_updater.h>
 #include <botlib_game_object_flag_resetter.h>
+#include <botlib_dead_object_remover.h>
 
 namespace mcdane {
 namespace itest {
@@ -42,6 +43,7 @@ private:
     botlib::TimeDeltaSmoother deltaSmoother_;
     botlib::GameObjectUpdater gameObjUpdater_;
     botlib::GameObjectFlagResetter flagResetter_;
+    botlib::DeadObjectRemover objRemover_;
 };
 
 } // end of namespace itest

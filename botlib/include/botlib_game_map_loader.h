@@ -27,9 +27,14 @@ private:
     void parseAddObject(GameMap& map,
                         const rapidjson::Value& v);
 
-    void addTile(GameMap& map);
+    void addTile(GameMap& map,
+                 const rapidjson::Value& v);
 
-    void addRobot(GameMap& map);
+    void addMissile(GameMap& map,
+                    const rapidjson::Value& v);
+
+    void addRobot(GameMap& map,
+                  const rapidjson::Value& v);
 
     unsigned int getPoolSize(unsigned int rows,
                              unsigned int cols);
@@ -46,8 +51,10 @@ private:
     commonlib::Vector2 pos_;
     commonlib::Vector2 direction_;
     bool movingEnabled_;
+    std::string sideStr_;
     std::vector<commonlib::JsonParamPtr> commonParams_;
     std::vector<commonlib::JsonParamPtr> tileParams_;
+    std::vector<commonlib::JsonParamPtr> missileParams_;
     std::vector<commonlib::JsonParamPtr> robotParams_;
 };
 

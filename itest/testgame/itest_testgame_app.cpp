@@ -105,6 +105,8 @@ void TestGameApp::update()
 
     gameObjUpdater_.setDelta(deltaSmoother_.curTimeDelta());
     map_.accessRegion(presentArea, gameObjUpdater_);
+
+    map_.accessRegion(presentArea, objRemover_);
 }
 
 } // end of namespace itest
