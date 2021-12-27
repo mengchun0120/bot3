@@ -9,7 +9,7 @@
 #include <commonlib_linked_list.h>
 #include <commonlib_region.h>
 #include <commonlib_object_pool.h>
-#include <botlib_game_map_item.h>
+#include <botlib_game_map_accessor.h>
 
 namespace mcdane {
 namespace botlib {
@@ -17,7 +17,6 @@ namespace botlib {
 class GameMap {
 public:
     using ItemList = commonlib::LinkedList<GameMapItem>;
-    using Accessor = std::function<bool(GameObject*)>;
 
 public:
     static constexpr float k_cellBreath = 40.0f;
@@ -75,7 +74,7 @@ public:
     commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r) const;
 
     void accessRegion(const commonlib::Region<int>& r,
-                      Accessor& accessor);
+                      GameMapAccessor& accessor);
 
 private:
     void initItemDeleter();

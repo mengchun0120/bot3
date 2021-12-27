@@ -13,8 +13,11 @@ void RobotHitMissileChecker::reset(Robot* robot)
     robot_ = robot;
 }
 
-bool RobotHitMissileChecker::run(GameObject* o)
+bool RobotHitMissileChecker::run(ItemList& itemList,
+                                 GameMapItem* item)
 {
+    GameObject* o = item->obj();
+
     if (!check(o))
     {
         return true;

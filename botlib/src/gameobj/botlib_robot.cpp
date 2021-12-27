@@ -151,17 +151,11 @@ void Robot::updatePos(GameMap& map,
 bool Robot::checkNonpassthroughCollide(Vector2& delta,
                                        GameMap& map)
 {
-    using namespace std::placeholders;
-
     static NonpassthroughCollideChecker checker;
-    static GameMap::Accessor accessor = std::bind(
-                                            &NonpassthroughCollideChecker::run,
-                                            &checker, _1);
-
     Region<int> area = map.getCollideArea(collideRegion(), delta[0], delta[1]);
 
     checker.reset(this, delta);
-    map.accessRegion(area, accessor);
+    map.accessRegion(area, checker);
 
     delta = checker.delta();
 
@@ -170,15 +164,11 @@ bool Robot::checkNonpassthroughCollide(Vector2& delta,
 
 void Robot::checkCollideMissile(GameMap& map)
 {
-    using namespace std::placeholders;
-
     static RobotHitMissileChecker checker;
-    static GameMap::Accessor accessor = std::bind(&RobotHitMissileChecker::run,
-                                                  &checker, _1);
 
     Region<int> r = map.getCollideArea(collideRegion());
     checker.reset(this);
-    map.accessRegion(r, accessor);
+    map.accessRegion(r, checker);
 }
 
 void Robot::updateShooting(GameMap& map)

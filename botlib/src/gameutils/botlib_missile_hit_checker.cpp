@@ -14,8 +14,11 @@ void MissileHitChecker::reset(Missile* missile)
     missile_ = missile;
 }
 
-bool MissileHitChecker::run(GameObject* o)
+bool MissileHitChecker::run(ItemList& itemList,
+                            GameMapItem* item)
 {
+    GameObject* o = item->obj();
+
     if (!check(o))
     {
         return true;

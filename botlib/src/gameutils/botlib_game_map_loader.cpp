@@ -186,11 +186,7 @@ unsigned int GameMapLoader::getPoolSize(unsigned int rows,
 bool GameMapLoader::checkCollide(GameMap& map,
                                  float collideBreath)
 {
-    using namespace std::placeholders;
-
     static AddObjectChecker checker;
-    static GameMap::Accessor accessor = std::bind(&AddObjectChecker::run,
-                                                  &checker, _1);
 
     Region<float> r{pos_[0]-collideBreath, pos_[0]+collideBreath,
                     pos_[1]-collideBreath, pos_[1]+collideBreath};
@@ -202,7 +198,7 @@ bool GameMapLoader::checkCollide(GameMap& map,
 
     checker.reset(r);
     Region<int> area = map.getCollideArea(r);
-    map.accessRegion(area, accessor);
+    map.accessRegion(area, checker);
 
     return checker.collide();
 }

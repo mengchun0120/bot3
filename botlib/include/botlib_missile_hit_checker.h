@@ -3,17 +3,19 @@
 
 #include <botlib_missile.h>
 #include <botlib_robot.h>
+#include <botlib_game_map_accessor.h>
 
 namespace mcdane {
 namespace botlib {
 
-class MissileHitChecker {
+class MissileHitChecker: public GameMapAccessor {
 public:
     void reset(Missile* missile);
 
     inline bool collide() const;
 
-    bool run(GameObject* o);
+    bool run(ItemList& itemList,
+             GameMapItem* item) override;
 
 private:
     inline bool check(GameObject* o);

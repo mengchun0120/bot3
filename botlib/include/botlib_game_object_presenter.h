@@ -1,21 +1,19 @@
 #ifndef INCLUDED_BOTLIB_GAME_OBJECT_PRESENTER_H
 #define INCLUDED_BOTLIB_GAME_OBJECT_PRESENTER_H
 
-#include <botlib_game_object.h>
+#include <botlib_game_map_accessor.h>
 
 namespace mcdane {
 namespace botlib {
 
-class GameObjectPresenter {
+class GameObjectPresenter: public GameMapAccessor {
 public:
-    GameObjectPresenter() = default;
-
-    ~GameObjectPresenter() = default;
-
     void reset(GameObjectType type);
 
-    bool present(GameObject* o);
+    bool run(ItemList& itemList,
+             GameMapItem* item) override;
 
+private:
     inline bool check(GameObject* o);
 
 private:

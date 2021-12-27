@@ -2,16 +2,17 @@
 #define INCLUDED_BOTLIB_ADD_OBJECT_CHECHER
 
 #include <commonlib_region.h>
-#include <botlib_game_object.h>
+#include <botlib_game_map_accessor.h>
 
 namespace mcdane {
 namespace botlib {
 
-class AddObjectChecker {
+class AddObjectChecker: public GameMapAccessor {
 public:
     void reset(const commonlib::Region<float>& collideRegion);
 
-    bool run(GameObject* o);
+    bool run(ItemList& itemList,
+             GameMapItem* item) override;
 
     inline bool collide() const;
 

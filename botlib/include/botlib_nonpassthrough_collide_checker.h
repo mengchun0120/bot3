@@ -1,17 +1,13 @@
 #ifndef INCLUDED_BOTLIB_NONPASSTHROUGH_COLLIDE_CHECKER_H
 #define INCLUDED_BOTLIB_NONPASSTHROUGH_COLLIDE_CHECKER_H
 
-#include <botlib_game_object.h>
+#include <botlib_game_map_accessor.h>
 
 namespace mcdane {
 namespace botlib {
 
-class NonpassthroughCollideChecker {
+class NonpassthroughCollideChecker: public GameMapAccessor {
 public:
-    NonpassthroughCollideChecker() = default;
-
-    ~NonpassthroughCollideChecker() = default;
-
     void reset(GameObject* o,
                const commonlib::Vector2& delta);
 
@@ -19,9 +15,11 @@ public:
 
     inline const commonlib::Vector2& delta() const;
 
-    inline bool check(GameObject* o) const;
+    bool run(ItemList& itemList,
+             GameMapItem* item) override;
 
-    bool run(GameObject* o);
+private:
+    inline bool check(GameObject* o) const;
 
 private:
     GameObject* obj_;

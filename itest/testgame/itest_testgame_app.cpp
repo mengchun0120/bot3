@@ -89,28 +89,22 @@ void TestGameApp::setupMap(const std::string& mapFile)
 
 void TestGameApp::setupGameObjUpdater()
 {
-    using namespace std::placeholders;
-
     gameObjUpdater_.setMap(&map_);
-    updater_ = std::bind(&GameObjectUpdater::run, &gameObjUpdater_, _1);
 }
 
 void TestGameApp::setupFlagAccessor()
 {
-    using namespace std::placeholders;
-
     flagResetter_.reset(GameObject::FLAG_UPDATED, false);
-    flagAccessor_ = std::bind(&GameObjectFlagResetter::run, &flagResetter_, _1);
 }
 
 void TestGameApp::update()
 {
     const Region<int>& presentArea = map_.presentArea();
 
-    map_.accessRegion(presentArea, flagAccessor_);
+    map_.accessRegion(presentArea, flagResetter_);
 
     gameObjUpdater_.setDelta(deltaSmoother_.curTimeDelta());
-    map_.accessRegion(presentArea, updater_);
+    map_.accessRegion(presentArea, gameObjUpdater_);
 }
 
 } // end of namespace itest

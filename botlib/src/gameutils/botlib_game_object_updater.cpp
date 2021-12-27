@@ -14,8 +14,11 @@ void GameObjectUpdater::setDelta(float delta)
     delta_ = delta;
 }
 
-bool GameObjectUpdater::run(GameObject* o)
+bool GameObjectUpdater::run(ItemList& itemList,
+                            GameMapItem* item)
 {
+    GameObject* o = item->obj();
+
     if (!check(o))
     {
         return true;

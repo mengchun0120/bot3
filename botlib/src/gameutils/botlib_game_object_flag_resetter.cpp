@@ -10,9 +10,10 @@ void GameObjectFlagResetter::reset(GameObject::Flag flag,
     value_ = value;
 }
 
-bool GameObjectFlagResetter::run(GameObject* o)
+bool GameObjectFlagResetter::run(ItemList& itemList,
+                                 GameMapItem* item)
 {
-    o->setFlag(flag_, value_);
+    item->obj()->setFlag(flag_, value_);
     return true;
 }
 

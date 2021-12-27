@@ -59,16 +59,12 @@ void Missile::resetSpeed()
 
 bool Missile::checkCollideObjs(GameMap& map)
 {
-    using namespace std::placeholders;
-
     static MissileHitChecker checker;
-    static GameMap::Accessor accessor = std::bind(&MissileHitChecker::run,
-                                                  &checker, _1);
 
     Region<int> area = map.getCollideArea(collideRegion());
 
     checker.reset(this);
-    map.accessRegion(area, accessor);
+    map.accessRegion(area, checker);
 
     return checker.collide();
 }

@@ -41,9 +41,7 @@ private:
     botlib::GameMap map_;
     botlib::TimeDeltaSmoother deltaSmoother_;
     botlib::GameObjectUpdater gameObjUpdater_;
-    botlib::GameMap::Accessor updater_;
     botlib::GameObjectFlagResetter flagResetter_;
-    botlib::GameMap::Accessor flagAccessor_;
 };
 
 } // end of namespace itest

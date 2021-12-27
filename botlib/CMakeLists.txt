@@ -30,6 +30,7 @@ set(BOTLIB_GAMEUTILS_SRC
     src/gameutils/botlib_add_object_checker.cpp
     src/gameutils/botlib_game_lib.cpp
     src/gameutils/botlib_game_map.cpp
+    src/gameutils/botlib_game_map_accessor.cpp
     src/gameutils/botlib_game_map_item.cpp
     src/gameutils/botlib_game_map_loader.cpp
     src/gameutils/botlib_game_object_flag_resetter.cpp

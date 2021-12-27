@@ -29,8 +29,6 @@ void GameMap::init(unsigned int poolSize,
 
 void GameMap::present()
 {
-    using namespace std::placeholders;
-
     static GameObjectType presentOrder[] = {
         GameObjectType::TILE,
         GameObjectType::ROBOT,
@@ -39,8 +37,6 @@ void GameMap::present()
     };
     constexpr int presentTypeCount = 4;
     static GameObjectPresenter presenter;
-    static Accessor accessor = std::bind(&GameObjectPresenter::present,
-                                         &presenter, _1);
 
     SimpleShaderProgram& program = Graphics::simpleShader();
     program.setViewportOrigin(viewportOrigin_);
@@ -48,7 +44,7 @@ void GameMap::present()
     for (unsigned int i = 0; i < presentTypeCount; ++i)
     {
         presenter.reset(presentOrder[i]);
-        accessRegion(presentArea_, accessor);
+        accessRegion(presentArea_, presenter);
     }
 }
 
@@ -175,7 +171,7 @@ Region<int> GameMap::getCollideArea(const Region<float>& r) const
 }
 
 void GameMap::accessRegion(const Region<int>& r,
-                           Accessor& accessor)
+                           GameMapAccessor& accessor)
 {
     GameMapItem* item, * next;
 
@@ -184,11 +180,12 @@ void GameMap::accessRegion(const Region<int>& r,
         auto& row = map_[rowIdx];
         for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
         {
-            for (item = row[colIdx].first(); item; item = next)
+            ItemList& itemList = row[colIdx];
+            for (item = itemList.first(); item; item = next)
             {
                 next = item->next();
 
-                if (!accessor(item->obj()))
+                if (!accessor.run(itemList, item))
                 {
                     return;
                 }

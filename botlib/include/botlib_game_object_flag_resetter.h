@@ -1,17 +1,18 @@
 #ifndef INCLUDED_BOTLIB_GAME_OBJECT_FLAG_RESETTER_H
 #define INCLUDED_BOTLIB_GAME_OBJECT_FLAG_RESETTER_H
 
-#include <botlib_game_object.h>
+#include <botlib_game_map_accessor.h>
 
 namespace mcdane {
 namespace botlib {
 
-class GameObjectFlagResetter {
+class GameObjectFlagResetter: public GameMapAccessor {
 public:
     void reset(GameObject::Flag flag,
                bool value);
 
-    bool run(GameObject* o);
+    bool run(ItemList& itemList,
+             GameMapItem* item) override;
 
 private:
     GameObject::Flag flag_;
