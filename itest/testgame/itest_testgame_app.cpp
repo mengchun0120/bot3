@@ -23,6 +23,8 @@ TestGameApp::TestGameApp(const std::string& configFile,
 
     Graphics::initInstance(cfg.simpleVertexShaderFiles(),
                            cfg.simpleFragShaderFiles(),
+                           cfg.particleVertexShaderFiles(),
+                           cfg.particleFragShaderFiles(),
                            cfg.fontDir());
 
     GameLib::initInstance(cfg.picDir(),

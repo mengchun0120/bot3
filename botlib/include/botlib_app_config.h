@@ -42,6 +42,10 @@ public:
 
     inline const std::vector<std::string>& simpleFragShaderFiles() const;
 
+    inline const std::vector<std::string>& particleVertexShaderFiles() const;
+
+    inline const std::vector<std::string>& particleFragShaderFiles() const;
+
     inline const std::string& buttonConfigFile() const;
 
     inline const std::string& labelConfigFile() const;
@@ -101,6 +105,8 @@ private:
     std::string libDir_;
     std::vector<std::string> simpleVertexShaderFiles_;
     std::vector<std::string> simpleFragShaderFiles_;
+    std::vector<std::string> particleVertexShaderFiles_;
+    std::vector<std::string> particleFragShaderFiles_;
     std::string buttonConfigFile_;
     std::string labelConfigFile_;
     std::string messageBoxConfigFile_;
@@ -174,6 +180,16 @@ const std::vector<std::string>& AppConfig::simpleVertexShaderFiles() const
 const std::vector<std::string>& AppConfig::simpleFragShaderFiles() const
 {
     return simpleFragShaderFiles_;
+}
+
+const std::vector<std::string>& AppConfig::particleVertexShaderFiles() const
+{
+    return particleVertexShaderFiles_;
+}
+
+const std::vector<std::string>& AppConfig::particleFragShaderFiles() const
+{
+    return particleFragShaderFiles_;
 }
 
 const std::string& AppConfig::buttonConfigFile() const

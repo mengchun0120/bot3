@@ -85,19 +85,32 @@ void AppConfig::loadDirectories(const rapidjson::Document& doc,
 
 void AppConfig::loadShaderFiles(const rapidjson::Document& doc)
 {
-    std::vector<std::string> vertexShaderFiles, fragShaderFiles;
+    std::vector<std::string> simpleVertexShaderFiles1;
+    std::vector<std::string> simpleFragShaderFiles1;
+    std::vector<std::string> particleVertexShaderFiles1;
+    std::vector<std::string> particleFragShaderFiles1;
 
     std::vector<JsonParamPtr> params{
-        jsonParam(vertexShaderFiles, {"shaders", "simpleVertexShaderFiles"},
+        jsonParam(simpleVertexShaderFiles1,
+                  {"shaders", "simpleVertexShaderFiles"},
                   true, k_nonEmptyStrVecV),
-        jsonParam(fragShaderFiles, {"shaders", "simpleFragShaderFiles"},
+        jsonParam(simpleFragShaderFiles1,
+                  {"shaders", "simpleFragShaderFiles"},
+                  true, k_nonEmptyStrVecV),
+        jsonParam(particleVertexShaderFiles1,
+                  {"shaders", "particleVertexShaderFiles"},
+                  true, k_nonEmptyStrVecV),
+        jsonParam(particleFragShaderFiles1,
+                  {"shaders", "particleFragShaderFiles"},
                   true, k_nonEmptyStrVecV)
     };
 
     parse(params, doc);
 
-    marshalFileNames(simpleVertexShaderFiles_, vertexShaderFiles, glslDir_);
-    marshalFileNames(simpleFragShaderFiles_, fragShaderFiles, glslDir_);
+    marshalFileNames(simpleVertexShaderFiles_, simpleVertexShaderFiles1, glslDir_);
+    marshalFileNames(simpleFragShaderFiles_, simpleFragShaderFiles1, glslDir_);
+    marshalFileNames(particleVertexShaderFiles_, particleVertexShaderFiles1, glslDir_);
+    marshalFileNames(particleFragShaderFiles_, particleFragShaderFiles1, glslDir_);
 }
 
 void AppConfig::loadConfigFiles(const rapidjson::Document& doc)

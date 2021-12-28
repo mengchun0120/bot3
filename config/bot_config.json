@@ -17,6 +17,11 @@
         "simpleFragShaderFiles": [
             "simple_frag_shader.glsl",
             "simple_frag_shader_v2.glsl"
+        ],
+        "particleVertexShaderFiles": ["particle_vertex_shader.glsl"],
+        "particleFragShaderFiles": [
+            "particle_frag_shader.glsl",
+            "particle_frag_shader_v2.glsl"
         ]
     },
     "configs": {

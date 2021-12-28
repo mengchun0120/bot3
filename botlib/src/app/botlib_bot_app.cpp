@@ -80,6 +80,8 @@ void BotApp::setupOpenGL(const AppConfig& cfg)
 
     Graphics::initInstance(cfg.simpleVertexShaderFiles(),
                            cfg.simpleFragShaderFiles(),
+                           cfg.particleVertexShaderFiles(),
+                           cfg.particleFragShaderFiles(),
                            cfg.fontDir());
 }
 

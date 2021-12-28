@@ -49,6 +49,7 @@ set(BOTLIB_MISC_SRC
 
 set(BOTLIB_OPENGL_SRC
     src/opengl/botlib_graphics.cpp
+    src/opengl/botlib_particle_shader_program.cpp
     src/opengl/botlib_simple_shader_program.cpp
     src/opengl/botlib_text_size.cpp
     src/opengl/botlib_text_system.cpp)

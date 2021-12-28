@@ -30,6 +30,8 @@ void TestShapeApp::setupOpenGL()
 
     Graphics::initInstance(cfg.simpleVertexShaderFiles(),
                            cfg.simpleFragShaderFiles(),
+                           cfg.particleVertexShaderFiles(),
+                           cfg.particleFragShaderFiles(),
                            cfg.fontDir());
 
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

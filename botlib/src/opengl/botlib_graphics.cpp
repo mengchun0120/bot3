@@ -9,6 +9,8 @@ std::shared_ptr<Graphics> Graphics::k_instance;
 void Graphics::initInstance(
                     const std::vector<std::string>& simpleVertexShaderFiles,
                     const std::vector<std::string>& simpleFragShaderFiles,
+                    const std::vector<std::string>& particleVertexShaderFiles,
+                    const std::vector<std::string>& particleFragShaderFiles,
                     const std::string& fontDir)
 {
     if (k_instance)
@@ -17,16 +19,22 @@ void Graphics::initInstance(
         return;
     }
 
-    Graphics* g = new Graphics(simpleVertexShaderFiles, simpleFragShaderFiles,
+    Graphics* g = new Graphics(simpleVertexShaderFiles,
+                               simpleFragShaderFiles,
+                               particleVertexShaderFiles,
+                               particleFragShaderFiles,
                                fontDir);
     k_instance.reset(g);
 }
 
 Graphics::Graphics(const std::vector<std::string>& simpleVertexShaderFiles,
                    const std::vector<std::string>& simpleFragShaderFiles,
+                   const std::vector<std::string>& particleVertexShaderFiles,
+                   const std::vector<std::string>& particleFragShaderFiles,
                    const std::string& fontDir)
 {
     simpleShader_.init(simpleVertexShaderFiles, simpleFragShaderFiles);
+    particleShader_.init(particleVertexShaderFiles, particleFragShaderFiles);
     textSys_.load(fontDir);
 }
 

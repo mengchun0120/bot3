@@ -1,5 +1,9 @@
 #version 330
 
+#ifdef GL_ES
+precision mediump float;
+#endif
+
 uniform bool useColor;
 uniform bool useTexColor;
 uniform vec4 color;

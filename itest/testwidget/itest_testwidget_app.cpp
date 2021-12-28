@@ -21,6 +21,8 @@ TestWidgetApp::TestWidgetApp(const std::string& configFile,
     const AppConfig& cfg = AppConfig::getInstance();
     Graphics::initInstance(cfg.simpleVertexShaderFiles(),
                            cfg.simpleFragShaderFiles(),
+                           cfg.particleVertexShaderFiles(),
+                           cfg.particleFragShaderFiles(),
                            cfg.fontDir());
 
     Button::initConfig(cfg.buttonConfigFile(),
