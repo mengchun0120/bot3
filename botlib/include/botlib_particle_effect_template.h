@@ -17,7 +17,9 @@ public:
                            float initSpeed1,
                            float duration1,
                            float particleSize1,
-                           const std::vector<commonlib::Vector2>& directions,
+                           const std::vector<commonlib::Vector2>& startPos,
+                           const std::vector<commonlib::Vector2>& direction,
+                           const std::vector<float>& initSpeed,
                            const commonlib::Texture* texture1,
                            const commonlib::Color* color1);
 
@@ -33,11 +35,11 @@ public:
 
     inline float particleSize() const;
 
-    inline const commonlib::VertexArray &directionVertexArray() const;
+    inline const commonlib::VertexArray& vertexArray() const;
 
-    inline const commonlib::Texture *texture() const;
+    inline const commonlib::Texture* texture() const;
 
-    inline const commonlib::Color *color() const;
+    inline const commonlib::Color* color() const;
 
 protected:
     int numParticles_;
@@ -45,7 +47,7 @@ protected:
     float initSpeed_;
     float duration_;
     float particleSize_;
-    commonlib::VertexArray directionVertexArray_;
+    commonlib::VertexArray vertexArray_;
     const commonlib::Texture *texture_;
     const commonlib::Color *color_;
 };
@@ -75,9 +77,9 @@ float ParticleEffectTemplate::particleSize() const
     return particleSize_;
 }
 
-const commonlib::VertexArray& ParticleEffectTemplate::directionVertexArray() const
+const commonlib::VertexArray& ParticleEffectTemplate::vertexArray() const
 {
-    return directionVertexArray_;
+    return vertexArray_;
 }
 
 const commonlib::Texture* ParticleEffectTemplate::texture() const

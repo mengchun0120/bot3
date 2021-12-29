@@ -4,12 +4,13 @@ uniform vec2 viewportSize;
 uniform vec2 viewportOrigin;
 uniform vec2 ref;
 uniform float curTime;
-uniform float initSpeed;
 uniform float acceleration;
 uniform float particleSize;
+uniform float duration;
 
 in vec2 startPos;
 in vec2 direction;
+in float initSpeed;
 out float alpha;
 
 void main()
@@ -21,7 +22,7 @@ void main()
 
     gl_Position = vec4(pos * 2.0 / viewportSize, 0.0, 1.0);
 
-    alpha = 1.0 - acceleration * curTime / initSpeed;
+    alpha = 1.0 - curTime / duration;
     if (alpha < 0.0)
     {
         alpha = 0.0;

@@ -47,10 +47,10 @@ private:
     GLint refLoc_;
     GLint curTimeLoc_;
     GLint accelerationLoc_;
-    GLint initSpeedLoc_;
     GLint particleSizeLoc_;
     GLint startPosLoc_;
     GLint directionLoc_;
+    GLint initSpeedLoc_;
     GLint textureLoc_;
     GLint colorLoc_;
 };

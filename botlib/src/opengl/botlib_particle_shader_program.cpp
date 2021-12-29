@@ -19,7 +19,7 @@ void ParticleShaderProgram::init(const std::vector<std::string>& vertexShaderFil
 
 void ParticleShaderProgram::setStartPosDirection(const VertexArray& va)
 {
-    if (va.numBufferBlocks() != 2)
+    if (va.numBufferBlocks() != 3)
     {
         THROW_EXCEPT(OpenGLException, "Invalid VertexArray");
     }
@@ -33,7 +33,6 @@ void ParticleShaderProgram::setStartPosDirection(const VertexArray& va)
                           GL_FALSE,
                           va.stride(0),
                           reinterpret_cast<void*>(0));
-
     glEnableVertexAttribArray(startPosLoc_);
 
     glVertexAttribPointer(directionLoc_,
@@ -42,9 +41,11 @@ void ParticleShaderProgram::setStartPosDirection(const VertexArray& va)
                           GL_FALSE,
                           va.stride(1),
                           reinterpret_cast<void*>(va.offset(1)));
-
     glEnableVertexAttribArray(directionLoc_);
 
+    glVertexAttribPointer(initSpeedLoc_, 1, GL_FLOAT, GL_FALSE,
+                          va.stride(2), reinterpret_cast<void*>(va.offset(2)));
+    glEnableVertexAttribArray(initSpeedLoc_);
 }
 
 void ParticleShaderProgram::setTexture(GLuint textureId)
@@ -61,10 +62,10 @@ void ParticleShaderProgram::initLocations()
     refLoc_ = getUniformLocation("ref");
     curTimeLoc_ = getUniformLocation("curTime");
     accelerationLoc_ = getUniformLocation("acceleration");
-    initSpeedLoc_ = getUniformLocation("initSpeed");
     particleSizeLoc_ = getUniformLocation("particleSize");
     startPosLoc_ = getAttribLocation("startPos");
     directionLoc_ = getAttribLocation("direction");
+    initSpeedLoc_ = getAttribLocation("initSpeed");
     colorLoc_ = getUniformLocation("color");
     textureLoc_ = getUniformLocation("texture");
 }
