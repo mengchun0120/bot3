@@ -17,28 +17,41 @@ void ParticleShaderProgram::init(const std::vector<std::string>& vertexShaderFil
     LOG_INFO << "ParticleShaderProgram initialized" << LOG_END;
 }
 
-void ParticleShaderProgram::setDirection(const commonlib::VertexArray& va)
+void ParticleShaderProgram::setStartPosDirection(const VertexArray& va)
 {
-    if (va.numBufferBlocks() == 0)
+    if (va.numBufferBlocks() != 2)
     {
-        THROW_EXCEPT(OpenGLException, "VertexArray contains zero buffer block");
+        THROW_EXCEPT(OpenGLException, "Invalid VertexArray");
     }
 
     glBindVertexArray(va.arrayObj());
     glBindBuffer(GL_ARRAY_BUFFER, va.bufferObj());
 
-    glVertexAttribPointer(directionLoc_,
+    glVertexAttribPointer(startPosLoc_,
                           Constants::FLOATS_PER_POS,
                           GL_FLOAT,
                           GL_FALSE,
                           va.stride(0),
-                          reinterpret_cast<void *>(0));
+                          reinterpret_cast<void*>(0));
+
+    glEnableVertexAttribArray(startPosLoc_);
+
+    glVertexAttribPointer(directionLoc_,
+                          Constants::FLOATS_PER_DIRECTION,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          va.stride(1),
+                          reinterpret_cast<void*>(va.offset(1)));
 
     glEnableVertexAttribArray(directionLoc_);
+
 }
 
 void ParticleShaderProgram::setTexture(GLuint textureId)
 {
+    glUniform1i(textureLoc_, 0);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
 void ParticleShaderProgram::initLocations()
@@ -50,9 +63,10 @@ void ParticleShaderProgram::initLocations()
     accelerationLoc_ = getUniformLocation("acceleration");
     initSpeedLoc_ = getUniformLocation("initSpeed");
     particleSizeLoc_ = getUniformLocation("particleSize");
+    startPosLoc_ = getAttribLocation("startPos");
+    directionLoc_ = getAttribLocation("direction");
     colorLoc_ = getUniformLocation("color");
     textureLoc_ = getUniformLocation("texture");
-    directionLoc_ = getAttribLocation("direction");
 }
 
 } // end of namespace botlib

@@ -34,7 +34,7 @@ public:
 
     inline void setInitSpeed(float speed);
 
-    void setDirection(const commonlib::VertexArray& va);
+    void setStartPosDirection(const commonlib::VertexArray& va);
 
     void setTexture(GLuint textureId);
 
@@ -49,6 +49,7 @@ private:
     GLint accelerationLoc_;
     GLint initSpeedLoc_;
     GLint particleSizeLoc_;
+    GLint startPosLoc_;
     GLint directionLoc_;
     GLint textureLoc_;
     GLint colorLoc_;

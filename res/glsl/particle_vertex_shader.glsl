@@ -8,12 +8,13 @@ uniform float initSpeed;
 uniform float acceleration;
 uniform float particleSize;
 
+in vec2 startPos;
 in vec2 direction;
 out float alpha;
 
 void main()
 {
-    vec2 pos = ref + direction *
+    vec2 pos = ref + startPos + direction *
                (initSpeed * curTime - acceleration * curTime * curTime / 2.0);
 
     pos -= viewportOrigin;
