@@ -29,6 +29,10 @@ set(BOTLIB_GAMEOBJ_SRC
 
 set(BOTLIB_GAMEUTILS_SRC
     src/gameutils/botlib_add_object_checker.cpp
+    src/gameutils/botlib_ai_robot_template_parser.cpp
+    src/gameutils/botlib_component_parser.cpp
+    src/gameutils/botlib_component_template_parser.cpp
+    src/gameutils/botlib_composite_object_template_parser.cpp
     src/gameutils/botlib_dead_object_remover.cpp
     src/gameutils/botlib_game_lib.cpp
     src/gameutils/botlib_game_map.cpp
@@ -37,12 +41,17 @@ set(BOTLIB_GAMEUTILS_SRC
     src/gameutils/botlib_game_map_loader.cpp
     src/gameutils/botlib_game_object_flag_resetter.cpp
     src/gameutils/botlib_game_object_presenter.cpp
+    src/gameutils/botlib_game_object_template_parser.cpp
     src/gameutils/botlib_game_object_updater.cpp
     src/gameutils/botlib_game_utils.cpp
-    src/gameutils/botlib_lib_parser.cpp
     src/gameutils/botlib_missile_hit_checker.cpp
+    src/gameutils/botlib_missile_template_parser.cpp
     src/gameutils/botlib_nonpassthrough_collide_checker.cpp
+    src/gameutils/botlib_rect_parser.cpp
     src/gameutils/botlib_robot_hit_missile_checker.cpp
+    src/gameutils/botlib_robot_template_parser.cpp
+    src/gameutils/botlib_texture_parser.cpp
+    src/gameutils/botlib_tile_template_parser.cpp
     src/gameutils/botlib_time_delta_smoother.cpp)
 
 set(BOTLIB_MISC_SRC

@@ -1,5 +1,11 @@
 #include <commonlib_log.h>
-#include <botlib_lib_parser.h>
+#include <botlib_ai_robot_template_parser.h>
+#include <botlib_component_template_parser.h>
+#include <botlib_missile_template_parser.h>
+#include <botlib_rect_parser.h>
+#include <botlib_robot_template_parser.h>
+#include <botlib_texture_parser.h>
+#include <botlib_tile_template_parser.h>
 #include <botlib_game_lib.h>
 
 using namespace mcdane::commonlib;
