@@ -12,9 +12,7 @@ namespace botlib {
 
 class ParticleEffectTemplate: public GameObjectTemplate {
 public:
-    ParticleEffectTemplate(float span1,
-                           float acceleration1,
-                           float initSpeed1,
+    ParticleEffectTemplate(float acceleration1,
                            float duration1,
                            float particleSize1,
                            const std::vector<commonlib::Vector2>& startPos,
@@ -29,8 +27,6 @@ public:
 
     inline float acceleration() const;
 
-    inline float initSpeed() const;
-
     inline float duration() const;
 
     inline float particleSize() const;
@@ -40,6 +36,25 @@ public:
     inline const commonlib::Texture* texture() const;
 
     inline const commonlib::Color* color() const;
+
+protected:
+    void loadVertexArray(const std::vector<commonlib::Vector2>& startPos,
+                         const std::vector<commonlib::Vector2>& direction,
+                         const std::vector<float>& initSpeed);
+
+    void resetSpan(float duration1,
+                   float acceleration1,
+                   float particleSize1,
+                   const std::vector<commonlib::Vector2>& startPos,
+                   const std::vector<commonlib::Vector2>& direction,
+                   const std::vector<float>& initSpeed);
+
+    float calculateSpan(float duration1,
+                        float acceleration1,
+                        float particleSize1,
+                        const commonlib::Vector2& startPos,
+                        const commonlib::Vector2& direction,
+                        float initSpeed);
 
 protected:
     int numParticles_;
@@ -60,11 +75,6 @@ int ParticleEffectTemplate::numParticles() const
 float ParticleEffectTemplate::acceleration() const
 {
     return acceleration_;
-}
-
-float ParticleEffectTemplate::initSpeed() const
-{
-    return initSpeed_;
 }
 
 float ParticleEffectTemplate::duration() const
