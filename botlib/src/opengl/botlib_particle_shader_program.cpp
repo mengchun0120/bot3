@@ -17,7 +17,7 @@ void ParticleShaderProgram::init(const std::vector<std::string>& vertexShaderFil
     LOG_INFO << "ParticleShaderProgram initialized" << LOG_END;
 }
 
-void ParticleShaderProgram::setStartPosDirection(const VertexArray& va)
+void ParticleShaderProgram::setStartPosDirectionSpeed(const VertexArray& va)
 {
     if (va.numBufferBlocks() != 3)
     {

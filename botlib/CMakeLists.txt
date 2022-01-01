@@ -20,6 +20,7 @@ set(BOTLIB_GAMEOBJ_SRC
     src/gameobj/botlib_hp_indicator.cpp
     src/gameobj/botlib_missile.cpp
     src/gameobj/botlib_missile_template.cpp
+    src/gameobj/botlib_particle_effect.cpp
     src/gameobj/botlib_particle_effect_template.cpp
     src/gameobj/botlib_robot.cpp
     src/gameobj/botlib_robot_template.cpp

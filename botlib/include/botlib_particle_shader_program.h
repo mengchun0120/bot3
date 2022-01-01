@@ -32,9 +32,7 @@ public:
 
     inline void setColor(const commonlib::Color& color);
 
-    inline void setInitSpeed(float speed);
-
-    void setStartPosDirection(const commonlib::VertexArray& va);
+    void setStartPosDirectionSpeed(const commonlib::VertexArray& va);
 
     void setTexture(GLuint textureId);
 
@@ -92,11 +90,6 @@ void ParticleShaderProgram::setParticleSize(float particleSize)
 void ParticleShaderProgram::setColor(const commonlib::Color& color)
 {
     glUniform4fv(colorLoc_, 1, reinterpret_cast<const GLfloat*>(&color));
-}
-
-void ParticleShaderProgram::setInitSpeed(float speed)
-{
-    glUniform1f(initSpeedLoc_, speed);
 }
 
 } // end of namespace botlib
