@@ -19,7 +19,7 @@ public:
                            const std::vector<commonlib::Vector2>& direction,
                            const std::vector<float>& initSpeed,
                            const commonlib::Texture* texture1,
-                           const commonlib::Color* color1);
+                           const commonlib::Color& color1);
 
     ~ParticleEffectTemplate() override = default;
 
@@ -35,7 +35,7 @@ public:
 
     inline const commonlib::Texture* texture() const;
 
-    inline const commonlib::Color* color() const;
+    inline const commonlib::Color& color() const;
 
 protected:
     void loadVertexArray(const std::vector<commonlib::Vector2>& startPos,
@@ -64,7 +64,7 @@ protected:
     float particleSize_;
     commonlib::VertexArray vertexArray_;
     const commonlib::Texture *texture_;
-    const commonlib::Color *color_;
+    const commonlib::Color color_;
 };
 
 int ParticleEffectTemplate::numParticles() const
@@ -97,7 +97,7 @@ const commonlib::Texture* ParticleEffectTemplate::texture() const
     return texture_;
 }
 
-const commonlib::Color* ParticleEffectTemplate::color() const
+const commonlib::Color& ParticleEffectTemplate::color() const
 {
     return color_;
 }

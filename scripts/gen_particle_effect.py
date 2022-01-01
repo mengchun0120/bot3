@@ -4,10 +4,17 @@ import random
 import math
 import json
 
-def write_list(outputList, fileName):
+def write_scalar_list(outputList, fileName):
     with open(fileName, "w") as f:
         for i in outputList:
             f.write(f"{i}\n")
+
+def write_vector_list(outputList, fileName):
+    with open(fileName, "w") as f:
+        for i in outputList:
+            for k in i:
+                f.write(f"{k}")
+            f.write("\n")
 
 def gen_effects(numParticles, startRadius, minSpeed, maxSpeed,
                 randomDirection, prefix):
@@ -30,9 +37,9 @@ def gen_effects(numParticles, startRadius, minSpeed, maxSpeed,
 
         initSpeedList.append(random.uniform(minSpeed, maxSpeed))
 
-    write_list(startPosList, f"{prefix}_start_pos.txt")
-    write_list(directionList, f"{prefix}_direction.txt")
-    write_list(initSpeedList, f"{prefix}_init_speed.txt")
+    write_vector_list(startPosList, f"{prefix}_start_pos.txt")
+    write_vector_list(directionList, f"{prefix}_direction.txt")
+    write_scalar_list(initSpeedList, f"{prefix}_init_speed.txt")
 
 def main():
     parser = argparse.ArgumentParser(description="Generate particle effect")

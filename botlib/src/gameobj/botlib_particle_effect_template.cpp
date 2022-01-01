@@ -14,7 +14,7 @@ ParticleEffectTemplate::ParticleEffectTemplate(float acceleration1,
                                                const std::vector<Vector2>& direction,
                                                const std::vector<float>& initSpeed,
                                                const Texture* texture1,
-                                               const Color* color1)
+                                               const Color& color1)
     : GameObjectTemplate(GameObjectType::EFFECT, 0.0f, 0.0f)
     , numParticles_(startPos.size() / Constants::FLOATS_PER_DIRECTION)
     , acceleration_(acceleration1)

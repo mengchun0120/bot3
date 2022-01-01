@@ -47,6 +47,7 @@ set(BOTLIB_GAMEUTILS_SRC
     src/gameutils/botlib_missile_hit_checker.cpp
     src/gameutils/botlib_missile_template_parser.cpp
     src/gameutils/botlib_nonpassthrough_collide_checker.cpp
+    src/gameutils/botlib_particle_effect_template_parser.cpp
     src/gameutils/botlib_rect_parser.cpp
     src/gameutils/botlib_robot_hit_missile_checker.cpp
     src/gameutils/botlib_robot_template_parser.cpp
@@ -55,7 +56,8 @@ set(BOTLIB_GAMEUTILS_SRC
     src/gameutils/botlib_time_delta_smoother.cpp)
 
 set(BOTLIB_MISC_SRC
-    src/misc/botlib_constants.cpp)
+    src/misc/botlib_constants.cpp
+    src/misc/botlib_typedef.cpp)
 
 set(BOTLIB_OPENGL_SRC
     src/opengl/botlib_graphics.cpp
