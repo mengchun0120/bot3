@@ -30,5 +30,9 @@
     {
         "name": "red_missile",
         "file": "red_missile.png"
+    },
+    {
+        "name": "small_ball",
+        "file": "small_ball.png"
     }
 ]

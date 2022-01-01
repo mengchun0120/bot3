@@ -1,0 +1,13 @@
+[
+    {
+        "name": "red_explosion",
+        "acceleration": 0.0001,
+        "duration": 2.0,
+        "particleSize": 10.0,
+        "startPosFile": "red_explosion_start_pos.txt",
+        "directionFile": "red_explosion_direction.txt",
+        "initSpeedFile": "red_explosion_init_speed.txt",
+        "texture": "small_ball",
+        "color": [255, 0, 0, 255]
+    }
+]

@@ -8,6 +8,8 @@
 #include <botlib_tile_template.h>
 #include <botlib_missile_template.h>
 #include <botlib_ai_robot_template.h>
+#include <botlib_particle_effect_template.h>
+#include <botlib_typedef.h>
 
 namespace mcdane {
 namespace botlib {
@@ -15,12 +17,14 @@ namespace botlib {
 class GameLib {
 public:
     static void initInstance(const std::string& picDir,
+                             const std::string& libDir,
                              const std::string& textureLibFile,
                              const std::string& rectLibFile,
                              const std::string& componentTemplateLibFile,
                              const std::string& tileTemplateLibFile,
                              const std::string& missileTemplateLibFile,
-                             const std::string& aiRobotTemplateLibFile);
+                             const std::string& aiRobotTemplateLibFile,
+                             const std::string& particleEffectTemplateLibFile);
 
     inline static const GameLib& getInstance();
 
@@ -41,6 +45,9 @@ public:
     inline const AIRobotTemplate* findAIRobotTemplate(
                                                 const std::string& name) const;
 
+    inline const ParticleEffectTemplate* findPartilceEffectTemplate(
+                                                const std::string& name) const;
+
     inline float maxObjSpan() const;
 
     inline float maxCollideBreath() const;
@@ -49,12 +56,14 @@ private:
     GameLib() = default;
 
     void load(const std::string& picDir,
+              const std::string& libDir,
               const std::string& textureLibFile,
               const std::string& rectLibFile,
               const std::string& componentTemplateLibFile,
               const std::string& tileTemplateLibFile,
               const std::string& missileTemplateLibFile,
-              const std::string& aiRobotTemplateLibFile);
+              const std::string& aiRobotTemplateLibFile,
+              const std::string& particleEffectTemplateLibFile);
 
     void calculateMaxObjSpan();
 
@@ -63,12 +72,13 @@ private:
 private:
     static std::shared_ptr<GameLib> k_gameLib;
 
-    commonlib::NamedMap<commonlib::Texture> textureLib_;
-    commonlib::NamedMap<Rectangle> rectLib_;
-    commonlib::NamedMap<ComponentTemplate> componentTemplateLib_;
-    commonlib::NamedMap<TileTemplate> tileTemplateLib_;
-    commonlib::NamedMap<MissileTemplate> missileTemplateLib_;
-    commonlib::NamedMap<AIRobotTemplate> aiRobotTemplateLib_;
+    TextureLib textureLib_;
+    RectLib rectLib_;
+    ComponentTemplateLib componentTemplateLib_;
+    TileTemplateLib tileTemplateLib_;
+    MissileTemplateLib missileTemplateLib_;
+    AIRobotTemplateLib aiRobotTemplateLib_;
+    ParticleEffectTemplateLib particleEffectTemplateLib_;
     float maxObjSpan_;
     float maxCollideBreath_;
 };
@@ -109,6 +119,12 @@ const AIRobotTemplate* GameLib::findAIRobotTemplate(
                                                 const std::string& name) const
 {
     return aiRobotTemplateLib_.search(name);
+}
+
+const ParticleEffectTemplate* GameLib::findPartilceEffectTemplate(
+                                                const std::string& name) const
+{
+    return particleEffectTemplateLib_.search(name);
 }
 
 float GameLib::maxObjSpan() const

@@ -19,6 +19,7 @@ class ComponentTemplate;
 class TileTemplate;
 class MissileTemplate;
 class AIRobotTemplate;
+class ParticleEffectTemplate;
 
 using TextureLib = commonlib::NamedMap<commonlib::Texture>;
 using RectLib = commonlib::NamedMap<Rectangle>;
@@ -26,6 +27,7 @@ using ComponentTemplateLib = commonlib::NamedMap<ComponentTemplate>;
 using TileTemplateLib = commonlib::NamedMap<TileTemplate>;
 using MissileTemplateLib = commonlib::NamedMap<MissileTemplate>;
 using AIRobotTemplateLib = commonlib::NamedMap<AIRobotTemplate>;
+using ParticleEffectTemplateLib = commonlib::NamedMap<ParticleEffectTemplate>;
 
 } // end of namespace botlib
 } // end of namespace mcdane

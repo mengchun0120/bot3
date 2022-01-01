@@ -12,8 +12,10 @@ namespace mcdane {
 namespace botlib {
 
 ParticleEffectTemplateParser::ParticleEffectTemplateParser(
-                                            const NamedMap<Texture>& textureLib)
-    : textureLib_(textureLib)
+                                        const std::string& libDir,
+                                        const NamedMap<Texture>& textureLib)
+    : libDir_(libDir)
+    , textureLib_(textureLib)
     , params_{
         jsonParam(acceleration_, "acceleration", true, ge(0.0f)),
         jsonParam(duration_, "duration", true, gt(0.0f)),
@@ -42,9 +44,9 @@ ParticleEffectTemplate* ParticleEffectTemplateParser::operator()(
     std::vector<Vector2> direction;
     std::vector<float> initSpeed;
 
-    readList(startPos, startPosFile_);
-    readList(direction, directionFile_);
-    readList(initSpeed, initSpeedFile_);
+    readList(startPos, constructPath({libDir_, startPosFile_}));
+    readList(direction, constructPath({libDir_, directionFile_}));
+    readList(initSpeed, constructPath({libDir_, initSpeedFile_}));
 
     return new ParticleEffectTemplate(acceleration_,
                                       duration_,

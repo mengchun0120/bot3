@@ -13,11 +13,13 @@ namespace botlib {
 
 class ParticleEffectTemplateParser {
 public:
-    ParticleEffectTemplateParser(const TextureLib& textureLib);
+    ParticleEffectTemplateParser(const std::string& libDir,
+                                 const TextureLib& textureLib);
 
     ParticleEffectTemplate* operator()(const rapidjson::Value& v);
 
 private:
+    std::string libDir_;
     const TextureLib& textureLib_;
     float acceleration_;
     float duration_;

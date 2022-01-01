@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="188.15381"
-     inkscape:cy="890.82143"
+     inkscape:zoom="15.839192"
+     inkscape:cx="312.30009"
+     inkscape:cy="1004.8987"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -88,5 +88,26 @@
        inkscape:export-ydpi="90.606743"
        rx="2.0983622"
        ry="2.1651795" />
+    <rect
+       style="fill:#00ffff;fill-opacity:1;stroke:none;stroke-width:0.13229166;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect826"
+       width="17.121954"
+       height="10.440216"
+       x="73.215149"
+       y="25.821651" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2">
+    <ellipse
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.05780691;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path824"
+       cx="81.555565"
+       cy="30.114868"
+       rx="1.4671935"
+       ry="1.4223207"
+       inkscape:export-xdpi="90.606743"
+       inkscape:export-ydpi="90.606743" />
   </g>
 </svg>

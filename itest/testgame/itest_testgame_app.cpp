@@ -28,12 +28,14 @@ TestGameApp::TestGameApp(const std::string& configFile,
                            cfg.fontDir());
 
     GameLib::initInstance(cfg.picDir(),
+                          cfg.libDir(),
                           cfg.textureLibFile(),
                           cfg.rectLibFile(),
                           cfg.componentTemplateLibFile(),
                           cfg.tileTemplateLibFile(),
                           cfg.missileTemplateLibFile(),
-                          cfg.aiRobotTemplateLibFile());
+                          cfg.aiRobotTemplateLibFile(),
+                          cfg.particleEffectTemplateLibFile());
 
     HPIndicator::initConfig(cfg.hpIndicatorConfigFile());
 

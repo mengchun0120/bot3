@@ -152,6 +152,9 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
         jsonParam(missileTemplateLibFile_, {"libraries", "missileTemplateLibFile"},
                   true, k_nonEmptyStrV),
         jsonParam(aiRobotTemplateLibFile_, {"libraries", "aiRobotTemplateLibFile"},
+                  true, k_nonEmptyStrV),
+        jsonParam(particleEffectTemplateLibFile_,
+                  {"libraries", "particleEffectTemplateLibFile"},
                   true, k_nonEmptyStrV)
     };
 
@@ -163,6 +166,8 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
     tileTemplateLibFile_ = constructPath({libDir_, tileTemplateLibFile_});
     missileTemplateLibFile_ = constructPath({libDir_, missileTemplateLibFile_});
     aiRobotTemplateLibFile_ = constructPath({libDir_, aiRobotTemplateLibFile_});
+    particleEffectTemplateLibFile_ = constructPath(
+                                     {libDir_, particleEffectTemplateLibFile_});
 }
 
 void AppConfig::loadGameSettings(const rapidjson::Document& doc)
