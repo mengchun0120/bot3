@@ -8,6 +8,7 @@
 #include <fstream>
 #include <algorithm>
 #include <commonlib_exception.h>
+#include <commonlib_log.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -28,14 +29,18 @@ void readList(std::vector<T>& v,
     std::ifstream in(fileName);
     std::list<T> tmp;
 
-    while (in.good())
+    if (!in)
     {
-        T t;
-        in >> t;
+        THROW_EXCEPT(FileException, "Failed to open file " + fileName);
+    }
+
+    T t;
+    while (in >> t)
+    {
         tmp.push_back(t);
     }
 
-    if (!in.eof())
+    if (in.bad())
     {
         THROW_EXCEPT(FileException, "Failed to read file " + fileName);
     }

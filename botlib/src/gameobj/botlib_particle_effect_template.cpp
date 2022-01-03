@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <commonlib_log.h>
 #include <botlib_constants.h>
 #include <botlib_particle_effect_template.h>
 
@@ -16,7 +17,7 @@ ParticleEffectTemplate::ParticleEffectTemplate(float acceleration1,
                                                const Texture* texture1,
                                                const Color& color1)
     : GameObjectTemplate(GameObjectType::EFFECT, 0.0f, 0.0f)
-    , numParticles_(startPos.size() / Constants::FLOATS_PER_DIRECTION)
+    , numParticles_(startPos.size())
     , acceleration_(acceleration1)
     , particleSize_(particleSize1)
     , texture_(texture1)
@@ -25,6 +26,7 @@ ParticleEffectTemplate::ParticleEffectTemplate(float acceleration1,
     loadVertexArray(startPos, direction, initSpeed);
     resetSpan(duration1, acceleration1, particleSize1, startPos,
               direction, initSpeed);
+
 }
 
 void ParticleEffectTemplate::loadVertexArray(const std::vector<Vector2>& startPos,

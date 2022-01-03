@@ -13,7 +13,7 @@ def write_vector_list(outputList, fileName):
     with open(fileName, "w") as f:
         for i in outputList:
             for k in i:
-                f.write(f"{k}")
+                f.write(f"{k} ")
             f.write("\n")
 
 def gen_effects(numParticles, startRadius, minSpeed, maxSpeed,
