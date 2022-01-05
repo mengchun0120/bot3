@@ -29,23 +29,8 @@ void GameMap::init(unsigned int poolSize,
 
 void GameMap::present()
 {
-    static GameObjectType presentOrder[] = {
-        GameObjectType::TILE,
-        GameObjectType::ROBOT,
-        GameObjectType::MISSILE,
-        GameObjectType::EFFECT
-    };
-    constexpr int presentTypeCount = 4;
-    static GameObjectPresenter presenter;
-
-    SimpleShaderProgram& program = Graphics::simpleShader();
-    program.setViewportOrigin(viewportOrigin_);
-
-    for (unsigned int i = 0; i < presentTypeCount; ++i)
-    {
-        presenter.reset(presentOrder[i]);
-        accessRegion(presentArea_, presenter);
-    }
+    presentObjs();
+    presentParticleEffects();
 }
 
 void GameMap::addObj(GameObject* o,
@@ -302,6 +287,38 @@ void GameMap::resetPresentArea()
     int endCol = clamp(getCellIdx(viewableRegion_.right()), 0, colCount()-1);
 
     presentArea_.init(startCol, endCol, startRow, endRow);
+}
+
+void GameMap::presentObjs()
+{
+    static GameObjectType presentOrder[] = {
+        GameObjectType::TILE,
+        GameObjectType::ROBOT,
+        GameObjectType::MISSILE
+    };
+    constexpr int presentTypeCount = 3;
+
+    SimpleShaderProgram& program = Graphics::simpleShader();
+    program.use();
+    program.setViewportSize(viewportSize_);
+    program.setViewportOrigin(viewportOrigin_);
+
+    for (unsigned int i = 0; i < presentTypeCount; ++i)
+    {
+        presenter_.reset(presentOrder[i]);
+        accessRegion(presentArea_, presenter_);
+    }
+}
+
+void GameMap::presentParticleEffects()
+{
+    ParticleShaderProgram& program = Graphics::particleShader();
+    program.use();
+    program.setViewportSize(viewportSize_);
+    program.setViewportOrigin(viewportOrigin_);
+
+    presenter_.reset(GameObjectType::EFFECT);
+    accessRegion(presentArea_, presenter_);
 }
 
 } // end of namespace botlib

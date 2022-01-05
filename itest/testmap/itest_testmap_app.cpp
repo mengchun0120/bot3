@@ -65,10 +65,6 @@ void TestMapApp::setupOpenGL()
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    SimpleShaderProgram& shader = Graphics::simpleShader();
-    shader.use();
-    shader.setViewportSize(viewportSize());
 }
 
 void TestMapApp::setupMap(const std::string& mapFile)

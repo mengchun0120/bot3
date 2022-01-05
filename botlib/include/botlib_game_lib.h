@@ -45,7 +45,7 @@ public:
     inline const AIRobotTemplate* findAIRobotTemplate(
                                                 const std::string& name) const;
 
-    inline const ParticleEffectTemplate* findPartilceEffectTemplate(
+    inline const ParticleEffectTemplate* findParticleEffectTemplate(
                                                 const std::string& name) const;
 
     inline float maxObjSpan() const;
@@ -121,7 +121,7 @@ const AIRobotTemplate* GameLib::findAIRobotTemplate(
     return aiRobotTemplateLib_.search(name);
 }
 
-const ParticleEffectTemplate* GameLib::findPartilceEffectTemplate(
+const ParticleEffectTemplate* GameLib::findParticleEffectTemplate(
                                                 const std::string& name) const
 {
     return particleEffectTemplateLib_.search(name);

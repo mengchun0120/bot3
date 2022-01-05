@@ -7,6 +7,7 @@
 #include <botlib_tile.h>
 #include <botlib_missile.h>
 #include <botlib_ai_robot.h>
+#include <botlib_particle_effect.h>
 #include <botlib_add_object_checker.h>
 #include <botlib_game_map_loader.h>
 
@@ -124,6 +125,10 @@ void GameMapLoader::parseAddObject(GameMap& map,
     {
         addRobot(map, v);
     }
+    else if (typeStr_ == "particleEffect")
+    {
+        addParticleEffect(map, v);
+    }
     else
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid type " + typeStr_);
@@ -221,6 +226,24 @@ void GameMapLoader::addRobot(GameMap& map,
     }
 
     map.addObj(robot);
+}
+
+void GameMapLoader::addParticleEffect(GameMap& map,
+                                      const rapidjson::Value& v)
+{
+    const GameLib& lib = GameLib::getInstance();
+
+    const ParticleEffectTemplate* t = lib.findParticleEffectTemplate(templateStr_);
+    if (!t)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Failed to find ParticleEffectTemplate " + templateStr_);
+    }
+
+    ParticleEffect* effect = new ParticleEffect();
+    effect->init(t, pos_);
+
+    map.addObj(effect);
 }
 
 unsigned int GameMapLoader::getPoolSize(unsigned int rows,

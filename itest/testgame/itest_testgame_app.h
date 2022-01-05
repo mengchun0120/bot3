@@ -36,6 +36,10 @@ private:
 
     void setupFlagAccessor();
 
+    void presentObjs();
+
+    void presentEffects();
+
     void update();
 
 private:

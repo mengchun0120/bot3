@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <botlib_graphics.h>
 #include <botlib_game_map.h>
 #include <botlib_particle_effect.h>
@@ -22,7 +23,7 @@ void ParticleEffect::present() const
     shader.setRef(pos_);
     shader.setAcceleration(t->acceleration());
     shader.setParticleSize(t->particleSize());
-    shader.setCurTime(timeDistMs(Clock::now(), startTime_));
+    shader.setCurTime(timeDistMs(startTime_, Clock::now()));
     shader.setStartPosDirectionSpeed(t->vertexArray());
     shader.setTexture(t->texture()->id());
     shader.setColor(t->color());

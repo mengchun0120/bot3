@@ -27,6 +27,9 @@ ParticleEffectTemplate::ParticleEffectTemplate(float acceleration1,
     resetSpan(duration1, acceleration1, particleSize1, startPos,
               direction, initSpeed);
 
+    LOG_DEBUG << "numParticles=" << numParticles_
+              << " particleSize=" << particleSize_
+              << LOG_END;
 }
 
 void ParticleEffectTemplate::loadVertexArray(const std::vector<Vector2>& startPos,

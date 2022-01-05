@@ -10,6 +10,7 @@
 #include <commonlib_region.h>
 #include <commonlib_object_pool.h>
 #include <botlib_game_map_accessor.h>
+#include <botlib_game_object_presenter.h>
 
 namespace mcdane {
 namespace botlib {
@@ -101,6 +102,10 @@ private:
 
     void resetPresentArea();
 
+    void presentObjs();
+
+    void presentParticleEffects();
+
 private:
     ItemList::Deleter itemDeleter_;
     commonlib::ObjectPool<GameMapItem> itemPool_;
@@ -117,6 +122,7 @@ private:
     commonlib::Region<float> boundary_;
     commonlib::Region<float> viewableRegion_;
     commonlib::Region<int> presentArea_;
+    GameObjectPresenter presenter_;
 };
 
 int GameMap::rowCount() const

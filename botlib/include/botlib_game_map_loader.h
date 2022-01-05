@@ -36,6 +36,9 @@ private:
     void addRobot(GameMap& map,
                   const rapidjson::Value& v);
 
+    void addParticleEffect(GameMap& map,
+                           const rapidjson::Value& v);
+
     unsigned int getPoolSize(unsigned int rows,
                              unsigned int cols);
 
