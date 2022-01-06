@@ -19,6 +19,7 @@ ParticleEffectTemplate::ParticleEffectTemplate(float acceleration1,
     : GameObjectTemplate(GameObjectType::EFFECT, 0.0f, 0.0f)
     , numParticles_(startPos.size())
     , acceleration_(acceleration1)
+    , duration_(duration1)
     , particleSize_(particleSize1)
     , texture_(texture1)
     , color_(color1)

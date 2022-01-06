@@ -63,6 +63,7 @@ void ParticleShaderProgram::initLocations()
     curTimeLoc_ = getUniformLocation("curTime");
     accelerationLoc_ = getUniformLocation("acceleration");
     particleSizeLoc_ = getUniformLocation("particleSize");
+    durationLoc_ = getUniformLocation("duration");
     startPosLoc_ = getAttribLocation("startPos");
     directionLoc_ = getAttribLocation("direction");
     initSpeedLoc_ = getAttribLocation("initSpeed");

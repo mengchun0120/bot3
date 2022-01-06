@@ -3,6 +3,7 @@
 
 #include <commonlib_vector.h>
 #include <commonlib_color.h>
+#include <commonlib_log.h>
 #include <commonlib_vertex_array.h>
 #include <commonlib_shader_program.h>
 
@@ -30,6 +31,8 @@ public:
 
     inline void setParticleSize(float particleSize);
 
+    inline void setDuration(float duration);
+
     inline void setColor(const commonlib::Color& color);
 
     void setStartPosDirectionSpeed(const commonlib::VertexArray& va);
@@ -46,6 +49,7 @@ private:
     GLint curTimeLoc_;
     GLint accelerationLoc_;
     GLint particleSizeLoc_;
+    GLint durationLoc_;
     GLint startPosLoc_;
     GLint directionLoc_;
     GLint initSpeedLoc_;
@@ -85,6 +89,11 @@ void ParticleShaderProgram::setAcceleration(float acceleration)
 void ParticleShaderProgram::setParticleSize(float particleSize)
 {
     glUniform1f(particleSizeLoc_, particleSize);
+}
+
+void ParticleShaderProgram::setDuration(float duration)
+{
+    glUniform1f(durationLoc_, duration);
 }
 
 void ParticleShaderProgram::setColor(const commonlib::Color& color)

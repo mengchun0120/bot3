@@ -24,6 +24,7 @@ void ParticleEffect::present() const
     shader.setAcceleration(t->acceleration());
     shader.setParticleSize(t->particleSize());
     shader.setCurTime(timeDistMs(startTime_, Clock::now()));
+    shader.setDuration(t->duration());
     shader.setStartPosDirectionSpeed(t->vertexArray());
     shader.setTexture(t->texture()->id());
     shader.setColor(t->color());
@@ -34,7 +35,7 @@ void ParticleEffect::present() const
 void ParticleEffect::update(GameMap& map,
                             float delta)
 {
-    if (timeDistMs(Clock::now(), startTime_) >= getTemplate()->duration())
+    if (timeDistMs(startTime_, Clock::now()) >= getTemplate()->duration())
     {
         setAlive(false);
     }
