@@ -48,9 +48,9 @@ void ParticleShaderProgram::setStartPosDirectionSpeed(const VertexArray& va)
     glEnableVertexAttribArray(initSpeedLoc_);
 }
 
-void ParticleShaderProgram::setTexture(GLuint textureId)
+void ParticleShaderProgram::setPointTexture(GLuint textureId)
 {
-    glUniform1i(textureLoc_, 0);
+    glUniform1i(pointTextureLoc_, 0);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
 }
@@ -68,7 +68,7 @@ void ParticleShaderProgram::initLocations()
     directionLoc_ = getAttribLocation("direction");
     initSpeedLoc_ = getAttribLocation("initSpeed");
     colorLoc_ = getUniformLocation("color");
-    textureLoc_ = getUniformLocation("texture");
+    pointTextureLoc_ = getUniformLocation("pointTexture");
 }
 
 } // end of namespace botlib

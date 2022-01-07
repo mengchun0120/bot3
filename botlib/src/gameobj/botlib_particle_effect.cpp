@@ -13,6 +13,7 @@ void ParticleEffect::init(const ParticleEffectTemplate* t,
 {
     GameObject::init(t, pos);
     startTime_ = Clock::now();
+    elapsedTime_ = 0.0f;
 }
 
 void ParticleEffect::present() const
@@ -23,10 +24,10 @@ void ParticleEffect::present() const
     shader.setRef(pos_);
     shader.setAcceleration(t->acceleration());
     shader.setParticleSize(t->particleSize());
-    shader.setCurTime(timeDistMs(startTime_, Clock::now()));
+    shader.setCurTime(elapsedTime_);
     shader.setDuration(t->duration());
     shader.setStartPosDirectionSpeed(t->vertexArray());
-    shader.setTexture(t->texture()->id());
+    shader.setPointTexture(t->texture()->id());
     shader.setColor(t->color());
 
     glDrawArrays(GL_POINTS, 0, t->numParticles());
@@ -35,7 +36,8 @@ void ParticleEffect::present() const
 void ParticleEffect::update(GameMap& map,
                             float delta)
 {
-    if (timeDistMs(startTime_, Clock::now()) >= getTemplate()->duration())
+    elapsedTime_ = elapsedTimeMs(startTime_);
+    if (elapsedTime_ >= getTemplate()->duration())
     {
         setAlive(false);
     }

@@ -4,7 +4,7 @@
 precision mediump float;
 #endif
 
-uniform sampler2D texture;
+uniform sampler2D pointTexture;
 uniform vec4 color;
 
 in float alpha;
@@ -19,6 +19,6 @@ void main()
     else
     {
         vec4 tmpColor = vec4(color.rgb, alpha);
-        fragColor = texture(texture, gl_PointCoord) * tmpColor;
+        fragColor = texture(pointTexture, gl_PointCoord) * tmpColor;
     }
 }

@@ -28,6 +28,7 @@ public:
 
 private:
     commonlib::TimePoint startTime_;
+    float elapsedTime_;
 };
 
 const ParticleEffectTemplate* ParticleEffect::getTemplate() const

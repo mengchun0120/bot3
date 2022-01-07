@@ -37,7 +37,7 @@ public:
 
     void setStartPosDirectionSpeed(const commonlib::VertexArray& va);
 
-    void setTexture(GLuint textureId);
+    void setPointTexture(GLuint textureId);
 
 private:
     void initLocations();
@@ -53,7 +53,7 @@ private:
     GLint startPosLoc_;
     GLint directionLoc_;
     GLint initSpeedLoc_;
-    GLint textureLoc_;
+    GLint pointTextureLoc_;
     GLint colorLoc_;
 };
 
