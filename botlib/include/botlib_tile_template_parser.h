@@ -2,15 +2,16 @@
 #define INCLUDED_BOTLIB_TILE_TEMPLATE_PARSER_H
 
 #include <botlib_composite_object_template_parser.h>
-#include <botlib_tile_template.h>
 
 namespace mcdane {
 namespace botlib {
 
+class TileTemplate;
+
 class TileTemplateParser: public CompositeObjectTemplateParser {
 public:
     TileTemplateParser(
-            const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib);
+            const ComponentTemplateLib& componentTemplateLib);
 
     TileTemplate* operator()(const rapidjson::Value& v);
 

@@ -1,3 +1,4 @@
+#include <botlib_tile_template.h>
 #include <botlib_tile_template_parser.h>
 
 using namespace mcdane::commonlib;
@@ -6,7 +7,7 @@ namespace mcdane {
 namespace botlib {
 
 TileTemplateParser::TileTemplateParser(
-                        const NamedMap<ComponentTemplate>& componentTemplateLib)
+                        const ComponentTemplateLib& componentTemplateLib)
     : CompositeObjectTemplateParser(componentTemplateLib)
     , params_{
         jsonParam(hp_, "hp", true, ge(0.0f))

@@ -1,3 +1,4 @@
+#include <botlib_rectangle.h>
 #include <botlib_rect_parser.h>
 
 using namespace mcdane::commonlib;

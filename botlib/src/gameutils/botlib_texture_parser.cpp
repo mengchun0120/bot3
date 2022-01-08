@@ -1,4 +1,5 @@
 #include <commonlib_file_utils.h>
+#include <commonlib_texture.h>
 #include <botlib_texture_parser.h>
 
 using namespace mcdane::commonlib;

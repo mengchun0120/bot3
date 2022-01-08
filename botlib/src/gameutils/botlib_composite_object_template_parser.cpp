@@ -1,5 +1,4 @@
 #include <commonlib_exception.h>
-#include <commonlib_named_map.h>
 #include <botlib_composite_object_template_parser.h>
 
 using namespace mcdane::commonlib;

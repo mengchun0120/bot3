@@ -5,10 +5,11 @@
 #include <vector>
 #include <rapidjson/document.h>
 #include <commonlib_json_param.h>
-#include <botlib_rectangle.h>
 
 namespace mcdane {
 namespace botlib {
+
+class Rectangle;
 
 class RectParser {
 public:

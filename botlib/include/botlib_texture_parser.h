@@ -5,7 +5,14 @@
 #include <vector>
 #include <rapidjson/document.h>
 #include <commonlib_json_param.h>
-#include <commonlib_texture.h>
+
+namespace mcdane {
+namespace commonlib {
+
+class Texture;
+
+}
+}
 
 namespace mcdane {
 namespace botlib {

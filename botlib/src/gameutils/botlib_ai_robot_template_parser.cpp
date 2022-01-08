@@ -1,3 +1,4 @@
+#include <botlib_ai_robot_template.h>
 #include <botlib_ai_robot_template_parser.h>
 
 using namespace mcdane::commonlib;
@@ -6,8 +7,8 @@ namespace mcdane {
 namespace botlib {
 
 AIRobotTemplateParser::AIRobotTemplateParser(
-            const NamedMap<MissileTemplate>& missileTemplateLib,
-            const NamedMap<ComponentTemplate>& componentTemplateLib)
+            const MissileTemplateLib& missileTemplateLib,
+            const ComponentTemplateLib& componentTemplateLib)
     : RobotTemplateParser(missileTemplateLib,
                           componentTemplateLib)
 {
