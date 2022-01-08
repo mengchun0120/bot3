@@ -1,6 +1,7 @@
 #include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <botlib_game_map.h>
+#include <botlib_particle_effect.h>
 #include <botlib_missile_hit_checker.h>
 #include <botlib_missile.h>
 
@@ -40,6 +41,7 @@ void Missile::update(GameMap& map,
 
     if (collideBoundary || collideObjs)
     {
+        showExplodeEffect(map);
         setAlive(false);
     }
 
@@ -67,6 +69,13 @@ bool Missile::checkCollideObjs(GameMap& map)
     map.accessRegion(area, checker);
 
     return checker.collide();
+}
+
+void Missile::showExplodeEffect(GameMap& map)
+{
+    ParticleEffect* explodeEffect = new ParticleEffect();
+    explodeEffect->init(getTemplate()->explodeEffectTemplate(), pos_);
+    map.addObj(explodeEffect);
 }
 
 } // end of namespace botlib

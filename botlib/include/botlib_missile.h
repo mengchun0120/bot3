@@ -39,6 +39,8 @@ private:
 
     bool checkCollideObjs(GameMap& map);
 
+    void showExplodeEffect(GameMap& map);
+
 private:
     Side side_;
     commonlib::Vector2 speed_;
