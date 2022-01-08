@@ -2,16 +2,17 @@
 #define INCLUDED_BOTLIB_ROBOT_TEMPLATE_PARSER_H
 
 #include <botlib_composite_object_template_parser.h>
-#include <botlib_missile_template.h>
 
 namespace mcdane {
 namespace botlib {
 
+class MissileTemplate;
+
 class RobotTemplateParser: public CompositeObjectTemplateParser {
 public:
     RobotTemplateParser(
-            const commonlib::NamedMap<MissileTemplate>& missileTemplateLib,
-            const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib);
+            const MissileTemplateLib& missileTemplateLib,
+            const ComponentTemplateLib& componentTemplateLib);
 
     void load(const rapidjson::Value& v);
 
@@ -27,7 +28,7 @@ protected:
     std::vector<commonlib::Vector2> firePoints_;
     std::vector<commonlib::Vector2> fireDirections_;
     std::vector<commonlib::JsonParamPtr> params_;
-    const commonlib::NamedMap<MissileTemplate>& missileTemplateLib_;
+    const MissileTemplateLib& missileTemplateLib_;
 };
 
 } // end of namespace botlib

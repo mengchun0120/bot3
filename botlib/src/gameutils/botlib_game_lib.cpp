@@ -63,16 +63,18 @@ void GameLib::load(const std::string& picDir,
     TileTemplateParser tileTemplateParser(componentTemplateLib_);
     tileTemplateLib_.load(tileTemplateLibFile, tileTemplateParser);
 
-    MissileTemplateParser missileTemplateParser(componentTemplateLib_);
+    ParticleEffectTemplateParser particleEffectTemplateParser(libDir, textureLib_);
+    particleEffectTemplateLib_.load(particleEffectTemplateLibFile,
+                                    particleEffectTemplateParser);
+
+    MissileTemplateParser missileTemplateParser(componentTemplateLib_,
+                                                particleEffectTemplateLib_);
     missileTemplateLib_.load(missileTemplateLibFile, missileTemplateParser);
 
     AIRobotTemplateParser aiRobotTemplateParser(missileTemplateLib_,
                                                 componentTemplateLib_);
     aiRobotTemplateLib_.load(aiRobotTemplateLibFile, aiRobotTemplateParser);
 
-    ParticleEffectTemplateParser particleEffectTemplateParser(libDir, textureLib_);
-    particleEffectTemplateLib_.load(particleEffectTemplateLibFile,
-                                    particleEffectTemplateParser);
 
     calculateMaxObjSpan();
     calculateMaxCollideBreath();

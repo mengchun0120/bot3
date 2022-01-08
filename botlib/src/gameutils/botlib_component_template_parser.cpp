@@ -1,4 +1,8 @@
 #include <commonlib_exception.h>
+#include <commonlib_named_map.h>
+#include <commonlib_texture.h>
+#include <botlib_rectangle.h>
+#include <botlib_component_template.h>
 #include <botlib_component_template_parser.h>
 
 using namespace mcdane::commonlib;
@@ -7,8 +11,8 @@ namespace mcdane {
 namespace botlib {
 
 ComponentTemplateParser::ComponentTemplateParser(
-                            const NamedMap<Texture>& textureLib,
-                            const NamedMap<Rectangle>& rectLib)
+                            const TextureLib& textureLib,
+                            const RectLib& rectLib)
     : textureLib_(textureLib)
     , rectLib_(rectLib)
     , params_{

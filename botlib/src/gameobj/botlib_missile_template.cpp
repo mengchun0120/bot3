@@ -3,17 +3,20 @@
 namespace mcdane {
 namespace botlib {
 
-MissileTemplate::MissileTemplate(float collideBreath,
-                                 float damage,
-                                 float speed,
-                                 std::vector<Component>&& components)
+MissileTemplate::MissileTemplate(
+                    float collideBreath1,
+                    float damage1,
+                    float speed1,
+                    const ParticleEffectTemplate* explodeEffectTemplate1,
+                    std::vector<Component>&& components)
     : CompositeObjectTemplate(
         GameObjectType::MISSILE,
-        collideBreath,
+        collideBreath1,
         false,
         std::forward<std::vector<Component>>(components))
-    , damage_(damage)
-    , speed_(speed)
+    , damage_(damage1)
+    , speed_(speed1)
+    , explodeEffectTemplate_(explodeEffectTemplate1)
 {
 }
 

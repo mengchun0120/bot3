@@ -1,4 +1,5 @@
 #include <commonlib_exception.h>
+#include <commonlib_named_map.h>
 #include <botlib_composite_object_template_parser.h>
 
 using namespace mcdane::commonlib;
@@ -7,8 +8,8 @@ namespace mcdane {
 namespace botlib {
 
 CompositeObjectTemplateParser::CompositeObjectTemplateParser(
-                    const NamedMap<ComponentTemplate>& componentLib)
-    : componentParser_(componentLib)
+                            const ComponentTemplateLib& componentTemplateLib)
+    : componentParser_(componentTemplateLib)
 {
 }
 

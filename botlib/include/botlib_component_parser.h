@@ -5,23 +5,23 @@
 #include <vector>
 #include <rapidjson/document.h>
 #include <commonlib_json_param.h>
-#include <commonlib_named_map.h>
-#include <botlib_component_template.h>
-#include <botlib_component.h>
+#include <botlib_typedef.h>
 
 namespace mcdane {
 namespace botlib {
 
+class Component;
+
 class ComponentParser {
 public:
     ComponentParser(
-            const commonlib::NamedMap<ComponentTemplate>& componentLib);
+            const ComponentTemplateLib& componentTemplateLib);
 
     void initComponent(Component& c,
                        const rapidjson::Value& v);
 
 private:
-    const commonlib::NamedMap<ComponentTemplate>& componentLib_;
+    const ComponentTemplateLib& componentTemplateLib_;
     std::string templateName_;
     commonlib::Vector2 pos_;
     commonlib::Vector2 direction_;

@@ -10,6 +10,7 @@
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
-        ]
+        ],
+        "explodeEffect": "red_explosion"
     }
 ]

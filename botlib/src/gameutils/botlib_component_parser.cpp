@@ -1,4 +1,7 @@
 #include <commonlib_exception.h>
+#include <commonlib_named_map.h>
+#include <botlib_component_template.h>
+#include <botlib_component.h>
 #include <botlib_component_parser.h>
 
 using namespace mcdane::commonlib;
@@ -7,8 +10,8 @@ namespace mcdane {
 namespace botlib {
 
 ComponentParser::ComponentParser(
-        const NamedMap<ComponentTemplate>& componentLib)
-    : componentLib_(componentLib)
+        const ComponentTemplateLib& componentTemplateLib)
+    : componentTemplateLib_(componentTemplateLib)
     , params_{
         jsonParam(templateName_, "template", true, k_nonEmptyStrV),
         jsonParam(pos_, "pos"),
@@ -22,7 +25,7 @@ void ComponentParser::initComponent(Component& c,
 {
     parse(params_, v);
 
-    ComponentTemplate* t = componentLib_.search(templateName_);
+    ComponentTemplate* t = componentTemplateLib_.search(templateName_);
     if (!t)
     {
         THROW_EXCEPT(ParseException,

@@ -2,7 +2,6 @@
 #define INCLUDED_BOTLIB_MISSILE_TEMPLATE_PARSER_H
 
 #include <botlib_composite_object_template_parser.h>
-#include <botlib_missile_template.h>
 
 namespace mcdane {
 namespace botlib {
@@ -10,13 +9,16 @@ namespace botlib {
 class MissileTemplateParser: public CompositeObjectTemplateParser {
 public:
     MissileTemplateParser(
-            const commonlib::NamedMap<ComponentTemplate>& componentTemplateLib);
+            const ComponentTemplateLib& componentTemplateLib,
+            const ParticleEffectTemplateLib& particleEffectTemplateLib);
 
     MissileTemplate* operator()(const rapidjson::Value& v);
 
 private:
+    const ParticleEffectTemplateLib& particleEffectTemplateLib_;
     float damage_;
     float speed_;
+    std::string explodeEffectName_;
     std::vector<commonlib::JsonParamPtr> params_;
 };
 

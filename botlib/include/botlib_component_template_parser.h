@@ -5,10 +5,7 @@
 #include <vector>
 #include <rapidjson/document.h>
 #include <commonlib_json_param.h>
-#include <commonlib_named_map.h>
-#include <commonlib_texture.h>
-#include <botlib_rectangle.h>
-#include <botlib_component_template.h>
+#include <botlib_typedef.h>
 
 namespace mcdane {
 namespace botlib {
@@ -16,14 +13,14 @@ namespace botlib {
 class ComponentTemplateParser {
 public:
     ComponentTemplateParser(
-            const commonlib::NamedMap<commonlib::Texture>& textureLib,
-            const commonlib::NamedMap<Rectangle>& rectLib);
+            const TextureLib& textureLib,
+            const RectLib& rectLib);
 
     ComponentTemplate* operator()(const rapidjson::Value& v);
 
 private:
-    const commonlib::NamedMap<commonlib::Texture>& textureLib_;
-    const commonlib::NamedMap<Rectangle>& rectLib_;
+    const TextureLib& textureLib_;
+    const RectLib& rectLib_;
     std::string textureName_;
     std::string rectName_;
     std::vector<commonlib::JsonParamPtr> params_;

@@ -1,4 +1,6 @@
 #include <commonlib_exception.h>
+#include <commonlib_named_map.h>
+#include <botlib_missile_template.h>
 #include <botlib_robot_template_parser.h>
 
 using namespace mcdane::commonlib;
@@ -7,8 +9,8 @@ namespace mcdane {
 namespace botlib {
 
 RobotTemplateParser::RobotTemplateParser(
-            const NamedMap<MissileTemplate>& missileTemplateLib,
-            const NamedMap<ComponentTemplate>& componentTemplateLib)
+            const MissileTemplateLib& missileTemplateLib,
+            const ComponentTemplateLib& componentTemplateLib)
     : CompositeObjectTemplateParser(componentTemplateLib)
     , params_{
         jsonParam(hp_, "hp", true, ge(0.0f)),
