@@ -12,17 +12,15 @@ void AddObjectChecker::reset(const Region<float>& collideRegion)
     collideRegion_ = collideRegion;
 }
 
-bool AddObjectChecker::run(ItemList& itemList,
-                           GameMapItem* item)
+bool AddObjectChecker::run(GameObjectList& objList,
+                           GameObject* obj)
 {
-    GameObject* o = item->obj();
-
-    if (!check(o))
+    if (!check(obj))
     {
         return true;
     }
 
-    bool collide1 = checkRectCollideRect(o->collideRegion(), collideRegion_);
+    bool collide1 = checkRectCollideRect(obj->collideRegion(), collideRegion_);
     if (collide1)
     {
         collide_ = true;

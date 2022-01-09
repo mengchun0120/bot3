@@ -1,4 +1,6 @@
 #include <commonlib_log.h>
+#include <commonlib_linked_list.h>
+#include <botlib_game_object.h>
 #include <botlib_dead_object_remover.h>
 
 using namespace mcdane::commonlib;
@@ -6,19 +8,17 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-bool DeadObjectRemover::run(ItemList& itemList,
-                            GameMapItem* item)
+bool DeadObjectRemover::run(GameObjectList& objList,
+                            GameObject* obj)
 {
-    GameObject* o = item->obj();
-
-    if (o->alive())
+    if (obj->alive())
     {
         return true;
     }
 
-    LOG_DEBUG << "Deleted " << o->type() << " " << o << LOG_END;
+    LOG_DEBUG << "Deleted " << obj->type() << " " << obj << LOG_END;
 
-    itemList.remove(item);
+    objList.remove(obj);
 
     return true;
 }

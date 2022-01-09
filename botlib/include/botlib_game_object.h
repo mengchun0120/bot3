@@ -60,6 +60,14 @@ public:
 
     inline unsigned int col() const;
 
+    inline GameObject* prev();
+
+    inline GameObject* next();
+
+    inline const GameObject* prev() const;
+
+    inline const GameObject* next() const;
+
     virtual void update(GameMap& map,
                         float timeDelta);
 
@@ -83,10 +91,13 @@ public:
     void setFlag(Flag flag,
                  bool b);
 
+    inline void setPrev(GameObject* o);
+
+    inline void setNext(GameObject* o);
+
 public:
     static Deleter k_defaultDeleter;
 
-protected:
 protected:
     const GameObjectTemplate* t_;
     commonlib::Vector2 pos_;
@@ -94,6 +105,8 @@ protected:
     unsigned int row_;
     unsigned int col_;
     commonlib::Region<float> collideRegion_;
+    GameObject* prev_;
+    GameObject* next_;
 };
 
 GameObjectType GameObject::type() const
@@ -174,6 +187,36 @@ unsigned int GameObject::row() const
 unsigned int GameObject::col() const
 {
     return col_;
+}
+
+GameObject* GameObject::prev()
+{
+    return prev_;
+}
+
+GameObject* GameObject::next()
+{
+    return next_;
+}
+
+const GameObject* GameObject::prev() const
+{
+    return prev_;
+}
+
+const GameObject* GameObject::next() const
+{
+    return next_;
+}
+
+void GameObject::setPrev(GameObject* o)
+{
+    prev_ = o;
+}
+
+void GameObject::setNext(GameObject* o)
+{
+    next_ = o;
 }
 
 } // end of namespace botlib

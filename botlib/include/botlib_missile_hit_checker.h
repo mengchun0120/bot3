@@ -14,13 +14,13 @@ public:
 
     inline bool collide() const;
 
-    bool run(ItemList& itemList,
-             GameMapItem* item) override;
+    bool run(GameObjectList& objList,
+             GameObject* obj) override;
 
 private:
-    inline bool check(GameObject* o);
+    inline bool check(GameObject* obj);
 
-    inline bool isSameSideRobot(GameObject* o);
+    inline bool isSameSideRobot(GameObject* obj);
 
 private:
     bool collide_;
@@ -32,17 +32,17 @@ bool MissileHitChecker::collide() const
     return collide_;
 }
 
-bool MissileHitChecker::check(GameObject* o)
+bool MissileHitChecker::check(GameObject* obj)
 {
-    return o->alive() &&
-           (o->type() == GameObjectType::TILE ||
-            isSameSideRobot(o));
+    return obj->alive() &&
+           (obj->type() == GameObjectType::TILE ||
+            isSameSideRobot(obj));
 }
 
-bool MissileHitChecker::isSameSideRobot(GameObject* o)
+bool MissileHitChecker::isSameSideRobot(GameObject* obj)
 {
-    return o->type() == GameObjectType::ROBOT &&
-           static_cast<Robot*>(o)->side() == missile_->side();
+    return obj->type() == GameObjectType::ROBOT &&
+           static_cast<Robot*>(obj)->side() == missile_->side();
 }
 
 } // end of namespace botlib

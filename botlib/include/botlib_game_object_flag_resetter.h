@@ -11,8 +11,8 @@ public:
     void reset(GameObject::Flag flag,
                bool value);
 
-    bool run(ItemList& itemList,
-             GameMapItem* item) override;
+    bool run(GameObjectList& objList,
+             GameObject* obj) override;
 
 private:
     GameObject::Flag flag_;

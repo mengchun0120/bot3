@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_GAME_OBJECT_PRESENTER_H
 #define INCLUDED_BOTLIB_GAME_OBJECT_PRESENTER_H
 
+#include <botlib_game_object.h>
 #include <botlib_game_map_accessor.h>
 
 namespace mcdane {
@@ -10,19 +11,19 @@ class GameObjectPresenter: public GameMapAccessor {
 public:
     void reset(GameObjectType type);
 
-    bool run(ItemList& itemList,
-             GameMapItem* item) override;
+    bool run(GameObjectList& objList,
+             GameObject* obj) override;
 
 private:
-    inline bool check(GameObject* o);
+    inline bool check(GameObject* obj);
 
 private:
     GameObjectType curType_;
 };
 
-bool GameObjectPresenter::check(GameObject* o)
+bool GameObjectPresenter::check(GameObject* obj)
 {
-    return o->alive() && o->type() == curType_;
+    return obj->alive() && obj->type() == curType_;
 }
 
 } // end of namespace botlib

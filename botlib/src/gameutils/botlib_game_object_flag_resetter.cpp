@@ -1,3 +1,4 @@
+#include <botlib_game_object.h>
 #include <botlib_game_object_flag_resetter.h>
 
 namespace mcdane {
@@ -10,10 +11,10 @@ void GameObjectFlagResetter::reset(GameObject::Flag flag,
     value_ = value;
 }
 
-bool GameObjectFlagResetter::run(ItemList& itemList,
-                                 GameMapItem* item)
+bool GameObjectFlagResetter::run(GameObjectList& objList,
+                                 GameObject* obj)
 {
-    item->obj()->setFlag(flag_, value_);
+    obj->setFlag(flag_, value_);
     return true;
 }
 

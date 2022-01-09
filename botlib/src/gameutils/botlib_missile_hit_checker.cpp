@@ -14,18 +14,16 @@ void MissileHitChecker::reset(Missile* missile)
     missile_ = missile;
 }
 
-bool MissileHitChecker::run(ItemList& itemList,
-                            GameMapItem* item)
+bool MissileHitChecker::run(GameObjectList& objList,
+                            GameObject* obj)
 {
-    GameObject* o = item->obj();
-
-    if (!check(o))
+    if (!check(obj))
     {
         return true;
     }
 
     bool collide1 = checkRectCollideRect(missile_->collideRegion(),
-                                         o->collideRegion());
+                                         obj->collideRegion());
     if (!collide1)
     {
         return true;
@@ -33,14 +31,14 @@ bool MissileHitChecker::run(ItemList& itemList,
 
     collide_ = true;
 
-    if (o->type() == GameObjectType::ROBOT)
+    if (obj->type() == GameObjectType::ROBOT)
     {
-        Robot* robot = static_cast<Robot*>(o);
+        Robot* robot = static_cast<Robot*>(obj);
         robot->addHP(-missile_->damage());
     }
-    else if (o->type() == GameObjectType::TILE)
+    else if (obj->type() == GameObjectType::TILE)
     {
-        Tile* tile = static_cast<Tile*>(o);
+        Tile* tile = static_cast<Tile*>(obj);
         tile->addHP(-missile_->damage());
     }
 

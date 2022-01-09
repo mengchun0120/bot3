@@ -128,7 +128,7 @@ void testLinkedList_PushBackNullCauseException()
 
 void testLinkedList_PushWorks()
 {
-    LinkedList<TestNode> list(&LinkedList<TestNode>::k_defaultDeleter);
+    LinkedList<TestNode> list;
     TestNode* n1 = new TestNode(1);
     TestNode* n2 = new TestNode(2);
     TestNode* n3 = new TestNode(3);
@@ -149,7 +149,7 @@ void testLinkedList_PushWorks()
 
 void testLinkedList_InsertWorks()
 {
-    LinkedList<TestNode> list(&LinkedList<TestNode>::k_defaultDeleter);
+    LinkedList<TestNode> list;
     TestNode* n1 = new TestNode(1);
     TestNode* n2 = new TestNode(2);
     TestNode* n3 = new TestNode(3);
@@ -195,7 +195,7 @@ void testLinkedList_UnlinkWorks()
 
 void testLinkedList_RemoveWorks()
 {
-    LinkedList<TestNode> list(&LinkedList<TestNode>::k_defaultDeleter);
+    LinkedList<TestNode> list;
     TestNode* n1 = new TestNode(1);
     TestNode* n2 = new TestNode(2);
     TestNode* n3 = new TestNode(3);

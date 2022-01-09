@@ -8,17 +8,14 @@
 #include <commonlib_vector.h>
 #include <commonlib_linked_list.h>
 #include <commonlib_region.h>
-#include <commonlib_object_pool.h>
-#include <botlib_game_map_accessor.h>
 #include <botlib_game_object_presenter.h>
+#include <botlib_game_object.h>
+#include <botlib_typedef.h>
 
 namespace mcdane {
 namespace botlib {
 
 class GameMap {
-public:
-    using ItemList = commonlib::LinkedList<GameMapItem>;
-
 public:
     static constexpr float k_cellBreath = 40.0f;
     static constexpr unsigned int k_minRows = 30;
@@ -38,10 +35,9 @@ public:
 
     void present();
 
-    void addObj(GameObject* obj,
-                GameObject::Deleter* deleter=&GameObject::k_defaultDeleter);
+    void addObj(GameObject* obj);
 
-    void repositionObj(GameObject* o);
+    void repositionObj(GameObject* obj);
 
     inline int rowCount() const;
 
@@ -64,10 +60,6 @@ public:
     void setViewportOrigin(float x,
                            float y);
 
-    GameMapItem* searchObj(GameObject* o);
-
-    GameMapItem* unlinkObj(GameObject* o);
-
     commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r,
                                           float deltaX,
                                           float deltaY) const;
@@ -78,17 +70,6 @@ public:
                       GameMapAccessor& accessor);
 
 private:
-    void initItemDeleter();
-
-    void initPool(unsigned int poolSize);
-
-    void initMap(unsigned int rows,
-                 unsigned int cols,
-                 float viewportWidth,
-                 float viewportHeight,
-                 float maxObjSpan,
-                 float maxCollideBreath);
-
     void initMapCells(unsigned int rows,
                       unsigned int cols);
 
@@ -107,12 +88,10 @@ private:
     void presentParticleEffects();
 
 private:
-    ItemList::Deleter itemDeleter_;
-    commonlib::ObjectPool<GameMapItem> itemPool_;
     float maxObjSpan_;
     float maxCollideBreath_;
     int extraCell_;
-    std::vector<std::vector<ItemList>> map_;
+    std::vector<std::vector<GameObjectList>> map_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 viewportHalfSize_;
     commonlib::Vector2 minViewportOrigin_;

@@ -6,6 +6,10 @@ namespace commonlib {
 
 template <typename T>
 class NamedMap;
+
+template <typename T>
+class LinkedList;
+
 class Texture;
 
 } // end of namespace commonlib
@@ -14,6 +18,7 @@ class Texture;
 namespace mcdane {
 namespace botlib {
 
+class GameObject;
 class Rectangle;
 class ComponentTemplate;
 class TileTemplate;
@@ -28,6 +33,7 @@ using TileTemplateLib = commonlib::NamedMap<TileTemplate>;
 using MissileTemplateLib = commonlib::NamedMap<MissileTemplate>;
 using AIRobotTemplateLib = commonlib::NamedMap<AIRobotTemplate>;
 using ParticleEffectTemplateLib = commonlib::NamedMap<ParticleEffectTemplate>;
+using GameObjectList = commonlib::LinkedList<GameObject>;
 
 } // end of namespace botlib
 } // end of namespace mcdane

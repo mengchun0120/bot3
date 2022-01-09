@@ -8,17 +8,15 @@ void GameObjectPresenter::reset(GameObjectType type)
     curType_ = type;
 }
 
-bool GameObjectPresenter::run(ItemList& itemList,
-                              GameMapItem* item)
+bool GameObjectPresenter::run(GameObjectList& objList,
+                              GameObject* obj)
 {
-    GameObject* o = item->obj();
-
-    if (!check(o))
+    if (!check(obj))
     {
         return true;
     }
 
-    o->present();
+    obj->present();
 
     return true;
 }

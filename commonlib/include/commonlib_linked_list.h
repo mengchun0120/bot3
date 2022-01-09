@@ -54,20 +54,14 @@ public:
 
     void clear();
 
-public:
-    static Deleter k_defaultDeleter;
+private:
+    void del(T* t);
 
 private:
     Deleter* deleter_;
     T* first_;
     T* last_;
     unsigned int size_;
-};
-
-template<typename T>
-typename LinkedList<T>::Deleter LinkedList<T>::k_defaultDeleter = [](T* t)->void
-{
-    delete t;
 };
 
 template <typename T>
@@ -312,9 +306,9 @@ template <typename T>
 void LinkedList<T>::removeFront()
 {
     T* t = unlinkFront();
-    if (t && deleter_)
+    if (t)
     {
-        (*deleter_)(t);
+        del(t);
     }
 }
 
@@ -322,9 +316,9 @@ template <typename T>
 void LinkedList<T>::removeBack()
 {
     T* t = unlinkBack();
-    if (t && deleter_)
+    if (t)
     {
-        (*deleter_)(t);
+        del(t);
     }
 }
 
@@ -337,29 +331,35 @@ void LinkedList<T>::remove(T* t)
     }
 
     unlink(t);
-
-    if (deleter_)
-    {
-        (*deleter_)(t);
-    }
+    del(t);
 }
 
 template <typename T>
 void LinkedList<T>::clear()
 {
-    if (deleter_)
+    T* next;
+    for (T* cur = first_; cur; cur = next)
     {
-        T* next;
-        for (T* cur = first_; cur; cur = next)
-        {
-            next = cur->next();
-            (*deleter_)(cur);
-        }
+        next = cur->next();
+        del(cur);
     }
 
     first_ = nullptr;
     last_ = nullptr;
     size_ = 0;
+}
+
+template <typename T>
+void LinkedList<T>::del(T* t)
+{
+    if (deleter_)
+    {
+        (*deleter_)(t);
+    }
+    else
+    {
+        delete t;
+    }
 }
 
 } // end of namespace commonlib

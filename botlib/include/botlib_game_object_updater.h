@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_GAME_OBJECT_UPDATER_H
 #define INCLUDED_BOTLIB_GAME_OBJECT_UPDATER_H
 
+#include <botlib_game_object.h>
 #include <botlib_game_map_accessor.h>
 
 namespace mcdane {
@@ -14,20 +15,20 @@ public:
 
     void setDelta(float delta);
 
-    bool run(ItemList& itemList,
-             GameMapItem* item) override;
+    bool run(GameObjectList& objList,
+             GameObject* obj) override;
 
 private:
-    inline bool check(GameObject* o) const;
+    inline bool check(GameObject* obj) const;
 
 private:
     GameMap* map_;
     float delta_;
 };
 
-bool GameObjectUpdater::check(GameObject* o) const
+bool GameObjectUpdater::check(GameObject* obj) const
 {
-    return o->alive() && !o->updated();
+    return obj->alive() && !obj->updated();
 }
 
 } // end of namespace botlib

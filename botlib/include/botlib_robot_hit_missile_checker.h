@@ -12,21 +12,21 @@ class RobotHitMissileChecker: public GameMapAccessor {
 public:
     void reset(Robot* robot);
 
-    bool run(ItemList& itemList,
-             GameMapItem* item) override;
+    bool run(GameObjectList& objList,
+             GameObject* obj) override;
 
 private:
-    inline bool check(GameObject* o);
+    inline bool check(GameObject* obj);
 
 private:
     Robot* robot_;
 };
 
-bool RobotHitMissileChecker::check(GameObject* o)
+bool RobotHitMissileChecker::check(GameObject* obj)
 {
-    return o->type() == GameObjectType::MISSILE &&
-           o->alive() &&
-           static_cast<Missile*>(o)->side() != robot_->side();
+    return obj->type() == GameObjectType::MISSILE &&
+           obj->alive() &&
+           static_cast<Missile*>(obj)->side() != robot_->side();
 }
 
 } // end of namespace botlib

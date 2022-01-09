@@ -8,8 +8,8 @@ namespace botlib {
 
 class DeadObjectRemover: public GameMapAccessor {
 public:
-    bool run(ItemList& itemList,
-             GameMapItem* item) override;
+    bool run(GameObjectList& objList,
+             GameObject* obj) override;
 };
 
 } // end of namespace botlib

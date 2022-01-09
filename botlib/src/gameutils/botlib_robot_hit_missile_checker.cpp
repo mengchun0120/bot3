@@ -13,17 +13,15 @@ void RobotHitMissileChecker::reset(Robot* robot)
     robot_ = robot;
 }
 
-bool RobotHitMissileChecker::run(ItemList& itemList,
-                                 GameMapItem* item)
+bool RobotHitMissileChecker::run(GameObjectList& objList,
+                                 GameObject* obj)
 {
-    GameObject* o = item->obj();
-
-    if (!check(o))
+    if (!check(obj))
     {
         return true;
     }
 
-    Missile* missile = static_cast<Missile*>(o);
+    Missile* missile = static_cast<Missile*>(obj);
 
     bool collide = checkRectCollideRect(robot_->collideRegion(),
                                         missile->collideRegion());

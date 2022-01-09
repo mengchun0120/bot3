@@ -1,4 +1,3 @@
-#include <botlib_game_object.h>
 #include <botlib_game_object_updater.h>
 
 namespace mcdane {
@@ -14,17 +13,15 @@ void GameObjectUpdater::setDelta(float delta)
     delta_ = delta;
 }
 
-bool GameObjectUpdater::run(ItemList& itemList,
-                            GameMapItem* item)
+bool GameObjectUpdater::run(GameObjectList& objList,
+                            GameObject* obj)
 {
-    GameObject* o = item->obj();
-
-    if (!check(o))
+    if (!check(obj))
     {
         return true;
     }
 
-    o->update(*map_, delta_);
+    obj->update(*map_, delta_);
     return true;
 }
 

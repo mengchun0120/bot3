@@ -21,10 +21,13 @@ void GameMap::init(unsigned int poolSize,
                    float maxObjSpan,
                    float maxCollideBreath)
 {
-    initItemDeleter();
-    initPool(poolSize);
-    initMap(rows, cols, viewportWidth, viewportHeight,
-            maxObjSpan, maxCollideBreath);
+    maxObjSpan_ = maxObjSpan;
+    maxCollideBreath_ = maxCollideBreath;
+    extraCell_ = static_cast<int>(ceil(maxObjSpan_ / k_cellBreath));
+    initMapCells(rows, cols);
+    setBoundary(rows, cols);
+    setViewportSize(viewportWidth, viewportHeight);
+    setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
 }
 
 void GameMap::present()
@@ -33,44 +36,41 @@ void GameMap::present()
     presentParticleEffects();
 }
 
-void GameMap::addObj(GameObject* o,
-                     GameObject::Deleter* deleter)
+void GameMap::addObj(GameObject* obj)
 {
-    if (!o)
+    if (!obj)
     {
-        THROW_EXCEPT(InvalidArgumentException, "o is null");
+        THROW_EXCEPT(InvalidArgumentException, "obj is null");
     }
 
-    int rowIdx = getCellIdx(o->y());
-    int colIdx = getCellIdx(o->x());
-    o->setMapPos(rowIdx, colIdx);
+    int rowIdx = getCellIdx(obj->y());
+    int colIdx = getCellIdx(obj->x());
 
-    GameMapItem* item = itemPool_.alloc();
-    item->init(o, deleter);
-    map_[rowIdx][colIdx].pushFront(item);
+    map_[rowIdx][colIdx].pushFront(obj);
+    obj->setMapPos(rowIdx, colIdx);
 
-    LOG_DEBUG << "addObj " << o->type() << " " << o << " row=" << rowIdx
+    LOG_DEBUG << "addObj " << obj->type() << " " << obj << " row=" << rowIdx
               << " col=" << colIdx << LOG_END;
 }
 
-void GameMap::repositionObj(GameObject* o)
+void GameMap::repositionObj(GameObject* obj)
 {
-    if (!o)
+    if (!obj)
     {
-        THROW_EXCEPT(InvalidArgumentException, "o is null");
+        THROW_EXCEPT(InvalidArgumentException, "obj is null");
     }
 
-    unsigned int rowIdx = getCellIdx(o->y());
-    unsigned int colIdx = getCellIdx(o->x());
+    unsigned int rowIdx = getCellIdx(obj->y());
+    unsigned int colIdx = getCellIdx(obj->x());
 
-    if (rowIdx == o->row() && colIdx == o->col())
+    if (rowIdx == obj->row() && colIdx == obj->col())
     {
         return;
     }
 
-    GameMapItem* item = unlinkObj(o);
-    map_[rowIdx][colIdx].pushFront(item);
-    o->setMapPos(rowIdx, colIdx);
+    map_[obj->row()][obj->col()].unlink(obj);
+    map_[rowIdx][colIdx].pushFront(obj);
+    obj->setMapPos(rowIdx, colIdx);
 }
 
 void GameMap::setViewportOrigin(float x,
@@ -81,27 +81,6 @@ void GameMap::setViewportOrigin(float x,
     viewportAnchor_ = viewportOrigin_ - viewportHalfSize_;
     resetViewableRegion();
     resetPresentArea();
-}
-
-GameMapItem* GameMap::searchObj(GameObject* o)
-{
-    ItemList& cell = map_[o->row()][o->col()];
-    for (GameMapItem* i = cell.first(); i; i = i->next())
-    {
-        if (i->obj() == o)
-        {
-            return i;
-        }
-    }
-
-    return nullptr;
-}
-
-GameMapItem* GameMap::unlinkObj(GameObject* o)
-{
-    GameMapItem* item = searchObj(o);
-    map_[o->row()][o->col()].unlink(item);
-    return item;
 }
 
 Region<int> GameMap::getCollideArea(const Region<float>& r,
@@ -158,61 +137,21 @@ Region<int> GameMap::getCollideArea(const Region<float>& r) const
 void GameMap::accessRegion(const Region<int>& r,
                            GameMapAccessor& accessor)
 {
-    GameMapItem* item, * next;
-
     for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
     {
         auto& row = map_[rowIdx];
         for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
         {
-            ItemList& itemList = row[colIdx];
-            for (item = itemList.first(); item; item = next)
+            GameObjectList& objList = row[colIdx];
+            for (GameObject* obj = objList.first(); obj; obj = obj->next())
             {
-                next = item->next();
-
-                if (!accessor.run(itemList, item))
+                if (!accessor.run(objList, obj))
                 {
                     return;
                 }
             }
         }
     }
-}
-
-void GameMap::initItemDeleter()
-{
-    itemDeleter_ = [this](GameMapItem* item)->void
-    {
-        item->deleteObj();
-        itemPool_.free(item);
-    };
-}
-
-void GameMap::initPool(unsigned int poolSize)
-{
-    if (poolSize == 0)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid poolSize" + toString(poolSize));
-    }
-
-    itemPool_.init(poolSize);
-}
-
-void GameMap::initMap(unsigned int rows,
-                      unsigned int cols,
-                      float viewportWidth,
-                      float viewportHeight,
-                      float maxObjSpan,
-                      float maxCollideBreath)
-{
-    maxObjSpan_ = maxObjSpan;
-    maxCollideBreath_ = maxCollideBreath;
-    extraCell_ = static_cast<int>(ceil(maxObjSpan_ / k_cellBreath));
-    initMapCells(rows, cols);
-    setBoundary(rows, cols);
-    setViewportSize(viewportWidth, viewportHeight);
-    setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
 }
 
 void GameMap::initMapCells(unsigned int rows,
@@ -225,10 +164,6 @@ void GameMap::initMapCells(unsigned int rows,
     for (auto it = map_.begin(); it != map_.end(); ++it)
     {
         it->resize(colCount);
-        for (auto itemIt = it->begin(); itemIt != it->end(); ++itemIt)
-        {
-            itemIt->setDeleter(&itemDeleter_);
-        }
     }
 }
 

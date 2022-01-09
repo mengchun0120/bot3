@@ -2,6 +2,7 @@
 #define INCLUDED_BOTLIB_ADD_OBJECT_CHECHER
 
 #include <commonlib_region.h>
+#include <botlib_game_object.h>
 #include <botlib_game_map_accessor.h>
 
 namespace mcdane {
@@ -11,13 +12,13 @@ class AddObjectChecker: public GameMapAccessor {
 public:
     void reset(const commonlib::Region<float>& collideRegion);
 
-    bool run(ItemList& itemList,
-             GameMapItem* item) override;
+    bool run(GameObjectList& objList,
+             GameObject* obj) override;
 
     inline bool collide() const;
 
 private:
-    inline bool check(GameObject* o) const;
+    inline bool check(GameObject* obj) const;
 
 private:
     bool collide_;
@@ -29,9 +30,9 @@ bool AddObjectChecker::collide() const
     return collide_;
 }
 
-bool AddObjectChecker::check(GameObject* o) const
+bool AddObjectChecker::check(GameObject* obj) const
 {
-    return o->alive() && isNonPassthroughObjType(o->type());
+    return obj->alive() && isNonPassthroughObjType(obj->type());
 }
 
 } // end of namespace botlib
