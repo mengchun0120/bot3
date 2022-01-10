@@ -1,6 +1,8 @@
 #include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <botlib_tile.h>
+#include <botlib_missile.h>
+#include <botlib_robot.h>
 #include <botlib_missile_hit_checker.h>
 
 using namespace mcdane::commonlib;
@@ -8,16 +10,34 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void MissileHitChecker::reset(Missile* missile)
+namespace {
+
+inline bool check(GameObject* obj)
 {
-    collide_ = false;
-    missile_ = missile;
+    return obj->alive() &&
+           (obj->type() == GameObjectType::TILE ||
+            isSameSideRobot(obj));
+}
+
+inline bool isSameSideRobot(GameObject* obj,
+                            Missile* missile)
+{
+    return obj->type() == GameObjectType::ROBOT &&
+           static_cast<Robot*>(obj)->side() == missile->side();
+}
+
+} // end of unnamed namespace
+
+MissileHitChecker::MissileHitChecker(Missile* missile)
+    : collide_(false)
+    , missile_(missile)
+{
 }
 
 bool MissileHitChecker::run(GameObjectList& objList,
                             GameObject* obj)
 {
-    if (!check(obj))
+    if (!check(obj, missile_))
     {
         return true;
     }

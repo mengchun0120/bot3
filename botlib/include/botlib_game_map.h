@@ -67,7 +67,8 @@ public:
     commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r) const;
 
     void accessRegion(const commonlib::Region<int>& r,
-                      GameMapAccessor& accessor);
+                      GameMapAccessor& accessor,
+                      bool deleteDeadObj);
 
 private:
     void initMapCells(unsigned int rows,

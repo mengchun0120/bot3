@@ -78,6 +78,11 @@ void GameObject::setUpdated(bool b)
     setFlag(FLAG_UPDATED, b);
 }
 
+void GameObject::setLocked(bool b)
+{
+    setFlag(FLAG_LOCKED, b);
+}
+
 void GameObject::setFlag(Flag flag,
                          bool b)
 {

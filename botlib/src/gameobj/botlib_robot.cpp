@@ -41,12 +41,16 @@ void Robot::present() const
 void Robot::update(GameMap& map,
                    float timeDelta)
 {
+    setLocked(true);
+
     if (movingEnabled_)
     {
         updatePos(map, timeDelta);
     }
 
     GameObject::update(map, timeDelta);
+
+    setLocked(false);
 }
 
 void Robot::shiftPos(const Vector2& delta)
@@ -151,11 +155,10 @@ void Robot::updatePos(GameMap& map,
 bool Robot::checkNonpassthroughCollide(Vector2& delta,
                                        GameMap& map)
 {
-    static NonpassthroughCollideChecker checker;
+    NonpassthroughCollideChecker checker(this, delta);
     Region<int> area = map.getCollideArea(collideRegion(), delta[0], delta[1]);
 
-    checker.reset(this, delta);
-    map.accessRegion(area, checker);
+    map.accessRegion(area, checker, false);
 
     delta = checker.delta();
 
@@ -164,11 +167,9 @@ bool Robot::checkNonpassthroughCollide(Vector2& delta,
 
 void Robot::checkCollideMissile(GameMap& map)
 {
-    static RobotHitMissileChecker checker;
-
+    RobotHitMissileChecker checker(this);
     Region<int> r = map.getCollideArea(collideRegion());
-    checker.reset(this);
-    map.accessRegion(r, checker);
+    map.accessRegion(r, checker, true);
 }
 
 void Robot::updateShooting(GameMap& map)

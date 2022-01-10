@@ -16,7 +16,8 @@ public:
     enum Flag {
         FLAG_ALIVE = 0x00000001,
         FLAG_INVINCIBLE = 0x00000002,
-        FLAG_UPDATED = 0x00000004
+        FLAG_UPDATED = 0x00000004,
+        FLAG_LOCKED = 0x00000008
     };
 
     using Deleter = std::function<void(GameObject*)>;
@@ -56,6 +57,8 @@ public:
 
     inline bool updated() const;
 
+    inline bool locked() const;
+
     inline unsigned int row() const;
 
     inline unsigned int col() const;
@@ -87,6 +90,8 @@ public:
     void setInvincible(bool b);
 
     void setUpdated(bool b);
+
+    void setLocked(bool b);
 
     void setFlag(Flag flag,
                  bool b);
@@ -177,6 +182,11 @@ bool GameObject::invincible() const
 bool GameObject::updated() const
 {
     return flags_ & FLAG_UPDATED;
+}
+
+bool locked() const
+{
+    return flag_ & FLAG_LOCKED;
 }
 
 unsigned int GameObject::row() const

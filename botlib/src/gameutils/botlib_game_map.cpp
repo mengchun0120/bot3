@@ -135,7 +135,8 @@ Region<int> GameMap::getCollideArea(const Region<float>& r) const
 }
 
 void GameMap::accessRegion(const Region<int>& r,
-                           GameMapAccessor& accessor)
+                           GameMapAccessor& accessor,
+                           bool deleteDeadObj)
 {
     for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
     {
@@ -148,6 +149,11 @@ void GameMap::accessRegion(const Region<int>& r,
                 if (!accessor.run(objList, obj))
                 {
                     return;
+                }
+
+                if (deleteDeadObj && !obj->alive() && !obj->locked())
+                {
+                    objList.remove(obj);
                 }
             }
         }

@@ -61,12 +61,10 @@ void Missile::resetSpeed()
 
 bool Missile::checkCollideObjs(GameMap& map)
 {
-    static MissileHitChecker checker;
+    MissileHitChecker checker(this);
 
     Region<int> area = map.getCollideArea(collideRegion());
-
-    checker.reset(this);
-    map.accessRegion(area, checker);
+    map.accessRegion(area, checker, true);
 
     return checker.collide();
 }

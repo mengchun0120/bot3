@@ -6,10 +6,19 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void AddObjectChecker::reset(const Region<float>& collideRegion)
+namespace {
+
+inline bool check(GameObject* obj)
 {
-    collide_ = false;
-    collideRegion_ = collideRegion;
+    return obj->alive() && isNonPassthroughObjType(obj->type());
+}
+
+} // end of unnamed namespace
+
+AddObjectChecker::AddObjectChecke(const Region<float>& collideRegion)
+    : collide_(false)
+    , collideRegion_(collideRegion)
+{
 }
 
 bool AddObjectChecker::run(GameObjectList& objList,
