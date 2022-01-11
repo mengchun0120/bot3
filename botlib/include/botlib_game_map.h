@@ -25,8 +25,7 @@ public:
 
     ~GameMap() = default;
 
-    void init(unsigned int poolSize,
-              unsigned int rows,
+    void init(unsigned int rows,
               unsigned int cols,
               float viewportWidth,
               float viewportHeight,

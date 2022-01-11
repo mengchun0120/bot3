@@ -10,8 +10,7 @@ namespace botlib {
 
 class GameMapLoader {
 public:
-    GameMapLoader(float poolSizeFactor,
-                  float viewportWidth,
+    GameMapLoader(float viewportWidth,
                   float viewportHeight);
 
     void load(GameMap& map,
@@ -39,14 +38,10 @@ private:
     void addParticleEffect(GameMap& map,
                            const rapidjson::Value& v);
 
-    unsigned int getPoolSize(unsigned int rows,
-                             unsigned int cols);
-
     bool checkCollide(GameMap& map,
                       float collideBreath);
 
 private:
-    float poolSizeFactor_;
     float viewportWidth_;
     float viewportHeight_;
     std::string typeStr_;

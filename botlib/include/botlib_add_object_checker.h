@@ -11,13 +11,12 @@ class AddObjectChecker: public GameMapAccessor {
 public:
     AddObjectChecker(const commonlib::Region<float>& collideRegion);
 
+    void reset(const commonlib::Region<float>& collideRegion);
+
     bool run(GameObjectList& objList,
              GameObject* obj) override;
 
     inline bool collide() const;
-
-private:
-    inline bool check(GameObject* obj) const;
 
 private:
     bool collide_;

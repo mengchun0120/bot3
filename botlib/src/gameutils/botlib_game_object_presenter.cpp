@@ -1,3 +1,4 @@
+#include <botlib_game_object.h>
 #include <botlib_game_object_presenter.h>
 
 namespace mcdane {
@@ -11,7 +12,7 @@ void GameObjectPresenter::reset(GameObjectType type)
 bool GameObjectPresenter::run(GameObjectList& objList,
                               GameObject* obj)
 {
-    if (!check(obj))
+    if (!obj->alive() || obj->type() != curType_)
     {
         return true;
     }

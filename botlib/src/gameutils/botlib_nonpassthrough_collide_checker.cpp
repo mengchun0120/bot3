@@ -29,6 +29,14 @@ NonpassthroughCollideChecker::NonpassthroughCollideChecker(GameObject* obj,
 {
 }
 
+void NonpassthroughCollideChecker::reset(GameObject* obj,
+                                         commonlib::Vector2& delta1)
+{
+    obj_ = obj;
+    collide_ = false;
+    delta_ = delta1;
+}
+
 bool NonpassthroughCollideChecker::run(GameObjectList& objList,
                                        GameObject* other)
 {

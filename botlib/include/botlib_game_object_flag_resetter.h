@@ -8,6 +8,11 @@ namespace botlib {
 
 class GameObjectFlagResetter: public GameMapAccessor {
 public:
+    GameObjectFlagResetter() = default;
+
+    GameObjectFlagResetter(GameObject::Flag flag,
+                           bool value);
+
     void reset(GameObject::Flag flag,
                bool value);
 

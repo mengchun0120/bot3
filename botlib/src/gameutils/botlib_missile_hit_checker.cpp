@@ -12,18 +12,19 @@ namespace botlib {
 
 namespace {
 
-inline bool check(GameObject* obj)
-{
-    return obj->alive() &&
-           (obj->type() == GameObjectType::TILE ||
-            isSameSideRobot(obj));
-}
-
 inline bool isSameSideRobot(GameObject* obj,
                             Missile* missile)
 {
     return obj->type() == GameObjectType::ROBOT &&
            static_cast<Robot*>(obj)->side() == missile->side();
+}
+
+
+inline bool check(GameObject* obj, Missile* missile)
+{
+    return obj->alive() &&
+           (obj->type() == GameObjectType::TILE ||
+            isSameSideRobot(obj, missile));
 }
 
 } // end of unnamed namespace
@@ -32,6 +33,12 @@ MissileHitChecker::MissileHitChecker(Missile* missile)
     : collide_(false)
     , missile_(missile)
 {
+}
+
+void MissileHitChecker::reset(Missile* missile)
+{
+    collide_ = false;
+    missile_ = missile;
 }
 
 bool MissileHitChecker::run(GameObjectList& objList,

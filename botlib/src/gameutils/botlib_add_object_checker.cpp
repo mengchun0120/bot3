@@ -1,4 +1,5 @@
 #include <commonlib_collide.h>
+#include <botlib_game_object.h>
 #include <botlib_add_object_checker.h>
 
 using namespace mcdane::commonlib;
@@ -6,25 +7,22 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-namespace {
-
-inline bool check(GameObject* obj)
-{
-    return obj->alive() && isNonPassthroughObjType(obj->type());
-}
-
-} // end of unnamed namespace
-
-AddObjectChecker::AddObjectChecke(const Region<float>& collideRegion)
+AddObjectChecker::AddObjectChecker(const Region<float>& collideRegion)
     : collide_(false)
     , collideRegion_(collideRegion)
 {
 }
 
+void AddObjectChecker::reset(const commonlib::Region<float>& collideRegion)
+{
+    collide_ = false;
+    collideRegion_ = collideRegion;
+}
+
 bool AddObjectChecker::run(GameObjectList& objList,
                            GameObject* obj)
 {
-    if (!check(obj))
+    if (!obj->alive() || !isNonPassthroughObjType(obj->type()))
     {
         return true;
     }

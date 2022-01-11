@@ -69,9 +69,7 @@ void TestMapApp::setupOpenGL()
 
 void TestMapApp::setupMap(const std::string& mapFile)
 {
-    const AppConfig& cfg = AppConfig::getInstance();
-
-    GameMapLoader loader(cfg.mapPoolSizeFactor(), viewportWidth(), viewportHeight());
+    GameMapLoader loader(viewportWidth(), viewportHeight());
     loader.load(map_, mapFile);
 }
 

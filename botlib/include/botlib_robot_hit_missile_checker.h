@@ -12,6 +12,8 @@ class RobotHitMissileChecker: public GameMapAccessor {
 public:
     RobotHitMissileChecker(Robot* robot);
 
+    void reset(Robot* robot);
+
     bool run(GameObjectList& objList,
              GameObject* obj) override;
 

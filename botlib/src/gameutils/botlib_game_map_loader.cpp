@@ -16,8 +16,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-GameMapLoader::GameMapLoader(float poolSizeFactor,
-                             float viewportWidth,
+GameMapLoader::GameMapLoader(float viewportWidth,
                              float viewportHeight)
     : commonParams_{
         jsonParam(typeStr_, "type", true, k_nonEmptyStrV),
@@ -36,12 +35,6 @@ GameMapLoader::GameMapLoader(float poolSizeFactor,
         jsonParam(movingEnabled_, "movingEnabled")
       }
 {
-    if (poolSizeFactor <= 0.0f || poolSizeFactor > 1.0f)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid poolSizeFactor " + toString(poolSizeFactor));
-    }
-
     if (viewportWidth <= 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
@@ -54,7 +47,6 @@ GameMapLoader::GameMapLoader(float poolSizeFactor,
                      "Invalid viewportHeight " + toString(viewportHeight));
     }
 
-    poolSizeFactor_ = poolSizeFactor;
     viewportWidth_ = viewportWidth;
     viewportHeight_ = viewportHeight;
 }
@@ -80,10 +72,9 @@ void GameMapLoader::loadMapDimension(GameMap& map,
 
     parse(params, doc);
 
-    unsigned int poolSize = getPoolSize(rows, cols);
     const GameLib& lib = GameLib::getInstance();
 
-    map.init(poolSize, rows, cols, viewportWidth_, viewportHeight_,
+    map.init(rows, cols, viewportWidth_, viewportHeight_,
              lib.maxObjSpan(), lib.maxCollideBreath());
 }
 
@@ -244,12 +235,6 @@ void GameMapLoader::addParticleEffect(GameMap& map,
     effect->init(t, pos_);
 
     map.addObj(effect);
-}
-
-unsigned int GameMapLoader::getPoolSize(unsigned int rows,
-                                        unsigned int cols)
-{
-    return static_cast<unsigned int>(floor(rows * cols * poolSizeFactor_));
 }
 
 bool GameMapLoader::checkCollide(GameMap& map,

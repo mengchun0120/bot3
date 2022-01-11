@@ -14,6 +14,8 @@ public:
 
     inline bool collide() const;
 
+    void reset(Missile* missile);
+
     bool run(GameObjectList& objList,
              GameObject* obj) override;
 

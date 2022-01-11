@@ -13,8 +13,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void GameMap::init(unsigned int poolSize,
-                   unsigned int rows,
+void GameMap::init(unsigned int rows,
                    unsigned int cols,
                    float viewportWidth,
                    float viewportHeight,
@@ -153,6 +152,7 @@ void GameMap::accessRegion(const Region<int>& r,
 
                 if (deleteDeadObj && !obj->alive() && !obj->locked())
                 {
+                    LOG_DEBUG << "delete " << obj->type() << " " << obj << LOG_END;
                     objList.remove(obj);
                 }
             }
@@ -247,7 +247,7 @@ void GameMap::presentObjs()
     for (unsigned int i = 0; i < presentTypeCount; ++i)
     {
         presenter_.reset(presentOrder[i]);
-        accessRegion(presentArea_, presenter_);
+        accessRegion(presentArea_, presenter_, false);
     }
 }
 
@@ -259,7 +259,7 @@ void GameMap::presentParticleEffects()
     program.setViewportOrigin(viewportOrigin_);
 
     presenter_.reset(GameObjectType::EFFECT);
-    accessRegion(presentArea_, presenter_);
+    accessRegion(presentArea_, presenter_, false);
 }
 
 } // end of namespace botlib

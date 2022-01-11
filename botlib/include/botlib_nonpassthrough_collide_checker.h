@@ -15,11 +15,11 @@ public:
 
     inline const commonlib::Vector2& delta() const;
 
+    void reset(GameObject* obj,
+               commonlib::Vector2& delta1);
+
     bool run(GameObjectList& objList,
              GameObject* obj) override;
-
-private:
-    inline bool check(GameObject* obj) const;
 
 private:
     GameObject* obj_;

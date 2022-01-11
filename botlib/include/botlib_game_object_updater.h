@@ -11,25 +11,21 @@ class GameMap;
 
 class GameObjectUpdater: public GameMapAccessor {
 public:
-    void setMap(GameMap* map);
+    GameObjectUpdater() = default;
 
-    void setDelta(float delta);
+    GameObjectUpdater(GameMap* map,
+                      float delta);
+
+    void reset(GameMap* map,
+               float delta);
 
     bool run(GameObjectList& objList,
              GameObject* obj) override;
 
 private:
-    inline bool check(GameObject* obj) const;
-
-private:
     GameMap* map_;
     float delta_;
 };
-
-bool GameObjectUpdater::check(GameObject* obj) const
-{
-    return obj->alive() && !obj->updated();
-}
 
 } // end of namespace botlib
 } // end of namespace mcdane

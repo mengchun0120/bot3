@@ -27,6 +27,11 @@ RobotHitMissileChecker::RobotHitMissileChecker(Robot* robot)
 {
 }
 
+void RobotHitMissileChecker::reset(Robot* robot)
+{
+    robot_ = robot;
+}
+
 bool RobotHitMissileChecker::run(GameObjectList& objList,
                                  GameObject* obj)
 {

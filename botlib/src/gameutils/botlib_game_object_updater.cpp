@@ -1,22 +1,27 @@
+#include <botlib_game_object.h>
 #include <botlib_game_object_updater.h>
 
 namespace mcdane {
 namespace botlib {
 
-void GameObjectUpdater::setMap(GameMap* map)
+GameObjectUpdater::GameObjectUpdater(GameMap* map,
+                                     float delta)
+    : map_(map)
+    , delta_(delta)
 {
-    map_ = map;
 }
 
-void GameObjectUpdater::setDelta(float delta)
+void GameObjectUpdater::reset(GameMap* map,
+                              float delta)
 {
+    map_ = map;
     delta_ = delta;
 }
 
 bool GameObjectUpdater::run(GameObjectList& objList,
                             GameObject* obj)
 {
-    if (!check(obj))
+    if (!obj->alive() || obj->updated())
     {
         return true;
     }

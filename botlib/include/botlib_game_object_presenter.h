@@ -9,22 +9,16 @@ namespace botlib {
 
 class GameObjectPresenter: public GameMapAccessor {
 public:
+    GameObjectPresenter() = default;
+
     void reset(GameObjectType type);
 
     bool run(GameObjectList& objList,
              GameObject* obj) override;
 
 private:
-    inline bool check(GameObject* obj);
-
-private:
     GameObjectType curType_;
 };
-
-bool GameObjectPresenter::check(GameObject* obj)
-{
-    return obj->alive() && obj->type() == curType_;
-}
 
 } // end of namespace botlib
 } // end of namespace mcdane

@@ -4,6 +4,13 @@
 namespace mcdane {
 namespace botlib {
 
+GameObjectFlagResetter::GameObjectFlagResetter(GameObject::Flag flag,
+                                               bool value)
+    : flag_(flag)
+    , value_(value)
+{
+}
+
 void GameObjectFlagResetter::reset(GameObject::Flag flag,
                                    bool value)
 {

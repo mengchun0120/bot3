@@ -184,9 +184,9 @@ bool GameObject::updated() const
     return flags_ & FLAG_UPDATED;
 }
 
-bool locked() const
+bool GameObject::locked() const
 {
-    return flag_ & FLAG_LOCKED;
+    return flags_ & FLAG_LOCKED;
 }
 
 unsigned int GameObject::row() const
