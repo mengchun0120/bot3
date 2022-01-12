@@ -17,6 +17,7 @@ MissileTemplateParser::MissileTemplateParser(
     , params_{
         jsonParam(damage_, "damage", true, gt(0.0f)),
         jsonParam(speed_, "speed", true, gt(0.0f)),
+        jsonParam(explodeBreath_, "explodeBreath", true, gt(0.0f)),
         jsonParam(explodeEffectName_, "explodeEffect", true, k_nonEmptyStrV)
       }
 {
@@ -38,6 +39,7 @@ MissileTemplate* MissileTemplateParser::operator()(const rapidjson::Value& v)
     return new MissileTemplate(collideBreath_,
                                damage_,
                                speed_,
+                               explodeBreath_,
                                explodeEffectTemplate,
                                std::move(components_));
 }

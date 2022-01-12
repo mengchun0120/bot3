@@ -18,6 +18,7 @@ private:
     const ParticleEffectTemplateLib& particleEffectTemplateLib_;
     float damage_;
     float speed_;
+    float explodeBreath_;
     std::string explodeEffectName_;
     std::vector<commonlib::JsonParamPtr> params_;
 };

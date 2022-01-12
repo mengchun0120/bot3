@@ -4,6 +4,7 @@
         "collideBreath": 8.0,
         "damage": 10.0,
         "speed": 100.0,
+        "explodeBreath": 18.0,
         "components": [
             {
                 "template": "red_missile",
