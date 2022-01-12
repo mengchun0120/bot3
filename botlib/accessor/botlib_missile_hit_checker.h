@@ -10,17 +10,25 @@ class Missile;
 
 class MissileHitChecker: public GameMapAccessor {
 public:
-    MissileHitChecker(Missile* missile);
+    MissileHitChecker() = default;
+
+    MissileHitChecker(Missile* missile,
+                      bool inflictDamage);
 
     inline bool collide() const;
 
-    void reset(Missile* missile);
+    void reset(Missile* missile,
+               bool inflictDamage);
 
     bool run(GameObjectList& objList,
              GameObject* obj) override;
 
 private:
+    void doDamage(GameObject* obj);
+
+private:
     bool collide_;
+    bool inflictDamage_;
     Missile* missile_;
 };
 

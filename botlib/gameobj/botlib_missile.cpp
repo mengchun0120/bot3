@@ -41,8 +41,7 @@ void Missile::update(GameMap& map,
 
     if (collideBoundary || collideObjs)
     {
-        showExplodeEffect(map);
-        setAlive(false);
+        explode(map);
     }
 
     GameObject::update(map, timeDelta);
@@ -54,6 +53,16 @@ void Missile::setDirection(const commonlib::Vector2& direction1)
     resetSpeed();
 }
 
+void Missile::explode(GameMap& map)
+{
+    MissileHitChecker checker(this, true);
+    Region<int> area = map.getCollideArea(explodeRegion());
+    map.accessRegion(area, checker, true);
+
+    showExplodeEffect(map);
+    setAlive(false);
+}
+
 void Missile::resetSpeed()
 {
     speed_ = speedNorm() * direction_;
@@ -61,12 +70,17 @@ void Missile::resetSpeed()
 
 bool Missile::checkCollideObjs(GameMap& map)
 {
-    MissileHitChecker checker(this);
-
+    MissileHitChecker checker(this, false);
     Region<int> area = map.getCollideArea(collideRegion());
-    map.accessRegion(area, checker, true);
+    map.accessRegion(area, checker, false);
 
     return checker.collide();
+}
+
+Region<float> Missile::explodeRegion()
+{
+    float breath = getTemplate()->explodeBreath();
+    return Region<float>({x()-breath, x()+breath, y()-breath, y()+breath});
 }
 
 void Missile::showExplodeEffect(GameMap& map)

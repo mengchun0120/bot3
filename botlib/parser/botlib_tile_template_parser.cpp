@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <botlib_tile_template.h>
 #include <botlib_tile_template_parser.h>
 

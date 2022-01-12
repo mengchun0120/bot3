@@ -34,10 +34,14 @@ public:
 
     void setDirection(const commonlib::Vector2& direction1) override;
 
+    void explode(GameMap& map);
+
 private:
     void resetSpeed();
 
     bool checkCollideObjs(GameMap& map);
+
+    commonlib::Region<float> explodeRegion();
 
     void showExplodeEffect(GameMap& map);
 

@@ -15,7 +15,7 @@
     {
         "name": "ice_tile",
         "collideBreath": 20.0,
-        "invincible": true,
+        "invincible": false,
         "hp": 20.0,
         "components": [
             {
@@ -28,7 +28,7 @@
     {
         "name": "clay_tile",
         "collideBreath": 20.0,
-        "invincible": true,
+        "invincible": false,
         "hp": 30.0,
         "components": [
             {
@@ -41,7 +41,7 @@
     {
         "name": "fireland_tile",
         "collideBreath": 20.0,
-        "invincible": true,
+        "invincible": false,
         "hp": 40.0,
         "components": [
             {
@@ -54,7 +54,7 @@
     {
         "name": "bush_tile",
         "collideBreath": 20.0,
-        "invincible": true,
+        "invincible": false,
         "hp": 50.0,
         "components": [
             {

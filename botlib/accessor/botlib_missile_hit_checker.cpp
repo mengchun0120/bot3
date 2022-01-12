@@ -29,15 +29,19 @@ inline bool check(GameObject* obj, Missile* missile)
 
 } // end of unnamed namespace
 
-MissileHitChecker::MissileHitChecker(Missile* missile)
+MissileHitChecker::MissileHitChecker(Missile* missile,
+                                     bool inflictDamage)
     : collide_(false)
+    , inflictDamage_(inflictDamage)
     , missile_(missile)
 {
 }
 
-void MissileHitChecker::reset(Missile* missile)
+void MissileHitChecker::reset(Missile* missile,
+                              bool inflictDamage)
 {
     collide_ = false;
+    inflictDamage_ = inflictDamage;
     missile_ = missile;
 }
 
@@ -58,18 +62,28 @@ bool MissileHitChecker::run(GameObjectList& objList,
 
     collide_ = true;
 
+    if (inflictDamage_)
+    {
+        doDamage(obj);
+    }
+
+    return true;
+}
+
+void MissileHitChecker::doDamage(GameObject* obj)
+{
     if (obj->type() == GameObjectType::ROBOT)
     {
         Robot* robot = static_cast<Robot*>(obj);
         robot->addHP(-missile_->damage());
+        LOG_DEBUG << "damage robot " << robot << " hp=" << robot->hp() << LOG_END;
     }
     else if (obj->type() == GameObjectType::TILE)
     {
         Tile* tile = static_cast<Tile*>(obj);
         tile->addHP(-missile_->damage());
+        LOG_DEBUG << "damage tile " << tile << " hp=" << tile->hp() << LOG_END;
     }
-
-    return true;
 }
 
 } // end of namespace botlib

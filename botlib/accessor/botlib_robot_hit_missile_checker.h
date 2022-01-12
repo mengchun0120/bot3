@@ -6,18 +6,24 @@
 namespace mcdane {
 namespace botlib {
 
+class GameMap;
 class Robot;
 
 class RobotHitMissileChecker: public GameMapAccessor {
 public:
-    RobotHitMissileChecker(Robot* robot);
+    RobotHitMissileChecker() = default;
 
-    void reset(Robot* robot);
+    RobotHitMissileChecker(GameMap* map,
+                           Robot* robot);
+
+    void reset(GameMap* map,
+               Robot* robot);
 
     bool run(GameObjectList& objList,
              GameObject* obj) override;
 
 private:
+    GameMap* map_;
     Robot* robot_;
 };
 

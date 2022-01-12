@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <botlib_game_object_template_parser.h>
 
 using namespace mcdane::commonlib;

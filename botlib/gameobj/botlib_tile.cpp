@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_math_utils.h>
 #include <botlib_graphics.h>
