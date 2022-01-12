@@ -36,7 +36,7 @@ void testNamedMap_LoadWrongFileThrowException()
     {
         TestNamedMapParser parser;
         NamedMap<std::string> map;
-        map.load("commonlib/test/data/wrong_named_map.json", parser);
+        map.load("unittest/commonlib/data/wrong_named_map.json", parser);
     }
     catch (const ParseException& e)
     {
@@ -55,7 +55,7 @@ void testNamedMap_SearchCorrectFile()
     {
         TestNamedMapParser parser;
         NamedMap<std::string> map;
-        map.load("commonlib/test/data/correct_named_map.json", parser);
+        map.load("unittest/commonlib/data/correct_named_map.json", parser);
 
         const std::string* s = map.search("top");
         assert(s && *s == "Top");

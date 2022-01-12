@@ -3,12 +3,12 @@ cmake_minimum_required(VERSION 3.10)
 set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 
 set(BOTMAIN_SRC
-    src/bot_main.cpp)
+    bot_main.cpp)
 
 add_definitions(${CPP_COMPILE_FLAG})
 
-include_directories(${CMAKE_SOURCE_DIR}/commonlib/include
-                    ${CMAKE_SOURCE_DIR}/botlib/include)
+include_directories(${COMMONLIB_DIR}
+                    ${BOTLIB_DIR})
 
 add_executable(bot ${BOTMAIN_SRC})
 
