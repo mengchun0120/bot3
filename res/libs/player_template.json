@@ -1,0 +1,30 @@
+{
+    "name": "player",
+    "collideBreath": 25.0,
+    "invincible": false,
+    "hp": 120.0,
+    "armor": 100.0,
+    "speed": 200.0,
+    "energy": 100.0,
+    "rechargeRate": 20.0,
+    "missile": "green_missile",
+    "fireIntervalMS": 1500.0,
+    "components": [
+        {
+            "template": "green_base",
+            "pos": [0.0, 0.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "template": "green_gun",
+            "pos": [38.28427, 0.0],
+            "direction": [1.0, 0.0]
+        }
+    ],
+    "firePoints": [
+        [48.28427, 0.0]
+    ],
+    "fireDirections": [
+        [1.0, 0.0]
+    ]
+}

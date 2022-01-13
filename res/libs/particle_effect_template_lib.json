@@ -9,5 +9,16 @@
         "initSpeedFile": "red_explosion_init_speed.txt",
         "texture": "small_ball",
         "color": [255, 0, 0, 255]
+    },
+    {
+        "name": "green_explosion",
+        "acceleration": 0.0001,
+        "duration": 600.0,
+        "particleSize": 10.0,
+        "startPosFile": "green_explosion_start_pos.txt",
+        "directionFile": "green_explosion_direction.txt",
+        "initSpeedFile": "green_explosion_init_speed.txt",
+        "texture": "small_ball",
+        "color": [0, 255, 0, 255]
     }
 ]

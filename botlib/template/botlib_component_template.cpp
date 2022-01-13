@@ -9,19 +9,25 @@ namespace botlib {
 
 ComponentTemplate::ComponentTemplate(const Texture* texture,
                                      const Rectangle* rect)
-    : texture_(texture)
-    , rect_(rect)
 {
-    if (!texture_)
+    init(texture, rect);
+}
+
+void ComponentTemplate::init(const commonlib::Texture* texture,
+                             const Rectangle* rect)
+{
+    if (!texture)
     {
         THROW_EXCEPT(InvalidArgumentException, "texture is null");
     }
 
-    if (!rect_)
+    if (!rect)
     {
         THROW_EXCEPT(InvalidArgumentException, "rect is null");
     }
 
+    texture_ = texture;
+    rect_ = rect;
     span_ = static_cast<float>(sqrt(rect_->width() * rect_->width() +
                                     rect_->height() * rect_->height()) / 2.0);
 }

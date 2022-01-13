@@ -8,12 +8,19 @@ namespace botlib {
 
 class GameObjectTemplate {
 public:
+    GameObjectTemplate() = default;
+
     GameObjectTemplate(GameObjectType t,
                        float span,
                        float collideBreath,
                        bool invincible=false);
 
     virtual ~GameObjectTemplate() = default;
+
+    void init(GameObjectType t,
+              float span,
+              float collideBreath,
+              bool invincible=false);
 
     inline GameObjectType type() const;
 
@@ -22,12 +29,6 @@ public:
     inline float collideBreath() const;
 
     inline bool invincible() const;
-
-private:
-    void init(GameObjectType t,
-              float span,
-              float collideBreath,
-              bool invincible=false);
 
 protected:
     GameObjectType type_;

@@ -55,6 +55,7 @@ set(BOTLIB_PARSER_SRC
     parser/botlib_game_object_template_parser.cpp
     parser/botlib_missile_template_parser.cpp
     parser/botlib_particle_effect_template_parser.cpp
+    parser/botlib_player_template_parser.cpp
     parser/botlib_rect_parser.cpp
     parser/botlib_robot_template_parser.cpp
     parser/botlib_texture_parser.cpp
@@ -81,6 +82,7 @@ set(BOTLIB_TEMPLATE_SRC
     template/botlib_game_object_template.cpp
     template/botlib_missile_template.cpp
     template/botlib_particle_effect_template.cpp
+    template/botlib_player_template.cpp
     template/botlib_robot_template.cpp
     template/botlib_tile_template.cpp)
 

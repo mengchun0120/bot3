@@ -70,6 +70,8 @@ public:
 
     inline const std::string& particleEffectTemplateLibFile() const;
 
+    inline const std::string& playerTemplateFile() const;
+
     inline float mapPoolSizeFactor() const;
 
     inline unsigned int timeDeltaHistoryLen() const;
@@ -121,6 +123,7 @@ private:
     std::string missileTemplateLibFile_;
     std::string aiRobotTemplateLibFile_;
     std::string particleEffectTemplateLibFile_;
+    std::string playerTemplateFile_;
     float mapPoolSizeFactor_;
     unsigned int timeDeltaHistoryLen_;
 };
@@ -253,6 +256,11 @@ const std::string& AppConfig::aiRobotTemplateLibFile() const
 const std::string& AppConfig::particleEffectTemplateLibFile() const
 {
     return particleEffectTemplateLibFile_;
+}
+
+const std::string& AppConfig::playerTemplateFile() const
+{
+    return playerTemplateFile_;
 }
 
 float AppConfig::mapPoolSizeFactor() const

@@ -7,6 +7,7 @@
 #include <botlib_texture_parser.h>
 #include <botlib_tile_template_parser.h>
 #include <botlib_particle_effect_template_parser.h>
+#include <botlib_player_template_parser.h>
 #include <botlib_game_lib.h>
 
 using namespace mcdane::commonlib;
@@ -24,7 +25,8 @@ void GameLib::initInstance(const std::string& picDir,
                            const std::string& tileTemplateLibFile,
                            const std::string& missileTemplateLibFile,
                            const std::string& aiRobotTemplateLibFile,
-                           const std::string& particleEffectTemplateLibFile)
+                           const std::string& particleEffectTemplateLibFile,
+                           const std::string& playerTemplateFile)
 {
     GameLib* lib = new GameLib();
     lib->load(picDir,
@@ -35,7 +37,8 @@ void GameLib::initInstance(const std::string& picDir,
               tileTemplateLibFile,
               missileTemplateLibFile,
               aiRobotTemplateLibFile,
-              particleEffectTemplateLibFile);
+              particleEffectTemplateLibFile,
+              playerTemplateFile);
 
     k_gameLib.reset(lib);
 }
@@ -48,7 +51,8 @@ void GameLib::load(const std::string& picDir,
                    const std::string& tileTemplateLibFile,
                    const std::string& missileTemplateLibFile,
                    const std::string& aiRobotTemplateLibFile,
-                   const std::string& particleEffectTemplateLibFile)
+                   const std::string& particleEffectTemplateLibFile,
+                   const std::string& playerTemplateFile)
 {
     TextureParser textureParser(picDir);
     textureLib_.load(textureLibFile, textureParser);
@@ -76,6 +80,10 @@ void GameLib::load(const std::string& picDir,
     aiRobotTemplateLib_.load(aiRobotTemplateLibFile, aiRobotTemplateParser);
 
 
+    PlayerTemplateParser playerTemplateParser(missileTemplateLib_,
+                                              componentTemplateLib_);
+    playerTemplateParser.load(playerTemplate_, playerTemplateFile);
+
     calculateMaxObjSpan();
     calculateMaxCollideBreath();
 
@@ -84,7 +92,7 @@ void GameLib::load(const std::string& picDir,
 
 void GameLib::calculateMaxObjSpan()
 {
-    maxObjSpan_ = 0.0f;
+    maxObjSpan_ = playerTemplate_.span();
 
     auto accessor = [this](const GameObjectTemplate* t)->bool
     {
@@ -106,7 +114,7 @@ void GameLib::calculateMaxObjSpan()
 
 void GameLib::calculateMaxCollideBreath()
 {
-    maxCollideBreath_ = 0.0f;
+    maxCollideBreath_ = playerTemplate_.collideBreath();
 
     auto accessor = [this](const GameObjectTemplate* t)->bool
     {

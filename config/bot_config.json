@@ -38,7 +38,8 @@
         "tileTemplateLibFile": "tile_template_lib.json",
         "missileTemplateLibFile": "missile_template_lib.json",
         "aiRobotTemplateLibFile": "ai_robot_template_lib.json",
-        "particleEffectTemplateLibFile": "particle_effect_template_lib.json"
+        "particleEffectTemplateLibFile": "particle_effect_template_lib.json",
+        "playerTemplateFile": "player_template.json"
     },
     "game": {
         "mapPoolSizeFactor": 0.75,

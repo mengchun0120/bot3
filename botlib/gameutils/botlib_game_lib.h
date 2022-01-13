@@ -9,6 +9,7 @@
 #include <botlib_missile_template.h>
 #include <botlib_ai_robot_template.h>
 #include <botlib_particle_effect_template.h>
+#include <botlib_player_template.h>
 #include <botlib_typedef.h>
 
 namespace mcdane {
@@ -24,7 +25,8 @@ public:
                              const std::string& tileTemplateLibFile,
                              const std::string& missileTemplateLibFile,
                              const std::string& aiRobotTemplateLibFile,
-                             const std::string& particleEffectTemplateLibFile);
+                             const std::string& particleEffectTemplateLibFile,
+                             const std::string& playerTemplateFile);
 
     inline static const GameLib& getInstance();
 
@@ -48,6 +50,8 @@ public:
     inline const ParticleEffectTemplate* findParticleEffectTemplate(
                                                 const std::string& name) const;
 
+    inline const PlayerTemplate& playerTemplate() const;
+
     inline float maxObjSpan() const;
 
     inline float maxCollideBreath() const;
@@ -63,7 +67,8 @@ private:
               const std::string& tileTemplateLibFile,
               const std::string& missileTemplateLibFile,
               const std::string& aiRobotTemplateLibFile,
-              const std::string& particleEffectTemplateLibFile);
+              const std::string& particleEffectTemplateLibFile,
+              const std::string& playerTemplateFile);
 
     void calculateMaxObjSpan();
 
@@ -79,6 +84,7 @@ private:
     MissileTemplateLib missileTemplateLib_;
     AIRobotTemplateLib aiRobotTemplateLib_;
     ParticleEffectTemplateLib particleEffectTemplateLib_;
+    PlayerTemplate playerTemplate_;
     float maxObjSpan_;
     float maxCollideBreath_;
 };
@@ -125,6 +131,11 @@ const ParticleEffectTemplate* GameLib::findParticleEffectTemplate(
                                                 const std::string& name) const
 {
     return particleEffectTemplateLib_.search(name);
+}
+
+const PlayerTemplate& GameLib::playerTemplate() const
+{
+    return playerTemplate_;
 }
 
 float GameLib::maxObjSpan() const

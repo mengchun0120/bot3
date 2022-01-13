@@ -18,10 +18,18 @@ TileTemplate::TileTemplate(float collideBreath,
                               std::forward<std::vector<Component>>(components))
     , hp_(hp)
 {
-    if (hp_ < 0.0f)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid hp " + toString(hp_));
-    }
+}
+
+void TileTemplate::init(float collideBreath,
+                        float hp,
+                        bool invincible,
+                        std::vector<Component>&& components)
+{
+    CompositeObjectTemplate::init(GameObjectType::TILE,
+                                  collideBreath,
+                                  invincible,
+                                  std::forward<std::vector<Component>>(components));
+    hp_ = hp;
 }
 
 } // end of namespace botlib

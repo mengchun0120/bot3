@@ -38,5 +38,20 @@
         "name": "red_missile",
         "texture": "red_missile",
         "rect": "missile"
+    },
+    {
+        "name": "green_base",
+        "texture": "green_base",
+        "rect": "base"
+    },
+    {
+        "name": "green_gun",
+        "texture": "green_gun",
+        "rect": "gun"
+    },
+    {
+        "name": "green_missile",
+        "texture": "green_missile",
+        "rect": "missile"
     }
 ]

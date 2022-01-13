@@ -13,5 +13,20 @@
             }
         ],
         "explodeEffect": "red_explosion"
+    },
+    {
+        "name": "green_missile",
+        "collideBreath": 8.0,
+        "damage": 10.0,
+        "speed": 100.0,
+        "explodeBreath": 18.0,
+        "components": [
+            {
+                "template": "green_missile",
+                "pos": [0.0, 0.0],
+                "direction": [1.0, 0.0]
+            }
+        ],
+        "explodeEffect": "green_explosion"
     }
 ]

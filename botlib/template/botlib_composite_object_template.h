@@ -10,12 +10,19 @@ namespace botlib {
 
 class CompositeObjectTemplate: public GameObjectTemplate {
 public:
+    CompositeObjectTemplate() = default;
+
     CompositeObjectTemplate(GameObjectType t,
                             float collideBreath,
                             bool invincible,
                             std::vector<Component>&& components);
 
     ~CompositeObjectTemplate() override = default;
+
+    void init(GameObjectType t,
+              float collideBreath,
+              bool invincible,
+              std::vector<Component>&& components);
 
     inline unsigned int numComponents() const;
 

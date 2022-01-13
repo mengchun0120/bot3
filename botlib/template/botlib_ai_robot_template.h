@@ -8,6 +8,8 @@ namespace botlib {
 
 class AIRobotTemplate: public RobotTemplate {
 public:
+    AIRobotTemplate() = default;
+
     AIRobotTemplate(float hp1,
                     float armor1,
                     float speed1,
@@ -21,6 +23,19 @@ public:
                     std::vector<commonlib::Vector2>&& fireDirections);
 
     ~AIRobotTemplate() = default;
+
+    void init(float hp1,
+              float armor1,
+              float speed1,
+              float energy1,
+              float rechargeRate1,
+              float collideBreath1,
+              const MissileTemplate* missileTemplate1,
+              float fireIntervalMS1,
+              std::vector<Component>&& components,
+              std::vector<commonlib::Vector2>&& firePoints,
+              std::vector<commonlib::Vector2>&& fireDirections);
+
 };
 
 } // end of namespace botlib

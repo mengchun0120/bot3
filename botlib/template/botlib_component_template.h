@@ -9,10 +9,15 @@ namespace botlib {
 
 class ComponentTemplate {
 public:
+    ComponentTemplate() = default;
+
     ComponentTemplate(const commonlib::Texture* texture,
                       const Rectangle* rect);
 
     ~ComponentTemplate() = default;
+
+    void init(const commonlib::Texture* texture,
+              const Rectangle* rect);
 
     inline const commonlib::Texture* texture() const;
 

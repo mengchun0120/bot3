@@ -32,6 +32,18 @@
         "file": "red_missile.png"
     },
     {
+        "name": "green_base",
+        "file": "green_base.png"
+    },
+    {
+        "name": "green_gun",
+        "file": "green_gun.png"
+    },
+    {
+        "name": "green_missile",
+        "file": "green_missile.png"
+    },
+    {
         "name": "small_ball",
         "file": "small_ball.png"
     }

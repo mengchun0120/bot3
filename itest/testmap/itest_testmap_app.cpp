@@ -36,7 +36,8 @@ TestMapApp::TestMapApp(const std::string& configFile,
                           cfg.tileTemplateLibFile(),
                           cfg.missileTemplateLibFile(),
                           cfg.aiRobotTemplateLibFile(),
-                          cfg.particleEffectTemplateLibFile());
+                          cfg.particleEffectTemplateLibFile(),
+                          cfg.playerTemplateFile());
 
     HPIndicator::initConfig(cfg.hpIndicatorConfigFile());
 

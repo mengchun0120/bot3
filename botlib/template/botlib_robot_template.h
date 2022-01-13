@@ -9,6 +9,8 @@ namespace botlib {
 
 class RobotTemplate: public CompositeObjectTemplate {
 public:
+    RobotTemplate() = default;
+
     RobotTemplate(float hp1,
                   float armor1,
                   float speed1,
@@ -22,6 +24,18 @@ public:
                   std::vector<commonlib::Vector2>&& fireDirections);
 
     ~RobotTemplate() override = default;
+
+    void init(float hp1,
+              float armor1,
+              float speed1,
+              float energy1,
+              float rechargeRate1,
+              float collideBreath1,
+              const MissileTemplate* missileTemplate,
+              float fireIntervalMS1,
+              std::vector<Component>&& components,
+              std::vector<commonlib::Vector2>&& firePoints,
+              std::vector<commonlib::Vector2>&& fireDirections);
 
     inline float hp() const;
 

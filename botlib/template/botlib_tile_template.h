@@ -10,12 +10,19 @@ namespace botlib {
 
 class TileTemplate: public CompositeObjectTemplate {
 public:
+    TileTemplate() = default;
+
     TileTemplate(float collideBreath,
                  float hp,
                  bool invincible,
                  std::vector<Component>&& components);
 
     ~TileTemplate() override = default;
+
+    void init(float collideBreath,
+              float hp,
+              bool invincible,
+              std::vector<Component>&& components);
 
     inline float hp() const;
 

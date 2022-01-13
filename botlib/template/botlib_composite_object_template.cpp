@@ -1,3 +1,4 @@
+#include <utility>
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
 #include <botlib_composite_object_template.h>
@@ -13,11 +14,20 @@ CompositeObjectTemplate::CompositeObjectTemplate(
                                     bool invincible,
                                     std::vector<Component>&& components)
     : GameObjectTemplate(t, 0.0f, collideBreath, invincible)
-    , components_(components)
+    , components_(std::forward<std::vector<Component>>(components))
 {
     resetSpan();
 }
 
+void CompositeObjectTemplate::init(GameObjectType t,
+                                   float collideBreath,
+                                   bool invincible,
+                                   std::vector<Component>&& components)
+{
+    GameObjectTemplate::init(t, 0.0f, collideBreath, invincible);
+    components_ = std::move(components);
+    resetSpan();
+}
 
 void CompositeObjectTemplate::resetSpan()
 {
