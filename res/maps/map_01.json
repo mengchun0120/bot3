@@ -3,6 +3,12 @@
     "cols": 50,
     "objects": [
         {
+            "type": "player",
+            "template": "player",
+            "pos": [200.0, 600.0],
+            "direction": [1.0, 0.0]
+        },
+        {
             "type": "tile",
             "template": "clay_tile",
             "pos": [200.0, 200.0],

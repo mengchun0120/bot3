@@ -15,6 +15,8 @@
 namespace mcdane {
 namespace botlib {
 
+class Player;
+
 class GameMap {
 public:
     static constexpr float k_cellBreath = 40.0f;
@@ -55,6 +57,8 @@ public:
     inline const commonlib::Region<int>& presentArea() const;
 
     inline int getCellIdx(float x) const;
+
+    inline const Player* player() const;
 
     void setViewportOrigin(float x,
                            float y);
@@ -102,6 +106,7 @@ private:
     commonlib::Region<float> viewableRegion_;
     commonlib::Region<int> presentArea_;
     GameObjectPresenter presenter_;
+    Player* player_;
 };
 
 int GameMap::rowCount() const
@@ -147,6 +152,11 @@ const commonlib::Region<int>& GameMap::presentArea() const
 int GameMap::getCellIdx(float x) const
 {
     return static_cast<int>(floor(x / k_cellBreath)) + extraCell_;
+}
+
+const Player* GameMap::player() const
+{
+    return player_;
 }
 
 } // end of namespace botlib

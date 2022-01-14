@@ -38,6 +38,9 @@ private:
     void addParticleEffect(GameMap& map,
                            const rapidjson::Value& v);
 
+    void addPlayer(GameMap& map,
+                   const rapidjson::Value& v);
+
     bool checkCollide(GameMap& map,
                       float collideBreath);
 

@@ -6,12 +6,23 @@
 #include <commonlib_collide.h>
 #include <botlib_graphics.h>
 #include <botlib_game_object_presenter.h>
+#include <botlib_player.h>
 #include <botlib_game_map.h>
 
 using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
+
+namespace {
+
+inline bool isPlayer(GameObject* obj)
+{
+    return obj->type() == GameObjectType::ROBOT &&
+           static_cast<Robot*>(obj)->side() == Side::PLAYER;
+}
+
+} // end of unnamed namespace
 
 void GameMap::init(unsigned int rows,
                    unsigned int cols,
@@ -47,6 +58,11 @@ void GameMap::addObj(GameObject* obj)
 
     map_[rowIdx][colIdx].pushFront(obj);
     obj->setMapPos(rowIdx, colIdx);
+
+    if (isPlayer(obj))
+    {
+        player_ = static_cast<Player*>(obj);
+    }
 
     LOG_DEBUG << "addObj " << obj->type() << " " << obj << " row=" << rowIdx
               << " col=" << colIdx << LOG_END;

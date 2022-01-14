@@ -8,6 +8,7 @@
 #include <botlib_missile.h>
 #include <botlib_ai_robot.h>
 #include <botlib_particle_effect.h>
+#include <botlib_player.h>
 #include <botlib_add_object_checker.h>
 #include <botlib_game_map_loader.h>
 
@@ -119,6 +120,10 @@ void GameMapLoader::parseAddObject(GameMap& map,
     else if (typeStr_ == "particleEffect")
     {
         addParticleEffect(map, v);
+    }
+    else if (typeStr_ == "player")
+    {
+        addPlayer(map, v);
     }
     else
     {
@@ -235,6 +240,17 @@ void GameMapLoader::addParticleEffect(GameMap& map,
     effect->init(t, pos_);
 
     map.addObj(effect);
+}
+
+void GameMapLoader::addPlayer(GameMap& map,
+                              const rapidjson::Value& v)
+{
+    const GameLib& lib = GameLib::getInstance();
+
+    Player* player = new Player();
+    player->init(&lib.playerTemplate(), pos_, direction_);
+
+    map.addObj(player);
 }
 
 bool GameMapLoader::checkCollide(GameMap& map,

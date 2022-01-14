@@ -25,6 +25,8 @@ public:
 
     inline const commonlib::Vector2& direction() const;
 
+    inline unsigned int numComponents() const;
+
     inline const Component& component(unsigned int idx) const;
 
     void present() const override;
@@ -63,6 +65,11 @@ float CompositeObject::directionY() const
 const commonlib::Vector2& CompositeObject::direction() const
 {
     return direction_;
+}
+
+unsigned int CompositeObject::numComponents() const
+{
+    return getTemplate()->numComponents();
 }
 
 const Component& CompositeObject::component(unsigned int idx) const

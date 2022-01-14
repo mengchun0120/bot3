@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <botlib_player_template.h>
 
 using namespace mcdane::commonlib;
@@ -42,6 +43,8 @@ void PlayerTemplate::init(float hp1,
                           std::vector<Vector2>&& firePoints,
                           std::vector<Vector2>&& fireDirections)
 {
+    LOG_DEBUG << "numComponents=" << components.size() << LOG_END;
+
     RobotTemplate::init(hp1,
                         armor1,
                         speed1,
