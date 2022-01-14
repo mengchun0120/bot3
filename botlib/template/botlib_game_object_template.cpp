@@ -41,3 +41,19 @@ void GameObjectTemplate::init(GameObjectType t,
 } // end of namespace botlib
 } // end of namespace mcdane
 
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::botlib::GameObjectTemplate& t)
+{
+    os << "GameObjectTemplate(" << &t
+       << ", type=" << t.type()
+       << ", span=" << t.span()
+       << ", collideBreath=" << t.collideBreath()
+       << ", invincible=" << t.invincible()
+       << ")";
+
+    return os;
+}
+
+} // end of namespace std

@@ -39,5 +39,12 @@ public:
 } // end of namespace botlib
 } // end of namespace mcdane
 
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::botlib::PlayerTemplate& t);
+
+} // end of namespace std
+
 #endif
 

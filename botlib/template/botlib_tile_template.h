@@ -38,5 +38,12 @@ float TileTemplate::hp() const
 } // end of namespace botlib
 } // end of namespace mcdane
 
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::botlib::TileTemplate& t);
+
+} // end of namespace std
+
 #endif
 

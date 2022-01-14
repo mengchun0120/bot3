@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <commonlib_file_utils.h>
 #include <commonlib_texture.h>
 #include <botlib_texture_parser.h>
@@ -17,7 +18,12 @@ Texture* TextureParser::operator()(const rapidjson::Value& v)
 {
     parse(params_, v);
     std::string path = constructPath({picDir_, fileName_});
-    return new Texture(path);
+
+    Texture* tex = new Texture(path);
+
+    LOG_DEBUG << "Created " << *tex << LOG_END;
+
+    return tex;
 }
 
 } // end of namespace botlib

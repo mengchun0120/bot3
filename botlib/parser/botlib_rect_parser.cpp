@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <botlib_rectangle.h>
 #include <botlib_rect_parser.h>
 
@@ -19,8 +20,14 @@ Rectangle* RectParser::operator()(const rapidjson::Value& v)
 {
     hasTexture_ = false;
     parse(params_, v);
-    return hasTexture_ ? new Rectangle(width_, height_, TexRectangle()) :
+
+    Rectangle* rect= hasTexture_ ?
+                         new Rectangle(width_, height_, TexRectangle()) :
                          new Rectangle(width_, height_);
+
+    LOG_DEBUG << "Created " << *rect << LOG_END;
+
+    return rect;
 }
 
 } // end of namespace botlib

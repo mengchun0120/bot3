@@ -2,6 +2,7 @@
 #define INCLUDED_COMMONLIB_TEXTURE_H
 
 #include <string>
+#include <ostream>
 #include <commonlib_opengl.h>
 
 namespace mcdane {
@@ -46,6 +47,13 @@ private:
 
 } // end of namespace commonlib
 } // end of namespace mcdane
+
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::commonlib::Texture& tex);
+
+} // end of namespace std
 
 #endif
 

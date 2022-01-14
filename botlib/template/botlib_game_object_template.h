@@ -60,5 +60,12 @@ bool GameObjectTemplate::invincible() const
 } // end of namespace botlib
 } // end of namespace mcdane
 
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::botlib::GameObjectTemplate& t);
+
+} // end of namespace std
+
 #endif
 

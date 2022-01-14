@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_RECTANGLE_H
 #define INCLUDED_BOTLIB_RECTANGLE_H
 
+#include <ostream>
 #include <botlib_polygon.h>
 #include <botlib_tex_rectangle.h>
 
@@ -43,6 +44,13 @@ private:
 
 } // end of namespace botlib
 } // end of namespace mcdane
+
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::botlib::Rectangle& rect);
+
+} // end of namespace std
 
 #endif
 

@@ -17,11 +17,11 @@ public:
                   float energy1,
                   float rechargeRate1,
                   float collideBreath1,
-                  const MissileTemplate* missileTemplate,
+                  const MissileTemplate* missileTemplate1,
                   float fireIntervalMS1,
                   std::vector<Component>&& components,
-                  std::vector<commonlib::Vector2>&& firePoints,
-                  std::vector<commonlib::Vector2>&& fireDirections);
+                  std::vector<commonlib::Vector2>&& firePoints1,
+                  std::vector<commonlib::Vector2>&& fireDirections1);
 
     ~RobotTemplate() override = default;
 
@@ -31,11 +31,11 @@ public:
               float energy1,
               float rechargeRate1,
               float collideBreath1,
-              const MissileTemplate* missileTemplate,
+              const MissileTemplate* missileTemplate1,
               float fireIntervalMS1,
               std::vector<Component>&& components,
-              std::vector<commonlib::Vector2>&& firePoints,
-              std::vector<commonlib::Vector2>&& fireDirections);
+              std::vector<commonlib::Vector2>&& firePoints1,
+              std::vector<commonlib::Vector2>&& fireDirections1);
 
     inline float hp() const;
 
@@ -53,7 +53,11 @@ public:
 
     inline unsigned int numFirePoints() const;
 
+    inline const std::vector<commonlib::Vector2>& firePoints() const;
+
     inline const commonlib::Vector2& firePoint(unsigned int i) const;
+
+    inline const std::vector<commonlib::Vector2>& fireDirections() const;
 
     inline const commonlib::Vector2& fireDirection(unsigned int i) const;
 
@@ -109,9 +113,19 @@ unsigned int RobotTemplate::numFirePoints() const
     return firePoints_.size();
 }
 
+const std::vector<commonlib::Vector2>& RobotTemplate::firePoints() const
+{
+    return firePoints_;
+}
+
 const commonlib::Vector2& RobotTemplate::firePoint(unsigned int i) const
 {
     return firePoints_[i];
+}
+
+const std::vector<commonlib::Vector2>& RobotTemplate::fireDirections() const
+{
+    return fireDirections_;
 }
 
 const commonlib::Vector2& RobotTemplate::fireDirection(unsigned int i) const
@@ -121,6 +135,13 @@ const commonlib::Vector2& RobotTemplate::fireDirection(unsigned int i) const
 
 } // end of namespace botlib
 } // end of namespace mcdane
+
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::botlib::RobotTemplate& t);
+
+} // end of namespace std
 
 #endif
 

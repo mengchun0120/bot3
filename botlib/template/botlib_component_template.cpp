@@ -35,3 +35,19 @@ void ComponentTemplate::init(const commonlib::Texture* texture,
 } // end of namespace botlib
 } // end of namespace mcdane
 
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::botlib::ComponentTemplate& t)
+{
+    os << "ComponentTemplate(" << &t
+       << ", texture=" << *(t.texture())
+       << ", rect=" << *(t.rect())
+       << ")";
+
+    return os;
+}
+
+} // end of namespace std
+
+

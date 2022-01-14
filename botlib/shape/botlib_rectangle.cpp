@@ -81,3 +81,19 @@ void Rectangle::load(float width,
 } // end of namespace botlib
 } // end of namespace mcdane
 
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::botlib::Rectangle& rect)
+{
+    os << "Rectangle(" << &rect
+       << ", width=" << rect.width()
+       << ", height=" << rect.height()
+       << ")";
+
+    return os;
+}
+
+} // end of namespace std
+
+

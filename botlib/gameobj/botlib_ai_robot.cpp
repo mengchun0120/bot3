@@ -1,11 +1,14 @@
+#include <commonlib_log.h>
 #include <botlib_ai_robot.h>
+
+using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
 
 void AIRobot::init(const AIRobotTemplate* t,
-                   const commonlib::Vector2& pos1,
-                   const commonlib::Vector2& direction1)
+                   const Vector2& pos1,
+                   const Vector2& direction1)
 {
     Robot::init(t, Side::AI, pos1, direction1);
 }

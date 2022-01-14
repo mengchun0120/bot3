@@ -65,3 +65,20 @@ void Texture::init(const std::string& imageFile)
 } // end of namespace commonlib
 } // end of namespace mcdane
 
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::commonlib::Texture& tex)
+{
+    os << "Texture(" << &tex
+       << ", id=" << tex.id()
+       << ", width=" << tex.width()
+       << ", height=" << tex.height()
+       << ")";
+
+    return os;
+}
+
+} // end of namespace std
+
+

@@ -1,4 +1,5 @@
 #include <utility>
+#include <commonlib_log.h>
 #include <commonlib_json_utils.h>
 #include <botlib_player_template.h>
 #include <botlib_player_template_parser.h>
@@ -34,6 +35,8 @@ void PlayerTemplateParser::load(PlayerTemplate& t,
            std::forward<std::vector<Component>>(components_),
            std::forward<std::vector<Vector2>>(firePoints_),
            std::forward<std::vector<Vector2>>(fireDirections_));
+
+    LOG_DEBUG << "Initialized " << t << LOG_END;
 }
 
 } // end of namespace botlib

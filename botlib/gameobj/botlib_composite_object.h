@@ -29,6 +29,8 @@ public:
 
     inline const Component& component(unsigned int idx) const;
 
+    inline const std::vector<Component>& components() const;
+
     void present() const override;
 
     void shiftPos(const commonlib::Vector2& delta) override;
@@ -70,6 +72,11 @@ const commonlib::Vector2& CompositeObject::direction() const
 unsigned int CompositeObject::numComponents() const
 {
     return getTemplate()->numComponents();
+}
+
+const std::vector<Component>& CompositeObject::components() const
+{
+    return components_;
 }
 
 const Component& CompositeObject::component(unsigned int idx) const

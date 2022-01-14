@@ -1,7 +1,9 @@
 #include <algorithm>
+#include <commonlib_log.h>
 #include <commonlib_math_utils.h>
 #include <botlib_graphics.h>
 #include <botlib_composite_object.h>
+#include <botlib_player.h>
 
 using namespace mcdane::commonlib;
 

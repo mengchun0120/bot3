@@ -62,3 +62,20 @@ void PlayerTemplate::init(float hp1,
 } // end of namespace botlib
 } // end of namespace mcdane
 
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::botlib::PlayerTemplate& t)
+{
+    using namespace mcdane::botlib;
+
+    os << "PlayerTemplate(" << &t
+       << ", Base=" << static_cast<const RobotTemplate&>(t)
+       << ")";
+
+    return os;
+}
+
+} // end of namespace std
+
+

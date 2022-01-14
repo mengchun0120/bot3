@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_COMPONENT_H
 #define INCLUDED_BOTLIB_COMPONENT_H
 
+#include <ostream>
 #include <commonlib_vector.h>
 #include <botlib_component_template.h>
 
@@ -86,6 +87,13 @@ const commonlib::Vector2& Component::direction() const
 
 } // end of namespace botlib
 } // end of namespace mcdane
+
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::botlib::Component& component);
+
+} // end of namespace std
 
 #endif
 

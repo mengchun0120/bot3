@@ -25,15 +25,15 @@ GameMapLoader::GameMapLoader(float viewportWidth,
         jsonParam(pos_, "pos", true)
       }
     , tileParams_{
-        jsonParam(direction_, "direction", true)
+        jsonParam(direction_, "direction")
       }
     , missileParams_{
-        jsonParam(direction_, "direction", true),
-        jsonParam(sideStr_, "side", true)
+        jsonParam(direction_, "direction"),
+        jsonParam(sideStr_, "side")
       }
     , robotParams_{
-        jsonParam(direction_, "direction", true),
-        jsonParam(movingEnabled_, "movingEnabled")
+        jsonParam(direction_, "direction"),
+        jsonParam(movingEnabled_, "movingEnabled", false)
       }
 {
     if (viewportWidth <= 0.0f)
@@ -115,7 +115,7 @@ void GameMapLoader::parseAddObject(GameMap& map,
     }
     else if (typeStr_ == "robot")
     {
-        addRobot(map, v);
+        addAIRobot(map, v);
     }
     else if (typeStr_ == "particleEffect")
     {
@@ -191,7 +191,7 @@ void GameMapLoader::addMissile(GameMap& map,
     map.addObj(missile);
 }
 
-void GameMapLoader::addRobot(GameMap& map,
+void GameMapLoader::addAIRobot(GameMap& map,
                              const rapidjson::Value& v)
 {
     const GameLib& lib = GameLib::getInstance();
@@ -245,10 +245,20 @@ void GameMapLoader::addParticleEffect(GameMap& map,
 void GameMapLoader::addPlayer(GameMap& map,
                               const rapidjson::Value& v)
 {
-    const GameLib& lib = GameLib::getInstance();
+    const PlayerTemplate& t = GameLib::getInstance().playerTemplate();
+
+    bool collide = checkCollide(map, t.collideBreath());
+
+    if (collide)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Player cannot be placed in map");
+    }
+
+    parse(robotParams_, v);
 
     Player* player = new Player();
-    player->init(&lib.playerTemplate(), pos_, direction_);
+    player->init(&t, pos_, direction_);
 
     map.addObj(player);
 }

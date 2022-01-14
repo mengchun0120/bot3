@@ -35,3 +35,21 @@ void TileTemplate::init(float collideBreath,
 } // end of namespace botlib
 } // end of namespace mcdane
 
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::botlib::TileTemplate& t)
+{
+    using namespace mcdane::botlib;
+
+    os << "TileTemplate(" << &t
+       << ", hp=" << t.hp()
+       << ", Base=" << static_cast<const CompositeObjectTemplate&>(t)
+       << ")";
+
+    return os;
+}
+
+} // end of namespace std
+
+

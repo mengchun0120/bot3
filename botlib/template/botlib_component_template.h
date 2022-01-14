@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_COMPONENT_TEMPLATE_H
 #define INCLUDED_BOTLIB_COMPONENT_TEMPLATE_H
 
+#include <ostream>
 #include <commonlib_texture.h>
 #include <botlib_rectangle.h>
 
@@ -48,6 +49,13 @@ float ComponentTemplate::span() const
 
 } // end of namespace botlib
 } // end of namespace mcdane
+
+namespace std {
+
+ostream& operator<<(ostream& os,
+                    const mcdane::botlib::ComponentTemplate& t);
+
+} // end of namespace std
 
 #endif
 

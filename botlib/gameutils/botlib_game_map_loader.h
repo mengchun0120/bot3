@@ -32,8 +32,8 @@ private:
     void addMissile(GameMap& map,
                     const rapidjson::Value& v);
 
-    void addRobot(GameMap& map,
-                  const rapidjson::Value& v);
+    void addAIRobot(GameMap& map,
+                    const rapidjson::Value& v);
 
     void addParticleEffect(GameMap& map,
                            const rapidjson::Value& v);
