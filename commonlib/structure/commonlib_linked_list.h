@@ -2,14 +2,15 @@
 #define INCLUDED_COMMOLIB_LINKED_LIST_H
 
 #include <functional>
-#include <ostream>
+#include <sstream>
 #include <commonlib_exception.h>
+#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
 template <typename T>
-class LinkedList {
+class LinkedList: public Object {
 public:
     using Deleter = typename std::function<void(T*)>;
 
@@ -53,6 +54,8 @@ public:
     void remove(T* t);
 
     void clear();
+
+    std::string toString() const override;
 
 private:
     void del(T* t);
@@ -362,32 +365,30 @@ void LinkedList<T>::del(T* t)
     }
 }
 
-} // end of namespace commonlib
-} // end of namespace mcdane
-
-namespace std {
-
 template <typename T>
-std::ostream& operator<<(std::ostream& os,
-                         const mcdane::commonlib::LinkedList<T>& list)
+std::string LinkedList<T>::toString() const
 {
-    os << '[';
-    if (!list.empty())
-    {
-        const T* t = list.first();
-        os << *t;
+    std::ostringstream oss;
 
-        for (t = t->next(); t; t = t->next())
+    oss << "LinkedList(size=" << size_
+        << ", data=[";
+
+    if (!empty())
+    {
+        oss << *first_;
+        for (const T* t = first_->next(); t; t = t->next())
         {
-            os << ", " << *t;
+            oss << ", " << *t;
         }
     }
-    os << ']';
 
-    return os;
+    oss << "], Base=" << Object::toString() << ")";
+
+    return oss.str();
 }
 
-} // end of namespace std
+} // end of namespace commonlib
+} // end of namespace mcdane
 
 #endif
 

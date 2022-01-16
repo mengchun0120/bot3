@@ -38,19 +38,14 @@ public:
         return height_;
     }
 
+    std::string toString() const override;
+
 private:
     float width_, height_;
 };
 
 } // end of namespace botlib
 } // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::Rectangle& rect);
-
-} // end of namespace std
 
 #endif
 

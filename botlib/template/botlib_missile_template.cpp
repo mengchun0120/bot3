@@ -1,3 +1,4 @@
+#include <sstream>
 #include <botlib_particle_effect_template.h>
 #include <botlib_missile_template.h>
 
@@ -23,26 +24,20 @@ MissileTemplate::MissileTemplate(
 {
 }
 
-} // end of namespace botlib
-} // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::MissileTemplate& t)
+std::string MissileTemplate::toString() const
 {
-    using namespace mcdane::botlib;
+    std::ostringstream oss;
 
-    os << "MissileTemplate(" << &t
-       << ", damage=" << t.damage()
-       << ", speed=" << t.speed()
-       << ", explodeBreath=" << t.explodeBreath()
-       << ", explodeEffectTemplate=" << *t.explodeEffectTemplate()
-       << ", Base=" << static_cast<const CompositeObjectTemplate&>(t)
-       << ")";
+    oss << "MissileTemplate(damage=" << damage_
+        << ", speed=" << speed_
+        << ", explodeBreath=" << explodeBreath_
+        << ", explodeEffectTemplate=" << explodeEffectTemplate_->toString()
+        << ", Base=" << CompositeObjectTemplate::toString()
+        << ")";
 
-    return os;
+    return oss.str();
 }
 
-} // end of namespace std
+} // end of namespace botlib
+} // end of namespace mcdane
 

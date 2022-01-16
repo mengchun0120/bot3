@@ -36,6 +36,8 @@ public:
 
     void explode(GameMap& map);
 
+    std::string toString() const override;
+
 private:
     void resetSpeed();
 

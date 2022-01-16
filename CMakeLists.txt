@@ -17,6 +17,7 @@ set(BOTLIB_DIR
 
 set(COMMONLIB_DIR
     ${CMAKE_SOURCE_DIR}/commonlib/app
+    ${CMAKE_SOURCE_DIR}/commonlib/base
     ${CMAKE_SOURCE_DIR}/commonlib/input
     ${CMAKE_SOURCE_DIR}/commonlib/math
     ${CMAKE_SOURCE_DIR}/commonlib/misc

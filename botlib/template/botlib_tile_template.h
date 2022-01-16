@@ -1,9 +1,7 @@
 #ifndef INCLUDED_BOTLIB_TILE_TEMPLATE_H
 #define INCLUDED_BOTLIB_TILE_TEMPLATE_H
 
-#include <commonlib_texture.h>
-#include <botlib_rectangle.h>
-#include <botlib_composite_object.h>
+#include <botlib_composite_object_template.h>
 
 namespace mcdane {
 namespace botlib {
@@ -26,6 +24,8 @@ public:
 
     inline float hp() const;
 
+    std::string toString() const override;
+
 protected:
     float hp_;
 };
@@ -37,13 +37,6 @@ float TileTemplate::hp() const
 
 } // end of namespace botlib
 } // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::TileTemplate& t);
-
-} // end of namespace std
 
 #endif
 

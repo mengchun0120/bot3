@@ -3,18 +3,19 @@
 
 #include <list>
 #include <vector>
-#include <iostream>
 #include <functional>
+#include <sstream>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
+#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
 template <typename T>
-class NamedMap {
+class NamedMap: public Object {
 public:
     using NodeAccessor = std::function<bool(const T*)>;
 
@@ -45,9 +46,13 @@ public:
 
     void traverse(NodeAccessor accessor);
 
+    std::string toString() const override;
+
 private:
-    struct Node {
+    struct Node: public Object {
         Node(char ch);
+
+        std::string toString() const override;
 
         Node* left_,* right_;
         char ch_;
@@ -323,12 +328,51 @@ void NamedMap<T>::traverse(NodeAccessor accessor)
 }
 
 template <typename T>
+std::string NamedMap<T>::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "NamedMap(root=" << root_
+        << ", objs=[";
+
+    if (!objs_.empty())
+    {
+        oss << *(objs_[0]);
+        for (std::size_t i = 1; i < objs_.size(); ++i)
+        {
+            oss << ", " << *(objs_[i]);
+        }
+    }
+
+    oss << "], names=" << names_
+        << ", Base=" << Object::toString()
+        << ")";
+
+    return oss.str();
+}
+
+template <typename T>
 NamedMap<T>::Node::Node(char ch)
     : left_(nullptr)
     , right_(nullptr)
     , ch_(ch)
     , ptr_(nullptr)
 {}
+
+template <typename T>
+std::string NamedMap<T>::Node::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "Node(ch=" << ch_
+        << ", ptr=" << *ptr_
+        << ", left=" << left_
+        << ", right=" << right_
+        << ", Base=" << Object::toString()
+        << ")";
+
+    return oss.str();
+}
 
 } // end of namespace commonlib
 } // end of namespace mcdane

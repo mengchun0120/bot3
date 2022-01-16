@@ -1,3 +1,5 @@
+#include <ios>
+#include <sstream>
 #include <commonlib_exception.h>
 #include <botlib_game_object.h>
 
@@ -94,6 +96,21 @@ void GameObject::setFlag(Flag flag,
     {
         flags_ &= ~flag;
     }
+}
+
+std::string GameObject::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "GameObject(" << this
+        << ", pos=" << pos_
+        << ", collideRegion=" << collideRegion_
+        << ", row=" << row_
+        << ", col=" << col_
+        << ", flags=" << std::hex << flags_
+        << ")";
+
+    return oss.str();
 }
 
 } // end of namespace botlib

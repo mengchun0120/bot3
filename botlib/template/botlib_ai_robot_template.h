@@ -36,6 +36,7 @@ public:
               std::vector<commonlib::Vector2>&& firePoints,
               std::vector<commonlib::Vector2>&& fireDirections);
 
+    std::string toString() const override;
 };
 
 } // end of namespace botlib

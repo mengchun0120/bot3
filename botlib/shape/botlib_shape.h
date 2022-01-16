@@ -10,7 +10,7 @@
 namespace mcdane {
 namespace botlib {
 
-class Shape {
+class Shape: public commonlib::Object {
 public:
     Shape() = default;
 
@@ -42,14 +42,18 @@ public:
                       const GLuint textureId,
                       const commonlib::Color* texColor) const = 0;
 
-    const commonlib::VertexArray &vertexArray() const
-    {
-        return va_;
-    }
+    inline const commonlib::VertexArray& vertexArray() const;
+
+    std::string toString() const override;
 
 protected:
     commonlib::VertexArray va_;
 };
+
+const commonlib::VertexArray& Shape::vertexArray() const
+{
+    return va_;
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

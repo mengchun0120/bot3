@@ -28,6 +28,8 @@ public:
 
     void addHP(float delta);
 
+    std::string toString() const override;
+
 private:
     float hp_;
     HPIndicator hpIndicator_;

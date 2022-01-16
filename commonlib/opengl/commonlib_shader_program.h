@@ -28,12 +28,9 @@ public:
     void load(const std::vector<std::string>& vertexShaderFiles,
               const std::vector<std::string>& fragShaderFiles);
 
-    bool valid() const noexcept
-    {
-        return vertexShader_ != 0 &&
-               fragShader_ != 0 &&
-               program_ != 0;
-    }
+    inline bool valid() const noexcept;
+
+    inline GLuint program() const;
 
     ShaderProgram& operator=(const ShaderProgram& other) = delete;
 
@@ -45,16 +42,23 @@ public:
 
     const std::string getError() const;
 
-    GLuint program() const
-    {
-        return program_;
-    }
-
 private:
     GLuint vertexShader_;
     GLuint fragShader_;
     GLuint program_;
 };
+
+bool ShaderProgram::valid() const noexcept
+{
+    return vertexShader_ != 0 &&
+           fragShader_ != 0 &&
+           program_ != 0;
+}
+
+GLuint ShaderProgram::program() const
+{
+    return program_;
+}
 
 } // end of namespace commonlib
 } // end of namespace mcdane

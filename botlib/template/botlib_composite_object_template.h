@@ -30,6 +30,8 @@ public:
 
     inline const std::vector<Component>& components() const;
 
+    std::string toString() const override;
+
 private:
     void resetSpan();
 
@@ -54,13 +56,6 @@ const std::vector<Component>& CompositeObjectTemplate::components() const
 
 } // end of namespace botlib
 } // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::CompositeObjectTemplate& t);
-
-} // end of namespace std
 
 #endif
 

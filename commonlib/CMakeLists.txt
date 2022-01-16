@@ -5,6 +5,9 @@ set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 set(COMMONLIB_APP_SRC
     app/commonlib_app.cpp)
 
+set(COMMONLIB_BASE_SRC
+    base/commonlib_object.cpp)
+
 set(COMMONLIB_INPUT_SRC
     input/commonlib_input_event.cpp
     input/commonlib_input_manager.cpp)
@@ -47,6 +50,7 @@ set(COMMONLIB_STRUCTURE_SRC
 
 set(COMMONLIB_SRC
     ${COMMONLIB_APP_SRC}
+    ${COMMONLIB_BASE_SRC}
     ${COMMONLIB_INPUT_SRC}
     ${COMMONLIB_MATH_SRC}
     ${COMMONLIB_MISC_SRC}

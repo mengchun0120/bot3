@@ -1,3 +1,4 @@
+#include <sstream>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 #include <commonlib_log.h>
@@ -62,23 +63,19 @@ void Texture::init(const std::string& imageFile)
     stbi_image_free(data);
 }
 
-} // end of namespace commonlib
-} // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::commonlib::Texture& tex)
+std::string Texture::toString() const
 {
-    os << "Texture(" << &tex
-       << ", id=" << tex.id()
-       << ", width=" << tex.width()
-       << ", height=" << tex.height()
+    std::ostringstream oss;
+
+    oss << "Texture(id=" << id_
+       << ", width=" << width_
+       << ", height=" << height_
+       << ", Base=" << Object::toString()
        << ")";
 
-    return os;
+    return oss.str();
 }
 
-} // end of namespace std
-
+} // end of namespace commonlib
+} // end of namespace mcdane
 

@@ -1,3 +1,4 @@
+#include <sstream>
 #include <commonlib_log.h>
 #include <botlib_player_template.h>
 
@@ -59,23 +60,15 @@ void PlayerTemplate::init(float hp1,
 
 }
 
-} // end of namespace botlib
-} // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::PlayerTemplate& t)
+std::string PlayerTemplate::toString() const
 {
-    using namespace mcdane::botlib;
+    std::ostringstream oss;
 
-    os << "PlayerTemplate(" << &t
-       << ", Base=" << static_cast<const RobotTemplate&>(t)
-       << ")";
+    oss << "PlayerTemplate(Base=" << RobotTemplate::toString() << ")";
 
-    return os;
+    return oss.str();
 }
 
-} // end of namespace std
-
+} // end of namespace botlib
+} // end of namespace mcdane
 

@@ -40,6 +40,8 @@ public:
               const commonlib::Color* borderColor,
               const GLuint textureId,
               const commonlib::Color* texColor) const override;
+
+    std::string toString() const override;
 };
 
 } // end of namespace botlib

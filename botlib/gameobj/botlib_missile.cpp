@@ -1,3 +1,4 @@
+#include <sstream>
 #include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <botlib_game_map.h>
@@ -88,6 +89,20 @@ void Missile::showExplodeEffect(GameMap& map)
     ParticleEffect* explodeEffect = new ParticleEffect();
     explodeEffect->init(getTemplate()->explodeEffectTemplate(), pos_);
     map.addObj(explodeEffect);
+}
+
+std::string Missile::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "Missile(" << this
+        << ", side=" << side_
+        << ", speed=" << speed_
+        << ", damage=" << damage_
+        << ", Base=" << CompositeObject::toString()
+        << ")";
+
+    return oss.str();
 }
 
 } // end of namespace botlib

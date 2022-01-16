@@ -1,4 +1,4 @@
-#include <iostream>
+#include <sstream>
 #include <commonlib_exception.h>
 #include <commonlib_algorithm.h>
 #include <botlib_polygon.h>
@@ -120,6 +120,15 @@ void Polygon::draw(SimpleShaderProgram& program,
 
         glDrawArrays(GL_TRIANGLE_FAN, 0, va_.numVertices(0));
     }
+}
+
+std::string Polygon::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "Polygon(Base=" << Shape::toString() << ")";
+
+    return oss.str();
 }
 
 } // end of namespace botlib

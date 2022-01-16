@@ -2,13 +2,13 @@
 #define INCLUDED_COMMONLIB_TEXTURE_H
 
 #include <string>
-#include <ostream>
 #include <commonlib_opengl.h>
+#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
-class Texture {
+class Texture: public Object {
 public:
     Texture();
 
@@ -40,6 +40,8 @@ public:
         return height_;
     }
 
+    std::string toString() const override;
+
 private:
     GLuint id_;
     int width_, height_;
@@ -47,13 +49,6 @@ private:
 
 } // end of namespace commonlib
 } // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::commonlib::Texture& tex);
-
-} // end of namespace std
 
 #endif
 

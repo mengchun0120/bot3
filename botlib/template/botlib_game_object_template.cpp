@@ -1,3 +1,4 @@
+#include <sstream>
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
 #include <botlib_game_object_template.h>
@@ -23,13 +24,13 @@ void GameObjectTemplate::init(GameObjectType t,
     if (!isValidGameObjectType(t))
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid type " + toString(static_cast<int>(t)));
+                     "Invalid type " + std::to_string(static_cast<int>(t)));
     }
 
     if (span < 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid span " + toString(span));
+                     "Invalid span " + std::to_string(span));
     }
 
     type_ = t;
@@ -38,22 +39,20 @@ void GameObjectTemplate::init(GameObjectType t,
     invincible_ = invincible;
 }
 
+std::string GameObjectTemplate::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "GameObjectTemplate(type=" << type_
+        << ", span=" << span_
+        << ", collideBreath=" << collideBreath_
+        << ", invincible=" << invincible_
+        << ", Base=" << Object::toString()
+        << ")";
+
+    return oss.str();
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::GameObjectTemplate& t)
-{
-    os << "GameObjectTemplate(" << &t
-       << ", type=" << t.type()
-       << ", span=" << t.span()
-       << ", collideBreath=" << t.collideBreath()
-       << ", invincible=" << t.invincible()
-       << ")";
-
-    return os;
-}
-
-} // end of namespace std

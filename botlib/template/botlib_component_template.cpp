@@ -1,4 +1,5 @@
 #include <cmath>
+#include <sstream>
 #include <commonlib_exception.h>
 #include <botlib_component_template.h>
 
@@ -32,22 +33,18 @@ void ComponentTemplate::init(const commonlib::Texture* texture,
                                     rect_->height() * rect_->height()) / 2.0);
 }
 
-} // end of namespace botlib
-} // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::ComponentTemplate& t)
+std::string ComponentTemplate::toString() const
 {
-    os << "ComponentTemplate(" << &t
-       << ", texture=" << *(t.texture())
-       << ", rect=" << *(t.rect())
-       << ")";
+    std::ostringstream oss;
 
-    return os;
+    oss << "ComponentTemplate(texture=" << texture_->toString()
+        << ", rect=" << rect_->toString()
+        << ", Base=" << Object::toString()
+        << ")";
+
+    return oss.str();
 }
 
-} // end of namespace std
-
+} // end of namespace botlib
+} // end of namespace mcdane
 

@@ -60,6 +60,8 @@ public:
 
     void setShootingEnabled(bool b);
 
+    std::string toString() const override;
+
 protected:
     void initFirePointsAndDirections();
 

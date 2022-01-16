@@ -1,3 +1,4 @@
+#include <sstream>
 #include <commonlib_exception.h>
 #include <botlib_rectangle.h>
 
@@ -78,22 +79,18 @@ void Rectangle::load(float width,
     Polygon::load(positions.data(), positions.size(), texRect.texPos());
 }
 
-} // end of namespace botlib
-} // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::Rectangle& rect)
+std::string Rectangle::toString() const
 {
-    os << "Rectangle(" << &rect
-       << ", width=" << rect.width()
-       << ", height=" << rect.height()
-       << ")";
+    std::ostringstream oss;
 
-    return os;
+    oss << "Rectangle(width=" << width_
+        << ", height=" << height_
+        << ", Base=" << Polygon::toString()
+        << ")";
+
+    return oss.str();
 }
 
-} // end of namespace std
-
+} // end of namespace botlib
+} // end of namespace mcdane
 

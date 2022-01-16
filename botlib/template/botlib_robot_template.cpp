@@ -1,4 +1,5 @@
 #include <utility>
+#include <sstream>
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
 #include <commonlib_out_utils.h>
@@ -66,32 +67,25 @@ void RobotTemplate::init(float hp1,
     fireDirections_ = std::forward<std::vector<Vector2>>(fireDirections1);
 }
 
-} // end of namespace botlib
-} // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::RobotTemplate& t)
+std::string RobotTemplate::toString() const
 {
-    using namespace mcdane::botlib;
+    std::ostringstream oss;
 
-    os << "RobotTemplate(" << &t
-       << ", hp=" << t.hp()
-       << ", armor=" << t.armor()
-       << ", speed=" << t.speed()
-       << ", energy=" << t.energy()
-       << ", rechargeRate=" << t.rechargeRate()
-       << ", fireIntervalMS=" << t.fireIntervalMS()
-       << ", missileTemplate=" << *t.missileTemplate()
-       << ", firePoints=" << t.firePoints()
-       << ", fireDirections=" << t.fireDirections()
-       << ", CompositeTemplate=" << static_cast<const CompositeObjectTemplate&>(t)
-       << ")";
+    oss << "RobotTemplate(hp=" << hp_
+        << ", armor=" << armor_
+        << ", speed=" << speed_
+        << ", energy=" << energy_
+        << ", rechargeRate=" << rechargeRate_
+        << ", fireIntervalMS=" << fireIntervalMS_
+        << ", missileTemplate=" << missileTemplate_->toString()
+        << ", firePoints=" << firePoints_
+        << ", fireDirections=" << fireDirections_
+        << ", Base=" << CompositeObjectTemplate::toString()
+        << ")";
 
-    return os;
+    return oss.str();
 }
 
-} // end of namespace std
-
+} // end of namespace botlib
+} // end of namespace mcdane
 

@@ -34,17 +34,11 @@ public:
               std::vector<commonlib::Vector2>&& firePoints,
               std::vector<commonlib::Vector2>&& fireDirections);
 
+    std::string toString() const override;
 };
 
 } // end of namespace botlib
 } // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::PlayerTemplate& t);
-
-} // end of namespace std
 
 #endif
 

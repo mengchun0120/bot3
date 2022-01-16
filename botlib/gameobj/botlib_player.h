@@ -18,6 +18,8 @@ public:
               const commonlib::Vector2 direction1);
 
     inline const PlayerTemplate* getTemplate() const;
+
+    std::string toString() const override;
 };
 
 const PlayerTemplate* Player::getTemplate() const

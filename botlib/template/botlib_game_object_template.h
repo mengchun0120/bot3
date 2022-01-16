@@ -2,11 +2,12 @@
 #define INCLUDED_BOTLIB_GAME_OBJECT_TEMPLATE_H
 
 #include <botlib_game_object_type.h>
+#include <commonlib_object.h>
 
 namespace mcdane {
 namespace botlib {
 
-class GameObjectTemplate {
+class GameObjectTemplate: public commonlib::Object {
 public:
     GameObjectTemplate() = default;
 
@@ -29,6 +30,8 @@ public:
     inline float collideBreath() const;
 
     inline bool invincible() const;
+
+    std::string toString() const override;
 
 protected:
     GameObjectType type_;
@@ -59,13 +62,6 @@ bool GameObjectTemplate::invincible() const
 
 } // end of namespace botlib
 } // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::GameObjectTemplate& t);
-
-} // end of namespace std
 
 #endif
 

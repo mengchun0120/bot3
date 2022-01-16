@@ -1,13 +1,14 @@
 #include <cassert>
 #include <vector>
 #include <iostream>
+#include <sstream>
 #include <commonlib_linked_list.h>
 #include <test_commonlib.h>
 
 namespace mcdane {
 namespace commonlib {
 
-class TestNode {
+class TestNode: public Object {
 public:
     TestNode(int v);
 
@@ -24,6 +25,8 @@ public:
     inline void setNext(TestNode* n);
 
     inline void setPrev(TestNode* n);
+
+    std::string toString() const override;
 
 private:
     int val_;
@@ -71,6 +74,19 @@ void TestNode::setNext(TestNode* n)
 void TestNode::setPrev(TestNode* n)
 {
     prev_ = n;
+}
+
+std::string TestNode::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "TestNode(val=" << val_
+        << ", prev=" << prev_
+        << ", next=" << next_
+        << ", Base=" << Object::toString()
+        << ")";
+
+    return oss.str();
 }
 
 bool checkLinkedList(const LinkedList<TestNode>& list,

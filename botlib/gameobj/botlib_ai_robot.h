@@ -18,6 +18,8 @@ public:
               const commonlib::Vector2& direction1);
 
     inline const AIRobotTemplate* getTemplate() const;
+
+    std::string toString() const override;
 };
 
 const AIRobotTemplate* AIRobot::getTemplate() const

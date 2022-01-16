@@ -1,13 +1,15 @@
 #ifndef INCLUDED_COMMONLIB_FIXED_QUEUE_H
 #define INCLUDED_COMMONLIB_FIXED_QUEUE_H
 
+#include <sstream>
 #include <commonlib_exception.h>
+#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
 template <typename T>
-class FixedQueue {
+class FixedQueue: public Object {
 public:
     FixedQueue();
 
@@ -44,6 +46,8 @@ public:
     {
         return capacity_;
     }
+
+    std::string toString() const override;
 
 private:
     T* queue_;
@@ -163,6 +167,33 @@ void FixedQueue<T>::clear()
     size_ = 0;
     first_ = -1;
     free_ = 0;
+}
+
+template <typename T>
+std::string FixedQueue<T>::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "FixedQueue(first_=" << first_
+        << ", free_=" << free_
+        << ", capacity=" << capacity_
+        << ", size=" << size_
+        << ", queue=[";
+
+    if (!empty())
+    {
+        oss << queue_[first_];
+
+        int idx = (first_ + 1) % capacity_;
+        for (int i = 1; i < size_; ++i)
+        {
+            oss << ", " << queue_[idx];
+        }
+    }
+
+    oss << "], Base=" << Object::toString() << ")";
+
+    return oss.str();
 }
 
 } // end of namespace commonlib

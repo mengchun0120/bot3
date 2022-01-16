@@ -5,15 +5,18 @@
 #include <vector>
 #include <commonlib_opengl.h>
 #include <commonlib_buffer_block.h>
+#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
-class VertexArray {
+class VertexArray: public Object {
 
-    struct BufferDescriptor {
+    struct BufferDescriptor  {
         void init(const BufferBlock& block,
                   unsigned int offset);
+
+        std::string toString() const;
 
         unsigned int offset_;
         unsigned int numVertices_;
@@ -93,6 +96,8 @@ public:
     {
         return bufferObj_;
     }
+
+    std::string toString() const override;
 
 private:
     template <typename Iterator>

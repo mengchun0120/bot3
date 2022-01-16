@@ -1,4 +1,5 @@
 #include <utility>
+#include <sstream>
 #include <commonlib_exception.h>
 #include <commonlib_out_utils.h>
 #include <commonlib_string_utils.h>
@@ -43,24 +44,17 @@ void CompositeObjectTemplate::resetSpan()
     }
 }
 
-} // end of namespace botlib
-} // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::CompositeObjectTemplate& t)
+std::string CompositeObjectTemplate::toString() const
 {
-    using namespace mcdane::botlib;
+    std::ostringstream oss;
 
-    os << "CompositeObjectTemplate(" << &t
-       << ", components=" << t.components()
-       << ", Base=" << static_cast<const GameObjectTemplate&>(t)
-       << ")";
+    oss << "CompositeObjectTemplate(components=" << components_
+        << ", Base=" << GameObjectTemplate::toString()
+        << ")";
 
-    return os;
+    return oss.str();
 }
 
-} // end of namespace std
-
+} // end of namespace botlib
+} // end of namespace mcdane
 

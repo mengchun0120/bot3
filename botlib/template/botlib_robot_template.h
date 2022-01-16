@@ -61,6 +61,8 @@ public:
 
     inline const commonlib::Vector2& fireDirection(unsigned int i) const;
 
+    std::string toString() const override;
+
 protected:
     float hp_;
     float armor_;
@@ -135,13 +137,6 @@ const commonlib::Vector2& RobotTemplate::fireDirection(unsigned int i) const
 
 } // end of namespace botlib
 } // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::RobotTemplate& t);
-
-} // end of namespace std
 
 #endif
 

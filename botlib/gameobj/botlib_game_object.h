@@ -2,6 +2,7 @@
 #define INCLUDED_BOTLIB_GAME_OBJECT_H
 
 #include <functional>
+#include <ostream>
 #include <commonlib_vector.h>
 #include <commonlib_region.h>
 #include <botlib_game_object_template.h>
@@ -11,7 +12,7 @@ namespace botlib {
 
 class GameMap;
 
-class GameObject {
+class GameObject: public commonlib::Object {
 public:
     enum Flag {
         FLAG_ALIVE = 0x00000001,
@@ -30,6 +31,8 @@ public:
               const commonlib::Vector2& pos1);
 
     inline GameObjectType type() const;
+
+    inline const GameObjectTemplate* getTemplate() const;
 
     inline float span() const;
 
@@ -50,6 +53,8 @@ public:
     inline float collideTop() const;
 
     inline const commonlib::Region<float>& collideRegion() const;
+
+    inline int flags() const;
 
     inline bool alive() const;
 
@@ -100,6 +105,8 @@ public:
 
     inline void setNext(GameObject* o);
 
+    std::string toString() const override;
+
 public:
     static Deleter k_defaultDeleter;
 
@@ -117,6 +124,11 @@ protected:
 GameObjectType GameObject::type() const
 {
     return t_->type();
+}
+
+const GameObjectTemplate* GameObject::getTemplate() const
+{
+    return t_;
 }
 
 float GameObject::span() const
@@ -167,6 +179,11 @@ float GameObject::collideTop() const
 const commonlib::Region<float>& GameObject::collideRegion() const
 {
     return collideRegion_;
+}
+
+int GameObject::flags() const
+{
+    return flags_;
 }
 
 bool GameObject::alive() const

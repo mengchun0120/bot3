@@ -4,11 +4,12 @@
 #include <ostream>
 #include <commonlib_texture.h>
 #include <botlib_rectangle.h>
+#include <commonlib_object.h>
 
 namespace mcdane {
 namespace botlib {
 
-class ComponentTemplate {
+class ComponentTemplate: public commonlib::Object {
 public:
     ComponentTemplate() = default;
 
@@ -25,6 +26,8 @@ public:
     inline const Rectangle* rect() const;
 
     inline float span() const;
+
+    std::string toString() const override;
 
 private:
     const commonlib::Texture* texture_;
@@ -49,13 +52,6 @@ float ComponentTemplate::span() const
 
 } // end of namespace botlib
 } // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::ComponentTemplate& t);
-
-} // end of namespace std
 
 #endif
 

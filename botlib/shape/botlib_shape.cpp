@@ -1,5 +1,6 @@
 #include <memory>
 #include <algorithm>
+#include <sstream>
 #include <commonlib_exception.h>
 #include <commonlib_algorithm.h>
 #include <botlib_constants.h>
@@ -86,6 +87,17 @@ void Shape::load(const Point2* positions,
         va_.load({BufferBlock{positions, numPositions, Constants::POS_SIZE, 0},
                   BufferBlock{texPos, numPositions, Constants::TEXPOS_SIZE, 0}});
     }
+}
+
+std::string Shape::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "Shape(va=" << va_.toString()
+        << ", Base=" << Object::toString()
+        << ")";
+
+    return oss.str();
 }
 
 } // end of namespace botlib

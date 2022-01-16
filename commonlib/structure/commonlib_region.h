@@ -2,13 +2,16 @@
 #define INCLUDED_COMMONLIB_REGION_H
 
 #include <vector>
+#include <sstream>
+#include <ostream>
 #include <commonlib_exception.h>
+#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
 template <typename T>
-class Region {
+class Region: public Object {
 public:
     Region() = default;
 
@@ -50,6 +53,8 @@ public:
 
     void shift(T deltaX,
                T deltaY);
+
+    std::string toString() const override;
 
 private:
     T left_;
@@ -196,6 +201,21 @@ void Region<T>::shift(T deltaX,
     right_ += deltaX;
     bottom_ += deltaY;
     top_ += deltaY;
+}
+
+template <typename T>
+std::string Region<T>::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "Region(left=" << left_
+        << ", right=" << right_
+        << ", bottom=" << bottom_
+        << ", top=" << top_
+        << ", Base=" << Object::toString()
+        << ")";
+
+    return oss.str();
 }
 
 } // end of namespace commonlib

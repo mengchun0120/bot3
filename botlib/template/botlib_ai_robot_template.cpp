@@ -1,4 +1,5 @@
 #include <utility>
+#include <sstream>
 #include <botlib_ai_robot_template.h>
 
 using namespace mcdane::commonlib;
@@ -55,6 +56,15 @@ void AIRobotTemplate::init(float hp1,
                         std::forward<std::vector<Vector2>>(firePoints),
                         std::forward<std::vector<Vector2>>(fireDirections));
 
+}
+
+std::string AIRobotTemplate::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "AIRobotTemplate(Base=" << RobotTemplate::toString() << ")";
+
+    return oss.str();
 }
 
 } // end of namespace botlib

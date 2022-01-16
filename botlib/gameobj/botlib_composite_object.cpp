@@ -1,6 +1,8 @@
 #include <algorithm>
+#include <sstream>
 #include <commonlib_log.h>
 #include <commonlib_math_utils.h>
+#include <commonlib_out_utils.h>
 #include <botlib_graphics.h>
 #include <botlib_composite_object.h>
 #include <botlib_player.h>
@@ -82,6 +84,19 @@ void CompositeObject::shiftComponents(const Vector2& delta)
     {
         components_[i].shiftPos(delta);
     }
+}
+
+std::string CompositeObject::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "CompositeObject(" << this
+        << ", direction=" << direction_
+        << ", components=" << components_
+        << ", Base=" << GameObject::toString()
+        << ")";
+
+    return oss.str();
 }
 
 } // end of namespace botlib

@@ -1,13 +1,15 @@
 #ifndef INCLUDED_COMMONLIB_OBJECT_POOL_H
 #define INCLUDED_COMMONLIB_OBJECT_POOL_H
 
+#include <sstream>
 #include <commonlib_exception.h>
+#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
 template <typename T>
-class ObjectPool {
+class ObjectPool: public Object {
 public:
     ObjectPool();
 
@@ -25,6 +27,8 @@ public:
     {
         return freeCount_;
     }
+
+    std::string toString() const override;
 
 private:
     void initPool(unsigned int size);
@@ -131,6 +135,29 @@ void ObjectPool<T>::initNext(unsigned int size)
     next_[size-1] = -1;
 }
 
+template <typename T>
+std::string ObjectPool<T>::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "ObjectPool(freeCount=" << freeCount_
+        << ", size=" << size_
+        << ", free=[";
+
+    if (freeCount_ > 0)
+    {
+        oss << firstFree_;
+
+        for (int idx = next_[firstFree_]; idx >= 0; idx = next_[idx])
+        {
+            oss << ", " << idx;
+        }
+    }
+
+    oss << "], Base=" << Object::toString();
+
+    return oss.str();
+}
 
 } // end of namespace commonlib
 } // end of namespace mcdane

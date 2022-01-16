@@ -1,6 +1,6 @@
 #include <utility>
+#include <sstream>
 #include <commonlib_exception.h>
-#include <commonlib_string_utils.h>
 #include <botlib_tile_template.h>
 
 using namespace mcdane::commonlib;
@@ -32,24 +32,17 @@ void TileTemplate::init(float collideBreath,
     hp_ = hp;
 }
 
-} // end of namespace botlib
-} // end of namespace mcdane
-
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::TileTemplate& t)
+std::string TileTemplate::toString() const
 {
-    using namespace mcdane::botlib;
+    std::ostringstream oss;
 
-    os << "TileTemplate(" << &t
-       << ", hp=" << t.hp()
-       << ", Base=" << static_cast<const CompositeObjectTemplate&>(t)
+    oss << "TileTemplate(hp=" << hp_
+       << ", Base=" << CompositeObjectTemplate::toString()
        << ")";
 
-    return os;
+    return oss.str();
 }
 
-} // end of namespace std
-
+} // end of namespace botlib
+} // end of namespace mcdane
 
