@@ -17,7 +17,7 @@ namespace botlib {
 
 class Player;
 
-class GameMap {
+class GameMap: public commonlib::Object {
 public:
     static constexpr float k_cellBreath = 40.0f;
     static constexpr unsigned int k_minRows = 30;
@@ -72,6 +72,8 @@ public:
     void accessRegion(const commonlib::Region<int>& r,
                       GameMapAccessor& accessor,
                       bool deleteDeadObj);
+
+    std::string toString() const override;
 
 private:
     void initMapCells(unsigned int rows,

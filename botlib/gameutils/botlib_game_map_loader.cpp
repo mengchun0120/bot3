@@ -60,6 +60,8 @@ void GameMapLoader::load(GameMap& map,
 
     loadMapDimension(map, doc);
     loadObjects(map, doc);
+
+    LOG_DEBUG << "Loaded map " << fileName << ": " << map << LOG_END;
 }
 
 void GameMapLoader::loadMapDimension(GameMap& map,

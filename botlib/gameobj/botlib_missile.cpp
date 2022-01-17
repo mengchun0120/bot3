@@ -95,8 +95,7 @@ std::string Missile::toString() const
 {
     std::ostringstream oss;
 
-    oss << "Missile(" << this
-        << ", side=" << side_
+    oss << "Missile(side=" << side_
         << ", speed=" << speed_
         << ", damage=" << damage_
         << ", Base=" << CompositeObject::toString()

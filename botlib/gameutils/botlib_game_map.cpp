@@ -1,4 +1,5 @@
 #include <cmath>
+#include <sstream>
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
 #include <commonlib_string_utils.h>
@@ -20,6 +21,39 @@ inline bool isPlayer(GameObject* obj)
 {
     return obj->type() == GameObjectType::ROBOT &&
            static_cast<Robot*>(obj)->side() == Side::PLAYER;
+}
+
+void streamMap(std::ostringstream& oss,
+               const std::vector<std::vector<GameObjectList>>& map)
+{
+    bool firstCell = true;
+
+    oss << "[";
+
+    for (std::size_t rowIdx = 0; rowIdx < map.size(); ++rowIdx)
+    {
+        const auto& row = map[rowIdx];
+        for (std::size_t colIdx = 0; colIdx < row.size(); ++colIdx)
+        {
+            if (row[colIdx].empty())
+            {
+                continue;
+            }
+
+            if (!firstCell)
+            {
+                oss << ", ";
+            }
+            else
+            {
+                firstCell = true;
+            }
+
+            oss << row[colIdx];
+        }
+    }
+
+    oss << "]";
 }
 
 } // end of unnamed namespace
@@ -64,8 +98,7 @@ void GameMap::addObj(GameObject* obj)
         player_ = static_cast<Player*>(obj);
     }
 
-    LOG_DEBUG << "addObj " << obj->type() << " " << obj << " row=" << rowIdx
-              << " col=" << colIdx << LOG_END;
+    LOG_DEBUG << "addObj " << *obj << LOG_END;
 }
 
 void GameMap::repositionObj(GameObject* obj)
@@ -168,12 +201,37 @@ void GameMap::accessRegion(const Region<int>& r,
 
                 if (deleteDeadObj && !obj->alive() && !obj->locked())
                 {
-                    LOG_DEBUG << "delete " << obj->type() << " " << obj << LOG_END;
+                    LOG_DEBUG << "delete " << *obj << LOG_END;
                     objList.remove(obj);
                 }
             }
         }
     }
+}
+
+std::string GameMap::toString() const
+{
+    std::ostringstream oss;
+
+    oss << "GameMap(maxObjSpan=" << maxObjSpan_
+        << ", maxCollideBreath=" << maxCollideBreath_
+        << ", extraCell=" << extraCell_
+        << ", viewportSize=" << viewportSize_
+        << ", minViewportOrigin=" << minViewportOrigin_
+        << ", maxViewportOrigin=" << maxViewportOrigin_
+        << ", viewportOrigin=" << viewportOrigin_
+        << ", viewportAnchor=" << viewportAnchor_
+        << ", boundary=" << boundary_
+        << ", viewableRegion=" << viewableRegion_
+        << ", presentArea=" << presentArea_
+        << ", map=";
+
+    streamMap(oss, map_);
+
+    oss << ", Base=" << Object::toString()
+        << ")";
+
+    return oss.str();
 }
 
 void GameMap::initMapCells(unsigned int rows,
@@ -194,12 +252,14 @@ void GameMap::setBoundary(unsigned int rows,
 {
     if (rows < k_minRows)
     {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid rows " + toString(rows));
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Invalid rows " + std::to_string(rows));
     }
 
     if (cols < k_minCols)
     {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid cols " + toString(cols));
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Invalid cols " + std::to_string(cols));
     }
 
     boundary_.init(0.0f, rows * k_cellBreath, 0.0f, cols * k_cellBreath);
@@ -211,13 +271,13 @@ void GameMap::setViewportSize(float viewportWidth,
     if (viewportWidth <= 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid viewportWidth " + toString(viewportWidth));
+                     "Invalid viewportWidth " + std::to_string(viewportWidth));
     }
 
     if (viewportHeight <= 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid viewportHeight " + toString(viewportHeight));
+                     "Invalid viewportHeight " + std::to_string(viewportHeight));
     }
 
     viewportSize_.init({viewportWidth, viewportHeight});
