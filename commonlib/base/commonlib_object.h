@@ -3,6 +3,7 @@
 
 #include <ostream>
 #include <string>
+#include <rapidjson/document.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -14,7 +15,12 @@ public:
     virtual ~Object() = default;
 
     virtual std::string toString() const;
+
+    virtual rapidjson::Value toJson() const;
 };
+
+rapidjson::Value toJson(const Object& obj,
+                        rapidjson::Document::AllocatorType& allocator);
 
 } // end of namespace commonlib
 } // end of namespace mcdane

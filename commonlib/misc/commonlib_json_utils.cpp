@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <rapidjson/filereadstream.h>
 #include <commonlib_exception.h>
+#include <commonlib_string_utils.h>
 #include <commonlib_json_utils.h>
 
 namespace mcdane {
@@ -49,6 +50,102 @@ const rapidjson::Value* findJson(const rapidjson::Value& json,
 
         v = &(*v)[name];
     }
+
+    return v;
+}
+
+rapidjson::Value ptrToJson(const void* ptr,
+                           rapidjson::Document::AllocatorType& allocator)
+{
+    return toJson(toString(ptr), allocator);
+}
+
+rapidjson::Value toJson(const std::string& s,
+                        rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value v;
+
+    v.SetString(s.c_str(), s.size(), allocator);
+
+    return v;
+}
+
+rapidjson::Value toJson(int i,
+                        rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value v;
+
+    v.SetInt(i);
+
+    return v;
+}
+
+rapidjson::Value toJson(unsigned int i,
+                        rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value v;
+
+    v.SetUint(i);
+
+    return v;
+}
+
+rapidjson::Value toJson(long i,
+                        rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value v;
+
+    v.SetInt(i);
+
+    return v;
+}
+
+rapidjson::Value toJson(unsigned long i,
+                        rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value v;
+
+    v.SetUint(i);
+
+    return v;
+}
+
+rapidjson::Value toJson(int64_t i,
+                        rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value v;
+
+    v.SetInt64(i);
+
+    return v;
+}
+
+rapidjson::Value toJson(uint64_t i,
+                        rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value v;
+
+    v.SetUint64(i);
+
+    return v;
+}
+
+rapidjson::Value toJson(double d,
+                        rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value v;
+
+    v.SetDouble(d);
+
+    return v;
+}
+
+rapidjson::Value toJson(float f,
+                        rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value v;
+
+    v.SetFloat(f);
 
     return v;
 }

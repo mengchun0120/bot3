@@ -9,6 +9,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
+#include <commonlib_string_utils.h>
 #include <commonlib_object.h>
 
 namespace mcdane {
@@ -48,11 +49,15 @@ public:
 
     std::string toString() const override;
 
+    rapidjson::Document toJson() const override;
+
 private:
     struct Node: public Object {
         Node(char ch);
 
         std::string toString() const override;
+
+        rapidjson::Document toJson() const override;
 
         Node* left_,* right_;
         char ch_;
@@ -352,6 +357,23 @@ std::string NamedMap<T>::toString() const
 }
 
 template <typename T>
+rapidjson::Document NamedMap<T>::toJson() const
+{
+    using namespace rapidjson;
+
+    Document doc(kObjectType);
+    Document::AllocatorType& allocator = doc.GetAllocator();
+
+    doc.AddMember("class", "NamedMap", allocator);
+    doc.AddMember("root", mcdane::commonlib::toJson(this, allocator), allocator);
+    doc.AddMember("objs", mcdane::commonlib::toJson(objs_, allocator), allocator);
+    doc.AddMember("names", mcdane::commonlib::toJson(names_, allocator), allocator);
+    doc.AddMember("base", Object::toJson(), allocator);
+
+    return doc;
+}
+
+template <typename T>
 NamedMap<T>::Node::Node(char ch)
     : left_(nullptr)
     , right_(nullptr)
@@ -372,6 +394,23 @@ std::string NamedMap<T>::Node::toString() const
         << ")";
 
     return oss.str();
+}
+
+template <typename T>
+rapidjson::Document NamedMap<T>::Node::toJson() const
+{
+    using namespace rapidjson;
+
+    Document doc(kObjectType);
+    Document::AllocatorType& allocator = doc.GetAllocator();
+
+    doc.AddMember("class", "NamedMap", allocator);
+    doc.AddMember("ch", ch_, allocator);
+    doc.AddMember("left", mcdane::commonlib::toJson(left_, allocator), allocator);
+    doc.AddMember("right", mcdane::commonlib::toJson(right_, allocator), allocator);
+    doc.AddMember("Base", Object::toJson(), allocator);
+
+    return doc;
 }
 
 } // end of namespace commonlib
