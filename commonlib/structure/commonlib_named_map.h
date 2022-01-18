@@ -49,7 +49,8 @@ public:
 
     std::string toString() const override;
 
-    rapidjson::Document toJson() const override;
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     struct Node: public Object {
@@ -57,7 +58,8 @@ private:
 
         std::string toString() const override;
 
-        rapidjson::Document toJson() const override;
+        rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
 
         Node* left_,* right_;
         char ch_;
@@ -357,20 +359,20 @@ std::string NamedMap<T>::toString() const
 }
 
 template <typename T>
-rapidjson::Document NamedMap<T>::toJson() const
+rapidjson::Value NamedMap<T>::toJson(
+                        rapidjson::Document::AllocatorType& allocator) const
 {
     using namespace rapidjson;
 
-    Document doc(kObjectType);
-    Document::AllocatorType& allocator = doc.GetAllocator();
+    Value v(kObjectType);
 
-    doc.AddMember("class", "NamedMap", allocator);
-    doc.AddMember("root", mcdane::commonlib::toJson(this, allocator), allocator);
-    doc.AddMember("objs", mcdane::commonlib::toJson(objs_, allocator), allocator);
-    doc.AddMember("names", mcdane::commonlib::toJson(names_, allocator), allocator);
-    doc.AddMember("base", Object::toJson(), allocator);
+    v.AddMember("class", "NamedMap", allocator);
+    v.AddMember("root", mcdane::commonlib::toJson(this, allocator), allocator);
+    v.AddMember("objs", mcdane::commonlib::toJson(objs_, allocator), allocator);
+    v.AddMember("names", mcdane::commonlib::toJson(names_, allocator), allocator);
+    v.AddMember("base", Object::toJson(allocator), allocator);
 
-    return doc;
+    return v;
 }
 
 template <typename T>
@@ -397,20 +399,20 @@ std::string NamedMap<T>::Node::toString() const
 }
 
 template <typename T>
-rapidjson::Document NamedMap<T>::Node::toJson() const
+rapidjson::Value NamedMap<T>::Node::toJson(
+                        rapidjson::Document::AllocatorType& allocator) const
 {
     using namespace rapidjson;
 
-    Document doc(kObjectType);
-    Document::AllocatorType& allocator = doc.GetAllocator();
+    Value v(kObjectType);
 
-    doc.AddMember("class", "NamedMap", allocator);
-    doc.AddMember("ch", ch_, allocator);
-    doc.AddMember("left", mcdane::commonlib::toJson(left_, allocator), allocator);
-    doc.AddMember("right", mcdane::commonlib::toJson(right_, allocator), allocator);
-    doc.AddMember("Base", Object::toJson(), allocator);
+    v.AddMember("class", "NamedMap", allocator);
+    v.AddMember("ch", ch_, allocator);
+    v.AddMember("left", mcdane::commonlib::toJson(left_, allocator), allocator);
+    v.AddMember("right", mcdane::commonlib::toJson(right_, allocator), allocator);
+    v.AddMember("Base", Object::toJson(allocator), allocator);
 
-    return doc;
+    return v;
 }
 
 } // end of namespace commonlib

@@ -12,23 +12,21 @@ std::string Object::toString() const
     return "";
 }
 
-rapidjson::Value Object::toJson() const
+rapidjson::Value Object::toJson(
+                        rapidjson::Document::AllocatorType& allocator) const
 {
-    using namespace rapidjson;
+    rapidjson::Value v;
 
-    Document doc(kObjectType);
-    Document::AllocatorType& allocator = doc.GetAllocator();
+    v.AddMember("class", "Object", allocator);
+    v.AddMember("ptr", mcdane::commonlib::toJson(this, allocator), allocator);
 
-    doc.AddMember("class", "Object", allocator);
-    doc.AddMember("ptr", mcdane::commonlib::toJson(this, allocator), allocator);
-
-    return doc;
+    return v;
 }
 
 rapidjson::Value toJson(const Object& obj,
                         rapidjson::Document::AllocatorType& allocator)
 {
-    return obj.toJson();
+    return obj.toJson(allocator);
 }
 
 } // end of namespace commonlib

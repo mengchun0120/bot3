@@ -54,8 +54,8 @@ const rapidjson::Value* findJson(const rapidjson::Value& json,
     return v;
 }
 
-rapidjson::Value ptrToJson(const void* ptr,
-                           rapidjson::Document::AllocatorType& allocator)
+rapidjson::Value toJson(const void* ptr,
+                        rapidjson::Document::AllocatorType& allocator)
 {
     return toJson(toString(ptr), allocator);
 }

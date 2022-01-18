@@ -16,7 +16,8 @@ public:
 
     virtual std::string toString() const;
 
-    virtual rapidjson::Value toJson() const;
+    virtual rapidjson::Value toJson(
+                    rapidjson::Document::AllocatorType& allocator) const;
 };
 
 rapidjson::Value toJson(const Object& obj,
