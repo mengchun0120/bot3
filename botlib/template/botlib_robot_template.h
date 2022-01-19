@@ -63,6 +63,9 @@ public:
 
     std::string toString() const override;
 
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
+
 protected:
     float hp_;
     float armor_;

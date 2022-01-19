@@ -37,6 +37,9 @@ public:
 
     inline const commonlib::Color& color() const;
 
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
+
 protected:
     void loadVertexArray(const std::vector<commonlib::Vector2>& startPos,
                          const std::vector<commonlib::Vector2>& direction,
@@ -59,7 +62,6 @@ protected:
 protected:
     int numParticles_;
     float acceleration_;
-    float initSpeed_;
     float duration_;
     float particleSize_;
     commonlib::VertexArray vertexArray_;

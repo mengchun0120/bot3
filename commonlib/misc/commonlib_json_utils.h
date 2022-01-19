@@ -46,6 +46,9 @@ rapidjson::Value jsonVal(double d,
 rapidjson::Value jsonVal(float f,
                          rapidjson::Document::AllocatorType& allocator);
 
+rapidjson::Value jsonVal(bool b,
+                         rapidjson::Document::AllocatorType& allocator);
+
 template <typename T>
 rapidjson::Value jsonVal(const std::vector<T>& vec,
                          rapidjson::Document::AllocatorType& allocator)

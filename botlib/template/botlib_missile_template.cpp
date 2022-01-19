@@ -38,6 +38,24 @@ std::string MissileTemplate::toString() const
     return oss.str();
 }
 
+rapidjson::Value MissileTemplate::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "MissileTemplate", allocator);
+    v.AddMember("damage", damage_, allocator);
+    v.AddMember("speed", speed_, allocator);
+    v.AddMember("explodeBreath", explodeBreath_, allocator);
+    v.AddMember("particleEffectTemplate", explodeEffectTemplate_->toJson(allocator),
+                allocator);
+    v.AddMember("base", CompositeObjectTemplate::toJson(allocator), allocator);
+
+    return v;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

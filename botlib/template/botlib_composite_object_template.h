@@ -32,6 +32,9 @@ public:
 
     std::string toString() const override;
 
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
+
 private:
     void resetSpan();
 

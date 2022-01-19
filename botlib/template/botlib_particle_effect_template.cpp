@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <commonlib_log.h>
+#include <commonlib_json_utils.h>
 #include <botlib_constants.h>
 #include <botlib_particle_effect_template.h>
 
@@ -73,6 +74,26 @@ float ParticleEffectTemplate::calculateSpan(float duration1,
     Vector2 endPos = startPos + direction * (initSpeed * duration1 -
                      acceleration1 * duration1 * duration1 / 2.0);
     return std::max(endPos[0], endPos[1]) + particleSize1;
+}
+
+rapidjson::Value ParticleEffectTemplate::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "ParticleEffectTemplate", allocator);
+    v.AddMember("numParticles", numParticles_, allocator);
+    v.AddMember("acceleration", acceleration_, allocator);
+    v.AddMember("duration", duration_, allocator);
+    v.AddMember("particleSize", particleSize_, allocator);
+    v.AddMember("vertexArray", vertexArray_.toJson(allocator), allocator);
+    v.AddMember("texture", texture_->toJson(allocator), allocator);
+    v.AddMember("color", jsonVal(color_, allocator), allocator);
+    v.AddMember("base", GameObjectTemplate::toJson(allocator), allocator);
+
+    return v;
 }
 
 } // end of namespace botlib

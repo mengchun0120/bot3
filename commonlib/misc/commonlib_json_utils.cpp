@@ -150,6 +150,16 @@ rapidjson::Value jsonVal(float f,
     return v;
 }
 
+rapidjson::Value jsonVal(bool b,
+                         rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value v;
+
+    v.SetBool(b);
+
+    return v;
+}
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 

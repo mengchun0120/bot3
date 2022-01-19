@@ -45,6 +45,21 @@ std::string ComponentTemplate::toString() const
     return oss.str();
 }
 
+rapidjson::Value ComponentTemplate::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "ComponentTemplate", allocator);
+    v.AddMember("texture", texture_->toJson(allocator), allocator);
+    v.AddMember("rect", rect_->toJson(allocator), allocator);
+    v.AddMember("base", Object::toJson(allocator), allocator);
+
+    return v;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

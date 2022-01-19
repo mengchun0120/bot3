@@ -43,6 +43,20 @@ std::string TileTemplate::toString() const
     return oss.str();
 }
 
+rapidjson::Value TileTemplate::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "TileTemplate", allocator);
+    v.AddMember("hp", hp_, allocator);
+    v.AddMember("base", CompositeObjectTemplate::toJson(allocator), allocator);
+
+    return v;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

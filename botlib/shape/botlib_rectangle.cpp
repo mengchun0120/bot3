@@ -91,6 +91,21 @@ std::string Rectangle::toString() const
     return oss.str();
 }
 
+rapidjson::Value Rectangle::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "Rectangle", allocator);
+    v.AddMember("width", width_, allocator);
+    v.AddMember("height", height_, allocator);
+    v.AddMember("base", Polygon::toJson(allocator), allocator);
+
+    return v;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

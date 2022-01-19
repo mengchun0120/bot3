@@ -53,6 +53,22 @@ std::string GameObjectTemplate::toString() const
     return oss.str();
 }
 
+rapidjson::Value GameObjectTemplate::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "GameObjectTemplate", allocator);
+    v.AddMember("span", span_, allocator);
+    v.AddMember("collideBreath", collideBreath_, allocator);
+    v.AddMember("invincible", invincible_, allocator);
+    v.AddMember("base", Object::toJson(allocator), allocator);
+
+    return v;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

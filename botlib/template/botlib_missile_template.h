@@ -29,6 +29,9 @@ public:
 
     std::string toString() const override;
 
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
+
 private:
     float damage_;
     float speed_;

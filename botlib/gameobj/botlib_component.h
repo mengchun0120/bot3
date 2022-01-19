@@ -4,11 +4,12 @@
 #include <ostream>
 #include <commonlib_vector.h>
 #include <botlib_component_template.h>
+#include <commonlib_object.h>
 
 namespace mcdane {
 namespace botlib {
 
-class Component {
+class Component: public commonlib::Object {
 public:
     Component();
 
@@ -43,6 +44,9 @@ public:
     void setDirection(const commonlib::Vector2& direction1);
 
     void present() const;
+
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     const ComponentTemplate* t_;

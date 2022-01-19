@@ -100,6 +100,20 @@ std::string Shape::toString() const
     return oss.str();
 }
 
+rapidjson::Value Shape::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "Shape", allocator);
+    v.AddMember("va", va_.toJson(allocator), allocator);
+    v.AddMember("base", Object::toJson(allocator), allocator);
+
+    return v;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

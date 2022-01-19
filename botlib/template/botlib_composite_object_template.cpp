@@ -3,6 +3,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_out_utils.h>
 #include <commonlib_string_utils.h>
+#include <commonlib_json_utils.h>
 #include <botlib_composite_object_template.h>
 
 using namespace mcdane::commonlib;
@@ -53,6 +54,20 @@ std::string CompositeObjectTemplate::toString() const
         << ")";
 
     return oss.str();
+}
+
+rapidjson::Value CompositeObjectTemplate::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "CompositeObjectTemplate", allocator);
+    v.AddMember("components", jsonVal(components_, allocator), allocator);
+    v.AddMember("base", GameObjectTemplate::toJson(allocator), allocator);
+
+    return v;
 }
 
 } // end of namespace botlib

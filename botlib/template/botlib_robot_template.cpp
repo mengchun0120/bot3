@@ -3,6 +3,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
 #include <commonlib_out_utils.h>
+#include <commonlib_json_utils.h>
 #include <botlib_robot_template.h>
 
 using namespace mcdane::commonlib;
@@ -84,6 +85,28 @@ std::string RobotTemplate::toString() const
         << ")";
 
     return oss.str();
+}
+
+rapidjson::Value RobotTemplate::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "RobotTemplate", allocator);
+    v.AddMember("hp", hp_, allocator);
+    v.AddMember("armor", armor_, allocator);
+    v.AddMember("speed", speed_, allocator);
+    v.AddMember("energy", energy_, allocator);
+    v.AddMember("rechargeRate", rechargeRate_, allocator);
+    v.AddMember("fireIntervalMS", fireIntervalMS_, allocator);
+    v.AddMember("firePoints", jsonVal(firePoints_, allocator), allocator);
+    v.AddMember("fireDirections", jsonVal(fireDirections_, allocator), allocator);
+    v.AddMember("missileTemplate", missileTemplate_->toJson(allocator), allocator);
+    v.AddMember("base", CompositeObjectTemplate::toJson(allocator), allocator);
+
+    return v;
 }
 
 } // end of namespace botlib

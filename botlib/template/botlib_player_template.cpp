@@ -69,6 +69,19 @@ std::string PlayerTemplate::toString() const
     return oss.str();
 }
 
+rapidjson::Value PlayerTemplate::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "PlayerTemplate", allocator);
+    v.AddMember("base", RobotTemplate::toJson(allocator), allocator);
+
+    return v;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

@@ -131,6 +131,19 @@ std::string Polygon::toString() const
     return oss.str();
 }
 
+rapidjson::Value Polygon::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "Polygon", allocator);
+    v.AddMember("base", Shape::toJson(allocator), allocator);
+
+    return v;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

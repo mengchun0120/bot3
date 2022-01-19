@@ -1,4 +1,5 @@
 #include <commonlib_exception.h>
+#include <commonlib_json_utils.h>
 #include <botlib_graphics.h>
 #include <botlib_component.h>
 
@@ -72,6 +73,21 @@ void Component::present() const
 
     t_->rect()->draw(program, &pos_, &direction_, nullptr, nullptr,
                      t_->texture()->id(), nullptr);
+}
+
+rapidjson::Value Component::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "component", allocator);
+    v.AddMember("template", t_->toJson(allocator), allocator);
+    v.AddMember("pos", jsonVal(pos_, allocator), allocator);
+    v.AddMember("direction", jsonVal(direction_, allocator), allocator);
+
+    return v;
 }
 
 } // end of namespace botlib
