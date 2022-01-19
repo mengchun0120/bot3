@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include <commonlib_exception.h>
+#include <commonlib_json_utils.h>
 #include <commonlib_object.h>
 
 namespace mcdane {
@@ -29,6 +30,9 @@ public:
     }
 
     std::string toString() const override;
+
+    rapidjson::Value toJson(
+            rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     void initPool(unsigned int size);
@@ -157,6 +161,31 @@ std::string ObjectPool<T>::toString() const
     oss << "], Base=" << Object::toString();
 
     return oss.str();
+}
+
+template <typename T>
+rapidjson::Value ObjectPool<T>::toJson(
+            rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "ObjectPool", allocator);
+    v.AddMember("freeCount", freeCount_, allocator);
+    v.AddMember("size", size_, allocator);
+
+    Value arr(kArrayType);
+
+    for (int idx = firstFree_; idx >= 0; idx = next_[idx])
+    {
+        arr.PushBack(idx, allocator);
+    }
+
+    v.AddMember("free", arr, allocator);
+    v.AddMember("base", Object::toJson(allocator), allocator);
+
+    return v;
 }
 
 } // end of namespace commonlib

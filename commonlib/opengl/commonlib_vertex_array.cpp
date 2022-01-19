@@ -1,5 +1,6 @@
 #include <sstream>
 #include <commonlib_exception.h>
+#include <commonlib_json_utils.h>
 #include <commonlib_buffer_block.h>
 #include <commonlib_vertex_array.h>
 
@@ -44,6 +45,23 @@ std::string VertexArray::BufferDescriptor::toString() const
         << ")";
 
     return oss.str();
+}
+
+rapidjson::Value VertexArray::BufferDescriptor::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "BufferDescriptor", allocator);
+    v.AddMember("offset", offset_, allocator);
+    v.AddMember("numVertices", numVertices_, allocator);
+    v.AddMember("vertexSize", vertexSize_, allocator);
+    v.AddMember("totalSize", totalSize_, allocator);
+    v.AddMember("stride", stride_, allocator);
+
+    return v;
 }
 
 VertexArray::VertexArray()
@@ -136,6 +154,22 @@ std::string VertexArray::toString() const
     oss << "], Base=" << Object::toString() << ")";
 
     return oss.str();
+}
+
+rapidjson::Value VertexArray::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "VertexArray", allocator);
+    v.AddMember("arrayObj", arrayObj_, allocator);
+    v.AddMember("bufferObj", bufferObj_, allocator);
+    v.AddMember("descriptors", jsonVal(descriptors_, allocator), allocator);
+    v.AddMember("base", Object::toJson(allocator), allocator);
+
+    return v;
 }
 
 } // end of namespace commonlib

@@ -76,6 +76,22 @@ std::string Texture::toString() const
     return oss.str();
 }
 
+rapidjson::Value Texture::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "Texture", allocator);
+    v.AddMember("id", id_, allocator);
+    v.AddMember("width", width_, allocator);
+    v.AddMember("height", height_, allocator);
+    v.AddMember("base", Object::toJson(allocator), allocator);
+
+    return v;
+}
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 

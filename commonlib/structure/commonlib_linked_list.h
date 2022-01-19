@@ -4,6 +4,7 @@
 #include <functional>
 #include <sstream>
 #include <commonlib_exception.h>
+#include <commonlib_json_utils.h>
 #include <commonlib_object.h>
 
 namespace mcdane {
@@ -56,6 +57,9 @@ public:
     void clear();
 
     std::string toString() const override;
+
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     void del(T* t);
@@ -385,6 +389,29 @@ std::string LinkedList<T>::toString() const
     oss << "], Base=" << Object::toString() << ")";
 
     return oss.str();
+}
+
+template <typename T>
+rapidjson::Value LinkedList<T>::toJson(
+                        rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "LinkedList", allocator);
+    v.AddMember("size", size_, allocator);
+
+    Value arr(kArrayType);
+    for (const T* t = first_; t; t = t->next())
+    {
+        arr.PushBack(jsonVal(*t, allocator), allocator);
+    }
+
+    v.AddMember("data", arr, allocator);
+    v.AddMember("base", Object::toJson(allocator), allocator);
+
+    return v;
 }
 
 } // end of namespace commonlib

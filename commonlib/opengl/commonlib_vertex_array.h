@@ -12,11 +12,14 @@ namespace commonlib {
 
 class VertexArray: public Object {
 
-    struct BufferDescriptor  {
+    struct BufferDescriptor: public Object {
         void init(const BufferBlock& block,
                   unsigned int offset);
 
         std::string toString() const;
+
+        rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const;
 
         unsigned int offset_;
         unsigned int numVertices_;
@@ -98,6 +101,9 @@ public:
     }
 
     std::string toString() const override;
+
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     template <typename Iterator>

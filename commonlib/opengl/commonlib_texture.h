@@ -42,6 +42,9 @@ public:
 
     std::string toString() const override;
 
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
+
 private:
     GLuint id_;
     int width_, height_;
