@@ -18,13 +18,13 @@ rapidjson::Value Object::toJson(
     rapidjson::Value v;
 
     v.AddMember("class", "Object", allocator);
-    v.AddMember("ptr", mcdane::commonlib::toJson(this, allocator), allocator);
+    v.AddMember("ptr", jsonVal(this, allocator), allocator);
 
     return v;
 }
 
-rapidjson::Value toJson(const Object& obj,
-                        rapidjson::Document::AllocatorType& allocator)
+rapidjson::Value jsonVal(const Object& obj,
+                         rapidjson::Document::AllocatorType& allocator)
 {
     return obj.toJson(allocator);
 }

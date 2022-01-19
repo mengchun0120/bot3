@@ -367,9 +367,9 @@ rapidjson::Value NamedMap<T>::toJson(
     Value v(kObjectType);
 
     v.AddMember("class", "NamedMap", allocator);
-    v.AddMember("root", mcdane::commonlib::toJson(this, allocator), allocator);
-    v.AddMember("objs", mcdane::commonlib::toJson(objs_, allocator), allocator);
-    v.AddMember("names", mcdane::commonlib::toJson(names_, allocator), allocator);
+    v.AddMember("root", jsonVal(this, allocator), allocator);
+    v.AddMember("objs", jsonVal(objs_, allocator), allocator);
+    v.AddMember("names", jsonVal(names_, allocator), allocator);
     v.AddMember("base", Object::toJson(allocator), allocator);
 
     return v;
@@ -408,8 +408,8 @@ rapidjson::Value NamedMap<T>::Node::toJson(
 
     v.AddMember("class", "NamedMap", allocator);
     v.AddMember("ch", ch_, allocator);
-    v.AddMember("left", mcdane::commonlib::toJson(left_, allocator), allocator);
-    v.AddMember("right", mcdane::commonlib::toJson(right_, allocator), allocator);
+    v.AddMember("left", jsonVal(left_, allocator), allocator);
+    v.AddMember("right", jsonVal(right_, allocator), allocator);
     v.AddMember("Base", Object::toJson(allocator), allocator);
 
     return v;

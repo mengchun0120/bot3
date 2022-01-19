@@ -20,8 +20,8 @@ public:
                     rapidjson::Document::AllocatorType& allocator) const;
 };
 
-rapidjson::Value toJson(const Object& obj,
-                        rapidjson::Document::AllocatorType& allocator);
+rapidjson::Value jsonVal(const Object& obj,
+                         rapidjson::Document::AllocatorType& allocator);
 
 } // end of namespace commonlib
 } // end of namespace mcdane

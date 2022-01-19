@@ -54,13 +54,13 @@ const rapidjson::Value* findJson(const rapidjson::Value& json,
     return v;
 }
 
-rapidjson::Value toJson(const void* ptr,
+rapidjson::Value jsonVal(const void* ptr,
                         rapidjson::Document::AllocatorType& allocator)
 {
-    return toJson(toString(ptr), allocator);
+    return jsonVal(toString(ptr), allocator);
 }
 
-rapidjson::Value toJson(const std::string& s,
+rapidjson::Value jsonVal(const std::string& s,
                         rapidjson::Document::AllocatorType& allocator)
 {
     rapidjson::Value v;
@@ -70,7 +70,7 @@ rapidjson::Value toJson(const std::string& s,
     return v;
 }
 
-rapidjson::Value toJson(int i,
+rapidjson::Value jsonVal(int i,
                         rapidjson::Document::AllocatorType& allocator)
 {
     rapidjson::Value v;
@@ -80,7 +80,7 @@ rapidjson::Value toJson(int i,
     return v;
 }
 
-rapidjson::Value toJson(unsigned int i,
+rapidjson::Value jsonVal(unsigned int i,
                         rapidjson::Document::AllocatorType& allocator)
 {
     rapidjson::Value v;
@@ -90,8 +90,8 @@ rapidjson::Value toJson(unsigned int i,
     return v;
 }
 
-rapidjson::Value toJson(long i,
-                        rapidjson::Document::AllocatorType& allocator)
+rapidjson::Value jsonVal(long i,
+                         rapidjson::Document::AllocatorType& allocator)
 {
     rapidjson::Value v;
 
@@ -100,8 +100,8 @@ rapidjson::Value toJson(long i,
     return v;
 }
 
-rapidjson::Value toJson(unsigned long i,
-                        rapidjson::Document::AllocatorType& allocator)
+rapidjson::Value jsonVal(unsigned long i,
+                         rapidjson::Document::AllocatorType& allocator)
 {
     rapidjson::Value v;
 
@@ -110,8 +110,8 @@ rapidjson::Value toJson(unsigned long i,
     return v;
 }
 
-rapidjson::Value toJson(int64_t i,
-                        rapidjson::Document::AllocatorType& allocator)
+rapidjson::Value jsonVal(int64_t i,
+                         rapidjson::Document::AllocatorType& allocator)
 {
     rapidjson::Value v;
 
@@ -120,8 +120,8 @@ rapidjson::Value toJson(int64_t i,
     return v;
 }
 
-rapidjson::Value toJson(uint64_t i,
-                        rapidjson::Document::AllocatorType& allocator)
+rapidjson::Value jsonVal(uint64_t i,
+                         rapidjson::Document::AllocatorType& allocator)
 {
     rapidjson::Value v;
 
@@ -130,8 +130,8 @@ rapidjson::Value toJson(uint64_t i,
     return v;
 }
 
-rapidjson::Value toJson(double d,
-                        rapidjson::Document::AllocatorType& allocator)
+rapidjson::Value jsonVal(double d,
+                         rapidjson::Document::AllocatorType& allocator)
 {
     rapidjson::Value v;
 
@@ -140,8 +140,8 @@ rapidjson::Value toJson(double d,
     return v;
 }
 
-rapidjson::Value toJson(float f,
-                        rapidjson::Document::AllocatorType& allocator)
+rapidjson::Value jsonVal(float f,
+                         rapidjson::Document::AllocatorType& allocator)
 {
     rapidjson::Value v;
 

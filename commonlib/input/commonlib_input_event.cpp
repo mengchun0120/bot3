@@ -1,5 +1,6 @@
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
+#include <commonlib_json_utils.h>
 #include <commonlib_input_event.h>
 
 namespace mcdane {
@@ -48,11 +49,40 @@ void MouseButtonEvent::set(float x,
     mods_ = mods;
 }
 
+rapidjson::Value MouseButtonEvent::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("x", x_, allocator);
+    v.AddMember("y", y_, allocator);
+    v.AddMember("button", jsonVal(buttonStr(button_), allocator), allocator);
+    v.AddMember("action", jsonVal(actionStr(action_), allocator), allocator);
+    v.AddMember("mods", mods_, allocator);
+
+    return v;
+}
+
 void MouseMoveEvent::set(float x,
                          float y)
 {
     x_ = x;
     y_ = y;
+}
+
+rapidjson::Value MouseMoveEvent::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("x", x_, allocator);
+    v.AddMember("y", y_, allocator);
+
+    return v;
 }
 
 void KeyEvent::set(int key,
@@ -66,9 +96,36 @@ void KeyEvent::set(int key,
     mods_ = mods;
 }
 
-InputEvent::InputEvent()
-    : type_(EventType::UNKNOWN)
+rapidjson::Value KeyEvent::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
 {
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("key", key_, allocator);
+    v.AddMember("action", jsonVal(actionStr(action_), allocator), allocator);
+    v.AddMember("scancode", scancode_, allocator);
+    v.AddMember("mods", mods_, allocator);
+
+    return v;
+}
+
+std::string eventTypeStr(EventType t)
+{
+    switch(t)
+    {
+        case EventType::MOUSE_BUTTON:
+            return "MOUSE_BUTTON";
+        case EventType::MOUSE_MOVE:
+            return "MOUSE_MOVE";
+        case EventType::KEY:
+            return "KEY";
+        default:
+            THROW_EXCEPT(InvalidArgumentException, "Invalid EventType " +
+                         std::to_string(static_cast<int>(t)));
+
+    }
 }
 
 InputEvent& InputEvent::operator=(const InputEvent& e)
@@ -86,9 +143,8 @@ InputEvent& InputEvent::operator=(const InputEvent& e)
             keyEvent_ = e.keyEvent_;
             break;
         default:
-            THROW_EXCEPT(InvalidArgumentException,
-                        "Invalid EventType " +
-                            toString(static_cast<int>(e.type_)));
+            THROW_EXCEPT(InvalidArgumentException, "Invalid EventType " +
+                         std::to_string(static_cast<int>(e.type_)));
     }
 
     return *this;
@@ -153,6 +209,36 @@ const KeyEvent& InputEvent::keyEvent() const
     return keyEvent_;
 }
 
+rapidjson::Value InputEvent::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "InputEvent", allocator);
+    v.AddMember("type", jsonVal(eventTypeStr(type_), allocator), allocator);
+
+    Value evt;
+    switch (type_)
+    {
+        case EventType::MOUSE_BUTTON:
+            evt = mouseButtonEvent_.toJson(allocator);
+            break;
+        case EventType::MOUSE_MOVE:
+            evt = mouseMoveEvent_.toJson(allocator);
+            break;
+        case EventType::KEY:
+            evt = keyEvent_.toJson(allocator);
+            break;
+    }
+
+    v.AddMember("event", evt, allocator);
+    v.AddMember("base", Object::toJson(allocator), allocator);
+
+    return v;
+}
+
 #endif
 
 } // end of namespace commonlib
@@ -209,7 +295,7 @@ std::ostream& operator<<(std::ostream& os,
             return os << e.keyEvent();
     }
     THROW_EXCEPT(InvalidArgumentException,
-                 "Invalid EventType " + toString(static_cast<int>(e.type())));
+                 "Invalid EventType " + std::to_string(static_cast<int>(e.type())));
     return os;
 }
 

@@ -4,6 +4,7 @@
 #include <string>
 #include <ostream>
 #include <commonlib_opengl.h>
+#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -21,6 +22,9 @@ struct MouseButtonEvent {
              int action,
              int mods);
 
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const;
+
     float x_;
     float y_;
     int button_;
@@ -32,6 +36,9 @@ struct MouseMoveEvent {
     void set(float x,
              float y);
 
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const;
+
     float x_;
     float y_;
 };
@@ -42,6 +49,9 @@ struct KeyEvent {
              int scancode,
              int mods);
 
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const;
+
     int key_;
     int action_;
     int scancode_;
@@ -51,16 +61,14 @@ struct KeyEvent {
 enum class EventType {
     MOUSE_BUTTON,
     MOUSE_MOVE,
-    KEY,
-    UNKNOWN
+    KEY
 };
 
-class InputEvent {
+std::string eventTypeStr(EventType t);
+
+class InputEvent: public Object {
 public:
-
-    InputEvent();
-
-    ~InputEvent() = default;
+    InputEvent() = default;
 
     EventType type() const
     {
@@ -88,6 +96,9 @@ public:
     const MouseMoveEvent& mouseMoveEvent() const;
 
     const KeyEvent& keyEvent() const;
+
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     EventType type_;
