@@ -26,6 +26,9 @@ public:
     void update(GameMap& map,
                 float delta);
 
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
+
 private:
     commonlib::TimePoint startTime_;
     float elapsedTime_;

@@ -20,6 +20,9 @@ public:
     inline const AIRobotTemplate* getTemplate() const;
 
     std::string toString() const override;
+
+    rapidjson::Value toJson(
+                rapidjson::Document::AllocatorType& allocator) const override;
 };
 
 const AIRobotTemplate* AIRobot::getTemplate() const

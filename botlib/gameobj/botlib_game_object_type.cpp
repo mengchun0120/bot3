@@ -3,6 +3,18 @@
 namespace mcdane {
 namespace botlib {
 
+std::string stringVal(GameObjectType t)
+{
+    static std::string typeStr[] = {
+        "tile",
+        "robot",
+        "missile",
+        "effect"
+    };
+
+    return typeStr[static_cast<int>(t)];
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

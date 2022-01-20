@@ -1,5 +1,8 @@
 #include <string>
+#include <commonlib_exception.h>
 #include <botlib_side.h>
+
+using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
@@ -15,7 +18,20 @@ Side strToSide(const std::string& s)
         return Side::PLAYER;
     }
 
-    return Side::UNKNOWN;
+    THROW_EXCEPT(InvalidArgumentException, "Invalid side " + s);
+}
+
+std::string stringVal(Side s)
+{
+    switch (s)
+    {
+        case Side::AI:
+            return "AI";
+        case Side::PLAYER:
+            return "PLAYER";
+        default:
+            THROW_EXCEPT(InvalidArgumentException, "Invalid side");
+    }
 }
 
 } // end of namespace botlib

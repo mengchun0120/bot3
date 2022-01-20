@@ -3,6 +3,7 @@
 #include <commonlib_log.h>
 #include <commonlib_math_utils.h>
 #include <commonlib_out_utils.h>
+#include <commonlib_json_utils.h>
 #include <botlib_graphics.h>
 #include <botlib_composite_object.h>
 #include <botlib_player.h>
@@ -97,6 +98,21 @@ std::string CompositeObject::toString() const
         << ")";
 
     return oss.str();
+}
+
+rapidjson::Value CompositeObject::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "CompositeObject", allocator);
+    v.AddMember("direction", jsonVal(direction_, allocator), allocator);
+    v.AddMember("components", jsonVal(components_, allocator), allocator);
+    v.AddMember("base", GameObject::toJson(allocator), allocator);
+
+    return v;
 }
 
 } // end of namespace botlib

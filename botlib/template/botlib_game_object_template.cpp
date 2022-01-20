@@ -1,6 +1,7 @@
 #include <sstream>
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
+#include <commonlib_json_utils.h>
 #include <botlib_game_object_template.h>
 
 using namespace mcdane::commonlib;
@@ -61,6 +62,7 @@ rapidjson::Value GameObjectTemplate::toJson(
     Value v(kObjectType);
 
     v.AddMember("class", "GameObjectTemplate", allocator);
+    v.AddMember("type", jsonVal(stringVal(type_), allocator), allocator),
     v.AddMember("span", span_, allocator);
     v.AddMember("collideBreath", collideBreath_, allocator);
     v.AddMember("invincible", invincible_, allocator);

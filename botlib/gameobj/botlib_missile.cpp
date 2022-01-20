@@ -1,6 +1,7 @@
 #include <sstream>
 #include <commonlib_log.h>
 #include <commonlib_collide.h>
+#include <commonlib_json_utils.h>
 #include <botlib_game_map.h>
 #include <botlib_particle_effect.h>
 #include <botlib_missile_hit_checker.h>
@@ -102,6 +103,22 @@ std::string Missile::toString() const
         << ")";
 
     return oss.str();
+}
+
+rapidjson::Value Missile::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "Missile", allocator);
+    v.AddMember("side", jsonVal(stringVal(side_), allocator), allocator);
+    v.AddMember("speed", jsonVal(speed_, allocator), allocator);
+    v.AddMember("damage", damage_, allocator);
+    v.AddMember("base", CompositeObject::toJson(allocator), allocator);
+
+    return v;
 }
 
 } // end of namespace botlib

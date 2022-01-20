@@ -25,6 +25,19 @@ std::string AIRobot::toString() const
     return oss.str();
 }
 
+rapidjson::Value AIRobot::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "AIRobot", allocator);
+    v.AddMember("base", Robot::toJson(allocator), allocator);
+
+    return v;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

@@ -43,6 +43,20 @@ void ParticleEffect::update(GameMap& map,
     }
 }
 
+rapidjson::Value ParticleEffect::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "ParticleEffect", allocator);
+    v.AddMember("elapsedTime", elapsedTime_, allocator);
+    v.AddMember("base", GameObject::toJson(allocator), allocator);
+
+    return v;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

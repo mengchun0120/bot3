@@ -182,10 +182,6 @@ void GameMapLoader::addMissile(GameMap& map,
     parse(missileParams_, v);
 
     Side side = strToSide(sideStr_);
-    if (side == Side::UNKNOWN)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid side " + sideStr_);
-    }
 
     Missile* missile = new Missile();
     missile->init(t, side, pos_, direction_);

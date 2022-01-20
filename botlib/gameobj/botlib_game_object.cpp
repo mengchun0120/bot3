@@ -1,6 +1,7 @@
 #include <ios>
 #include <sstream>
 #include <commonlib_exception.h>
+#include <commonlib_json_utils.h>
 #include <botlib_game_object.h>
 
 using namespace mcdane::commonlib;
@@ -111,6 +112,27 @@ std::string GameObject::toString() const
         << ")";
 
     return oss.str();
+}
+
+rapidjson::Value GameObject::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "GameObject", allocator);
+    v.AddMember("template", t_->toJson(allocator), allocator);
+    v.AddMember("pos", jsonVal(pos_, allocator), allocator);
+    v.AddMember("flags", flags_, allocator);
+    v.AddMember("row", row_, allocator);
+    v.AddMember("col", col_, allocator);
+    v.AddMember("collideRegion", collideRegion_.toJson(allocator), allocator);
+    v.AddMember("prev", jsonVal(prev_, allocator), allocator);
+    v.AddMember("next", jsonVal(next_, allocator), allocator);
+    v.AddMember("base", Object::toJson(allocator), allocator);
+
+    return v;
 }
 
 } // end of namespace botlib
