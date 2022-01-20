@@ -88,8 +88,7 @@ rapidjson::Value ParticleEffectTemplate::toJson(
     v.AddMember("acceleration", acceleration_, allocator);
     v.AddMember("duration", duration_, allocator);
     v.AddMember("particleSize", particleSize_, allocator);
-    v.AddMember("vertexArray", vertexArray_.toJson(allocator), allocator);
-    v.AddMember("texture", texture_->toJson(allocator), allocator);
+    v.AddMember("texture", texture_->id(), allocator);
     v.AddMember("color", jsonVal(color_, allocator), allocator);
     v.AddMember("base", GameObjectTemplate::toJson(allocator), allocator);
 

@@ -57,35 +57,70 @@ void GameLib::load(const std::string& picDir,
     TextureParser textureParser(picDir);
     textureLib_.load(textureLibFile, textureParser);
 
+    LOG_DEBUG << "textureLib Loaded: "
+              << textureLib_
+              << LOG_END;
+
     RectParser rectParser;
     rectLib_.load(rectLibFile, rectParser);
+
+    LOG_DEBUG << "rectLib Loaded: "
+              << rectLib_
+              << LOG_END;
 
     ComponentTemplateParser componentTemplateParser(textureLib_, rectLib_);
     componentTemplateLib_.load(componentTemplateLibFile,
                                componentTemplateParser);
 
+    LOG_DEBUG << "componentTemplateLib Loaded: "
+              << componentTemplateLib_
+              << LOG_END;
+
     TileTemplateParser tileTemplateParser(componentTemplateLib_);
     tileTemplateLib_.load(tileTemplateLibFile, tileTemplateParser);
+
+    LOG_DEBUG << "tileTemplate Loaded: "
+              << tileTemplateLib_
+              << LOG_END;
 
     ParticleEffectTemplateParser particleEffectTemplateParser(libDir, textureLib_);
     particleEffectTemplateLib_.load(particleEffectTemplateLibFile,
                                     particleEffectTemplateParser);
 
+    LOG_DEBUG << "particleEffectTemplateLib Loaded: "
+              << particleEffectTemplateLib_
+              << LOG_END;
+
     MissileTemplateParser missileTemplateParser(componentTemplateLib_,
                                                 particleEffectTemplateLib_);
     missileTemplateLib_.load(missileTemplateLibFile, missileTemplateParser);
+
+    LOG_DEBUG << "missileTemplateLib Loaded: "
+              << missileTemplateLib_
+              << LOG_END;
 
     AIRobotTemplateParser aiRobotTemplateParser(missileTemplateLib_,
                                                 componentTemplateLib_);
     aiRobotTemplateLib_.load(aiRobotTemplateLibFile, aiRobotTemplateParser);
 
+    LOG_DEBUG << "aiRobotTemplateLib Loaded: "
+              << aiRobotTemplateLib_
+              << LOG_END;
 
     PlayerTemplateParser playerTemplateParser(missileTemplateLib_,
                                               componentTemplateLib_);
     playerTemplateParser.load(playerTemplate_, playerTemplateFile);
 
+    LOG_DEUBG << "playerTemplate Loaded: "
+              << playerTemplate_
+              << LOG_END;
+
     calculateMaxObjSpan();
     calculateMaxCollideBreath();
+
+    LOG_DEBUG << "maxObjSpan=" << maxObjSpan_
+              << "maxCollideBreath=" << maxCollideBreath_
+              << LOG_END;
 
     LOG_INFO << "GameLib loaded successfull" << LOG_END;
 }

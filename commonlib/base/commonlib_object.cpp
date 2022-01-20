@@ -1,24 +1,43 @@
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
-#include <rapidjson/prettywriter.h>
+#include <rapidjson/ostreamwrapper.h>
+#include <rapidjson/writer.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
+unsigned int Object::k_curId = 0;
+
+Object::Object()
+    : id_(k_curId++)
+{}
+
 std::string Object::toString() const
 {
-    return "";
+    using namespace rapidjson;
+
+    Document doc;
+    Document::AllocatorType& allocator = doc.GetAllocator();
+    StringBuffer buffer;
+    Writer<StringBuffer> writer(buffer);
+
+    Value v = toJson(allocator);
+    v.Accept(writer);
+
+    return buffer.GetString();
 }
 
 rapidjson::Value Object::toJson(
                         rapidjson::Document::AllocatorType& allocator) const
 {
-    rapidjson::Value v;
+    using namespace rapidjson;
+
+    Value v(kObjectType);
 
     v.AddMember("class", "Object", allocator);
-    v.AddMember("ptr", jsonVal(this, allocator), allocator);
+    v.AddMember("id", id_, allocator);
 
     return v;
 }
@@ -37,7 +56,17 @@ namespace std {
 ostream& operator<<(ostream& os,
                     const mcdane::commonlib::Object& obj)
 {
-    return os << obj.toString();
+    using namespace rapidjson;
+
+    Document doc;
+    Document::AllocatorType& allocator = doc.GetAllocator();
+    OStreamWrapper ows(os);
+    Writer<OStreamWrapper> writer(ows);
+
+    Value v = obj.toJson(allocator);
+    v.Accept(writer);
+
+    return os;
 }
 
 } // end of namespace std

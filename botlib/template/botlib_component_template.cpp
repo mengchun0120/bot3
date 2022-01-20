@@ -53,8 +53,8 @@ rapidjson::Value ComponentTemplate::toJson(
     Value v(kObjectType);
 
     v.AddMember("class", "ComponentTemplate", allocator);
-    v.AddMember("texture", texture_->toJson(allocator), allocator);
-    v.AddMember("rect", rect_->toJson(allocator), allocator);
+    v.AddMember("texture", texture_->id(), allocator);
+    v.AddMember("rect", rect_->id(), allocator);
     v.AddMember("base", Object::toJson(allocator), allocator);
 
     return v;

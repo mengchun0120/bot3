@@ -25,8 +25,6 @@ Rectangle* RectParser::operator()(const rapidjson::Value& v)
                          new Rectangle(width_, height_, TexRectangle()) :
                          new Rectangle(width_, height_);
 
-    LOG_DEBUG << "Created " << *rect << LOG_END;
-
     return rect;
 }
 

@@ -56,6 +56,29 @@ void streamMap(std::ostringstream& oss,
     oss << "]";
 }
 
+rapidjson::Value mapJson(
+                const std::vector<std::vector<GameObjectList>>& map,
+                rapidjson::Document::AllocatorType& allocator)
+{
+    using namespace rapidjson;
+
+    Value v(kArrayType);
+
+    for (unsigned int rowIdx = 0; rowIdx < map.size(); ++rowIdx)
+    {
+        const auto& row = map[rowIdx];
+        for (unsigned int colIdx = 0; colIdx < row.size(); ++colIdx)
+        {
+            if (!row[colIdx].empty())
+            {
+                v.PushBack(jsonVal(row[colIdx], allocator), allocator);
+            }
+        }
+    }
+
+    return v;
+}
+
 } // end of unnamed namespace
 
 void GameMap::init(unsigned int rows,
@@ -232,6 +255,34 @@ std::string GameMap::toString() const
         << ")";
 
     return oss.str();
+}
+
+rapidjson::Value GameMap::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "GameMap", allocator);
+    v.AddMember("maxObjSpan", maxObjSpan_, allocator);
+    v.AddMember("maxCollideBreath", maxCollideBreath_, allocator);
+    v.AddMember("extraCell", extraCell_, allocator);
+    v.AddMember("viewportSize", jsonVal(viewportSize_, allocator), allocator);
+    v.AddMember("minViewportOrigin", jsonVal(minViewportOrigin_, allocator),
+                allocator);
+    v.AddMember("maxViewportOrigin", jsonVal(maxViewportOrigin_, allocator),
+                allocator);
+    v.AddMember("viewportAnchor", jsonVal(viewportAnchor_, allocator), allocator);
+    v.AddMember("boundary", boundary_.toJson(allocator), allocator);
+    v.AddMember("viewableRegion", viewableRegion_.toJson(allocator), allocator);
+    v.AddMember("presentArea", presentArea_.toJson(allocator), allocator);
+    v.AddMember("rowCount", rowCount(), allocator);
+    v.AddMember("colCount", colCount(), allocator);
+    v.AddMember("map", mapJson(map_, allocator), allocator);
+    v.AddMember("base", Object::toJson(allocator), allocator);
+
+    return v;
 }
 
 void GameMap::initMapCells(unsigned int rows,

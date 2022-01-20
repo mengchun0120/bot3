@@ -49,7 +49,7 @@ rapidjson::Value MissileTemplate::toJson(
     v.AddMember("damage", damage_, allocator);
     v.AddMember("speed", speed_, allocator);
     v.AddMember("explodeBreath", explodeBreath_, allocator);
-    v.AddMember("particleEffectTemplate", explodeEffectTemplate_->toJson(allocator),
+    v.AddMember("particleEffectTemplate", explodeEffectTemplate_->id(),
                 allocator);
     v.AddMember("base", CompositeObjectTemplate::toJson(allocator), allocator);
 

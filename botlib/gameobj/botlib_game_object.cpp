@@ -122,7 +122,7 @@ rapidjson::Value GameObject::toJson(
     Value v(kObjectType);
 
     v.AddMember("class", "GameObject", allocator);
-    v.AddMember("template", t_->toJson(allocator), allocator);
+    v.AddMember("template", t_->id(), allocator);
     v.AddMember("pos", jsonVal(pos_, allocator), allocator);
     v.AddMember("flags", flags_, allocator);
     v.AddMember("row", row_, allocator);

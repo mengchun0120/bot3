@@ -108,7 +108,6 @@ rapidjson::Value Shape::toJson(
     Value v(kObjectType);
 
     v.AddMember("class", "Shape", allocator);
-    v.AddMember("va", va_.toJson(allocator), allocator);
     v.AddMember("base", Object::toJson(allocator), allocator);
 
     return v;

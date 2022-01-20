@@ -10,15 +10,26 @@ namespace commonlib {
 
 class Object {
 public:
-    Object() = default;
+    Object();
 
     virtual ~Object() = default;
+
+    inline unsigned int id() const;
 
     virtual std::string toString() const;
 
     virtual rapidjson::Value toJson(
                     rapidjson::Document::AllocatorType& allocator) const;
+
+private:
+    static unsigned int k_curId;
+    unsigned int id_;
 };
+
+unsigned int Object::id() const
+{
+    return id_;
+}
 
 rapidjson::Value jsonVal(const Object& obj,
                          rapidjson::Document::AllocatorType& allocator);
