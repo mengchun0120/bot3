@@ -64,7 +64,7 @@ enum class EventType {
     KEY
 };
 
-std::string eventTypeStr(EventType t);
+std::string stringVal(EventType t);
 
 class InputEvent: public Object {
 public:
@@ -113,24 +113,6 @@ private:
 
 } // end of namespace commonlib
 } // end of namespace mcdane
-
-namespace std {
-
-#ifdef DESKTOP_APP
-std::ostream& operator<<(std::ostream& os,
-                         const mcdane::commonlib::MouseButtonEvent& e);
-
-std::ostream& operator<<(std::ostream& os,
-                         const mcdane::commonlib::MouseMoveEvent& e);
-
-std::ostream& operator<<(std::ostream& os,
-                         const mcdane::commonlib::KeyEvent& e);
-
-std::ostream& operator<<(std::ostream& os,
-                         const mcdane::commonlib::InputEvent& e);
-#endif
-
-} // end of namespace std
 
 #endif // #ifndef INCLUDED_COMMONLIB_INPUT_EVENT_H
 

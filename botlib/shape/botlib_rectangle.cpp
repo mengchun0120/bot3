@@ -79,18 +79,6 @@ void Rectangle::load(float width,
     Polygon::load(positions.data(), positions.size(), texRect.texPos());
 }
 
-std::string Rectangle::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "Rectangle(width=" << width_
-        << ", height=" << height_
-        << ", Base=" << Polygon::toString()
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value Rectangle::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

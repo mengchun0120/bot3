@@ -29,8 +29,6 @@ inline bool isNonPassthroughObjType(GameObjectType t)
            t == GameObjectType::ROBOT;
 }
 
-std::string stringVal(GameObjectType t);
-
 } // end of namespace botlib
 } // end of namespace mcdane
 

@@ -43,8 +43,6 @@ struct Vector: public std::array<float, N> {
     Vector& operator*=(float f) noexcept;
 
     Vector& operator/=(float f) noexcept;
-
-    std::string toString() const;
 };
 
 using Vector2 = Vector<2>;
@@ -151,25 +149,6 @@ template <std::size_t N>
 Vector<N>& Vector<N>::operator/=(float f) noexcept
 {
     return *this *= (1.0f / f);
-}
-
-template <std::size_t N>
-std::string Vector<N>::toString() const
-{
-    std::ostringstream oss;
-
-    oss << '[';
-    if (N > 0)
-    {
-        oss << (*this)[0];
-        for (std::size_t i = 1; i < N; ++i)
-        {
-            oss << ", " << (*this)[i];
-        }
-    }
-    oss << ']';
-
-    return oss.str();
 }
 
 template <std::size_t N>
@@ -295,10 +274,21 @@ Vector3 cross(const Vector3& lhs,
 namespace std {
 
 template <std::size_t N>
-std::ostream& operator<<(std::ostream& out,
+std::ostream& operator<<(std::ostream& os,
                          const mcdane::commonlib::Vector<N>& v)
 {
-    return out << v.toString();
+    os << '[';
+    if (N > 0)
+    {
+        os << v[0];
+        for (std::size_t i = 1; i < N; ++i)
+        {
+            os << ", " << v[i];
+        }
+    }
+    os << ']';
+
+    return os;
 }
 
 template <std::size_t N>

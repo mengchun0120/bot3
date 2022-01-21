@@ -68,25 +68,6 @@ void RobotTemplate::init(float hp1,
     fireDirections_ = std::forward<std::vector<Vector2>>(fireDirections1);
 }
 
-std::string RobotTemplate::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "RobotTemplate(hp=" << hp_
-        << ", armor=" << armor_
-        << ", speed=" << speed_
-        << ", energy=" << energy_
-        << ", rechargeRate=" << rechargeRate_
-        << ", fireIntervalMS=" << fireIntervalMS_
-        << ", missileTemplate=" << missileTemplate_->toString()
-        << ", firePoints=" << firePoints_
-        << ", fireDirections=" << fireDirections_
-        << ", Base=" << CompositeObjectTemplate::toString()
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value RobotTemplate::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

@@ -107,11 +107,4 @@ const commonlib::Color& ParticleEffectTemplate::color() const
 } // end of namespace botlib
 } // end of namespace mcdane
 
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::ParticleEffectTemplate& t);
-
-} // end of namespace std
-
 #endif

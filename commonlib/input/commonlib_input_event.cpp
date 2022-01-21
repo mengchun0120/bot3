@@ -111,7 +111,7 @@ rapidjson::Value KeyEvent::toJson(
     return v;
 }
 
-std::string eventTypeStr(EventType t)
+std::string stringVal(EventType t)
 {
     switch(t)
     {
@@ -217,7 +217,7 @@ rapidjson::Value InputEvent::toJson(
     Value v(kObjectType);
 
     v.AddMember("class", "InputEvent", allocator);
-    v.AddMember("type", jsonVal(eventTypeStr(type_), allocator), allocator);
+    v.AddMember("type", jsonVal(stringVal(type_), allocator), allocator);
 
     Value evt;
     switch (type_)
@@ -243,63 +243,4 @@ rapidjson::Value InputEvent::toJson(
 
 } // end of namespace commonlib
 } // end of namespace mcdane
-
-namespace std {
-
-#ifdef DESKTOP_APP
-std::ostream& operator<<(std::ostream& os,
-                         const mcdane::commonlib::MouseButtonEvent& e)
-{
-    using namespace mcdane::commonlib;
-
-    os << "MouseButtonEvent(x=" << e.x_
-       << ", y=" << e.y_
-       << ", button=" << buttonStr(e.button_)
-       << ", action=" << actionStr(e.action_)
-       << ", mods=" << e.mods_ << ')';
-    return os;
-}
-
-std::ostream& operator<<(std::ostream& os,
-                         const mcdane::commonlib::MouseMoveEvent& e)
-{
-    os << "MouseMoveEvent(x=" << e.x_
-       << ", y=" << e.y_ << ')';
-    return os;
-}
-
-std::ostream& operator<<(std::ostream& os,
-                         const mcdane::commonlib::KeyEvent& e)
-{
-    using namespace mcdane::commonlib;
-
-    os << "KeyEvent(key=" << e.key_
-       << ", action=" << actionStr(e.action_)
-       << ", scancode=" << e.scancode_
-       << ", mods=" << e.mods_ << ')';
-    return os;
-}
-
-std::ostream& operator<<(std::ostream& os,
-                         const mcdane::commonlib::InputEvent& e)
-{
-    using namespace mcdane::commonlib;
-
-    switch(e.type())
-    {
-        case EventType::MOUSE_BUTTON:
-            return os << e.mouseButtonEvent();
-        case EventType::MOUSE_MOVE:
-            return os << e.mouseMoveEvent();
-        case EventType::KEY:
-            return os << e.keyEvent();
-    }
-    THROW_EXCEPT(InvalidArgumentException,
-                 "Invalid EventType " + std::to_string(static_cast<int>(e.type())));
-    return os;
-}
-
-#endif
-
-} // end of namespace std
 

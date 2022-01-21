@@ -39,13 +39,13 @@ GameMapLoader::GameMapLoader(float viewportWidth,
     if (viewportWidth <= 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid viewportWidth " + toString(viewportWidth));
+                     "Invalid viewportWidth " + stringVal(viewportWidth));
     }
 
     if (viewportHeight <= 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid viewportHeight " + toString(viewportHeight));
+                     "Invalid viewportHeight " + stringVal(viewportHeight));
     }
 
     viewportWidth_ = viewportWidth;

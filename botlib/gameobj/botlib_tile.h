@@ -28,8 +28,6 @@ public:
 
     void addHP(float delta);
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 

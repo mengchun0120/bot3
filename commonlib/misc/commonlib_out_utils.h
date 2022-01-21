@@ -5,6 +5,7 @@
 #include <vector>
 #include <array>
 #include <initializer_list>
+#include <rapidjson/document.h>
 
 namespace std {
 
@@ -59,6 +60,9 @@ std::ostream& operator<<(std::ostream& os,
     os << ']';
     return os;
 }
+
+std::ostream& operator<<(std::ostream& os,
+                         const rapidjson::Value& v);
 
 } // end of namespace std
 

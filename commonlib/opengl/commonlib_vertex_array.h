@@ -16,8 +16,6 @@ class VertexArray: public Object {
         void init(const BufferBlock& block,
                   unsigned int offset);
 
-        std::string toString() const;
-
         rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const;
 
@@ -99,8 +97,6 @@ public:
     {
         return bufferObj_;
     }
-
-    std::string toString() const override;
 
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;

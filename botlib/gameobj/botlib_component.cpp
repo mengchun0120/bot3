@@ -93,20 +93,3 @@ rapidjson::Value Component::toJson(
 } // end of namespace botlib
 } // end of namespace mcdane
 
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::Component& component)
-{
-    os << "Component(" << &component
-       << ", template=" << *component.getTemplate()
-       << ", pos=" << component.pos()
-       << ", direction=" << component.direction()
-       << ")";
-
-    return os;
-}
-
-} // end of namespace std
-
-

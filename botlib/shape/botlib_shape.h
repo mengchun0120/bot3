@@ -44,8 +44,6 @@ public:
 
     inline const commonlib::VertexArray& vertexArray() const;
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 

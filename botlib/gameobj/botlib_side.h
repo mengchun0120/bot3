@@ -14,8 +14,6 @@ enum class Side {
 
 Side strToSide(const std::string& s);
 
-std::string stringVal(Side s);
-
 } // end of namespace botlib
 } // end of namespace mcdane
 

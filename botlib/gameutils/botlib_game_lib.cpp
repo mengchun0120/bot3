@@ -111,7 +111,7 @@ void GameLib::load(const std::string& picDir,
                                               componentTemplateLib_);
     playerTemplateParser.load(playerTemplate_, playerTemplateFile);
 
-    LOG_DEUBG << "playerTemplate Loaded: "
+    LOG_DEBUG << "playerTemplate Loaded: "
               << playerTemplate_
               << LOG_END;
 

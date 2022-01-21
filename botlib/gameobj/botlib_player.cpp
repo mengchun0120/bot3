@@ -14,17 +14,6 @@ void Player::init(const PlayerTemplate* t,
     Robot::init(t, Side::PLAYER, pos1, direction1);
 }
 
-std::string Player::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "Player(" << this
-        << ", Base=" << Robot::toString()
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value Player::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

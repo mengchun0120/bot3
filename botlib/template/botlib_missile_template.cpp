@@ -24,20 +24,6 @@ MissileTemplate::MissileTemplate(
 {
 }
 
-std::string MissileTemplate::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "MissileTemplate(damage=" << damage_
-        << ", speed=" << speed_
-        << ", explodeBreath=" << explodeBreath_
-        << ", explodeEffectTemplate=" << explodeEffectTemplate_->toString()
-        << ", Base=" << CompositeObjectTemplate::toString()
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value MissileTemplate::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

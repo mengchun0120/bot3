@@ -73,8 +73,6 @@ public:
                       GameMapAccessor& accessor,
                       bool deleteDeadObj);
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 

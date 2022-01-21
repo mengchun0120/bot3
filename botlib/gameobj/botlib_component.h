@@ -92,12 +92,5 @@ const commonlib::Vector2& Component::direction() const
 } // end of namespace botlib
 } // end of namespace mcdane
 
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::Component& component);
-
-} // end of namespace std
-
 #endif
 

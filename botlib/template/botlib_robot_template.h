@@ -61,8 +61,6 @@ public:
 
     inline const commonlib::Vector2& fireDirection(unsigned int i) const;
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 

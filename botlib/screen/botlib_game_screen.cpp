@@ -15,7 +15,7 @@ GameScreen::GameScreen(const Vector2& viewportSize,
     if (viewportSize[0] <= 0.0f || viewportSize[1] <= 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid viewportSize " + toString(viewportSize));
+                     "Invalid viewportSize " + stringVal(viewportSize));
     }
 }
 
@@ -44,7 +44,7 @@ bool GameScreen::processInput(const commonlib::InputEvent &e)
         default:
             THROW_EXCEPT(InvalidArgumentException,
                          "Invalid event-type: " +
-                            toString(static_cast<int>(e.type())));
+                         std::to_string(static_cast<int>(e.type())));
     }
 
     return true;

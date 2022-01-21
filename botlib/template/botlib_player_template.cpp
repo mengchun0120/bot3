@@ -60,15 +60,6 @@ void PlayerTemplate::init(float hp1,
 
 }
 
-std::string PlayerTemplate::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "PlayerTemplate(Base=" << RobotTemplate::toString() << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value PlayerTemplate::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

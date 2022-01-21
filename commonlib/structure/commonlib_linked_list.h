@@ -56,8 +56,6 @@ public:
 
     void clear();
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 
@@ -367,28 +365,6 @@ void LinkedList<T>::del(T* t)
     {
         delete t;
     }
-}
-
-template <typename T>
-std::string LinkedList<T>::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "LinkedList(size=" << size_
-        << ", data=[";
-
-    if (!empty())
-    {
-        oss << *first_;
-        for (const T* t = first_->next(); t; t = t->next())
-        {
-            oss << ", " << *t;
-        }
-    }
-
-    oss << "], Base=" << Object::toString() << ")";
-
-    return oss.str();
 }
 
 template <typename T>

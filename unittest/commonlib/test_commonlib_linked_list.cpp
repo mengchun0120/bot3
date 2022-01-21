@@ -26,8 +26,6 @@ public:
 
     inline void setPrev(TestNode* n);
 
-    std::string toString() const override;
-
 private:
     int val_;
     TestNode* next_;
@@ -74,19 +72,6 @@ void TestNode::setNext(TestNode* n)
 void TestNode::setPrev(TestNode* n)
 {
     prev_ = n;
-}
-
-std::string TestNode::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "TestNode(val=" << val_
-        << ", prev=" << prev_
-        << ", next=" << next_
-        << ", Base=" << Object::toString()
-        << ")";
-
-    return oss.str();
 }
 
 bool checkLinkedList(const LinkedList<TestNode>& list,

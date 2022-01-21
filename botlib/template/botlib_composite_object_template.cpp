@@ -45,17 +45,6 @@ void CompositeObjectTemplate::resetSpan()
     }
 }
 
-std::string CompositeObjectTemplate::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "CompositeObjectTemplate(components=" << components_
-        << ", Base=" << GameObjectTemplate::toString()
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value CompositeObjectTemplate::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

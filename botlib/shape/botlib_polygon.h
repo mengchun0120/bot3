@@ -41,8 +41,6 @@ public:
               const GLuint textureId,
               const commonlib::Color* texColor) const override;
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 };

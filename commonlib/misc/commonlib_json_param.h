@@ -92,7 +92,7 @@ void TypedJsonParam<T>::parse(const rapidjson::Value& value)
         if (required_)
         {
             THROW_EXCEPT(ParseException,
-                         "Failed to find path " + toString(path_));
+                         "Failed to find path " + stringVal(path_));
         }
 
         return;
@@ -103,7 +103,7 @@ void TypedJsonParam<T>::parse(const rapidjson::Value& value)
     if (!validator_.validate(var_))
     {
         THROW_EXCEPT(ParseException,
-                     "Validation failed for " + toString(path_) +
+                     "Validation failed for " + stringVal(path_) +
                      ": " + validator_.description(var_));
     }
 }

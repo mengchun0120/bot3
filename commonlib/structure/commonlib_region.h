@@ -55,8 +55,6 @@ public:
     void shift(T deltaX,
                T deltaY);
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
             rapidjson::Document::AllocatorType& allocator) const override;
 
@@ -205,21 +203,6 @@ void Region<T>::shift(T deltaX,
     right_ += deltaX;
     bottom_ += deltaY;
     top_ += deltaY;
-}
-
-template <typename T>
-std::string Region<T>::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "Region(left=" << left_
-        << ", right=" << right_
-        << ", bottom=" << bottom_
-        << ", top=" << top_
-        << ", Base=" << Object::toString()
-        << ")";
-
-    return oss.str();
 }
 
 template <typename T>

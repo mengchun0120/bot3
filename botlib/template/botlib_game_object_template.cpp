@@ -40,20 +40,6 @@ void GameObjectTemplate::init(GameObjectType t,
     invincible_ = invincible;
 }
 
-std::string GameObjectTemplate::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "GameObjectTemplate(type=" << type_
-        << ", span=" << span_
-        << ", collideBreath=" << collideBreath_
-        << ", invincible=" << invincible_
-        << ", Base=" << Object::toString()
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value GameObjectTemplate::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

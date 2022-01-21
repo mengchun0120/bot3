@@ -89,17 +89,6 @@ void Shape::load(const Point2* positions,
     }
 }
 
-std::string Shape::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "Shape(va=" << va_.toString()
-        << ", Base=" << Object::toString()
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value Shape::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

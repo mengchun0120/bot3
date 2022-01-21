@@ -1,6 +1,7 @@
 #include <sstream>
 #include <commonlib_log.h>
 #include <commonlib_collide.h>
+#include <commonlib_string_utils.h>
 #include <botlib_game_map.h>
 #include <botlib_nonpassthrough_collide_checker.h>
 #include <botlib_robot_hit_missile_checker.h>
@@ -193,23 +194,6 @@ bool Robot::canShoot(const TimePoint& t)
 void Robot::shoot(GameMap& map,
                   const TimePoint& t)
 {
-}
-
-std::string Robot::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "Robot(" << this
-        << ", side=" << side_
-        << ", hp=" << hp_
-        << ", speed=" << speed_
-        << ", energy=" << energy_
-        << ", movingEnabled=" << movingEnabled_
-        << ", shootingEnabled=" << shootingEnabled_
-        << ", Base=" << CompositeObject::toString()
-        << ")";
-
-    return oss.str();
 }
 
 rapidjson::Value Robot::toJson(

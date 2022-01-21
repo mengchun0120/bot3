@@ -33,18 +33,6 @@ void ComponentTemplate::init(const commonlib::Texture* texture,
                                     rect_->height() * rect_->height()) / 2.0);
 }
 
-std::string ComponentTemplate::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "ComponentTemplate(texture=" << texture_->toString()
-        << ", rect=" << rect_->toString()
-        << ", Base=" << Object::toString()
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value ComponentTemplate::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

@@ -98,26 +98,3 @@ rapidjson::Value ParticleEffectTemplate::toJson(
 } // end of namespace botlib
 } // end of namespace mcdane
 
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::botlib::ParticleEffectTemplate& t)
-{
-    using namespace mcdane::botlib;
-
-    os << "ParticleEffectTemplate(" << &t
-       << ", numParticles=" << t.numParticles()
-       << ", acceleration=" << t.acceleration()
-       << ", duration=" << t.duration()
-       << ", particleSize=" << t.particleSize()
-       << ", texture=" << *t.texture()
-       << ", color=" << t.color()
-       << ", Base=" << static_cast<const GameObjectTemplate&>(t)
-       << ")";
-
-    return os;
-}
-
-} // end of namespace std
-
-

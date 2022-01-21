@@ -63,19 +63,6 @@ void Texture::init(const std::string& imageFile)
     stbi_image_free(data);
 }
 
-std::string Texture::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "Texture(id=" << id_
-       << ", width=" << width_
-       << ", height=" << height_
-       << ", Base=" << Object::toString()
-       << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value Texture::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

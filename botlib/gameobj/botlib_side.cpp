@@ -21,19 +21,6 @@ Side strToSide(const std::string& s)
     THROW_EXCEPT(InvalidArgumentException, "Invalid side " + s);
 }
 
-std::string stringVal(Side s)
-{
-    switch (s)
-    {
-        case Side::AI:
-            return "AI";
-        case Side::PLAYER:
-            return "PLAYER";
-        default:
-            THROW_EXCEPT(InvalidArgumentException, "Invalid side");
-    }
-}
-
 } // end of namespace botlib
 } // end of namespace mcdane
 
@@ -42,14 +29,20 @@ namespace std {
 ostream& operator<<(ostream& os,
                     mcdane::botlib::Side side)
 {
-    static string sideStr[] = {
-        "AI",
-        "PLAYER"
-    };
+    using namespace mcdane::botlib;
+    using namespace mcdane::commonlib;
 
-    os << sideStr[static_cast<int>(side)];
-
-    return os;
+    switch (side)
+    {
+        case Side::AI:
+            return os << "AI";
+        case Side::PLAYER:
+            return os << "PLAYER";
+        default:
+            THROW_EXCEPT(InvalidArgumentException,
+                         "Invalid side" +
+                         std::to_string(static_cast<int>(side)));
+    }
 }
 
 } // end of namespace std

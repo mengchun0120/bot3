@@ -33,20 +33,6 @@ void VertexArray::BufferDescriptor::init(const BufferBlock &block,
     stride_ = block.stride_;
 }
 
-std::string VertexArray::BufferDescriptor::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "BufferDescriptor(offset=" << offset_
-        << ", numVertices=" << numVertices_
-        << ", vertexSize=" << vertexSize_
-        << ", totalSize=" << totalSize_
-        << ", stride=" << stride_
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value VertexArray::BufferDescriptor::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {
@@ -131,29 +117,6 @@ void VertexArray::storeBufferBlock(BufferDescriptor& descriptor,
     block.validate();
     descriptor.init(block, offset);
     glBufferSubData(GL_ARRAY_BUFFER, offset, descriptor.totalSize_, block.data_);
-}
-
-std::string VertexArray::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "VertexArray(arrayObj=" << arrayObj_
-        << ", bufferObj=" << bufferObj_
-        << ", descriptors=[";
-
-    if (!descriptors_.empty())
-    {
-        oss << descriptors_[0].toString();
-
-        for (std::size_t i = 1; i < descriptors_.size(); ++i)
-        {
-            oss << ", " << descriptors_[i].toString();
-        }
-    }
-
-    oss << "], Base=" << Object::toString() << ")";
-
-    return oss.str();
 }
 
 rapidjson::Value VertexArray::toJson(

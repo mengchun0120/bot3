@@ -122,15 +122,6 @@ void Polygon::draw(SimpleShaderProgram& program,
     }
 }
 
-std::string Polygon::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "Polygon(Base=" << Shape::toString() << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value Polygon::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

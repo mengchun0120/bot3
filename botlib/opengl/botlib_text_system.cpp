@@ -129,8 +129,9 @@ float TextSystem::getHeight(TextSize size) const
 {
     if (!isValidTextSize(size))
     {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid size" +
-                     toString(static_cast<int>(size)));
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Invalid size" +
+                     std::to_string(static_cast<int>(size)));
     }
 
     return fontHeights_[static_cast<int>(size)];

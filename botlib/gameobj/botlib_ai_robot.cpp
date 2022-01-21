@@ -14,17 +14,6 @@ void AIRobot::init(const AIRobotTemplate* t,
     Robot::init(t, Side::AI, pos1, direction1);
 }
 
-std::string AIRobot::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "AIRobot(" << this
-        << ", Base=" << Robot::toString()
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value AIRobot::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

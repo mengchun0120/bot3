@@ -232,31 +232,6 @@ void GameMap::accessRegion(const Region<int>& r,
     }
 }
 
-std::string GameMap::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "GameMap(maxObjSpan=" << maxObjSpan_
-        << ", maxCollideBreath=" << maxCollideBreath_
-        << ", extraCell=" << extraCell_
-        << ", viewportSize=" << viewportSize_
-        << ", minViewportOrigin=" << minViewportOrigin_
-        << ", maxViewportOrigin=" << maxViewportOrigin_
-        << ", viewportOrigin=" << viewportOrigin_
-        << ", viewportAnchor=" << viewportAnchor_
-        << ", boundary=" << boundary_
-        << ", viewableRegion=" << viewableRegion_
-        << ", presentArea=" << presentArea_
-        << ", map=";
-
-    streamMap(oss, map_);
-
-    oss << ", Base=" << Object::toString()
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value GameMap::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

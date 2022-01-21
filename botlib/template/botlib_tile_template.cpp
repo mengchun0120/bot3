@@ -32,17 +32,6 @@ void TileTemplate::init(float collideBreath,
     hp_ = hp;
 }
 
-std::string TileTemplate::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "TileTemplate(hp=" << hp_
-       << ", Base=" << CompositeObjectTemplate::toString()
-       << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value TileTemplate::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

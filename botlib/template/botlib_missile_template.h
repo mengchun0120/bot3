@@ -27,8 +27,6 @@ public:
 
     inline const ParticleEffectTemplate* explodeEffectTemplate() const;
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 

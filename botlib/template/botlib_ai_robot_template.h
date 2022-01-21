@@ -36,8 +36,6 @@ public:
               std::vector<commonlib::Vector2>&& firePoints,
               std::vector<commonlib::Vector2>&& fireDirections);
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 };

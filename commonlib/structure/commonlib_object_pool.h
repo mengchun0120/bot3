@@ -29,8 +29,6 @@ public:
         return freeCount_;
     }
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
             rapidjson::Document::AllocatorType& allocator) const override;
 
@@ -137,30 +135,6 @@ void ObjectPool<T>::initNext(unsigned int size)
         next_[i] = i+1;
     }
     next_[size-1] = -1;
-}
-
-template <typename T>
-std::string ObjectPool<T>::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "ObjectPool(freeCount=" << freeCount_
-        << ", size=" << size_
-        << ", free=[";
-
-    if (freeCount_ > 0)
-    {
-        oss << firstFree_;
-
-        for (int idx = next_[firstFree_]; idx >= 0; idx = next_[idx])
-        {
-            oss << ", " << idx;
-        }
-    }
-
-    oss << "], Base=" << Object::toString();
-
-    return oss.str();
 }
 
 template <typename T>

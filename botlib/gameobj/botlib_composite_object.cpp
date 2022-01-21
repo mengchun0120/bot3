@@ -87,19 +87,6 @@ void CompositeObject::shiftComponents(const Vector2& delta)
     }
 }
 
-std::string CompositeObject::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "CompositeObject(" << this
-        << ", direction=" << direction_
-        << ", components=" << components_
-        << ", Base=" << GameObject::toString()
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value CompositeObject::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

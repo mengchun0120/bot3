@@ -48,8 +48,6 @@ public:
         return capacity_;
     }
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 
@@ -171,33 +169,6 @@ void FixedQueue<T>::clear()
     size_ = 0;
     first_ = -1;
     free_ = 0;
-}
-
-template <typename T>
-std::string FixedQueue<T>::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "FixedQueue(first_=" << first_
-        << ", free_=" << free_
-        << ", capacity=" << capacity_
-        << ", size=" << size_
-        << ", queue=[";
-
-    if (!empty())
-    {
-        oss << queue_[first_];
-
-        int idx = (first_ + 1) % capacity_;
-        for (int i = 1; i < size_; ++i)
-        {
-            oss << ", " << queue_[idx];
-        }
-    }
-
-    oss << "], Base=" << Object::toString() << ")";
-
-    return oss.str();
 }
 
 template <typename T>

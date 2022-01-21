@@ -58,15 +58,6 @@ void AIRobotTemplate::init(float hp1,
 
 }
 
-std::string AIRobotTemplate::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "AIRobotTemplate(Base=" << RobotTemplate::toString() << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value AIRobotTemplate::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

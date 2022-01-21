@@ -16,8 +16,6 @@ public:
 
     inline unsigned int id() const;
 
-    virtual std::string toString() const;
-
     virtual rapidjson::Value toJson(
                     rapidjson::Document::AllocatorType& allocator) const;
 

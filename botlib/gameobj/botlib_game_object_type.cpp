@@ -1,19 +1,8 @@
+#include <commonlib_exception.h>
 #include <botlib_game_object_type.h>
 
 namespace mcdane {
 namespace botlib {
-
-std::string stringVal(GameObjectType t)
-{
-    static std::string typeStr[] = {
-        "tile",
-        "robot",
-        "missile",
-        "effect"
-    };
-
-    return typeStr[static_cast<int>(t)];
-}
 
 } // end of namespace botlib
 } // end of namespace mcdane
@@ -22,14 +11,24 @@ namespace std {
 
 ostream& operator<<(ostream& os, mcdane::botlib::GameObjectType t)
 {
-    static std::string typeStr[] = {
-        "tile",
-        "robot",
-        "missile",
-        "effect"
-    };
+    using namespace mcdane::botlib;
+    using namespace mcdane::commonlib;
 
-    return os << typeStr[static_cast<int>(t)];
+    switch(t)
+    {
+        case GameObjectType::TILE:
+            return os << "tile";
+        case GameObjectType::ROBOT:
+            return os << "robot";
+        case GameObjectType::MISSILE:
+            return os << "missile";
+        case GameObjectType::EFFECT:
+            return os << "effect";
+        default:
+            THROW_EXCEPT(InvalidArgumentException,
+                         "Invalid GameObjectType "
+                         + std::to_string(static_cast<int>(t)));
+    }
 }
 
 } // end of namespace std

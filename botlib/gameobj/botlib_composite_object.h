@@ -37,8 +37,6 @@ public:
 
     virtual void setDirection(const commonlib::Vector2& direction1);
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 

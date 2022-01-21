@@ -19,8 +19,6 @@ public:
 
     inline const PlayerTemplate* getTemplate() const;
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 };

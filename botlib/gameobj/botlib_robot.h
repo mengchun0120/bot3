@@ -60,8 +60,6 @@ public:
 
     void setShootingEnabled(bool b);
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 

@@ -2,6 +2,7 @@
 #include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <commonlib_json_utils.h>
+#include <commonlib_string_utils.h>
 #include <botlib_game_map.h>
 #include <botlib_particle_effect.h>
 #include <botlib_missile_hit_checker.h>
@@ -90,19 +91,6 @@ void Missile::showExplodeEffect(GameMap& map)
     ParticleEffect* explodeEffect = new ParticleEffect();
     explodeEffect->init(getTemplate()->explodeEffectTemplate(), pos_);
     map.addObj(explodeEffect);
-}
-
-std::string Missile::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "Missile(side=" << side_
-        << ", speed=" << speed_
-        << ", damage=" << damage_
-        << ", Base=" << CompositeObject::toString()
-        << ")";
-
-    return oss.str();
 }
 
 rapidjson::Value Missile::toJson(

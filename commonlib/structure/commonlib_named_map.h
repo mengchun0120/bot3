@@ -47,16 +47,12 @@ public:
 
     void traverse(NodeAccessor accessor);
 
-    std::string toString() const override;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     struct Node: public Object {
         Node(char ch);
-
-        std::string toString() const override;
 
         rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
@@ -335,30 +331,6 @@ void NamedMap<T>::traverse(NodeAccessor accessor)
 }
 
 template <typename T>
-std::string NamedMap<T>::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "NamedMap(root=" << root_
-        << ", objs=[";
-
-    if (!objs_.empty())
-    {
-        oss << *(objs_[0]);
-        for (std::size_t i = 1; i < objs_.size(); ++i)
-        {
-            oss << ", " << *(objs_[i]);
-        }
-    }
-
-    oss << "], names=" << names_
-        << ", Base=" << Object::toString()
-        << ")";
-
-    return oss.str();
-}
-
-template <typename T>
 rapidjson::Value NamedMap<T>::toJson(
                         rapidjson::Document::AllocatorType& allocator) const
 {
@@ -382,21 +354,6 @@ NamedMap<T>::Node::Node(char ch)
     , ch_(ch)
     , ptr_(nullptr)
 {}
-
-template <typename T>
-std::string NamedMap<T>::Node::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "Node(ch=" << ch_
-        << ", ptr=" << *ptr_
-        << ", left=" << left_
-        << ", right=" << right_
-        << ", Base=" << Object::toString()
-        << ")";
-
-    return oss.str();
-}
 
 template <typename T>
 rapidjson::Value NamedMap<T>::Node::toJson(

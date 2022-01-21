@@ -44,18 +44,6 @@ void Tile::addHP(float delta)
     hpIndicator_.reset(pos(), hpRatio());
 }
 
-std::string Tile::toString() const
-{
-    std::ostringstream oss;
-
-    oss << "Tile(" << this
-        << ", hp=" << hp_
-        << ", Base=" << CompositeObject::toString()
-        << ")";
-
-    return oss.str();
-}
-
 rapidjson::Value Tile::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

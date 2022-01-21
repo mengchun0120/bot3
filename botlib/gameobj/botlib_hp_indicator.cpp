@@ -84,7 +84,7 @@ void HPIndicator::setHPPercent(float hpPercent)
     if (hpPercent < 0.0f || hpPercent > 1.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid hpPercent " + toString(hpPercent));
+                     "Invalid hpPercent " + stringVal(hpPercent));
     }
 
     std::ostringstream oss;
