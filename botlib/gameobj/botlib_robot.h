@@ -82,8 +82,6 @@ protected:
 
     void updateShooting(GameMap& map);
 
-    bool canShoot(const commonlib::TimePoint& t);
-
     void shoot(GameMap& map,
                const commonlib::TimePoint& t);
 

@@ -5,6 +5,7 @@
 #include <botlib_game_map.h>
 #include <botlib_nonpassthrough_collide_checker.h>
 #include <botlib_robot_hit_missile_checker.h>
+#include <botlib_missile.h>
 #include <botlib_robot.h>
 
 using namespace mcdane::commonlib;
@@ -50,6 +51,11 @@ void Robot::update(GameMap& map,
         updatePos(map, timeDelta);
     }
 
+    if (alive() && shootingEnabled_)
+    {
+        updateShooting(map);
+    }
+
     GameObject::update(map, timeDelta);
 
     setLocked(false);
@@ -90,6 +96,30 @@ void Robot::addHP(float delta)
     }
 
     hpIndicator_.reset(pos(), hpRatio());
+}
+
+void Robot::setShootingEnabled(bool b)
+{
+    shootingEnabled_ = b;
+}
+
+rapidjson::Value Robot::toJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kObjectType);
+
+    v.AddMember("class", "Robot", allocator);
+    v.AddMember("side", jsonVal(stringVal(side_), allocator), allocator);
+    v.AddMember("hp", hp_, allocator);
+    v.AddMember("speed", jsonVal(speed_, allocator), allocator);
+    v.AddMember("energy", energy_, allocator);
+    v.AddMember("movingEnabled", movingEnabled_, allocator);
+    v.AddMember("shootingEnabled", shootingEnabled_, allocator);
+    v.AddMember("base", CompositeObject::toJson(allocator), allocator);
+
+    return v;
 }
 
 void Robot::initFirePointsAndDirections()
@@ -178,7 +208,7 @@ void Robot::updateShooting(GameMap& map)
 {
     TimePoint thisTime = Clock::now();
 
-    if (!canShoot(thisTime))
+    if (timeDistMs(lastShootTime_, thisTime) < fireIntervalMS())
     {
         return;
     }
@@ -186,33 +216,21 @@ void Robot::updateShooting(GameMap& map)
     shoot(map, thisTime);
 }
 
-bool Robot::canShoot(const TimePoint& t)
-{
-    return timeDistMs(t, lastShootTime_) >= fireIntervalMS();
-}
-
 void Robot::shoot(GameMap& map,
                   const TimePoint& t)
 {
-}
+    for (unsigned int i = 0; i < firePoints_.size(); ++i)
+    {
+        Missile* missile = new Missile();
+        missile->init(getTemplate()->missileTemplate(),
+                      side_,
+                      firePoints_[i],
+                      fireDirections_[i]);
 
-rapidjson::Value Robot::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
+        map.addObj(missile);
+    }
 
-    Value v(kObjectType);
-
-    v.AddMember("class", "Robot", allocator);
-    v.AddMember("side", jsonVal(stringVal(side_), allocator), allocator);
-    v.AddMember("hp", hp_, allocator);
-    v.AddMember("speed", jsonVal(speed_, allocator), allocator);
-    v.AddMember("energy", energy_, allocator);
-    v.AddMember("movingEnabled", movingEnabled_, allocator);
-    v.AddMember("shootingEnabled", shootingEnabled_, allocator);
-    v.AddMember("base", CompositeObject::toJson(allocator), allocator);
-
-    return v;
+    lastShootTime_ = t;
 }
 
 } // end of namespace botlib

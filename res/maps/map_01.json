@@ -25,28 +25,7 @@
             "template": "red_robot",
             "pos": [80.0, 80.0],
             "direction": [0.707106781, 0.707106781],
-            "movingEnabled": true
-        },
-        {
-            "type": "missile",
-            "template": "red_missile",
-            "side": "player",
-            "pos": [300.0, 300.0],
-            "direction": [-0.707106781, -0.707106781]
-        },
-        {
-            "type": "missile",
-            "template": "red_missile",
-            "side": "player",
-            "pos": [500.0, 180.0],
-            "direction": [-1.0, 0.0]
-        },
-        {
-            "type": "missile",
-            "template": "red_missile",
-            "side": "player",
-            "pos": [600.0, 180.0],
-            "direction": [-1.0, 0.0]
+            "shootingEnabled": true
         }
     ]
 }

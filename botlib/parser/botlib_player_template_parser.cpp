@@ -35,8 +35,6 @@ void PlayerTemplateParser::load(PlayerTemplate& t,
            std::forward<std::vector<Component>>(components_),
            std::forward<std::vector<Vector2>>(firePoints_),
            std::forward<std::vector<Vector2>>(fireDirections_));
-
-    LOG_DEBUG << "Initialized " << t << LOG_END;
 }
 
 } // end of namespace botlib
