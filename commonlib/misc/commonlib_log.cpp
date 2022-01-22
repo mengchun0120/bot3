@@ -5,6 +5,7 @@
 #endif
 
 #include <cstdio>
+#include <commonlib_exception.h>
 #include <commonlib_log.h>
 
 namespace mcdane {
@@ -28,6 +29,19 @@ void Logger::initInstance(std::ostream& os,
         k_logger.reset(new Logger(os, minLevel));
     }
 #endif
+}
+
+Logger::LogLevel Logger::strToLevel(const std::string& levelStr)
+{
+    for (int i = 0; i < static_cast<int>(LEVEL_COUNT); ++i)
+    {
+        if (levelStr == k_levelStr[i])
+        {
+            return static_cast<LogLevel>(i);
+        }
+    }
+
+    THROW_EXCEPT(InvalidArgumentException, "Invalid log level " + levelStr);
 }
 
 Logger::Logger(std::ostream& os,

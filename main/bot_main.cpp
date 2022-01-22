@@ -11,6 +11,7 @@ using namespace mcdane::botlib;
 
 struct Arguments {
     std::string configFile_;
+    std::string logLevelStr_;
     std::string logFile_;
     std::string appDir_;
 };
@@ -23,6 +24,8 @@ void parseArguments(Arguments& args, int argc, char* argv[])
                          "Config file", false, k_nonEmptyStrV),
         Argument::create(args.logFile_, "logFile", "l", "log",
                          "Log file", false, k_nonEmptyStrV),
+        Argument::create(args.logLevelStr_, "logLevel", "v", "logLevel",
+                         "Log level"),
         Argument::create(args.appDir_, "appDir", "a", "appDir",
                          "App directory", false, k_nonEmptyStrV)
     });
@@ -30,7 +33,8 @@ void parseArguments(Arguments& args, int argc, char* argv[])
     parser.parse(argc, argv);
 }
 
-void initLog(const std::string& logFile)
+void initLog(const std::string& logLevelStr,
+             const std::string& logFile)
 {
     static std::ofstream os;
 
@@ -41,7 +45,14 @@ void initLog(const std::string& logFile)
         THROW_EXCEPT(FileException, "Failed to open file " + logFile);
     }
 
-    Logger::initInstance(os, Logger::LEVEL_DEBUG);
+    Logger::LogLevel level = Logger::LEVEL_DEBUG;
+
+    if (!logLevelStr.empty())
+    {
+        level = Logger::strToLevel(logLevelStr);
+    }
+
+    Logger::initInstance(os, level);
 }
 
 int main(int argc, char* argv[])
@@ -51,7 +62,7 @@ int main(int argc, char* argv[])
     try
     {
         parseArguments(args, argc, argv);
-        initLog(args.logFile_);
+        initLog(args.logLevelStr_, args.logFile_);
     }
     catch (const std::exception& e)
     {

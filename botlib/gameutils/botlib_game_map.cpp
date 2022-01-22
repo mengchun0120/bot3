@@ -23,39 +23,6 @@ inline bool isPlayer(GameObject* obj)
            static_cast<Robot*>(obj)->side() == Side::PLAYER;
 }
 
-void streamMap(std::ostringstream& oss,
-               const std::vector<std::vector<GameObjectList>>& map)
-{
-    bool firstCell = true;
-
-    oss << "[";
-
-    for (std::size_t rowIdx = 0; rowIdx < map.size(); ++rowIdx)
-    {
-        const auto& row = map[rowIdx];
-        for (std::size_t colIdx = 0; colIdx < row.size(); ++colIdx)
-        {
-            if (row[colIdx].empty())
-            {
-                continue;
-            }
-
-            if (!firstCell)
-            {
-                oss << ", ";
-            }
-            else
-            {
-                firstCell = true;
-            }
-
-            oss << row[colIdx];
-        }
-    }
-
-    oss << "]";
-}
-
 rapidjson::Value mapJson(
                 const std::vector<std::vector<GameObjectList>>& map,
                 rapidjson::Document::AllocatorType& allocator)

@@ -24,6 +24,8 @@ public:
     static std::string k_levelStr[LEVEL_COUNT];
     static std::shared_ptr<Logger> k_logger;
 
+    static LogLevel strToLevel(const std::string& levelStr);
+
     static void initInstance(std::ostream& os,
                              LogLevel minLevel=LEVEL_DEBUG);
 
