@@ -32,7 +32,7 @@ void GameObject::init(const GameObjectTemplate* t,
 
     t_ = t;
     pos_ = pos1;
-    setAlive(true);
+    setState(GameObjectState::ALIVE);
     collideRegion_.init(x()-collideBreath(), x()+collideBreath(),
                         y()-collideBreath(), y()+collideBreath());
 }
@@ -66,9 +66,9 @@ void GameObject::clearFlags()
     flags_ = 0;
 }
 
-void GameObject::setAlive(bool b)
+void GameObject::setState(GameObjectState newState)
 {
-    setFlag(FLAG_ALIVE, b);
+    state_ = newState;
 }
 
 void GameObject::setInvincible(bool b)

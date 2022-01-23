@@ -5,6 +5,7 @@
 #include <ostream>
 #include <commonlib_vector.h>
 #include <commonlib_region.h>
+#include <botlib_game_object_state.h>
 #include <botlib_game_object_template.h>
 
 namespace mcdane {
@@ -15,7 +16,6 @@ class GameMap;
 class GameObject: public commonlib::Object {
 public:
     enum Flag {
-        FLAG_ALIVE = 0x00000001,
         FLAG_INVINCIBLE = 0x00000002,
         FLAG_UPDATED = 0x00000004,
         FLAG_LOCKED = 0x00000008
@@ -33,6 +33,8 @@ public:
     inline GameObjectType type() const;
 
     inline const GameObjectTemplate* getTemplate() const;
+
+    inline GameObjectState state() const;
 
     inline float span() const;
 
@@ -55,8 +57,6 @@ public:
     inline const commonlib::Region<float>& collideRegion() const;
 
     inline int flags() const;
-
-    inline bool alive() const;
 
     inline bool invincible() const;
 
@@ -90,7 +90,7 @@ public:
 
     void clearFlags();
 
-    void setAlive(bool b);
+    void setState(GameObjectState newState);
 
     void setInvincible(bool b);
 
@@ -113,6 +113,7 @@ public:
 
 protected:
     const GameObjectTemplate* t_;
+    GameObjectState state_;
     commonlib::Vector2 pos_;
     int flags_;
     unsigned int row_;
@@ -130,6 +131,11 @@ GameObjectType GameObject::type() const
 const GameObjectTemplate* GameObject::getTemplate() const
 {
     return t_;
+}
+
+GameObjectState GameObject::state() const
+{
+    return state_;
 }
 
 float GameObject::span() const
@@ -185,11 +191,6 @@ const commonlib::Region<float>& GameObject::collideRegion() const
 int GameObject::flags() const
 {
     return flags_;
-}
-
-bool GameObject::alive() const
-{
-    return flags_ & FLAG_ALIVE;
 }
 
 bool GameObject::invincible() const

@@ -12,7 +12,7 @@ void GameObjectPresenter::reset(GameObjectType type)
 bool GameObjectPresenter::run(GameObjectList& objList,
                               GameObject* obj)
 {
-    if (!obj->alive() || obj->type() != curType_)
+    if (obj->state() == GameObjectState::DEAD || obj->type() != curType_)
     {
         return true;
     }

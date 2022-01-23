@@ -14,7 +14,7 @@ bool check(GameObject* obj,
            GameObject* thisObj)
 {
     return obj != thisObj &&
-           obj->alive() &&
+           obj->state() == GameObjectState::ALIVE &&
            (obj->type() == GameObjectType::ROBOT ||
             obj->type() == GameObjectType::TILE);
 }

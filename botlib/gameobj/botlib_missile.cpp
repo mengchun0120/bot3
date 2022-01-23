@@ -27,7 +27,7 @@ void Missile::init(const MissileTemplate* t,
 void Missile::update(GameMap& map,
                      float timeDelta)
 {
-    if (!alive())
+    if (state() == GameObjectState::DEAD)
     {
         return;
     }
@@ -63,7 +63,7 @@ void Missile::explode(GameMap& map)
     map.accessRegion(area, checker, true);
 
     showExplodeEffect(map);
-    setAlive(false);
+    setState(GameObjectState::DEAD);
 }
 
 void Missile::resetSpeed()

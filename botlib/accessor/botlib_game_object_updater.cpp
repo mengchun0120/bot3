@@ -21,7 +21,7 @@ void GameObjectUpdater::reset(GameMap* map,
 bool GameObjectUpdater::run(GameObjectList& objList,
                             GameObject* obj)
 {
-    if (!obj->alive() || obj->updated())
+    if (obj->state() != GameObjectState::ALIVE || obj->updated())
     {
         return true;
     }

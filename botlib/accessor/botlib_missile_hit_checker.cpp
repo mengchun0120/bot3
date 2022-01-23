@@ -22,7 +22,7 @@ inline bool isSameSideRobot(GameObject* obj,
 
 inline bool check(GameObject* obj, Missile* missile)
 {
-    return obj->alive() &&
+    return obj->state() == GameObjectState::ALIVE &&
            (obj->type() == GameObjectType::TILE ||
             isSameSideRobot(obj, missile));
 }

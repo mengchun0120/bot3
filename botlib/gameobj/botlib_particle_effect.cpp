@@ -39,7 +39,7 @@ void ParticleEffect::update(GameMap& map,
     elapsedTime_ = elapsedTimeMs(startTime_);
     if (elapsedTime_ >= getTemplate()->duration())
     {
-        setAlive(false);
+        setState(GameObjectState::DEAD);
     }
 }
 

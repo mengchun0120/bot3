@@ -38,7 +38,7 @@ void Tile::addHP(float delta)
     hp_ = clamp(hp_+delta, 0.0f, t->hp());
     if (hp_ <= 0.0f)
     {
-        setAlive(false);
+        setState(GameObjectState::DEAD);
     }
 
     hpIndicator_.reset(pos(), hpRatio());

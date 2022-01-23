@@ -22,13 +22,13 @@ void AddObjectChecker::reset(const commonlib::Region<float>& collideRegion)
 bool AddObjectChecker::run(GameObjectList& objList,
                            GameObject* obj)
 {
-    if (!obj->alive() || !isNonPassthroughObjType(obj->type()))
+    if (obj->state() != GameObjectState::ALIVE ||
+        !isNonPassthroughObjType(obj->type()))
     {
         return true;
     }
 
-    bool collide1 = checkRectCollideRect(obj->collideRegion(), collideRegion_);
-    if (collide1)
+    if (checkRectCollideRect(obj->collideRegion(), collideRegion_))
     {
         collide_ = true;
     }

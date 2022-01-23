@@ -189,7 +189,9 @@ void GameMap::accessRegion(const Region<int>& r,
                     return;
                 }
 
-                if (deleteDeadObj && !obj->alive() && !obj->locked())
+                if (deleteDeadObj &&
+                    obj->state() == GameObjectState::DEAD &&
+                    !obj->locked())
                 {
                     LOG_DEBUG << "delete " << *obj << LOG_END;
                     objList.remove(obj);

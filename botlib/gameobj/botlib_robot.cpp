@@ -44,6 +44,11 @@ void Robot::present() const
 void Robot::update(GameMap& map,
                    float timeDelta)
 {
+    if (state() != GameObjectState::ALIVE)
+    {
+        return;
+    }
+
     setLocked(true);
 
     if (movingEnabled_)
@@ -51,7 +56,7 @@ void Robot::update(GameMap& map,
         updatePos(map, timeDelta);
     }
 
-    if (alive() && shootingEnabled_)
+    if (shootingEnabled_)
     {
         updateShooting(map);
     }
@@ -92,7 +97,7 @@ void Robot::addHP(float delta)
     hp_ = clamp(hp_+delta, 0.0f, t->hp());
     if (hp_ <= 0.0f)
     {
-        setAlive(false);
+        setState(GameObjectState::DEAD);
     }
 
     hpIndicator_.reset(pos(), hpRatio());

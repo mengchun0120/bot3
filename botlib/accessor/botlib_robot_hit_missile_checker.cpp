@@ -16,7 +16,7 @@ inline bool check(GameObject* obj,
                   Robot* robot)
 {
     return obj->type() == GameObjectType::MISSILE &&
-           obj->alive() &&
+           obj->state() == GameObjectState::ALIVE &&
            static_cast<Missile*>(obj)->side() != robot->side();
 }
 
