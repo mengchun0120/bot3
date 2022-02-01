@@ -1,3 +1,4 @@
+#include <iostream>
 #include <test_commonlib.h>
 
 int main(int argc, char *argv[])
@@ -17,4 +18,6 @@ int main(int argc, char *argv[])
     testNamedMap();
     testLinkedList();
     testCollide();
+
+    std::cout << "Test successful" << std::endl;
 }

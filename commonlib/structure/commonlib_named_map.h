@@ -3,7 +3,6 @@
 
 #include <unordered_map>
 #include <functional>
-#include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
@@ -11,6 +10,10 @@
 
 namespace mcdane {
 namespace commonlib {
+
+template <typename T>
+using NamedMapParser =
+std::function<void(T&, const rapidjson::Value&)>;
 
 template <typename T>
 class NamedMap: public Object {
@@ -29,6 +32,11 @@ public:
         const std::string& fileName,
         PARSER& parser);
 
+    void
+    init(
+        const std::string& fileName,
+        NamedMapParser<T> parser);
+
     const T*
     search(
         const std::string& name) const;
@@ -43,9 +51,11 @@ public:
 
 private:
     void
-    add(
-        const std::string& name,
+    add(const std::string& name,
         T* t);
+
+    T&
+    add(const std::string& name);
 
 private:
     Map map_;
@@ -91,19 +101,39 @@ NamedMap<T>::load(
 
 template <typename T>
 void
-NamedMap<T>::add(
-    const std::string& name,
-    T* t)
+NamedMap<T>::init(
+    const std::string& fileName,
+    NamedMapParser<T> parser)
 {
-    auto it = map_.find(name);
-    if (it != map_.end())
+    rapidjson::Document doc;
+    readJson(doc, fileName);
+
+    if (!doc.IsArray())
     {
         THROW_EXCEPT(
             ParseException,
-            "Duplicate name " + name);
+            "Invalid json file: " + fileName);
     }
 
-    map_[name] = *t;
+    std::string name;
+
+    std::vector<JsonParamPtr> params{
+        jsonParam(
+            name,
+            {"name"},
+            true,
+            k_nonEmptyStrV)
+    };
+
+    const rapidjson::Value& arr = doc.GetArray();
+    int numObjects = arr.Capacity();
+
+    for (int i = 0; i < numObjects; ++i)
+    {
+        parse(params, arr[i]);
+        T& t = add(name);
+        parser(t, arr[i]);
+    }
 }
 
 template <typename T>
@@ -173,6 +203,37 @@ NamedMap<T>::toJson(
         allocator);
 
     return v;
+}
+template <typename T>
+void
+NamedMap<T>::add(
+    const std::string& name,
+    T* t)
+{
+    auto it = map_.find(name);
+    if (it != map_.end())
+    {
+        THROW_EXCEPT(
+            ParseException,
+            "Duplicate name " + name);
+    }
+
+    map_[name] = *t;
+}
+
+template <typename T>
+T&
+NamedMap<T>::add(const std::string& name)
+{
+    auto it = map_.find(name);
+    if (it != map_.end())
+    {
+        THROW_EXCEPT(
+            ParseException,
+            "Duplicate name " + name);
+    }
+
+    return map_[name];
 }
 
 } // end of namespace commonlib

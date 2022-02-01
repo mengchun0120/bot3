@@ -7,36 +7,32 @@
 namespace mcdane {
 namespace commonlib {
 
-struct TestNamedMapParser {
-    TestNamedMapParser();
+auto stringParser =
+[](
+    std::string& s,
+    const rapidjson::Value& v)
+{
+    std::vector<JsonParamPtr> params{
+        jsonParam(
+            s,
+            "value"
+        )
+    };
 
-    std::string* operator()(const rapidjson::Value& v);
-
-    std::vector<JsonParamPtr> params_;
-    std::string value_;
+    parse(params, v);
 };
 
-
-TestNamedMapParser::TestNamedMapParser()
-    : params_{jsonParam(value_, {"value"})}
-{
-}
-
-std::string* TestNamedMapParser::operator()(const rapidjson::Value& v)
-{
-    parse(params_, v);
-    return new std::string(value_);
-}
-
-void testNamedMap_LoadWrongFileThrowException()
+void
+testNamedMap_LoadWrongFileThrowException()
 {
     bool exceptionHappened = false;
 
     try
     {
-        TestNamedMapParser parser;
         NamedMap<std::string> map;
-        map.load("unittest/commonlib/data/wrong_named_map.json", parser);
+        map.init(
+            "unittest/commonlib/data/wrong_named_map.json",
+            stringParser);
     }
     catch (const ParseException& e)
     {
@@ -47,15 +43,17 @@ void testNamedMap_LoadWrongFileThrowException()
     assert(exceptionHappened);
 }
 
-void testNamedMap_SearchCorrectFile()
+void
+testNamedMap_SearchCorrectFile()
 {
     bool exceptionHappened = false;
 
     try
     {
-        TestNamedMapParser parser;
         NamedMap<std::string> map;
-        map.load("unittest/commonlib/data/correct_named_map.json", parser);
+        map.init(
+            "unittest/commonlib/data/correct_named_map.json",
+            stringParser);
 
         const std::string* s = map.search("top");
         assert(s && *s == "Top");
@@ -76,6 +74,7 @@ void testNamedMap_SearchCorrectFile()
 void testNamedMap()
 {
     testNamedMap_LoadWrongFileThrowException();
+    testNamedMap_SearchCorrectFile();
 }
 
 } // end of namespace commonlib
