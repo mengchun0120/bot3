@@ -25,7 +25,7 @@ void ComponentParser::initComponent(Component& c,
 {
     parse(params_, v);
 
-    ComponentTemplate* t = componentTemplateLib_.search(templateName_);
+    const ComponentTemplate* t = componentTemplateLib_.search(templateName_);
     if (!t)
     {
         THROW_EXCEPT(ParseException,

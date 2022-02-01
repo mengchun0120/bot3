@@ -10,6 +10,8 @@ class ParticleEffectTemplate;
 
 class MissileTemplate: public CompositeObjectTemplate {
 public:
+    MissileTemplate() = default;
+
     MissileTemplate(float collideBreath1,
                     float damage1,
                     float speed1,

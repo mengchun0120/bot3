@@ -41,8 +41,6 @@ public:
     VertexArray(Iterator begin,
                 Iterator end);
 
-    VertexArray(const VertexArray& other) = delete;
-
     virtual ~VertexArray();
 
     void load(const void* data,
@@ -55,8 +53,6 @@ public:
     template <typename Iterator>
     void load(Iterator begin,
               Iterator end);
-
-    VertexArray& operator=(const VertexArray& other) = delete;
 
     bool valid() const noexcept
     {

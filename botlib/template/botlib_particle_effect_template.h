@@ -12,6 +12,8 @@ namespace botlib {
 
 class ParticleEffectTemplate: public GameObjectTemplate {
 public:
+    ParticleEffectTemplate() = default;
+
     ParticleEffectTemplate(float acceleration1,
                            float duration1,
                            float particleSize1,
@@ -66,7 +68,7 @@ protected:
     float particleSize_;
     commonlib::VertexArray vertexArray_;
     const commonlib::Texture *texture_;
-    const commonlib::Color color_;
+    commonlib::Color color_;
 };
 
 int ParticleEffectTemplate::numParticles() const
