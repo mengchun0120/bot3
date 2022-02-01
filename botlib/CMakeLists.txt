@@ -60,7 +60,6 @@ set(BOTLIB_PARSER_SRC
     parser/botlib_player_template_parser.cpp
     parser/botlib_rect_parser.cpp
     parser/botlib_robot_template_parser.cpp
-    parser/botlib_texture_parser.cpp
     parser/botlib_tile_template_parser.cpp)
 
 set(BOTLIB_SCREEN_SRC

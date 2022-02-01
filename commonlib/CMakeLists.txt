@@ -6,7 +6,8 @@ set(COMMONLIB_APP_SRC
     app/commonlib_app.cpp)
 
 set(COMMONLIB_BASE_SRC
-    base/commonlib_object.cpp)
+    base/commonlib_object.cpp
+    base/commonlib_named_object.cpp)
 
 set(COMMONLIB_INPUT_SRC
     input/commonlib_input_event.cpp

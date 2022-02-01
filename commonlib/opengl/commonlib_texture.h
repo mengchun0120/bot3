@@ -3,45 +3,52 @@
 
 #include <string>
 #include <commonlib_opengl.h>
-#include <commonlib_object.h>
+#include <commonlib_named_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
-class Texture: public Object {
+class Texture: public NamedObject {
 public:
-    Texture();
+    Texture() = default;
 
-    Texture(const std::string& imageFile);
-
-    Texture(const Texture& other) = delete;
-
-    virtual ~Texture();
+    ~Texture() override;
 
     void init(const std::string& imageFile);
 
-    bool valid() const
+    void
+    init(
+        const rapidjson::Value& v,
+        const std::string& picDir,
+        bool requireName = true);
+
+    bool
+    valid() const
     {
         return id_ != 0;
     }
 
-    GLuint id() const
+    GLuint
+    id() const
     {
         return id_;
     }
 
-    int width() const
+    int
+    width() const
     {
         return width_;
     }
 
-    int height() const
+    int
+    height() const
     {
         return height_;
     }
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
+    rapidjson::Value
+    toJson(
+        rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     GLuint id_;

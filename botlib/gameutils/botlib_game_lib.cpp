@@ -4,7 +4,6 @@
 #include <botlib_missile_template_parser.h>
 #include <botlib_rect_parser.h>
 #include <botlib_robot_template_parser.h>
-#include <botlib_texture_parser.h>
 #include <botlib_tile_template_parser.h>
 #include <botlib_particle_effect_template_parser.h>
 #include <botlib_player_template_parser.h>
@@ -17,49 +16,51 @@ namespace botlib {
 
 std::shared_ptr<GameLib> GameLib::k_gameLib;
 
-void GameLib::initInstance(const std::string& picDir,
-                           const std::string& libDir,
-                           const std::string& textureLibFile,
-                           const std::string& rectLibFile,
-                           const std::string& componentTemplateLibFile,
-                           const std::string& tileTemplateLibFile,
-                           const std::string& missileTemplateLibFile,
-                           const std::string& aiRobotTemplateLibFile,
-                           const std::string& particleEffectTemplateLibFile,
-                           const std::string& playerTemplateFile)
+void
+GameLib::initInstance(
+    const std::string& picDir,
+    const std::string& libDir,
+    const std::string& textureLibFile,
+    const std::string& rectLibFile,
+    const std::string& componentTemplateLibFile,
+    const std::string& tileTemplateLibFile,
+    const std::string& missileTemplateLibFile,
+    const std::string& aiRobotTemplateLibFile,
+    const std::string& particleEffectTemplateLibFile,
+    const std::string& playerTemplateFile)
 {
     GameLib* lib = new GameLib();
-    lib->load(picDir,
-              libDir,
-              textureLibFile,
-              rectLibFile,
-              componentTemplateLibFile,
-              tileTemplateLibFile,
-              missileTemplateLibFile,
-              aiRobotTemplateLibFile,
-              particleEffectTemplateLibFile,
-              playerTemplateFile);
+    lib->load(
+        picDir,
+        libDir,
+        textureLibFile,
+        rectLibFile,
+        componentTemplateLibFile,
+        tileTemplateLibFile,
+        missileTemplateLibFile,
+        aiRobotTemplateLibFile,
+        particleEffectTemplateLibFile,
+        playerTemplateFile);
 
     k_gameLib.reset(lib);
 }
 
-void GameLib::load(const std::string& picDir,
-                   const std::string& libDir,
-                   const std::string& textureLibFile,
-                   const std::string& rectLibFile,
-                   const std::string& componentTemplateLibFile,
-                   const std::string& tileTemplateLibFile,
-                   const std::string& missileTemplateLibFile,
-                   const std::string& aiRobotTemplateLibFile,
-                   const std::string& particleEffectTemplateLibFile,
-                   const std::string& playerTemplateFile)
+void
+GameLib::load(
+    const std::string& picDir,
+    const std::string& libDir,
+    const std::string& textureLibFile,
+    const std::string& rectLibFile,
+    const std::string& componentTemplateLibFile,
+    const std::string& tileTemplateLibFile,
+    const std::string& missileTemplateLibFile,
+    const std::string& aiRobotTemplateLibFile,
+    const std::string& particleEffectTemplateLibFile,
+    const std::string& playerTemplateFile)
 {
-    TextureParser textureParser(picDir);
-    textureLib_.load(textureLibFile, textureParser);
-
-    LOG_DEBUG << "textureLib Loaded: "
-              << textureLib_
-              << LOG_END;
+    initTextureLib(
+        textureLibFile,
+        picDir);
 
     RectParser rectParser;
     rectLib_.load(rectLibFile, rectParser);
@@ -125,11 +126,39 @@ void GameLib::load(const std::string& picDir,
     LOG_INFO << "GameLib loaded successfull" << LOG_END;
 }
 
-void GameLib::calculateMaxObjSpan()
+void
+GameLib::initTextureLib(
+    const std::string& textureLibFile,
+    const std::string& picDir)
+{
+    auto parser =
+    [&](
+        Texture& texture,
+        const rapidjson::Value& v)
+    {
+        texture.init(
+            v,
+            picDir,
+            true);
+    };
+
+    textureLib_.init(
+        textureLibFile,
+        parser);
+
+    LOG_DEBUG << "textureLib loaded successfully: "
+              << textureLib_
+              << LOG_END;
+}
+
+void
+GameLib::calculateMaxObjSpan()
 {
     maxObjSpan_ = playerTemplate_.span();
 
-    auto accessor = [this](const GameObjectTemplate* t)->bool
+    auto accessor =
+    [this](
+         const GameObjectTemplate* t)->bool
     {
         if (t->span() > maxObjSpan_)
         {
@@ -147,11 +176,14 @@ void GameLib::calculateMaxObjSpan()
     LOG_INFO << "maxObjSpan=" << maxObjSpan_ << LOG_END;
 }
 
-void GameLib::calculateMaxCollideBreath()
+void
+GameLib::calculateMaxCollideBreath()
 {
     maxCollideBreath_ = playerTemplate_.collideBreath();
 
-    auto accessor = [this](const GameObjectTemplate* t)->bool
+    auto accessor =
+    [this](
+         const GameObjectTemplate* t)->bool
     {
         if (t->collideBreath() > maxCollideBreath_)
         {
