@@ -2,6 +2,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
 #include <commonlib_json_utils.h>
+#include <commonlib_json_param.h>
 #include <botlib_game_object_template.h>
 
 using namespace mcdane::commonlib;
@@ -40,6 +41,25 @@ void GameObjectTemplate::init(GameObjectType t,
     invincible_ = invincible;
 }
 
+void GameObjectTemplate::init(GameObjectType t,
+                              float span,
+                              const rapidjson::Value& v)
+{
+    float collideBreath1;
+    bool invincible1 = false;
+
+    std::vector<JsonParamPtr> params{
+        jsonParam(collideBreath1, "collideBreath", true, ge(0.0f)),
+        jsonParam(invincible1, "invincible", false)
+    };
+
+    parse(params, v);
+
+    init(t, span, collideBreath1, invincible1);
+
+    NamedObject::init(v, true);
+}
+
 rapidjson::Value GameObjectTemplate::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {
@@ -52,7 +72,7 @@ rapidjson::Value GameObjectTemplate::toJson(
     v.AddMember("span", span_, allocator);
     v.AddMember("collideBreath", collideBreath_, allocator);
     v.AddMember("invincible", invincible_, allocator);
-    v.AddMember("base", Object::toJson(allocator), allocator);
+    v.AddMember("base", NamedObject::toJson(allocator), allocator);
 
     return v;
 }

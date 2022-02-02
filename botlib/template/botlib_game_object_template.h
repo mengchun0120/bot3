@@ -2,12 +2,12 @@
 #define INCLUDED_BOTLIB_GAME_OBJECT_TEMPLATE_H
 
 #include <botlib_game_object_type.h>
-#include <commonlib_object.h>
+#include <commonlib_named_object.h>
 
 namespace mcdane {
 namespace botlib {
 
-class GameObjectTemplate: public commonlib::Object {
+class GameObjectTemplate: public commonlib::NamedObject {
 public:
     GameObjectTemplate() = default;
 
@@ -22,6 +22,10 @@ public:
               float span,
               float collideBreath,
               bool invincible=false);
+
+    void init(GameObjectType t,
+              float span,
+              const rapidjson::Value& v);
 
     inline GameObjectType type() const;
 
