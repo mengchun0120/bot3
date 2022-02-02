@@ -4,6 +4,7 @@
 #include <commonlib_out_utils.h>
 #include <commonlib_string_utils.h>
 #include <commonlib_json_utils.h>
+#include <botlib_component_template.h>
 #include <botlib_composite_object_template.h>
 
 using namespace mcdane::commonlib;

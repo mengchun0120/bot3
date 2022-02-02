@@ -1,13 +1,14 @@
 #ifndef INCLUDED_BOTLIB_COMPONENT_H
 #define INCLUDED_BOTLIB_COMPONENT_H
 
-#include <ostream>
 #include <commonlib_vector.h>
-#include <botlib_component_template.h>
 #include <commonlib_object.h>
+#include <botlib_typedef.h>
 
 namespace mcdane {
 namespace botlib {
+
+class ComponentTemplate;
 
 class Component: public commonlib::Object {
 public:
@@ -18,6 +19,9 @@ public:
     void init(const ComponentTemplate* t,
               const commonlib::Vector2& pos1,
               const commonlib::Vector2& direction1);
+
+    void init(const rapidjson::Value& v,
+              const ComponentTemplateLib& componentTemplateLib);
 
     inline const ComponentTemplate* getTemplate() const;
 

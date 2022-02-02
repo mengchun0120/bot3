@@ -1,5 +1,8 @@
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
+#include <commonlib_json_param.h>
+#include <commonlib_named_map.h>
+#include <botlib_component_template.h>
 #include <botlib_graphics.h>
 #include <botlib_component.h>
 
@@ -32,6 +35,28 @@ void Component::init(const ComponentTemplate* t,
     t_ = t;
     pos_ = pos1;
     direction_ = direction1;
+}
+
+void Component::init(const rapidjson::Value& v,
+                     const ComponentTemplateLib& componentTemplateLib)
+{
+    std::string templateName;
+    commonlib::Vector2 pos1, direction1;
+    std::vector<JsonParamPtr> params{
+        jsonParam(templateName, "template", true, k_nonEmptyStrV),
+        jsonParam(pos1, "pos"),
+        jsonParam(direction1, "direction")
+    };
+
+    parse(params, v);
+
+    const ComponentTemplate* t = componentTemplateLib.search(templateName);
+    if (!t)
+    {
+        THROW_EXCEPT(ParseException, "Failed to find template " + templateName);
+    }
+
+    init(t, pos1, direction1);
 }
 
 Component& Component::operator=(const Component& other)

@@ -1,6 +1,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_named_map.h>
 #include <botlib_particle_effect_template.h>
+#include <botlib_component_template.h>
 #include <botlib_missile_template.h>
 #include <botlib_missile_template_parser.h>
 
