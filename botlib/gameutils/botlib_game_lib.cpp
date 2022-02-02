@@ -2,7 +2,6 @@
 #include <botlib_ai_robot_template_parser.h>
 #include <botlib_component_template_parser.h>
 #include <botlib_missile_template_parser.h>
-#include <botlib_rect_parser.h>
 #include <botlib_robot_template_parser.h>
 #include <botlib_tile_template_parser.h>
 #include <botlib_particle_effect_template_parser.h>
@@ -16,18 +15,16 @@ namespace botlib {
 
 std::shared_ptr<GameLib> GameLib::k_gameLib;
 
-void
-GameLib::initInstance(
-    const std::string& picDir,
-    const std::string& libDir,
-    const std::string& textureLibFile,
-    const std::string& rectLibFile,
-    const std::string& componentTemplateLibFile,
-    const std::string& tileTemplateLibFile,
-    const std::string& missileTemplateLibFile,
-    const std::string& aiRobotTemplateLibFile,
-    const std::string& particleEffectTemplateLibFile,
-    const std::string& playerTemplateFile)
+void GameLib::initInstance(const std::string& picDir,
+                           const std::string& libDir,
+                           const std::string& textureLibFile,
+                           const std::string& rectLibFile,
+                           const std::string& componentTemplateLibFile,
+                           const std::string& tileTemplateLibFile,
+                           const std::string& missileTemplateLibFile,
+                           const std::string& aiRobotTemplateLibFile,
+                           const std::string& particleEffectTemplateLibFile,
+                           const std::string& playerTemplateFile)
 {
     GameLib* lib = new GameLib();
     lib->load(
@@ -45,29 +42,19 @@ GameLib::initInstance(
     k_gameLib.reset(lib);
 }
 
-void
-GameLib::load(
-    const std::string& picDir,
-    const std::string& libDir,
-    const std::string& textureLibFile,
-    const std::string& rectLibFile,
-    const std::string& componentTemplateLibFile,
-    const std::string& tileTemplateLibFile,
-    const std::string& missileTemplateLibFile,
-    const std::string& aiRobotTemplateLibFile,
-    const std::string& particleEffectTemplateLibFile,
-    const std::string& playerTemplateFile)
+void GameLib::load(const std::string& picDir,
+                   const std::string& libDir,
+                   const std::string& textureLibFile,
+                   const std::string& rectLibFile,
+                   const std::string& componentTemplateLibFile,
+                   const std::string& tileTemplateLibFile,
+                   const std::string& missileTemplateLibFile,
+                   const std::string& aiRobotTemplateLibFile,
+                   const std::string& particleEffectTemplateLibFile,
+                   const std::string& playerTemplateFile)
 {
-    initTextureLib(
-        textureLibFile,
-        picDir);
-
-    RectParser rectParser;
-    rectLib_.load(rectLibFile, rectParser);
-
-    LOG_DEBUG << "rectLib Loaded: "
-              << rectLib_
-              << LOG_END;
+    initTextureLib(textureLibFile, picDir);
+    initRectLib(rectLibFile);
 
     ComponentTemplateParser componentTemplateParser(textureLib_, rectLib_);
     componentTemplateLib_.load(componentTemplateLibFile,
@@ -126,39 +113,38 @@ GameLib::load(
     LOG_INFO << "GameLib loaded successfull" << LOG_END;
 }
 
-void
-GameLib::initTextureLib(
-    const std::string& textureLibFile,
-    const std::string& picDir)
+void GameLib::initTextureLib(const std::string& textureLibFile,
+                             const std::string& picDir)
 {
-    auto parser =
-    [&](
-        Texture& texture,
-        const rapidjson::Value& v)
+    auto parser = [&](Texture& texture,
+                      const rapidjson::Value& v)
     {
-        texture.init(
-            v,
-            picDir,
-            true);
+        texture.init(v, picDir, true);
     };
 
-    textureLib_.init(
-        textureLibFile,
-        parser);
+    textureLib_.init(textureLibFile, parser);
 
-    LOG_DEBUG << "textureLib loaded successfully: "
-              << textureLib_
-              << LOG_END;
+    LOG_DEBUG << "textureLib loaded successfully: " << textureLib_ << LOG_END;
 }
 
-void
-GameLib::calculateMaxObjSpan()
+void GameLib::initRectLib(const std::string& rectLibFile)
+{
+    auto parser = [&](Rectangle& rect,
+                      const rapidjson::Value& v)
+    {
+        rect.init(v, true);
+    };
+
+    rectLib_.init(rectLibFile, parser);
+
+    LOG_DEBUG << "rectLib loaded successfully: " << rectLib_ << LOG_END;
+}
+
+void GameLib::calculateMaxObjSpan()
 {
     maxObjSpan_ = playerTemplate_.span();
 
-    auto accessor =
-    [this](
-         const GameObjectTemplate* t)->bool
+    auto accessor = [this](const GameObjectTemplate* t)->bool
     {
         if (t->span() > maxObjSpan_)
         {
@@ -176,14 +162,11 @@ GameLib::calculateMaxObjSpan()
     LOG_INFO << "maxObjSpan=" << maxObjSpan_ << LOG_END;
 }
 
-void
-GameLib::calculateMaxCollideBreath()
+void GameLib::calculateMaxCollideBreath()
 {
     maxCollideBreath_ = playerTemplate_.collideBreath();
 
-    auto accessor =
-    [this](
-         const GameObjectTemplate* t)->bool
+    auto accessor = [this](const GameObjectTemplate* t)->bool
     {
         if (t->collideBreath() > maxCollideBreath_)
         {

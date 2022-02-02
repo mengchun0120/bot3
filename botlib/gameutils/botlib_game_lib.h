@@ -18,86 +18,67 @@ namespace botlib {
 class GameLib {
 public:
     static void
-    initInstance(
-        const std::string& picDir,
-        const std::string& libDir,
-        const std::string& textureLibFile,
-        const std::string& rectLibFile,
-        const std::string& componentTemplateLibFile,
-        const std::string& tileTemplateLibFile,
-        const std::string& missileTemplateLibFile,
-        const std::string& aiRobotTemplateLibFile,
-        const std::string& particleEffectTemplateLibFile,
-        const std::string& playerTemplateFile);
+    initInstance(const std::string& picDir,
+                 const std::string& libDir,
+                 const std::string& textureLibFile,
+                 const std::string& rectLibFile,
+                 const std::string& componentTemplateLibFile,
+                 const std::string& tileTemplateLibFile,
+                 const std::string& missileTemplateLibFile,
+                 const std::string& aiRobotTemplateLibFile,
+                 const std::string& particleEffectTemplateLibFile,
+                 const std::string& playerTemplateFile);
 
-    inline static const GameLib&
-    getInstance();
+    inline static const GameLib& getInstance();
 
     ~GameLib() = default;
 
-    inline const commonlib::Texture*
-    findTexture(
-        const std::string& name) const;
+    inline const commonlib::Texture* findTexture(const std::string& name) const;
 
-    inline const Rectangle*
-    findRect(
-        const std::string& name) const;
+    inline const Rectangle* findRect(const std::string& name) const;
 
-    inline const ComponentTemplate*
-    findComponentTemplate(
-        const std::string& name) const;
+    inline const ComponentTemplate* findComponentTemplate(
+                                            const std::string& name) const;
 
-    inline const TileTemplate*
-    findTileTemplate(
-        const std::string& name) const;
+    inline const TileTemplate* findTileTemplate(const std::string& name) const;
 
-    inline const MissileTemplate*
-    findMissileTemplate(
-        const std::string& name) const;
+    inline const MissileTemplate* findMissileTemplate(
+                                            const std::string& name) const;
 
-    inline const AIRobotTemplate*
-    findAIRobotTemplate(
-        const std::string& name) const;
+    inline const AIRobotTemplate* findAIRobotTemplate(
+                                            const std::string& name) const;
 
-    inline const ParticleEffectTemplate*
-    findParticleEffectTemplate(
-        const std::string& name) const;
+    inline const ParticleEffectTemplate* findParticleEffectTemplate(
+                                            const std::string& name) const;
 
-    inline const PlayerTemplate&
-    playerTemplate() const;
+    inline const PlayerTemplate& playerTemplate() const;
 
-    inline float
-    maxObjSpan() const;
+    inline float maxObjSpan() const;
 
-    inline float
-    maxCollideBreath() const;
+    inline float maxCollideBreath() const;
 
 private:
     GameLib() = default;
 
-    void
-    load(
-        const std::string& picDir,
-        const std::string& libDir,
-        const std::string& textureLibFile,
-        const std::string& rectLibFile,
-        const std::string& componentTemplateLibFile,
-        const std::string& tileTemplateLibFile,
-        const std::string& missileTemplateLibFile,
-        const std::string& aiRobotTemplateLibFile,
-        const std::string& particleEffectTemplateLibFile,
-        const std::string& playerTemplateFile);
+    void load(const std::string& picDir,
+              const std::string& libDir,
+              const std::string& textureLibFile,
+              const std::string& rectLibFile,
+              const std::string& componentTemplateLibFile,
+              const std::string& tileTemplateLibFile,
+              const std::string& missileTemplateLibFile,
+              const std::string& aiRobotTemplateLibFile,
+              const std::string& particleEffectTemplateLibFile,
+              const std::string& playerTemplateFile);
 
-    void
-    initTextureLib(
-        const std::string& textureLibFile,
-        const std::string& picDir);
+    void initTextureLib(const std::string& textureLibFile,
+                        const std::string& picDir);
 
-    void
-    calculateMaxObjSpan();
+    void initRectLib(const std::string& rectLibFile);
 
-    void
-    calculateMaxCollideBreath();
+    void calculateMaxObjSpan();
+
+    void calculateMaxCollideBreath();
 
 private:
     static std::shared_ptr<GameLib> k_gameLib;
@@ -114,75 +95,61 @@ private:
     float maxCollideBreath_;
 };
 
-const GameLib&
-GameLib::getInstance()
+const GameLib& GameLib::getInstance()
 {
     return *k_gameLib;
 }
 
-const commonlib::Texture*
-GameLib::findTexture(
-    const std::string& name) const
+const commonlib::Texture* GameLib::findTexture(const std::string& name) const
 {
     return textureLib_.search(name);
 }
 
-const Rectangle*
-GameLib::findRect(
-    const std::string& name) const
+const Rectangle* GameLib::findRect(const std::string& name) const
 {
     return rectLib_.search(name);
 }
 
-const ComponentTemplate*
-GameLib::findComponentTemplate(
-    const std::string& name) const
+const ComponentTemplate* GameLib::findComponentTemplate(
+                                        const std::string& name) const
 {
     return componentTemplateLib_.search(name);
 }
 
-const TileTemplate*
-GameLib::findTileTemplate(
-    const std::string& name) const
+const TileTemplate* GameLib::findTileTemplate(const std::string& name) const
 {
     return tileTemplateLib_.search(name);
 }
 
-const MissileTemplate*
-GameLib::findMissileTemplate(
-    const std::string& name) const
+const MissileTemplate* GameLib::findMissileTemplate(
+                                       const std::string& name) const
 {
     return missileTemplateLib_.search(name);
 }
 
-const AIRobotTemplate*
-GameLib::findAIRobotTemplate(
-    const std::string& name) const
+const AIRobotTemplate* GameLib::findAIRobotTemplate(
+                                        const std::string& name) const
 {
     return aiRobotTemplateLib_.search(name);
 }
 
-const ParticleEffectTemplate*
-GameLib::findParticleEffectTemplate(
-    const std::string& name) const
+const ParticleEffectTemplate* GameLib::findParticleEffectTemplate(
+                                        const std::string& name) const
 {
     return particleEffectTemplateLib_.search(name);
 }
 
-const PlayerTemplate&
-GameLib::playerTemplate() const
+const PlayerTemplate& GameLib::playerTemplate() const
 {
     return playerTemplate_;
 }
 
-float
-GameLib::maxObjSpan() const
+float GameLib::maxObjSpan() const
 {
     return maxObjSpan_;
 }
 
-float
-GameLib::maxCollideBreath() const
+float GameLib::maxCollideBreath() const
 {
     return maxCollideBreath_;
 }

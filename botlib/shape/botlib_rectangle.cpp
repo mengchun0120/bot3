@@ -1,5 +1,5 @@
-#include <sstream>
 #include <commonlib_exception.h>
+#include <commonlib_json_param.h>
 #include <botlib_rectangle.h>
 
 using namespace mcdane::commonlib;
@@ -7,31 +7,56 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void validateParamForRect(float width,
-                          float height)
+void validateParamForRect(float width1,
+                          float height1)
 {
-    if (width < 0.0f)
+    if (width1 < 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException, "width is negative");
     }
 
-    if (height < 0.0f)
+    if (height1 < 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException, "height is negative");
     }
 }
 
-Rectangle::Rectangle(float width,
-                     float height)
+Rectangle::Rectangle(float width1,
+                     float height1)
 {
-    load(width, height);
+    load(width1, height1);
 }
 
-Rectangle::Rectangle(float width,
-                     float height,
+Rectangle::Rectangle(float width1,
+                     float height1,
                      const TexRectangle& texRect)
 {
-    load(width, height, texRect);
+    load(width1, height1, texRect);
+}
+
+void Rectangle::init(const rapidjson::Value& v,
+                     bool requireName)
+{
+    float width1, height1;
+    bool hasTexture;
+    std::vector<JsonParamPtr> params{
+        jsonParam(width1, "width", true, gt(0.0f)),
+        jsonParam(height1, "height", true, gt(0.0f)),
+        jsonParam(hasTexture, "hasTexture")
+    };
+
+    parse(params, v);
+
+    if (hasTexture)
+    {
+        load(width1, height1, TexRectangle());
+    }
+    else
+    {
+        load(width1, height1);
+    }
+
+    NamedObject::init(v, requireName);
 }
 
 void Rectangle::load(float width,

@@ -12,17 +12,20 @@ class Rectangle: public Polygon {
 public:
     Rectangle() = default;
 
-    Rectangle(float width,
-              float height);
+    Rectangle(float width1,
+              float height1);
 
-    Rectangle(float width,
-              float height,
+    Rectangle(float width1,
+              float height1,
               const TexRectangle& texRect);
 
     ~Rectangle() override = default;
 
-    void load(float width,
-              float height);
+    void init(const rapidjson::Value& v,
+              bool requireName=false);
+
+    void load(float width1,
+              float height1);
 
     void load(float width,
               float height,
