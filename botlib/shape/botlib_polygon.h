@@ -2,7 +2,6 @@
 #define INCLUDED_BOTLIB_POLYGON_H
 
 #include <botlib_shape.h>
-#include <botlib_tex_pos_array.h>
 
 namespace mcdane {
 namespace botlib {
