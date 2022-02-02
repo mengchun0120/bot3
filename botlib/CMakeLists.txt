@@ -52,7 +52,6 @@ set(BOTLIB_OPENGL_SRC
 set(BOTLIB_PARSER_SRC
     parser/botlib_ai_robot_template_parser.cpp
     parser/botlib_component_parser.cpp
-    parser/botlib_component_template_parser.cpp
     parser/botlib_composite_object_template_parser.cpp
     parser/botlib_game_object_template_parser.cpp
     parser/botlib_missile_template_parser.cpp

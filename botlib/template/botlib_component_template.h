@@ -1,25 +1,27 @@
 #ifndef INCLUDED_BOTLIB_COMPONENT_TEMPLATE_H
 #define INCLUDED_BOTLIB_COMPONENT_TEMPLATE_H
 
-#include <ostream>
-#include <commonlib_texture.h>
-#include <botlib_rectangle.h>
-#include <commonlib_object.h>
+#include <commonlib_named_object.h>
+#include <botlib_typedef.h>
 
 namespace mcdane {
 namespace botlib {
 
-class ComponentTemplate: public commonlib::Object {
+class ComponentTemplate: public commonlib::NamedObject {
 public:
     ComponentTemplate() = default;
 
-    ComponentTemplate(const commonlib::Texture* texture,
-                      const Rectangle* rect);
+    ComponentTemplate(const commonlib::Texture* texture1,
+                      const Rectangle* rect1);
 
     ~ComponentTemplate() = default;
 
-    void init(const commonlib::Texture* texture,
-              const Rectangle* rect);
+    void init(const commonlib::Texture* texture1,
+              const Rectangle* rect1);
+
+    void init(const rapidjson::Value& v,
+              const TextureLib& textureLib,
+              const RectLib& rectLib);
 
     inline const commonlib::Texture* texture() const;
 
@@ -29,6 +31,9 @@ public:
 
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
+
+private:
+    void resetSpan();
 
 private:
     const commonlib::Texture* texture_;

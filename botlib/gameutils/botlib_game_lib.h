@@ -76,6 +76,8 @@ private:
 
     void initRectLib(const std::string& rectLibFile);
 
+    void initComponentTemplateLib(const std::string& componentTemplateLibFile);
+
     void calculateMaxObjSpan();
 
     void calculateMaxCollideBreath();

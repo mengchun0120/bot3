@@ -55,14 +55,7 @@ void GameLib::load(const std::string& picDir,
 {
     initTextureLib(textureLibFile, picDir);
     initRectLib(rectLibFile);
-
-    ComponentTemplateParser componentTemplateParser(textureLib_, rectLib_);
-    componentTemplateLib_.load(componentTemplateLibFile,
-                               componentTemplateParser);
-
-    LOG_DEBUG << "componentTemplateLib Loaded: "
-              << componentTemplateLib_
-              << LOG_END;
+    initComponentTemplateLib(componentTemplateLibFile);
 
     TileTemplateParser tileTemplateParser(componentTemplateLib_);
     tileTemplateLib_.load(tileTemplateLibFile, tileTemplateParser);
@@ -138,6 +131,21 @@ void GameLib::initRectLib(const std::string& rectLibFile)
     rectLib_.init(rectLibFile, parser);
 
     LOG_DEBUG << "rectLib loaded successfully: " << rectLib_ << LOG_END;
+}
+
+void GameLib::initComponentTemplateLib(
+                    const std::string& componentTemplateLibFile)
+{
+    auto parser = [&](ComponentTemplate& t,
+                      const rapidjson::Value& v)
+    {
+        t.init(v, textureLib_, rectLib_);
+    };
+
+    componentTemplateLib_.init(componentTemplateLibFile, parser);
+
+    LOG_DEBUG << "componentTemplateLib loaded successfully: "
+              << componentTemplateLib_ << LOG_END;
 }
 
 void GameLib::calculateMaxObjSpan()
