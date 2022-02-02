@@ -78,6 +78,8 @@ private:
 
     void initComponentTemplateLib(const std::string& componentTemplateLibFile);
 
+    void initTileTemplateLib(const std::string& tileTemplateLibFile);
+
     void calculateMaxObjSpan();
 
     void calculateMaxCollideBreath();

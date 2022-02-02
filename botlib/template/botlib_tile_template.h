@@ -22,6 +22,9 @@ public:
               bool invincible,
               std::vector<Component>&& components);
 
+    void init(const rapidjson::Value& v,
+              const ComponentTemplateLib& componentTemplateLib);
+
     inline float hp() const;
 
     rapidjson::Value toJson(

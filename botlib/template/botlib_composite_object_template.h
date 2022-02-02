@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <botlib_component.h>
+#include <botlib_typedef.h>
 #include <botlib_game_object_template.h>
 
 namespace mcdane {
@@ -24,6 +25,10 @@ public:
               bool invincible,
               std::vector<Component>&& components);
 
+    void init(GameObjectType t,
+              const rapidjson::Value& v,
+              const ComponentTemplateLib& componentTemplateLib);
+
     inline unsigned int numComponents() const;
 
     inline const Component& component(unsigned int i) const;
@@ -34,6 +39,10 @@ public:
                 rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
+    void initComponents(
+                const rapidjson::Value& v,
+                const ComponentTemplateLib& componentTemplateLib);
+
     void resetSpan();
 
 private:

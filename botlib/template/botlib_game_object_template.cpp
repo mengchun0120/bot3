@@ -42,20 +42,22 @@ void GameObjectTemplate::init(GameObjectType t,
 }
 
 void GameObjectTemplate::init(GameObjectType t,
-                              float span,
                               const rapidjson::Value& v)
 {
-    float collideBreath1;
-    bool invincible1 = false;
+    if (!isValidGameObjectType(t))
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Invalid type " + std::to_string(static_cast<int>(t)));
+    }
+
+    type_ = t;
 
     std::vector<JsonParamPtr> params{
-        jsonParam(collideBreath1, "collideBreath", true, ge(0.0f)),
-        jsonParam(invincible1, "invincible", false)
+        jsonParam(collideBreath_, "collideBreath", true, ge(0.0f)),
+        jsonParam(invincible_, "invincible", false)
     };
 
     parse(params, v);
-
-    init(t, span, collideBreath1, invincible1);
 
     NamedObject::init(v, true);
 }

@@ -1,6 +1,5 @@
 #include <utility>
-#include <sstream>
-#include <commonlib_exception.h>
+#include <commonlib_json_param.h>
 #include <botlib_tile_template.h>
 
 using namespace mcdane::commonlib;
@@ -30,6 +29,18 @@ void TileTemplate::init(float collideBreath,
                                   invincible,
                                   std::forward<std::vector<Component>>(components));
     hp_ = hp;
+}
+
+void TileTemplate::init(
+    const rapidjson::Value& v,
+    const ComponentTemplateLib& componentTemplateLib)
+{
+    std::vector<JsonParamPtr> params{
+        jsonParam(hp_, "hp", true, gt(0.0f))
+    };
+
+    parse(params, v);
+    CompositeObjectTemplate::init(GameObjectType::TILE, v, componentTemplateLib);
 }
 
 rapidjson::Value TileTemplate::toJson(

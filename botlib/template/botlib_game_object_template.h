@@ -24,7 +24,6 @@ public:
               bool invincible=false);
 
     void init(GameObjectType t,
-              float span,
               const rapidjson::Value& v);
 
     inline GameObjectType type() const;
