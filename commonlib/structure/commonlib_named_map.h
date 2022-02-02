@@ -12,8 +12,7 @@ namespace mcdane {
 namespace commonlib {
 
 template <typename T>
-using NamedMapParser =
-std::function<void(T&, const rapidjson::Value&)>;
+using NamedMapParser = std::function<void(T&, const rapidjson::Value&)>;
 
 template <typename T>
 class NamedMap: public Object {
@@ -27,35 +26,23 @@ public:
     virtual ~NamedMap() = default;
 
     template <typename PARSER>
-    void
-    load(
-        const std::string& fileName,
-        PARSER& parser);
+    void load(const std::string& fileName,
+              PARSER& parser);
 
-    void
-    init(
-        const std::string& fileName,
-        NamedMapParser<T> parser);
+    void init(const std::string& fileName,
+              NamedMapParser<T> parser);
 
-    const T*
-    search(
-        const std::string& name) const;
+    const T* search(const std::string& name) const;
 
-    void
-    traverse(
-        NodeAccessor accessor);
+    void traverse(NodeAccessor accessor);
 
-    rapidjson::Value
-    toJson(
+    rapidjson::Value toJson(
         rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
-    void
-    add(const std::string& name,
-        T* t);
+    void add(const std::string& name, T* t);
 
-    T&
-    add(const std::string& name);
+    T& add(const std::string& name);
 
 private:
     Map map_;
@@ -63,29 +50,21 @@ private:
 
 template <typename T>
 template <typename PARSER>
-void
-NamedMap<T>::load(
-    const std::string& fileName,
-    PARSER& parser)
+void NamedMap<T>::load(const std::string& fileName,
+                       PARSER& parser)
 {
     rapidjson::Document doc;
     readJson(doc, fileName);
 
     if (!doc.IsArray())
     {
-        THROW_EXCEPT(
-            ParseException,
-            "Invalid json file: " + fileName);
+        THROW_EXCEPT(ParseException, "Invalid json file: " + fileName);
     }
 
     std::string name;
 
     std::vector<JsonParamPtr> params{
-        jsonParam(
-            name,
-            {"name"},
-            true,
-            k_nonEmptyStrV)
+        jsonParam(name, {"name"}, true, k_nonEmptyStrV)
     };
 
     const rapidjson::Value& arr = doc.GetArray();
@@ -100,29 +79,21 @@ NamedMap<T>::load(
 }
 
 template <typename T>
-void
-NamedMap<T>::init(
-    const std::string& fileName,
-    NamedMapParser<T> parser)
+void NamedMap<T>::init(const std::string& fileName,
+                       NamedMapParser<T> parser)
 {
     rapidjson::Document doc;
     readJson(doc, fileName);
 
     if (!doc.IsArray())
     {
-        THROW_EXCEPT(
-            ParseException,
-            "Invalid json file: " + fileName);
+        THROW_EXCEPT(ParseException, "Invalid json file: " + fileName);
     }
 
     std::string name;
 
     std::vector<JsonParamPtr> params{
-        jsonParam(
-            name,
-            {"name"},
-            true,
-            k_nonEmptyStrV)
+        jsonParam(name, {"name"}, true, k_nonEmptyStrV)
     };
 
     const rapidjson::Value& arr = doc.GetArray();
@@ -137,9 +108,7 @@ NamedMap<T>::init(
 }
 
 template <typename T>
-const T*
-NamedMap<T>::search(
-    const std::string& name) const
+const T* NamedMap<T>::search(const std::string& name) const
 {
     auto it = map_.find(name);
     if (it == map_.end())
@@ -151,9 +120,7 @@ NamedMap<T>::search(
 }
 
 template <typename T>
-void
-NamedMap<T>::traverse(
-    NodeAccessor accessor)
+void NamedMap<T>::traverse(NodeAccessor accessor)
 {
     for (auto it = map_.cbegin(); it != map_.cend(); ++it)
     {
@@ -165,18 +132,14 @@ NamedMap<T>::traverse(
 }
 
 template <typename T>
-rapidjson::Value
-NamedMap<T>::toJson(
+rapidjson::Value NamedMap<T>::toJson(
     rapidjson::Document::AllocatorType& allocator) const
 {
     using namespace rapidjson;
 
     Value v(kObjectType);
 
-    v.AddMember(
-        "class",
-        "NamedMap",
-        allocator);
+    v.AddMember("class", "NamedMap", allocator);
 
     Value objs(kArrayType);
 
@@ -184,53 +147,37 @@ NamedMap<T>::toJson(
     {
         Value item(kObjectType);
 
-        item.AddMember(
-            "name",
-            jsonVal(it->first, allocator),
-            allocator);
-
-        item.AddMember(
-            "value",
-            jsonVal(it->second, allocator),
-            allocator);
+        item.AddMember("name", jsonVal(it->first, allocator), allocator);
+        item.AddMember("value", jsonVal(it->second, allocator), allocator);
 
         objs.PushBack(item, allocator);
     }
 
-    v.AddMember(
-        "objects",
-        objs,
-        allocator);
+    v.AddMember("objects", objs, allocator);
 
     return v;
 }
+
 template <typename T>
-void
-NamedMap<T>::add(
-    const std::string& name,
-    T* t)
+void NamedMap<T>::add(const std::string& name,
+                      T* t)
 {
     auto it = map_.find(name);
     if (it != map_.end())
     {
-        THROW_EXCEPT(
-            ParseException,
-            "Duplicate name " + name);
+        THROW_EXCEPT(ParseException, "Duplicate name " + name);
     }
 
     map_[name] = *t;
 }
 
 template <typename T>
-T&
-NamedMap<T>::add(const std::string& name)
+T& NamedMap<T>::add(const std::string& name)
 {
     auto it = map_.find(name);
     if (it != map_.end())
     {
-        THROW_EXCEPT(
-            ParseException,
-            "Duplicate name " + name);
+        THROW_EXCEPT(ParseException, "Duplicate name " + name);
     }
 
     return map_[name];

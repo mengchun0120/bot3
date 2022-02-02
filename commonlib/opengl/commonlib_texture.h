@@ -16,44 +16,45 @@ public:
 
     void init(const std::string& imageFile);
 
-    void
-    init(
-        const rapidjson::Value& v,
-        const std::string& picDir,
-        bool requireName = true);
+    void init(const rapidjson::Value& v,
+              const std::string& picDir,
+              bool requireName = true);
 
-    bool
-    valid() const
-    {
-        return id_ != 0;
-    }
+    inline bool valid() const;
 
-    GLuint
-    id() const
-    {
-        return id_;
-    }
+    inline GLuint id() const;
 
-    int
-    width() const
-    {
-        return width_;
-    }
+    inline int width() const;
 
-    int
-    height() const
-    {
-        return height_;
-    }
+    inline int height() const;
 
-    rapidjson::Value
-    toJson(
+    rapidjson::Value toJson(
         rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     GLuint id_;
     int width_, height_;
 };
+
+bool Texture::valid() const
+{
+    return id_ != 0;
+}
+
+GLuint Texture::id() const
+{
+    return id_;
+}
+
+int Texture::width() const
+{
+    return width_;
+}
+
+int Texture::height() const
+{
+    return height_;
+}
 
 } // end of namespace commonlib
 } // end of namespace mcdane

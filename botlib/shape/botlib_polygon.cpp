@@ -1,4 +1,3 @@
-#include <sstream>
 #include <commonlib_exception.h>
 #include <commonlib_algorithm.h>
 #include <botlib_simple_shader_program.h>
