@@ -57,14 +57,7 @@ void GameLib::load(const std::string& picDir,
     initRectLib(rectLibFile);
     initComponentTemplateLib(componentTemplateLibFile);
     initTileTemplateLib(tileTemplateLibFile);
-
-    ParticleEffectTemplateParser particleEffectTemplateParser(libDir, textureLib_);
-    particleEffectTemplateLib_.load(particleEffectTemplateLibFile,
-                                    particleEffectTemplateParser);
-
-    LOG_DEBUG << "particleEffectTemplateLib Loaded: "
-              << particleEffectTemplateLib_
-              << LOG_END;
+    initParticleEffectTemplateLib(particleEffectTemplateLibFile, libDir);
 
     MissileTemplateParser missileTemplateParser(componentTemplateLib_,
                                                 particleEffectTemplateLib_);
@@ -154,6 +147,22 @@ void GameLib::initTileTemplateLib(const std::string& tileTemplateLibFile)
 
     LOG_DEBUG << "tileTemplateLib loaded successfully: "
               << tileTemplateLib_ << LOG_END;
+}
+
+void GameLib::initParticleEffectTemplateLib(
+    const std::string& particleEffectTemplateLibFile,
+    const std::string& libDir)
+{
+    auto parser = [&](ParticleEffectTemplate& t,
+                      const rapidjson::Value& v)
+    {
+        t.init(v, textureLib_, libDir);
+    };
+
+    particleEffectTemplateLib_.init(particleEffectTemplateLibFile, parser);
+
+    LOG_DEBUG << "particleEffectTemplateLib loaded successfully: "
+              << particleEffectTemplateLib_ << LOG_END;
 }
 
 void GameLib::calculateMaxObjSpan()

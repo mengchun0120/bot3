@@ -80,6 +80,10 @@ private:
 
     void initTileTemplateLib(const std::string& tileTemplateLibFile);
 
+    void initParticleEffectTemplateLib(
+        const std::string& particleEffectTemplateLibFile,
+        const std::string& libDir);
+
     void calculateMaxObjSpan();
 
     void calculateMaxCollideBreath();

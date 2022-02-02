@@ -2,9 +2,9 @@
 #define INCLUDED_BOTLIB_PARTICLE_EFFECT_TEMPLATE_H
 
 #include <commonlib_vertex_array.h>
-#include <commonlib_texture.h>
 #include <commonlib_color.h>
 #include <commonlib_vector.h>
+#include <botlib_typedef.h>
 #include <botlib_game_object_template.h>
 
 namespace mcdane {
@@ -25,6 +25,10 @@ public:
 
     ~ParticleEffectTemplate() override = default;
 
+    void init(const rapidjson::Value& v,
+              const TextureLib& textureLib,
+              const std::string& libDir);
+
     inline int numParticles() const;
 
     inline float acceleration() const;
@@ -43,21 +47,25 @@ public:
                 rapidjson::Document::AllocatorType& allocator) const override;
 
 protected:
+    void loadVertexData(std::vector<commonlib::Vector2>& startPos,
+                        std::vector<commonlib::Vector2>& direction,
+                        std::vector<float>& initSpeed,
+                        const std::string& startPosFile,
+                        const std::string& directionFile,
+                        const std::string& initSpeedFile,
+                        const std::string& libDir);
+
+
+
     void loadVertexArray(const std::vector<commonlib::Vector2>& startPos,
                          const std::vector<commonlib::Vector2>& direction,
                          const std::vector<float>& initSpeed);
 
-    void resetSpan(float duration1,
-                   float acceleration1,
-                   float particleSize1,
-                   const std::vector<commonlib::Vector2>& startPos,
+    void resetSpan(const std::vector<commonlib::Vector2>& startPos,
                    const std::vector<commonlib::Vector2>& direction,
                    const std::vector<float>& initSpeed);
 
-    float calculateSpan(float duration1,
-                        float acceleration1,
-                        float particleSize1,
-                        const commonlib::Vector2& startPos,
+    float calculateSpan(const commonlib::Vector2& startPos,
                         const commonlib::Vector2& direction,
                         float initSpeed);
 
