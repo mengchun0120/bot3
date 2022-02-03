@@ -49,16 +49,6 @@ set(BOTLIB_OPENGL_SRC
     opengl/botlib_text_size.cpp
     opengl/botlib_text_system.cpp)
 
-set(BOTLIB_PARSER_SRC
-    parser/botlib_ai_robot_template_parser.cpp
-    parser/botlib_component_parser.cpp
-    parser/botlib_composite_object_template_parser.cpp
-    parser/botlib_game_object_template_parser.cpp
-    parser/botlib_missile_template_parser.cpp
-    parser/botlib_particle_effect_template_parser.cpp
-    parser/botlib_player_template_parser.cpp
-    parser/botlib_robot_template_parser.cpp)
-
 set(BOTLIB_SCREEN_SRC
     screen/botlib_game_screen.cpp
     screen/botlib_screen.cpp
@@ -99,7 +89,6 @@ set(BOTLIB_SRC
     ${BOTLIB_GAMEUTILS_SRC}
     ${BOTLIB_MISC_SRC}
     ${BOTLIB_OPENGL_SRC}
-    ${BOTLIB_PARSER_SRC}
     ${BOTLIB_SCREEN_SRC}
     ${BOTLIB_SHAPE_SRC}
     ${BOTLIB_TEMPLATE_SRC}

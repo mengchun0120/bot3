@@ -58,6 +58,13 @@ void AIRobotTemplate::init(float hp1,
 
 }
 
+void AIRobotTemplate::init(const rapidjson::Value& v,
+                           const MissileTemplateLib& missileTemplateLib,
+                           const ComponentTemplateLib& componentTemplateLib)
+{
+    RobotTemplate::init(v, missileTemplateLib, componentTemplateLib);
+}
+
 rapidjson::Value AIRobotTemplate::toJson(
                 rapidjson::Document::AllocatorType& allocator) const
 {

@@ -1,5 +1,5 @@
-#include <sstream>
 #include <commonlib_log.h>
+#include <commonlib_json_utils.h>
 #include <botlib_player_template.h>
 
 using namespace mcdane::commonlib;
@@ -44,8 +44,6 @@ void PlayerTemplate::init(float hp1,
                           std::vector<Vector2>&& firePoints,
                           std::vector<Vector2>&& fireDirections)
 {
-    LOG_DEBUG << "numComponents=" << components.size() << LOG_END;
-
     RobotTemplate::init(hp1,
                         armor1,
                         speed1,
@@ -58,6 +56,18 @@ void PlayerTemplate::init(float hp1,
                         std::forward<std::vector<Vector2>>(firePoints),
                         std::forward<std::vector<Vector2>>(fireDirections));
 
+}
+
+void PlayerTemplate::init(const std::string& playerTemplateFile,
+                          const MissileTemplateLib& missileTemplateLib,
+                          const ComponentTemplateLib& componentTemplateLib)
+{
+    rapidjson::Document doc;
+    readJson(doc, playerTemplateFile);
+
+    RobotTemplate::init(doc, missileTemplateLib, componentTemplateLib);
+
+    LOG_DEBUG << "PlayerTemplate loaded successfully " << *this << LOG_END;
 }
 
 rapidjson::Value PlayerTemplate::toJson(

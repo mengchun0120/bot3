@@ -1,11 +1,12 @@
 #ifndef INCLUDED_BOTLIB_ROBOT_TEMPLATE_H
 #define INCLUDED_BOTLIB_ROBOT_TEMPLATE_H
 
-#include <botlib_missile_template.h>
 #include <botlib_composite_object_template.h>
 
 namespace mcdane {
 namespace botlib {
+
+class MissileTemplate;
 
 class RobotTemplate: public CompositeObjectTemplate {
 public:
@@ -36,6 +37,10 @@ public:
               std::vector<Component>&& components,
               std::vector<commonlib::Vector2>&& firePoints1,
               std::vector<commonlib::Vector2>&& fireDirections1);
+
+    void init(const rapidjson::Value& v,
+              const MissileTemplateLib& missileTemplateLib,
+              const ComponentTemplateLib& componentTemplateLib);
 
     inline float hp() const;
 

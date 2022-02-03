@@ -9,7 +9,6 @@ set(BOTLIB_DIR
     ${CMAKE_SOURCE_DIR}/botlib/gameutils
     ${CMAKE_SOURCE_DIR}/botlib/misc
     ${CMAKE_SOURCE_DIR}/botlib/opengl
-    ${CMAKE_SOURCE_DIR}/botlib/parser
     ${CMAKE_SOURCE_DIR}/botlib/screen
     ${CMAKE_SOURCE_DIR}/botlib/shape
     ${CMAKE_SOURCE_DIR}/botlib/template

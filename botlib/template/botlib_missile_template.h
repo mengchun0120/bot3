@@ -21,6 +21,10 @@ public:
 
     ~MissileTemplate() override = default;
 
+    void init(const rapidjson::Value& v,
+              const ParticleEffectTemplateLib& particleEffectTemplateLib,
+              const ComponentTemplateLib& componentTemplateLib);
+
     inline float damage() const;
 
     inline float speed() const;

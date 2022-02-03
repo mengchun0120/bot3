@@ -84,6 +84,10 @@ private:
         const std::string& particleEffectTemplateLibFile,
         const std::string& libDir);
 
+    void initMissileTemplateLib(const std::string& missileTemplateLibFile);
+
+    void initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile);
+
     void calculateMaxObjSpan();
 
     void calculateMaxCollideBreath();

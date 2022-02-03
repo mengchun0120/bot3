@@ -34,6 +34,10 @@ public:
               std::vector<commonlib::Vector2>&& firePoints,
               std::vector<commonlib::Vector2>&& fireDirections);
 
+    void init(const std::string& playerTemplateFile,
+              const MissileTemplateLib& missileTemplateLib,
+              const ComponentTemplateLib& componentTemplateLib);
+
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 };

@@ -1,11 +1,4 @@
 #include <commonlib_log.h>
-#include <botlib_ai_robot_template_parser.h>
-#include <botlib_component_template_parser.h>
-#include <botlib_missile_template_parser.h>
-#include <botlib_robot_template_parser.h>
-#include <botlib_tile_template_parser.h>
-#include <botlib_particle_effect_template_parser.h>
-#include <botlib_player_template_parser.h>
 #include <botlib_game_lib.h>
 
 using namespace mcdane::commonlib;
@@ -58,30 +51,10 @@ void GameLib::load(const std::string& picDir,
     initComponentTemplateLib(componentTemplateLibFile);
     initTileTemplateLib(tileTemplateLibFile);
     initParticleEffectTemplateLib(particleEffectTemplateLibFile, libDir);
-
-    MissileTemplateParser missileTemplateParser(componentTemplateLib_,
-                                                particleEffectTemplateLib_);
-    missileTemplateLib_.load(missileTemplateLibFile, missileTemplateParser);
-
-    LOG_DEBUG << "missileTemplateLib Loaded: "
-              << missileTemplateLib_
-              << LOG_END;
-
-    AIRobotTemplateParser aiRobotTemplateParser(missileTemplateLib_,
-                                                componentTemplateLib_);
-    aiRobotTemplateLib_.load(aiRobotTemplateLibFile, aiRobotTemplateParser);
-
-    LOG_DEBUG << "aiRobotTemplateLib Loaded: "
-              << aiRobotTemplateLib_
-              << LOG_END;
-
-    PlayerTemplateParser playerTemplateParser(missileTemplateLib_,
-                                              componentTemplateLib_);
-    playerTemplateParser.load(playerTemplate_, playerTemplateFile);
-
-    LOG_DEBUG << "playerTemplate Loaded: "
-              << playerTemplate_
-              << LOG_END;
+    initMissileTemplateLib(missileTemplateLibFile);
+    initAIRobotTemplateLib(aiRobotTemplateLibFile);
+    playerTemplate_.init(playerTemplateFile, missileTemplateLib_,
+                         componentTemplateLib_);
 
     calculateMaxObjSpan();
     calculateMaxCollideBreath();
@@ -163,6 +136,34 @@ void GameLib::initParticleEffectTemplateLib(
 
     LOG_DEBUG << "particleEffectTemplateLib loaded successfully: "
               << particleEffectTemplateLib_ << LOG_END;
+}
+
+void GameLib::initMissileTemplateLib(const std::string& missileTemplateLibFile)
+{
+    auto parser = [&](MissileTemplate& t,
+                      const rapidjson::Value& v)
+    {
+        t.init(v, particleEffectTemplateLib_, componentTemplateLib_);
+    };
+
+    missileTemplateLib_.init(missileTemplateLibFile, parser);
+
+    LOG_DEBUG << "missileTemplateLib loaded successfully: "
+              << missileTemplateLib_ << LOG_END;
+}
+
+void GameLib::initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile)
+{
+    auto parser = [&](AIRobotTemplate& t,
+                      const rapidjson::Value& v)
+    {
+        t.init(v, missileTemplateLib_, componentTemplateLib_);
+    };
+
+    aiRobotTemplateLib_.init(aiRobotTemplateLibFile, parser);
+
+    LOG_DEBUG << "aiRobotTemplateLib loaded successfully: "
+              << aiRobotTemplateLib_ << LOG_END;
 }
 
 void GameLib::calculateMaxObjSpan()
