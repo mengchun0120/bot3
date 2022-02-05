@@ -72,15 +72,15 @@ protected:
 
     void resetSpeed();
 
-    void updatePos(GameMap& map,
-                   float timeDelta);
+    virtual void updatePos(GameMap& map,
+                           float timeDelta);
 
     bool checkNonpassthroughCollide(commonlib::Vector2& delta,
                                     GameMap& map);
 
     void checkCollideMissile(GameMap& map);
 
-    void updateShooting(GameMap& map);
+    virtual void updateShooting(GameMap& map);
 
     void shoot(GameMap& map,
                const commonlib::TimePoint& t);

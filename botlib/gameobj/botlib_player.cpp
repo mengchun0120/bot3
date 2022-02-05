@@ -1,5 +1,5 @@
-#include <sstream>
 #include <commonlib_log.h>
+#include <commonlib_math_utils.h>
 #include <botlib_player.h>
 
 using namespace mcdane::commonlib;
@@ -8,8 +8,8 @@ namespace mcdane {
 namespace botlib {
 
 void Player::init(const PlayerTemplate* t,
-                  const commonlib::Vector2 pos1,
-                  const commonlib::Vector2 direction1)
+                  const commonlib::Vector2& pos1,
+                  const commonlib::Vector2& direction1)
 {
     Robot::init(t, Side::PLAYER, pos1, direction1);
 }
@@ -25,6 +25,30 @@ rapidjson::Value Player::toJson(
     v.AddMember("base", Robot::toJson(allocator), allocator);
 
     return v;
+}
+
+void Player::setDest(const commonlib::Vector2 dest1)
+{
+    dest_ = dest1;
+    direction_ = dest_ - pos_;
+    direction_.normalize();
+}
+
+void Player::updatePos(GameMap& map,
+                       float delta)
+{
+    if (!movingEnabled_)
+    {
+        return;
+    }
+
+    if (fuzzyEqual(pos_, dest_))
+    {
+        setMovingEnabled(false);
+        return;
+    }
+
+    Robot::updatePos(map, delta);
 }
 
 } // end of namespace botlib
