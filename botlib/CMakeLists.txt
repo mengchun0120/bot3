@@ -51,10 +51,13 @@ set(BOTLIB_OPENGL_SRC
 
 set(BOTLIB_SCREEN_SRC
     screen/botlib_game_screen.cpp
+    screen/botlib_game_screen_config.cpp
     screen/botlib_screen.cpp
     screen/botlib_screen_manager.cpp
+    screen/botlib_screen_settings.cpp
     screen/botlib_screen_type.cpp
-    screen/botlib_start_screen.cpp)
+    screen/botlib_start_screen.cpp
+    screen/botlib_start_screen_config.cpp)
 
 set(BOTLIB_SHAPE_SRC
     shape/botlib_polygon.cpp
