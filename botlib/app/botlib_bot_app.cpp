@@ -11,22 +11,12 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-std::shared_ptr<BotApp> BotApp::k_botApp;
-
-void BotApp::initInstance(const std::string& configFile,
-                          const std::string& appDir)
-{
-    if (!k_botApp)
-    {
-        k_botApp.reset(new BotApp(configFile, appDir));
-    }
-}
-
 BotApp::BotApp(const std::string& configFile,
-               const std::string& appDir)
+               const std::string& appDir,
+               const std::string& mapFile)
     : App()
 {
-    init(configFile, appDir);
+    init(configFile, appDir, mapFile);
 }
 
 BotApp::~BotApp()
@@ -57,7 +47,8 @@ void BotApp::postProcess()
 
 
 void BotApp::init(const std::string& configFile,
-                  const std::string& appDir)
+                  const std::string& appDir,
+                  const std::string& mapFile)
 {
     AppConfig::initInstance(configFile, appDir);
     const AppConfig& cfg = AppConfig::getInstance();
@@ -67,7 +58,7 @@ void BotApp::init(const std::string& configFile,
     setupOpenGL(cfg);
     setupWidget(cfg);
     setupActions();
-    setupScreen(cfg);
+    setupScreen(cfg.startScreenConfigFile(), mapFile);
     setupInput(cfg);
 }
 
@@ -99,11 +90,14 @@ void BotApp::setupActions()
 }
 
 
-void BotApp::setupScreen(const AppConfig& cfg)
+void BotApp::setupScreen(const std::string& startScreenCfgFile,
+                         const std::string& mapFile)
 {
-    StartScreen::initConfig(cfg.startScreenConfigFile());
-
-    screenManager_.init(ScreenType::START, viewportSize(), actions_);
+    screenManager_.init(ScreenType::START,
+                        viewportSize(),
+                        actions_,
+                        startScreenCfgFile,
+                        mapFile);
 }
 
 void BotApp::setupInput(const AppConfig& cfg)

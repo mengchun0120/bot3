@@ -54,7 +54,6 @@ set(BOTLIB_SCREEN_SRC
     screen/botlib_game_screen_config.cpp
     screen/botlib_screen.cpp
     screen/botlib_screen_manager.cpp
-    screen/botlib_screen_settings.cpp
     screen/botlib_screen_type.cpp
     screen/botlib_start_screen.cpp
     screen/botlib_start_screen_config.cpp)

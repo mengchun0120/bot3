@@ -11,6 +11,7 @@ using namespace mcdane::botlib;
 
 struct Arguments {
     std::string configFile_;
+    std::string mapFile_;
     std::string logLevelStr_;
     std::string logFile_;
     std::string appDir_;
@@ -22,6 +23,8 @@ void parseArguments(Arguments& args, int argc, char* argv[])
     parser.init({
         Argument::create(args.configFile_, "configFile", "c", "config",
                          "Config file", false, k_nonEmptyStrV),
+        Argument::create(args.mapFile_, "mapFile", "m", "mapFile",
+                         "Map file", true, k_nonEmptyStrV),
         Argument::create(args.logFile_, "logFile", "l", "log",
                          "Log file", false, k_nonEmptyStrV),
         Argument::create(args.logLevelStr_, "logLevel", "v", "logLevel",
@@ -75,8 +78,8 @@ int main(int argc, char* argv[])
 
     try
     {
-        BotApp::initInstance(args.configFile_, args.appDir_);
-        BotApp::getInstance().run();
+        BotApp app(args.configFile_, args.appDir_, args.mapFile_);
+        app.run();
     }
     catch (const std::exception& e)
     {

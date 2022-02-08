@@ -1,19 +1,20 @@
 #ifndef INCLUDED_BOTLIB_START_SCREEN_H
 #define INCLUDED_BOTLIB_START_SCREEN_H
 
-#include <string>
+#include <commonlib_vector.h>
 #include <botlib_widget_group.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
 namespace botlib {
 
+class StartScreenConfig;
+
 class StartScreen: public Screen {
 public:
-    static void initConfig(const std::string& configFile);
-
     StartScreen(const commonlib::Vector2& viewportSize,
-                const AppActions& actions);
+                const AppActions& actions,
+                const StartScreenConfig* cfg);
 
     ~StartScreen() override;
 
@@ -43,10 +44,7 @@ private:
 #endif
 
 private:
-    static float k_buttonWidth;
-    static float k_buttonHeight;
-    static float k_buttonSpacing;
-
+    const StartScreenConfig* cfg_;
     WidgetGroup widgets_;
 };
 

@@ -2,6 +2,8 @@
 #define INCLUDED_BOTLIB_SCREEN_MANAGER_H
 
 #include <commonlib_vector.h>
+#include <botlib_start_screen_config.h>
+#include <botlib_game_screen_config.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -15,7 +17,9 @@ public:
 
     void init(ScreenType startScreenType,
               const commonlib::Vector2& viewportSize,
-              const AppActions& actions);
+              const AppActions& actions,
+              const std::string& startScreenCfgFile,
+              const std::string& mapFile);
 
     void update();
 
@@ -33,11 +37,16 @@ public:
     }
 
 private:
+    Screen* createScreen(ScreenType screenType);
+
+private:
     Screen* prevScreen_;
     Screen* curScreen_;
     ScreenType curScreenType_;
     commonlib::Vector2 viewportSize_;
     AppActions actions_;
+    StartScreenConfig startScreenConfig_;
+    GameScreenConfig gameScreenConfig_;
 };
 
 } // end of namespace botlib

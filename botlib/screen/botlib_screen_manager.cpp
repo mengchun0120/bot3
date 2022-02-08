@@ -1,4 +1,6 @@
 #include <commonlib_exception.h>
+#include <botlib_start_screen.h>
+#include <botlib_game_screen.h>
 #include <botlib_screen_manager.h>
 
 using namespace mcdane::commonlib;
@@ -21,13 +23,17 @@ ScreenManager::~ScreenManager()
 
 void ScreenManager::init(ScreenType startScreenType,
                          const commonlib::Vector2& viewportSize,
-                         const AppActions& actions)
+                         const AppActions& actions,
+                         const std::string& startScreenCfgFile,
+                         const std::string& mapFile)
 {
-    prevScreen_ = nullptr;
-    curScreen_ = Screen::create(startScreenType, viewportSize, actions);
     curScreenType_ = startScreenType;
     viewportSize_ = viewportSize;
     actions_ = actions;
+    prevScreen_ = nullptr;
+    curScreen_ = createScreen(startScreenType);
+    startScreenConfig_.init(startScreenCfgFile);
+    gameScreenConfig_.init(mapFile);
 }
 
 void ScreenManager::update()
@@ -69,7 +75,7 @@ void ScreenManager::switchScreen(ScreenType type)
     }
 
     prevScreen_ = curScreen_;
-    curScreen_ = Screen::create(type, viewportSize_, actions_);
+    curScreen_ = createScreen(type);
     curScreenType_ = type;
 }
 
@@ -80,6 +86,28 @@ void ScreenManager::postProcess()
         delete prevScreen_;
         prevScreen_ = nullptr;
     }
+}
+
+Screen* ScreenManager::createScreen(ScreenType screenType)
+{
+    Screen* screen = nullptr;
+    switch(screenType)
+    {
+        case ScreenType::START:
+            screen = new StartScreen(viewportSize_, actions_, &startScreenConfig_);
+            break;
+        case ScreenType::GAME:
+            screen = new GameScreen(viewportSize_, actions_, &gameScreenConfig_);
+            break;
+        case ScreenType::SHOW_MAP:
+            break;
+        default:
+            THROW_EXCEPT(commonlib::MyException, "Invalid screen type");
+            break;
+    }
+
+    return screen;
+
 }
 
 } // end of namespace botlib

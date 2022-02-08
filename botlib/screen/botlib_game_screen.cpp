@@ -9,8 +9,10 @@ namespace mcdane {
 namespace botlib {
 
 GameScreen::GameScreen(const Vector2& viewportSize,
-                       const AppActions actions)
+                       const AppActions actions,
+                       const GameScreenConfig* cfg)
     : Screen(actions)
+    , cfg_(cfg)
 {
     if (viewportSize[0] <= 0.0f || viewportSize[1] <= 0.0f)
     {
@@ -31,7 +33,7 @@ void GameScreen::present()
 {
 }
 
-bool GameScreen::processInput(const commonlib::InputEvent &e)
+bool GameScreen::processInput(const InputEvent &e)
 {
     switch (e.type())
     {

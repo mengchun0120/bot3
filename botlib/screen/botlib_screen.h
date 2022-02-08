@@ -1,7 +1,6 @@
 #ifndef INCLUDED_BOTLIB_SCREEN_H
 #define INCLUDED_BOTLIB_SCREEN_H
 
-#include <commonlib_vector.h>
 #include <commonlib_input_event.h>
 #include <botlib_app_actions.h>
 
@@ -10,10 +9,6 @@ namespace botlib {
 
 class Screen {
 public:
-    static Screen* create(ScreenType type,
-                          const commonlib::Vector2& viewportSize,
-                          const AppActions& actions);
-
     Screen(const AppActions& actions);
 
     virtual ~Screen() = default;

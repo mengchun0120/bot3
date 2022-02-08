@@ -11,13 +11,9 @@ namespace botlib {
 
 class BotApp: public commonlib::App {
 public:
-    static void initInstance(const std::string& configFile,
-                             const std::string& appDir);
-
-    static BotApp& getInstance()
-    {
-        return *k_botApp;
-    }
+    BotApp(const std::string& configFile,
+           const std::string& appDir,
+           const std::string& mapFile);
 
     ~BotApp() override;
 
@@ -33,13 +29,9 @@ public:
     }
 
 private:
-    static std::shared_ptr<BotApp> k_botApp;
-
-    BotApp(const std::string& configFile,
-           const std::string& appDir);
-
     void init(const std::string& configFile,
-              const std::string& appDir);
+              const std::string& appDir,
+              const std::string& mapFile);
 
 #ifdef DESKTOP_APP
     void initWindow();
@@ -51,7 +43,8 @@ private:
 
     void setupActions();
 
-    void setupScreen(const AppConfig& cfg);
+    void setupScreen(const std::string& startScreenCfgFile,
+                     const std::string& mapFile);
 
     void setupInput(const AppConfig& cfg);
 

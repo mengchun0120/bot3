@@ -1,41 +1,21 @@
-#include <iostream>
 #include <functional>
 #include <commonlib_log.h>
-#include <commonlib_json_utils.h>
-#include <commonlib_json_param.h>
+#include <commonlib_string_utils.h>
 #include <botlib_button.h>
 #include <botlib_graphics.h>
+#include <botlib_start_screen_config.h>
 #include <botlib_start_screen.h>
-#include <botlib_screen_manager.h>
 
 using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
 
-float StartScreen::k_buttonWidth;
-float StartScreen::k_buttonHeight;
-float StartScreen::k_buttonSpacing;
-
-void StartScreen::initConfig(const std::string& configFile)
-{
-    rapidjson::Document doc;
-    readJson(doc, configFile);
-
-    std::vector<JsonParamPtr> params{
-        jsonParam(k_buttonWidth, {"buttonWidth"}, true, gt(0.0f)),
-        jsonParam(k_buttonHeight, {"buttonHeight"}, true, gt(0.0f)),
-        jsonParam(k_buttonSpacing, {"buttonSpacing"}, true, gt(0.0f))
-    };
-
-    parse(params, doc);
-
-    LOG_INFO << "StartScreen config initialized successfully" << LOG_END;
-}
-
 StartScreen::StartScreen(const commonlib::Vector2& viewportSize,
-                         const AppActions& actions)
+                         const AppActions& actions,
+                         const StartScreenConfig* cfg)
     : Screen(actions)
+    , cfg_(cfg)
 {
     if (viewportSize[0] <= 0.0f || viewportSize[1] <= 0.0f)
     {
@@ -88,16 +68,19 @@ void StartScreen::initWidgets(const commonlib::Vector2& viewportSize)
         std::bind(&StartScreen::exitGame, this)
     };
     unsigned int numButtons = buttonTexts.size();
-    float totalHeight = numButtons * k_buttonHeight +
-                        (numButtons - 1.0f) * k_buttonSpacing;
+    float totalHeight = numButtons * cfg_->buttonHeight() +
+                        (numButtons - 1.0f) * cfg_->buttonSpacing();
     float x = viewportSize[0] / 2.0f;
-    float y = (viewportSize[1] + totalHeight - k_buttonHeight) / 2.0f;
-    float deltaY = k_buttonHeight + k_buttonSpacing;
+    float y = (viewportSize[1] + totalHeight - cfg_->buttonHeight()) / 2.0f;
+    float deltaY = cfg_->buttonHeight() + cfg_->buttonSpacing();
 
     widgets_.init(numButtons);
     for (unsigned int i = 0; i < numButtons; ++i)
     {
-        Button* button = new Button(x, y, k_buttonWidth, k_buttonHeight,
+        Button* button = new Button(x,
+                                    y,
+                                    cfg_->buttonWidth(),
+                                    cfg_->buttonHeight(),
                                     buttonTexts[i]);
         button->setActionFunc(actions[i]);
         widgets_.setWidget(i, button);
@@ -122,7 +105,6 @@ void StartScreen::startGame()
 
 void StartScreen::showSettings()
 {
-    std::cerr << "Show Settings" << std::endl;
 }
 
 void StartScreen::exitGame()
