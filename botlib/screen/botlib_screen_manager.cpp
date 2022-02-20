@@ -97,7 +97,7 @@ Screen* ScreenManager::createScreen(ScreenType screenType)
             screen = new StartScreen(viewportSize_, actions_, &startScreenConfig_);
             break;
         case ScreenType::GAME:
-            screen = new GameScreen(viewportSize_, actions_, &gameScreenConfig_);
+            screen = new GameScreen(viewportSize_, actions_, gameScreenConfig_);
             break;
         case ScreenType::SHOW_MAP:
             break;

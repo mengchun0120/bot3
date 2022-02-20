@@ -10,7 +10,11 @@ class GameScreenConfig {
 public:
     GameScreenConfig() = default;
 
+    GameScreenConfig(const GameScreenConfig& other) = default;
+
     void init(const std::string& mapFile1);
+
+    GameScreenConfig& operator=(const GameScreenConfig& other) = default;
 
     inline const std::string& mapFile() const;
 

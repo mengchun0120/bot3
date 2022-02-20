@@ -4,8 +4,13 @@ namespace mcdane {
 namespace botlib {
 
 Screen::Screen(const AppActions& actions)
-    : actions_(actions)
 {
+    init(actions);
+}
+
+void Screen::init(const AppActions& actions)
+{
+    actions_ = actions;
 }
 
 } // end of namespace botlib

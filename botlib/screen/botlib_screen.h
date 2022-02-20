@@ -9,9 +9,13 @@ namespace botlib {
 
 class Screen {
 public:
+    Screen() = default;
+
     Screen(const AppActions& actions);
 
     virtual ~Screen() = default;
+
+    void init(const AppActions& actions);
 
     virtual void update() = 0;
 

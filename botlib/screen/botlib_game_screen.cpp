@@ -1,4 +1,3 @@
-#include <iostream>
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
 #include <botlib_game_screen.h>
@@ -10,19 +9,27 @@ namespace botlib {
 
 GameScreen::GameScreen(const Vector2& viewportSize,
                        const AppActions actions,
-                       const GameScreenConfig* cfg)
-    : Screen(actions)
-    , cfg_(cfg)
+                       const GameScreenConfig& cfg)
 {
+    init(viewportSize, actions, cfg);
+}
+
+GameScreen::~GameScreen()
+{
+}
+
+void GameScreen::init(const commonlib::Vector2& viewportSize,
+                      const AppActions actions,
+                      const GameScreenConfig& cfg)
+{
+    Screen::init(actions);
+    cfg_ = cfg;
+
     if (viewportSize[0] <= 0.0f || viewportSize[1] <= 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Invalid viewportSize " + stringVal(viewportSize));
     }
-}
-
-GameScreen::~GameScreen()
-{
 }
 
 void GameScreen::update()
