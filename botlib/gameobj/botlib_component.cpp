@@ -94,7 +94,7 @@ void Component::setDirection(const commonlib::Vector2& direction1)
 
 void Component::present() const
 {
-    SimpleShaderProgram& program = Graphics::simpleShader();
+    SimpleShaderProgram& program = Graphics::getInstance().simpleShader();
 
     t_->rect()->draw(program, &pos_, &direction_, nullptr, nullptr,
                      t_->texture()->id(), nullptr);

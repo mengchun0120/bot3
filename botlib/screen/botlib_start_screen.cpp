@@ -91,7 +91,7 @@ void StartScreen::initWidgets(const commonlib::Vector2& viewportSize)
 
 void StartScreen::prepareShader(const commonlib::Vector2& viewportSize)
 {
-    SimpleShaderProgram& shader = Graphics::simpleShader();
+    SimpleShaderProgram& shader = Graphics::getInstance().simpleShader();
 
     shader.use();
     shader.setViewportOrigin(viewportSize / 2.0f);

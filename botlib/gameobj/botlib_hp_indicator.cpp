@@ -50,7 +50,8 @@ void HPIndicator::validateColors()
 
 void HPIndicator::initSize()
 {
-    k_halfHeight = Graphics::textSys().getHeight(k_textSize) / 2.0f;
+    Graphics& g = Graphics::getInstance();
+    k_halfHeight = g.textSys().getHeight(k_textSize) / 2.0f;
 }
 
 void HPIndicator::reset(const commonlib::Vector2& pos,
@@ -62,7 +63,9 @@ void HPIndicator::reset(const commonlib::Vector2& pos,
 
 void HPIndicator::present() const
 {
-    Graphics::textSys().draw(Graphics::simpleShader(), hpPercentStr_, pos_,
+    Graphics& g = Graphics::getInstance();
+
+    g.textSys().draw(g.simpleShader(), hpPercentStr_, pos_,
                              k_textSize, color_);
 }
 
@@ -73,9 +76,11 @@ void HPIndicator::shiftPos(const commonlib::Vector2& delta)
 
 void HPIndicator::setPos(const commonlib::Vector2& pos)
 {
+    Graphics& g = Graphics::getInstance();
+
     pos_[1] = pos[1] - k_halfHeight;
 
-    float width = Graphics::textSys().getWidth(hpPercentStr_, k_textSize);
+    float width = g.textSys().getWidth(hpPercentStr_, k_textSize);
     pos_[0] = pos[0] - width/2.0f;
 }
 

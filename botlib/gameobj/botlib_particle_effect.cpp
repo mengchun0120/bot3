@@ -18,7 +18,7 @@ void ParticleEffect::init(const ParticleEffectTemplate* t,
 
 void ParticleEffect::present() const
 {
-    ParticleShaderProgram& shader = Graphics::particleShader();
+    ParticleShaderProgram& shader = Graphics::getInstance().particleShader();
     const ParticleEffectTemplate* t = getTemplate();
 
     shader.setRef(pos_);

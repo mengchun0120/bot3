@@ -310,7 +310,7 @@ void GameMap::presentObjs()
     };
     constexpr int presentTypeCount = 3;
 
-    SimpleShaderProgram& program = Graphics::simpleShader();
+    SimpleShaderProgram& program = Graphics::getInstance().simpleShader();
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
@@ -324,7 +324,7 @@ void GameMap::presentObjs()
 
 void GameMap::presentParticleEffects()
 {
-    ParticleShaderProgram& program = Graphics::particleShader();
+    ParticleShaderProgram& program = Graphics::getInstance().particleShader();
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);

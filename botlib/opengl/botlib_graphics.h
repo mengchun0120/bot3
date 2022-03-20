@@ -13,17 +13,19 @@ class AppConfig;
 
 class Graphics {
 public:
-    inline static SimpleShaderProgram& simpleShader();
-
-    inline static ParticleShaderProgram& particleShader();
-
-    inline static TextSystem& textSys();
-
     static void initInstance(const AppConfig& cfg);
+
+    inline static Graphics& getInstance();
 
     Graphics(const AppConfig& cfg);
 
     ~Graphics() = default;
+
+    inline SimpleShaderProgram& simpleShader();
+
+    inline ParticleShaderProgram& particleShader();
+
+    inline const TextSystem& textSys() const;
 
 private:
     static std::shared_ptr<Graphics> k_instance;
@@ -33,19 +35,24 @@ private:
     TextSystem textSys_;
 };
 
+Graphics& Graphics::getInstance()
+{
+    return *k_instance;
+}
+
 SimpleShaderProgram& Graphics::simpleShader()
 {
     return k_instance->simpleShader_;
 }
 
-TextSystem& Graphics::textSys()
-{
-    return k_instance->textSys_;
-}
-
 ParticleShaderProgram& Graphics::particleShader()
 {
     return k_instance->particleShader_;
+}
+
+const TextSystem& Graphics::textSys() const
+{
+    return k_instance->textSys_;
 }
 
 } // end of namespace botlib

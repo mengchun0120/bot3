@@ -125,8 +125,9 @@ void Label::shiftPos(float dx,
 
 void Label::present() const
 {
-    SimpleShaderProgram& program = Graphics::simpleShader();
-    TextSystem& textSys = Graphics::textSys();
+    Graphics& g = Graphics::getInstance();
+    SimpleShaderProgram& program = g.simpleShader();
+    const TextSystem& textSys = g.textSys();
 
     rect_.draw(program, &pos_, nullptr, backColor_, borderColor_, 0, nullptr);
     if (text_.size() > 0)
@@ -197,7 +198,7 @@ void Label::updateTextPos()
 
 float Label::calculateTextPosX()
 {
-    TextSystem& textSys = Graphics::textSys();
+    const TextSystem& textSys = Graphics::getInstance().textSys();
     float x;
 
     switch(halign_)
@@ -226,7 +227,7 @@ float Label::calculateTextPosX()
 
 float Label::calculateTextPosY()
 {
-    TextSystem& textSys = Graphics::textSys();
+    const TextSystem& textSys = Graphics::getInstance().textSys();
     float y;
 
     switch(valign_)

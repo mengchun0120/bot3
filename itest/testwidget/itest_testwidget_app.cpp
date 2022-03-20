@@ -84,7 +84,7 @@ void TestWidgetApp::setupOpenGL()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
-    SimpleShaderProgram& shader = Graphics::simpleShader();
+    SimpleShaderProgram& shader = Graphics::getInstance().simpleShader();
 
     shader.use();
     shader.setViewportSize(viewportSize());

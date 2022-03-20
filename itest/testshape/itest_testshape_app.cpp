@@ -35,7 +35,7 @@ void TestShapeApp::setupOpenGL()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
-    SimpleShaderProgram& program = Graphics::simpleShader();
+    SimpleShaderProgram& program = Graphics::getInstance().simpleShader();
 
     program.use();
     program.setViewportSize(viewportSize());
@@ -80,8 +80,9 @@ void TestShapeApp::preProcess()
 
 void TestShapeApp::process()
 {
-    SimpleShaderProgram& program = Graphics::simpleShader();
-    TextSystem& textSys = Graphics::textSys();
+    Graphics& g = Graphics::getInstance();
+    SimpleShaderProgram& program = g.simpleShader();
+    const TextSystem& textSys = g.textSys();
 
     triangle_.draw(program, &trianglePos_, nullptr, &fillColor_,
                    nullptr, 0, nullptr);
