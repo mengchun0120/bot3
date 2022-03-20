@@ -1,4 +1,5 @@
 #include <commonlib_log.h>
+#include <botlib_app_config.h>
 #include <botlib_graphics.h>
 
 namespace mcdane {
@@ -6,12 +7,7 @@ namespace botlib {
 
 std::shared_ptr<Graphics> Graphics::k_instance;
 
-void Graphics::initInstance(
-                    const std::vector<std::string>& simpleVertexShaderFiles,
-                    const std::vector<std::string>& simpleFragShaderFiles,
-                    const std::vector<std::string>& particleVertexShaderFiles,
-                    const std::vector<std::string>& particleFragShaderFiles,
-                    const std::string& fontDir)
+void Graphics::initInstance(const AppConfig& cfg)
 {
     if (k_instance)
     {
@@ -19,23 +15,17 @@ void Graphics::initInstance(
         return;
     }
 
-    Graphics* g = new Graphics(simpleVertexShaderFiles,
-                               simpleFragShaderFiles,
-                               particleVertexShaderFiles,
-                               particleFragShaderFiles,
-                               fontDir);
+    Graphics* g = new Graphics(cfg);
     k_instance.reset(g);
 }
 
-Graphics::Graphics(const std::vector<std::string>& simpleVertexShaderFiles,
-                   const std::vector<std::string>& simpleFragShaderFiles,
-                   const std::vector<std::string>& particleVertexShaderFiles,
-                   const std::vector<std::string>& particleFragShaderFiles,
-                   const std::string& fontDir)
+Graphics::Graphics(const AppConfig& cfg)
 {
-    simpleShader_.init(simpleVertexShaderFiles, simpleFragShaderFiles);
-    particleShader_.init(particleVertexShaderFiles, particleFragShaderFiles);
-    textSys_.load(fontDir);
+    simpleShader_.init(cfg.simpleVertexShaderFiles(),
+                       cfg.simpleFragShaderFiles());
+    particleShader_.init(cfg.particleVertexShaderFiles(),
+                         cfg.particleFragShaderFiles());
+    textSys_.load(cfg.fontDir());
 }
 
 } // end of namespace botlib

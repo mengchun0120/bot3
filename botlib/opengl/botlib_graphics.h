@@ -9,6 +9,8 @@
 namespace mcdane {
 namespace botlib {
 
+class AppConfig;
+
 class Graphics {
 public:
     inline static SimpleShaderProgram& simpleShader();
@@ -17,21 +19,11 @@ public:
 
     inline static TextSystem& textSys();
 
-    static void initInstance(
-                        const std::vector<std::string>& simpleVertexShaderFiles,
-                        const std::vector<std::string>& simpleFragShaderFiles,
-                        const std::vector<std::string>& particleVertexShaderFiles,
-                        const std::vector<std::string>& particleFragShaderFiles,
-                        const std::string& fontDir);
+    static void initInstance(const AppConfig& cfg);
+
+    Graphics(const AppConfig& cfg);
 
     ~Graphics() = default;
-
-private:
-    Graphics(const std::vector<std::string>& simpleVertexShaderFiles,
-             const std::vector<std::string>& simpleFragShaderFiles,
-             const std::vector<std::string>& particleVertexShaderFiles,
-             const std::vector<std::string>& particleFragShaderFiles,
-             const std::string& fontDir);
 
 private:
     static std::shared_ptr<Graphics> k_instance;

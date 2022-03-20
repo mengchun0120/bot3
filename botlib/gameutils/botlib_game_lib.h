@@ -15,21 +15,18 @@
 namespace mcdane {
 namespace botlib {
 
+class AppConfig;
+
 class GameLib {
 public:
     static void
-    initInstance(const std::string& picDir,
-                 const std::string& libDir,
-                 const std::string& textureLibFile,
-                 const std::string& rectLibFile,
-                 const std::string& componentTemplateLibFile,
-                 const std::string& tileTemplateLibFile,
-                 const std::string& missileTemplateLibFile,
-                 const std::string& aiRobotTemplateLibFile,
-                 const std::string& particleEffectTemplateLibFile,
-                 const std::string& playerTemplateFile);
+    initInstance(const AppConfig& cfg);
 
     inline static const GameLib& getInstance();
+
+    GameLib() = default;
+
+    GameLib(const AppConfig& cfg);
 
     ~GameLib() = default;
 
@@ -58,18 +55,8 @@ public:
     inline float maxCollideBreath() const;
 
 private:
-    GameLib() = default;
 
-    void load(const std::string& picDir,
-              const std::string& libDir,
-              const std::string& textureLibFile,
-              const std::string& rectLibFile,
-              const std::string& componentTemplateLibFile,
-              const std::string& tileTemplateLibFile,
-              const std::string& missileTemplateLibFile,
-              const std::string& aiRobotTemplateLibFile,
-              const std::string& particleEffectTemplateLibFile,
-              const std::string& playerTemplateFile);
+    void load(const AppConfig& cfg);
 
     void initTextureLib(const std::string& textureLibFile,
                         const std::string& picDir);

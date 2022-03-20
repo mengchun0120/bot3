@@ -1,4 +1,5 @@
 #include <commonlib_log.h>
+#include <botlib_app_config.h>
 #include <botlib_game_lib.h>
 
 using namespace mcdane::commonlib;
@@ -8,52 +9,29 @@ namespace botlib {
 
 std::shared_ptr<GameLib> GameLib::k_gameLib;
 
-void GameLib::initInstance(const std::string& picDir,
-                           const std::string& libDir,
-                           const std::string& textureLibFile,
-                           const std::string& rectLibFile,
-                           const std::string& componentTemplateLibFile,
-                           const std::string& tileTemplateLibFile,
-                           const std::string& missileTemplateLibFile,
-                           const std::string& aiRobotTemplateLibFile,
-                           const std::string& particleEffectTemplateLibFile,
-                           const std::string& playerTemplateFile)
+void GameLib::initInstance(const AppConfig& cfg)
 {
-    GameLib* lib = new GameLib();
-    lib->load(
-        picDir,
-        libDir,
-        textureLibFile,
-        rectLibFile,
-        componentTemplateLibFile,
-        tileTemplateLibFile,
-        missileTemplateLibFile,
-        aiRobotTemplateLibFile,
-        particleEffectTemplateLibFile,
-        playerTemplateFile);
-
+    GameLib* lib = new GameLib(cfg);
     k_gameLib.reset(lib);
 }
 
-void GameLib::load(const std::string& picDir,
-                   const std::string& libDir,
-                   const std::string& textureLibFile,
-                   const std::string& rectLibFile,
-                   const std::string& componentTemplateLibFile,
-                   const std::string& tileTemplateLibFile,
-                   const std::string& missileTemplateLibFile,
-                   const std::string& aiRobotTemplateLibFile,
-                   const std::string& particleEffectTemplateLibFile,
-                   const std::string& playerTemplateFile)
+GameLib::GameLib(const AppConfig& cfg)
 {
-    initTextureLib(textureLibFile, picDir);
-    initRectLib(rectLibFile);
-    initComponentTemplateLib(componentTemplateLibFile);
-    initTileTemplateLib(tileTemplateLibFile);
-    initParticleEffectTemplateLib(particleEffectTemplateLibFile, libDir);
-    initMissileTemplateLib(missileTemplateLibFile);
-    initAIRobotTemplateLib(aiRobotTemplateLibFile);
-    playerTemplate_.init(playerTemplateFile, missileTemplateLib_,
+    load(cfg);
+}
+
+void GameLib::load(const AppConfig& cfg)
+{
+    initTextureLib(cfg.textureLibFile(), cfg.picDir());
+    initRectLib(cfg.rectLibFile());
+    initComponentTemplateLib(cfg.componentTemplateLibFile());
+    initTileTemplateLib(cfg.tileTemplateLibFile());
+    initParticleEffectTemplateLib(cfg.particleEffectTemplateLibFile(),
+                                  cfg.libDir());
+    initMissileTemplateLib(cfg.missileTemplateLibFile());
+    initAIRobotTemplateLib(cfg.aiRobotTemplateLibFile());
+    playerTemplate_.init(cfg.playerTemplateFile(),
+                         missileTemplateLib_,
                          componentTemplateLib_);
 
     calculateMaxObjSpan();

@@ -68,11 +68,7 @@ void BotApp::setupOpenGL(const AppConfig& cfg)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-    Graphics::initInstance(cfg.simpleVertexShaderFiles(),
-                           cfg.simpleFragShaderFiles(),
-                           cfg.particleVertexShaderFiles(),
-                           cfg.particleFragShaderFiles(),
-                           cfg.fontDir());
+    Graphics::initInstance(cfg);
 }
 
 void BotApp::setupWidget(const AppConfig& cfg)

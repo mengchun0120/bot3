@@ -16,9 +16,10 @@ public:
     static void initInstance(const std::string& fileName,
                              const std::string& appDir);
 
-    ~AppConfig() = default;
+    AppConfig(const std::string& fileName,
+              const std::string& appDir);
 
-    void load();
+    ~AppConfig() = default;
 
     inline unsigned int width() const;
 
@@ -89,10 +90,6 @@ private:
     void loadLibFiles(const rapidjson::Document& doc);
 
     void loadGameSettings(const rapidjson::Document& doc);
-
-private:
-    AppConfig(const std::string& fileName,
-              const std::string& appDir);
 
 private:
     static std::shared_ptr<AppConfig> k_instance;

@@ -108,9 +108,6 @@ public:
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 
-public:
-    static Deleter k_defaultDeleter;
-
 protected:
     const GameObjectTemplate* t_;
     GameObjectState state_;

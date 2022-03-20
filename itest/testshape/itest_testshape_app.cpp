@@ -28,11 +28,7 @@ void TestShapeApp::setupOpenGL()
 {
     const AppConfig& cfg = AppConfig::getInstance();
 
-    Graphics::initInstance(cfg.simpleVertexShaderFiles(),
-                           cfg.simpleFragShaderFiles(),
-                           cfg.particleVertexShaderFiles(),
-                           cfg.particleFragShaderFiles(),
-                           cfg.fontDir());
+    Graphics::initInstance(cfg);
 
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glEnable(GL_BLEND);

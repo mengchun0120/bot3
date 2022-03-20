@@ -68,11 +68,7 @@ void TestGameScreenApp::setupOpenGL()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-    Graphics::initInstance(cfg.simpleVertexShaderFiles(),
-                           cfg.simpleFragShaderFiles(),
-                           cfg.particleVertexShaderFiles(),
-                           cfg.particleFragShaderFiles(),
-                           cfg.fontDir());
+    Graphics::initInstance(cfg);
 }
 
 void TestGameScreenApp::setupWidget()
@@ -96,16 +92,7 @@ void TestGameScreenApp::setupGame()
 {
     const AppConfig& cfg = AppConfig::getInstance();
 
-    GameLib::initInstance(cfg.picDir(),
-                          cfg.libDir(),
-                          cfg.textureLibFile(),
-                          cfg.rectLibFile(),
-                          cfg.componentTemplateLibFile(),
-                          cfg.tileTemplateLibFile(),
-                          cfg.missileTemplateLibFile(),
-                          cfg.aiRobotTemplateLibFile(),
-                          cfg.particleEffectTemplateLibFile(),
-                          cfg.playerTemplateFile());
+    GameLib::initInstance(cfg);
 
     HPIndicator::initConfig(cfg.hpIndicatorConfigFile());
 

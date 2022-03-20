@@ -33,6 +33,7 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_tile.cpp)
 
 set(BOTLIB_GAMEUTILS_SRC
+    gameutils/botlib_context.cpp
     gameutils/botlib_game_lib.cpp
     gameutils/botlib_game_map.cpp
     gameutils/botlib_game_map_loader.cpp

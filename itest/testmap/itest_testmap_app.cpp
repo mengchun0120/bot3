@@ -22,22 +22,9 @@ TestMapApp::TestMapApp(const std::string& configFile,
 
     const AppConfig& cfg = AppConfig::getInstance();
 
-    Graphics::initInstance(cfg.simpleVertexShaderFiles(),
-                           cfg.simpleFragShaderFiles(),
-                           cfg.particleVertexShaderFiles(),
-                           cfg.particleFragShaderFiles(),
-                           cfg.fontDir());
+    Graphics::initInstance(cfg);
 
-    GameLib::initInstance(cfg.picDir(),
-                          cfg.libDir(),
-                          cfg.textureLibFile(),
-                          cfg.rectLibFile(),
-                          cfg.componentTemplateLibFile(),
-                          cfg.tileTemplateLibFile(),
-                          cfg.missileTemplateLibFile(),
-                          cfg.aiRobotTemplateLibFile(),
-                          cfg.particleEffectTemplateLibFile(),
-                          cfg.playerTemplateFile());
+    GameLib::initInstance(cfg);
 
     HPIndicator::initConfig(cfg.hpIndicatorConfigFile());
 
