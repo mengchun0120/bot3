@@ -1,6 +1,6 @@
 #include <iostream>
 #include <botlib_app_config.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_button.h>
 #include <botlib_label.h>
 #include <itest_testwidget_app.h>
@@ -14,12 +14,13 @@ namespace itest {
 TestWidgetApp::TestWidgetApp(const std::string& configFile,
                            const std::string& appDir)
 {
-    AppConfig::initInstance(configFile, appDir);
+    AppConfig::init(configFile, appDir);
 
     setupWindow(1000, 800, "test widgets");
 
-    const AppConfig& cfg = AppConfig::getInstance();
-    Graphics::initInstance(cfg);
+    const AppConfig& cfg = AppConfig::instance();
+
+    Context::init(cfg);
 
     Button::initConfig(cfg.buttonConfigFile(),
                        cfg.picDir());
@@ -84,7 +85,7 @@ void TestWidgetApp::setupOpenGL()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
-    SimpleShaderProgram& shader = Graphics::getInstance().simpleShader();
+    SimpleShaderProgram& shader = Context::graphics().simpleShader();
 
     shader.use();
     shader.setViewportSize(viewportSize());
@@ -136,7 +137,8 @@ void TestWidgetApp::setupInput()
 {
     using namespace std::placeholders;
 
-    const AppConfig& cfg = AppConfig::getInstance();
+    const AppConfig& cfg = AppConfig::instance();
+
     InputManager::initInstance(window(), viewportHeight(),
                                cfg.inputQueueCapacity());
 

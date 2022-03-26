@@ -7,14 +7,6 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-std::shared_ptr<GameLib> GameLib::k_gameLib;
-
-void GameLib::initInstance(const AppConfig& cfg)
-{
-    GameLib* lib = new GameLib(cfg);
-    k_gameLib.reset(lib);
-}
-
 GameLib::GameLib(const AppConfig& cfg)
 {
     load(cfg);

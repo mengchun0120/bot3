@@ -21,8 +21,8 @@ void marshalFileNames(std::vector<std::string>& newFileNames,
 
 std::shared_ptr<AppConfig> AppConfig::k_instance;
 
-void AppConfig::initInstance(const std::string& fileName,
-                             const std::string& appDir)
+void AppConfig::init(const std::string& fileName,
+                     const std::string& appDir)
 {
     if (k_instance)
     {
@@ -107,10 +107,18 @@ void AppConfig::loadShaderFiles(const rapidjson::Document& doc)
 
     parse(params, doc);
 
-    marshalFileNames(simpleVertexShaderFiles_, simpleVertexShaderFiles1, glslDir_);
-    marshalFileNames(simpleFragShaderFiles_, simpleFragShaderFiles1, glslDir_);
-    marshalFileNames(particleVertexShaderFiles_, particleVertexShaderFiles1, glslDir_);
-    marshalFileNames(particleFragShaderFiles_, particleFragShaderFiles1, glslDir_);
+    marshalFileNames(simpleVertexShaderFiles_,
+                     simpleVertexShaderFiles1,
+                     glslDir_);
+    marshalFileNames(simpleFragShaderFiles_,
+                     simpleFragShaderFiles1,
+                     glslDir_);
+    marshalFileNames(particleVertexShaderFiles_,
+                     particleVertexShaderFiles1,
+                     glslDir_);
+    marshalFileNames(particleFragShaderFiles_,
+                     particleFragShaderFiles1,
+                     glslDir_);
 }
 
 void AppConfig::loadConfigFiles(const rapidjson::Document& doc)

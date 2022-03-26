@@ -1,7 +1,7 @@
 #include <iostream>
+#include <commonlib_log.h>
 #include <botlib_app_config.h>
-#include <botlib_graphics.h>
-#include <botlib_game_lib.h>
+#include <botlib_context.h>
 #include <botlib_hp_indicator.h>
 #include <botlib_game_map_loader.h>
 #include <itest_testmap_app.h>
@@ -16,20 +16,24 @@ TestMapApp::TestMapApp(const std::string& configFile,
                        const std::string& appDir,
                        const std::string& mapFile)
 {
-    AppConfig::initInstance(configFile, appDir);
+    AppConfig::init(configFile, appDir);
 
     setupWindow(1000, 800, "test game map");
 
-    const AppConfig& cfg = AppConfig::getInstance();
+    const AppConfig& cfg = AppConfig::instance();
 
-    Graphics::initInstance(cfg);
-
-    GameLib::initInstance(cfg);
-
+    Context::init(cfg);
     HPIndicator::initConfig(cfg.hpIndicatorConfigFile());
 
+    LOG_INFO << "HPIndicator" << LOG_END;
+
     setupOpenGL();
+
+    LOG_INFO << "setupOpenGL" << LOG_END;
+
     setupMap(mapFile);
+
+    LOG_INFO << "setupMap" << LOG_END;
 }
 
 void TestMapApp::preProcess()

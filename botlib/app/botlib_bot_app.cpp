@@ -1,7 +1,7 @@
 #include <iostream>
 #include <commonlib_log.h>
 #include <botlib_app_config.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_button.h>
 #include <botlib_start_screen.h>
 #include <botlib_bot_app.h>
@@ -50,11 +50,12 @@ void BotApp::init(const std::string& configFile,
                   const std::string& appDir,
                   const std::string& mapFile)
 {
-    AppConfig::initInstance(configFile, appDir);
-    const AppConfig& cfg = AppConfig::getInstance();
+    AppConfig::init(configFile, appDir);
+    const AppConfig& cfg = AppConfig::instance();
 #ifdef DESKTOP_APP
     setupWindow(cfg.width(), cfg.height(), cfg.title());
 #endif
+    Context::init(cfg);
     setupOpenGL(cfg);
     setupWidget(cfg);
     setupActions();
@@ -67,8 +68,6 @@ void BotApp::setupOpenGL(const AppConfig& cfg)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-    Graphics::initInstance(cfg);
 }
 
 void BotApp::setupWidget(const AppConfig& cfg)

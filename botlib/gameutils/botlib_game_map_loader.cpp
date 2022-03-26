@@ -3,7 +3,7 @@
 #include <commonlib_string_utils.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_collide.h>
-#include <botlib_game_lib.h>
+#include <botlib_context.h>
 #include <botlib_tile.h>
 #include <botlib_missile.h>
 #include <botlib_ai_robot.h>
@@ -74,7 +74,7 @@ void GameMapLoader::loadMapDimension(GameMap& map,
 
     parse(params, doc);
 
-    const GameLib& lib = GameLib::getInstance();
+    const GameLib& lib = Context::gameLib();
 
     map.init(rows, cols, viewportWidth_, viewportHeight_,
              lib.maxObjSpan(), lib.maxCollideBreath());
@@ -135,7 +135,7 @@ void GameMapLoader::parseAddObject(GameMap& map,
 void GameMapLoader::addTile(GameMap& map,
                             const rapidjson::Value& v)
 {
-    const GameLib& lib = GameLib::getInstance();
+    const GameLib& lib = Context::gameLib();
 
     const TileTemplate* t = lib.findTileTemplate(templateStr_);
     if (!t)
@@ -162,7 +162,7 @@ void GameMapLoader::addTile(GameMap& map,
 void GameMapLoader::addMissile(GameMap& map,
                                const rapidjson::Value& v)
 {
-    const GameLib& lib = GameLib::getInstance();
+    const GameLib& lib = Context::gameLib();
 
     const MissileTemplate* t = lib.findMissileTemplate(templateStr_);
     if (!t)
@@ -191,7 +191,7 @@ void GameMapLoader::addMissile(GameMap& map,
 void GameMapLoader::addAIRobot(GameMap& map,
                              const rapidjson::Value& v)
 {
-    const GameLib& lib = GameLib::getInstance();
+    const GameLib& lib = Context::gameLib();
 
     const AIRobotTemplate* t = lib.findAIRobotTemplate(templateStr_);
     if (!t)
@@ -224,7 +224,7 @@ void GameMapLoader::addAIRobot(GameMap& map,
 void GameMapLoader::addParticleEffect(GameMap& map,
                                       const rapidjson::Value& v)
 {
-    const GameLib& lib = GameLib::getInstance();
+    const GameLib& lib = Context::gameLib();
 
     const ParticleEffectTemplate* t = lib.findParticleEffectTemplate(templateStr_);
     if (!t)
@@ -242,7 +242,7 @@ void GameMapLoader::addParticleEffect(GameMap& map,
 void GameMapLoader::addPlayer(GameMap& map,
                               const rapidjson::Value& v)
 {
-    const PlayerTemplate& t = GameLib::getInstance().playerTemplate();
+    const PlayerTemplate& t = Context::gameLib().playerTemplate();
 
     bool collide = checkCollide(map, t.collideBreath());
 

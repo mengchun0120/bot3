@@ -28,7 +28,7 @@ void parseArguments(Arguments& args, int argc, char* argv[])
         Argument::create(args.logFile_, "logFile", "l", "log",
                          "Log file", false, k_nonEmptyStrV),
         Argument::create(args.logLevelStr_, "logLevel", "v", "logLevel",
-                         "Log level"),
+                         "Log level", true),
         Argument::create(args.appDir_, "appDir", "a", "appDir",
                          "App directory", false, k_nonEmptyStrV)
     });

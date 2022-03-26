@@ -24,9 +24,6 @@ public:
     void postProcess() override;
 
 private:
-    void setupAppConfig(const std::string& configFile,
-                        const std::string& appDir);
-
     void setupWindow();
 
     void setupOpenGL();

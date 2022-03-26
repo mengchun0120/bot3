@@ -5,7 +5,7 @@
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
 #include <commonlib_string_utils.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_hp_indicator.h>
 
 using namespace mcdane::commonlib;
@@ -50,7 +50,7 @@ void HPIndicator::validateColors()
 
 void HPIndicator::initSize()
 {
-    Graphics& g = Graphics::getInstance();
+    Graphics& g = Context::graphics();
     k_halfHeight = g.textSys().getHeight(k_textSize) / 2.0f;
 }
 
@@ -63,7 +63,7 @@ void HPIndicator::reset(const commonlib::Vector2& pos,
 
 void HPIndicator::present() const
 {
-    Graphics& g = Graphics::getInstance();
+    Graphics& g = Context::graphics();
 
     g.textSys().draw(g.simpleShader(), hpPercentStr_, pos_,
                              k_textSize, color_);
@@ -76,7 +76,7 @@ void HPIndicator::shiftPos(const commonlib::Vector2& delta)
 
 void HPIndicator::setPos(const commonlib::Vector2& pos)
 {
-    Graphics& g = Graphics::getInstance();
+    Graphics& g = Context::graphics();
 
     pos_[1] = pos[1] - k_halfHeight;
 

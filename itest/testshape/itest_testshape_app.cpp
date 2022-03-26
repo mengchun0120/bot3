@@ -1,7 +1,7 @@
 #include <vector>
 #include <commonlib_file_utils.h>
 #include <botlib_app_config.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <itest_testshape_app.h>
 
 using namespace mcdane::commonlib;
@@ -13,11 +13,13 @@ namespace itest {
 TestShapeApp::TestShapeApp(const std::string& configFile,
                            const std::string& appDir)
 {
-    AppConfig::initInstance(configFile, appDir);
+    AppConfig::init(configFile, appDir);
 
 #ifdef DESKTOP_APP
     setupWindow(1000, 800, "Test Shape");
 #endif
+
+    Context::init(AppConfig::instance());
 
     setupOpenGL();
     setupShapeColor();
@@ -26,16 +28,12 @@ TestShapeApp::TestShapeApp(const std::string& configFile,
 
 void TestShapeApp::setupOpenGL()
 {
-    const AppConfig& cfg = AppConfig::getInstance();
-
-    Graphics::initInstance(cfg);
-
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
-    SimpleShaderProgram& program = Graphics::getInstance().simpleShader();
+    SimpleShaderProgram& program = Context::graphics().simpleShader();
 
     program.use();
     program.setViewportSize(viewportSize());
@@ -80,7 +78,7 @@ void TestShapeApp::preProcess()
 
 void TestShapeApp::process()
 {
-    Graphics& g = Graphics::getInstance();
+    Graphics& g = Context::graphics();
     SimpleShaderProgram& program = g.simpleShader();
     const TextSystem& textSys = g.textSys();
 

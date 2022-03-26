@@ -2,7 +2,7 @@
 #include <commonlib_log.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_label.h>
 
 using namespace mcdane::commonlib;
@@ -125,7 +125,7 @@ void Label::shiftPos(float dx,
 
 void Label::present() const
 {
-    Graphics& g = Graphics::getInstance();
+    Graphics& g = Context::graphics();
     SimpleShaderProgram& program = g.simpleShader();
     const TextSystem& textSys = g.textSys();
 
@@ -198,7 +198,7 @@ void Label::updateTextPos()
 
 float Label::calculateTextPosX()
 {
-    const TextSystem& textSys = Graphics::getInstance().textSys();
+    const TextSystem& textSys = Context::graphics().textSys();
     float x;
 
     switch(halign_)
@@ -227,7 +227,7 @@ float Label::calculateTextPosX()
 
 float Label::calculateTextPosY()
 {
-    const TextSystem& textSys = Graphics::getInstance().textSys();
+    const TextSystem& textSys = Context::graphics().textSys();
     float y;
 
     switch(valign_)

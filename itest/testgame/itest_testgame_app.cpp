@@ -1,6 +1,5 @@
 #include <botlib_app_config.h>
-#include <botlib_game_lib.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_game_map_loader.h>
 #include <botlib_hp_indicator.h>
 #include <itest_testgame_app.h>
@@ -15,16 +14,13 @@ TestGameApp::TestGameApp(const std::string& configFile,
                          const std::string& appDir,
                          const std::string& mapFile)
 {
-    AppConfig::initInstance(configFile, appDir);
+    AppConfig::init(configFile, appDir);
 
     setupWindow(1000, 1000, "test game mechanics");
 
-    const AppConfig& cfg = AppConfig::getInstance();
+    const AppConfig& cfg = AppConfig::instance();
 
-    Graphics::initInstance(cfg);
-
-    GameLib::initInstance(cfg);
-
+    Context::init(cfg);
     HPIndicator::initConfig(cfg.hpIndicatorConfigFile());
 
     setupOpenGL();
@@ -61,7 +57,7 @@ void TestGameApp::setupOpenGL()
 
 void TestGameApp::setupDeltaSmoother()
 {
-    const AppConfig& cfg = AppConfig::getInstance();
+    const AppConfig& cfg = AppConfig::instance();
 
     deltaSmoother_.init(cfg.timeDeltaHistoryLen());
     deltaSmoother_.start();

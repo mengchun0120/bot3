@@ -1,7 +1,6 @@
 #ifndef INCLUDED_BOTLIB_GRAPHICS_H
 #define INCLUDED_BOTLIB_GRAPHICS_H
 
-#include <memory>
 #include <botlib_simple_shader_program.h>
 #include <botlib_particle_shader_program.h>
 #include <botlib_text_system.h>
@@ -13,10 +12,6 @@ class AppConfig;
 
 class Graphics {
 public:
-    static void initInstance(const AppConfig& cfg);
-
-    inline static Graphics& getInstance();
-
     Graphics(const AppConfig& cfg);
 
     ~Graphics() = default;
@@ -28,31 +23,24 @@ public:
     inline const TextSystem& textSys() const;
 
 private:
-    static std::shared_ptr<Graphics> k_instance;
-
     SimpleShaderProgram simpleShader_;
     ParticleShaderProgram particleShader_;
     TextSystem textSys_;
 };
 
-Graphics& Graphics::getInstance()
-{
-    return *k_instance;
-}
-
 SimpleShaderProgram& Graphics::simpleShader()
 {
-    return k_instance->simpleShader_;
+    return simpleShader_;
 }
 
 ParticleShaderProgram& Graphics::particleShader()
 {
-    return k_instance->particleShader_;
+    return particleShader_;
 }
 
 const TextSystem& Graphics::textSys() const
 {
-    return k_instance->textSys_;
+    return textSys_;
 }
 
 } // end of namespace botlib

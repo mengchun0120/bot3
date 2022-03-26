@@ -3,7 +3,7 @@
 #include <commonlib_json_param.h>
 #include <commonlib_named_map.h>
 #include <botlib_component_template.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_component.h>
 
 using namespace mcdane::commonlib;
@@ -94,7 +94,7 @@ void Component::setDirection(const commonlib::Vector2& direction1)
 
 void Component::present() const
 {
-    SimpleShaderProgram& program = Graphics::getInstance().simpleShader();
+    SimpleShaderProgram& program = Context::graphics().simpleShader();
 
     t_->rect()->draw(program, &pos_, &direction_, nullptr, nullptr,
                      t_->texture()->id(), nullptr);

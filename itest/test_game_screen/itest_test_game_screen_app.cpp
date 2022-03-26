@@ -1,6 +1,5 @@
 #include <botlib_app_config.h>
-#include <botlib_game_lib.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_button.h>
 #include <botlib_hp_indicator.h>
 #include <itest_test_game_screen_app.h>
@@ -15,8 +14,9 @@ TestGameScreenApp::TestGameScreenApp(const std::string& configFile,
                                      const std::string& appDir,
                                      const std::string& mapFile)
 {
-    setupAppConfig(configFile, appDir);
+    AppConfig::init(configFile, appDir);
     setupWindow();
+    Context::init(AppConfig::instance());
     setupOpenGL();
     setupWidget();
     setupActions();
@@ -47,33 +47,23 @@ void TestGameScreenApp::postProcess()
     App::postProcess();
 }
 
-void TestGameScreenApp::setupAppConfig(const std::string& configFile,
-                                       const std::string& appDir)
-{
-    AppConfig::initInstance(configFile, appDir);
-}
-
 void TestGameScreenApp::setupWindow()
 {
-    const AppConfig& cfg = AppConfig::getInstance();
+    const AppConfig& cfg = AppConfig::instance();
 
     App::setupWindow(cfg.width(), cfg.height(), cfg.title());
 }
 
 void TestGameScreenApp::setupOpenGL()
 {
-    const AppConfig& cfg = AppConfig::getInstance();
-
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-    Graphics::initInstance(cfg);
 }
 
 void TestGameScreenApp::setupWidget()
 {
-    const AppConfig& cfg = AppConfig::getInstance();
+    const AppConfig& cfg = AppConfig::instance();
 
     Button::initConfig(cfg.buttonConfigFile(), cfg.picDir());
 }
@@ -90,9 +80,7 @@ void TestGameScreenApp::setupActions()
 
 void TestGameScreenApp::setupGame()
 {
-    const AppConfig& cfg = AppConfig::getInstance();
-
-    GameLib::initInstance(cfg);
+    const AppConfig& cfg = AppConfig::instance();
 
     HPIndicator::initConfig(cfg.hpIndicatorConfigFile());
 
@@ -112,7 +100,7 @@ void TestGameScreenApp::setupInput()
 {
     using namespace std::placeholders;
 
-    const AppConfig& cfg = AppConfig::getInstance();
+    const AppConfig& cfg = AppConfig::instance();
 
     InputManager::initInstance(window(),
                                viewportHeight(),

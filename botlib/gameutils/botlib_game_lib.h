@@ -19,11 +19,6 @@ class AppConfig;
 
 class GameLib {
 public:
-    static void
-    initInstance(const AppConfig& cfg);
-
-    inline static const GameLib& getInstance();
-
     GameLib() = default;
 
     GameLib(const AppConfig& cfg);
@@ -80,8 +75,6 @@ private:
     void calculateMaxCollideBreath();
 
 private:
-    static std::shared_ptr<GameLib> k_gameLib;
-
     TextureLib textureLib_;
     RectLib rectLib_;
     ComponentTemplateLib componentTemplateLib_;
@@ -93,11 +86,6 @@ private:
     float maxObjSpan_;
     float maxCollideBreath_;
 };
-
-const GameLib& GameLib::getInstance()
-{
-    return *k_gameLib;
-}
 
 const commonlib::Texture* GameLib::findTexture(const std::string& name) const
 {

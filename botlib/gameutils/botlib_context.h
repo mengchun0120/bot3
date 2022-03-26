@@ -1,43 +1,43 @@
 #ifndef INCLUDED_BOTLIB_CONTEXT_H
 #define INCLUDED_BOTLIB_CONTEXT_H
 
-#include <botlib_app_config.h>
+#include <memory>
 #include <botlib_graphics.h>
 #include <botlib_game_lib.h>
 
 namespace mcdane {
 namespace botlib {
 
+class AppConfig;
+
 class Context {
 public:
-    Context(const std::string& appCfgFileName,
-            const std::string& appDir);
+    static void init(const AppConfig& cfg);
 
-    inline const AppConfig& appCfg() const;
+    inline static Graphics& graphics();
 
-    inline Graphics& graphics();
+    inline static const GameLib& gameLib();
 
-    inline const GameLib& gameLib() const;
+    ~Context() = default;
 
 private:
-    AppConfig appCfg_;
+    Context(const AppConfig& cfg);
+
+private:
+    static std::shared_ptr<Context> k_context;
+
     Graphics graphics_;
     GameLib gameLib_;
 };
 
-const AppConfig& Context::appCfg() const
-{
-    return appCfg_;
-}
-
 Graphics& Context::graphics()
 {
-    return graphics_;
+    return k_context->graphics_;
 }
 
-const GameLib& Context::gameLib() const
+const GameLib& Context::gameLib()
 {
-    return gameLib_;
+    return k_context->gameLib_;
 }
 
 } // end of namespace botlib

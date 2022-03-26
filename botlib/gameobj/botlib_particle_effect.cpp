@@ -1,5 +1,5 @@
 #include <commonlib_log.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_game_map.h>
 #include <botlib_particle_effect.h>
 
@@ -18,7 +18,7 @@ void ParticleEffect::init(const ParticleEffectTemplate* t,
 
 void ParticleEffect::present() const
 {
-    ParticleShaderProgram& shader = Graphics::getInstance().particleShader();
+    ParticleShaderProgram& shader = Context::graphics().particleShader();
     const ParticleEffectTemplate* t = getTemplate();
 
     shader.setRef(pos_);

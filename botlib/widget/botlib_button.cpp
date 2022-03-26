@@ -3,7 +3,7 @@
 #include <commonlib_file_utils.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_button.h>
 
 using namespace mcdane::commonlib;
@@ -90,7 +90,7 @@ void Button::present() const
         return;
     }
 
-    Graphics& g = Graphics::getInstance();
+    Graphics& g = Context::graphics();
     SimpleShaderProgram& program = g.simpleShader();
     const TextSystem& textSys = g.textSys();
 
@@ -187,7 +187,7 @@ void Button::onMouseOut()
 
 void Button::resetTextPos()
 {
-    const TextSystem& textSys = Graphics::getInstance().textSys();
+    const TextSystem& textSys = Context::graphics().textSys();
     commonlib::Vector2 sz = textSys.getSize(text_, textSize_);
 
     textPos_[0] = pos_[0] - sz[0]/2.0f;

@@ -5,7 +5,7 @@
 #include <commonlib_string_utils.h>
 #include <commonlib_math_utils.h>
 #include <commonlib_collide.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_game_object_presenter.h>
 #include <botlib_player.h>
 #include <botlib_game_map.h>
@@ -310,7 +310,7 @@ void GameMap::presentObjs()
     };
     constexpr int presentTypeCount = 3;
 
-    SimpleShaderProgram& program = Graphics::getInstance().simpleShader();
+    SimpleShaderProgram& program = Context::graphics().simpleShader();
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
@@ -324,7 +324,7 @@ void GameMap::presentObjs()
 
 void GameMap::presentParticleEffects()
 {
-    ParticleShaderProgram& program = Graphics::getInstance().particleShader();
+    ParticleShaderProgram& program = Context::graphics().particleShader();
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);

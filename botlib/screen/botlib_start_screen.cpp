@@ -2,7 +2,7 @@
 #include <commonlib_log.h>
 #include <commonlib_string_utils.h>
 #include <botlib_button.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_start_screen_config.h>
 #include <botlib_start_screen.h>
 
@@ -91,7 +91,7 @@ void StartScreen::initWidgets(const commonlib::Vector2& viewportSize)
 
 void StartScreen::prepareShader(const commonlib::Vector2& viewportSize)
 {
-    SimpleShaderProgram& shader = Graphics::getInstance().simpleShader();
+    SimpleShaderProgram& shader = Context::graphics().simpleShader();
 
     shader.use();
     shader.setViewportOrigin(viewportSize / 2.0f);

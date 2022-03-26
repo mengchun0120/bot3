@@ -11,10 +11,10 @@ namespace botlib {
 
 class AppConfig {
 public:
-    inline static const AppConfig& getInstance();
+    inline static const AppConfig& instance();
 
-    static void initInstance(const std::string& fileName,
-                             const std::string& appDir);
+    static void init(const std::string& fileName,
+                     const std::string& appDir);
 
     AppConfig(const std::string& fileName,
               const std::string& appDir);
@@ -125,7 +125,7 @@ private:
     unsigned int timeDeltaHistoryLen_;
 };
 
-const AppConfig& AppConfig::getInstance()
+const AppConfig& AppConfig::instance()
 {
     return *k_instance;
 }
