@@ -11,8 +11,6 @@ namespace botlib {
 
 class HPIndicator {
 public:
-    static void initConfig(const std::string& cfgFile);
-
     HPIndicator() = default;
 
     ~HPIndicator() = default;
@@ -25,12 +23,6 @@ public:
     void shiftPos(const commonlib::Vector2& delta);
 
 private:
-    static void readColors(const std::string& cfgFile);
-
-    static void validateColors();
-
-    static void initSize();
-
     void setPos(const commonlib::Vector2& pos);
 
     void setHPPercent(float hpPercent);
@@ -38,15 +30,9 @@ private:
     void resetColor(float hpPercent);
 
 private:
-    static std::vector<commonlib::Color> k_colors;
-    static constexpr TextSize k_textSize = TextSize::TINY;
-    static constexpr int k_hpLevelCount = 3;
-    static float k_hpLevels[];
-    static float k_halfHeight;
-
     commonlib::Vector2 pos_;
     std::string hpPercentStr_;
-    commonlib::Color* color_;
+    const commonlib::Color* color_;
 };
 
 } // end of namespace botlib

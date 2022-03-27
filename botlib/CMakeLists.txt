@@ -25,6 +25,7 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_game_object_state.cpp
     gameobj/botlib_game_object_type.cpp
     gameobj/botlib_hp_indicator.cpp
+    gameobj/botlib_hp_indicator_config.cpp
     gameobj/botlib_missile.cpp
     gameobj/botlib_particle_effect.cpp
     gameobj/botlib_player.cpp

@@ -13,47 +13,6 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-std::vector<commonlib::Color> HPIndicator::k_colors;
-
-float HPIndicator::k_hpLevels[] = {
-    0.4f, 0.15f, 0.0f
-};
-
-float HPIndicator::k_halfHeight;
-
-void HPIndicator::initConfig(const std::string& cfgFile)
-{
-    readColors(cfgFile);
-    validateColors();
-    initSize();
-}
-
-void HPIndicator::readColors(const std::string& cfgFile)
-{
-    rapidjson::Document doc;
-    readJson(doc, cfgFile);
-
-    std::vector<JsonParamPtr> params{
-        jsonParam(k_colors, "colors")
-    };
-
-    parse(params, doc);
-}
-
-void HPIndicator::validateColors()
-{
-    if (k_colors.size() != k_hpLevelCount)
-    {
-        THROW_EXCEPT(ParseException, "Invalid size for HPIndicator::k_colors");
-    }
-}
-
-void HPIndicator::initSize()
-{
-    Graphics& g = Context::graphics();
-    k_halfHeight = g.textSys().getHeight(k_textSize) / 2.0f;
-}
-
 void HPIndicator::reset(const commonlib::Vector2& pos,
                         float hpPercent)
 {
@@ -64,9 +23,10 @@ void HPIndicator::reset(const commonlib::Vector2& pos,
 void HPIndicator::present() const
 {
     Graphics& g = Context::graphics();
+    HPIndicatorConfig hpCfg = Context::hpIndicatorConfig();
 
     g.textSys().draw(g.simpleShader(), hpPercentStr_, pos_,
-                             k_textSize, color_);
+                     hpCfg.textSize(), color_);
 }
 
 void HPIndicator::shiftPos(const commonlib::Vector2& delta)
@@ -77,10 +37,11 @@ void HPIndicator::shiftPos(const commonlib::Vector2& delta)
 void HPIndicator::setPos(const commonlib::Vector2& pos)
 {
     Graphics& g = Context::graphics();
+    HPIndicatorConfig hpCfg = Context::hpIndicatorConfig();
 
-    pos_[1] = pos[1] - k_halfHeight;
+    pos_[1] = pos[1] - hpCfg.halfHeight();
 
-    float width = g.textSys().getWidth(hpPercentStr_, k_textSize);
+    float width = g.textSys().getWidth(hpPercentStr_, hpCfg.textSize());
     pos_[0] = pos[0] - width/2.0f;
 }
 
@@ -102,16 +63,8 @@ void HPIndicator::setHPPercent(float hpPercent)
 
 void HPIndicator::resetColor(float hpPercent)
 {
-    int level;
-    for (level = 0; level < k_hpLevelCount; ++level)
-    {
-        if (hpPercent >= k_hpLevels[level])
-        {
-            break;
-        }
-    }
-
-    color_ = &k_colors[level];
+    HPIndicatorConfig hpCfg = Context::hpIndicatorConfig();
+    color_ = hpCfg.color(hpPercent);
 }
 
 } // end of namespace botlib

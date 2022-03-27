@@ -82,8 +82,6 @@ void TestGameScreenApp::setupGame()
 {
     const AppConfig& cfg = AppConfig::instance();
 
-    HPIndicator::initConfig(cfg.hpIndicatorConfigFile());
-
     deltaSmoother_.init(cfg.timeDeltaHistoryLen());
     deltaSmoother_.start();
 }

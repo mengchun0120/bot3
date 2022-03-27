@@ -12,6 +12,8 @@ Graphics::Graphics(const AppConfig& cfg)
     particleShader_.init(cfg.particleVertexShaderFiles(),
                          cfg.particleFragShaderFiles());
     textSys_.load(cfg.fontDir());
+
+    LOG_INFO << "Graphics created successfully" << LOG_END;
 }
 
 } // end of namespace botlib

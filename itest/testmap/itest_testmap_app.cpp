@@ -23,17 +23,8 @@ TestMapApp::TestMapApp(const std::string& configFile,
     const AppConfig& cfg = AppConfig::instance();
 
     Context::init(cfg);
-    HPIndicator::initConfig(cfg.hpIndicatorConfigFile());
-
-    LOG_INFO << "HPIndicator" << LOG_END;
-
     setupOpenGL();
-
-    LOG_INFO << "setupOpenGL" << LOG_END;
-
     setupMap(mapFile);
-
-    LOG_INFO << "setupMap" << LOG_END;
 }
 
 void TestMapApp::preProcess()

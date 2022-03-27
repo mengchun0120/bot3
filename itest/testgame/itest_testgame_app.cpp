@@ -21,8 +21,6 @@ TestGameApp::TestGameApp(const std::string& configFile,
     const AppConfig& cfg = AppConfig::instance();
 
     Context::init(cfg);
-    HPIndicator::initConfig(cfg.hpIndicatorConfigFile());
-
     setupOpenGL();
     setupDeltaSmoother();
     setupMap(mapFile);

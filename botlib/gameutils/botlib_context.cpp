@@ -1,5 +1,6 @@
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
+#include <botlib_app_config.h>
 #include <botlib_context.h>
 
 using namespace mcdane::commonlib;
@@ -23,6 +24,7 @@ void Context::init(const AppConfig& cfg)
 Context::Context(const AppConfig& cfg)
     : graphics_(cfg)
     , gameLib_(cfg)
+    , hpIndicatorConfig_(graphics_, cfg.hpIndicatorConfigFile())
 {
     LOG_INFO << "Context initialized successfully" << LOG_END;
 }
