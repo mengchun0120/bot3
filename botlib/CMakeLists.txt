@@ -81,6 +81,7 @@ set(BOTLIB_TEMPLATE_SRC
 set(BOTLIB_WIDGET_SRC
     widget/botlib_align.cpp
     widget/botlib_button.cpp
+    widget/botlib_button_config.cpp
     widget/botlib_label.cpp
     widget/botlib_message_box.cpp
     widget/botlib_widget.cpp

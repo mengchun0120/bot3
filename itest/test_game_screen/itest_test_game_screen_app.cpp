@@ -18,7 +18,6 @@ TestGameScreenApp::TestGameScreenApp(const std::string& configFile,
     setupWindow();
     Context::init(AppConfig::instance());
     setupOpenGL();
-    setupWidget();
     setupActions();
     setupGame();
     setupScreen(mapFile);
@@ -59,13 +58,6 @@ void TestGameScreenApp::setupOpenGL()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-}
-
-void TestGameScreenApp::setupWidget()
-{
-    const AppConfig& cfg = AppConfig::instance();
-
-    Button::initConfig(cfg.buttonConfigFile(), cfg.picDir());
 }
 
 void TestGameScreenApp::setupActions()

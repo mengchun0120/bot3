@@ -57,7 +57,6 @@ void BotApp::init(const std::string& configFile,
 #endif
     Context::init(cfg);
     setupOpenGL(cfg);
-    setupWidget(cfg);
     setupActions();
     setupScreen(cfg.startScreenConfigFile(), mapFile);
     setupInput(cfg);
@@ -68,11 +67,6 @@ void BotApp::setupOpenGL(const AppConfig& cfg)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-}
-
-void BotApp::setupWidget(const AppConfig& cfg)
-{
-    Button::initConfig(cfg.buttonConfigFile(), cfg.picDir());
 }
 
 void BotApp::setupActions()

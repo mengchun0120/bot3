@@ -5,6 +5,7 @@
 #include <botlib_graphics.h>
 #include <botlib_game_lib.h>
 #include <botlib_hp_indicator_config.h>
+#include <botlib_button_config.h>
 
 namespace mcdane {
 namespace botlib {
@@ -21,6 +22,8 @@ public:
 
     inline static const HPIndicatorConfig& hpIndicatorConfig();
 
+    inline static const ButtonConfig& buttonConfig();
+
     ~Context() = default;
 
 private:
@@ -32,6 +35,7 @@ private:
     Graphics graphics_;
     GameLib gameLib_;
     HPIndicatorConfig hpIndicatorConfig_;
+    ButtonConfig buttonConfig_;
 };
 
 Graphics& Context::graphics()
@@ -47,6 +51,11 @@ const GameLib& Context::gameLib()
 const HPIndicatorConfig& Context::hpIndicatorConfig()
 {
     return k_context->hpIndicatorConfig_;
+}
+
+const ButtonConfig& Context::buttonConfig()
+{
+    return k_context->buttonConfig_;
 }
 
 } // end of namespace botlib

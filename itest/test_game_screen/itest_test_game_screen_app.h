@@ -28,8 +28,6 @@ private:
 
     void setupOpenGL();
 
-    void setupWidget();
-
     void setupActions();
 
     void setupGame();

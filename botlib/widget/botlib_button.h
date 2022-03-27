@@ -16,10 +16,14 @@ class Button: public Widget {
 public:
     using ActionFunc = std::function<void()>;
 
-public:
-    static void initConfig(const std::string& configFile,
-                           const std::string& picDir);
+    enum State {
+        STATE_NORMAL,
+        STATE_HOVER,
+        STATE_PRESSED,
+        STATE_COUNT
+    };
 
+public:
     Button();
 
     Button(float x,
@@ -65,21 +69,9 @@ public:
 #endif
 
 private:
-    static void validateTextColor();
-
     void resetTextPos();
 
 private:
-    enum State {
-        STATE_NORMAL,
-        STATE_HOVER,
-        STATE_PRESSED,
-        STATE_COUNT
-    };
-
-    static std::vector<commonlib::Color> k_textColors;
-    static commonlib::Texture k_texture;
-
     std::string text_;
     commonlib::Vector2 textPos_;
     State state_;

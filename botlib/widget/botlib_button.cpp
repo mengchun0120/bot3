@@ -4,45 +4,11 @@
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
 #include <botlib_context.h>
-#include <botlib_button.h>
 
 using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
-
-std::vector<Color> Button::k_textColors;
-Texture Button::k_texture;
-
-void Button::initConfig(const std::string& configFile,
-                        const std::string& picDir)
-{
-    rapidjson::Document doc;
-    readJson(doc, configFile);
-
-    std::string textureFile;
-    std::vector<JsonParamPtr> params{
-        jsonParam(k_textColors, {"textColor"}),
-        jsonParam(textureFile, {"texture"}, true, k_nonEmptyStrV)
-    };
-
-    parse(params, doc);
-
-    validateTextColor();
-
-    textureFile = constructPath({picDir, textureFile});
-    k_texture.init(textureFile);
-
-    LOG_INFO << "Button config finished successfully" << LOG_END;
-}
-
-void Button::validateTextColor()
-{
-    if (k_textColors.size() != STATE_COUNT)
-    {
-        THROW_EXCEPT(MyException, "Size of textColor is invalid");
-    }
-}
 
 Button::Button()
     : state_(STATE_NORMAL)
@@ -93,11 +59,12 @@ void Button::present() const
     Graphics& g = Context::graphics();
     SimpleShaderProgram& program = g.simpleShader();
     const TextSystem& textSys = g.textSys();
+    const ButtonConfig& cfg = Context::buttonConfig();
 
     rect_.draw(program, &pos_, nullptr, nullptr, nullptr,
-               k_texture.id(), nullptr);
+               cfg.texture().id(), nullptr);
 
-    textSys.draw(program, text_, textPos_, textSize_, &k_textColors[state_]);
+    textSys.draw(program, text_, textPos_, textSize_, cfg.textColor(state_));
 }
 
 void Button::setText(const std::string &text)

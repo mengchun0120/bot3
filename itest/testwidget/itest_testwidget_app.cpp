@@ -22,9 +22,6 @@ TestWidgetApp::TestWidgetApp(const std::string& configFile,
 
     Context::init(cfg);
 
-    Button::initConfig(cfg.buttonConfigFile(),
-                       cfg.picDir());
-
     Label::initConfig(cfg.labelConfigFile());
     MessageBox::initConfig(cfg.messageBoxConfigFile());
 
