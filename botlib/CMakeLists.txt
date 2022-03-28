@@ -83,7 +83,9 @@ set(BOTLIB_WIDGET_SRC
     widget/botlib_button.cpp
     widget/botlib_button_config.cpp
     widget/botlib_label.cpp
+    widget/botlib_label_config.cpp
     widget/botlib_message_box.cpp
+    widget/botlib_message_box_config.cpp
     widget/botlib_widget.cpp
     widget/botlib_widget_group.cpp)
 

@@ -1,7 +1,5 @@
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
-#include <commonlib_json_utils.h>
-#include <commonlib_json_param.h>
 #include <botlib_context.h>
 #include <botlib_label.h>
 
@@ -9,26 +7,6 @@ using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
-
-Color Label::k_defaultTextColor;
-Color Label::k_defaultBackColor;
-Color Label::k_defaultBorderColor;
-
-void Label::initConfig(const std::string& configFile)
-{
-    rapidjson::Document doc;
-    readJson(doc, configFile);
-
-    std::vector<JsonParamPtr> params{
-        jsonParam(k_defaultTextColor, {"defaultTextColor"}),
-        jsonParam(k_defaultBackColor, {"defaultBackColor"}),
-        jsonParam(k_defaultBorderColor, {"defaultBorderColor"})
-    };
-
-    parse(params, doc);
-
-    LOG_INFO << "Label config initialized successfully" << LOG_END;
-}
 
 Label::Label(float x,
              float y,
@@ -38,19 +16,13 @@ Label::Label(float x,
              TextSize textSize,
              HAlign halign,
              VAlign valign,
-             const Color& textColor,
+             const Color* textColor,
              const Color* backColor,
              const Color* borderColor,
              bool visible)
 {
     init(x, y, width, height, text, textSize, halign, valign,
          textColor, backColor, borderColor, visible);
-}
-
-Label::~Label()
-{
-    delete backColor_;
-    delete borderColor_;
 }
 
 void Label::init(float x,
@@ -61,7 +33,7 @@ void Label::init(float x,
                  TextSize textSize,
                  HAlign halign,
                  VAlign valign,
-                 const Color& textColor,
+                 const Color* textColor,
                  const Color* backColor,
                  const Color* borderColor,
                  bool visible)
@@ -87,25 +59,7 @@ void Label::init(float x,
     halign_ = halign;
     valign_ = valign;
     updateTextPos();
-    textColor_ = textColor;
-
-    if (backColor)
-    {
-        backColor_ = new Color(*backColor);
-    }
-    else
-    {
-        backColor_ = nullptr;
-    }
-
-    if (borderColor)
-    {
-        borderColor_ = new Color(*borderColor);
-    }
-    else
-    {
-        borderColor_ = nullptr;
-    }
+    initColors(textColor, backColor, borderColor);
 }
 
 void Label::setPos(float x,
@@ -129,7 +83,7 @@ void Label::present() const
     SimpleShaderProgram& program = g.simpleShader();
     const TextSystem& textSys = g.textSys();
 
-    rect_.draw(program, &pos_, nullptr, backColor_, borderColor_, 0, nullptr);
+    rect_.draw(program, &pos_, nullptr, &backColor_, &borderColor_, 0, nullptr);
     if (text_.size() > 0)
     {
         textSys.draw(program, text_, textPos_, textSize_, &textColor_);
@@ -194,6 +148,17 @@ void Label::updateTextPos()
 {
     textPos_[0] = calculateTextPosX();
     textPos_[1] = calculateTextPosY();
+}
+
+void Label::initColors(const Color* textColor,
+                       const Color* backColor,
+                       const Color* borderColor)
+{
+    const LabelConfig& cfg = Context::labelConfig();
+
+    textColor_ = textColor ? *textColor : cfg.defaultTextColor();
+    backColor_ = backColor ? *backColor : cfg.defaultBackColor();
+    borderColor_ = borderColor ? *borderColor : cfg.defaultBorderColor();
 }
 
 float Label::calculateTextPosX()

@@ -21,10 +21,6 @@ TestWidgetApp::TestWidgetApp(const std::string& configFile,
     const AppConfig& cfg = AppConfig::instance();
 
     Context::init(cfg);
-
-    Label::initConfig(cfg.labelConfigFile());
-    MessageBox::initConfig(cfg.messageBoxConfigFile());
-
     setupOpenGL();
     setupWidgets();
     setupInput();

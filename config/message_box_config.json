@@ -5,5 +5,6 @@
     "buttonMarginY": 20.0,
     "buttonSpacing": 20.0,
     "buttonWidth": 100.0,
-    "buttonHeight": 60.0
+    "buttonHeight": 60.0,
+    "messageBorderColor": [211, 211, 211, 255]
 }

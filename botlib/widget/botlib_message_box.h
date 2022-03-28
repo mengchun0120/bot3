@@ -17,8 +17,6 @@ public:
         BUTTON_CANCEL = 2
     };
 
-    static void initConfig(const std::string& configFile);
-
     MessageBox() = default;
 
     MessageBox(float x,
@@ -92,14 +90,6 @@ private:
         IDX_CANCEL,
         WIDGET_COUNT
     };
-
-    static float k_messageMarginX;
-    static float k_messageMarginY;
-    static float k_messageHeight;
-    static float k_buttonMarginY;
-    static float k_buttonSpacing;
-    static float k_buttonWidth;
-    static float k_buttonHeight;
 
     commonlib::Vector2 pos_;
     commonlib::Vector2 size_;

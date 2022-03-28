@@ -2,40 +2,13 @@
 #include <commonlib_log.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
+#include <botlib_context.h>
 #include <botlib_message_box.h>
 
 using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
-
-float MessageBox::k_messageMarginX;
-float MessageBox::k_messageMarginY;
-float MessageBox::k_messageHeight;
-float MessageBox::k_buttonMarginY;
-float MessageBox::k_buttonSpacing;
-float MessageBox::k_buttonWidth;
-float MessageBox::k_buttonHeight;
-
-void MessageBox::initConfig(const std::string& configFile)
-{
-    rapidjson::Document doc;
-    readJson(doc, configFile);
-
-    std::vector<JsonParamPtr> params{
-        jsonParam(k_messageMarginX, {"messageMarginX"}, true, gt(0.0f)),
-        jsonParam(k_messageMarginY, {"messageMarginY"}, true, gt(0.0f)),
-        jsonParam(k_messageHeight, {"messageHeight"}, true, gt(0.0f)),
-        jsonParam(k_buttonMarginY, {"buttonMarginY"}, true, gt(0.0f)),
-        jsonParam(k_buttonSpacing, {"buttonSpacing"}, true, gt(0.0f)),
-        jsonParam(k_buttonWidth, {"buttonWidth"}, true, gt(0.0f)),
-        jsonParam(k_buttonHeight, {"buttonHeight"}, true, gt(0.0f))
-    };
-
-    parse(params, doc);
-
-    LOG_INFO << "MessageBox config initialized successfully" << LOG_END;
-}
 
 MessageBox::MessageBox(float x,
                        float y,
@@ -106,23 +79,27 @@ void MessageBox::initBack()
 
 void MessageBox::initMessage(const std::string& msg)
 {
-    float msgY = y() + height()/2.0f - k_messageMarginY - k_messageHeight/2.0f;
-    float msgWidth = width() - 2.0f * k_messageMarginX;
-    Label* box = new Label(x(), msgY, msgWidth, k_messageHeight, msg,
+    const MessageBoxConfig& cfg = Context::msgBoxConfig();
+
+    float msgY = y() + height()/2.0f - cfg.messageMarginY() - cfg.messageHeight()/2.0f;
+    float msgWidth = width() - 2.0f * cfg.messageMarginX();
+    Label* box = new Label(x(), msgY, msgWidth, cfg.messageHeight(), msg,
                            TextSize::SMALL, HAlign::MIDDLE, VAlign::MIDDLE,
-                           Label::defaultTextColor(), nullptr, nullptr);
+                           nullptr, nullptr, &cfg.messageBorderColor());
     widgets_.setWidget(IDX_MSG, box);
 }
 
 void MessageBox::initButtons(int buttons)
 {
-    Button* okButton = new Button(0.0f, 0.0f, k_buttonWidth, k_buttonHeight,
+    const MessageBoxConfig& cfg = Context::msgBoxConfig();
+
+    Button* okButton = new Button(0.0f, 0.0f, cfg.buttonWidth(), cfg.buttonHeight(),
                                   "OK", TextSize::SMALL, false);
     Button::ActionFunc okAct = std::bind(&MessageBox::onOKClicked, this);
     okButton->setActionFunc(okAct);
     widgets_.setWidget(IDX_OK, okButton);
 
-    Button* cancelButton = new Button(0.0f, 0.0f, k_buttonWidth, k_buttonHeight,
+    Button* cancelButton = new Button(0.0f, 0.0f, cfg.buttonWidth(), cfg.buttonHeight(),
                                       "Cancel", TextSize::SMALL, false);
     Button::ActionFunc cancelAct = std::bind(&MessageBox::onCancelClicked,
                                              this);
@@ -162,16 +139,18 @@ void MessageBox::onCancelClicked()
 
 void MessageBox::configButtons(int buttons)
 {
+    const MessageBoxConfig& cfg = Context::msgBoxConfig();
+
     int buttonCount = getButtonCount(buttons);
-    float buttonY = y() - height()/2.0f + k_buttonMarginY + k_buttonHeight/2.0f;
-    float buttonMarginX = (width() - buttonCount * k_buttonWidth -
-                           (buttonCount - 1) * k_buttonSpacing) / 2.0f;
-    float buttonX = x() - width()/2.0f + buttonMarginX + k_buttonWidth / 2.0f;
+    float buttonY = y() - height()/2.0f + cfg.buttonMarginY() + cfg.buttonHeight()/2.0f;
+    float buttonMarginX = (width() - buttonCount * cfg.buttonWidth() -
+                           (buttonCount - 1) * cfg.buttonSpacing()) / 2.0f;
+    float buttonX = x() - width()/2.0f + buttonMarginX + cfg.buttonWidth() / 2.0f;
 
     if (buttons & BUTTON_OK)
     {
         showButton(IDX_OK, buttonX, buttonY);
-        buttonX += k_buttonWidth + k_buttonSpacing;
+        buttonX += cfg.buttonWidth() + cfg.buttonSpacing();
     }
     else
     {

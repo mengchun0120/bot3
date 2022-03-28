@@ -26,6 +26,8 @@ Context::Context(const AppConfig& cfg)
     , gameLib_(cfg)
     , hpIndicatorConfig_(graphics_, cfg.hpIndicatorConfigFile())
     , buttonConfig_(cfg.buttonConfigFile(), cfg.picDir())
+    , labelConfig_(cfg.labelConfigFile())
+    , msgBoxConfig_(cfg.messageBoxConfigFile())
 {
     LOG_INFO << "Context initialized successfully" << LOG_END;
 }

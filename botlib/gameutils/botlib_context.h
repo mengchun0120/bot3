@@ -6,6 +6,8 @@
 #include <botlib_game_lib.h>
 #include <botlib_hp_indicator_config.h>
 #include <botlib_button_config.h>
+#include <botlib_label_config.h>
+#include <botlib_message_box_config.h>
 
 namespace mcdane {
 namespace botlib {
@@ -24,6 +26,10 @@ public:
 
     inline static const ButtonConfig& buttonConfig();
 
+    inline static const LabelConfig& labelConfig();
+
+    inline static const MessageBoxConfig& msgBoxConfig();
+
     ~Context() = default;
 
 private:
@@ -36,6 +42,8 @@ private:
     GameLib gameLib_;
     HPIndicatorConfig hpIndicatorConfig_;
     ButtonConfig buttonConfig_;
+    LabelConfig labelConfig_;
+    MessageBoxConfig msgBoxConfig_;
 };
 
 Graphics& Context::graphics()
@@ -56,6 +64,16 @@ const HPIndicatorConfig& Context::hpIndicatorConfig()
 const ButtonConfig& Context::buttonConfig()
 {
     return k_context->buttonConfig_;
+}
+
+const LabelConfig& Context::labelConfig()
+{
+    return k_context->labelConfig_;
+}
+
+const MessageBoxConfig& Context::msgBoxConfig()
+{
+    return k_context->msgBoxConfig_;
 }
 
 } // end of namespace botlib
