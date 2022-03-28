@@ -8,7 +8,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void StartScreenConfig::init(const std::string& cfgFile)
+StartScreenConfig::StartScreenConfig(const std::string& cfgFile)
 {
     rapidjson::Document doc;
     readJson(doc, cfgFile);

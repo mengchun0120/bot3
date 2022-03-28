@@ -8,9 +8,7 @@ namespace botlib {
 
 class StartScreenConfig {
 public:
-    StartScreenConfig() = default;
-
-    void init(const std::string& cfgFile);
+    StartScreenConfig(const std::string& configFile);
 
     inline float buttonWidth() const;
 

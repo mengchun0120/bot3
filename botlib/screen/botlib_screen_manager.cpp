@@ -24,7 +24,6 @@ ScreenManager::~ScreenManager()
 void ScreenManager::init(ScreenType startScreenType,
                          const commonlib::Vector2& viewportSize,
                          const AppActions& actions,
-                         const std::string& startScreenCfgFile,
                          const std::string& mapFile)
 {
     curScreenType_ = startScreenType;
@@ -32,7 +31,6 @@ void ScreenManager::init(ScreenType startScreenType,
     actions_ = actions;
     prevScreen_ = nullptr;
     curScreen_ = createScreen(startScreenType);
-    startScreenConfig_.init(startScreenCfgFile);
     gameScreenConfig_.init(mapFile);
 }
 
@@ -94,7 +92,7 @@ Screen* ScreenManager::createScreen(ScreenType screenType)
     switch(screenType)
     {
         case ScreenType::START:
-            screen = new StartScreen(viewportSize_, actions_, &startScreenConfig_);
+            screen = new StartScreen(viewportSize_, actions_);
             break;
         case ScreenType::GAME:
             screen = new GameScreen(viewportSize_, actions_, gameScreenConfig_);

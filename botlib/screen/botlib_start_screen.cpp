@@ -12,10 +12,8 @@ namespace mcdane {
 namespace botlib {
 
 StartScreen::StartScreen(const commonlib::Vector2& viewportSize,
-                         const AppActions& actions,
-                         const StartScreenConfig* cfg)
+                         const AppActions& actions)
     : Screen(actions)
-    , cfg_(cfg)
 {
     if (viewportSize[0] <= 0.0f || viewportSize[1] <= 0.0f)
     {
@@ -68,19 +66,20 @@ void StartScreen::initWidgets(const commonlib::Vector2& viewportSize)
         std::bind(&StartScreen::exitGame, this)
     };
     unsigned int numButtons = buttonTexts.size();
-    float totalHeight = numButtons * cfg_->buttonHeight() +
-                        (numButtons - 1.0f) * cfg_->buttonSpacing();
+    const StartScreenConfig& cfg = Context::startScreenConfig();
+    float totalHeight = numButtons * cfg.buttonHeight() +
+                        (numButtons - 1.0f) * cfg.buttonSpacing();
     float x = viewportSize[0] / 2.0f;
-    float y = (viewportSize[1] + totalHeight - cfg_->buttonHeight()) / 2.0f;
-    float deltaY = cfg_->buttonHeight() + cfg_->buttonSpacing();
+    float y = (viewportSize[1] + totalHeight - cfg.buttonHeight()) / 2.0f;
+    float deltaY = cfg.buttonHeight() + cfg.buttonSpacing();
 
     widgets_.init(numButtons);
     for (unsigned int i = 0; i < numButtons; ++i)
     {
         Button* button = new Button(x,
                                     y,
-                                    cfg_->buttonWidth(),
-                                    cfg_->buttonHeight(),
+                                    cfg.buttonWidth(),
+                                    cfg.buttonHeight(),
                                     buttonTexts[i]);
         button->setActionFunc(actions[i]);
         widgets_.setWidget(i, button);

@@ -8,13 +8,10 @@
 namespace mcdane {
 namespace botlib {
 
-class StartScreenConfig;
-
 class StartScreen: public Screen {
 public:
     StartScreen(const commonlib::Vector2& viewportSize,
-                const AppActions& actions,
-                const StartScreenConfig* cfg);
+                const AppActions& actions);
 
     ~StartScreen() override;
 
@@ -44,7 +41,6 @@ private:
 #endif
 
 private:
-    const StartScreenConfig* cfg_;
     WidgetGroup widgets_;
 };
 

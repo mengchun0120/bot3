@@ -58,7 +58,7 @@ void BotApp::init(const std::string& configFile,
     Context::init(cfg);
     setupOpenGL(cfg);
     setupActions();
-    setupScreen(cfg.startScreenConfigFile(), mapFile);
+    setupScreen(mapFile);
     setupInput(cfg);
 }
 
@@ -79,13 +79,11 @@ void BotApp::setupActions()
 }
 
 
-void BotApp::setupScreen(const std::string& startScreenCfgFile,
-                         const std::string& mapFile)
+void BotApp::setupScreen(const std::string& mapFile)
 {
     screenManager_.init(ScreenType::START,
                         viewportSize(),
                         actions_,
-                        startScreenCfgFile,
                         mapFile);
 }
 

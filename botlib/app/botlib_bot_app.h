@@ -41,8 +41,7 @@ private:
 
     void setupActions();
 
-    void setupScreen(const std::string& startScreenCfgFile,
-                     const std::string& mapFile);
+    void setupScreen(const std::string& mapFile);
 
     void setupInput(const AppConfig& cfg);
 

@@ -18,7 +18,6 @@ public:
     void init(ScreenType startScreenType,
               const commonlib::Vector2& viewportSize,
               const AppActions& actions,
-              const std::string& startScreenCfgFile,
               const std::string& mapFile);
 
     void update();
@@ -45,7 +44,6 @@ private:
     ScreenType curScreenType_;
     commonlib::Vector2 viewportSize_;
     AppActions actions_;
-    StartScreenConfig startScreenConfig_;
     GameScreenConfig gameScreenConfig_;
 };
 
