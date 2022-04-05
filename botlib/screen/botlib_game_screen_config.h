@@ -8,15 +8,12 @@ namespace botlib {
 
 class GameScreenConfig {
 public:
-    GameScreenConfig() = default;
-
-    GameScreenConfig(const GameScreenConfig& other) = default;
-
-    void init(const std::string& mapFile1);
-
-    GameScreenConfig& operator=(const GameScreenConfig& other) = default;
+    GameScreenConfig(const std::string& configFile);
 
     inline const std::string& mapFile() const;
+
+private:
+    void init(const std::string& configFile);
 
 private:
     std::string mapFile_;

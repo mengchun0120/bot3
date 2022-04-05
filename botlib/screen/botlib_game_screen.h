@@ -2,7 +2,6 @@
 #define INCLUDED_BOTLIB_GAME_SCREEN_H
 
 #include <commonlib_vector.h>
-#include <botlib_game_screen_config.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -13,14 +12,12 @@ public:
     GameScreen() = default;
 
     GameScreen(const commonlib::Vector2& viewportSize,
-               const AppActions actions,
-               const GameScreenConfig& cfg);
+               const AppActions actions);
 
     ~GameScreen() override;
 
     void init(const commonlib::Vector2& viewportSize,
-              const AppActions actions,
-              const GameScreenConfig& cfg);
+              const AppActions actions);
 
     void update() override;
 
@@ -34,9 +31,6 @@ private:
     bool processMouseMove(const commonlib::MouseMoveEvent& e);
 
     bool processKey(const commonlib::KeyEvent& e);
-
-private:
-    GameScreenConfig cfg_;
 };
 
 } // end of namespace botlib

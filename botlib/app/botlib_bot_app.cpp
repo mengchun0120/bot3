@@ -12,11 +12,10 @@ namespace mcdane {
 namespace botlib {
 
 BotApp::BotApp(const std::string& configFile,
-               const std::string& appDir,
-               const std::string& mapFile)
+               const std::string& appDir)
     : App()
 {
-    init(configFile, appDir, mapFile);
+    init(configFile, appDir);
 }
 
 BotApp::~BotApp()
@@ -47,8 +46,7 @@ void BotApp::postProcess()
 
 
 void BotApp::init(const std::string& configFile,
-                  const std::string& appDir,
-                  const std::string& mapFile)
+                  const std::string& appDir)
 {
     AppConfig::init(configFile, appDir);
     const AppConfig& cfg = AppConfig::instance();
@@ -58,7 +56,7 @@ void BotApp::init(const std::string& configFile,
     Context::init(cfg);
     setupOpenGL(cfg);
     setupActions();
-    setupScreen(mapFile);
+    setupScreen();
     setupInput(cfg);
 }
 
@@ -79,12 +77,11 @@ void BotApp::setupActions()
 }
 
 
-void BotApp::setupScreen(const std::string& mapFile)
+void BotApp::setupScreen()
 {
     screenManager_.init(ScreenType::START,
                         viewportSize(),
-                        actions_,
-                        mapFile);
+                        actions_);
 }
 
 void BotApp::setupInput(const AppConfig& cfg)

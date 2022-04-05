@@ -11,8 +11,7 @@ namespace mcdane {
 namespace itest {
 
 TestGameScreenApp::TestGameScreenApp(const std::string& configFile,
-                                     const std::string& appDir,
-                                     const std::string& mapFile)
+                                     const std::string& appDir)
 {
     AppConfig::init(configFile, appDir);
     setupWindow();
@@ -20,7 +19,7 @@ TestGameScreenApp::TestGameScreenApp(const std::string& configFile,
     setupOpenGL();
     setupActions();
     setupGame();
-    setupScreen(mapFile);
+    setupScreen();
     setupInput();
 }
 
@@ -78,12 +77,9 @@ void TestGameScreenApp::setupGame()
     deltaSmoother_.start();
 }
 
-void TestGameScreenApp::setupScreen(const std::string& mapFile)
+void TestGameScreenApp::setupScreen()
 {
-    GameScreenConfig cfg;
-
-    cfg.init(mapFile);
-    screen_.init(viewportSize(), actions_, cfg);
+    screen_.init(viewportSize(), actions_);
 }
 
 void TestGameScreenApp::setupInput()

@@ -65,13 +65,14 @@ void AppConfig::loadBasics(const rapidjson::Document& doc)
 void AppConfig::loadDirectories(const rapidjson::Document& doc,
                                 const std::string& appDir)
 {
-    std::vector<std::string> fontDir, picDir, glslDir, configDir, libDir;
+    std::vector<std::string> fontDir, picDir, glslDir, configDir, libDir, mapDir;
     std::vector<JsonParamPtr> params{
         jsonParam(fontDir, {"directories", "fontDir"}, true, k_nonEmptyStrVecV),
         jsonParam(picDir, {"directories", "picDir"}, true, k_nonEmptyStrVecV),
         jsonParam(glslDir, {"directories", "glslDir"}, true, k_nonEmptyStrVecV),
         jsonParam(configDir, {"directories", "configDir"}, true, k_nonEmptyStrVecV),
-        jsonParam(libDir, {"directories", "libDir"}, true, k_nonEmptyStrVecV)
+        jsonParam(libDir, {"directories", "libDir"}, true, k_nonEmptyStrVecV),
+        jsonParam(mapDir, {"directories", "mapDir"}, true, k_nonEmptyStrVecV)
     };
 
     parse(params, doc);
@@ -81,6 +82,7 @@ void AppConfig::loadDirectories(const rapidjson::Document& doc,
     glslDir_ = constructPath(appDir, glslDir);
     configDir_ = constructPath(appDir, configDir);
     libDir_ = constructPath(appDir, libDir);
+    mapDir_ = constructPath(appDir, mapDir);
 }
 
 void AppConfig::loadShaderFiles(const rapidjson::Document& doc)
@@ -132,6 +134,8 @@ void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
                   true, k_nonEmptyStrV),
         jsonParam(startScreenConfigFile_, {"configs", "startScreenConfigFile"},
                   true, k_nonEmptyStrV),
+        jsonParam(gameScreenConfigFile_, {"configs", "gameScreenConfigFile"},
+                  true, k_nonEmptyStrV),
         jsonParam(hpIndicatorConfigFile_, {"configs", "hpIndicatorConfigFile"},
                   true, k_nonEmptyStrV)
     };
@@ -142,6 +146,7 @@ void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
     labelConfigFile_ = constructPath({configDir_, labelConfigFile_});
     messageBoxConfigFile_ = constructPath({configDir_, messageBoxConfigFile_});
     startScreenConfigFile_ = constructPath({configDir_, startScreenConfigFile_});
+    gameScreenConfigFile_ = constructPath({configDir_, gameScreenConfigFile_});
     hpIndicatorConfigFile_ = constructPath({configDir_, hpIndicatorConfigFile_});
 }
 

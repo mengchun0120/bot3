@@ -12,8 +12,7 @@ namespace itest {
 class TestGameScreenApp: public commonlib::App {
 public:
     TestGameScreenApp(const std::string& configFile,
-                      const std::string& appDir,
-                      const std::string& mapFile);
+                      const std::string& appDir);
 
     ~TestGameScreenApp() = default;
 
@@ -32,7 +31,7 @@ private:
 
     void setupGame();
 
-    void setupScreen(const std::string& mapFile);
+    void setupScreen();
 
     void setupInput();
 

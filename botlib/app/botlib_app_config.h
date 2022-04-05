@@ -39,6 +39,8 @@ public:
 
     inline const std::string& libDir() const;
 
+    inline const std::string& mapDir() const;
+
     inline const std::vector<std::string>& simpleVertexShaderFiles() const;
 
     inline const std::vector<std::string>& simpleFragShaderFiles() const;
@@ -54,6 +56,8 @@ public:
     inline const std::string& messageBoxConfigFile() const;
 
     inline const std::string& startScreenConfigFile() const;
+
+    inline const std::string& gameScreenConfigFile() const;
 
     inline const std::string& hpIndicatorConfigFile() const;
 
@@ -104,6 +108,7 @@ private:
     std::string glslDir_;
     std::string configDir_;
     std::string libDir_;
+    std::string mapDir_;
     std::vector<std::string> simpleVertexShaderFiles_;
     std::vector<std::string> simpleFragShaderFiles_;
     std::vector<std::string> particleVertexShaderFiles_;
@@ -112,6 +117,7 @@ private:
     std::string labelConfigFile_;
     std::string messageBoxConfigFile_;
     std::string startScreenConfigFile_;
+    std::string gameScreenConfigFile_;
     std::string hpIndicatorConfigFile_;
     std::string textureLibFile_;
     std::string rectLibFile_;
@@ -175,6 +181,11 @@ const std::string& AppConfig::libDir() const
     return libDir_;
 }
 
+const std::string& AppConfig::mapDir() const
+{
+    return mapDir_;
+}
+
 const std::vector<std::string>& AppConfig::simpleVertexShaderFiles() const
 {
     return simpleVertexShaderFiles_;
@@ -213,6 +224,11 @@ const std::string& AppConfig::messageBoxConfigFile() const
 const std::string& AppConfig::startScreenConfigFile() const
 {
     return startScreenConfigFile_;
+}
+
+const std::string& AppConfig::gameScreenConfigFile() const
+{
+    return gameScreenConfigFile_;
 }
 
 const std::string& AppConfig::hpIndicatorConfigFile() const

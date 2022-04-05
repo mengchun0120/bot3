@@ -10,7 +10,8 @@
         "picDir": ["res", "pics"],
         "glslDir": ["res", "glsl"],
         "libDir": ["res", "libs"],
-        "configDir": ["config"]
+        "configDir": ["config"],
+        "mapDir": ["res", "maps"]
     },
     "shaders": {
         "simpleVertexShaderFiles": ["simple_vertex_shader.glsl"],
@@ -29,6 +30,7 @@
         "labelConfigFile": "label_config.json",
         "messageBoxConfigFile": "message_box_config.json",
         "startScreenConfigFile": "start_screen_config.json",
+        "gameScreenConfigFile": "game_screen_config.json",
         "hpIndicatorConfigFile": "hp_indicator_config.json"
     },
     "libraries": {

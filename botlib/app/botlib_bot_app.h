@@ -12,8 +12,7 @@ namespace botlib {
 class BotApp: public commonlib::App {
 public:
     BotApp(const std::string& configFile,
-           const std::string& appDir,
-           const std::string& mapFile);
+           const std::string& appDir);
 
     ~BotApp() override;
 
@@ -30,8 +29,7 @@ public:
 
 private:
     void init(const std::string& configFile,
-              const std::string& appDir,
-              const std::string& mapFile);
+              const std::string& appDir);
 
 #ifdef DESKTOP_APP
     void initWindow();
@@ -41,7 +39,7 @@ private:
 
     void setupActions();
 
-    void setupScreen(const std::string& mapFile);
+    void setupScreen();
 
     void setupInput(const AppConfig& cfg);
 

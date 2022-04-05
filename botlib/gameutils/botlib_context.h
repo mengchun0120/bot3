@@ -9,6 +9,7 @@
 #include <botlib_label_config.h>
 #include <botlib_message_box_config.h>
 #include <botlib_start_screen_config.h>
+#include <botlib_game_screen_config.h>
 
 namespace mcdane {
 namespace botlib {
@@ -33,6 +34,8 @@ public:
 
     inline static const StartScreenConfig& startScreenConfig();
 
+    inline static const GameScreenConfig& gameScreenConfig();
+
     ~Context() = default;
 
 private:
@@ -48,6 +51,7 @@ private:
     LabelConfig labelConfig_;
     MessageBoxConfig msgBoxConfig_;
     StartScreenConfig startScreenConfig_;
+    GameScreenConfig gameScreenConfig_;
 };
 
 Graphics& Context::graphics()
@@ -83,6 +87,11 @@ const MessageBoxConfig& Context::msgBoxConfig()
 const StartScreenConfig& Context::startScreenConfig()
 {
     return k_context->startScreenConfig_;
+}
+
+const GameScreenConfig& Context::gameScreenConfig()
+{
+    return k_context->gameScreenConfig_;
 }
 
 } // end of namespace botlib

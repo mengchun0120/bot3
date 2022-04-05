@@ -29,6 +29,7 @@ Context::Context(const AppConfig& cfg)
     , labelConfig_(cfg.labelConfigFile())
     , msgBoxConfig_(cfg.messageBoxConfigFile())
     , startScreenConfig_(cfg.startScreenConfigFile())
+    , gameScreenConfig_(cfg.gameScreenConfigFile())
 {
     LOG_INFO << "Context initialized successfully" << LOG_END;
 }

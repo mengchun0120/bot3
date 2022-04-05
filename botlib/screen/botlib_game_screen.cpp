@@ -8,10 +8,9 @@ namespace mcdane {
 namespace botlib {
 
 GameScreen::GameScreen(const Vector2& viewportSize,
-                       const AppActions actions,
-                       const GameScreenConfig& cfg)
+                       const AppActions actions)
 {
-    init(viewportSize, actions, cfg);
+    init(viewportSize, actions);
 }
 
 GameScreen::~GameScreen()
@@ -19,11 +18,9 @@ GameScreen::~GameScreen()
 }
 
 void GameScreen::init(const commonlib::Vector2& viewportSize,
-                      const AppActions actions,
-                      const GameScreenConfig& cfg)
+                      const AppActions actions)
 {
     Screen::init(actions);
-    cfg_ = cfg;
 
     if (viewportSize[0] <= 0.0f || viewportSize[1] <= 0.0f)
     {
