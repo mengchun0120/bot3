@@ -1,7 +1,7 @@
 #ifndef INCLUDED_BOTLIB_GAME_SCREEN_H
 #define INCLUDED_BOTLIB_GAME_SCREEN_H
 
-#include <commonlib_vector.h>
+#include <botlib_game_map.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -31,6 +31,9 @@ private:
     bool processMouseMove(const commonlib::MouseMoveEvent& e);
 
     bool processKey(const commonlib::KeyEvent& e);
+
+private:
+    GameMap map_;
 };
 
 } // end of namespace botlib

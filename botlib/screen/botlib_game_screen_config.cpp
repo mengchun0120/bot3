@@ -1,6 +1,8 @@
 #include <commonlib_log.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
+#include <commonlib_file_utils.h>
+#include <botlib_app_config.h>
 #include <botlib_game_screen_config.h>
 
 using namespace mcdane::commonlib;
@@ -23,6 +25,10 @@ void GameScreenConfig::init(const std::string& configFile)
     };
 
     parse(params, doc);
+
+    const AppConfig& cfg = AppConfig::instance();
+
+    mapFile_ = constructPath({cfg.mapDir(), mapFile_});
 
     LOG_INFO << "GameScreenConfig initialized successfully" << LOG_END;
 }

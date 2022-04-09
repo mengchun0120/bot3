@@ -1,5 +1,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
+#include <botlib_game_map_loader.h>
+#include <botlib_context.h>
 #include <botlib_game_screen.h>
 
 using namespace mcdane::commonlib;
@@ -17,7 +19,7 @@ GameScreen::~GameScreen()
 {
 }
 
-void GameScreen::init(const commonlib::Vector2& viewportSize,
+void GameScreen::init(const Vector2& viewportSize,
                       const AppActions actions)
 {
     Screen::init(actions);
@@ -27,6 +29,11 @@ void GameScreen::init(const commonlib::Vector2& viewportSize,
         THROW_EXCEPT(InvalidArgumentException,
                      "Invalid viewportSize " + stringVal(viewportSize));
     }
+
+    GameMapLoader loader(viewportSize[0], viewportSize[1]);
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+
+    loader.load(map_, cfg.mapFile());
 }
 
 void GameScreen::update()
@@ -35,6 +42,7 @@ void GameScreen::update()
 
 void GameScreen::present()
 {
+    map_.present();
 }
 
 bool GameScreen::processInput(const InputEvent &e)
@@ -56,17 +64,17 @@ bool GameScreen::processInput(const InputEvent &e)
     return true;
 }
 
-bool GameScreen::processMouseButton(const commonlib::MouseButtonEvent& e)
+bool GameScreen::processMouseButton(const MouseButtonEvent& e)
 {
     return true;
 }
 
-bool GameScreen::processMouseMove(const commonlib::MouseMoveEvent& e)
+bool GameScreen::processMouseMove(const MouseMoveEvent& e)
 {
     return true;
 }
 
-bool GameScreen::processKey(const commonlib::KeyEvent& e)
+bool GameScreen::processKey(const KeyEvent& e)
 {
     return true;
 }

@@ -86,6 +86,7 @@ void GameMap::addObj(GameObject* obj)
     if (isPlayer(obj))
     {
         player_ = static_cast<Player*>(obj);
+        setViewportOrigin(player_->x(), player_->y());
     }
 
     LOG_DEBUG << "addObj " << *obj << LOG_END;

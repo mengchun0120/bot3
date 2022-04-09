@@ -60,6 +60,8 @@ public:
 
     inline const Player* player() const;
 
+    inline Player* player();
+
     void setViewportOrigin(float x,
                            float y);
 
@@ -158,6 +160,11 @@ int GameMap::getCellIdx(float x) const
 }
 
 const Player* GameMap::player() const
+{
+    return player_;
+}
+
+Player* GameMap::player()
 {
     return player_;
 }
