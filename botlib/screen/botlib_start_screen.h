@@ -15,7 +15,7 @@ public:
 
     ~StartScreen() override;
 
-    void update() override;
+    void update(float delta) override;
 
     void present() override;
 

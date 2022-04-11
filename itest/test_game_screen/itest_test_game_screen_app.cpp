@@ -17,10 +17,7 @@ TestGameScreenApp::TestGameScreenApp(const std::string& configFile,
     setupWindow();
     Context::init(AppConfig::instance());
     setupOpenGL();
-    setupActions();
     setupGame();
-    setupScreen();
-    setupInput();
 }
 
 void TestGameScreenApp::preProcess()
@@ -35,7 +32,7 @@ void TestGameScreenApp::process()
 
     if (running())
     {
-        screen_.update();
+        screen_.update(deltaSmoother_.curTimeDelta());
         screen_.present();
     }
 }
@@ -59,6 +56,22 @@ void TestGameScreenApp::setupOpenGL()
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
+void TestGameScreenApp::setupGame()
+{
+    setupDeltaSmoother();
+    setupActions();
+    setupScreen();
+    setupInput();
+}
+
+void TestGameScreenApp::setupDeltaSmoother()
+{
+    const AppConfig& cfg = AppConfig::instance();
+
+    deltaSmoother_.init(cfg.timeDeltaHistoryLen());
+    deltaSmoother_.start();
+}
+
 void TestGameScreenApp::setupActions()
 {
     using namespace std::placeholders;
@@ -67,14 +80,6 @@ void TestGameScreenApp::setupActions()
     actions_.switchAction_ = std::bind(&TestGameScreenApp::switchScreen,
                                        this,
                                        _1);
-}
-
-void TestGameScreenApp::setupGame()
-{
-    const AppConfig& cfg = AppConfig::instance();
-
-    deltaSmoother_.init(cfg.timeDeltaHistoryLen());
-    deltaSmoother_.start();
 }
 
 void TestGameScreenApp::setupScreen()

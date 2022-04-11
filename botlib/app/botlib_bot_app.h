@@ -3,6 +3,7 @@
 
 #include <commonlib_app.h>
 #include <commonlib_input_manager.h>
+#include <botlib_time_delta_smoother.h>
 #include <botlib_screen_manager.h>
 #include <botlib_app_actions.h>
 
@@ -37,6 +38,10 @@ private:
 
     void setupOpenGL(const AppConfig& cfg);
 
+    void setupGame(const AppConfig& cfg);
+
+    void setupDeltaSmoother(const AppConfig& cfg);
+
     void setupActions();
 
     void setupScreen();
@@ -46,6 +51,7 @@ private:
     void exitApp();
 
 private:
+    TimeDeltaSmoother deltaSmoother_;
     ScreenManager screenManager_;
     commonlib::InputProcessor inputProcessor_;
     AppActions actions_;

@@ -29,7 +29,7 @@ StartScreen::~StartScreen()
 {
 }
 
-void StartScreen::update()
+void StartScreen::update(float delta)
 {
 }
 

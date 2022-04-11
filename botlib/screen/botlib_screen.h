@@ -17,7 +17,7 @@ public:
 
     void init(const AppActions& actions);
 
-    virtual void update() = 0;
+    virtual void update(float delta) = 0;
 
     virtual void present() = 0;
 

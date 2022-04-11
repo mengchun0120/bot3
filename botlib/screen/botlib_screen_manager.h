@@ -17,7 +17,7 @@ public:
               const commonlib::Vector2& viewportSize,
               const AppActions& actions);
 
-    void update();
+    void update(float delta);
 
     void present();
 

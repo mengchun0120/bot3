@@ -33,7 +33,7 @@ void BotApp::process()
 
     if (running())
     {
-        screenManager_.update();
+        screenManager_.update(deltaSmoother_.curTimeDelta());
         screenManager_.present();
     }
 }
@@ -55,9 +55,7 @@ void BotApp::init(const std::string& configFile,
 #endif
     Context::init(cfg);
     setupOpenGL(cfg);
-    setupActions();
-    setupScreen();
-    setupInput(cfg);
+    setupGame(cfg);
 }
 
 void BotApp::setupOpenGL(const AppConfig& cfg)
@@ -65,6 +63,20 @@ void BotApp::setupOpenGL(const AppConfig& cfg)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+void BotApp::setupGame(const AppConfig& cfg)
+{
+    setupDeltaSmoother(cfg);
+    setupActions();
+    setupScreen();
+    setupInput(cfg);
+}
+
+void BotApp::setupDeltaSmoother(const AppConfig& cfg)
+{
+    deltaSmoother_.init(cfg.timeDeltaHistoryLen());
+    deltaSmoother_.start();
 }
 
 void BotApp::setupActions()
@@ -75,7 +87,6 @@ void BotApp::setupActions()
     actions_.switchAction_ = std::bind(&ScreenManager::switchScreen,
                                        &screenManager_, _1);
 }
-
 
 void BotApp::setupScreen()
 {

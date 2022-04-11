@@ -32,11 +32,11 @@ void ScreenManager::init(ScreenType startScreenType,
     curScreen_ = createScreen(startScreenType);
 }
 
-void ScreenManager::update()
+void ScreenManager::update(float delta)
 {
     if (curScreen_)
     {
-        curScreen_->update();
+        curScreen_->update(delta);
     }
 }
 

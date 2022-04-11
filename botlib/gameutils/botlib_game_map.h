@@ -50,6 +50,8 @@ public:
 
     inline const commonlib::Vector2& viewportOrigin() const;
 
+    inline const commonlib::Vector2& viewportAnchor() const;
+
     inline const commonlib::Region<float>& boundary() const;
 
     inline const commonlib::Region<float>& viewableRegion() const;
@@ -137,6 +139,11 @@ float GameMap::height() const
 const commonlib::Vector2& GameMap::viewportOrigin() const
 {
     return viewportOrigin_;
+}
+
+const commonlib::Vector2& GameMap::viewportAnchor() const
+{
+    return viewportAnchor_;
 }
 
 const commonlib::Region<float>& GameMap::boundary() const

@@ -27,9 +27,11 @@ private:
 
     void setupOpenGL();
 
-    void setupActions();
-
     void setupGame();
+
+    void setupDeltaSmoother();
+
+    void setupActions();
 
     void setupScreen();
 

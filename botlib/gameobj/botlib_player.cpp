@@ -30,8 +30,7 @@ rapidjson::Value Player::toJson(
 void Player::setDest(const commonlib::Vector2 dest1)
 {
     dest_ = dest1;
-    direction_ = dest_ - pos_;
-    direction_.normalize();
+    Robot::setDirection(normalize(dest_ - pos_));
 }
 
 void Player::updatePos(GameMap& map,
