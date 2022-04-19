@@ -1,3 +1,4 @@
+#include <iostream>
 #include <commonlib_log.h>
 #include <commonlib_math_utils.h>
 #include <botlib_player.h>
@@ -8,8 +9,8 @@ namespace mcdane {
 namespace botlib {
 
 void Player::init(const PlayerTemplate* t,
-                  const commonlib::Vector2& pos1,
-                  const commonlib::Vector2& direction1)
+                  const Vector2& pos1,
+                  const Vector2& direction1)
 {
     Robot::init(t, Side::PLAYER, pos1, direction1);
 }
@@ -27,10 +28,17 @@ rapidjson::Value Player::toJson(
     return v;
 }
 
-void Player::setDest(const commonlib::Vector2 dest1)
+void Player::setDest(const Vector2& dest1)
 {
     dest_ = dest1;
-    Robot::setDirection(normalize(dest_ - pos_));
+    Vector2 d = normalize(dest_ - pos_);
+    Robot::setDirection(d);
+}
+
+void Player::update(GameMap& map,
+                    float delta)
+{
+    Robot::update(map, delta);
 }
 
 void Player::updatePos(GameMap& map,
@@ -41,7 +49,7 @@ void Player::updatePos(GameMap& map,
         return;
     }
 
-    if (fuzzyEqual(pos_, dest_))
+    if (fuzzyEqual(pos_, dest_, 0.1f))
     {
         setMovingEnabled(false);
         return;

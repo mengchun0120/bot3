@@ -36,7 +36,11 @@ private:
 
     bool processKey(const commonlib::KeyEvent& e);
 
+    void updatePlayer(float delta);
+
     void clearMapUpdated();
+
+    void updateObjects(float delta);
 
 private:
     GameMap map_;

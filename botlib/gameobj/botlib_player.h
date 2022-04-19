@@ -24,7 +24,10 @@ public:
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 
-    void setDest(const commonlib::Vector2 dest1);
+    void setDest(const commonlib::Vector2& dest1);
+
+    void update(GameMap& map,
+                float delta) override;
 
 protected:
     void updatePos(GameMap& map,

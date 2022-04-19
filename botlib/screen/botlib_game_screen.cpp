@@ -1,3 +1,4 @@
+#include <iostream>
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
 #include <botlib_game_map_loader.h>
@@ -36,7 +37,9 @@ void GameScreen::init(const Vector2& viewportSize,
 
 void GameScreen::update(float delta)
 {
-    
+    updatePlayer(delta);
+    clearMapUpdated();
+    updateObjects(delta);
 }
 
 void GameScreen::present()
@@ -73,16 +76,21 @@ void GameScreen::loadMap(const Vector2& viewportSize)
 
 bool GameScreen::processMouseButton(const MouseButtonEvent& e)
 {
-/*    if (e.button_ == GLFW_MOUSE_BUTTON_RIGHT && e.action_ == GLFW_PRESS)
+    if (e.button_ == GLFW_MOUSE_BUTTON_RIGHT && e.action_ == GLFW_PRESS)
     {
+        Player* player = map_.player();
+        if (player && player->state() != GameObjectState::ALIVE)
+        {
+            return true;
+        }
+
         Vector2 p{e.x_, e.y_};
         p += map_.viewportAnchor();
 
-        Player* player = map_.player();
         player->setDest(p);
         player->setMovingEnabled(true);
     }
-*/
+
     return true;
 }
 
@@ -94,6 +102,30 @@ bool GameScreen::processMouseMove(const MouseMoveEvent& e)
 bool GameScreen::processKey(const KeyEvent& e)
 {
     return true;
+}
+
+void GameScreen::updatePlayer(float delta)
+{
+    Player* player = map_.player();
+    if (!player || player->state() == GameObjectState::DEAD)
+    {
+        return;
+    }
+
+    player->update(map_, delta);
+    map_.setViewportOrigin(player->x(), player->y());
+}
+
+void GameScreen::clearMapUpdated()
+{
+    objFlagResetter_.reset(GameObject::FLAG_UPDATED, false);
+    map_.accessRegion(map_.presentArea(), objFlagResetter_, false);
+}
+
+void GameScreen::updateObjects(float delta)
+{
+    objUpdater_.reset(&map_, delta);
+    map_.accessRegion(map_.presentArea(), objUpdater_, true);
 }
 
 } // end of namespace botlib
