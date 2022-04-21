@@ -17,33 +17,23 @@ namespace botlib {
 
 namespace {
 
+static int k_objTypeLayerMap[] = {
+    0,     // tile
+    1,     // robot
+    2,     // missile
+    3      // effect
+};
+
+
+inline int getLayer(GameObjectType type)
+{
+    return k_objTypeLayerMap[static_cast<int>(type)];
+}
+
 inline bool isPlayer(GameObject* obj)
 {
     return obj->type() == GameObjectType::ROBOT &&
            static_cast<Robot*>(obj)->side() == Side::PLAYER;
-}
-
-rapidjson::Value mapJson(
-                const std::vector<std::vector<GameObjectList>>& map,
-                rapidjson::Document::AllocatorType& allocator)
-{
-    using namespace rapidjson;
-
-    Value v(kArrayType);
-
-    for (unsigned int rowIdx = 0; rowIdx < map.size(); ++rowIdx)
-    {
-        const auto& row = map[rowIdx];
-        for (unsigned int colIdx = 0; colIdx < row.size(); ++colIdx)
-        {
-            if (!row[colIdx].empty())
-            {
-                v.PushBack(jsonVal(row[colIdx], allocator), allocator);
-            }
-        }
-    }
-
-    return v;
 }
 
 } // end of unnamed namespace
@@ -79,8 +69,9 @@ void GameMap::addObj(GameObject* obj)
 
     int rowIdx = getCellIdx(obj->y());
     int colIdx = getCellIdx(obj->x());
+    int layer = getLayer(obj->type());
 
-    map_[rowIdx][colIdx].pushFront(obj);
+    cells_[rowIdx][colIdx][layer].pushFront(obj);
     obj->setMapPos(rowIdx, colIdx);
 
     if (isPlayer(obj))
@@ -101,14 +92,15 @@ void GameMap::repositionObj(GameObject* obj)
 
     unsigned int rowIdx = getCellIdx(obj->y());
     unsigned int colIdx = getCellIdx(obj->x());
+    int layer = getLayer(obj->type());
 
     if (rowIdx == obj->row() && colIdx == obj->col())
     {
         return;
     }
 
-    map_[obj->row()][obj->col()].unlink(obj);
-    map_[rowIdx][colIdx].pushFront(obj);
+    cells_[obj->row()][obj->col()][layer].unlink(obj);
+    cells_[rowIdx][colIdx][layer].pushFront(obj);
     obj->setMapPos(rowIdx, colIdx);
 }
 
@@ -177,25 +169,17 @@ void GameMap::accessRegion(const Region<int>& r,
                            GameMapAccessor& accessor,
                            bool deleteDeadObj)
 {
-    for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
+    for (int layer = 0; layer < LAYER_COUNT; ++layer)
     {
-        auto& row = map_[rowIdx];
-        for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
+        for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
         {
-            GameObjectList& objList = row[colIdx];
-            for (GameObject* obj = objList.first(); obj; obj = obj->next())
+            auto& row = cells_[rowIdx];
+            for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
             {
-                if (!accessor.run(objList, obj))
+                GameObjectList& objs = row[colIdx][layer];
+                for (GameObject* obj = objs.first(); obj; obj = obj->next())
                 {
-                    return;
-                }
-
-                if (deleteDeadObj &&
-                    obj->state() == GameObjectState::DEAD &&
-                    !obj->locked())
-                {
-                    LOG_DEBUG << "delete " << *obj << LOG_END;
-                    objList.remove(obj);
+                    accessor.run(objs, obj);
                 }
             }
         }
@@ -224,7 +208,7 @@ rapidjson::Value GameMap::toJson(
     v.AddMember("presentArea", presentArea_.toJson(allocator), allocator);
     v.AddMember("rowCount", rowCount(), allocator);
     v.AddMember("colCount", colCount(), allocator);
-    v.AddMember("map", mapJson(map_, allocator), allocator);
+    v.AddMember("cells", cellsToJson(allocator), allocator);
     v.AddMember("base", Object::toJson(allocator), allocator);
 
     return v;
@@ -236,8 +220,8 @@ void GameMap::initMapCells(unsigned int rows,
     unsigned int rowCount = rows + extraCell_*2;
     unsigned int colCount = cols + extraCell_*2;
 
-    map_.resize(rowCount);
-    for (auto it = map_.begin(); it != map_.end(); ++it)
+    cells_.resize(rowCount);
+    for (auto it = cells_.begin(); it != cells_.end(); ++it)
     {
         it->resize(colCount);
     }
@@ -332,6 +316,32 @@ void GameMap::presentParticleEffects()
 
     presenter_.reset(GameObjectType::EFFECT);
     accessRegion(presentArea_, presenter_, false);
+}
+
+rapidjson::Value GameMap::cellsToJson(
+                rapidjson::Document::AllocatorType& allocator) const
+{
+    using namespace rapidjson;
+
+    Value v(kArrayType);
+
+    for (unsigned int rowIdx = 0; rowIdx < cells_.size(); ++rowIdx)
+    {
+        const auto& row = cells_[rowIdx];
+        for (unsigned int colIdx = 0; colIdx < row.size(); ++colIdx)
+        {
+            const Cell& cell = row[colIdx];
+            for (int layer = 0; layer < GameMap::LAYER_COUNT; ++layer)
+            {
+                if (!cell[layer].empty())
+                {
+                    v.PushBack(jsonVal(cell[layer], allocator), allocator);
+                }
+            }
+        }
+    }
+
+    return v;
 }
 
 } // end of namespace botlib

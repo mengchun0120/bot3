@@ -19,6 +19,13 @@ class Player;
 
 class GameMap: public commonlib::Object {
 public:
+    enum {
+        LAYER_COUNT = 4
+    };
+
+    using Cell = std::array<GameObjectList, LAYER_COUNT>;
+
+public:
     static constexpr float k_cellBreath = 40.0f;
     static constexpr unsigned int k_minRows = 30;
     static constexpr unsigned int k_minCols = 40;
@@ -98,11 +105,14 @@ private:
 
     void presentParticleEffects();
 
+    rapidjson::Value cellsToJson(
+                rapidjson::Document::AllocatorType& allocator) const;
+
 private:
     float maxObjSpan_;
     float maxCollideBreath_;
     int extraCell_;
-    std::vector<std::vector<GameObjectList>> map_;
+    std::vector<std::vector<Cell>> cells_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 viewportHalfSize_;
     commonlib::Vector2 minViewportOrigin_;
@@ -118,12 +128,12 @@ private:
 
 int GameMap::rowCount() const
 {
-    return static_cast<int>(map_.size());
+    return static_cast<int>(cells_.size());
 }
 
 int GameMap::colCount() const
 {
-    return static_cast<int>(map_[0].size());
+    return static_cast<int>(cells_[0].size());
 }
 
 float GameMap::width() const
