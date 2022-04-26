@@ -248,6 +248,7 @@ T* LinkedList<T>::unlinkFront()
     }
 
     --size_;
+    tmp->setNext(nullptr);
 
     return tmp;
 }
@@ -274,6 +275,7 @@ T* LinkedList<T>::unlinkBack()
     }
 
     --size_;
+    tmp->setPrev(nullptr);
 
     return tmp;
 }
@@ -284,6 +286,11 @@ void LinkedList<T>::unlink(T* t)
     if (empty())
     {
         THROW_EXCEPT(InvalidArgumentException, "List is empty");
+    }
+
+    if (!t)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "t is null");
     }
 
     if (t->prev())
@@ -304,6 +311,8 @@ void LinkedList<T>::unlink(T* t)
         last_ = t->prev();
     }
 
+    t->setPrev(nullptr);
+    t->setNext(nullptr);
     --size_;
 }
 

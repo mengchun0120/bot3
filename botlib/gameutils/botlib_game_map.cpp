@@ -177,8 +177,10 @@ void GameMap::accessRegion(const Region<int>& r,
             for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
             {
                 GameObjectList& objs = row[colIdx][layer];
-                for (GameObject* obj = objs.first(); obj; obj = obj->next())
+                GameObject* next;
+                for (GameObject* obj = objs.first(); obj; obj = next)
                 {
+                    next = obj->next();
                     accessor.run(objs, obj);
                 }
             }
