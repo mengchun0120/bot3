@@ -1,10 +1,11 @@
 #ifndef INCLUDED_BOTLIB_GAME_MAP_ACCESSOR_H
 #define INCLUDED_BOTLIB_GAME_MAP_ACCESSOR_H
 
-#include <botlib_typedef.h>
-
 namespace mcdane {
 namespace botlib {
+
+class GameMap;
+class GameObject;
 
 class GameMapAccessor {
 public:
@@ -12,7 +13,7 @@ public:
 
     virtual ~GameMapAccessor() = default;
 
-    virtual bool run(GameObjectList& objList,
+    virtual bool run(GameMap& map,
                      GameObject* obj) = 0;
 };
 

@@ -78,7 +78,7 @@ void TestGameApp::update()
 
     map_.accessRegion(presentArea, flagResetter_, false);
 
-    gameObjUpdater_.reset(&map_, deltaSmoother_.curTimeDelta());
+    gameObjUpdater_.reset(deltaSmoother_.curTimeDelta());
     map_.accessRegion(presentArea, gameObjUpdater_, true);
 }
 

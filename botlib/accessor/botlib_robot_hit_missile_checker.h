@@ -13,17 +13,14 @@ class RobotHitMissileChecker: public GameMapAccessor {
 public:
     RobotHitMissileChecker() = default;
 
-    RobotHitMissileChecker(GameMap* map,
-                           Robot* robot);
+    RobotHitMissileChecker(Robot* robot);
 
-    void reset(GameMap* map,
-               Robot* robot);
+    void reset(Robot* robot);
 
-    bool run(GameObjectList& objList,
+    bool run(GameMap& map,
              GameObject* obj) override;
 
 private:
-    GameMap* map_;
     Robot* robot_;
 };
 

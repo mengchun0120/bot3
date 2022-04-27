@@ -20,7 +20,7 @@ public:
     void reset(Missile* missile,
                bool inflictDamage);
 
-    bool run(GameObjectList& objList,
+    bool run(GameMap& map,
              GameObject* obj) override;
 
 private:

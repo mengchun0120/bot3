@@ -13,10 +13,7 @@ namespace commonlib {
 template <typename T>
 class LinkedList: public Object {
 public:
-    using Deleter = typename std::function<void(T*)>;
-
-public:
-    LinkedList(Deleter* deleter=nullptr);
+    LinkedList();
 
     ~LinkedList();
 
@@ -31,8 +28,6 @@ public:
     inline bool empty() const;
 
     inline unsigned int size() const;
-
-    inline void setDeleter(Deleter* deleter);
 
     void pushFront(T* t);
 
@@ -60,19 +55,14 @@ public:
                 rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
-    void del(T* t);
-
-private:
-    Deleter* deleter_;
     T* first_;
     T* last_;
     unsigned int size_;
 };
 
 template <typename T>
-LinkedList<T>::LinkedList(LinkedList<T>::Deleter* deleter)
-    : deleter_(deleter)
-    , first_(nullptr)
+LinkedList<T>::LinkedList()
+    : first_(nullptr)
     , last_(nullptr)
     , size_(0)
 {
@@ -111,19 +101,13 @@ const T* LinkedList<T>::last() const
 template <typename T>
 bool LinkedList<T>::empty() const
 {
-    return size() == 0;
+    return size_ == 0;
 }
 
 template <typename T>
 unsigned int LinkedList<T>::size() const
 {
     return size_;
-}
-
-template <typename T>
-void LinkedList<T>::setDeleter(Deleter* deleter)
-{
-    deleter_ = deleter;
 }
 
 template <typename T>
@@ -137,7 +121,7 @@ void LinkedList<T>::pushFront(T* t)
     t->setNext(first_);
     t->setPrev(nullptr);
 
-    if (first_ != nullptr)
+    if (first_)
     {
         first_->setPrev(t);
     }
@@ -161,7 +145,7 @@ void LinkedList<T>::pushBack(T* t)
     t->setNext(nullptr);
     t->setPrev(last_);
 
-    if (last_ != nullptr)
+    if (last_)
     {
         last_->setNext(t);
     }
@@ -322,7 +306,7 @@ void LinkedList<T>::removeFront()
     T* t = unlinkFront();
     if (t)
     {
-        del(t);
+        delete t;
     }
 }
 
@@ -332,7 +316,7 @@ void LinkedList<T>::removeBack()
     T* t = unlinkBack();
     if (t)
     {
-        del(t);
+        delete t;
     }
 }
 
@@ -345,7 +329,7 @@ void LinkedList<T>::remove(T* t)
     }
 
     unlink(t);
-    del(t);
+    delete t;
 }
 
 template <typename T>
@@ -355,25 +339,12 @@ void LinkedList<T>::clear()
     for (T* cur = first_; cur; cur = next)
     {
         next = cur->next();
-        del(cur);
+        delete cur;
     }
 
     first_ = nullptr;
     last_ = nullptr;
     size_ = 0;
-}
-
-template <typename T>
-void LinkedList<T>::del(T* t)
-{
-    if (deleter_)
-    {
-        (*deleter_)(t);
-    }
-    else
-    {
-        delete t;
-    }
 }
 
 template <typename T>

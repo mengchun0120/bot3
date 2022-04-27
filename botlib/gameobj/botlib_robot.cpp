@@ -204,7 +204,7 @@ bool Robot::checkNonpassthroughCollide(Vector2& delta,
 
 void Robot::checkCollideMissile(GameMap& map)
 {
-    RobotHitMissileChecker checker(&map, this);
+    RobotHitMissileChecker checker(this);
     Region<int> r = map.getCollideArea(collideRegion());
     map.accessRegion(r, checker, true);
 }

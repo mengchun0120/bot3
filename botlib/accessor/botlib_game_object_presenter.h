@@ -13,7 +13,7 @@ public:
 
     void reset(GameObjectType type);
 
-    bool run(GameObjectList& objList,
+    bool run(GameMap& map,
              GameObject* obj) override;
 
 private:

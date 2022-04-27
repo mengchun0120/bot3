@@ -22,21 +22,17 @@ inline bool check(GameObject* obj,
 
 } // end of unnamed namespace
 
-RobotHitMissileChecker::RobotHitMissileChecker(GameMap* map,
-                                               Robot* robot)
-    : map_(map)
-    , robot_(robot)
+RobotHitMissileChecker::RobotHitMissileChecker(Robot* robot)
+    : robot_(robot)
 {
 }
 
-void RobotHitMissileChecker::reset(GameMap* map,
-                                   Robot* robot)
+void RobotHitMissileChecker::reset(Robot* robot)
 {
-    map_ = map;
     robot_ = robot;
 }
 
-bool RobotHitMissileChecker::run(GameObjectList& objList,
+bool RobotHitMissileChecker::run(GameMap& map,
                                  GameObject* obj)
 {
     if (!check(obj, robot_))
@@ -50,7 +46,7 @@ bool RobotHitMissileChecker::run(GameObjectList& objList,
                                         missile->collideRegion());
     if (collide)
     {
-        missile->explode(*map_);
+        missile->explode(map);
     }
 
     return true;

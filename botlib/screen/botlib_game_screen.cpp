@@ -124,7 +124,7 @@ void GameScreen::clearMapUpdated()
 
 void GameScreen::updateObjects(float delta)
 {
-    objUpdater_.reset(&map_, delta);
+    objUpdater_.reset(delta);
     map_.accessRegion(map_.presentArea(), objUpdater_, true);
 }
 

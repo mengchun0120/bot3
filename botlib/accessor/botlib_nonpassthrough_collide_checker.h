@@ -18,7 +18,7 @@ public:
     void reset(GameObject* obj,
                commonlib::Vector2& delta1);
 
-    bool run(GameObjectList& objList,
+    bool run(GameMap& map,
              GameObject* obj) override;
 
 private:

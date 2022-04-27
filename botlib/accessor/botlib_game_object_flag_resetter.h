@@ -16,7 +16,7 @@ public:
     void reset(GameObject::Flag flag,
                bool value);
 
-    bool run(GameObjectList& objList,
+    bool run(GameMap& map,
              GameObject* obj) override;
 
 private:

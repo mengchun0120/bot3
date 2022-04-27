@@ -9,7 +9,7 @@ void GameObjectPresenter::reset(GameObjectType type)
     curType_ = type;
 }
 
-bool GameObjectPresenter::run(GameObjectList& objList,
+bool GameObjectPresenter::run(GameMap& map,
                               GameObject* obj)
 {
     if (obj->state() == GameObjectState::DEAD || obj->type() != curType_)

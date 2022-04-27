@@ -4,21 +4,17 @@
 namespace mcdane {
 namespace botlib {
 
-GameObjectUpdater::GameObjectUpdater(GameMap* map,
-                                     float delta)
-    : map_(map)
-    , delta_(delta)
+GameObjectUpdater::GameObjectUpdater(float delta)
+    : delta_(delta)
 {
 }
 
-void GameObjectUpdater::reset(GameMap* map,
-                              float delta)
+void GameObjectUpdater::reset(float delta)
 {
-    map_ = map;
     delta_ = delta;
 }
 
-bool GameObjectUpdater::run(GameObjectList& objList,
+bool GameObjectUpdater::run(GameMap& map,
                             GameObject* obj)
 {
     if (obj->state() != GameObjectState::ALIVE || obj->updated())
@@ -26,7 +22,7 @@ bool GameObjectUpdater::run(GameObjectList& objList,
         return true;
     }
 
-    obj->update(*map_, delta_);
+    obj->update(map, delta_);
     return true;
 }
 

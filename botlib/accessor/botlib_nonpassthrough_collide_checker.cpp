@@ -37,7 +37,7 @@ void NonpassthroughCollideChecker::reset(GameObject* obj,
     delta_ = delta1;
 }
 
-bool NonpassthroughCollideChecker::run(GameObjectList& objList,
+bool NonpassthroughCollideChecker::run(GameMap& map,
                                        GameObject* other)
 {
     if (!check(other, obj_))

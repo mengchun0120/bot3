@@ -18,7 +18,7 @@ void GameObjectFlagResetter::reset(GameObject::Flag flag,
     value_ = value;
 }
 
-bool GameObjectFlagResetter::run(GameObjectList& objList,
+bool GameObjectFlagResetter::run(GameMap& map,
                                  GameObject* obj)
 {
     obj->setFlag(flag_, value_);

@@ -13,17 +13,14 @@ class GameObjectUpdater: public GameMapAccessor {
 public:
     GameObjectUpdater() = default;
 
-    GameObjectUpdater(GameMap* map,
-                      float delta);
+    GameObjectUpdater(float delta);
 
-    void reset(GameMap* map,
-               float delta);
+    void reset(float delta);
 
-    bool run(GameObjectList& objList,
+    bool run(GameMap& map,
              GameObject* obj) override;
 
 private:
-    GameMap* map_;
     float delta_;
 };
 

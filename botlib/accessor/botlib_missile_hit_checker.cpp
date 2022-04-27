@@ -45,7 +45,7 @@ void MissileHitChecker::reset(Missile* missile,
     missile_ = missile;
 }
 
-bool MissileHitChecker::run(GameObjectList& objList,
+bool MissileHitChecker::run(GameMap& map,
                             GameObject* obj)
 {
     if (!check(obj, missile_))

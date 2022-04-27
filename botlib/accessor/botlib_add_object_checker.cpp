@@ -19,7 +19,7 @@ void AddObjectChecker::reset(const commonlib::Region<float>& collideRegion)
     collideRegion_ = collideRegion;
 }
 
-bool AddObjectChecker::run(GameObjectList& objList,
+bool AddObjectChecker::run(GameMap& map,
                            GameObject* obj)
 {
     if (obj->state() != GameObjectState::ALIVE ||

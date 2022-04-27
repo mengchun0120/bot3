@@ -181,7 +181,7 @@ void GameMap::accessRegion(const Region<int>& r,
                 for (GameObject* obj = objs.first(); obj; obj = next)
                 {
                     next = obj->next();
-                    accessor.run(objs, obj);
+                    accessor.run(*this, obj);
                 }
             }
         }
