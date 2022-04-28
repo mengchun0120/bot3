@@ -47,6 +47,8 @@ public:
 
     void repositionObj(GameObject* obj);
 
+    void removeObj(GameObject* obj);
+
     inline int rowCount() const;
 
     inline int colCount() const;

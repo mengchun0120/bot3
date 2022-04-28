@@ -2,9 +2,7 @@
 #define INCLUDED_COMMOLIB_LINKED_LIST_H
 
 #include <functional>
-#include <sstream>
 #include <commonlib_exception.h>
-#include <commonlib_json_utils.h>
 #include <commonlib_object.h>
 
 namespace mcdane {
@@ -19,6 +17,8 @@ public:
     LinkedList(Deleter* deleter=nullptr);
 
     ~LinkedList();
+
+    void setDeleter(Deleter* deleter);
 
     inline T* first();
 
@@ -54,9 +54,6 @@ public:
 
     void clear();
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
 private:
     void del(T* t);
 
@@ -80,6 +77,12 @@ template <typename T>
 LinkedList<T>::~LinkedList()
 {
     clear();
+}
+
+template <typename T>
+void LinkedList<T>::setDeleter(Deleter* deleter)
+{
+    deleter_ = deleter;
 }
 
 template <typename T>
@@ -353,29 +356,6 @@ void LinkedList<T>::clear()
     first_ = nullptr;
     last_ = nullptr;
     size_ = 0;
-}
-
-template <typename T>
-rapidjson::Value LinkedList<T>::toJson(
-                        rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "LinkedList", allocator);
-    v.AddMember("size", size_, allocator);
-
-    Value arr(kArrayType);
-    for (const T* t = first_; t; t = t->next())
-    {
-        arr.PushBack(jsonVal(*t, allocator), allocator);
-    }
-
-    v.AddMember("data", arr, allocator);
-    v.AddMember("base", Object::toJson(allocator), allocator);
-
-    return v;
 }
 
 template <typename T>

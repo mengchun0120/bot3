@@ -38,6 +38,7 @@ set(BOTLIB_GAMEUTILS_SRC
     gameutils/botlib_game_lib.cpp
     gameutils/botlib_game_map.cpp
     gameutils/botlib_game_map_loader.cpp
+    gameutils/botlib_game_object_dumper.cpp
     gameutils/botlib_time_delta_smoother.cpp)
 
 set(BOTLIB_MISC_SRC
