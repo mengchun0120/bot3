@@ -13,7 +13,10 @@ namespace commonlib {
 template <typename T>
 class LinkedList: public Object {
 public:
-    LinkedList();
+    using Deleter = typename std::function<void(T*)>;
+
+public:
+    LinkedList(Deleter* deleter=nullptr);
 
     ~LinkedList();
 
@@ -55,14 +58,19 @@ public:
                 rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
+    void del(T* t);
+
+private:
+    Deleter* deleter_;
     T* first_;
     T* last_;
     unsigned int size_;
 };
 
 template <typename T>
-LinkedList<T>::LinkedList()
-    : first_(nullptr)
+LinkedList<T>::LinkedList(LinkedList<T>::Deleter* deleter)
+    : deleter_(deleter)
+    , first_(nullptr)
     , last_(nullptr)
     , size_(0)
 {
@@ -306,7 +314,7 @@ void LinkedList<T>::removeFront()
     T* t = unlinkFront();
     if (t)
     {
-        delete t;
+        del(t);
     }
 }
 
@@ -316,7 +324,7 @@ void LinkedList<T>::removeBack()
     T* t = unlinkBack();
     if (t)
     {
-        delete t;
+        del(t);
     }
 }
 
@@ -329,7 +337,7 @@ void LinkedList<T>::remove(T* t)
     }
 
     unlink(t);
-    delete t;
+    del(t);
 }
 
 template <typename T>
@@ -339,7 +347,7 @@ void LinkedList<T>::clear()
     for (T* cur = first_; cur; cur = next)
     {
         next = cur->next();
-        delete cur;
+        del(cur);
     }
 
     first_ = nullptr;
@@ -368,6 +376,19 @@ rapidjson::Value LinkedList<T>::toJson(
     v.AddMember("base", Object::toJson(allocator), allocator);
 
     return v;
+}
+
+template <typename T>
+void LinkedList<T>::del(T* t)
+{
+    if (deleter_)
+    {
+        (*deleter_)(t);
+    }
+    else
+    {
+        delete t;
+    }
 }
 
 } // end of namespace commonlib
