@@ -49,8 +49,6 @@ void Robot::update(GameMap& map,
         return;
     }
 
-    setLocked(true);
-
     if (movingEnabled_)
     {
         updatePos(map, timeDelta);
@@ -62,8 +60,6 @@ void Robot::update(GameMap& map,
     }
 
     GameObject::update(map, timeDelta);
-
-    setLocked(false);
 }
 
 void Robot::shiftPos(const Vector2& delta)

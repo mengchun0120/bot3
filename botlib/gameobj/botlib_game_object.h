@@ -16,9 +16,9 @@ class GameMap;
 class GameObject: public commonlib::Object {
 public:
     enum Flag {
-        FLAG_INVINCIBLE = 0x00000002,
-        FLAG_UPDATED = 0x00000004,
-        FLAG_LOCKED = 0x00000008
+        FLAG_INVINCIBLE = 0x00000001,
+        FLAG_UPDATED = 0x00000002,
+        FLAG_DUMPED = 0x00000004
     };
 
     using Deleter = std::function<void(GameObject*)>;
@@ -58,11 +58,13 @@ public:
 
     inline int flags() const;
 
+    inline bool getFlag(Flag flag) const;
+
     inline bool invincible() const;
 
     inline bool updated() const;
 
-    inline bool locked() const;
+    inline bool dumped() const;
 
     inline unsigned int row() const;
 
@@ -96,7 +98,7 @@ public:
 
     void setUpdated(bool b);
 
-    void setLocked(bool b);
+    void setDumped(bool b);
 
     void setFlag(Flag flag,
                  bool b);
@@ -190,6 +192,11 @@ int GameObject::flags() const
     return flags_;
 }
 
+bool GameObject::getFlag(Flag flag) const
+{
+    return flags_ & flag;
+}
+
 bool GameObject::invincible() const
 {
     return flags_ & FLAG_INVINCIBLE;
@@ -200,9 +207,9 @@ bool GameObject::updated() const
     return flags_ & FLAG_UPDATED;
 }
 
-bool GameObject::locked() const
+bool GameObject::dumped() const
 {
-    return flags_ & FLAG_LOCKED;
+    return flags_ & FLAG_DUMPED;
 }
 
 unsigned int GameObject::row() const

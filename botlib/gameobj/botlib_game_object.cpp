@@ -74,9 +74,9 @@ void GameObject::setUpdated(bool b)
     setFlag(FLAG_UPDATED, b);
 }
 
-void GameObject::setLocked(bool b)
+void GameObject::setDumped(bool b)
 {
-    setFlag(FLAG_LOCKED, b);
+    setFlag(FLAG_DUMPED, b);
 }
 
 void GameObject::setFlag(Flag flag,
