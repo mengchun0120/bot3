@@ -1,4 +1,4 @@
-#include <iostream>
+#include <algorithm>
 #include <commonlib_log.h>
 #include <commonlib_math_utils.h>
 #include <botlib_player.h>
@@ -31,8 +31,9 @@ rapidjson::Value Player::toJson(
 void Player::setDest(const Vector2& dest1)
 {
     dest_ = dest1;
-    Vector2 d = normalize(dest_ - pos_);
-    Robot::setDirection(d);
+    Vector2 dist = dest_ - pos_;
+    Robot::setDirection(normalize(dist));
+    updateMoveTime(dist);
 }
 
 void Player::update(GameMap& map,
@@ -44,18 +45,44 @@ void Player::update(GameMap& map,
 void Player::updatePos(GameMap& map,
                        float delta)
 {
-    if (!movingEnabled_)
+    bool reachDest = false;
+    if (timeToDest_ <= delta)
     {
-        return;
+        delta = timeToDest_;
+        timeToDest_ = 0.0f;
+        reachDest = true;
     }
-
-    if (fuzzyEqual(pos_, dest_, 0.1f))
+    else
     {
-        setMovingEnabled(false);
-        return;
+        timeToDest_ -= delta;
     }
 
     Robot::updatePos(map, delta);
+
+    if (reachDest)
+    {
+        setMovingEnabled(false);
+    }
+}
+
+void Player::updateMoveTime(const Vector2& dist)
+{
+    constexpr float VERY_SMALL = 1.0e-6f;
+    Vector2 absDist = abs(dist);
+    Vector2 absSpeed = abs(speed_);
+    float timeToDestX = 0.0f, timeToDestY = 0.0f;
+
+    if (absSpeed[0] > VERY_SMALL)
+    {
+        timeToDestX = absDist[0] / absSpeed[0];
+    }
+
+    if (absSpeed[1] > VERY_SMALL)
+    {
+        timeToDestY = absDist[1] / absSpeed[1];
+    }
+
+    timeToDest_ = std::max(timeToDestX, timeToDestY);
 }
 
 } // end of namespace botlib

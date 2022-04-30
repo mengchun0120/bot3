@@ -33,8 +33,11 @@ protected:
     void updatePos(GameMap& map,
                    float delta) override;
 
+    void updateMoveTime(const commonlib::Vector2& dist);
+
 protected:
     commonlib::Vector2 dest_;
+    float timeToDest_;
 };
 
 const PlayerTemplate* Player::getTemplate() const
