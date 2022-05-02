@@ -17,19 +17,6 @@ namespace botlib {
 
 namespace {
 
-static int k_objTypeLayerMap[] = {
-    0,     // tile
-    1,     // robot
-    2,     // missile
-    3      // effect
-};
-
-
-inline int getLayer(GameObjectType type)
-{
-    return k_objTypeLayerMap[static_cast<int>(type)];
-}
-
 inline bool isPlayer(GameObject* obj)
 {
     return obj->type() == GameObjectType::ROBOT &&
@@ -340,7 +327,7 @@ rapidjson::Value GameMap::cellsToJson(
         for (unsigned int colIdx = 0; colIdx < row.size(); ++colIdx)
         {
             const Cell& cell = row[colIdx];
-            for (int layer = 0; layer < GameMap::LAYER_COUNT; ++layer)
+            for (int layer = 0; layer < LAYER_COUNT; ++layer)
             {
                 if (!cell[layer].empty())
                 {

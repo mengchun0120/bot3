@@ -12,15 +12,13 @@ enum class GameObjectType {
     ROBOT,
     MISSILE,
     EFFECT,
-    INVALID
+    COUNT
 };
-
-constexpr unsigned int k_gameObjTypeCount = 4;
 
 inline bool isValidGameObjectType(GameObjectType t)
 {
     return static_cast<int>(GameObjectType::TILE) <= static_cast<int>(t) &&
-           static_cast<int>(GameObjectType::INVALID) > static_cast<int>(t);
+           static_cast<int>(GameObjectType::COUNT) > static_cast<int>(t);
 }
 
 inline bool isNonPassthroughObjType(GameObjectType t)

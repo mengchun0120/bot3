@@ -19,16 +19,17 @@ class Player;
 
 class GameMap: public commonlib::Object {
 public:
-    enum {
-        LAYER_COUNT = 4
-    };
+    static constexpr int LAYER_COUNT = static_cast<int>(GameObjectType::COUNT);
 
     using Cell = std::array<GameObjectList, LAYER_COUNT>;
 
-public:
     static constexpr float k_cellBreath = 40.0f;
     static constexpr unsigned int k_minRows = 30;
     static constexpr unsigned int k_minCols = 40;
+
+public:
+
+    inline static int getLayer(GameObjectType type);
 
     GameMap() = default;
 
@@ -127,6 +128,11 @@ private:
     GameObjectPresenter presenter_;
     Player* player_;
 };
+
+int GameMap::getLayer(GameObjectType type)
+{
+    return static_cast<int>(type);
+}
 
 int GameMap::rowCount() const
 {
