@@ -12,16 +12,24 @@ public:
 
     inline const std::string& mapFile() const;
 
+    inline int dumperPoolSize() const;
+
 private:
     void init(const std::string& configFile);
 
 private:
     std::string mapFile_;
+    int dumperPoolSize_;
 };
 
 const std::string& GameScreenConfig::mapFile() const
 {
     return mapFile_;
+}
+
+int GameScreenConfig::dumperPoolSize() const
+{
+    return dumperPoolSize_;
 }
 
 } // end of namespace botlib

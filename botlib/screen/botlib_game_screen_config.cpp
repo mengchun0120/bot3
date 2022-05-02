@@ -21,7 +21,8 @@ void GameScreenConfig::init(const std::string& configFile)
     readJson(doc, configFile);
 
     std::vector<JsonParamPtr> params{
-        jsonParam(mapFile_, {"mapFile"}, true, k_nonEmptyStrV)
+        jsonParam(mapFile_, {"mapFile"}, true, k_nonEmptyStrV),
+        jsonParam(dumperPoolSize_, {"dumperPoolSize"}, true, gt(0))
     };
 
     parse(params, doc);

@@ -1,3 +1,4 @@
 {
-    "mapFile": "map_01.json"
+    "mapFile": "map_01.json",
+    "dumperPoolSize": 200
 }

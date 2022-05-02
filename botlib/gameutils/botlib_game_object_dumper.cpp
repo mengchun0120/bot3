@@ -4,11 +4,11 @@
 namespace mcdane {
 namespace botlib {
 
-GameObjectDumper::GameObjectDumper(int poolSize)
-    : pool_(poolSize)
+void GameObjectDumper::init(int poolSize)
 {
     using namespace std::placeholders;
 
+    pool_.init(poolSize);
     deleter_ = std::bind(&GameObjectDumper::del, this, _1);
     objs_.setDeleter(&deleter_);
 }

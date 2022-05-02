@@ -32,7 +32,10 @@ void GameScreen::init(const Vector2& viewportSize,
                      "Invalid viewportSize " + stringVal(viewportSize));
     }
 
-    loadMap(viewportSize);
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+
+    loadMap(viewportSize, cfg.mapFile());
+    objDumper_.init(cfg.dumperPoolSize());
 }
 
 void GameScreen::update(float delta)
@@ -66,12 +69,12 @@ bool GameScreen::processInput(const InputEvent &e)
     return true;
 }
 
-void GameScreen::loadMap(const Vector2& viewportSize)
+void GameScreen::loadMap(const Vector2& viewportSize,
+                         const std::string& mapFile)
 {
     GameMapLoader loader(viewportSize[0], viewportSize[1]);
-    const GameScreenConfig& cfg = Context::gameScreenConfig();
 
-    loader.load(map_, cfg.mapFile());
+    loader.load(map_, mapFile);
 }
 
 bool GameScreen::processMouseButton(const MouseButtonEvent& e)

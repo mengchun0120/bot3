@@ -45,9 +45,11 @@ public:
     };
 
 public:
-    GameObjectDumper(int poolSize);
+    GameObjectDumper() = default;
 
     ~GameObjectDumper() = default;
+
+    void init(int poolSize);
 
     void add(GameObject* obj);
 

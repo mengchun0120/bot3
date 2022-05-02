@@ -4,6 +4,7 @@
 #include <botlib_game_map.h>
 #include <botlib_game_object_flag_resetter.h>
 #include <botlib_game_object_updater.h>
+#include <botlib_game_object_dumper.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -28,7 +29,8 @@ public:
     bool processInput(const commonlib::InputEvent& e) override;
 
 private:
-    void loadMap(const commonlib::Vector2& viewportSize);
+    void loadMap(const commonlib::Vector2& viewportSize,
+                 const std::string& mapFile);
 
     bool processMouseButton(const commonlib::MouseButtonEvent& e);
 
@@ -46,6 +48,7 @@ private:
     GameMap map_;
     GameObjectFlagResetter objFlagResetter_;
     GameObjectUpdater objUpdater_;
+    GameObjectDumper objDumper_;
 };
 
 } // end of namespace botlib
