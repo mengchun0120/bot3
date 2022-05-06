@@ -36,13 +36,19 @@ void GameScreen::init(const Vector2& viewportSize,
 
     loadMap(viewportSize, cfg.mapFile());
     objDumper_.init(cfg.dumperPoolSize());
+    objUpdater_.init(&objDumper_);
 }
 
-void GameScreen::update(float delta)
+void GameScreen::update(float timeDelta)
 {
-    updatePlayer(delta);
+    updatePlayer(timeDelta);
     clearMapUpdated();
-    updateObjects(delta);
+    updateObjects(timeDelta);
+
+    if (!objDumper_.empty())
+    {
+        objDumper_.clear(map_);
+    }
 }
 
 void GameScreen::present()
@@ -107,7 +113,7 @@ bool GameScreen::processKey(const KeyEvent& e)
     return true;
 }
 
-void GameScreen::updatePlayer(float delta)
+void GameScreen::updatePlayer(float timeDelta)
 {
     Player* player = map_.player();
     if (!player || player->state() == GameObjectState::DEAD)
@@ -115,20 +121,20 @@ void GameScreen::updatePlayer(float delta)
         return;
     }
 
-    player->update(map_, delta);
+    player->update(map_, objDumper_, timeDelta);
     map_.setViewportOrigin(player->x(), player->y());
 }
 
 void GameScreen::clearMapUpdated()
 {
     objFlagResetter_.reset(GameObject::FLAG_UPDATED, false);
-    map_.accessRegion(map_.presentArea(), objFlagResetter_, false);
+    map_.accessRegion(map_.presentArea(), objFlagResetter_);
 }
 
-void GameScreen::updateObjects(float delta)
+void GameScreen::updateObjects(float timeDelta)
 {
-    objUpdater_.reset(delta);
-    map_.accessRegion(map_.presentArea(), objUpdater_, true);
+    objUpdater_.reset(timeDelta);
+    map_.accessRegion(map_.presentArea(), objUpdater_);
 }
 
 } // end of namespace botlib

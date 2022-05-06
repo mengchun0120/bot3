@@ -8,8 +8,6 @@
 namespace mcdane {
 namespace botlib {
 
-class GameMap;
-
 class ParticleEffect: public GameObject {
 public:
     ParticleEffect() = default;
@@ -24,7 +22,8 @@ public:
     void present() const override;
 
     void update(GameMap& map,
-                float delta);
+                GameObjectDumper& dumper,
+                float timeDelta) override;
 
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;

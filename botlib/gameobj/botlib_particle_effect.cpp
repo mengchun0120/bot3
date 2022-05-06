@@ -34,13 +34,19 @@ void ParticleEffect::present() const
 }
 
 void ParticleEffect::update(GameMap& map,
-                            float delta)
+                            GameObjectDumper& dumper,
+                            float timeDelta)
 {
-    elapsedTime_ = elapsedTimeMs(startTime_);
-    if (elapsedTime_ >= getTemplate()->duration())
+    if (state_ == GameObjectState::ALIVE)
     {
-        setState(GameObjectState::DEAD);
+        elapsedTime_ += timeDelta;
+        if (elapsedTime_ >= getTemplate()->duration())
+        {
+            setState(GameObjectState::DEAD);
+        }
     }
+
+    GameObject::update(map, dumper, timeDelta);
 }
 
 rapidjson::Value ParticleEffect::toJson(

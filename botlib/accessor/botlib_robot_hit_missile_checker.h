@@ -8,19 +8,18 @@ namespace botlib {
 
 class GameMap;
 class Robot;
+class GameObjectDumper;
 
 class RobotHitMissileChecker: public GameMapAccessor {
 public:
-    RobotHitMissileChecker() = default;
-
-    RobotHitMissileChecker(Robot* robot);
-
-    void reset(Robot* robot);
+    RobotHitMissileChecker(GameObjectDumper& dumper,
+                           Robot* robot);
 
     bool run(GameMap& map,
              GameObject* obj) override;
 
 private:
+    GameObjectDumper& dumper_;
     Robot* robot_;
 };
 

@@ -24,6 +24,8 @@ ostream& operator<<(ostream& os,
             return os << "dying";
         case GameObjectState::DEAD:
             return os << "dead";
+        case GameObjectState::DUMPED:
+            return os << "dumped";
         default:
             THROW_EXCEPT(InvalidArgumentException, "Invalid state");
     }

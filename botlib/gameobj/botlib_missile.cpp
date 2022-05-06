@@ -6,6 +6,7 @@
 #include <botlib_game_map.h>
 #include <botlib_particle_effect.h>
 #include <botlib_missile_hit_checker.h>
+#include <botlib_game_object_dumper.h>
 #include <botlib_missile.h>
 
 using namespace mcdane::commonlib;
@@ -25,10 +26,12 @@ void Missile::init(const MissileTemplate* t,
 }
 
 void Missile::update(GameMap& map,
+                     GameObjectDumper& dumper,
                      float timeDelta)
 {
-    if (state() == GameObjectState::DEAD)
+    if (state_ != GameObjectState::ALIVE)
     {
+        GameObject::update(map, dumper, timeDelta);
         return;
     }
 
@@ -44,10 +47,10 @@ void Missile::update(GameMap& map,
 
     if (collideBoundary || collideObjs)
     {
-        explode(map);
+        explode(map, dumper);
     }
 
-    GameObject::update(map, timeDelta);
+    GameObject::update(map, dumper, timeDelta);
 }
 
 void Missile::setDirection(const commonlib::Vector2& direction1)
@@ -56,14 +59,15 @@ void Missile::setDirection(const commonlib::Vector2& direction1)
     resetSpeed();
 }
 
-void Missile::explode(GameMap& map)
+void Missile::explode(GameMap& map,
+                      GameObjectDumper& dumper)
 {
-    MissileHitChecker checker(this, true);
+    MissileHitChecker checker(this, true, &dumper);
     Region<int> area = map.getCollideArea(explodeRegion());
-    map.accessRegion(area, checker, true);
+    map.accessRegion(area, checker);
 
     showExplodeEffect(map);
-    setState(GameObjectState::DEAD);
+    dumper.add(this);
 }
 
 void Missile::resetSpeed()
@@ -75,7 +79,7 @@ bool Missile::checkCollideObjs(GameMap& map)
 {
     MissileHitChecker checker(this, false);
     Region<int> area = map.getCollideArea(collideRegion());
-    map.accessRegion(area, checker, false);
+    map.accessRegion(area, checker);
 
     return checker.collide();
 }

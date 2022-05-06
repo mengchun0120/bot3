@@ -23,8 +23,10 @@ TestGameApp::TestGameApp(const std::string& configFile,
     Context::init(cfg);
     setupOpenGL();
     setupDeltaSmoother();
+    setupObjDumper();
     setupMap(mapFile);
     setupFlagAccessor();
+    setupObjUpdater();
 }
 
 void TestGameApp::preProcess()
@@ -67,19 +69,35 @@ void TestGameApp::setupMap(const std::string& mapFile)
     mapLoader.load(map_, mapFile);
 }
 
+void TestGameApp::setupObjDumper()
+{
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    objDumper_.init(cfg.dumperPoolSize());
+}
+
 void TestGameApp::setupFlagAccessor()
 {
     flagResetter_.reset(GameObject::FLAG_UPDATED, false);
+}
+
+void TestGameApp::setupObjUpdater()
+{
+    gameObjUpdater_.init(&objDumper_);
 }
 
 void TestGameApp::update()
 {
     const Region<int>& presentArea = map_.presentArea();
 
-    map_.accessRegion(presentArea, flagResetter_, false);
+    map_.accessRegion(presentArea, flagResetter_);
 
     gameObjUpdater_.reset(deltaSmoother_.curTimeDelta());
-    map_.accessRegion(presentArea, gameObjUpdater_, true);
+    map_.accessRegion(presentArea, gameObjUpdater_);
+
+    if (!objDumper_.empty())
+    {
+        objDumper_.clear(map_);
+    }
 }
 
 } // end of namespace itest

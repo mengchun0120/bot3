@@ -3,6 +3,7 @@
 #include <botlib_tile.h>
 #include <botlib_missile.h>
 #include <botlib_robot.h>
+#include <botlib_game_object_dumper.h>
 #include <botlib_missile_hit_checker.h>
 
 using namespace mcdane::commonlib;
@@ -30,19 +31,18 @@ inline bool check(GameObject* obj, Missile* missile)
 } // end of unnamed namespace
 
 MissileHitChecker::MissileHitChecker(Missile* missile,
-                                     bool inflictDamage)
+                                     bool inflictDamage,
+                                     GameObjectDumper* dumper)
     : collide_(false)
     , inflictDamage_(inflictDamage)
     , missile_(missile)
+    , dumper_(dumper)
 {
-}
-
-void MissileHitChecker::reset(Missile* missile,
-                              bool inflictDamage)
-{
-    collide_ = false;
-    inflictDamage_ = inflictDamage;
-    missile_ = missile;
+    if (inflictDamage_ && !dumper)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "dumper cannot be null if inflictDamage is true");
+    }
 }
 
 bool MissileHitChecker::run(GameMap& map,
@@ -64,25 +64,36 @@ bool MissileHitChecker::run(GameMap& map,
 
     if (inflictDamage_)
     {
-        doDamage(obj);
+        doDamage(map, obj);
     }
 
     return true;
 }
 
-void MissileHitChecker::doDamage(GameObject* obj)
+void MissileHitChecker::doDamage(GameMap& map,
+                                 GameObject* obj)
 {
     if (obj->type() == GameObjectType::ROBOT)
     {
         Robot* robot = static_cast<Robot*>(obj);
         robot->addHP(-missile_->damage());
         LOG_DEBUG << "damage robot " << robot << " hp=" << robot->hp() << LOG_END;
+
+        if (robot->canBeDumped(map))
+        {
+            dumper_->add(robot);
+        }
     }
     else if (obj->type() == GameObjectType::TILE)
     {
         Tile* tile = static_cast<Tile*>(obj);
         tile->addHP(-missile_->damage());
         LOG_DEBUG << "damage tile " << tile << " hp=" << tile->hp() << LOG_END;
+
+        if (tile->canBeDumped(map))
+        {
+            dumper_->add(tile);
+        }
     }
 }
 

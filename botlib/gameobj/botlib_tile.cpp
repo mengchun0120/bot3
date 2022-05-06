@@ -26,6 +26,18 @@ void Tile::present() const
     hpIndicator_.present();
 }
 
+void Tile::update(GameMap& map,
+                  GameObjectDumper& dumper,
+                  float delta)
+{
+    if (state_ == GameObjectState::DYING)
+    {
+        //TODO
+    }
+
+    GameObject::update(map, dumper, delta);
+}
+
 void Tile::addHP(float delta)
 {
     const TileTemplate* t = getTemplate();

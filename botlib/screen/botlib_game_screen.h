@@ -22,7 +22,7 @@ public:
     void init(const commonlib::Vector2& viewportSize,
               const AppActions actions);
 
-    void update(float delta) override;
+    void update(float timeDelta) override;
 
     void present() override;
 
@@ -38,17 +38,17 @@ private:
 
     bool processKey(const commonlib::KeyEvent& e);
 
-    void updatePlayer(float delta);
+    void updatePlayer(float timeDelta);
 
     void clearMapUpdated();
 
-    void updateObjects(float delta);
+    void updateObjects(float timeDelta);
 
 private:
     GameMap map_;
     GameObjectFlagResetter objFlagResetter_;
-    GameObjectUpdater objUpdater_;
     GameObjectDumper objDumper_;
+    GameObjectUpdater objUpdater_;
 };
 
 } // end of namespace botlib

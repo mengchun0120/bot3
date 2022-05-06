@@ -12,13 +12,13 @@ namespace mcdane {
 namespace botlib {
 
 class GameMap;
+class GameObjectDumper;
 
 class GameObject: public commonlib::Object {
 public:
     enum Flag {
         FLAG_INVINCIBLE = 0x00000001,
         FLAG_UPDATED = 0x00000002,
-        FLAG_DUMPED = 0x00000004
     };
 
     using Deleter = std::function<void(GameObject*)>;
@@ -64,8 +64,6 @@ public:
 
     inline bool updated() const;
 
-    inline bool dumped() const;
-
     inline unsigned int row() const;
 
     inline unsigned int col() const;
@@ -78,7 +76,10 @@ public:
 
     inline const GameObject* next() const;
 
+    bool canBeDumped(GameMap& map) const;
+
     virtual void update(GameMap& map,
+                        GameObjectDumper& dumper,
                         float timeDelta);
 
     virtual void present() const = 0;
@@ -97,8 +98,6 @@ public:
     void setInvincible(bool b);
 
     void setUpdated(bool b);
-
-    void setDumped(bool b);
 
     void setFlag(Flag flag,
                  bool b);
@@ -205,11 +204,6 @@ bool GameObject::invincible() const
 bool GameObject::updated() const
 {
     return flags_ & FLAG_UPDATED;
-}
-
-bool GameObject::dumped() const
-{
-    return flags_ & FLAG_DUMPED;
 }
 
 unsigned int GameObject::row() const

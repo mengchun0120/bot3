@@ -1,6 +1,8 @@
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
 #include <botlib_game_object.h>
+#include <botlib_game_object_dumper.h>
+#include <botlib_game_map.h>
 
 using namespace mcdane::commonlib;
 
@@ -30,10 +32,23 @@ void GameObject::init(const GameObjectTemplate* t,
                         y()-collideBreath(), y()+collideBreath());
 }
 
+bool GameObject::canBeDumped(GameMap& map) const
+{
+    return state_ != GameObjectState::DUMPED &&
+           (state_ != GameObjectState::ALIVE || !map.canSee(this));
+
+}
+
 void GameObject::update(GameMap& map,
+                        GameObjectDumper& dumper,
                         float timeDelta)
 {
     setUpdated(true);
+
+    if (canBeDumped(map))
+    {
+        dumper.add(this);
+    }
 }
 
 void GameObject::setPos(const commonlib::Vector2& pos1)
@@ -72,11 +87,6 @@ void GameObject::setInvincible(bool b)
 void GameObject::setUpdated(bool b)
 {
     setFlag(FLAG_UPDATED, b);
-}
-
-void GameObject::setDumped(bool b)
-{
-    setFlag(FLAG_DUMPED, b);
 }
 
 void GameObject::setFlag(Flag flag,

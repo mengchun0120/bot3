@@ -160,8 +160,7 @@ Region<int> GameMap::getCollideArea(const Region<float>& r) const
 }
 
 void GameMap::accessRegion(const Region<int>& r,
-                           GameMapAccessor& accessor,
-                           bool deleteDeadObj)
+                           GameMapAccessor& accessor)
 {
     for (int layer = 0; layer < LAYER_COUNT; ++layer)
     {
@@ -299,7 +298,7 @@ void GameMap::presentObjs()
     for (unsigned int i = 0; i < presentTypeCount; ++i)
     {
         presenter_.reset(presentOrder[i]);
-        accessRegion(presentArea_, presenter_, false);
+        accessRegion(presentArea_, presenter_);
     }
 }
 
@@ -311,7 +310,7 @@ void GameMap::presentParticleEffects()
     program.setViewportOrigin(viewportOrigin_);
 
     presenter_.reset(GameObjectType::EFFECT);
-    accessRegion(presentArea_, presenter_, false);
+    accessRegion(presentArea_, presenter_);
 }
 
 rapidjson::Value GameMap::cellsToJson(

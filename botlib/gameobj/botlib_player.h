@@ -27,11 +27,13 @@ public:
     void setDest(const commonlib::Vector2& dest1);
 
     void update(GameMap& map,
-                float delta) override;
+                GameObjectDumper& dumper,
+                float timeDelta) override;
 
 protected:
     void updatePos(GameMap& map,
-                   float delta) override;
+                   GameObjectDumper& dumper,
+                   float timeDelta) override;
 
     void updateMoveTime(const commonlib::Vector2& dist);
 

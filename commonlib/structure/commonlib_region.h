@@ -55,6 +55,9 @@ public:
     void shift(T deltaX,
                T deltaY);
 
+    bool contains(const T& x,
+                  const T& y) const;
+
     rapidjson::Value toJson(
             rapidjson::Document::AllocatorType& allocator) const override;
 
@@ -203,6 +206,16 @@ void Region<T>::shift(T deltaX,
     right_ += deltaX;
     bottom_ += deltaY;
     top_ += deltaY;
+}
+
+template <typename T>
+bool Region<T>::contains(const T& x,
+                         const T& y) const
+{
+    return left_ <= x &&
+           x <= right_ &&
+           bottom_ <= y &&
+           y <= top_;
 }
 
 template <typename T>

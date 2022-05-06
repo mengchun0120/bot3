@@ -26,6 +26,10 @@ public:
 
     void present() const override;
 
+    void update(GameMap& map,
+                GameObjectDumper& dumper,
+                float delta) override;
+
     void addHP(float delta);
 
     rapidjson::Value toJson(

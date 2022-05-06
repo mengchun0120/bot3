@@ -15,12 +15,18 @@ void GameObjectDumper::init(int poolSize)
 
 void GameObjectDumper::add(GameObject* obj)
 {
+    if (obj->state() == GameObjectState::DUMPED)
+    {
+        return;
+    }
+
     Item* item = pool_.alloc();
     item->setObj(obj);
     objs_.pushBack(item);
+    obj->setState(GameObjectState::DUMPED);
 }
 
-void GameObjectDumper::cleanup(GameMap& map)
+void GameObjectDumper::clear(GameMap& map)
 {
     Item* item;
     while ((item = objs_.unlinkFront()))

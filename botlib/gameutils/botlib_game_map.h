@@ -84,11 +84,12 @@ public:
     commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r) const;
 
     void accessRegion(const commonlib::Region<int>& r,
-                      GameMapAccessor& accessor,
-                      bool deleteDeadObj);
+                      GameMapAccessor& accessor);
 
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
+
+    inline bool canSee(const GameObject* obj) const;
 
 private:
     void initMapCells(unsigned int rows,
@@ -192,6 +193,11 @@ const Player* GameMap::player() const
 Player* GameMap::player()
 {
     return player_;
+}
+
+bool GameMap::canSee(const GameObject* obj) const
+{
+    return presentArea_.contains(obj->row(), obj->col());
 }
 
 } // end of namespace botlib

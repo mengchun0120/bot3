@@ -8,20 +8,22 @@ namespace mcdane {
 namespace botlib {
 
 class GameMap;
+class GameObjectDumper;
 
 class GameObjectUpdater: public GameMapAccessor {
 public:
     GameObjectUpdater() = default;
 
-    GameObjectUpdater(float delta);
+    void init(GameObjectDumper* dumper);
 
-    void reset(float delta);
+    void reset(float timeDelta);
 
     bool run(GameMap& map,
              GameObject* obj) override;
 
 private:
-    float delta_;
+    GameObjectDumper* dumper_;
+    float timeDelta_;
 };
 
 } // end of namespace botlib

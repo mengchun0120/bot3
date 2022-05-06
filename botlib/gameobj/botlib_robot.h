@@ -48,6 +48,7 @@ public:
     void present() const override;
 
     void update(GameMap& map,
+                GameObjectDumper& dumper,
                 float timeDelta) override;
 
     void shiftPos(const commonlib::Vector2& delta) override;
@@ -73,16 +74,20 @@ protected:
     void resetSpeed();
 
     virtual void updatePos(GameMap& map,
+                           GameObjectDumper& dumper,
                            float timeDelta);
 
     bool checkNonpassthroughCollide(commonlib::Vector2& delta,
                                     GameMap& map);
 
-    void checkCollideMissile(GameMap& map);
+    void checkCollideMissile(GameMap& map,
+                             GameObjectDumper& dumper);
 
-    virtual void updateShooting(GameMap& map);
+    virtual void updateShooting(GameMap& map,
+                                GameObjectDumper& dumper);
 
     void shoot(GameMap& map,
+               GameObjectDumper& dumper,
                const commonlib::TimePoint& t);
 
 protected:

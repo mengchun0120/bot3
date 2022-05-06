@@ -53,7 +53,9 @@ public:
 
     void add(GameObject* obj);
 
-    void cleanup(GameMap& map);
+    inline bool empty() const;
+
+    void clear(GameMap& map);
 
 private:
     void del(Item* item);
@@ -123,6 +125,11 @@ void GameObjectDumper::Item::reset()
     obj_ = nullptr;
     prev_ = nullptr;
     next_ = nullptr;
+}
+
+bool GameObjectDumper::empty() const
+{
+    return objs_.empty();
 }
 
 } // end of namespace botlib

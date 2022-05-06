@@ -30,11 +30,13 @@ public:
     inline float damage() const;
 
     void update(GameMap& map,
+                GameObjectDumper& dumper,
                 float timeDelta) override;
 
     void setDirection(const commonlib::Vector2& direction1) override;
 
-    void explode(GameMap& map);
+    void explode(GameMap& map,
+                 GameObjectDumper& dumper);
 
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;

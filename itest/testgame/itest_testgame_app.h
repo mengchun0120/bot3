@@ -4,6 +4,7 @@
 #include <commonlib_app.h>
 #include <botlib_time_delta_smoother.h>
 #include <botlib_game_map.h>
+#include <botlib_game_object_dumper.h>
 #include <botlib_game_object_updater.h>
 #include <botlib_game_object_flag_resetter.h>
 
@@ -31,7 +32,11 @@ private:
 
     void setupMap(const std::string& mapFile);
 
+    void setupObjDumper();
+
     void setupFlagAccessor();
+
+    void setupObjUpdater();
 
     void presentObjs();
 
@@ -42,6 +47,7 @@ private:
 private:
     botlib::GameMap map_;
     botlib::TimeDeltaSmoother deltaSmoother_;
+    botlib::GameObjectDumper objDumper_;
     botlib::GameObjectUpdater gameObjUpdater_;
     botlib::GameObjectFlagResetter flagResetter_;
 };

@@ -273,7 +273,7 @@ bool GameMapLoader::checkCollide(GameMap& map,
 
     AddObjectChecker checker(r);
     Region<int> area = map.getCollideArea(r);
-    map.accessRegion(area, checker, false);
+    map.accessRegion(area, checker);
 
     return checker.collide();
 }

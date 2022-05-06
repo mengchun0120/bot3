@@ -6,6 +6,7 @@
 #include <botlib_nonpassthrough_collide_checker.h>
 #include <botlib_robot_hit_missile_checker.h>
 #include <botlib_missile.h>
+#include <botlib_game_object_dumper.h>
 #include <botlib_robot.h>
 
 using namespace mcdane::commonlib;
@@ -42,24 +43,27 @@ void Robot::present() const
 }
 
 void Robot::update(GameMap& map,
+                   GameObjectDumper& dumper,
                    float timeDelta)
 {
-    if (state() != GameObjectState::ALIVE)
+    if (state_ == GameObjectState::ALIVE)
     {
-        return;
+        if (movingEnabled_)
+        {
+            updatePos(map, dumper, timeDelta);
+        }
+
+        if (shootingEnabled_)
+        {
+            updateShooting(map, dumper);
+        }
+    }
+    else if (state_ == GameObjectState::DYING)
+    {
+        //TODO
     }
 
-    if (movingEnabled_)
-    {
-        updatePos(map, timeDelta);
-    }
-
-    if (shootingEnabled_)
-    {
-        updateShooting(map);
-    }
-
-    GameObject::update(map, timeDelta);
+    GameObject::update(map, dumper, timeDelta);
 }
 
 void Robot::shiftPos(const Vector2& delta)
@@ -83,6 +87,11 @@ void Robot::setMovingEnabled(bool b)
 
 void Robot::addHP(float delta)
 {
+    if (state_ != GameObjectState::ALIVE)
+    {
+        return;
+    }
+
     const RobotTemplate* t = getTemplate();
 
     if (invincible())
@@ -164,6 +173,7 @@ void Robot::resetSpeed()
 }
 
 void Robot::updatePos(GameMap& map,
+                      GameObjectDumper& dumper,
                       float timeDelta)
 {
     Vector2 delta = speed_ * timeDelta;
@@ -182,7 +192,7 @@ void Robot::updatePos(GameMap& map,
     shiftPos(delta);
     map.repositionObj(this);
 
-    checkCollideMissile(map);
+    checkCollideMissile(map, dumper);
 }
 
 bool Robot::checkNonpassthroughCollide(Vector2& delta,
@@ -191,21 +201,23 @@ bool Robot::checkNonpassthroughCollide(Vector2& delta,
     NonpassthroughCollideChecker checker(this, delta);
     Region<int> area = map.getCollideArea(collideRegion(), delta[0], delta[1]);
 
-    map.accessRegion(area, checker, false);
+    map.accessRegion(area, checker);
 
     delta = checker.delta();
 
     return checker.collide();
 }
 
-void Robot::checkCollideMissile(GameMap& map)
+void Robot::checkCollideMissile(GameMap& map,
+                                GameObjectDumper& dumper)
 {
-    RobotHitMissileChecker checker(this);
+    RobotHitMissileChecker checker(dumper, this);
     Region<int> r = map.getCollideArea(collideRegion());
-    map.accessRegion(r, checker, true);
+    map.accessRegion(r, checker);
 }
 
-void Robot::updateShooting(GameMap& map)
+void Robot::updateShooting(GameMap& map,
+                           GameObjectDumper& dumper)
 {
     TimePoint thisTime = Clock::now();
 
@@ -214,10 +226,11 @@ void Robot::updateShooting(GameMap& map)
         return;
     }
 
-    shoot(map, thisTime);
+    shoot(map, dumper, thisTime);
 }
 
 void Robot::shoot(GameMap& map,
+                  GameObjectDumper& dumper,
                   const TimePoint& t)
 {
     for (unsigned int i = 0; i < firePoints_.size(); ++i)

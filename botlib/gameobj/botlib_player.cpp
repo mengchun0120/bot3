@@ -37,27 +37,29 @@ void Player::setDest(const Vector2& dest1)
 }
 
 void Player::update(GameMap& map,
-                    float delta)
+                    GameObjectDumper& dumper,
+                    float timeDelta)
 {
-    Robot::update(map, delta);
+    Robot::update(map, dumper, timeDelta);
 }
 
 void Player::updatePos(GameMap& map,
-                       float delta)
+                       GameObjectDumper& dumper,
+                       float timeDelta)
 {
     bool reachDest = false;
-    if (timeToDest_ <= delta)
+    if (timeToDest_ <= timeDelta)
     {
-        delta = timeToDest_;
+        timeDelta = timeToDest_;
         timeToDest_ = 0.0f;
         reachDest = true;
     }
     else
     {
-        timeToDest_ -= delta;
+        timeToDest_ -= timeDelta;
     }
 
-    Robot::updatePos(map, delta);
+    Robot::updatePos(map, dumper, timeDelta);
 
     if (reachDest)
     {
