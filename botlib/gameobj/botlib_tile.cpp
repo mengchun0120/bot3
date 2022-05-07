@@ -3,6 +3,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_math_utils.h>
 #include <botlib_graphics.h>
+#include <botlib_game_map.h>
 #include <botlib_tile.h>
 
 using namespace mcdane::commonlib;
@@ -68,6 +69,13 @@ rapidjson::Value Tile::toJson(
     v.AddMember("base", CompositeObject::toJson(allocator), allocator);
 
     return v;
+}
+
+bool Tile::canBeDumped(GameMap& map) const
+{
+    return state_ != GameObjectState::DUMPED &&
+           (state_ == GameObjectState::DEAD ||
+            (state_ == GameObjectState::DYING && !map.canSee(this)));
 }
 
 } // end of namespace botlib

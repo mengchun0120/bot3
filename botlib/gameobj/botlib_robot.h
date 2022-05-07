@@ -64,6 +64,8 @@ public:
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 
+    bool canBeDumped(GameMap& map) const override;
+
 protected:
     void initFirePointsAndDirections();
 

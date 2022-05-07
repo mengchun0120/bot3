@@ -1,7 +1,7 @@
 #ifndef INCLUDED_BOTLIB_GAME_OBJECT_PRESENTER_H
 #define INCLUDED_BOTLIB_GAME_OBJECT_PRESENTER_H
 
-#include <botlib_game_object.h>
+#include <botlib_game_object_type.h>
 #include <botlib_game_map_accessor.h>
 
 namespace mcdane {
@@ -13,8 +13,7 @@ public:
 
     void reset(GameObjectType type);
 
-    bool run(GameMap& map,
-             GameObject* obj) override;
+    bool run(GameObject* obj) override;
 
 private:
     GameObjectType curType_;

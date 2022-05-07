@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
 #include <botlib_game_object.h>
@@ -30,13 +31,6 @@ void GameObject::init(const GameObjectTemplate* t,
     setState(GameObjectState::ALIVE);
     collideRegion_.init(x()-collideBreath(), x()+collideBreath(),
                         y()-collideBreath(), y()+collideBreath());
-}
-
-bool GameObject::canBeDumped(GameMap& map) const
-{
-    return state_ != GameObjectState::DUMPED &&
-           (state_ != GameObjectState::ALIVE || !map.canSee(this));
-
 }
 
 void GameObject::update(GameMap& map,

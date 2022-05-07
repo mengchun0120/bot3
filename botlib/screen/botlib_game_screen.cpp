@@ -4,6 +4,8 @@
 #include <botlib_game_map_loader.h>
 #include <botlib_context.h>
 #include <botlib_player.h>
+#include <botlib_game_object_flag_resetter.h>
+#include <botlib_game_object_updater.h>
 #include <botlib_game_screen.h>
 
 using namespace mcdane::commonlib;
@@ -36,7 +38,6 @@ void GameScreen::init(const Vector2& viewportSize,
 
     loadMap(viewportSize, cfg.mapFile());
     objDumper_.init(cfg.dumperPoolSize());
-    objUpdater_.init(&objDumper_);
 }
 
 void GameScreen::update(float timeDelta)
@@ -127,14 +128,14 @@ void GameScreen::updatePlayer(float timeDelta)
 
 void GameScreen::clearMapUpdated()
 {
-    objFlagResetter_.reset(GameObject::FLAG_UPDATED, false);
-    map_.accessRegion(map_.presentArea(), objFlagResetter_);
+    GameObjectFlagResetter flagResetter(GameObject::FLAG_UPDATED, false);
+    map_.accessRegion(map_.presentArea(), flagResetter);
 }
 
 void GameScreen::updateObjects(float timeDelta)
 {
-    objUpdater_.reset(timeDelta);
-    map_.accessRegion(map_.presentArea(), objUpdater_);
+    GameObjectUpdater updater(map_, objDumper_, timeDelta);
+    map_.accessRegion(map_.presentArea(), updater);
 }
 
 } // end of namespace botlib

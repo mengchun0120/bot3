@@ -13,8 +13,7 @@ public:
 
     void reset(const commonlib::Region<float>& collideRegion);
 
-    bool run(GameMap& map,
-             GameObject* obj) override;
+    bool run(GameObject* obj) override;
 
     inline bool collide() const;
 

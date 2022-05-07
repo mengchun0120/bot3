@@ -4,25 +4,23 @@
 namespace mcdane {
 namespace botlib {
 
-void GameObjectUpdater::init(GameObjectDumper* dumper)
+GameObjectUpdater::GameObjectUpdater(GameMap& map,
+                                     GameObjectDumper& dumper,
+                                     float timeDelta)
+    : map_(map)
+    , dumper_(dumper)
+    , timeDelta_(timeDelta)
 {
-    dumper_ = dumper;
 }
 
-void GameObjectUpdater::reset(float timeDelta)
-{
-    timeDelta_ = timeDelta;
-}
-
-bool GameObjectUpdater::run(GameMap& map,
-                            GameObject* obj)
+bool GameObjectUpdater::run(GameObject* obj)
 {
     if (obj->updated())
     {
         return true;
     }
 
-    obj->update(map, *dumper_, timeDelta_);
+    obj->update(map_, dumper_, timeDelta_);
     return true;
 }
 

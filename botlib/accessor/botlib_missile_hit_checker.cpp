@@ -14,14 +14,14 @@ namespace botlib {
 namespace {
 
 inline bool isSameSideRobot(GameObject* obj,
-                            Missile* missile)
+                            Missile& missile)
 {
     return obj->type() == GameObjectType::ROBOT &&
-           static_cast<Robot*>(obj)->side() == missile->side();
+           static_cast<Robot*>(obj)->side() == missile.side();
 }
 
 
-inline bool check(GameObject* obj, Missile* missile)
+inline bool check(GameObject* obj, Missile& missile)
 {
     return obj->state() == GameObjectState::ALIVE &&
            (obj->type() == GameObjectType::TILE ||
@@ -30,13 +30,15 @@ inline bool check(GameObject* obj, Missile* missile)
 
 } // end of unnamed namespace
 
-MissileHitChecker::MissileHitChecker(Missile* missile,
+MissileHitChecker::MissileHitChecker(GameMap& map,
+                                     Missile& missile,
                                      bool inflictDamage,
                                      GameObjectDumper* dumper)
-    : collide_(false)
-    , inflictDamage_(inflictDamage)
+    : map_(map)
     , missile_(missile)
+    , inflictDamage_(inflictDamage)
     , dumper_(dumper)
+    , collide_(false)
 {
     if (inflictDamage_ && !dumper)
     {
@@ -45,15 +47,14 @@ MissileHitChecker::MissileHitChecker(Missile* missile,
     }
 }
 
-bool MissileHitChecker::run(GameMap& map,
-                            GameObject* obj)
+bool MissileHitChecker::run(GameObject* obj)
 {
     if (!check(obj, missile_))
     {
         return true;
     }
 
-    bool collide1 = checkRectCollideRect(missile_->collideRegion(),
+    bool collide1 = checkRectCollideRect(missile_.collideRegion(),
                                          obj->collideRegion());
     if (!collide1)
     {
@@ -64,22 +65,21 @@ bool MissileHitChecker::run(GameMap& map,
 
     if (inflictDamage_)
     {
-        doDamage(map, obj);
+        doDamage(obj);
     }
 
     return true;
 }
 
-void MissileHitChecker::doDamage(GameMap& map,
-                                 GameObject* obj)
+void MissileHitChecker::doDamage(GameObject* obj)
 {
     if (obj->type() == GameObjectType::ROBOT)
     {
         Robot* robot = static_cast<Robot*>(obj);
-        robot->addHP(-missile_->damage());
+        robot->addHP(-missile_.damage());
         LOG_DEBUG << "damage robot " << robot << " hp=" << robot->hp() << LOG_END;
 
-        if (robot->canBeDumped(map))
+        if (robot->canBeDumped(map_))
         {
             dumper_->add(robot);
         }
@@ -87,10 +87,10 @@ void MissileHitChecker::doDamage(GameMap& map,
     else if (obj->type() == GameObjectType::TILE)
     {
         Tile* tile = static_cast<Tile*>(obj);
-        tile->addHP(-missile_->damage());
+        tile->addHP(-missile_.damage());
         LOG_DEBUG << "damage tile " << tile << " hp=" << tile->hp() << LOG_END;
 
-        if (tile->canBeDumped(map))
+        if (tile->canBeDumped(map_))
         {
             dumper_->add(tile);
         }

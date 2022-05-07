@@ -12,13 +12,14 @@ class GameObjectDumper;
 
 class RobotHitMissileChecker: public GameMapAccessor {
 public:
-    RobotHitMissileChecker(GameObjectDumper& dumper,
+    RobotHitMissileChecker(GameMap& map,
+                           GameObjectDumper& dumper,
                            Robot* robot);
 
-    bool run(GameMap& map,
-             GameObject* obj) override;
+    bool run(GameObject* obj) override;
 
 private:
+    GameMap& map_;
     GameObjectDumper& dumper_;
     Robot* robot_;
 };

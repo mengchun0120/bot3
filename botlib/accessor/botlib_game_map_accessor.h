@@ -4,7 +4,6 @@
 namespace mcdane {
 namespace botlib {
 
-class GameMap;
 class GameObject;
 
 class GameMapAccessor {
@@ -13,8 +12,7 @@ public:
 
     virtual ~GameMapAccessor() = default;
 
-    virtual bool run(GameMap& map,
-                     GameObject* obj) = 0;
+    virtual bool run(GameObject* obj) = 0;
 };
 
 } // end of namespace botlib

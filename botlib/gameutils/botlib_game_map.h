@@ -8,13 +8,13 @@
 #include <commonlib_vector.h>
 #include <commonlib_linked_list.h>
 #include <commonlib_region.h>
-#include <botlib_game_object_presenter.h>
 #include <botlib_game_object.h>
 #include <botlib_typedef.h>
 
 namespace mcdane {
 namespace botlib {
 
+class GameMapAccessor;
 class Player;
 
 class GameMap: public commonlib::Object {
@@ -126,7 +126,6 @@ private:
     commonlib::Region<float> boundary_;
     commonlib::Region<float> viewableRegion_;
     commonlib::Region<int> presentArea_;
-    GameObjectPresenter presenter_;
     Player* player_;
 };
 
@@ -197,7 +196,7 @@ Player* GameMap::player()
 
 bool GameMap::canSee(const GameObject* obj) const
 {
-    return presentArea_.contains(obj->row(), obj->col());
+    return presentArea_.contains(obj->col(), obj->row());
 }
 
 } // end of namespace botlib

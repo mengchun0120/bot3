@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_NONPASSTHROUGH_COLLIDE_CHECKER_H
 #define INCLUDED_BOTLIB_NONPASSTHROUGH_COLLIDE_CHECKER_H
 
+#include <commonlib_vector.h>
 #include <botlib_game_map_accessor.h>
 
 namespace mcdane {
@@ -15,11 +16,7 @@ public:
 
     inline const commonlib::Vector2& delta() const;
 
-    void reset(GameObject* obj,
-               commonlib::Vector2& delta1);
-
-    bool run(GameMap& map,
-             GameObject* obj) override;
+    bool run(GameObject* obj) override;
 
 private:
     GameObject* obj_;

@@ -1,5 +1,8 @@
+#include <commonlib_log.h>
 #include <botlib_game_map.h>
 #include <botlib_game_object_dumper.h>
+
+using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
@@ -31,6 +34,7 @@ void GameObjectDumper::clear(GameMap& map)
     Item* item;
     while ((item = objs_.unlinkFront()))
     {
+        LOG_INFO << "removed " << item->obj()->id() << LOG_END;
         map.removeObj(item->obj());
         pool_.free(item);
     }

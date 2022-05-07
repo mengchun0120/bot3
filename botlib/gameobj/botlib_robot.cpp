@@ -132,6 +132,13 @@ rapidjson::Value Robot::toJson(
     return v;
 }
 
+bool Robot::canBeDumped(GameMap& map) const
+{
+    return state_ != GameObjectState::DUMPED &&
+           (state_ == GameObjectState::DEAD ||
+            (state_ == GameObjectState::DYING && !map.canSee(this)));
+}
+
 void Robot::initFirePointsAndDirections()
 {
     const RobotTemplate* t = getTemplate();
@@ -211,7 +218,7 @@ bool Robot::checkNonpassthroughCollide(Vector2& delta,
 void Robot::checkCollideMissile(GameMap& map,
                                 GameObjectDumper& dumper)
 {
-    RobotHitMissileChecker checker(dumper, this);
+    RobotHitMissileChecker checker(map, dumper, this);
     Region<int> r = map.getCollideArea(collideRegion());
     map.accessRegion(r, checker);
 }

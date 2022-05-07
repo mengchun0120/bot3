@@ -2,8 +2,6 @@
 #define INCLUDED_BOTLIB_GAME_SCREEN_H
 
 #include <botlib_game_map.h>
-#include <botlib_game_object_flag_resetter.h>
-#include <botlib_game_object_updater.h>
 #include <botlib_game_object_dumper.h>
 #include <botlib_screen.h>
 
@@ -46,9 +44,7 @@ private:
 
 private:
     GameMap map_;
-    GameObjectFlagResetter objFlagResetter_;
     GameObjectDumper objDumper_;
-    GameObjectUpdater objUpdater_;
 };
 
 } // end of namespace botlib

@@ -76,8 +76,6 @@ public:
 
     inline const GameObject* next() const;
 
-    bool canBeDumped(GameMap& map) const;
-
     virtual void update(GameMap& map,
                         GameObjectDumper& dumper,
                         float timeDelta);
@@ -108,6 +106,8 @@ public:
 
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
+
+    virtual bool canBeDumped(GameMap& map) const = 0;
 
 protected:
     const GameObjectTemplate* t_;

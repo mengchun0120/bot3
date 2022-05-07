@@ -63,6 +63,12 @@ rapidjson::Value ParticleEffect::toJson(
     return v;
 }
 
+bool ParticleEffect::canBeDumped(GameMap& map) const
+{
+    return state_ != GameObjectState::DUMPED &&
+           (state_ == GameObjectState::DEAD || !map.canSee(this));
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

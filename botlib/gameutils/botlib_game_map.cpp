@@ -174,7 +174,7 @@ void GameMap::accessRegion(const Region<int>& r,
                 for (GameObject* obj = objs.first(); obj; obj = next)
                 {
                     next = obj->next();
-                    accessor.run(*this, obj);
+                    accessor.run(obj);
                 }
             }
         }
@@ -295,10 +295,12 @@ void GameMap::presentObjs()
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
 
+    GameObjectPresenter presenter;
+
     for (unsigned int i = 0; i < presentTypeCount; ++i)
     {
-        presenter_.reset(presentOrder[i]);
-        accessRegion(presentArea_, presenter_);
+        presenter.reset(presentOrder[i]);
+        accessRegion(presentArea_, presenter);
     }
 }
 
@@ -309,8 +311,9 @@ void GameMap::presentParticleEffects()
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
 
-    presenter_.reset(GameObjectType::EFFECT);
-    accessRegion(presentArea_, presenter_);
+    GameObjectPresenter presenter;
+    presenter.reset(GameObjectType::EFFECT);
+    accessRegion(presentArea_, presenter);
 }
 
 rapidjson::Value GameMap::cellsToJson(

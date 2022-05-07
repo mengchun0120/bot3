@@ -62,7 +62,7 @@ void Missile::setDirection(const commonlib::Vector2& direction1)
 void Missile::explode(GameMap& map,
                       GameObjectDumper& dumper)
 {
-    MissileHitChecker checker(this, true, &dumper);
+    MissileHitChecker checker(map, *this, true, &dumper);
     Region<int> area = map.getCollideArea(explodeRegion());
     map.accessRegion(area, checker);
 
@@ -77,7 +77,7 @@ void Missile::resetSpeed()
 
 bool Missile::checkCollideObjs(GameMap& map)
 {
-    MissileHitChecker checker(this, false);
+    MissileHitChecker checker(map, *this, false);
     Region<int> area = map.getCollideArea(collideRegion());
     map.accessRegion(area, checker);
 
@@ -111,6 +111,11 @@ rapidjson::Value Missile::toJson(
     v.AddMember("base", CompositeObject::toJson(allocator), allocator);
 
     return v;
+}
+
+bool Missile::canBeDumped(GameMap& map) const
+{
+    return state_ != GameObjectState::DUMPED && !map.canSee(this);
 }
 
 } // end of namespace botlib

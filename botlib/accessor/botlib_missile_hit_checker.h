@@ -6,29 +6,30 @@
 namespace mcdane {
 namespace botlib {
 
+class GameMap;
 class Missile;
 class GameObjectDumper;
 
 class MissileHitChecker: public GameMapAccessor {
 public:
-    MissileHitChecker(Missile* missile,
+    MissileHitChecker(GameMap& map,
+                      Missile& missile,
                       bool inflictDamage,
                       GameObjectDumper* dumper=nullptr);
 
     inline bool collide() const;
 
-    bool run(GameMap& map,
-             GameObject* obj) override;
+    bool run(GameObject* obj) override;
 
 private:
-    void doDamage(GameMap& map,
-                  GameObject* obj);
+    void doDamage(GameObject* obj);
 
 private:
-    bool collide_;
+    GameMap& map_;
+    Missile& missile_;
     bool inflictDamage_;
-    Missile* missile_;
     GameObjectDumper* dumper_;
+    bool collide_;
 };
 
 bool MissileHitChecker::collide() const

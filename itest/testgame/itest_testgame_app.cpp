@@ -2,6 +2,8 @@
 #include <botlib_context.h>
 #include <botlib_game_map_loader.h>
 #include <botlib_hp_indicator.h>
+#include <botlib_game_object_updater.h>
+#include <botlib_game_object_flag_resetter.h>
 #include <itest_testgame_app.h>
 
 using namespace mcdane::commonlib;
@@ -25,8 +27,6 @@ TestGameApp::TestGameApp(const std::string& configFile,
     setupDeltaSmoother();
     setupObjDumper();
     setupMap(mapFile);
-    setupFlagAccessor();
-    setupObjUpdater();
 }
 
 void TestGameApp::preProcess()
@@ -75,29 +75,27 @@ void TestGameApp::setupObjDumper()
     objDumper_.init(cfg.dumperPoolSize());
 }
 
-void TestGameApp::setupFlagAccessor()
-{
-    flagResetter_.reset(GameObject::FLAG_UPDATED, false);
-}
-
-void TestGameApp::setupObjUpdater()
-{
-    gameObjUpdater_.init(&objDumper_);
-}
-
 void TestGameApp::update()
 {
-    const Region<int>& presentArea = map_.presentArea();
-
-    map_.accessRegion(presentArea, flagResetter_);
-
-    gameObjUpdater_.reset(deltaSmoother_.curTimeDelta());
-    map_.accessRegion(presentArea, gameObjUpdater_);
+    clearObjUpdated();
+    updateObjs();
 
     if (!objDumper_.empty())
     {
         objDumper_.clear(map_);
     }
+}
+
+void TestGameApp::clearObjUpdated()
+{
+    GameObjectFlagResetter flagResetter(GameObject::FLAG_UPDATED, false);
+    map_.accessRegion(map_.presentArea(), flagResetter);
+}
+
+void TestGameApp::updateObjs()
+{
+    GameObjectUpdater updater(map_, objDumper_, deltaSmoother_.curTimeDelta());
+    map_.accessRegion(map_.presentArea(), updater);
 }
 
 } // end of namespace itest
