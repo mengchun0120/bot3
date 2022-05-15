@@ -35,6 +35,7 @@ void GameMap::init(unsigned int rows,
     maxObjSpan_ = maxObjSpan;
     maxCollideBreath_ = maxCollideBreath;
     extraCell_ = static_cast<int>(ceil(maxObjSpan_ / k_cellBreath));
+    initObjDeleter();
     initMapCells(rows, cols);
     setBoundary(rows, cols);
     setViewportSize(viewportWidth, viewportHeight);
@@ -67,7 +68,7 @@ void GameMap::addObj(GameObject* obj)
         setViewportOrigin(player_->x(), player_->y());
     }
 
-    LOG_DEBUG << "addObj " << *obj << LOG_END;
+    LOG_DEBUG << "added " << obj->type() << " " << obj->id() << LOG_END;
 }
 
 void GameMap::repositionObj(GameObject* obj)
@@ -209,6 +210,15 @@ rapidjson::Value GameMap::toJson(
     return v;
 }
 
+void GameMap::initObjDeleter()
+{
+    objDeleter_ = [](GameObject* obj)
+    {
+        LOG_DEBUG << "deleted " << obj->type() << " " << obj->id() << LOG_END;
+        delete obj;
+    };
+}
+
 void GameMap::initMapCells(unsigned int rows,
                            unsigned int cols)
 {
@@ -216,9 +226,17 @@ void GameMap::initMapCells(unsigned int rows,
     unsigned int colCount = cols + extraCell_*2;
 
     cells_.resize(rowCount);
-    for (auto it = cells_.begin(); it != cells_.end(); ++it)
+    for (auto rowIt = cells_.begin(); rowIt != cells_.end(); ++rowIt)
     {
-        it->resize(colCount);
+        rowIt->resize(colCount);
+
+        for (auto colIt = rowIt->begin(); colIt != rowIt->end(); ++colIt)
+        {
+            for (auto objIt = colIt->begin(); objIt != colIt->end(); ++objIt)
+            {
+                objIt->setDeleter(&objDeleter_);
+            }
+        }
     }
 }
 

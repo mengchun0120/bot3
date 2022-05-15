@@ -47,7 +47,7 @@ void GameLib::initTextureLib(const std::string& textureLibFile,
 
     textureLib_.init(textureLibFile, parser);
 
-    LOG_DEBUG << "textureLib loaded successfully: " << textureLib_ << LOG_END;
+    LOG_DEBUG << "textureLib loaded successfully" << LOG_END;
 }
 
 void GameLib::initRectLib(const std::string& rectLibFile)
@@ -60,7 +60,7 @@ void GameLib::initRectLib(const std::string& rectLibFile)
 
     rectLib_.init(rectLibFile, parser);
 
-    LOG_DEBUG << "rectLib loaded successfully: " << rectLib_ << LOG_END;
+    LOG_DEBUG << "rectLib loaded successfully" << LOG_END;
 }
 
 void GameLib::initComponentTemplateLib(
@@ -74,8 +74,7 @@ void GameLib::initComponentTemplateLib(
 
     componentTemplateLib_.init(componentTemplateLibFile, parser);
 
-    LOG_DEBUG << "componentTemplateLib loaded successfully: "
-              << componentTemplateLib_ << LOG_END;
+    LOG_DEBUG << "componentTemplateLib loaded successfully" << LOG_END;
 }
 
 void GameLib::initTileTemplateLib(const std::string& tileTemplateLibFile)
@@ -88,8 +87,7 @@ void GameLib::initTileTemplateLib(const std::string& tileTemplateLibFile)
 
     tileTemplateLib_.init(tileTemplateLibFile, parser);
 
-    LOG_DEBUG << "tileTemplateLib loaded successfully: "
-              << tileTemplateLib_ << LOG_END;
+    LOG_DEBUG << "tileTemplateLib loaded successfully" << LOG_END;
 }
 
 void GameLib::initParticleEffectTemplateLib(
@@ -104,8 +102,7 @@ void GameLib::initParticleEffectTemplateLib(
 
     particleEffectTemplateLib_.init(particleEffectTemplateLibFile, parser);
 
-    LOG_DEBUG << "particleEffectTemplateLib loaded successfully: "
-              << particleEffectTemplateLib_ << LOG_END;
+    LOG_DEBUG << "particleEffectTemplateLib loaded successfully" << LOG_END;
 }
 
 void GameLib::initMissileTemplateLib(const std::string& missileTemplateLibFile)
@@ -118,8 +115,7 @@ void GameLib::initMissileTemplateLib(const std::string& missileTemplateLibFile)
 
     missileTemplateLib_.init(missileTemplateLibFile, parser);
 
-    LOG_DEBUG << "missileTemplateLib loaded successfully: "
-              << missileTemplateLib_ << LOG_END;
+    LOG_DEBUG << "missileTemplateLib loaded successfully" << LOG_END;
 }
 
 void GameLib::initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile)
@@ -132,8 +128,7 @@ void GameLib::initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile)
 
     aiRobotTemplateLib_.init(aiRobotTemplateLibFile, parser);
 
-    LOG_DEBUG << "aiRobotTemplateLib loaded successfully: "
-              << aiRobotTemplateLib_ << LOG_END;
+    LOG_DEBUG << "aiRobotTemplateLib loaded successfully" << LOG_END;
 }
 
 void GameLib::calculateMaxObjSpan()

@@ -92,6 +92,8 @@ public:
     inline bool canSee(const GameObject* obj) const;
 
 private:
+    void initObjDeleter();
+
     void initMapCells(unsigned int rows,
                       unsigned int cols);
 
@@ -116,6 +118,7 @@ private:
     float maxObjSpan_;
     float maxCollideBreath_;
     int extraCell_;
+    GameObjectList::Deleter objDeleter_;
     std::vector<std::vector<Cell>> cells_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 viewportHalfSize_;
