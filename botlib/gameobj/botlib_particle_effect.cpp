@@ -1,6 +1,7 @@
 #include <commonlib_log.h>
 #include <botlib_context.h>
 #include <botlib_game_map.h>
+#include <botlib_game_object_dumper.h>
 #include <botlib_particle_effect.h>
 
 using namespace mcdane::commonlib;
@@ -42,7 +43,7 @@ void ParticleEffect::update(GameMap& map,
         elapsedTime_ += timeDelta;
         if (elapsedTime_ >= getTemplate()->duration())
         {
-            setState(GameObjectState::DEAD);
+            dumper.add(this);
         }
     }
 
@@ -65,8 +66,7 @@ rapidjson::Value ParticleEffect::toJson(
 
 bool ParticleEffect::canBeDumped(GameMap& map) const
 {
-    return state_ != GameObjectState::DUMPED &&
-           (state_ == GameObjectState::DEAD || !map.canSee(this));
+    return state_ != GameObjectState::DEAD && !map.canSee(this);
 }
 
 } // end of namespace botlib

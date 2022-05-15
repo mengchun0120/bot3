@@ -9,8 +9,7 @@ namespace botlib {
 enum class GameObjectState {
     ALIVE,
     DYING,
-    DEAD,
-    DUMPED
+    DEAD
 };
 
 } // end of namespace botlib

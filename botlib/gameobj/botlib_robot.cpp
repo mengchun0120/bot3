@@ -102,7 +102,7 @@ void Robot::addHP(float delta)
     hp_ = clamp(hp_+delta, 0.0f, t->hp());
     if (hp_ <= 0.0f)
     {
-        setState(GameObjectState::DEAD);
+        setState(GameObjectState::DYING);
     }
 
     hpIndicator_.reset(pos(), hpRatio());
@@ -134,9 +134,7 @@ rapidjson::Value Robot::toJson(
 
 bool Robot::canBeDumped(GameMap& map) const
 {
-    return state_ != GameObjectState::DUMPED &&
-           (state_ == GameObjectState::DEAD ||
-            (state_ == GameObjectState::DYING && !map.canSee(this)));
+    return state_ == GameObjectState::DYING && !map.canSee(this);
 }
 
 void Robot::initFirePointsAndDirections()

@@ -14,7 +14,7 @@ class MissileHitChecker: public GameMapAccessor {
 public:
     MissileHitChecker(GameMap& map,
                       Missile& missile,
-                      bool inflictDamage,
+                      bool inflictDamage=false,
                       GameObjectDumper* dumper=nullptr);
 
     inline bool collide() const;

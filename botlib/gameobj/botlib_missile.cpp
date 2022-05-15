@@ -77,7 +77,7 @@ void Missile::resetSpeed()
 
 bool Missile::checkCollideObjs(GameMap& map)
 {
-    MissileHitChecker checker(map, *this, false);
+    MissileHitChecker checker(map, *this);
     Region<int> area = map.getCollideArea(collideRegion());
     map.accessRegion(area, checker);
 
@@ -115,7 +115,7 @@ rapidjson::Value Missile::toJson(
 
 bool Missile::canBeDumped(GameMap& map) const
 {
-    return state_ != GameObjectState::DUMPED && !map.canSee(this);
+    return state_ != GameObjectState::DEAD && !map.canSee(this);
 }
 
 } // end of namespace botlib
