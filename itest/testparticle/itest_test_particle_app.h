@@ -15,11 +15,7 @@ public:
                     const std::string& fragShaderFile,
                     const std::string& textureFile);
 
-    void preProcess() override;
-
     void process() override;
-
-    void postProcess() override;
 
 private:
     void setupOpenGL(const std::string& vertexShaderFile,

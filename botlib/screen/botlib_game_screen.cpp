@@ -54,7 +54,9 @@ void GameScreen::update(float timeDelta)
 
 void GameScreen::present()
 {
+    glClear(GL_COLOR_BUFFER_BIT);
     map_.present();
+    glFlush();
 }
 
 bool GameScreen::processInput(const InputEvent &e)

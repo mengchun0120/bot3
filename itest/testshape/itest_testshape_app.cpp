@@ -71,16 +71,13 @@ void TestShapeApp::setupTexture(const std::string& appDir)
     texPos_.init({w, 500.0});
 }
 
-void TestShapeApp::preProcess()
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
 void TestShapeApp::process()
 {
     Graphics& g = Context::graphics();
     SimpleShaderProgram& program = g.simpleShader();
     const TextSystem& textSys = g.textSys();
+
+    glClear(GL_COLOR_BUFFER_BIT);
 
     triangle_.draw(program, &trianglePos_, nullptr, &fillColor_,
                    nullptr, 0, nullptr);
@@ -98,11 +95,8 @@ void TestShapeApp::process()
                  TextSize::TINY, &fillColor_);
 
     glFlush();
-}
 
-void TestShapeApp::postProcess()
-{
-    App::postProcess();
+    postProcess();
 }
 
 } // end of namespace itest

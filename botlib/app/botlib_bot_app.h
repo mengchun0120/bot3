@@ -17,11 +17,7 @@ public:
 
     ~BotApp() override;
 
-    void preProcess() override;
-
     void process() override;
-
-    void postProcess() override;
 
     ScreenManager& screenManager()
     {

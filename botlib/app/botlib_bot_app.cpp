@@ -22,11 +22,6 @@ BotApp::~BotApp()
 {
 }
 
-void BotApp::preProcess()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
 void BotApp::process()
 {
     InputManager::getInstance().processInput(inputProcessor_);
@@ -36,14 +31,10 @@ void BotApp::process()
         screenManager_.update(deltaSmoother_.curTimeDelta());
         screenManager_.present();
     }
-}
 
-void BotApp::postProcess()
-{
     screenManager_.postProcess();
-    App::postProcess();
+    postProcess();
 }
-
 
 void BotApp::init(const std::string& configFile,
                   const std::string& appDir)

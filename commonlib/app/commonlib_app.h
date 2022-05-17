@@ -20,11 +20,9 @@ public:
 
     virtual ~App();
 
-    virtual void preProcess() = 0;
-
     virtual void process() = 0;
 
-    virtual void postProcess();
+    void postProcess();
 
 #ifdef DESKTOP_APP
     void setupWindow(unsigned int width,

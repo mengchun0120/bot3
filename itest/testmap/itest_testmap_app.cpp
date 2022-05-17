@@ -27,20 +27,13 @@ TestMapApp::TestMapApp(const std::string& configFile,
     setupMap(mapFile);
 }
 
-void TestMapApp::preProcess()
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
 void TestMapApp::process()
 {
+    glClear(GL_COLOR_BUFFER_BIT);
     map_.present();
     glFlush();
-}
 
-void TestMapApp::postProcess()
-{
-    App::postProcess();
+    postProcess();
 }
 
 void TestMapApp::setupOpenGL()

@@ -113,19 +113,8 @@ void App::run()
     running_ = true;
     while (0 == glfwWindowShouldClose(window_) && running_)
     {
-        preProcess();
-
-        if (running_)
-        {
-            process();
-        }
-
-        if (running_)
-        {
-            postProcess();
-        }
+        process();
     }
-    running_ = false;
 }
 #endif
 

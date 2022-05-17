@@ -15,11 +15,7 @@ public:
 
     ~TestShapeApp() override = default;
 
-    void preProcess() override;
-
     void process() override;
-
-    void postProcess() override;
 
 private:
     void setupOpenGL();

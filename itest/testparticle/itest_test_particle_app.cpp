@@ -21,13 +21,10 @@ TestParticleApp::TestParticleApp(const std::string& vertexShaderFile,
     startTime_ = Clock::now();
 }
 
-void TestParticleApp::preProcess()
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
 void TestParticleApp::process()
 {
+    glClear(GL_COLOR_BUFFER_BIT);
+
     program_.use();
     program_.setViewportOrigin(Vector2{500.0f, 500.0f});
     program_.setViewportSize(viewportSize());
@@ -40,11 +37,8 @@ void TestParticleApp::process()
     program_.setPointTexture(texture_.id());
     glDrawArrays(GL_POINTS, 0, va_.numVertices(0));
     glFlush();
-}
 
-void TestParticleApp::postProcess()
-{
-    App::postProcess();
+    postProcess();
 }
 
 void TestParticleApp::setupOpenGL(const std::string& vertexShaderFile,

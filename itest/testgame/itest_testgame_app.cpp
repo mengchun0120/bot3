@@ -29,22 +29,17 @@ TestGameApp::TestGameApp(const std::string& configFile,
     setupMap(mapFile);
 }
 
-void TestGameApp::preProcess()
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-    deltaSmoother_.updateTimeDelta();
-}
-
 void TestGameApp::process()
 {
+    deltaSmoother_.updateTimeDelta();
+
     update();
+
+    glClear(GL_COLOR_BUFFER_BIT);
     map_.present();
     glFlush();
-}
 
-void TestGameApp::postProcess()
-{
-    App::postProcess();
+    postProcess();
 }
 
 void TestGameApp::setupOpenGL()

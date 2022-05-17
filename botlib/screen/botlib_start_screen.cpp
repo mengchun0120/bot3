@@ -35,6 +35,7 @@ void StartScreen::update(float delta)
 
 void StartScreen::present()
 {
+    glClear(GL_COLOR_BUFFER_BIT);
     widgets_.present();
     glFlush();
 }

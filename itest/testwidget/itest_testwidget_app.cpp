@@ -26,27 +26,20 @@ TestWidgetApp::TestWidgetApp(const std::string& configFile,
     setupInput();
 }
 
-void TestWidgetApp::preProcess()
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
 void TestWidgetApp::process()
 {
     InputManager::getInstance().processInput(inputProcessor_);
+
+    glClear(GL_COLOR_BUFFER_BIT);
 
     widgets_.present();
     if (msgBox_.visible())
     {
         msgBox_.present();
     }
-
     glFlush();
-}
 
-void TestWidgetApp::postProcess()
-{
-    App::postProcess();
+    postProcess();
 }
 
 bool TestWidgetApp::processInput(const commonlib::InputEvent& e)

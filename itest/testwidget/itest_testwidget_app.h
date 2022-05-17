@@ -15,11 +15,7 @@ public:
 
     ~TestWidgetApp() override = default;
 
-    void preProcess() override;
-
     void process() override;
-
-    void postProcess() override;
 
     bool processInput(const commonlib::InputEvent& e);
 

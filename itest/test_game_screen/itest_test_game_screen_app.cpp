@@ -20,26 +20,18 @@ TestGameScreenApp::TestGameScreenApp(const std::string& configFile,
     setupGame();
 }
 
-void TestGameScreenApp::preProcess()
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-    deltaSmoother_.updateTimeDelta();
-}
-
 void TestGameScreenApp::process()
 {
     InputManager::getInstance().processInput(inputProcessor_);
+    deltaSmoother_.updateTimeDelta();
 
     if (running())
     {
         screen_.update(deltaSmoother_.curTimeDelta());
         screen_.present();
     }
-}
 
-void TestGameScreenApp::postProcess()
-{
-    App::postProcess();
+    postProcess();
 }
 
 void TestGameScreenApp::setupWindow()
