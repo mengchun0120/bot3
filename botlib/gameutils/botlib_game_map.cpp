@@ -97,6 +97,11 @@ void GameMap::removeObj(GameObject* obj)
     int layer = getLayer(obj->type());
 
     cells_[obj->row()][obj->col()][layer].remove(obj);
+
+    if (isPlayer(obj))
+    {
+        player_ = nullptr;
+    }
 }
 
 void GameMap::setViewportOrigin(float x,

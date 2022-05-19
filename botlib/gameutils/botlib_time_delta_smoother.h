@@ -17,7 +17,7 @@ public:
 
     void start();
 
-    void updateTimeDelta();
+    void update();
 
     inline float curTimeDelta() const;
 

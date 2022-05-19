@@ -3,7 +3,7 @@
         "name": "red_missile",
         "collideBreath": 8.0,
         "damage": 10.0,
-        "speed": 100.0,
+        "speed": 0.1,
         "explodeBreath": 18.0,
         "components": [
             {
@@ -18,7 +18,7 @@
         "name": "green_missile",
         "collideBreath": 8.0,
         "damage": 10.0,
-        "speed": 100.0,
+        "speed": 0.1,
         "explodeBreath": 18.0,
         "components": [
             {

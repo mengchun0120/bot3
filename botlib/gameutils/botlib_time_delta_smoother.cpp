@@ -1,4 +1,5 @@
 #include <commonlib_exception.h>
+#include <commonlib_time_utils.h>
 #include <botlib_time_delta_smoother.h>
 
 using namespace mcdane::commonlib;
@@ -39,15 +40,15 @@ void TimeDeltaSmoother::start()
     timeDeltaSum_ = 0.0f;
     totalSlots_ = 0;
     lastSlot_ = 0;
+    curTimeDelta_ = 0.0f;
 }
 
-void TimeDeltaSmoother::updateTimeDelta()
+void TimeDeltaSmoother::update()
 {
     using namespace std::chrono;
 
     TimePoint curTime = Clock::now();
-    duration<float> dur = curTime - prevTime_;
-    float timeDelta = dur.count();
+    float timeDelta = timeDistMs(prevTime_, curTime);
 
     unsigned int histSize = timeDeltaHistory_.size();
 

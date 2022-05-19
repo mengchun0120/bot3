@@ -42,7 +42,11 @@ void GameScreen::init(const Vector2& viewportSize,
 
 void GameScreen::update(float timeDelta)
 {
-    updatePlayer(timeDelta);
+    if (map_.player())
+    {
+        updatePlayer(timeDelta);
+    }
+
     clearMapUpdated();
     updateObjects(timeDelta);
 

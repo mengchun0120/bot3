@@ -23,7 +23,7 @@ TestGameScreenApp::TestGameScreenApp(const std::string& configFile,
 void TestGameScreenApp::process()
 {
     InputManager::getInstance().processInput(inputProcessor_);
-    deltaSmoother_.updateTimeDelta();
+    deltaSmoother_.update();
 
     if (running())
     {

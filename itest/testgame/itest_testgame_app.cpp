@@ -31,7 +31,7 @@ TestGameApp::TestGameApp(const std::string& configFile,
 
 void TestGameApp::process()
 {
-    deltaSmoother_.updateTimeDelta();
+    deltaSmoother_.update();
 
     update();
 
