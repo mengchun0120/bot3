@@ -10,30 +10,6 @@ class PlayerTemplate: public RobotTemplate {
 public:
     PlayerTemplate() = default;
 
-    PlayerTemplate(float hp1,
-                   float armor1,
-                   float speed1,
-                   float energy1,
-                   float rechargeRate1,
-                   float collideBreath1,
-                   const MissileTemplate* missileTemplate1,
-                   float fireIntervalMS1,
-                   std::vector<Component>&& components,
-                   std::vector<commonlib::Vector2>&& firePoints,
-                   std::vector<commonlib::Vector2>&& fireDirections);
-
-    void init(float hp1,
-              float armor1,
-              float speed1,
-              float energy1,
-              float rechargeRate1,
-              float collideBreath1,
-              const MissileTemplate* missileTemplate1,
-              float fireIntervalMS1,
-              std::vector<Component>&& components,
-              std::vector<commonlib::Vector2>&& firePoints,
-              std::vector<commonlib::Vector2>&& fireDirections);
-
     void init(const std::string& playerTemplateFile,
               const MissileTemplateLib& missileTemplateLib,
               const ComponentTemplateLib& componentTemplateLib);

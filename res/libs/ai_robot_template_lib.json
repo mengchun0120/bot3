@@ -27,6 +27,7 @@
         ],
         "fireDirections": [
             [1.0, 0.0]
-        ]
+        ],
+        "dyingDuration": 1000.0
     }
 ]

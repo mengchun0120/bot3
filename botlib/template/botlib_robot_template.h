@@ -12,31 +12,7 @@ class RobotTemplate: public CompositeObjectTemplate {
 public:
     RobotTemplate() = default;
 
-    RobotTemplate(float hp1,
-                  float armor1,
-                  float speed1,
-                  float energy1,
-                  float rechargeRate1,
-                  float collideBreath1,
-                  const MissileTemplate* missileTemplate1,
-                  float fireIntervalMS1,
-                  std::vector<Component>&& components,
-                  std::vector<commonlib::Vector2>&& firePoints1,
-                  std::vector<commonlib::Vector2>&& fireDirections1);
-
     ~RobotTemplate() override = default;
-
-    void init(float hp1,
-              float armor1,
-              float speed1,
-              float energy1,
-              float rechargeRate1,
-              float collideBreath1,
-              const MissileTemplate* missileTemplate1,
-              float fireIntervalMS1,
-              std::vector<Component>&& components,
-              std::vector<commonlib::Vector2>&& firePoints1,
-              std::vector<commonlib::Vector2>&& fireDirections1);
 
     void init(const rapidjson::Value& v,
               const MissileTemplateLib& missileTemplateLib,
@@ -66,6 +42,8 @@ public:
 
     inline const commonlib::Vector2& fireDirection(unsigned int i) const;
 
+    inline float dyingDuration() const;
+
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 
@@ -79,6 +57,7 @@ protected:
     float fireIntervalMS_;
     std::vector<commonlib::Vector2> firePoints_;
     std::vector<commonlib::Vector2> fireDirections_;
+    float dyingDuration_;
 };
 
 float RobotTemplate::hp() const
@@ -139,6 +118,11 @@ const std::vector<commonlib::Vector2>& RobotTemplate::fireDirections() const
 const commonlib::Vector2& RobotTemplate::fireDirection(unsigned int i) const
 {
     return fireDirections_[i];
+}
+
+float RobotTemplate::dyingDuration() const
+{
+    return dyingDuration_;
 }
 
 } // end of namespace botlib

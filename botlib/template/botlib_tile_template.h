@@ -10,33 +10,31 @@ class TileTemplate: public CompositeObjectTemplate {
 public:
     TileTemplate() = default;
 
-    TileTemplate(float collideBreath,
-                 float hp,
-                 bool invincible,
-                 std::vector<Component>&& components);
-
     ~TileTemplate() override = default;
-
-    void init(float collideBreath,
-              float hp,
-              bool invincible,
-              std::vector<Component>&& components);
 
     void init(const rapidjson::Value& v,
               const ComponentTemplateLib& componentTemplateLib);
 
     inline float hp() const;
 
+    inline float dyingDuration() const;
+
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
 
 protected:
     float hp_;
+    float dyingDuration_;
 };
 
 float TileTemplate::hp() const
 {
     return hp_;
+}
+
+float TileTemplate::dyingDuration() const
+{
+    return dyingDuration_;
 }
 
 } // end of namespace botlib

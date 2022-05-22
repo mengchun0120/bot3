@@ -65,6 +65,7 @@ void SimpleShaderProgram::initLocations()
     directionLoc_ = getUniformLocation("direction");
     useTexColorLoc_ = getUniformLocation("useTexColor");
     texColorLoc_ = getUniformLocation("texColor");
+    alphaLoc_ = getUniformLocation("alpha");
 }
 
 } // end of namespace botlib

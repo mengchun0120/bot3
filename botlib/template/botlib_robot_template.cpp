@@ -11,63 +11,6 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-RobotTemplate::RobotTemplate(float hp1,
-                             float armor1,
-                             float speed1,
-                             float energy1,
-                             float rechargeRate1,
-                             float collideBreath1,
-                             const MissileTemplate* missileTemplate1,
-                             float fireIntervalMS1,
-                             std::vector<Component>&& components,
-                             std::vector<Vector2>&& firePoints1,
-                             std::vector<Vector2>&& fireDirections1)
-    : CompositeObjectTemplate(
-        GameObjectType::ROBOT,
-        collideBreath1,
-        false,
-        std::forward<std::vector<Component>>(components))
-    , hp_(hp1)
-    , armor_(armor1)
-    , speed_(speed1)
-    , energy_(energy1)
-    , rechargeRate_(rechargeRate1)
-    , missileTemplate_(missileTemplate1)
-    , fireIntervalMS_(fireIntervalMS1)
-    , firePoints_(std::forward<std::vector<Vector2>>(firePoints1))
-    , fireDirections_(std::forward<std::vector<Vector2>>(fireDirections1))
-{
-}
-
-void RobotTemplate::init(float hp1,
-                         float armor1,
-                         float speed1,
-                         float energy1,
-                         float rechargeRate1,
-                         float collideBreath1,
-                         const MissileTemplate* missileTemplate1,
-                         float fireIntervalMS1,
-                         std::vector<Component>&& components,
-                         std::vector<Vector2>&& firePoints1,
-                         std::vector<Vector2>&& fireDirections1)
-{
-    CompositeObjectTemplate::init(
-                         GameObjectType::ROBOT,
-                         collideBreath1,
-                         false,
-                         std::forward<std::vector<Component>>(components));
-
-    hp_ = hp1;
-    armor_ = armor1;
-    speed_ = speed1;
-    energy_ = energy1;
-    rechargeRate_ = rechargeRate1;
-    missileTemplate_ = missileTemplate1;
-    fireIntervalMS_ = fireIntervalMS1;
-    firePoints_ = std::forward<std::vector<Vector2>>(firePoints1);
-    fireDirections_ = std::forward<std::vector<Vector2>>(fireDirections1);
-}
-
 void RobotTemplate::init(const rapidjson::Value& v,
                          const MissileTemplateLib& missileTemplateLib,
                          const ComponentTemplateLib& componentTemplateLib)
@@ -84,7 +27,8 @@ void RobotTemplate::init(const rapidjson::Value& v,
         jsonParam(firePoints_, "firePoints", true,
                   nonempty<std::vector<commonlib::Vector2>>()),
         jsonParam(fireDirections_, "fireDirections", true,
-                  nonempty<std::vector<commonlib::Vector2>>())
+                  nonempty<std::vector<commonlib::Vector2>>()),
+        jsonParam(dyingDuration_, "dyingDuration", true, gt(0.0f))
     };
 
     parse(params, v);

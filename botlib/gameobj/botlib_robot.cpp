@@ -34,6 +34,7 @@ void Robot::init(const RobotTemplate* t,
     initFirePointsAndDirections();
     resetSpeed();
     hpIndicator_.reset(pos(), hpRatio());
+    dyingTime_ = 0.0f;
 }
 
 void Robot::present() const
@@ -60,7 +61,15 @@ void Robot::update(GameMap& map,
     }
     else if (state_ == GameObjectState::DYING)
     {
-        //TODO
+        dyingTime_ += timeDelta;
+        if (dyingTime_ >= getTemplate()->dyingDuration())
+        {
+            dumper.add(this);
+        }
+        else
+        {
+            setAlpha(1.0f - dyingTime_ / getTemplate()->dyingDuration());
+        }
     }
 
     GameObject::update(map, dumper, timeDelta);

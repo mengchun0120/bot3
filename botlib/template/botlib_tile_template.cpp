@@ -7,36 +7,13 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-TileTemplate::TileTemplate(float collideBreath,
-                           float hp,
-                           bool invincible,
-                           std::vector<Component>&& components)
-    : CompositeObjectTemplate(GameObjectType::TILE,
-                              collideBreath,
-                              invincible,
-                              std::forward<std::vector<Component>>(components))
-    , hp_(hp)
-{
-}
-
-void TileTemplate::init(float collideBreath,
-                        float hp,
-                        bool invincible,
-                        std::vector<Component>&& components)
-{
-    CompositeObjectTemplate::init(GameObjectType::TILE,
-                                  collideBreath,
-                                  invincible,
-                                  std::forward<std::vector<Component>>(components));
-    hp_ = hp;
-}
-
 void TileTemplate::init(
     const rapidjson::Value& v,
     const ComponentTemplateLib& componentTemplateLib)
 {
     std::vector<JsonParamPtr> params{
-        jsonParam(hp_, "hp", true, gt(0.0f))
+        jsonParam(hp_, "hp", true, gt(0.0f)),
+        jsonParam(dyingDuration_, "dyingDuration", true, gt(0.0f))
     };
 
     parse(params, v);

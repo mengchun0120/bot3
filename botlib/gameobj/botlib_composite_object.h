@@ -31,11 +31,15 @@ public:
 
     inline const std::vector<Component>& components() const;
 
+    inline float alpha() const;
+
     void present() const override;
 
     void shiftPos(const commonlib::Vector2& delta) override;
 
     virtual void setDirection(const commonlib::Vector2& direction1);
+
+    void setAlpha(float alpha1);
 
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
@@ -50,6 +54,7 @@ private:
 protected:
     commonlib::Vector2 direction_;
     std::vector<Component> components_;
+    float alpha_;
 };
 
 const CompositeObjectTemplate* CompositeObject::getTemplate() const
@@ -80,6 +85,11 @@ unsigned int CompositeObject::numComponents() const
 const std::vector<Component>& CompositeObject::components() const
 {
     return components_;
+}
+
+float CompositeObject::alpha() const
+{
+    return alpha_;
 }
 
 const Component& CompositeObject::component(unsigned int idx) const

@@ -123,11 +123,6 @@ bool GameScreen::processKey(const KeyEvent& e)
 void GameScreen::updatePlayer(float timeDelta)
 {
     Player* player = map_.player();
-    if (!player || player->state() == GameObjectState::DEAD)
-    {
-        return;
-    }
-
     player->update(map_, objDumper_, timeDelta);
     map_.setViewportOrigin(player->x(), player->y());
 }

@@ -42,6 +42,8 @@ public:
 
     inline void setTexColor(const  commonlib::Color& color);
 
+    inline void setAlpha(float alpha);
+
 private:
     void initLocations();
 
@@ -59,6 +61,7 @@ private:
     GLint directionLoc_;
     GLint useTexColorLoc_;
     GLint texColorLoc_;
+    GLint alphaLoc_;
 };
 
 void SimpleShaderProgram::setUseObjRef(bool enabled)
@@ -114,6 +117,11 @@ void SimpleShaderProgram::setUseTexColor(bool use)
 void SimpleShaderProgram::setTexColor(const  commonlib::Color& color)
 {
     glUniform4fv(texColorLoc_, 1, reinterpret_cast<const GLfloat *>(&color));
+}
+
+void SimpleShaderProgram::setAlpha(float alpha)
+{
+    glUniform1f(alphaLoc_, alpha);
 }
 
 } // end of namespace botlib

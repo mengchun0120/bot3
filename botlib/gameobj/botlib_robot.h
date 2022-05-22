@@ -103,6 +103,7 @@ protected:
     HPIndicator hpIndicator_;
     bool shootingEnabled_;
     commonlib::TimePoint lastShootTime_;
+    float dyingTime_;
 };
 
 const RobotTemplate* Robot::getTemplate() const

@@ -10,7 +10,8 @@
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
-        ]
+        ],
+        "dyingDuration": 1000.0
     },
     {
         "name": "ice_tile",
@@ -23,7 +24,8 @@
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
-        ]
+        ],
+        "dyingDuration": 1000.0
     },
     {
         "name": "clay_tile",
@@ -36,7 +38,8 @@
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
-        ]
+        ],
+        "dyingDuration": 1000.0
     },
     {
         "name": "fireland_tile",
@@ -49,7 +52,8 @@
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
-        ]
+        ],
+        "dyingDuration": 1000.0
     },
     {
         "name": "bush_tile",
@@ -62,6 +66,7 @@
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
-        ]
+        ],
+        "dyingDuration": 1000.0
     }
 ]

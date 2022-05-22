@@ -4,6 +4,7 @@
 #include <commonlib_math_utils.h>
 #include <botlib_graphics.h>
 #include <botlib_game_map.h>
+#include <botlib_game_object_dumper.h>
 #include <botlib_tile.h>
 
 using namespace mcdane::commonlib;
@@ -19,6 +20,7 @@ void Tile::init(const TileTemplate* t,
     setInvincible(t->invincible());
     hp_ = t->hp();
     hpIndicator_.reset(pos(), hpRatio());
+    dyingTime_ = 0.0f;
 }
 
 void Tile::present() const
@@ -33,7 +35,15 @@ void Tile::update(GameMap& map,
 {
     if (state_ == GameObjectState::DYING)
     {
-        //TODO
+        dyingTime_ += delta;
+        if (dyingTime_ >= getTemplate()->dyingDuration())
+        {
+            dumper.add(this);
+        }
+        else
+        {
+            setAlpha(1.0f - dyingTime_ / getTemplate()->dyingDuration());
+        }
     }
 
     GameObject::update(map, dumper, delta);

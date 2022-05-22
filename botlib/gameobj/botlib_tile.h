@@ -40,6 +40,7 @@ public:
 private:
     float hp_;
     HPIndicator hpIndicator_;
+    float dyingTime_;
 };
 
 float Tile::hp() const

@@ -4,7 +4,7 @@
 #include <commonlib_math_utils.h>
 #include <commonlib_out_utils.h>
 #include <commonlib_json_utils.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_composite_object.h>
 #include <botlib_player.h>
 
@@ -25,10 +25,14 @@ void CompositeObject::init(const CompositeObjectTemplate* t,
     GameObject::init(t, pos1);
     direction_ = direction1;
     initComponents();
+    alpha_ = 1.0f;
 }
 
 void CompositeObject::present() const
 {
+    SimpleShaderProgram& program = Context::graphics().simpleShader();
+    program.setAlpha(alpha_);
+
     for (std::size_t i = 0; i < components_.size(); ++i)
     {
         components_[i].present();
@@ -45,6 +49,11 @@ void CompositeObject::setDirection(const Vector2& direction1)
 {
     direction_ = direction1;
     repositionComponents();
+}
+
+void CompositeObject::setAlpha(float alpha1)
+{
+    alpha_ = clamp(alpha1, 0.0f, 1.0f);
 }
 
 void CompositeObject::initComponents()
