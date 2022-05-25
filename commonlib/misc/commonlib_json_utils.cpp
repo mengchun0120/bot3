@@ -110,26 +110,6 @@ rapidjson::Value jsonVal(unsigned long i,
     return v;
 }
 
-rapidjson::Value jsonVal(int64_t i,
-                         rapidjson::Document::AllocatorType& allocator)
-{
-    rapidjson::Value v;
-
-    v.SetInt64(i);
-
-    return v;
-}
-
-rapidjson::Value jsonVal(uint64_t i,
-                         rapidjson::Document::AllocatorType& allocator)
-{
-    rapidjson::Value v;
-
-    v.SetUint64(i);
-
-    return v;
-}
-
 rapidjson::Value jsonVal(double d,
                          rapidjson::Document::AllocatorType& allocator)
 {

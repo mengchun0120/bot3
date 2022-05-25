@@ -34,12 +34,6 @@ rapidjson::Value jsonVal(long i,
 rapidjson::Value jsonVal(unsigned long i,
                          rapidjson::Document::AllocatorType& allocator);
 
-rapidjson::Value jsonVal(int64_t i,
-                         rapidjson::Document::AllocatorType& allocator);
-
-rapidjson::Value jsonVal(uint64_t i,
-                         rapidjson::Document::AllocatorType& allocator);
-
 rapidjson::Value jsonVal(double d,
                          rapidjson::Document::AllocatorType& allocator);
 
@@ -65,7 +59,7 @@ rapidjson::Value jsonVal(const std::vector<T>& vec,
     return v;
 }
 
-template <typename T, unsigned int N>
+template <typename T, std::size_t N>
 rapidjson::Value jsonVal(const std::array<T,N>& arr,
                          rapidjson::Document::AllocatorType& allocator)
 {
