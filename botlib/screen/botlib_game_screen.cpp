@@ -95,7 +95,7 @@ bool GameScreen::processMouseButton(const MouseButtonEvent& e)
     if (e.button_ == GLFW_MOUSE_BUTTON_RIGHT && e.action_ == GLFW_PRESS)
     {
         Player* player = map_.player();
-        if (player && player->state() != GameObjectState::ALIVE)
+        if (!player || player->state() != GameObjectState::ALIVE)
         {
             return true;
         }

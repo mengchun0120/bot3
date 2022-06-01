@@ -94,14 +94,14 @@ void GameMap::repositionObj(GameObject* obj)
 
 void GameMap::removeObj(GameObject* obj)
 {
-    int layer = getLayer(obj->type());
-
-    cells_[obj->row()][obj->col()][layer].remove(obj);
-
     if (isPlayer(obj))
     {
         player_ = nullptr;
     }
+
+    int layer = getLayer(obj->type());
+
+    cells_[obj->row()][obj->col()][layer].remove(obj);
 }
 
 void GameMap::setViewportOrigin(float x,

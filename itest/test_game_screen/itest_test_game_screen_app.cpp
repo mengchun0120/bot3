@@ -44,6 +44,7 @@ void TestGameScreenApp::setupWindow()
 void TestGameScreenApp::setupOpenGL()
 {
     glEnable(GL_BLEND);
+    glEnable(GL_PROGRAM_POINT_SIZE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }

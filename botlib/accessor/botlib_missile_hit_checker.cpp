@@ -13,19 +13,20 @@ namespace botlib {
 
 namespace {
 
-inline bool isSameSideRobot(GameObject* obj,
+inline bool isEnemyRobot(GameObject* obj,
                             Missile& missile)
 {
     return obj->type() == GameObjectType::ROBOT &&
-           static_cast<Robot*>(obj)->side() == missile.side();
+           static_cast<Robot*>(obj)->side() != missile.side();
 }
 
 
 inline bool check(GameObject* obj, Missile& missile)
 {
-    return obj->state() == GameObjectState::ALIVE &&
+    return obj != static_cast<GameObject*>(&missile) &&
+           obj->state() == GameObjectState::ALIVE &&
            (obj->type() == GameObjectType::TILE ||
-            isSameSideRobot(obj, missile));
+            isEnemyRobot(obj, missile));
 }
 
 } // end of unnamed namespace

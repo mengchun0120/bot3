@@ -1,0 +1,19 @@
+{
+    "rows": 50,
+    "cols": 50,
+    "objects": [
+        {
+            "type": "player",
+            "template": "player",
+            "pos": [140.0, 140.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "robot",
+            "template": "red_robot",
+            "pos": [80.0, 80.0],
+            "direction": [0.707106781, 0.707106781],
+            "shootingEnabled": true
+        }
+    ]
+}
