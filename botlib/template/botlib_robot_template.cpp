@@ -59,7 +59,7 @@ rapidjson::Value RobotTemplate::toJson(
     v.AddMember("fireIntervalMS", fireIntervalMS_, allocator);
     v.AddMember("firePoints", jsonVal(firePoints_, allocator), allocator);
     v.AddMember("fireDirections", jsonVal(fireDirections_, allocator), allocator);
-    v.AddMember("missileTemplate", missileTemplate_->id(), allocator);
+    v.AddMember("missileTemplate", jsonVal(missileTemplate_, allocator), allocator);
     v.AddMember("base", CompositeObjectTemplate::toJson(allocator), allocator);
 
     return v;

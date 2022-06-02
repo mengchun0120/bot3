@@ -108,7 +108,7 @@ rapidjson::Value Component::toJson(
     Value v(kObjectType);
 
     v.AddMember("class", "component", allocator);
-    v.AddMember("template", t_->id(), allocator);
+    v.AddMember("template", jsonVal(t_, allocator), allocator);
     v.AddMember("pos", jsonVal(pos_, allocator), allocator);
     v.AddMember("direction", jsonVal(direction_, allocator), allocator);
 

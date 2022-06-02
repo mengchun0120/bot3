@@ -8,12 +8,6 @@
 namespace mcdane {
 namespace commonlib {
 
-unsigned int Object::k_curId = 0;
-
-Object::Object()
-    : id_(k_curId++)
-{}
-
 rapidjson::Value Object::toJson(
                         rapidjson::Document::AllocatorType& allocator) const
 {
@@ -22,7 +16,6 @@ rapidjson::Value Object::toJson(
     Value v(kObjectType);
 
     v.AddMember("class", "Object", allocator);
-    v.AddMember("id", id_, allocator);
 
     return v;
 }

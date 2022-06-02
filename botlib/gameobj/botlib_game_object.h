@@ -46,6 +46,8 @@ public:
 
     inline const commonlib::Vector2 pos() const;
 
+    inline unsigned int id() const;
+
     inline float collideLeft() const;
 
     inline float collideRight() const;
@@ -110,8 +112,11 @@ public:
     virtual bool canBeDumped(GameMap& map) const = 0;
 
 protected:
+    static unsigned int k_curId;
+
     const GameObjectTemplate* t_;
     GameObjectState state_;
+    unsigned int id_;
     commonlib::Vector2 pos_;
     int flags_;
     unsigned int row_;
@@ -159,6 +164,11 @@ float GameObject::y() const
 const commonlib::Vector2 GameObject::pos() const
 {
     return pos_;
+}
+
+unsigned int GameObject::id() const
+{
+    return id_;
 }
 
 float GameObject::collideLeft() const

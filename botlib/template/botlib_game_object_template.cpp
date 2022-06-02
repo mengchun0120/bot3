@@ -70,7 +70,8 @@ rapidjson::Value GameObjectTemplate::toJson(
     Value v(kObjectType);
 
     v.AddMember("class", "GameObjectTemplate", allocator);
-    v.AddMember("type", jsonVal(stringVal(type_), allocator), allocator),
+    v.AddMember("ptr", jsonVal(this, allocator), allocator);
+    v.AddMember("type", jsonVal(stringVal(type_), allocator), allocator);
     v.AddMember("span", span_, allocator);
     v.AddMember("collideBreath", collideBreath_, allocator);
     v.AddMember("invincible", invincible_, allocator);

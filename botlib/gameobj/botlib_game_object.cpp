@@ -10,6 +10,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+unsigned int GameObject::k_curId = 0;
+
 GameObject::GameObject()
     : t_(nullptr)
     , flags_(0)
@@ -28,6 +30,7 @@ void GameObject::init(const GameObjectTemplate* t,
 
     t_ = t;
     pos_ = pos1;
+    id_ = k_curId++;
     setState(GameObjectState::ALIVE);
     collideRegion_.init(x()-collideBreath(), x()+collideBreath(),
                         y()-collideBreath(), y()+collideBreath());
@@ -104,7 +107,8 @@ rapidjson::Value GameObject::toJson(
     Value v(kObjectType);
 
     v.AddMember("class", "GameObject", allocator);
-    v.AddMember("template", t_->id(), allocator);
+    v.AddMember("id", id_, allocator);
+    v.AddMember("template", jsonVal(t_, allocator), allocator);
     v.AddMember("pos", jsonVal(pos_, allocator), allocator);
     v.AddMember("flags", flags_, allocator);
     v.AddMember("row", row_, allocator);
