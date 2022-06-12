@@ -1,29 +1,42 @@
 #include <commonlib_exception.h>
 #include <botlib_goodie_type.h>
 
+using namespace mcdane::commonlib;
+
 namespace mcdane {
 namespace botlib {
 
+static std::string k_goodieTypeStr[] = {
+    "gold",
+    "health",
+    "indestructable",
+    "double_experience",
+    "quick_shooter",
+    "quick_mover",
+    "double_damage"
+};
+
 const std::string& toString(GoodieType type)
 {
-    using namespace mcdane::commonlib;
-
-    static std::string goodieTypeStr[] = {
-        "gold",
-        "health",
-        "indestructable",
-        "double_experience",
-        "quick_shooter",
-        "quick_mover",
-        "double_damage"
-    };
-
     if (!isValidGoodieType(type))
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid GoodieType");
     }
 
-    return goodieTypeStr[static_cast<int>(type)];
+    return k_goodieTypeStr[static_cast<int>(type)];
+}
+
+GoodieType strToGoodieType(const std::string& s)
+{
+    for (int i = 0; i < goodieTypeCount(); ++i)
+    {
+        if (k_goodieTypeStr[i] == s)
+        {
+            return static_cast<GoodieType>(i);
+        }
+    }
+
+    THROW_EXCEPT(InvalidArgumentException, "Invalid GoodieType string " + s);
 }
 
 } // end of namespace botlib

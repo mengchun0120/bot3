@@ -18,6 +18,8 @@ ostream& operator<<(ostream& os, mcdane::botlib::GameObjectType t)
     {
         case GameObjectType::TILE:
             return os << "tile";
+        case GameObjectType::GOODIE:
+            return os << "goodie";
         case GameObjectType::ROBOT:
             return os << "robot";
         case GameObjectType::MISSILE:

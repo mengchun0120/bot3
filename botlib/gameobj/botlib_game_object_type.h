@@ -9,6 +9,7 @@ namespace botlib {
 
 enum class GameObjectType {
     TILE,
+    GOODIE,
     ROBOT,
     MISSILE,
     EFFECT,
