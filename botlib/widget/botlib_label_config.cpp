@@ -8,7 +8,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-LabelConfig::LabelConfig(const std::string configFile)
+void LabelConfig::init(const std::string configFile)
 {
     rapidjson::Document doc;
     readJson(doc, configFile);

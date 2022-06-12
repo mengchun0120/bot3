@@ -8,7 +8,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-MessageBoxConfig::MessageBoxConfig(const std::string& configFile)
+void MessageBoxConfig::init(const std::string& configFile)
 {
     rapidjson::Document doc;
     readJson(doc, configFile);

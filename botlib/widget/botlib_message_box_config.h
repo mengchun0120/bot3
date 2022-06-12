@@ -9,9 +9,11 @@ namespace botlib {
 
 class MessageBoxConfig {
 public:
-    MessageBoxConfig(const std::string& configFile);
+    MessageBoxConfig() = default;
 
     ~MessageBoxConfig() = default;
+
+    void init(const std::string& configFile);
 
     inline float messageMarginX() const;
 

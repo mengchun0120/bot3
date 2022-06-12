@@ -12,9 +12,11 @@ class AppConfig;
 
 class Graphics {
 public:
-    Graphics(const AppConfig& cfg);
+    Graphics() = default;
 
     ~Graphics() = default;
+
+    void init(const AppConfig& cfg);
 
     inline SimpleShaderProgram& simpleShader();
 

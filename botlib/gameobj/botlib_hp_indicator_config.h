@@ -13,33 +13,36 @@ class Graphics;
 
 class HPIndicatorConfig {
 public:
-    HPIndicatorConfig(Graphics& g,
-                      const std::string& fileName);
+    HPIndicatorConfig() = default;
 
     ~HPIndicatorConfig() = default;
 
+    void init(const std::string& fileName);
+
     inline TextSize textSize() const;
 
-    const commonlib::Color* color(float hpPercent) const;
+    inline const commonlib::Color& color() const;
 
     inline float halfHeight() const;
 
 private:
-    void init(Graphics& g,
-              const std::string& fileName);
 
-    void initSize(Graphics& g);
+    void initSize();
 
 private:
     TextSize textSize_;
-    std::vector<float> levels_;
-    std::vector<commonlib::Color> colors_;
+    commonlib::Color color_;
     float halfHeight_;
 };
 
 TextSize HPIndicatorConfig::textSize() const
 {
     return textSize_;
+}
+
+const commonlib::Color& HPIndicatorConfig::color() const
+{
+    return color_;
 }
 
 float HPIndicatorConfig::halfHeight() const

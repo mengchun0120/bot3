@@ -8,14 +8,13 @@ namespace botlib {
 
 class GameScreenConfig {
 public:
-    GameScreenConfig(const std::string& configFile);
+    GameScreenConfig() = default;
+
+    void init(const std::string& configFile);
 
     inline const std::string& mapFile() const;
 
     inline int dumperPoolSize() const;
-
-private:
-    void init(const std::string& configFile);
 
 private:
     std::string mapFile_;

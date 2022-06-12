@@ -10,11 +10,6 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-GameScreenConfig::GameScreenConfig(const std::string& configFile)
-{
-    init(configFile);
-}
-
 void GameScreenConfig::init(const std::string& configFile)
 {
     rapidjson::Document doc;

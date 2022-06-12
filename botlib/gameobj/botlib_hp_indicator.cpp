@@ -26,7 +26,7 @@ void HPIndicator::present() const
     HPIndicatorConfig hpCfg = Context::hpIndicatorConfig();
 
     g.textSys().draw(g.simpleShader(), hpPercentStr_, pos_,
-                     hpCfg.textSize(), color_);
+                     hpCfg.textSize(), &(hpCfg.color()));
 }
 
 void HPIndicator::shiftPos(const commonlib::Vector2& delta)
@@ -57,14 +57,6 @@ void HPIndicator::setHPPercent(float hpPercent)
 
     oss << std::fixed << std::setprecision(0) << (hpPercent * 100.0f) << '%';
     hpPercentStr_ = oss.str();
-
-    resetColor(hpPercent);
-}
-
-void HPIndicator::resetColor(float hpPercent)
-{
-    HPIndicatorConfig hpCfg = Context::hpIndicatorConfig();
-    color_ = hpCfg.color(hpPercent);
 }
 
 } // end of namespace botlib

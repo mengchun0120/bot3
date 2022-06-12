@@ -21,9 +21,9 @@ class GameLib {
 public:
     GameLib() = default;
 
-    GameLib(const AppConfig& cfg);
-
     ~GameLib() = default;
+
+    void load(const AppConfig& cfg);
 
     inline const commonlib::Texture* findTexture(const std::string& name) const;
 
@@ -50,9 +50,6 @@ public:
     inline float maxCollideBreath() const;
 
 private:
-
-    void load(const AppConfig& cfg);
-
     void initTextureLib(const std::string& textureLibFile,
                         const std::string& picDir);
 

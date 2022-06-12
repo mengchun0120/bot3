@@ -9,28 +9,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-HPIndicatorConfig::HPIndicatorConfig(Graphics& g,
-                                     const std::string& fileName)
-{
-    init(g, fileName);
-}
-
-const commonlib::Color* HPIndicatorConfig::color(float hpPercent) const
-{
-    unsigned int level;
-    for (level = 0; level < levels_.size(); ++level)
-    {
-        if (hpPercent >= levels_[level])
-        {
-            break;
-        }
-    }
-
-    return &colors_[level];
-}
-
-void HPIndicatorConfig::init(Graphics& g,
-                             const std::string& fileName)
+void HPIndicatorConfig::init(const std::string& fileName)
 {
     rapidjson::Document doc;
     readJson(doc, fileName);
@@ -38,23 +17,21 @@ void HPIndicatorConfig::init(Graphics& g,
     std::string textSizeStr;
     std::vector<JsonParamPtr> params{
         jsonParam(textSizeStr, {"textSize"}, true, k_nonEmptyStrV),
-        jsonParam(levels_, {"levels"}, true, nonEmptyVec<float>()),
-        jsonParam(colors_, {"colors"}, true, nonEmptyVec<Color>())
+        jsonParam(color_, {"color"}, true)
     };
 
     parse(params, doc);
 
-    if (levels_.size() != colors_.size())
-    {
-        THROW_EXCEPT(ParseException, "levels' size doesn't match colors");
-    }
-
     textSize_ = toTextSize(textSizeStr);
-    initSize(g);
+    initSize();
 }
 
-void HPIndicatorConfig::initSize(Graphics& g)
+void HPIndicatorConfig::initSize()
 {
+    Graphics& g = Context::graphics();
+
+    LOG_INFO << "textSys=" << &(g.textSys()) << LOG_END;
+
     halfHeight_ = g.textSys().getHeight(textSize_) / 2.0f;
 }
 

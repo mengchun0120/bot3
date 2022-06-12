@@ -9,8 +9,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-ButtonConfig::ButtonConfig(const std::string& configFile,
-                           const std::string& picDir)
+void ButtonConfig::init(const std::string& configFile,
+                        const std::string& picDir)
 {
     rapidjson::Document doc;
     readJson(doc, configFile);

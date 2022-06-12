@@ -12,8 +12,12 @@ namespace botlib {
 
 class ButtonConfig {
 public:
-    ButtonConfig(const std::string& configFile,
-                 const std::string& picDir);
+    ButtonConfig() = default;
+
+    ~ButtonConfig() = default;
+
+    void init(const std::string& configFile,
+              const std::string& picDir);
 
     inline const commonlib::Color* textColor(Button::State s) const;
 

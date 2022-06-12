@@ -7,11 +7,6 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-GameLib::GameLib(const AppConfig& cfg)
-{
-    load(cfg);
-}
-
 void GameLib::load(const AppConfig& cfg)
 {
     initTextureLib(cfg.textureLibFile(), cfg.picDir());

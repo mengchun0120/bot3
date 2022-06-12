@@ -36,62 +36,55 @@ public:
 
     inline static const GameScreenConfig& gameScreenConfig();
 
-    ~Context() = default;
-
 private:
-    Context(const AppConfig& cfg);
-
-private:
-    static std::shared_ptr<Context> k_context;
-
-    Graphics graphics_;
-    GameLib gameLib_;
-    HPIndicatorConfig hpIndicatorConfig_;
-    ButtonConfig buttonConfig_;
-    LabelConfig labelConfig_;
-    MessageBoxConfig msgBoxConfig_;
-    StartScreenConfig startScreenConfig_;
-    GameScreenConfig gameScreenConfig_;
+    static Graphics k_graphics;
+    static GameLib k_gameLib;
+    static HPIndicatorConfig k_hpIndicatorConfig;
+    static ButtonConfig k_buttonConfig;
+    static LabelConfig k_labelConfig;
+    static MessageBoxConfig k_msgBoxConfig;
+    static StartScreenConfig k_startScreenConfig;
+    static GameScreenConfig k_gameScreenConfig;
 };
 
 Graphics& Context::graphics()
 {
-    return k_context->graphics_;
+    return k_graphics;
 }
 
 const GameLib& Context::gameLib()
 {
-    return k_context->gameLib_;
+    return k_gameLib;
 }
 
 const HPIndicatorConfig& Context::hpIndicatorConfig()
 {
-    return k_context->hpIndicatorConfig_;
+    return k_hpIndicatorConfig;
 }
 
 const ButtonConfig& Context::buttonConfig()
 {
-    return k_context->buttonConfig_;
+    return k_buttonConfig;
 }
 
 const LabelConfig& Context::labelConfig()
 {
-    return k_context->labelConfig_;
+    return k_labelConfig;
 }
 
 const MessageBoxConfig& Context::msgBoxConfig()
 {
-    return k_context->msgBoxConfig_;
+    return k_msgBoxConfig;
 }
 
 const StartScreenConfig& Context::startScreenConfig()
 {
-    return k_context->startScreenConfig_;
+    return k_startScreenConfig;
 }
 
 const GameScreenConfig& Context::gameScreenConfig()
 {
-    return k_context->gameScreenConfig_;
+    return k_gameScreenConfig;
 }
 
 } // end of namespace botlib

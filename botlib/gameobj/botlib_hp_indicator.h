@@ -26,13 +26,9 @@ private:
     void setPos(const commonlib::Vector2& pos);
 
     void setHPPercent(float hpPercent);
-
-    void resetColor(float hpPercent);
-
 private:
     commonlib::Vector2 pos_;
     std::string hpPercentStr_;
-    const commonlib::Color* color_;
 };
 
 } // end of namespace botlib

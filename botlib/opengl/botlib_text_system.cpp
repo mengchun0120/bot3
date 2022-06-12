@@ -47,7 +47,7 @@ void TextSystem::load(const std::string& fontDir)
     loadFontHeights();
     loadFontRect();
 
-    LOG_INFO << "TextSystem loaded successfully" << LOG_END;
+    LOG_INFO << "TextSystem loaded successfully " << this << LOG_END;
 }
 
 void TextSystem::draw(SimpleShaderProgram& program,

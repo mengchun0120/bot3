@@ -9,9 +9,11 @@ namespace botlib {
 
 class LabelConfig {
 public:
-    LabelConfig(const std::string configFile);
+    LabelConfig() = default;
 
     ~LabelConfig() = default;
+
+    void init(const std::string configFile);
 
     inline const commonlib::Color& defaultTextColor() const;
 
