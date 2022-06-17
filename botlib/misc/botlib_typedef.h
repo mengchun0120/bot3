@@ -23,6 +23,7 @@ class Rectangle;
 class ComponentTemplate;
 class TileTemplate;
 class MissileTemplate;
+class GoodieTemplate;
 class AIRobotTemplate;
 class ParticleEffectTemplate;
 
@@ -30,6 +31,7 @@ using TextureLib = commonlib::NamedMap<commonlib::Texture>;
 using RectLib = commonlib::NamedMap<Rectangle>;
 using ComponentTemplateLib = commonlib::NamedMap<ComponentTemplate>;
 using TileTemplateLib = commonlib::NamedMap<TileTemplate>;
+using GoodieTemplateLib = commonlib::NamedMap<GoodieTemplate>;
 using MissileTemplateLib = commonlib::NamedMap<MissileTemplate>;
 using AIRobotTemplateLib = commonlib::NamedMap<AIRobotTemplate>;
 using ParticleEffectTemplateLib = commonlib::NamedMap<ParticleEffectTemplate>;

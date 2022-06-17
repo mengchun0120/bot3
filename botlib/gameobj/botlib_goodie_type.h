@@ -8,10 +8,8 @@ namespace mcdane {
 namespace botlib {
 
 enum class GoodieType {
-    GOLD,
     HEALTH,
     INDESTRUCTABLE,
-    DOUBLE_EXPERIENCE,
     QUICK_SHOOTER,
     QUICK_MOVER,
     DOUBLE_DAMAGE,
@@ -25,7 +23,7 @@ inline int goodieTypeCount()
 
 inline bool isValidGoodieType(GoodieType type)
 {
-    return static_cast<int>(GoodieType::GOLD) <= static_cast<int>(type) &&
+    return static_cast<int>(GoodieType::HEALTH) <= static_cast<int>(type) &&
            static_cast<int>(GoodieType::COUNT) > static_cast<int>(type);
 }
 

@@ -22,5 +22,11 @@
         "width": 16.0,
         "height": 16.0,
         "hasTexture": true
+    },
+    {
+        "name": "goodie",
+        "width": 40.0,
+        "height": 40.0,
+        "hasTexture": true
     }
 ]

@@ -71,6 +71,8 @@ public:
 
     inline const std::string& missileTemplateLibFile() const;
 
+    inline const std::string& goodieTemplateLibFile() const;
+
     inline const std::string& aiRobotTemplateLibFile() const;
 
     inline const std::string& particleEffectTemplateLibFile() const;
@@ -124,6 +126,7 @@ private:
     std::string componentTemplateLibFile_;
     std::string tileTemplateLibFile_;
     std::string missileTemplateLibFile_;
+    std::string goodieTemplateLibFile_;
     std::string aiRobotTemplateLibFile_;
     std::string particleEffectTemplateLibFile_;
     std::string playerTemplateFile_;
@@ -259,6 +262,11 @@ const std::string& AppConfig::tileTemplateLibFile() const
 const std::string& AppConfig::missileTemplateLibFile() const
 {
     return missileTemplateLibFile_;
+}
+
+const std::string& AppConfig::goodieTemplateLibFile() const
+{
+    return goodieTemplateLibFile_;
 }
 
 const std::string& AppConfig::aiRobotTemplateLibFile() const

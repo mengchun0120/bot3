@@ -46,5 +46,25 @@
     {
         "name": "small_ball",
         "file": "small_ball.png"
+    },
+    {
+        "name": "health_goodie",
+        "file": "health_goodie.png"
+    },
+    {
+        "name": "indestructable_goodie",
+        "file": "indestructable_goodie.png"
+    },
+    {
+        "name": "double_damage_goodie",
+        "file": "double_damage_goodie.png"
+    },
+    {
+        "name": "quick_shooter_goodie",
+        "file": "quick_shooter_goodie.png"
+    },
+    {
+        "name": "quick_mover_goodie",
+        "file": "quick_mover_goodie.png"
     }
 ]

@@ -7,10 +7,8 @@ namespace mcdane {
 namespace botlib {
 
 static std::string k_goodieTypeStr[] = {
-    "gold",
     "health",
     "indestructable",
-    "double_experience",
     "quick_shooter",
     "quick_mover",
     "double_damage"

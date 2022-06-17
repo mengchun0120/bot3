@@ -6,6 +6,7 @@
 #include <botlib_rectangle.h>
 #include <botlib_component_template.h>
 #include <botlib_tile_template.h>
+#include <botlib_goodie_template.h>
 #include <botlib_missile_template.h>
 #include <botlib_ai_robot_template.h>
 #include <botlib_particle_effect_template.h>
@@ -34,6 +35,8 @@ public:
 
     inline const TileTemplate* findTileTemplate(const std::string& name) const;
 
+    inline const GoodieTemplate* findGoodieTemplate(const std::string& name) const;
+
     inline const MissileTemplate* findMissileTemplate(
                                             const std::string& name) const;
 
@@ -59,6 +62,8 @@ private:
 
     void initTileTemplateLib(const std::string& tileTemplateLibFile);
 
+    void initGoodieTemplateLib(const std::string& goodieTemplateLibFile);
+
     void initParticleEffectTemplateLib(
         const std::string& particleEffectTemplateLibFile,
         const std::string& libDir);
@@ -76,6 +81,7 @@ private:
     RectLib rectLib_;
     ComponentTemplateLib componentTemplateLib_;
     TileTemplateLib tileTemplateLib_;
+    GoodieTemplateLib goodieTemplateLib_;
     MissileTemplateLib missileTemplateLib_;
     AIRobotTemplateLib aiRobotTemplateLib_;
     ParticleEffectTemplateLib particleEffectTemplateLib_;
@@ -103,6 +109,11 @@ const ComponentTemplate* GameLib::findComponentTemplate(
 const TileTemplate* GameLib::findTileTemplate(const std::string& name) const
 {
     return tileTemplateLib_.search(name);
+}
+
+const GoodieTemplate* GameLib::findGoodieTemplate(const std::string& name) const
+{
+    return goodieTemplateLib_.search(name);
 }
 
 const MissileTemplate* GameLib::findMissileTemplate(

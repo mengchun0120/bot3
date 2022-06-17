@@ -1,0 +1,72 @@
+[
+    {
+        "name": "health_goodie",
+        "type": "health",
+        "duration": 0.0,
+        "weight": 100.0,
+        "collideBreath": 20.0,
+        "components": [
+            {
+                "template": "health_goodie",
+                "pos": [0.0, 0.0],
+                "direction": [1.0, 0.0]
+            }
+        ]
+    },
+    {
+        "name": "indestructable_goodie",
+        "type": "indestructable",
+        "duration": 30000.0,
+        "weight": 20.0,
+        "collideBreath": 20.0,
+        "components": [
+            {
+                "template": "indestructable_goodie",
+                "pos": [0.0, 0.0],
+                "direction": [1.0, 0.0]
+            }
+        ]
+    },
+    {
+        "name": "double_damage_goodie",
+        "type": "double_damage",
+        "duration": 30000.0,
+        "weight": 20.0,
+        "collideBreath": 20.0,
+        "components": [
+            {
+                "template": "double_damage_goodie",
+                "pos": [0.0, 0.0],
+                "direction": [1.0, 0.0]
+            }
+        ]
+    },
+    {
+        "name": "quick_shooter_goodie",
+        "type": "quick_shooter",
+        "duration": 30000.0,
+        "weight": 20.0,
+        "collideBreath": 20.0,
+        "components": [
+            {
+                "template": "quick_shooter_goodie",
+                "pos": [0.0, 0.0],
+                "direction": [1.0, 0.0]
+            }
+        ]
+    },
+    {
+        "name": "quick_mover_goodie",
+        "type": "quick_mover",
+        "duration": 30000.0,
+        "weight": 20.0,
+        "collideBreath": 20.0,
+        "components": [
+            {
+                "template": "quick_mover_goodie",
+                "pos": [0.0, 0.0],
+                "direction": [1.0, 0.0]
+            }
+        ]
+    }
+]

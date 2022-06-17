@@ -53,5 +53,30 @@
         "name": "green_missile",
         "texture": "green_missile",
         "rect": "missile"
+    },
+    {
+        "name": "health_goodie",
+        "texture": "health_goodie",
+        "rect": "goodie"
+    },
+    {
+        "name": "indestructable_goodie",
+        "texture": "indestructable_goodie",
+        "rect": "goodie"
+    },
+    {
+        "name": "double_damage_goodie",
+        "texture": "double_damage_goodie",
+        "rect": "goodie"
+    },
+    {
+        "name": "quick_mover_goodie",
+        "texture": "quick_mover_goodie",
+        "rect": "goodie"
+    },
+    {
+        "name": "quick_shooter_goodie",
+        "texture": "quick_shooter_goodie",
+        "rect": "goodie"
     }
 ]

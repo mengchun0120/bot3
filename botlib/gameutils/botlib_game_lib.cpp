@@ -13,6 +13,7 @@ void GameLib::load(const AppConfig& cfg)
     initRectLib(cfg.rectLibFile());
     initComponentTemplateLib(cfg.componentTemplateLibFile());
     initTileTemplateLib(cfg.tileTemplateLibFile());
+    initGoodieTemplateLib(cfg.goodieTemplateLibFile());
     initParticleEffectTemplateLib(cfg.particleEffectTemplateLibFile(),
                                   cfg.libDir());
     initMissileTemplateLib(cfg.missileTemplateLibFile());
@@ -83,6 +84,19 @@ void GameLib::initTileTemplateLib(const std::string& tileTemplateLibFile)
     tileTemplateLib_.init(tileTemplateLibFile, parser);
 
     LOG_DEBUG << "tileTemplateLib loaded successfully" << LOG_END;
+}
+
+void GameLib::initGoodieTemplateLib(const std::string& goodieTemplateLibFile)
+{
+    auto parser = [&](GoodieTemplate& t,
+                      const rapidjson::Value& v)
+    {
+        t.init(v, componentTemplateLib_);
+    };
+
+    goodieTemplateLib_.init(goodieTemplateLibFile, parser);
+
+    LOG_DEBUG << "goodieTemplateLib loaded successfully" << LOG_END;
 }
 
 void GameLib::initParticleEffectTemplateLib(
