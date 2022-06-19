@@ -4,14 +4,9 @@
 namespace mcdane {
 namespace botlib {
 
-void GameObjectPresenter::reset(GameObjectType type)
-{
-    curType_ = type;
-}
-
 bool GameObjectPresenter::run(GameObject* obj)
 {
-    if (obj->state() == GameObjectState::DEAD || obj->type() != curType_)
+    if (obj->state() == GameObjectState::DEAD)
     {
         return true;
     }

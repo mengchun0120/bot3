@@ -25,6 +25,24 @@ inline bool isPlayer(GameObject* obj)
 
 } // end of unnamed namespace
 
+int GameMap::getLayer(GameObjectType t)
+{
+    switch(t)
+    {
+        case GameObjectType::TILE:
+        case GameObjectType::GOODIE:
+            return 0;
+        case GameObjectType::ROBOT:
+            return 1;
+        case GameObjectType::MISSILE:
+            return 2;
+        case GameObjectType::EFFECT:
+            return 3;
+        default:
+            THROW_EXCEPT(InvalidArgumentException, "Invalid GameObjectType");
+    }
+}
+
 void GameMap::init(unsigned int rows,
                    unsigned int cols,
                    float viewportWidth,
@@ -166,9 +184,13 @@ Region<int> GameMap::getCollideArea(const Region<float>& r) const
 }
 
 void GameMap::accessRegion(const Region<int>& r,
-                           GameMapAccessor& accessor)
+                           GameMapAccessor& accessor,
+                           int startLayer,
+                           int layerCount)
 {
-    for (int layer = 0; layer < LAYER_COUNT; ++layer)
+    int endLayer = startLayer + layerCount - 1;
+
+    for (int layer = startLayer; layer <= endLayer; ++layer)
     {
         for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
         {
@@ -306,26 +328,13 @@ void GameMap::resetPresentArea()
 
 void GameMap::presentObjs()
 {
-    static GameObjectType presentOrder[] = {
-        GameObjectType::TILE,
-        GameObjectType::GOODIE,
-        GameObjectType::ROBOT,
-        GameObjectType::MISSILE
-    };
-    constexpr int presentTypeCount = 4;
-
     SimpleShaderProgram& program = Context::graphics().simpleShader();
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
 
     GameObjectPresenter presenter;
-
-    for (unsigned int i = 0; i < presentTypeCount; ++i)
-    {
-        presenter.reset(presentOrder[i]);
-        accessRegion(presentArea_, presenter);
-    }
+    accessRegion(presentArea_, presenter, 0, 3);
 }
 
 void GameMap::presentParticleEffects()
@@ -336,8 +345,7 @@ void GameMap::presentParticleEffects()
     program.setViewportOrigin(viewportOrigin_);
 
     GameObjectPresenter presenter;
-    presenter.reset(GameObjectType::EFFECT);
-    accessRegion(presentArea_, presenter);
+    accessRegion(presentArea_, presenter, 3, 1);
 }
 
 rapidjson::Value GameMap::cellsToJson(
@@ -353,7 +361,7 @@ rapidjson::Value GameMap::cellsToJson(
         for (unsigned int colIdx = 0; colIdx < row.size(); ++colIdx)
         {
             const Cell& cell = row[colIdx];
-            for (int layer = 0; layer < LAYER_COUNT; ++layer)
+            for (int layer = 0; layer < k_layerCount; ++layer)
             {
                 if (!cell[layer].empty())
                 {

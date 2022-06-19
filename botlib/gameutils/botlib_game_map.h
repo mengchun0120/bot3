@@ -19,9 +19,9 @@ class Player;
 
 class GameMap: public commonlib::Object {
 public:
-    static constexpr int LAYER_COUNT = static_cast<int>(GameObjectType::COUNT);
+    static constexpr int k_layerCount = 4;
 
-    using Cell = std::array<GameObjectList, LAYER_COUNT>;
+    using Cell = std::array<GameObjectList, k_layerCount>;
 
     static constexpr float k_cellBreath = 40.0f;
     static constexpr unsigned int k_minRows = 30;
@@ -29,7 +29,7 @@ public:
 
 public:
 
-    inline static int getLayer(GameObjectType type);
+    static int getLayer(GameObjectType type);
 
     GameMap() = default;
 
@@ -84,7 +84,9 @@ public:
     commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r) const;
 
     void accessRegion(const commonlib::Region<int>& r,
-                      GameMapAccessor& accessor);
+                      GameMapAccessor& accessor,
+                      int startLayer=0,
+                      int layerCount=k_layerCount);
 
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
@@ -131,11 +133,6 @@ private:
     commonlib::Region<int> presentArea_;
     Player* player_;
 };
-
-int GameMap::getLayer(GameObjectType type)
-{
-    return static_cast<int>(type);
-}
 
 int GameMap::rowCount() const
 {

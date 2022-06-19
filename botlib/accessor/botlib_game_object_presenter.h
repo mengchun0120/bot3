@@ -11,12 +11,7 @@ class GameObjectPresenter: public GameMapAccessor {
 public:
     GameObjectPresenter() = default;
 
-    void reset(GameObjectType type);
-
     bool run(GameObject* obj) override;
-
-private:
-    GameObjectType curType_;
 };
 
 } // end of namespace botlib
