@@ -5,6 +5,7 @@
 #include <commonlib_collide.h>
 #include <botlib_context.h>
 #include <botlib_tile.h>
+#include <botlib_goodie.h>
 #include <botlib_missile.h>
 #include <botlib_ai_robot.h>
 #include <botlib_particle_effect.h>
@@ -25,6 +26,9 @@ GameMapLoader::GameMapLoader(float viewportWidth,
         jsonParam(pos_, "pos", true)
       }
     , tileParams_{
+        jsonParam(direction_, "direction")
+      }
+    , goodieParams_{
         jsonParam(direction_, "direction")
       }
     , missileParams_{
@@ -110,6 +114,10 @@ void GameMapLoader::parseAddObject(GameMap& map,
     {
         addTile(map, v);
     }
+    else if (typeStr_ == "goodie")
+    {
+        addGoodie(map, v);
+    }
     else if (typeStr_ == "missile")
     {
         addMissile(map, v);
@@ -157,6 +165,33 @@ void GameMapLoader::addTile(GameMap& map,
     tile->init(t, pos_, direction_);
 
     map.addObj(tile);
+}
+
+void GameMapLoader::addGoodie(GameMap& map,
+                              const rapidjson::Value& v)
+{
+    const GameLib& lib = Context::gameLib();
+
+    const GoodieTemplate* t = lib.findGoodieTemplate(templateStr_);
+    if (!t)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Failed to find GoodieTemplate " + templateStr_);
+    }
+
+    bool collide = checkCollide(map, t->collideBreath());
+    if (collide)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Goodie " + templateStr_ + " cannot be placed in map");
+    }
+
+    parse(goodieParams_, v);
+
+    Goodie* goodie = new Goodie();
+    goodie->init(t, pos_, direction_);
+
+    map.addObj(goodie);
 }
 
 void GameMapLoader::addMissile(GameMap& map,

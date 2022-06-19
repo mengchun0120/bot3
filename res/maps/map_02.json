@@ -14,6 +14,36 @@
             "pos": [80.0, 80.0],
             "direction": [0.707106781, 0.707106781],
             "shootingEnabled": true
+        },
+        {
+            "type": "goodie",
+            "template": "health_goodie",
+            "pos": [80.0, 240.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "goodie",
+            "template": "indestructable_goodie",
+            "pos": [160.0, 240.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "goodie",
+            "template": "double_damage_goodie",
+            "pos": [240.0, 240.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "goodie",
+            "template": "quick_shooter_goodie",
+            "pos": [320.0, 240.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "goodie",
+            "template": "quick_mover_goodie",
+            "pos": [400.0, 240.0],
+            "direction": [1.0, 0.0]
         }
     ]
 }

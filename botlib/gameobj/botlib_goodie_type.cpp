@@ -24,7 +24,7 @@ const std::string& toString(GoodieType type)
     return k_goodieTypeStr[static_cast<int>(type)];
 }
 
-GoodieType strToGoodieType(const std::string& s)
+GoodieType toGoodieType(const std::string& s)
 {
     for (int i = 0; i < goodieTypeCount(); ++i)
     {

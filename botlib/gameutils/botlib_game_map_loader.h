@@ -29,6 +29,9 @@ private:
     void addTile(GameMap& map,
                  const rapidjson::Value& v);
 
+    void addGoodie(GameMap& map,
+                   const rapidjson::Value& v);
+
     void addMissile(GameMap& map,
                     const rapidjson::Value& v);
 
@@ -56,6 +59,7 @@ private:
     std::string sideStr_;
     std::vector<commonlib::JsonParamPtr> commonParams_;
     std::vector<commonlib::JsonParamPtr> tileParams_;
+    std::vector<commonlib::JsonParamPtr> goodieParams_;
     std::vector<commonlib::JsonParamPtr> missileParams_;
     std::vector<commonlib::JsonParamPtr> robotParams_;
 };

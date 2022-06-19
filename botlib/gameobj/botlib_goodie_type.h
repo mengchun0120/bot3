@@ -29,7 +29,7 @@ inline bool isValidGoodieType(GoodieType type)
 
 const std::string& toString(GoodieType type);
 
-GoodieType strToGoodieType(const std::string& s);
+GoodieType toGoodieType(const std::string& s);
 
 } // end of namespace botlib
 } // end of namespace mcdane

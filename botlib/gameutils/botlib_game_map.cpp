@@ -308,10 +308,11 @@ void GameMap::presentObjs()
 {
     static GameObjectType presentOrder[] = {
         GameObjectType::TILE,
+        GameObjectType::GOODIE,
         GameObjectType::ROBOT,
         GameObjectType::MISSILE
     };
-    constexpr int presentTypeCount = 3;
+    constexpr int presentTypeCount = 4;
 
     SimpleShaderProgram& program = Context::graphics().simpleShader();
     program.use();
