@@ -39,6 +39,8 @@ public:
     rapidjson::Value toJson(
         rapidjson::Document::AllocatorType& allocator) const override;
 
+    inline int size() const;
+
 private:
     void add(const std::string& name, T* t);
 
@@ -156,6 +158,12 @@ rapidjson::Value NamedMap<T>::toJson(
     v.AddMember("objects", objs, allocator);
 
     return v;
+}
+
+template <typename T>
+int NamedMap<T>::size() const
+{
+    return map_.size();
 }
 
 template <typename T>
