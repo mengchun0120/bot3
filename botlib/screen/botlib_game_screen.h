@@ -3,6 +3,7 @@
 
 #include <botlib_game_map.h>
 #include <botlib_game_object_dumper.h>
+#include <botlib_player.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -36,16 +37,28 @@ private:
 
     bool processKey(const commonlib::KeyEvent& e);
 
+    void processFireKey(const commonlib::KeyEvent& e);
+
+    void processForwardKey(const commonlib::KeyEvent& e);
+
     void updatePlayer(float timeDelta);
 
     void clearMapUpdated();
 
     void updateObjects(float timeDelta);
 
+    inline bool isPlayerAvailable();
+
 private:
     GameMap map_;
     GameObjectDumper objDumper_;
 };
+
+bool GameScreen::isPlayerAvailable()
+{
+    return map_.player() &&
+           map_.player()->state() == GameObjectState::ALIVE;
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

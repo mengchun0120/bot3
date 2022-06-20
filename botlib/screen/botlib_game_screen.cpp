@@ -92,19 +92,14 @@ void GameScreen::loadMap(const Vector2& viewportSize,
 
 bool GameScreen::processMouseButton(const MouseButtonEvent& e)
 {
-    if (e.button_ == GLFW_MOUSE_BUTTON_RIGHT && e.action_ == GLFW_PRESS)
+    if (!isPlayerAvailable())
     {
-        Player* player = map_.player();
-        if (!player || player->state() != GameObjectState::ALIVE)
-        {
-            return true;
-        }
+        return true;
+    }
 
-        Vector2 p{e.x_, e.y_};
-        p += map_.viewportAnchor();
-
-        player->setDest(p);
-        player->setMovingEnabled(true);
+    if (e.button_ == GLFW_MOUSE_BUTTON_LEFT)
+    {
+        map_.player()->setShootingEnabled(e.action_ == GLFW_PRESS);
     }
 
     return true;
@@ -112,6 +107,22 @@ bool GameScreen::processMouseButton(const MouseButtonEvent& e)
 
 bool GameScreen::processMouseMove(const MouseMoveEvent& e)
 {
+    if (!isPlayerAvailable())
+    {
+        return true;
+    }
+
+    Vector2 p{e.x_, e.y_};
+    p += map_.viewportAnchor();
+
+    if (fuzzyEqual(p, map_.player()->pos(), 0.2f))
+    {
+        return true;
+    }
+
+    Vector2 direction = normalize(p - map_.player()->pos());
+    map_.player()->setDirection(direction);
+
     return true;
 }
 
@@ -119,12 +130,14 @@ bool GameScreen::processKey(const KeyEvent& e)
 {
     switch(e.key_)
     {
+        case GLFW_KEY_A:
+        {
+            processFireKey(e);
+            break;
+        }
         case GLFW_KEY_F:
         {
-            if (map_.player() && map_.player()->state() == GameObjectState::ALIVE)
-            {
-                map_.player()->setShootingEnabled(e.action_ == GLFW_PRESS);
-            }
+            processForwardKey(e);
             break;
         }
         default:
@@ -132,6 +145,27 @@ bool GameScreen::processKey(const KeyEvent& e)
     }
 
     return true;
+}
+
+void GameScreen::processFireKey(const KeyEvent& e)
+{
+    if (!isPlayerAvailable())
+    {
+        return;
+    }
+
+    map_.player()->setShootingEnabled(e.action_ == GLFW_PRESS);
+}
+
+void GameScreen::processForwardKey(const KeyEvent& e)
+{
+    if (!isPlayerAvailable() || e.action_ != GLFW_RELEASE)
+    {
+        return;
+    }
+
+    bool enabled = !map_.player()->movingEnabled();
+    map_.player()->setMovingEnabled(enabled);
 }
 
 void GameScreen::updatePlayer(float timeDelta)

@@ -28,14 +28,6 @@ rapidjson::Value Player::toJson(
     return v;
 }
 
-void Player::setDest(const Vector2& dest1)
-{
-    dest_ = dest1;
-    Vector2 dist = dest_ - pos_;
-    Robot::setDirection(normalize(dist));
-    updateMoveTime(dist);
-}
-
 void Player::update(GameMap& map,
                     GameObjectDumper& dumper,
                     float timeDelta)
@@ -47,44 +39,7 @@ void Player::updatePos(GameMap& map,
                        GameObjectDumper& dumper,
                        float timeDelta)
 {
-    bool reachDest = false;
-    if (timeToDest_ <= timeDelta)
-    {
-        timeDelta = timeToDest_;
-        timeToDest_ = 0.0f;
-        reachDest = true;
-    }
-    else
-    {
-        timeToDest_ -= timeDelta;
-    }
-
     Robot::updatePos(map, dumper, timeDelta);
-
-    if (reachDest)
-    {
-        setMovingEnabled(false);
-    }
-}
-
-void Player::updateMoveTime(const Vector2& dist)
-{
-    constexpr float VERY_SMALL = 1.0e-6f;
-    Vector2 absDist = abs(dist);
-    Vector2 absSpeed = abs(speed_);
-    float timeToDestX = 0.0f, timeToDestY = 0.0f;
-
-    if (absSpeed[0] > VERY_SMALL)
-    {
-        timeToDestX = absDist[0] / absSpeed[0];
-    }
-
-    if (absSpeed[1] > VERY_SMALL)
-    {
-        timeToDestY = absDist[1] / absSpeed[1];
-    }
-
-    timeToDest_ = std::max(timeToDestX, timeToDestY);
 }
 
 } // end of namespace botlib

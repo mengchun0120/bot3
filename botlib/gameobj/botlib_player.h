@@ -19,12 +19,8 @@ public:
 
     inline const PlayerTemplate* getTemplate() const;
 
-    inline const commonlib::Vector2& dest() const;
-
     rapidjson::Value toJson(
                 rapidjson::Document::AllocatorType& allocator) const override;
-
-    void setDest(const commonlib::Vector2& dest1);
 
     void update(GameMap& map,
                 GameObjectDumper& dumper,
@@ -34,22 +30,11 @@ protected:
     void updatePos(GameMap& map,
                    GameObjectDumper& dumper,
                    float timeDelta) override;
-
-    void updateMoveTime(const commonlib::Vector2& dist);
-
-protected:
-    commonlib::Vector2 dest_;
-    float timeToDest_;
 };
 
 const PlayerTemplate* Player::getTemplate() const
 {
     return static_cast<const PlayerTemplate*>(t_);
-}
-
-const commonlib::Vector2& Player::dest() const
-{
-    return dest_;
 }
 
 } // end of namespace botlib
