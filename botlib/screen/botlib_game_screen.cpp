@@ -117,6 +117,20 @@ bool GameScreen::processMouseMove(const MouseMoveEvent& e)
 
 bool GameScreen::processKey(const KeyEvent& e)
 {
+    switch(e.key_)
+    {
+        case GLFW_KEY_F:
+        {
+            if (map_.player() && map_.player()->state() == GameObjectState::ALIVE)
+            {
+                map_.player()->setShootingEnabled(e.action_ == GLFW_PRESS);
+            }
+            break;
+        }
+        default:
+            break;
+    }
+
     return true;
 }
 
