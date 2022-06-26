@@ -19,9 +19,6 @@ public:
 
     inline float dyingDuration() const;
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
 protected:
     float hp_;
     float dyingDuration_;

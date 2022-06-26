@@ -1,82 +1,66 @@
-[
-    {
-        "name": "steel_tile",
+{
+    "steel_tile": {
         "texture": "steel_tile",
         "rect": "tile"
     },
-    {
-        "name": "ice_tile",
+    "ice_tile": {
         "texture": "ice_tile",
         "rect": "tile"
     },
-    {
-        "name": "clay_tile",
+    "clay_tile": {
         "texture": "clay_tile",
         "rect": "tile"
     },
-    {
-        "name": "fireland_tile",
+    "fireland_tile": {
         "texture": "fireland_tile",
         "rect": "tile"
     },
-    {
-        "name": "bush_tile",
+    "bush_tile": {
         "texture": "bush_tile",
         "rect": "tile"
     },
-    {
-        "name": "red_base",
+    "red_base": {
         "texture": "red_base",
         "rect": "base"
     },
-    {
-        "name": "red_gun",
+    "red_gun": {
         "texture": "red_gun",
         "rect": "gun"
     },
-    {
-        "name": "red_missile",
+    "red_missile": {
         "texture": "red_missile",
         "rect": "missile"
     },
-    {
-        "name": "green_base",
+    "green_base": {
         "texture": "green_base",
         "rect": "base"
     },
-    {
-        "name": "green_gun",
+    "green_gun": {
         "texture": "green_gun",
         "rect": "gun"
     },
-    {
-        "name": "green_missile",
+    "green_missile": {
         "texture": "green_missile",
         "rect": "missile"
     },
-    {
-        "name": "health_goodie",
+    "health_goodie": {
         "texture": "health_goodie",
         "rect": "goodie"
     },
-    {
-        "name": "indestructable_goodie",
+    "indestructable_goodie": {
         "texture": "indestructable_goodie",
         "rect": "goodie"
     },
-    {
-        "name": "double_damage_goodie",
+    "double_damage_goodie": {
         "texture": "double_damage_goodie",
         "rect": "goodie"
     },
-    {
-        "name": "quick_mover_goodie",
+    "quick_mover_goodie": {
         "texture": "quick_mover_goodie",
         "rect": "goodie"
     },
-    {
-        "name": "quick_shooter_goodie",
+    "quick_shooter_goodie": {
         "texture": "quick_shooter_goodie",
         "rect": "goodie"
     }
-]
+}

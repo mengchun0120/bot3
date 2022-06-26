@@ -13,9 +13,6 @@ public:
     void init(const std::string& playerTemplateFile,
               const MissileTemplateLib& missileTemplateLib,
               const ComponentTemplateLib& componentTemplateLib);
-
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
 };
 
 } // end of namespace botlib

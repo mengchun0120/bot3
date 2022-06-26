@@ -141,25 +141,6 @@ float ParticleEffectTemplate::calculateSpan(const Vector2& startPos,
     return std::max(endPos[0], endPos[1]) + particleSize_;
 }
 
-rapidjson::Value ParticleEffectTemplate::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "ParticleEffectTemplate", allocator);
-    v.AddMember("numParticles", numParticles_, allocator);
-    v.AddMember("acceleration", acceleration_, allocator);
-    v.AddMember("duration", duration_, allocator);
-    v.AddMember("particleSize", particleSize_, allocator);
-    v.AddMember("texture", texture_->id(), allocator);
-    v.AddMember("color", jsonVal(color_, allocator), allocator);
-    v.AddMember("base", GameObjectTemplate::toJson(allocator), allocator);
-
-    return v;
-}
-
 } // end of namespace botlib
 } // end of namespace mcdane
 

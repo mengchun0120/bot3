@@ -61,23 +61,6 @@ void ComponentTemplate::init(const rapidjson::Value& v,
     }
 
     init(texture1, rect1);
-
-    NamedObject::init(v, true);
-}
-
-rapidjson::Value ComponentTemplate::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "ComponentTemplate", allocator);
-    v.AddMember("texture", jsonVal(texture_, allocator), allocator);
-    v.AddMember("rect", jsonVal(rect_, allocator), allocator);
-    v.AddMember("base", Object::toJson(allocator), allocator);
-
-    return v;
 }
 
 void ComponentTemplate::resetSpan()

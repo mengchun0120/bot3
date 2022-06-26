@@ -4,7 +4,6 @@
 #include <initializer_list>
 #include <commonlib_vector.h>
 #include <commonlib_vertex_array.h>
-#include <commonlib_named_object.h>
 #include <commonlib_opengl.h>
 
 namespace mcdane {
@@ -20,7 +19,7 @@ namespace botlib {
 class SimpleShaderProgram;
 class TexPosArray;
 
-class Shape: public commonlib::NamedObject {
+class Shape {
 public:
     Shape() = default;
 
@@ -53,9 +52,6 @@ public:
                       const commonlib::Color* texColor) const = 0;
 
     inline const commonlib::VertexArray& vertexArray() const;
-
-    rapidjson::Value toJson(
-        rapidjson::Document::AllocatorType& allocator) const override;
 
 protected:
     commonlib::VertexArray va_;

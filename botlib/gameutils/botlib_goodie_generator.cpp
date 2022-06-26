@@ -37,10 +37,10 @@ void GoodieGenerator::initBase(GoodieTemplateLib& lib)
 
     int i = 0;
     float weight = 0.0f;
-    auto accessor = [&](const GoodieTemplate* t)->bool
+    auto accessor = [&](const GoodieTemplate& t)->bool
     {
-        weight += t->weight();
-        base_[i].t_ = t;
+        weight += t.weight();
+        base_[i].t_ = &t;
         base_[i].weight_ = weight;
         ++i;
         return true;

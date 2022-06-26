@@ -8,17 +8,16 @@
 namespace mcdane {
 namespace commonlib {
 
-class Texture: public NamedObject {
+class Texture {
 public:
     Texture() = default;
 
-    ~Texture() override;
+    ~Texture();
 
     void init(const std::string& imageFile);
 
     void init(const rapidjson::Value& v,
-              const std::string& picDir,
-              bool requireName = true);
+              const std::string& picDir);
 
     inline bool valid() const;
 
@@ -27,9 +26,6 @@ public:
     inline int width() const;
 
     inline int height() const;
-
-    rapidjson::Value toJson(
-        rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     GLuint id_;

@@ -1,6 +1,5 @@
-[
-    {
-        "name": "red_robot",
+{
+    "red_robot": {
         "collideBreath": 25.0,
         "invincible": false,
         "hp": 120.0,
@@ -30,4 +29,4 @@
         ],
         "dyingDuration": 1000.0
     }
-]
+}

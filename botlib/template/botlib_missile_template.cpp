@@ -53,25 +53,6 @@ void MissileTemplate::init(
     CompositeObjectTemplate::init(GameObjectType::MISSILE, v, componentTemplateLib);
 }
 
-rapidjson::Value MissileTemplate::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "MissileTemplate", allocator);
-    v.AddMember("damage", damage_, allocator);
-    v.AddMember("speed", speed_, allocator);
-    v.AddMember("explodeBreath", explodeBreath_, allocator);
-    v.AddMember("particleEffectTemplate",
-                jsonVal(explodeEffectTemplate_, allocator),
-                allocator);
-    v.AddMember("base", CompositeObjectTemplate::toJson(allocator), allocator);
-
-    return v;
-}
-
 } // end of namespace botlib
 } // end of namespace mcdane
 

@@ -55,8 +55,6 @@ void Rectangle::init(const rapidjson::Value& v,
     {
         load(width1, height1);
     }
-
-    NamedObject::init(v, requireName);
 }
 
 void Rectangle::load(float width,
@@ -102,21 +100,6 @@ void Rectangle::load(float width,
     });
 
     Polygon::load(positions.data(), positions.size(), texRect.texPos());
-}
-
-rapidjson::Value Rectangle::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "Rectangle", allocator);
-    v.AddMember("width", width_, allocator);
-    v.AddMember("height", height_, allocator);
-    v.AddMember("base", Polygon::toJson(allocator), allocator);
-
-    return v;
 }
 
 } // end of namespace botlib

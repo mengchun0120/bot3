@@ -33,9 +33,6 @@ public:
 
     inline const ParticleEffectTemplate* explodeEffectTemplate() const;
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
 private:
     float damage_;
     float speed_;

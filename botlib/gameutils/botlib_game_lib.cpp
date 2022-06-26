@@ -36,9 +36,10 @@ void GameLib::initTextureLib(const std::string& textureLibFile,
                              const std::string& picDir)
 {
     auto parser = [&](Texture& texture,
+                      const std::string& name,
                       const rapidjson::Value& v)
     {
-        texture.init(v, picDir, true);
+        texture.init(v, picDir);
     };
 
     textureLib_.init(textureLibFile, parser);
@@ -49,6 +50,7 @@ void GameLib::initTextureLib(const std::string& textureLibFile,
 void GameLib::initRectLib(const std::string& rectLibFile)
 {
     auto parser = [&](Rectangle& rect,
+                      const std::string& name,
                       const rapidjson::Value& v)
     {
         rect.init(v, true);
@@ -63,6 +65,7 @@ void GameLib::initComponentTemplateLib(
                     const std::string& componentTemplateLibFile)
 {
     auto parser = [&](ComponentTemplate& t,
+                      const std::string& name,
                       const rapidjson::Value& v)
     {
         t.init(v, textureLib_, rectLib_);
@@ -76,6 +79,7 @@ void GameLib::initComponentTemplateLib(
 void GameLib::initTileTemplateLib(const std::string& tileTemplateLibFile)
 {
     auto parser = [&](TileTemplate& t,
+                      const std::string& name,
                       const rapidjson::Value& v)
     {
         t.init(v, componentTemplateLib_);
@@ -89,6 +93,7 @@ void GameLib::initTileTemplateLib(const std::string& tileTemplateLibFile)
 void GameLib::initGoodieTemplateLib(const std::string& goodieTemplateLibFile)
 {
     auto parser = [&](GoodieTemplate& t,
+                      const std::string& name,
                       const rapidjson::Value& v)
     {
         t.init(v, componentTemplateLib_);
@@ -104,6 +109,7 @@ void GameLib::initParticleEffectTemplateLib(
     const std::string& libDir)
 {
     auto parser = [&](ParticleEffectTemplate& t,
+                      const std::string& name,
                       const rapidjson::Value& v)
     {
         t.init(v, textureLib_, libDir);
@@ -117,6 +123,7 @@ void GameLib::initParticleEffectTemplateLib(
 void GameLib::initMissileTemplateLib(const std::string& missileTemplateLibFile)
 {
     auto parser = [&](MissileTemplate& t,
+                      const std::string& name,
                       const rapidjson::Value& v)
     {
         t.init(v, particleEffectTemplateLib_, componentTemplateLib_);
@@ -130,6 +137,7 @@ void GameLib::initMissileTemplateLib(const std::string& missileTemplateLibFile)
 void GameLib::initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile)
 {
     auto parser = [&](AIRobotTemplate& t,
+                      const std::string& name,
                       const rapidjson::Value& v)
     {
         t.init(v, missileTemplateLib_, componentTemplateLib_);
@@ -144,11 +152,11 @@ void GameLib::calculateMaxObjSpan()
 {
     maxObjSpan_ = playerTemplate_.span();
 
-    auto accessor = [this](const GameObjectTemplate* t)->bool
+    auto accessor = [this](const GameObjectTemplate& t)->bool
     {
-        if (t->span() > maxObjSpan_)
+        if (t.span() > maxObjSpan_)
         {
-            maxObjSpan_ = t->span();
+            maxObjSpan_ = t.span();
         }
 
         return true;
@@ -166,11 +174,11 @@ void GameLib::calculateMaxCollideBreath()
 {
     maxCollideBreath_ = playerTemplate_.collideBreath();
 
-    auto accessor = [this](const GameObjectTemplate* t)->bool
+    auto accessor = [this](const GameObjectTemplate& t)->bool
     {
-        if (t->collideBreath() > maxCollideBreath_)
+        if (t.collideBreath() > maxCollideBreath_)
         {
-            maxCollideBreath_ = t->collideBreath();
+            maxCollideBreath_ = t.collideBreath();
         }
 
         return true;

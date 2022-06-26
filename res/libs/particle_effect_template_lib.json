@@ -1,6 +1,5 @@
-[
-    {
-        "name": "red_explosion",
+{
+    "red_explosion": {
         "acceleration": 0.0001,
         "duration": 600.0,
         "particleSize": 10.0,
@@ -11,8 +10,7 @@
         "texture": "small_ball",
         "color": [255, 0, 0, 255]
     },
-    {
-        "name": "green_explosion",
+    "green_explosion": {
         "acceleration": 0.0001,
         "duration": 600.0,
         "particleSize": 10.0,
@@ -23,4 +21,4 @@
         "texture": "small_ball",
         "color": [0, 255, 0, 255]
     }
-]
+}

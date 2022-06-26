@@ -1,10 +1,8 @@
-[
-    {
-        "name": "top",
+{
+    "top": {
         "value": "Top"
     },
-    {
-        "name": "list",
+    "list": {
         "value": "List"
     }
-]
+}

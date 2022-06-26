@@ -39,9 +39,6 @@ public:
               const commonlib::Color* borderColor,
               const GLuint textureId,
               const commonlib::Color* texColor) const override;
-
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
 };
 
 } // end of namespace botlib

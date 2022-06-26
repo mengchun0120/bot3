@@ -43,28 +43,6 @@ void RobotTemplate::init(const rapidjson::Value& v,
     CompositeObjectTemplate::init(GameObjectType::ROBOT, v, componentTemplateLib);
 }
 
-rapidjson::Value RobotTemplate::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "RobotTemplate", allocator);
-    v.AddMember("hp", hp_, allocator);
-    v.AddMember("armor", armor_, allocator);
-    v.AddMember("speed", speed_, allocator);
-    v.AddMember("energy", energy_, allocator);
-    v.AddMember("rechargeRate", rechargeRate_, allocator);
-    v.AddMember("fireIntervalMS", fireIntervalMS_, allocator);
-    v.AddMember("firePoints", jsonVal(firePoints_, allocator), allocator);
-    v.AddMember("fireDirections", jsonVal(fireDirections_, allocator), allocator);
-    v.AddMember("missileTemplate", jsonVal(missileTemplate_, allocator), allocator);
-    v.AddMember("base", CompositeObjectTemplate::toJson(allocator), allocator);
-
-    return v;
-}
-
 } // end of namespace botlib
 } // end of namespace mcdane
 

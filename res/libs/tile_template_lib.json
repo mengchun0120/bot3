@@ -1,6 +1,5 @@
-[
-    {
-        "name": "steel_tile",
+{
+    "steel_tile": {
         "collideBreath": 20.0,
         "invincible": true,
         "hp": 100.0,
@@ -13,8 +12,7 @@
         ],
         "dyingDuration": 1000.0
     },
-    {
-        "name": "ice_tile",
+    "ice_tile": {
         "collideBreath": 20.0,
         "invincible": false,
         "hp": 20.0,
@@ -27,8 +25,7 @@
         ],
         "dyingDuration": 1000.0
     },
-    {
-        "name": "clay_tile",
+    "clay_tile": {
         "collideBreath": 20.0,
         "invincible": false,
         "hp": 30.0,
@@ -41,8 +38,7 @@
         ],
         "dyingDuration": 1000.0
     },
-    {
-        "name": "fireland_tile",
+    "fireland_tile": {
         "collideBreath": 20.0,
         "invincible": false,
         "hp": 40.0,
@@ -55,8 +51,7 @@
         ],
         "dyingDuration": 1000.0
     },
-    {
-        "name": "bush_tile",
+    "bush_tile": {
         "collideBreath": 20.0,
         "invincible": false,
         "hp": 50.0,
@@ -69,4 +64,4 @@
         ],
         "dyingDuration": 1000.0
     }
-]
+}

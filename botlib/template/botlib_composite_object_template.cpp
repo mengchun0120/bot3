@@ -82,20 +82,6 @@ void CompositeObjectTemplate::resetSpan()
     }
 }
 
-rapidjson::Value CompositeObjectTemplate::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "CompositeObjectTemplate", allocator);
-    v.AddMember("components", jsonVal(components_, allocator), allocator);
-    v.AddMember("base", GameObjectTemplate::toJson(allocator), allocator);
-
-    return v;
-}
-
 } // end of namespace botlib
 } // end of namespace mcdane
 

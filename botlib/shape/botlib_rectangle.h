@@ -41,9 +41,6 @@ public:
         return height_;
     }
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
 private:
     float width_, height_;
 };

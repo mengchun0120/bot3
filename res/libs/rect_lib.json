@@ -1,32 +1,27 @@
-[
-    {
-        "name": "tile",
+{
+    "tile": {
         "width": 40.0,
         "height": 40.0,
         "hasTexture": true
     },
-    {
-        "name": "base",
+    "base": {
         "width": 60.0,
         "height": 60.0,
         "hasTexture": true
     },
-    {
-        "name": "gun",
+    "gun": {
         "width": 20.0,
         "height": 20.0,
         "hasTexture": true
     },
-    {
-        "name": "missile",
+    "missile": {
         "width": 16.0,
         "height": 16.0,
         "hasTexture": true
     },
-    {
-        "name": "goodie",
+    "goodie": {
         "width": 40.0,
         "height": 40.0,
         "hasTexture": true
     }
-]
+}

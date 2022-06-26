@@ -64,8 +64,7 @@ void Texture::init(const std::string& imageFile)
 }
 
 void Texture::init(const rapidjson::Value& v,
-                   const std::string& picDir,
-                   bool requireName)
+                   const std::string& picDir)
 {
     std::string fileName;
 
@@ -77,24 +76,6 @@ void Texture::init(const rapidjson::Value& v,
 
     fileName = constructPath({picDir, fileName});
     init(fileName);
-
-    NamedObject::init(v, requireName);
-}
-
-rapidjson::Value Texture::toJson(
-    rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "Texture", allocator);
-    v.AddMember("id", id_, allocator);
-    v.AddMember("width", width_, allocator);
-    v.AddMember("height", height_, allocator);
-    v.AddMember("base", NamedObject::toJson(allocator), allocator);
-
-    return v;
 }
 
 } // end of namespace commonlib

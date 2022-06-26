@@ -10,6 +10,7 @@ namespace commonlib {
 auto stringParser =
 [](
     std::string& s,
+    const std::string& name,
     const rapidjson::Value& v)
 {
     std::vector<JsonParamPtr> params{

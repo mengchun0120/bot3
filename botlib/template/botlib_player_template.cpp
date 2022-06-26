@@ -15,21 +15,6 @@ void PlayerTemplate::init(const std::string& playerTemplateFile,
     readJson(doc, playerTemplateFile);
 
     RobotTemplate::init(doc, missileTemplateLib, componentTemplateLib);
-
-    LOG_DEBUG << "PlayerTemplate loaded successfully " << *this << LOG_END;
-}
-
-rapidjson::Value PlayerTemplate::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "PlayerTemplate", allocator);
-    v.AddMember("base", RobotTemplate::toJson(allocator), allocator);
-
-    return v;
 }
 
 } // end of namespace botlib

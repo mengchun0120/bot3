@@ -7,7 +7,7 @@
 namespace mcdane {
 namespace botlib {
 
-class ComponentTemplate: public commonlib::NamedObject {
+class ComponentTemplate {
 public:
     ComponentTemplate() = default;
 
@@ -28,9 +28,6 @@ public:
     inline const Rectangle* rect() const;
 
     inline float span() const;
-
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     void resetSpan();

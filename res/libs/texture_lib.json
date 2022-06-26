@@ -1,70 +1,53 @@
-[
-    {
-        "name": "steel_tile",
+{
+    "steel_tile": {
         "file": "steel_tile.png"
     },
-    {
-        "name": "ice_tile",
+    "ice_tile": {
         "file": "ice_tile.png"
     },
-    {
-        "name": "clay_tile",
+    "clay_tile": {
         "file": "clay_tile.png"
     },
-    {
-        "name": "fireland_tile",
+    "fireland_tile": {
         "file": "fireland_tile.png"
     },
-    {
-        "name": "bush_tile",
+    "bush_tile": {
         "file": "bush_tile.png"
     },
-    {
-        "name": "red_base",
+    "red_base": {
         "file": "red_base.png"
     },
-    {
-        "name": "red_gun",
+    "red_gun": {
         "file": "red_gun.png"
     },
-    {
-        "name": "red_missile",
+    "red_missile": {
         "file": "red_missile.png"
     },
-    {
-        "name": "green_base",
+    "green_base": {
         "file": "green_base.png"
     },
-    {
-        "name": "green_gun",
+    "green_gun": {
         "file": "green_gun.png"
     },
-    {
-        "name": "green_missile",
+    "green_missile": {
         "file": "green_missile.png"
     },
-    {
-        "name": "small_ball",
+    "small_ball": {
         "file": "small_ball.png"
     },
-    {
-        "name": "health_goodie",
+    "health_goodie": {
         "file": "health_goodie.png"
     },
-    {
-        "name": "indestructable_goodie",
+    "indestructable_goodie": {
         "file": "indestructable_goodie.png"
     },
-    {
-        "name": "double_damage_goodie",
+    "double_damage_goodie": {
         "file": "double_damage_goodie.png"
     },
-    {
-        "name": "quick_shooter_goodie",
+    "quick_shooter_goodie": {
         "file": "quick_shooter_goodie.png"
     },
-    {
-        "name": "quick_mover_goodie",
+    "quick_mover_goodie": {
         "file": "quick_mover_goodie.png"
     }
-]
+}

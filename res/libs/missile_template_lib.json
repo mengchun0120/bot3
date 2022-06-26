@@ -1,6 +1,5 @@
-[
-    {
-        "name": "red_missile",
+{
+    "red_missile": {
         "collideBreath": 8.0,
         "damage": 10.0,
         "speed": 0.1,
@@ -14,8 +13,7 @@
         ],
         "explodeEffect": "red_explosion"
     },
-    {
-        "name": "green_missile",
+    "green_missile": {
         "collideBreath": 8.0,
         "damage": 10.0,
         "speed": 0.5,
@@ -29,4 +27,4 @@
         ],
         "explodeEffect": "green_explosion"
     }
-]
+}

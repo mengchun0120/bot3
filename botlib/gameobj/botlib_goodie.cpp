@@ -15,7 +15,6 @@ void Goodie::init(const GoodieTemplate* t,
 
 void Goodie::present() const
 {
-    LOG_INFO << "goodie " << id() << " present" << LOG_END;
     CompositeObject::present();
 }
 

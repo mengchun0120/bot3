@@ -35,9 +35,6 @@ public:
 
     inline const std::vector<Component>& components() const;
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
 private:
     void initComponents(
                 const rapidjson::Value& v,

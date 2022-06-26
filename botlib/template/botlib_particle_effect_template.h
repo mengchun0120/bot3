@@ -43,9 +43,6 @@ public:
 
     inline const commonlib::Color& color() const;
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
 protected:
     void loadVertexData(std::vector<commonlib::Vector2>& startPos,
                         std::vector<commonlib::Vector2>& direction,

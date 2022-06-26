@@ -1,6 +1,5 @@
-[
-    {
-        "name": "health_goodie",
+{
+    "health_goodie": {
         "type": "health",
         "duration": 0.0,
         "weight": 100.0,
@@ -13,8 +12,7 @@
             }
         ]
     },
-    {
-        "name": "indestructable_goodie",
+    "indestructable_goodie": {
         "type": "indestructable",
         "duration": 30000.0,
         "weight": 20.0,
@@ -27,8 +25,7 @@
             }
         ]
     },
-    {
-        "name": "double_damage_goodie",
+    "double_damage_goodie": {
         "type": "double_damage",
         "duration": 30000.0,
         "weight": 20.0,
@@ -41,8 +38,7 @@
             }
         ]
     },
-    {
-        "name": "quick_shooter_goodie",
+    "quick_shooter_goodie": {
         "type": "quick_shooter",
         "duration": 30000.0,
         "weight": 20.0,
@@ -55,8 +51,7 @@
             }
         ]
     },
-    {
-        "name": "quick_mover_goodie",
+    "quick_mover_goodie": {
         "type": "quick_mover",
         "duration": 30000.0,
         "weight": 20.0,
@@ -69,4 +64,4 @@
             }
         ]
     }
-]
+}
