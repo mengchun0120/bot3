@@ -7,16 +7,16 @@ namespace mcdane {
 namespace botlib {
 
 static std::string k_goodieTypeStr[] = {
-    "health",
-    "indestructable",
-    "quick_shooter",
-    "quick_mover",
-    "double_damage"
+    "health filler",
+    "damage amplifier",
+    "attack accelerator",
+    "speed accelerator",
+    "armor enhancer"
 };
 
 const std::string& toString(GoodieType type)
 {
-    if (!isValidGoodieType(type))
+    if (!isValid(type))
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid GoodieType");
     }

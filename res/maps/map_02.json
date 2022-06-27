@@ -17,31 +17,31 @@
         },
         {
             "type": "goodie",
-            "template": "health_goodie",
+            "template": "health filler",
             "pos": [80.0, 240.0],
             "direction": [1.0, 0.0]
         },
         {
             "type": "goodie",
-            "template": "indestructable_goodie",
+            "template": "armor enhancer",
             "pos": [160.0, 240.0],
             "direction": [1.0, 0.0]
         },
         {
             "type": "goodie",
-            "template": "double_damage_goodie",
+            "template": "damage amplifier",
             "pos": [240.0, 240.0],
             "direction": [1.0, 0.0]
         },
         {
             "type": "goodie",
-            "template": "quick_shooter_goodie",
+            "template": "attack accelerator",
             "pos": [320.0, 240.0],
             "direction": [1.0, 0.0]
         },
         {
             "type": "goodie",
-            "template": "quick_mover_goodie",
+            "template": "speed accelerator",
             "pos": [400.0, 240.0],
             "direction": [1.0, 0.0]
         }

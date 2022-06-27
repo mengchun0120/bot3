@@ -8,11 +8,11 @@ namespace mcdane {
 namespace botlib {
 
 enum class GoodieType {
-    HEALTH,
-    INDESTRUCTABLE,
-    QUICK_SHOOTER,
-    QUICK_MOVER,
-    DOUBLE_DAMAGE,
+    HEALTH_FILLER,
+    DAMAGE_AMPLIFIER,
+    ATTACK_ACCELERATOR,
+    SPEED_ACCELERATOR,
+    ARMOR_ENHANCER,
     COUNT
 };
 
@@ -21,9 +21,15 @@ inline int goodieTypeCount()
     return static_cast<int>(GoodieType::COUNT);
 }
 
-inline bool isValidGoodieType(GoodieType type)
+inline bool isValid(GoodieType type)
 {
-    return static_cast<int>(GoodieType::HEALTH) <= static_cast<int>(type) &&
+    return static_cast<int>(GoodieType::HEALTH_FILLER) <= static_cast<int>(type) &&
+           static_cast<int>(GoodieType::COUNT) > static_cast<int>(type);
+}
+
+inline bool isInstantaneous(GoodieType type)
+{
+    return static_cast<int>(GoodieType::HEALTH_FILLER) < static_cast<int>(type) &&
            static_cast<int>(GoodieType::COUNT) > static_cast<int>(type);
 }
 
@@ -33,8 +39,6 @@ GoodieType toGoodieType(const std::string& s);
 
 } // end of namespace botlib
 } // end of namespace mcdane
-
-
 
 namespace std {
 

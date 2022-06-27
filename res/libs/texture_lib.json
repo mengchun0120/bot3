@@ -35,19 +35,19 @@
     "small_ball": {
         "file": "small_ball.png"
     },
-    "health_goodie": {
-        "file": "health_goodie.png"
+    "health_filler": {
+        "file": "health_filler.png"
     },
-    "indestructable_goodie": {
-        "file": "indestructable_goodie.png"
+    "damage_amplifier": {
+        "file": "damage_amplifier.png"
     },
-    "double_damage_goodie": {
-        "file": "double_damage_goodie.png"
+    "armor_enhancer": {
+        "file": "armor_enhancer.png"
     },
-    "quick_shooter_goodie": {
-        "file": "quick_shooter_goodie.png"
+    "attack_accelerator": {
+        "file": "attack_accelerator.png"
     },
-    "quick_mover_goodie": {
-        "file": "quick_mover_goodie.png"
+    "speed_accelerator": {
+        "file": "speed_accelerator.png"
     }
 }

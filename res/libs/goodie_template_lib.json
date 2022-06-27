@@ -1,64 +1,63 @@
 {
-    "health_goodie": {
-        "type": "health",
+    "health filler": {
         "duration": 0.0,
         "weight": 100.0,
         "collideBreath": 20.0,
         "components": [
             {
-                "template": "health_goodie",
+                "template": "health_filler",
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
         ]
     },
-    "indestructable_goodie": {
-        "type": "indestructable",
+    "armor enhancer": {
         "duration": 30000.0,
         "weight": 20.0,
+        "factor": 1.0,
         "collideBreath": 20.0,
         "components": [
             {
-                "template": "indestructable_goodie",
+                "template": "armor_enhancer",
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
         ]
     },
-    "double_damage_goodie": {
-        "type": "double_damage",
+    "damage amplifier": {
         "duration": 30000.0,
         "weight": 20.0,
+        "factor": 1.0,
         "collideBreath": 20.0,
         "components": [
             {
-                "template": "double_damage_goodie",
+                "template": "damage_amplifier",
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
         ]
     },
-    "quick_shooter_goodie": {
-        "type": "quick_shooter",
+    "attack accelerator": {
         "duration": 30000.0,
         "weight": 20.0,
+        "factor": 0.5,
         "collideBreath": 20.0,
         "components": [
             {
-                "template": "quick_shooter_goodie",
+                "template": "attack_accelerator",
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
         ]
     },
-    "quick_mover_goodie": {
-        "type": "quick_mover",
+    "speed accelerator": {
         "duration": 30000.0,
         "weight": 20.0,
+        "factor": 0.5,
         "collideBreath": 20.0,
         "components": [
             {
-                "template": "quick_mover_goodie",
+                "template": "speed_accelerator",
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }

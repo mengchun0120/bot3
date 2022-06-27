@@ -43,24 +43,24 @@
         "texture": "green_missile",
         "rect": "missile"
     },
-    "health_goodie": {
-        "texture": "health_goodie",
+    "health_filler": {
+        "texture": "health_filler",
         "rect": "goodie"
     },
-    "indestructable_goodie": {
-        "texture": "indestructable_goodie",
+    "armor_enhancer": {
+        "texture": "armor_enhancer",
         "rect": "goodie"
     },
-    "double_damage_goodie": {
-        "texture": "double_damage_goodie",
+    "damage_amplifier": {
+        "texture": "damage_amplifier",
         "rect": "goodie"
     },
-    "quick_mover_goodie": {
-        "texture": "quick_mover_goodie",
+    "speed_accelerator": {
+        "texture": "speed_accelerator",
         "rect": "goodie"
     },
-    "quick_shooter_goodie": {
-        "texture": "quick_shooter_goodie",
+    "attack_accelerator": {
+        "texture": "attack_accelerator",
         "rect": "goodie"
     }
 }
