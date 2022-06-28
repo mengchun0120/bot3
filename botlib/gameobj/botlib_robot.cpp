@@ -30,8 +30,13 @@ void Robot::init(const RobotTemplate* t,
 {
     CompositeObject::init(t, pos1, direction1);
     side_ = side;
-    hp_ = getTemplate()->hp();
+    hp_ = t->hp();
     initFirePointsAndDirections();
+    speedNorm_ = t->speed();
+    energy_ = t->energy();
+    armor_ = t->armor();
+    fireIntervalMS_ = t->fireIntervalMS();
+    damageFactor_ = 1.0f;
     resetSpeed();
     hpIndicator_.reset(pos(), hpRatio());
     dyingTime_ = 0.0f;
@@ -146,6 +151,46 @@ bool Robot::canBeDumped(GameMap& map) const
     return state_ == GameObjectState::DYING && !map.canSee(this);
 }
 
+void Robot::setSpeedNorm(float speedNorm1)
+{
+    if (speedNorm1 < 0.0f)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid speedNorm");
+    }
+
+    speedNorm_ = speedNorm1;
+}
+
+void Robot::setFireIntervalMS(float fireIntervalMS1)
+{
+    if (fireIntervalMS1 < 0.0f)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid fireIntervalMS");
+    }
+
+    fireIntervalMS_ = fireIntervalMS1;
+}
+
+void Robot::setArmor(float armor1)
+{
+    if (armor1 < 0.0f)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid armor");
+    }
+
+    armor_ = armor1;
+}
+
+void Robot::setDamageFactor(float factor)
+{
+    if (factor < 0.0f)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid factor");
+    }
+
+    damageFactor_ = factor;
+}
+
 void Robot::initFirePointsAndDirections()
 {
     const RobotTemplate* t = getTemplate();
@@ -183,7 +228,7 @@ void Robot::resetFirePointsAndDirections()
 
 void Robot::resetSpeed()
 {
-    speed_ = speedNorm() * direction_;
+    speed_ = speedNorm_ * direction_;
 }
 
 void Robot::updatePos(GameMap& map,

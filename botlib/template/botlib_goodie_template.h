@@ -4,6 +4,7 @@
 #include <functional>
 #include <botlib_goodie_type.h>
 #include <botlib_composite_object_template.h>
+#include <botlib_goodie_action.h>
 
 namespace mcdane {
 namespace botlib {
@@ -30,11 +31,20 @@ public:
 
     inline float factor() const;
 
+    inline const GoodieAction& activateAction() const;
+
+    inline const GoodieAction& deactivateAction() const;
+
+private:
+    void initActions();
+
 private:
     GoodieType type_;
     float duration_;
     float weight_;
     float factor_;
+    GoodieAction activateAction_;
+    GoodieAction deactivateAction_;
 };
 
 GoodieType GoodieTemplate::type() const
@@ -55,6 +65,16 @@ float GoodieTemplate::weight() const
 float GoodieTemplate::factor() const
 {
     return factor_;
+}
+
+const GoodieAction& GoodieTemplate::activateAction() const
+{
+    return activateAction_;
+}
+
+const GoodieAction& GoodieTemplate::deactivateAction() const
+{
+    return deactivateAction_;
 }
 
 } // end of namespace botlib

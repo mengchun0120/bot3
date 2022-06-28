@@ -31,6 +31,8 @@ public:
 
     inline float speedNorm() const;
 
+    inline float damageFactor() const;
+
     inline const commonlib::Vector2& speed() const;
 
     inline float energy() const;
@@ -65,6 +67,14 @@ public:
                 rapidjson::Document::AllocatorType& allocator) const override;
 
     bool canBeDumped(GameMap& map) const override;
+
+    void setSpeedNorm(float speedNorm1);
+
+    void setFireIntervalMS(float fireIntervalMS1);
+
+    void setArmor(float armor1);
+
+    void setDamageFactor(float factor);
 
 protected:
     void initFirePointsAndDirections();
@@ -104,6 +114,10 @@ protected:
     bool shootingEnabled_;
     commonlib::TimePoint lastShootTime_;
     float dyingTime_;
+    float fireIntervalMS_;
+    float speedNorm_;
+    float armor_;
+    float damageFactor_;
 };
 
 const RobotTemplate* Robot::getTemplate() const
@@ -123,12 +137,12 @@ float Robot::hp() const
 
 float Robot::armor() const
 {
-    return getTemplate()->armor();
+    return armor_;
 }
 
 float Robot::speedNorm() const
 {
-    return getTemplate()->speed();
+    return speedNorm_;
 }
 
 const commonlib::Vector2& Robot::speed() const
@@ -139,6 +153,11 @@ const commonlib::Vector2& Robot::speed() const
 float Robot::energy() const
 {
     return energy_;
+}
+
+float Robot::damageFactor() const
+{
+    return damageFactor_;
 }
 
 float Robot::rechargeRate() const
@@ -158,7 +177,7 @@ float Robot::hpRatio() const
 
 float Robot::fireIntervalMS() const
 {
-    return getTemplate()->fireIntervalMS();
+    return fireIntervalMS_;
 }
 
 bool Robot::shootingEnabled() const

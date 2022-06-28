@@ -76,6 +76,7 @@ set(BOTLIB_TEMPLATE_SRC
     template/botlib_component_template.cpp
     template/botlib_composite_object_template.cpp
     template/botlib_game_object_template.cpp
+    template/botlib_goodie_action.cpp
     template/botlib_goodie_template.cpp
     template/botlib_missile_template.cpp
     template/botlib_particle_effect_template.cpp
