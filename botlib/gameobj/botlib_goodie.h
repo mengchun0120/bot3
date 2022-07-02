@@ -7,6 +7,8 @@
 namespace mcdane {
 namespace botlib {
 
+class Player;
+
 class Goodie: public CompositeObject {
 public:
     Goodie() = default;
@@ -26,6 +28,8 @@ public:
                 float delta) override;
 
     bool canBeDumped(GameMap& map) const override;
+
+    void activate(Player& player);
 };
 
 const GoodieTemplate* Goodie::getTemplate() const

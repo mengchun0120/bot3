@@ -14,11 +14,13 @@ public:
     using Deleter = typename std::function<void(T*)>;
 
 public:
-    LinkedList(Deleter* deleter=nullptr);
+    LinkedList();
+
+    LinkedList(const Deleter& deleter);
 
     ~LinkedList();
 
-    void setDeleter(Deleter* deleter);
+    void setDeleter(const Deleter& deleter);
 
     inline T* first();
 
@@ -58,14 +60,22 @@ private:
     void del(T* t);
 
 private:
-    Deleter* deleter_;
+    Deleter deleter_;
     T* first_;
     T* last_;
     unsigned int size_;
 };
 
 template <typename T>
-LinkedList<T>::LinkedList(LinkedList<T>::Deleter* deleter)
+LinkedList<T>::LinkedList()
+    : first_(nullptr)
+    , last_(nullptr)
+    , size_(0)
+{
+}
+
+template <typename T>
+LinkedList<T>::LinkedList(const Deleter& deleter)
     : deleter_(deleter)
     , first_(nullptr)
     , last_(nullptr)
@@ -80,7 +90,7 @@ LinkedList<T>::~LinkedList()
 }
 
 template <typename T>
-void LinkedList<T>::setDeleter(Deleter* deleter)
+void LinkedList<T>::setDeleter(const Deleter& deleter)
 {
     deleter_ = deleter;
 }
@@ -363,7 +373,7 @@ void LinkedList<T>::del(T* t)
 {
     if (deleter_)
     {
-        (*deleter_)(t);
+        deleter_(t);
     }
     else
     {

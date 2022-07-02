@@ -50,6 +50,8 @@ public:
 
     void removeObj(GameObject* obj);
 
+    void unlinkObj(GameObject* obj);
+
     inline int rowCount() const;
 
     inline int colCount() const;
@@ -120,7 +122,6 @@ private:
     float maxObjSpan_;
     float maxCollideBreath_;
     int extraCell_;
-    GameObjectList::Deleter objDeleter_;
     std::vector<std::vector<Cell>> cells_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 viewportHalfSize_;

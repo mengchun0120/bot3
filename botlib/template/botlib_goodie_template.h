@@ -19,11 +19,11 @@ public:
 
     ~GoodieTemplate() override = default;
 
-    void init(GoodieType type1,
+    void init(GoodieType goodieType1,
               const rapidjson::Value& v,
               const ComponentTemplateLib& componentTemplateLib);
 
-    inline GoodieType type() const;
+    inline GoodieType goodieType() const;
 
     inline float duration() const;
 
@@ -31,25 +31,25 @@ public:
 
     inline float factor() const;
 
-    inline const GoodieAction& activateAction() const;
+    inline const ActivateGoodieAction& activateAction() const;
 
-    inline const GoodieAction& deactivateAction() const;
+    inline const DeactivateGoodieAction& deactivateAction() const;
 
 private:
     void initActions();
 
 private:
-    GoodieType type_;
+    GoodieType goodieType_;
     float duration_;
     float weight_;
     float factor_;
-    GoodieAction activateAction_;
-    GoodieAction deactivateAction_;
+    ActivateGoodieAction activateAction_;
+    DeactivateGoodieAction deactivateAction_;
 };
 
-GoodieType GoodieTemplate::type() const
+GoodieType GoodieTemplate::goodieType() const
 {
-    return type_;
+    return goodieType_;
 }
 
 float GoodieTemplate::duration() const
@@ -67,12 +67,12 @@ float GoodieTemplate::factor() const
     return factor_;
 }
 
-const GoodieAction& GoodieTemplate::activateAction() const
+const ActivateGoodieAction& GoodieTemplate::activateAction() const
 {
     return activateAction_;
 }
 
-const GoodieAction& GoodieTemplate::deactivateAction() const
+const DeactivateGoodieAction& GoodieTemplate::deactivateAction() const
 {
     return deactivateAction_;
 }

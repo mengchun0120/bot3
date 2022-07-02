@@ -17,11 +17,12 @@ namespace botlib {
 void Missile::init(const MissileTemplate* t,
                    Side side,
                    const commonlib::Vector2& pos1,
-                   const commonlib::Vector2& direction1)
+                   const commonlib::Vector2& direction1,
+                   float damageFactor)
 {
     CompositeObject::init(t, pos1, direction1);
     side_ = side;
-    damage_ = t->damage();
+    damage_ = t->damage() * damageFactor;
     resetSpeed();
 }
 

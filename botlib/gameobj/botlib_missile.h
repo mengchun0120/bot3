@@ -17,7 +17,8 @@ public:
     void init(const MissileTemplate* t,
               Side side,
               const commonlib::Vector2& pos1,
-              const commonlib::Vector2& direction1);
+              const commonlib::Vector2& direction1,
+              float damageFactor=1.0f);
 
     inline const MissileTemplate* getTemplate() const;
 

@@ -3,6 +3,7 @@
         "duration": 0.0,
         "weight": 100.0,
         "collideBreath": 20.0,
+        "factor": 0.3,
         "components": [
             {
                 "template": "health_filler",
@@ -12,9 +13,9 @@
         ]
     },
     "armor enhancer": {
-        "duration": 30000.0,
+        "duration": 60000.0,
         "weight": 20.0,
-        "factor": 1.0,
+        "factor": 3.0,
         "collideBreath": 20.0,
         "components": [
             {
@@ -27,7 +28,7 @@
     "damage amplifier": {
         "duration": 30000.0,
         "weight": 20.0,
-        "factor": 1.0,
+        "factor": 2.0,
         "collideBreath": 20.0,
         "components": [
             {
@@ -40,7 +41,7 @@
     "attack accelerator": {
         "duration": 30000.0,
         "weight": 20.0,
-        "factor": 0.5,
+        "factor": 0.4,
         "collideBreath": 20.0,
         "components": [
             {
@@ -53,7 +54,7 @@
     "speed accelerator": {
         "duration": 30000.0,
         "weight": 20.0,
-        "factor": 0.5,
+        "factor": 2.0,
         "collideBreath": 20.0,
         "components": [
             {

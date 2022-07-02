@@ -26,7 +26,7 @@ const std::string& toString(GoodieType type)
 
 GoodieType toGoodieType(const std::string& s)
 {
-    for (int i = 0; i < goodieTypeCount(); ++i)
+    for (unsigned int i = 0; i < goodieTypeCount(); ++i)
     {
         if (k_goodieTypeStr[i] == s)
         {

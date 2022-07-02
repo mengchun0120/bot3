@@ -10,7 +10,7 @@ set(BOTLIB_ACCESSOR_SRC
     accessor/botlib_game_object_updater.cpp
     accessor/botlib_missile_hit_checker.cpp
     accessor/botlib_nonpassthrough_collide_checker.cpp
-    accessor/botlib_robot_hit_missile_checker.cpp)
+    accessor/botlib_passthrough_collide_checker.cpp)
 
 set(BOTLIB_APP_SRC
     app/botlib_app_actions.cpp
@@ -25,6 +25,7 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_game_object_state.cpp
     gameobj/botlib_game_object_type.cpp
     gameobj/botlib_goodie.cpp
+    gameobj/botlib_goodie_effect.cpp
     gameobj/botlib_goodie_type.cpp
     gameobj/botlib_hp_indicator.cpp
     gameobj/botlib_hp_indicator_config.cpp

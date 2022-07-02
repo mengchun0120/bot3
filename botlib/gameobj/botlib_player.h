@@ -1,8 +1,11 @@
 #ifndef INCLUDED_BOTLIB_PLAYER_H
 #define INCLUDED_BOTLIB_PLAYER_H
 
+#include <commonlib_linked_list.h>
+#include <commonlib_object_pool.h>
 #include <botlib_player_template.h>
 #include <botlib_robot.h>
+#include <botlib_goodie_effect.h>
 
 namespace mcdane {
 namespace botlib {
@@ -26,10 +29,25 @@ public:
                 GameObjectDumper& dumper,
                 float timeDelta) override;
 
+    void addGoodieEffect(const GoodieTemplate* t);
+
 protected:
+    void initEffects();
+
     void updatePos(GameMap& map,
                    GameObjectDumper& dumper,
                    float timeDelta) override;
+
+    void updateGoodieEffects(float timeDelta);
+
+    GoodieEffect* findGoodieEffect(GoodieType type);
+
+protected:
+    using EffectList = commonlib::LinkedList<GoodieEffect>;
+    using EffectPool = commonlib::ObjectPool<GoodieEffect>;
+
+    EffectPool effectPool_;
+    EffectList effects_;
 };
 
 const PlayerTemplate* Player::getTemplate() const

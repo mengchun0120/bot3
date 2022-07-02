@@ -53,7 +53,6 @@ void GameMap::init(unsigned int rows,
     maxObjSpan_ = maxObjSpan;
     maxCollideBreath_ = maxCollideBreath;
     extraCell_ = static_cast<int>(ceil(maxObjSpan_ / k_cellBreath));
-    initObjDeleter();
     initMapCells(rows, cols);
     setBoundary(rows, cols);
     setViewportSize(viewportWidth, viewportHeight);
@@ -237,20 +236,16 @@ rapidjson::Value GameMap::toJson(
     return v;
 }
 
-void GameMap::initObjDeleter()
-{
-    objDeleter_ = [](GameObject* obj)
-    {
-        LOG_DEBUG << "deleted " << obj->type() << " " << obj->id() << LOG_END;
-        delete obj;
-    };
-}
-
 void GameMap::initMapCells(unsigned int rows,
                            unsigned int cols)
 {
     unsigned int rowCount = rows + extraCell_*2;
     unsigned int colCount = cols + extraCell_*2;
+    auto objDeleter = [](GameObject* obj)
+    {
+        LOG_DEBUG << "deleted " << obj->type() << " " << obj->id() << LOG_END;
+        delete obj;
+    };
 
     cells_.resize(rowCount);
     for (auto rowIt = cells_.begin(); rowIt != cells_.end(); ++rowIt)
@@ -261,7 +256,7 @@ void GameMap::initMapCells(unsigned int rows,
         {
             for (auto objIt = colIt->begin(); objIt != colIt->end(); ++objIt)
             {
-                objIt->setDeleter(&objDeleter_);
+                objIt->setDeleter(objDeleter);
             }
         }
     }

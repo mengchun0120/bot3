@@ -63,7 +63,6 @@ private:
 private:
     commonlib::LinkedList<Item> objs_;
     commonlib::ObjectPool<Item> pool_;
-    commonlib::LinkedList<Item>::Deleter deleter_;
 };
 
 GameObjectDumper::Item::Item()

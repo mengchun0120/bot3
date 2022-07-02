@@ -8,16 +8,16 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void GoodieTemplate::init(GoodieType type1,
+void GoodieTemplate::init(GoodieType goodieType1,
                           const rapidjson::Value& v,
                           const ComponentTemplateLib& componentTemplateLib)
 {
-    if (!isValid(type1))
+    if (!isValid(goodieType1))
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid GoodieType");
     }
 
-    type_ = type1;
+    goodieType_ = goodieType1;
 
     std::vector<JsonParamPtr> params{
         jsonParam(duration_, {"duration"}, true, ge(0.0f)),
@@ -34,7 +34,7 @@ void GoodieTemplate::init(GoodieType type1,
 
 void GoodieTemplate::initActions()
 {
-    switch(type_)
+    switch(goodieType_)
     {
         case GoodieType::HEALTH_FILLER:
         {
@@ -66,6 +66,7 @@ void GoodieTemplate::initActions()
             break;
         }
         default:
+            THROW_EXCEPT(InvalidArgumentException, "Invalid goodieType");
             break;
     }
 }

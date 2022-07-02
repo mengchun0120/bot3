@@ -16,9 +16,15 @@ enum class GoodieType {
     COUNT
 };
 
-inline int goodieTypeCount()
+inline unsigned int goodieTypeCount()
 {
-    return static_cast<int>(GoodieType::COUNT);
+    return static_cast<unsigned int>(GoodieType::COUNT);
+}
+
+inline unsigned int lastingGoodieTypeCount()
+{
+    return static_cast<unsigned int>(GoodieType::COUNT) -
+           static_cast<unsigned int>(GoodieType::DAMAGE_AMPLIFIER);
 }
 
 inline bool isValid(GoodieType type)
@@ -27,7 +33,7 @@ inline bool isValid(GoodieType type)
            static_cast<int>(GoodieType::COUNT) > static_cast<int>(type);
 }
 
-inline bool isInstantaneous(GoodieType type)
+inline bool isLasting(GoodieType type)
 {
     return static_cast<int>(GoodieType::HEALTH_FILLER) < static_cast<int>(type) &&
            static_cast<int>(GoodieType::COUNT) > static_cast<int>(type);

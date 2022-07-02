@@ -1,5 +1,6 @@
 #include <commonlib_log.h>
 #include <botlib_goodie.h>
+#include <botlib_player.h>
 
 using namespace mcdane::commonlib;
 
@@ -27,6 +28,21 @@ void Goodie::update(GameMap& map,
 bool Goodie::canBeDumped(GameMap& map) const
 {
     return false;
+}
+
+void Goodie::activate(Player& player)
+{
+    const GoodieTemplate* t = getTemplate();
+    const ActivateGoodieAction& action = t->activateAction();
+    if (action)
+    {
+        action(t, player);
+    }
+
+    if (isLasting(t->goodieType()))
+    {
+        player.addGoodieEffect(t);
+    }
 }
 
 } // end of namespace botlib

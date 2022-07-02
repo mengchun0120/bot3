@@ -76,14 +76,14 @@ public:
 
     void setDamageFactor(float factor);
 
+    void resetSpeed();
+
 protected:
     void initFirePointsAndDirections();
 
     void shiftFirePoints(const commonlib::Vector2& delta);
 
     void resetFirePointsAndDirections();
-
-    void resetSpeed();
 
     virtual void updatePos(GameMap& map,
                            GameObjectDumper& dumper,
@@ -92,8 +92,8 @@ protected:
     bool checkNonpassthroughCollide(commonlib::Vector2& delta,
                                     GameMap& map);
 
-    void checkCollideMissile(GameMap& map,
-                             GameObjectDumper& dumper);
+    void checkPassthroughCollide(GameMap& map,
+                                 GameObjectDumper& dumper);
 
     virtual void updateShooting(GameMap& map,
                                 GameObjectDumper& dumper);

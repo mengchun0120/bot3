@@ -4,7 +4,7 @@
 #include <commonlib_string_utils.h>
 #include <botlib_game_map.h>
 #include <botlib_nonpassthrough_collide_checker.h>
-#include <botlib_robot_hit_missile_checker.h>
+#include <botlib_passthrough_collide_checker.h>
 #include <botlib_missile.h>
 #include <botlib_game_object_dumper.h>
 #include <botlib_robot.h>
@@ -251,7 +251,7 @@ void Robot::updatePos(GameMap& map,
     shiftPos(delta);
     map.repositionObj(this);
 
-    checkCollideMissile(map, dumper);
+    checkPassthroughCollide(map, dumper);
 }
 
 bool Robot::checkNonpassthroughCollide(Vector2& delta,
@@ -267,10 +267,10 @@ bool Robot::checkNonpassthroughCollide(Vector2& delta,
     return checker.collide();
 }
 
-void Robot::checkCollideMissile(GameMap& map,
-                                GameObjectDumper& dumper)
+void Robot::checkPassthroughCollide(GameMap& map,
+                                    GameObjectDumper& dumper)
 {
-    RobotHitMissileChecker checker(map, dumper, this);
+    PassthroughCollideChecker checker(map, dumper, this);
     Region<int> r = map.getCollideArea(collideRegion());
     map.accessRegion(r, checker);
 }
@@ -298,7 +298,8 @@ void Robot::shoot(GameMap& map,
         missile->init(getTemplate()->missileTemplate(),
                       side_,
                       firePoints_[i],
-                      fireDirections_[i]);
+                      fireDirections_[i],
+                      damageFactor_);
 
         map.addObj(missile);
     }

@@ -12,8 +12,7 @@ void GameObjectDumper::init(int poolSize)
     using namespace std::placeholders;
 
     pool_.init(poolSize);
-    deleter_ = std::bind(&GameObjectDumper::del, this, _1);
-    objs_.setDeleter(&deleter_);
+    objs_.setDeleter(std::bind(&GameObjectDumper::del, this, _1));
 }
 
 void GameObjectDumper::add(GameObject* obj)

@@ -28,6 +28,12 @@ inline bool isNonPassthroughObjType(GameObjectType t)
            t == GameObjectType::ROBOT;
 }
 
+inline bool isPassthroughObjType(GameObjectType t)
+{
+    return t == GameObjectType::MISSILE ||
+           t == GameObjectType::GOODIE;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 
