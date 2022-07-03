@@ -2,7 +2,10 @@
 #include <commonlib_collide.h>
 #include <botlib_tile.h>
 #include <botlib_missile.h>
-#include <botlib_robot.h>
+#include <botlib_goodie.h>
+#include <botlib_ai_robot.h>
+#include <botlib_context.h>
+#include <botlib_game_map.h>
 #include <botlib_game_object_dumper.h>
 #include <botlib_missile_hit_checker.h>
 
@@ -78,7 +81,11 @@ void MissileHitChecker::doDamage(GameObject* obj)
     {
         Robot* robot = static_cast<Robot*>(obj);
         robot->addHP(-missile_.damage());
-        LOG_DEBUG << "damage robot " << robot << " hp=" << robot->hp() << LOG_END;
+
+        if (robot->state() != GameObjectState::ALIVE && robot->side() == Side::AI)
+        {
+            generateGoodie(static_cast<AIRobot*>(robot));
+        }
 
         if (robot->canBeDumped(map_))
         {
@@ -89,12 +96,22 @@ void MissileHitChecker::doDamage(GameObject* obj)
     {
         Tile* tile = static_cast<Tile*>(obj);
         tile->addHP(-missile_.damage());
-        LOG_DEBUG << "damage tile " << tile << " hp=" << tile->hp() << LOG_END;
 
         if (tile->canBeDumped(map_))
         {
             dumper_->add(tile);
         }
+    }
+}
+
+void MissileHitChecker::generateGoodie(AIRobot* robot)
+{
+    GoodieGenerator& g = Context::goodieGenerator();
+    Goodie* goodie = g.generate(robot->getTemplate()->goodieProb(),
+                                robot->pos());
+    if (goodie)
+    {
+        map_.addObj(goodie);
     }
 }
 

@@ -3,11 +3,13 @@
 
 #include <vector>
 #include <random>
-#include <memory>
+#include <commonlib_vector.h>
 #include <botlib_typedef.h>
 
 namespace mcdane {
 namespace botlib {
+
+class Goodie;
 
 class GoodieGenerator {
     struct Item {
@@ -22,19 +24,22 @@ public:
 
     ~GoodieGenerator() = default;
 
-    void init(GoodieTemplateLib& lib);
+    void init(const GoodieTemplateLib& lib);
 
-    const GoodieTemplate* generate();
+    Goodie* generate(float prob,
+                     const commonlib::Vector2& pos);
 
 private:
-    void initBase(GoodieTemplateLib& lib);
+    void initBase(const GoodieTemplateLib& lib);
 
     void initRandomGenerator();
+
+    const GoodieTemplate* getTemplate();
 
 private:
     std::vector<Item> base_;
     std::default_random_engine generator_;
-    std::shared_ptr<Distribution> distribution_;
+    Distribution distribution_;
 };
 
 } // end of namespace botlib

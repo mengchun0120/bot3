@@ -37,6 +37,8 @@ public:
 
     inline const GoodieTemplate* findGoodieTemplate(const std::string& name) const;
 
+    inline const GoodieTemplateLib& goodieTemplateLib() const;
+
     inline const MissileTemplate* findMissileTemplate(
                                             const std::string& name) const;
 
@@ -114,6 +116,11 @@ const TileTemplate* GameLib::findTileTemplate(const std::string& name) const
 const GoodieTemplate* GameLib::findGoodieTemplate(const std::string& name) const
 {
     return goodieTemplateLib_.search(name);
+}
+
+const GoodieTemplateLib& GameLib::goodieTemplateLib() const
+{
+    return goodieTemplateLib_;
 }
 
 const MissileTemplate* GameLib::findMissileTemplate(

@@ -1,0 +1,30 @@
+{
+    "rows": 50,
+    "cols": 50,
+    "objects": [
+        {
+            "type": "player",
+            "template": "player",
+            "pos": [240.0, 240.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "robot",
+            "template": "red_robot",
+            "pos": [80.0, 80.0],
+            "direction": [0.707106781, 0.707106781]
+        },
+        {
+            "type": "robot",
+            "template": "red_robot",
+            "pos": [160.0, 100.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "robot",
+            "template": "red_robot",
+            "pos": [240.0, 100.0],
+            "direction": [0.0, 1.0]
+        }
+    ]
+}

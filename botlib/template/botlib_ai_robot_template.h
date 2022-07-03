@@ -8,14 +8,24 @@ namespace botlib {
 
 class AIRobotTemplate: public RobotTemplate {
 public:
-    AIRobotTemplate() = default;
+    AIRobotTemplate();
 
     ~AIRobotTemplate() = default;
 
     void init(const rapidjson::Value& v,
               const MissileTemplateLib& missileTemplateLib,
               const ComponentTemplateLib& componentTemplateLib);
+
+    inline float goodieProb() const;
+
+private:
+    float goodieProb_;
 };
+
+float AIRobotTemplate::goodieProb() const
+{
+    return goodieProb_;
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

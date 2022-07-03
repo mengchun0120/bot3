@@ -30,7 +30,7 @@ public:
 
     const T* search(const std::string& name) const;
 
-    void traverse(NodeAccessor accessor);
+    void traverse(NodeAccessor accessor) const;
 
     inline int size() const;
 
@@ -78,7 +78,7 @@ const T* NamedMap<T>::search(const std::string& name) const
 }
 
 template <typename T>
-void NamedMap<T>::traverse(NodeAccessor accessor)
+void NamedMap<T>::traverse(NodeAccessor accessor) const
 {
     for (auto it = map_.cbegin(); it != map_.cend(); ++it)
     {
