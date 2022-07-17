@@ -6,13 +6,12 @@
 #include <ostream>
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
-#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
 template <typename T>
-class Region: public Object {
+class Region {
 public:
     Region() = default;
 
@@ -57,9 +56,6 @@ public:
 
     bool contains(const T& x,
                   const T& y) const;
-
-    rapidjson::Value toJson(
-            rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     T left_;
@@ -216,24 +212,6 @@ bool Region<T>::contains(const T& x,
            x <= right_ &&
            bottom_ <= y &&
            y <= top_;
-}
-
-template <typename T>
-rapidjson::Value Region<T>::toJson(
-            rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "Region", allocator);
-    v.AddMember("left", left_, allocator);
-    v.AddMember("right", right_, allocator);
-    v.AddMember("bottom", bottom_, allocator);
-    v.AddMember("top", top_, allocator);
-    v.AddMember("base", Object::toJson(allocator), allocator);
-
-    return v;
 }
 
 } // end of namespace commonlib

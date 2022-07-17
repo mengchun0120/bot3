@@ -22,9 +22,6 @@ public:
 
     inline const PlayerTemplate* getTemplate() const;
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
     void update(GameMap& map,
                 GameObjectDumper& dumper,
                 float timeDelta) override;

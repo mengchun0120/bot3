@@ -98,22 +98,6 @@ void Missile::showExplodeEffect(GameMap& map)
     map.addObj(explodeEffect);
 }
 
-rapidjson::Value Missile::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "Missile", allocator);
-    v.AddMember("side", jsonVal(stringVal(side_), allocator), allocator);
-    v.AddMember("speed", jsonVal(speed_, allocator), allocator);
-    v.AddMember("damage", damage_, allocator);
-    v.AddMember("base", CompositeObject::toJson(allocator), allocator);
-
-    return v;
-}
-
 bool Missile::canBeDumped(GameMap& map) const
 {
     return state_ != GameObjectState::DEAD && !map.canSee(this);

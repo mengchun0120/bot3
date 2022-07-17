@@ -49,9 +49,6 @@ public:
 
     void present() const;
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
 private:
     const ComponentTemplate* t_;
     commonlib::Vector2 pos_;

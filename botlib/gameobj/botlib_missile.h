@@ -39,9 +39,6 @@ public:
     void explode(GameMap& map,
                  GameObjectDumper& dumper);
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
     bool canBeDumped(GameMap& map) const override;
 
 private:

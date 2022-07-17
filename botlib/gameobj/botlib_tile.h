@@ -32,9 +32,6 @@ public:
 
     void addHP(float delta);
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
     bool canBeDumped(GameMap& map) const override;
 
 private:

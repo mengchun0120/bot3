@@ -63,9 +63,6 @@ public:
 
     void setShootingEnabled(bool b);
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
     bool canBeDumped(GameMap& map) const override;
 
     void setSpeedNorm(float speedNorm1);

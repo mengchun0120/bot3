@@ -5,19 +5,15 @@
 #include <vector>
 #include <commonlib_opengl.h>
 #include <commonlib_buffer_block.h>
-#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
-class VertexArray: public Object {
+class VertexArray {
 
-    struct BufferDescriptor: public Object {
+    struct BufferDescriptor {
         void init(const BufferBlock& block,
                   unsigned int offset);
-
-        rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const;
 
         unsigned int offset_;
         unsigned int numVertices_;
@@ -93,9 +89,6 @@ public:
     {
         return bufferObj_;
     }
-
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     template <typename Iterator>

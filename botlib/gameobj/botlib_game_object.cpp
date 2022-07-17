@@ -99,28 +99,6 @@ void GameObject::setFlag(Flag flag,
     }
 }
 
-rapidjson::Value GameObject::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "GameObject", allocator);
-    v.AddMember("id", id_, allocator);
-    v.AddMember("template", jsonVal(t_, allocator), allocator);
-    v.AddMember("pos", jsonVal(pos_, allocator), allocator);
-    v.AddMember("flags", flags_, allocator);
-    v.AddMember("row", row_, allocator);
-    v.AddMember("col", col_, allocator);
-    v.AddMember("collideRegion", collideRegion_.toJson(allocator), allocator);
-    v.AddMember("prev", jsonVal(prev_, allocator), allocator);
-    v.AddMember("next", jsonVal(next_, allocator), allocator);
-    v.AddMember("base", Object::toJson(allocator), allocator);
-
-    return v;
-}
-
 } // end of namespace botlib
 } // end of namespace mcdane
 

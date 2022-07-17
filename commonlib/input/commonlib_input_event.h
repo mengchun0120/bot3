@@ -22,9 +22,6 @@ struct MouseButtonEvent {
              int action,
              int mods);
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const;
-
     float x_;
     float y_;
     int button_;
@@ -36,9 +33,6 @@ struct MouseMoveEvent {
     void set(float x,
              float y);
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const;
-
     float x_;
     float y_;
 };
@@ -48,9 +42,6 @@ struct KeyEvent {
              int action,
              int scancode,
              int mods);
-
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const;
 
     int key_;
     int action_;
@@ -96,9 +87,6 @@ public:
     const MouseMoveEvent& mouseMoveEvent() const;
 
     const KeyEvent& keyEvent() const;
-
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     EventType type_;

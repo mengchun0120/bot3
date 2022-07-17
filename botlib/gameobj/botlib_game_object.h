@@ -14,7 +14,7 @@ namespace botlib {
 class GameMap;
 class GameObjectDumper;
 
-class GameObject: public commonlib::Object {
+class GameObject {
 public:
     enum Flag {
         FLAG_INVINCIBLE = 0x00000001,
@@ -105,9 +105,6 @@ public:
     inline void setPrev(GameObject* o);
 
     inline void setNext(GameObject* o);
-
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
 
     virtual bool canBeDumped(GameMap& map) const = 0;
 

@@ -4,13 +4,12 @@
 #include <sstream>
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
-#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
 template <typename T>
-class FixedQueue: public Object {
+class FixedQueue {
 public:
     FixedQueue();
 
@@ -47,9 +46,6 @@ public:
     {
         return capacity_;
     }
-
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     T* queue_;
@@ -169,24 +165,6 @@ void FixedQueue<T>::clear()
     size_ = 0;
     first_ = -1;
     free_ = 0;
-}
-
-template <typename T>
-rapidjson::Value FixedQueue<T>::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "FixedQueue", allocator);
-    v.AddMember("free", free_, allocator);
-    v.AddMember("capacity", capacity_, allocator);
-    v.AddMember("size", size_, allocator);
-    v.AddMember("queue", jsonVal(queue_, size_, allocator), allocator);
-    v.AddMember("base", Object::toJson(allocator), allocator);
-
-    return v;
 }
 
 } // end of namespace commonlib

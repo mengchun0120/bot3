@@ -90,9 +90,6 @@ public:
                       int startLayer=0,
                       int layerCount=k_layerCount);
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
     inline bool canSee(const GameObject* obj) const;
 
     bool checkCollision(commonlib::Vector2& delta,

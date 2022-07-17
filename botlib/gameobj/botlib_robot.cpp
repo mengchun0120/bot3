@@ -130,25 +130,6 @@ void Robot::setShootingEnabled(bool b)
     shootingEnabled_ = b;
 }
 
-rapidjson::Value Robot::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "Robot", allocator);
-    v.AddMember("side", jsonVal(stringVal(side_), allocator), allocator);
-    v.AddMember("hp", hp_, allocator);
-    v.AddMember("speed", jsonVal(speed_, allocator), allocator);
-    v.AddMember("energy", energy_, allocator);
-    v.AddMember("movingEnabled", movingEnabled_, allocator);
-    v.AddMember("shootingEnabled", shootingEnabled_, allocator);
-    v.AddMember("base", CompositeObject::toJson(allocator), allocator);
-
-    return v;
-}
-
 bool Robot::canBeDumped(GameMap& map) const
 {
     return state_ == GameObjectState::DYING && !map.canSee(this);

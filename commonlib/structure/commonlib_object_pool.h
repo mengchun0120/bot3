@@ -4,13 +4,12 @@
 #include <sstream>
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
-#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
 
 template <typename T>
-class ObjectPool: public Object {
+class ObjectPool {
 public:
     ObjectPool();
 
@@ -28,9 +27,6 @@ public:
     {
         return freeCount_;
     }
-
-    rapidjson::Value toJson(
-            rapidjson::Document::AllocatorType& allocator) const override;
 
 private:
     void initPool(unsigned int size);
@@ -135,31 +131,6 @@ void ObjectPool<T>::initNext(unsigned int size)
         next_[i] = i+1;
     }
     next_[size-1] = -1;
-}
-
-template <typename T>
-rapidjson::Value ObjectPool<T>::toJson(
-            rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "ObjectPool", allocator);
-    v.AddMember("freeCount", freeCount_, allocator);
-    v.AddMember("size", size_, allocator);
-
-    Value arr(kArrayType);
-
-    for (int idx = firstFree_; idx >= 0; idx = next_[idx])
-    {
-        arr.PushBack(idx, allocator);
-    }
-
-    v.AddMember("free", arr, allocator);
-    v.AddMember("base", Object::toJson(allocator), allocator);
-
-    return v;
 }
 
 } // end of namespace commonlib

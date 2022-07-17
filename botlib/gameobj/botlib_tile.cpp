@@ -67,20 +67,6 @@ void Tile::addHP(float delta)
     hpIndicator_.reset(pos(), hpRatio());
 }
 
-rapidjson::Value Tile::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "Tile", allocator);
-    v.AddMember("hp", hp_, allocator);
-    v.AddMember("base", CompositeObject::toJson(allocator), allocator);
-
-    return v;
-}
-
 bool Tile::canBeDumped(GameMap& map) const
 {
     return state_ == GameObjectState::DYING && !map.canSee(this);

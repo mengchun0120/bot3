@@ -41,9 +41,6 @@ public:
 
     void setAlpha(float alpha1);
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
-
 private:
     void initComponents();
 

@@ -15,19 +15,6 @@ void Player::init(const PlayerTemplate* t,
     initEffects();
 }
 
-rapidjson::Value Player::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "Player", allocator);
-    v.AddMember("base", Robot::toJson(allocator), allocator);
-
-    return v;
-}
-
 void Player::update(GameMap& map,
                     GameObjectDumper& dumper,
                     float timeDelta)

@@ -33,23 +33,6 @@ void VertexArray::BufferDescriptor::init(const BufferBlock &block,
     stride_ = block.stride_;
 }
 
-rapidjson::Value VertexArray::BufferDescriptor::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "BufferDescriptor", allocator);
-    v.AddMember("offset", offset_, allocator);
-    v.AddMember("numVertices", numVertices_, allocator);
-    v.AddMember("vertexSize", vertexSize_, allocator);
-    v.AddMember("totalSize", totalSize_, allocator);
-    v.AddMember("stride", stride_, allocator);
-
-    return v;
-}
-
 VertexArray::VertexArray()
     : arrayObj_(0)
     , bufferObj_(0)
@@ -117,22 +100,6 @@ void VertexArray::storeBufferBlock(BufferDescriptor& descriptor,
     block.validate();
     descriptor.init(block, offset);
     glBufferSubData(GL_ARRAY_BUFFER, offset, descriptor.totalSize_, block.data_);
-}
-
-rapidjson::Value VertexArray::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "VertexArray", allocator);
-    v.AddMember("arrayObj", arrayObj_, allocator);
-    v.AddMember("bufferObj", bufferObj_, allocator);
-    v.AddMember("descriptors", jsonVal(descriptors_, allocator), allocator);
-    v.AddMember("base", Object::toJson(allocator), allocator);
-
-    return v;
 }
 
 } // end of namespace commonlib

@@ -8,38 +8,6 @@
 namespace mcdane {
 namespace commonlib {
 
-rapidjson::Value Object::toJson(
-                        rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "Object", allocator);
-
-    return v;
-}
-
-rapidjson::Value jsonVal(const Object& obj,
-                         rapidjson::Document::AllocatorType& allocator)
-{
-    return obj.toJson(allocator);
-}
-
 } // end of namespace commonlib
 } // end of namespace mcdane
 
-namespace std {
-
-ostream& operator<<(ostream& os,
-                    const mcdane::commonlib::Object& obj)
-{
-    using namespace rapidjson;
-
-    Document doc;
-    Document::AllocatorType& allocator = doc.GetAllocator();
-
-    return os << obj.toJson(allocator);
-}
-
-} // end of namespace std

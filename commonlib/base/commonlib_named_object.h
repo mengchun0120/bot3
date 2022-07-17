@@ -19,9 +19,6 @@ public:
 
     void setName(const std::string& name1);
 
-    rapidjson::Value toJson(
-        rapidjson::Document::AllocatorType& allocator) const override;
-
 protected:
     std::string name_;
 };

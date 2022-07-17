@@ -50,20 +50,6 @@ void ParticleEffect::update(GameMap& map,
     GameObject::update(map, dumper, timeDelta);
 }
 
-rapidjson::Value ParticleEffect::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "ParticleEffect", allocator);
-    v.AddMember("elapsedTime", elapsedTime_, allocator);
-    v.AddMember("base", GameObject::toJson(allocator), allocator);
-
-    return v;
-}
-
 bool ParticleEffect::canBeDumped(GameMap& map) const
 {
     return state_ != GameObjectState::DEAD && !map.canSee(this);

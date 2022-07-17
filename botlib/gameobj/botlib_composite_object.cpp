@@ -96,21 +96,6 @@ void CompositeObject::shiftComponents(const Vector2& delta)
     }
 }
 
-rapidjson::Value CompositeObject::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "CompositeObject", allocator);
-    v.AddMember("direction", jsonVal(direction_, allocator), allocator);
-    v.AddMember("components", jsonVal(components_, allocator), allocator);
-    v.AddMember("base", GameObject::toJson(allocator), allocator);
-
-    return v;
-}
-
 } // end of namespace botlib
 } // end of namespace mcdane
 

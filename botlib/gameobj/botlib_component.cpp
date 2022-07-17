@@ -100,21 +100,6 @@ void Component::present() const
                      t_->texture()->id(), nullptr);
 }
 
-rapidjson::Value Component::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "component", allocator);
-    v.AddMember("template", jsonVal(t_, allocator), allocator);
-    v.AddMember("pos", jsonVal(pos_, allocator), allocator);
-    v.AddMember("direction", jsonVal(direction_, allocator), allocator);
-
-    return v;
-}
-
 } // end of namespace botlib
 } // end of namespace mcdane
 

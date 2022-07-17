@@ -209,34 +209,6 @@ void GameMap::accessRegion(const Region<int>& r,
     }
 }
 
-rapidjson::Value GameMap::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kObjectType);
-
-    v.AddMember("class", "GameMap", allocator);
-    v.AddMember("maxObjSpan", maxObjSpan_, allocator);
-    v.AddMember("maxCollideBreath", maxCollideBreath_, allocator);
-    v.AddMember("extraCell", extraCell_, allocator);
-    v.AddMember("viewportSize", jsonVal(viewportSize_, allocator), allocator);
-    v.AddMember("minViewportOrigin", jsonVal(minViewportOrigin_, allocator),
-                allocator);
-    v.AddMember("maxViewportOrigin", jsonVal(maxViewportOrigin_, allocator),
-                allocator);
-    v.AddMember("viewportAnchor", jsonVal(viewportAnchor_, allocator), allocator);
-    v.AddMember("boundary", boundary_.toJson(allocator), allocator);
-    v.AddMember("viewableRegion", viewableRegion_.toJson(allocator), allocator);
-    v.AddMember("presentArea", presentArea_.toJson(allocator), allocator);
-    v.AddMember("rowCount", rowCount(), allocator);
-    v.AddMember("colCount", colCount(), allocator);
-    v.AddMember("cells", cellsToJson(allocator), allocator);
-    v.AddMember("base", Object::toJson(allocator), allocator);
-
-    return v;
-}
-
 bool GameMap::checkCollision(Vector2& delta,
                              const GameObject* obj)
 {
@@ -355,32 +327,6 @@ void GameMap::presentParticleEffects()
 
     GameObjectPresenter presenter;
     accessRegion(presentArea_, presenter, 3, 1);
-}
-
-rapidjson::Value GameMap::cellsToJson(
-                rapidjson::Document::AllocatorType& allocator) const
-{
-    using namespace rapidjson;
-
-    Value v(kArrayType);
-
-    for (unsigned int rowIdx = 0; rowIdx < cells_.size(); ++rowIdx)
-    {
-        const auto& row = cells_[rowIdx];
-        for (unsigned int colIdx = 0; colIdx < row.size(); ++colIdx)
-        {
-            const Cell& cell = row[colIdx];
-            for (int layer = 0; layer < k_layerCount; ++layer)
-            {
-                if (!cell[layer].empty())
-                {
-                    v.PushBack(jsonVal(cell[layer], allocator), allocator);
-                }
-            }
-        }
-    }
-
-    return v;
 }
 
 bool GameMap::checkNonpassthroughCollide(commonlib::Vector2& delta,
