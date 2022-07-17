@@ -14,6 +14,15 @@
     "bush_tile": {
         "file": "bush_tile.png"
     },
+    "green_base": {
+        "file": "green_base.png"
+    },
+    "green_gun": {
+        "file": "green_gun.png"
+    },
+    "green_missile": {
+        "file": "green_missile.png"
+    },
     "red_base": {
         "file": "red_base.png"
     },
@@ -23,14 +32,23 @@
     "red_missile": {
         "file": "red_missile.png"
     },
-    "green_base": {
-        "file": "green_base.png"
+    "blue_base": {
+        "file": "blue_base.png"
     },
-    "green_gun": {
-        "file": "green_gun.png"
+    "blue_gun": {
+        "file": "blue_gun.png"
     },
-    "green_missile": {
-        "file": "green_missile.png"
+    "blue_missile": {
+        "file": "blue_missile.png"
+    },
+    "orange_base": {
+        "file": "orange_base.png"
+    },
+    "orange_gun": {
+        "file": "orange_gun.png"
+    },
+    "orange_missile": {
+        "file": "orange_missile.png"
     },
     "small_ball": {
         "file": "small_ball.png"

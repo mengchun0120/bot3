@@ -2,13 +2,6 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="210mm"
    height="297mm"
    viewBox="0 0 210 297"
@@ -17,8 +10,15 @@
    inkscape:export-filename="C:\Users\mengc\bot3\res\pics\red_base.png"
    inkscape:export-xdpi="90.606743"
    inkscape:export-ydpi="90.606743"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="pics.svg">
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="pics.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -28,16 +28,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="15.839192"
-     inkscape:cx="312.30009"
-     inkscape:cy="1004.8987"
+     inkscape:zoom="1.979899"
+     inkscape:cx="207.33381"
+     inkscape:cy="114.39977"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1027"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1"
      inkscape:pagecheckerboard="0">
     <inkscape:grid
@@ -95,6 +95,66 @@
        height="10.440216"
        x="73.215149"
        y="25.821651" />
+    <ellipse
+       style="fill:#00caff;fill-opacity:1;stroke:#000000;stroke-width:0.138929;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4518-5"
+       cx="41.827679"
+       cy="42.495853"
+       rx="8.3121557"
+       ry="8.3594036"
+       inkscape:export-xdpi="90.606743"
+       inkscape:export-ydpi="90.606743"
+       inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_base.png" />
+    <rect
+       style="fill:#0076ff;fill-opacity:1;stroke:#000000;stroke-width:0.133439;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4524-0"
+       width="5.2905211"
+       height="5.3850131"
+       x="56.955849"
+       y="41.139694"
+       inkscape:export-xdpi="93.658539"
+       inkscape:export-ydpi="93.658539"
+       inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_gun.png" />
+    <ellipse
+       style="fill:#00ffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+       id="path163-1"
+       cx="75.37001"
+       cy="43.56493"
+       inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+       inkscape:export-xdpi="90.606743"
+       inkscape:export-ydpi="90.606743"
+       rx="2.0983622"
+       ry="2.1651795" />
+    <ellipse
+       style="fill:#ff9800;fill-opacity:1;stroke:#000000;stroke-width:0.138929;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4518-5-4"
+       cx="42.896759"
+       cy="62.407436"
+       rx="8.3121557"
+       ry="8.3594036"
+       inkscape:export-xdpi="90.606743"
+       inkscape:export-ydpi="90.606743"
+       inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\orange_base.png" />
+    <rect
+       style="fill:#d46600;fill-opacity:1;stroke:#000000;stroke-width:0.133439;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4524-0-0"
+       width="5.2905211"
+       height="5.3850131"
+       x="56.688576"
+       y="59.314026"
+       inkscape:export-xdpi="93.658539"
+       inkscape:export-ydpi="93.658539"
+       inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\orange_gun.png" />
+    <ellipse
+       style="fill:#ffa700;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+       id="path163-1-6"
+       cx="71.761864"
+       cy="61.20472"
+       inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+       inkscape:export-xdpi="90.606743"
+       inkscape:export-ydpi="90.606743"
+       rx="2.0983622"
+       ry="2.1651795" />
   </g>
   <g
      inkscape:groupmode="layer"

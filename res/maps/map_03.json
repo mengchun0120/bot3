@@ -16,8 +16,14 @@
         },
         {
             "type": "robot",
-            "template": "red_robot",
+            "template": "blue_robot",
             "pos": [80.0, 200.0],
+            "direction": [0.707106781, 0.707106781]
+        },
+        {
+            "type": "robot",
+            "template": "orange_robot",
+            "pos": [180.0, 100.0],
             "direction": [0.707106781, 0.707106781]
         },
         {

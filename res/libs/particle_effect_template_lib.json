@@ -1,4 +1,15 @@
 {
+    "green_explosion": {
+        "acceleration": 0.0001,
+        "duration": 600.0,
+        "particleSize": 10.0,
+        "collideBreath": 0.0,
+        "startPosFile": "green_explosion_start_pos.txt",
+        "directionFile": "green_explosion_direction.txt",
+        "initSpeedFile": "green_explosion_init_speed.txt",
+        "texture": "small_ball",
+        "color": [0, 255, 0, 255]
+    },
     "red_explosion": {
         "acceleration": 0.0001,
         "duration": 600.0,
@@ -10,15 +21,26 @@
         "texture": "small_ball",
         "color": [255, 0, 0, 255]
     },
-    "green_explosion": {
+    "blue_explosion": {
         "acceleration": 0.0001,
         "duration": 600.0,
         "particleSize": 10.0,
         "collideBreath": 0.0,
-        "startPosFile": "green_explosion_start_pos.txt",
-        "directionFile": "green_explosion_direction.txt",
-        "initSpeedFile": "green_explosion_init_speed.txt",
+        "startPosFile": "blue_explosion_start_pos.txt",
+        "directionFile": "blue_explosion_direction.txt",
+        "initSpeedFile": "blue_explosion_init_speed.txt",
         "texture": "small_ball",
-        "color": [0, 255, 0, 255]
+        "color": [0, 255, 255, 255]
+    },
+    "orange_explosion": {
+        "acceleration": 0.0001,
+        "duration": 600.0,
+        "particleSize": 10.0,
+        "collideBreath": 0.0,
+        "startPosFile": "orange_explosion_start_pos.txt",
+        "directionFile": "orange_explosion_direction.txt",
+        "initSpeedFile": "orange_explosion_init_speed.txt",
+        "texture": "small_ball",
+        "color": [255, 167, 0, 255]
     }
 }

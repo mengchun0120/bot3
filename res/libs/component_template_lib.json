@@ -19,6 +19,18 @@
         "texture": "bush_tile",
         "rect": "tile"
     },
+    "green_base": {
+        "texture": "green_base",
+        "rect": "base"
+    },
+    "green_gun": {
+        "texture": "green_gun",
+        "rect": "gun"
+    },
+    "green_missile": {
+        "texture": "green_missile",
+        "rect": "missile"
+    },
     "red_base": {
         "texture": "red_base",
         "rect": "base"
@@ -31,16 +43,28 @@
         "texture": "red_missile",
         "rect": "missile"
     },
-    "green_base": {
-        "texture": "green_base",
+    "blue_base": {
+        "texture": "blue_base",
         "rect": "base"
     },
-    "green_gun": {
-        "texture": "green_gun",
+    "blue_gun": {
+        "texture": "blue_gun",
         "rect": "gun"
     },
-    "green_missile": {
-        "texture": "green_missile",
+    "blue_missile": {
+        "texture": "blue_missile",
+        "rect": "missile"
+    },
+    "orange_base": {
+        "texture": "orange_base",
+        "rect": "base"
+    },
+    "orange_gun": {
+        "texture": "orange_gun",
+        "rect": "gun"
+    },
+    "orange_missile": {
+        "texture": "orange_missile",
         "rect": "missile"
     },
     "health_filler": {

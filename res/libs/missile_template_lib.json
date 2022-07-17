@@ -1,4 +1,18 @@
 {
+    "green_missile": {
+        "collideBreath": 8.0,
+        "damage": 10.0,
+        "speed": 0.5,
+        "explodeBreath": 18.0,
+        "components": [
+            {
+                "template": "green_missile",
+                "pos": [0.0, 0.0],
+                "direction": [1.0, 0.0]
+            }
+        ],
+        "explodeEffect": "green_explosion"
+    },
     "red_missile": {
         "collideBreath": 8.0,
         "damage": 10.0,
@@ -13,18 +27,32 @@
         ],
         "explodeEffect": "red_explosion"
     },
-    "green_missile": {
+    "blue_missile": {
         "collideBreath": 8.0,
-        "damage": 10.0,
-        "speed": 0.5,
+        "damage": 20.0,
+        "speed": 0.15,
         "explodeBreath": 18.0,
         "components": [
             {
-                "template": "green_missile",
+                "template": "blue_missile",
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
         ],
-        "explodeEffect": "green_explosion"
+        "explodeEffect": "blue_explosion"
+    },
+    "orange_missile": {
+        "collideBreath": 8.0,
+        "damage": 30.0,
+        "speed": 0.2,
+        "explodeBreath": 18.0,
+        "components": [
+            {
+                "template": "orange_missile",
+                "pos": [0.0, 0.0],
+                "direction": [1.0, 0.0]
+            }
+        ],
+        "explodeEffect": "orange_explosion"
     }
 }
