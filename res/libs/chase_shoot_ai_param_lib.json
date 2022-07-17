@@ -1,0 +1,23 @@
+{
+    "steady_shooter": {
+        "chaseDuration": 500.0,
+        "shootDuration": 10000.0,
+        "chaseProb": 0.0,
+        "directionChangeInterval": 500.0,
+        "stopChaseDist": 400.0
+    },
+    "rush_chaser": {
+        "chaseDuration": 10000.0,
+        "shootDuration": 5000.0,
+        "chaseProb": 0.75,
+        "directionChangeInterval": 1000.0,
+        "stopChaseDist": 180.0
+    },
+    "balanced_shooter": {
+        "chaseDuration": 5000.0,
+        "shootDuration": 5000.0,
+        "chaseProb": 0.5,
+        "directionChangeInterval": 1500.0,
+        "stopChaseDist": 200.0
+    }
+}

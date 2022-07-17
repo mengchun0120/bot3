@@ -37,8 +37,6 @@ GameMapLoader::GameMapLoader(float viewportWidth,
       }
     , robotParams_{
         jsonParam(direction_, "direction"),
-        jsonParam(movingEnabled_, "movingEnabled", false),
-        jsonParam(shootingEnabled_, "shootingEnabled", false)
       }
 {
     if (viewportWidth <= 0.0f)
@@ -243,16 +241,10 @@ void GameMapLoader::addAIRobot(GameMap& map,
                      "Robot " + templateStr_ + " cannot be placed in map");
     }
 
-    movingEnabled_ = false;
-    shootingEnabled_ = false;
-
     parse(robotParams_, v);
 
     AIRobot* robot = new AIRobot();
     robot->init(t, pos_, direction_);
-    robot->setMovingEnabled(movingEnabled_);
-    robot->setShootingEnabled(shootingEnabled_);
-
     map.addObj(robot);
 }
 

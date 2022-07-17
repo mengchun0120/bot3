@@ -34,6 +34,12 @@ T clamp(const T& t, const T& min, const T& max)
     return t;
 }
 
+template <typename T>
+bool between(const T& x, const T& bound1, const T& bound2)
+{
+    return (x >= bound1 && x <= bound2) || (x >= bound2 && x <= bound1);
+}
+
 void rotate(float& x,
             float& y,
             float directionX,

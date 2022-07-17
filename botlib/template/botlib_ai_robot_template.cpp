@@ -16,7 +16,9 @@ void AIRobotTemplate::init(const rapidjson::Value& v,
                            const ComponentTemplateLib& componentTemplateLib)
 {
     std::vector<JsonParamPtr> params{
-        jsonParam(goodieProb_, "goodieProb", false, ge(0.0f))
+        jsonParam(goodieProb_, "goodieProb", false, ge(0.0f)),
+        jsonParam(aiAlgorithm_, {"ai", "algorithm"}, true, k_nonEmptyStrV),
+        jsonParam(aiName_, {"ai", "name"}, true, k_nonEmptyStrV)
     };
 
     parse(params, v);

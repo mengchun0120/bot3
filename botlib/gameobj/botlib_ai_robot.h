@@ -2,16 +2,19 @@
 #define INCLUDED_BOTLIB_AI_ROBOT_H
 
 #include <botlib_ai_robot_template.h>
+#include <botlib_robot_action.h>
 #include <botlib_robot.h>
 
 namespace mcdane {
 namespace botlib {
 
+class AI;
+
 class AIRobot: public Robot {
 public:
-    AIRobot() = default;
+    AIRobot();
 
-    ~AIRobot() override = default;
+    ~AIRobot() override;
 
     void init(const AIRobotTemplate* t,
               const commonlib::Vector2& pos1,
@@ -19,8 +22,13 @@ public:
 
     inline const AIRobotTemplate* getTemplate() const;
 
-    rapidjson::Value toJson(
-                rapidjson::Document::AllocatorType& allocator) const override;
+    void setAction(RobotAction a);
+
+    void update(GameMap& map,
+                GameObjectDumper& dumper,
+                float timeDelta) override;
+private:
+    AI* ai_;
 };
 
 const AIRobotTemplate* AIRobot::getTemplate() const

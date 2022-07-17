@@ -171,6 +171,9 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
         jsonParam(particleEffectTemplateLibFile_,
                   {"libraries", "particleEffectTemplateLibFile"},
                   true, k_nonEmptyStrV),
+        jsonParam(chaseShootAIParamLibFile_,
+                  {"libraries", "chaseShootAIParamLibFile"},
+                  true, k_nonEmptyStrV),
         jsonParam(playerTemplateFile_, {"libraries", "playerTemplateFile"},
                   true, k_nonEmptyStrV)
     };
@@ -186,6 +189,7 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
     aiRobotTemplateLibFile_ = constructPath({libDir_, aiRobotTemplateLibFile_});
     particleEffectTemplateLibFile_ = constructPath(
                                      {libDir_, particleEffectTemplateLibFile_});
+    chaseShootAIParamLibFile_ = constructPath({libDir_, chaseShootAIParamLibFile_});
     playerTemplateFile_ = constructPath({libDir_, playerTemplateFile_});
 }
 

@@ -7,6 +7,7 @@
 #include <commonlib_collide.h>
 #include <botlib_context.h>
 #include <botlib_game_object_presenter.h>
+#include <botlib_nonpassthrough_collide_checker.h>
 #include <botlib_player.h>
 #include <botlib_game_map.h>
 
@@ -236,6 +237,19 @@ rapidjson::Value GameMap::toJson(
     return v;
 }
 
+bool GameMap::checkCollision(Vector2& delta,
+                             const GameObject* obj)
+{
+    bool collideBoundary = checkRectCollideBoundary(delta,
+                                                    obj->collideRegion(),
+                                                    boundary(),
+                                                    delta);
+
+    bool collideObjs = checkNonpassthroughCollide(delta, obj);
+
+    return collideBoundary || collideObjs;
+}
+
 void GameMap::initMapCells(unsigned int rows,
                            unsigned int cols)
 {
@@ -367,6 +381,19 @@ rapidjson::Value GameMap::cellsToJson(
     }
 
     return v;
+}
+
+bool GameMap::checkNonpassthroughCollide(commonlib::Vector2& delta,
+                                         const GameObject* obj)
+{
+    NonpassthroughCollideChecker checker(obj, delta);
+    Region<int> area = getCollideArea(obj->collideRegion(), delta[0], delta[1]);
+
+    accessRegion(area, checker);
+
+    delta = checker.delta();
+
+    return checker.collide();
 }
 
 } // end of namespace botlib

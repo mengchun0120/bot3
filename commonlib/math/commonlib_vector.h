@@ -243,7 +243,8 @@ Vector<N> normalize(const Vector<N>& v)
 }
 
 template <std::size_t N>
-float dist(const Vector<N>& v1, const Vector<N>& v2)
+float dist(const Vector<N>& v1,
+           const Vector<N>& v2)
 {
     double sum = 0.0;
     for (std::size_t i = 0; i < N; ++i)
@@ -255,7 +256,8 @@ float dist(const Vector<N>& v1, const Vector<N>& v2)
 }
 
 template <std::size_t N>
-Vector<N> product(const Vector<N>& v1, const Vector<N>& v2)
+Vector<N> product(const Vector<N>& v1,
+                  const Vector<N>& v2)
 {
     Vector<N> r;
     for (std::size_t i = 0; i < N; ++i)
@@ -266,7 +268,8 @@ Vector<N> product(const Vector<N>& v1, const Vector<N>& v2)
 }
 
 template <std::size_t N>
-Vector<N> div(const Vector<N>& v1, const Vector<N>& v2)
+Vector<N> div(const Vector<N>& v1,
+              const Vector<N>& v2)
 {
     Vector<N> r;
     for (std::size_t i = 0; i < N; ++i)

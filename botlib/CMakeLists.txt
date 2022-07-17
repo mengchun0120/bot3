@@ -12,6 +12,13 @@ set(BOTLIB_ACCESSOR_SRC
     accessor/botlib_nonpassthrough_collide_checker.cpp
     accessor/botlib_passthrough_collide_checker.cpp)
 
+set(BOTLIB_AI_SRC
+    ai/botlib_ai.cpp
+    ai/botlib_ai_lib.cpp
+    ai/botlib_chase_shoot_ai.cpp
+    ai/botlib_chase_shoot_ai_param.cpp
+    ai/botlib_robot_action.cpp)
+
 set(BOTLIB_APP_SRC
     app/botlib_app_actions.cpp
     app/botlib_app_config.cpp
@@ -99,6 +106,7 @@ set(BOTLIB_WIDGET_SRC
 set(BOTLIB_SRC
     ${BOTLIB_ACCESSOR_SRC}
     ${BOTLIB_APP_SRC}
+    ${BOTLIB_AI_SRC}
     ${BOTLIB_GAMEOBJ_SRC}
     ${BOTLIB_GAMEUTILS_SRC}
     ${BOTLIB_MISC_SRC}

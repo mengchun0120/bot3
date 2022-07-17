@@ -28,6 +28,10 @@
             [1.0, 0.0]
         ],
         "dyingDuration": 1000.0,
-        "goodieProb": 1.0
+        "goodieProb": 1.0,
+        "ai": {
+            "algorithm": "chase_shoot",
+            "name": "balanced_shooter"
+        }
     }
 }

@@ -4,6 +4,7 @@ project(bot CXX)
 
 set(BOTLIB_DIR
     ${CMAKE_SOURCE_DIR}/botlib/accessor
+    ${CMAKE_SOURCE_DIR}/botlib/ai
     ${CMAKE_SOURCE_DIR}/botlib/app
     ${CMAKE_SOURCE_DIR}/botlib/gameobj
     ${CMAKE_SOURCE_DIR}/botlib/gameutils

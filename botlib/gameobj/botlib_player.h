@@ -34,10 +34,6 @@ public:
 protected:
     void initEffects();
 
-    void updatePos(GameMap& map,
-                   GameObjectDumper& dumper,
-                   float timeDelta) override;
-
     void updateGoodieEffects(float timeDelta);
 
     GoodieEffect* findGoodieEffect(GoodieType type);

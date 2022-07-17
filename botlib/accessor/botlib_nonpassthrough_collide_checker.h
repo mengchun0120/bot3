@@ -9,7 +9,7 @@ namespace botlib {
 
 class NonpassthroughCollideChecker: public GameMapAccessor {
 public:
-    NonpassthroughCollideChecker(GameObject* obj,
+    NonpassthroughCollideChecker(const GameObject* obj,
                                  commonlib::Vector2& delta1);
 
     inline bool collide() const;
@@ -19,7 +19,7 @@ public:
     bool run(GameObject* obj) override;
 
 private:
-    GameObject* obj_;
+    const GameObject* obj_;
     bool collide_;
     commonlib::Vector2 delta_;
 };

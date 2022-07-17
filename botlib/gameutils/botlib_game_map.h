@@ -95,6 +95,9 @@ public:
 
     inline bool canSee(const GameObject* obj) const;
 
+    bool checkCollision(commonlib::Vector2& delta,
+                        const GameObject* obj);
+
 private:
     void initObjDeleter();
 
@@ -117,6 +120,9 @@ private:
 
     rapidjson::Value cellsToJson(
                 rapidjson::Document::AllocatorType& allocator) const;
+
+    bool checkNonpassthroughCollide(commonlib::Vector2& delta,
+                                    const GameObject* obj);
 
 private:
     float maxObjSpan_;

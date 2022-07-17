@@ -5,20 +5,67 @@
         {
             "type": "player",
             "template": "player",
-            "pos": [140.0, 140.0],
+            "pos": [300.0, 400.0],
             "direction": [1.0, 0.0]
         },
         {
             "type": "robot",
             "template": "red_robot",
             "pos": [80.0, 80.0],
-            "direction": [0.707106781, 0.707106781],
-            "shootingEnabled": true
+            "direction": [0.707106781, 0.707106781]
         },
         {
-            "type": "goodie",
-            "template": "damage amplifier",
-            "pos": [80.0, 240.0],
+            "type": "robot",
+            "template": "red_robot",
+            "pos": [80.0, 200.0],
+            "direction": [0.707106781, 0.707106781]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [200.0, 200.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [240.0, 200.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [280.0, 200.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [320.0, 200.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [300.0, 300.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [340.0, 300.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [380.0, 400.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [420.0, 500.0],
             "direction": [1.0, 0.0]
         }
     ]

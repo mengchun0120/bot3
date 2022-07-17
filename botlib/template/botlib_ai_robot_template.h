@@ -18,13 +18,29 @@ public:
 
     inline float goodieProb() const;
 
+    inline const std::string& aiAlgorithm() const;
+
+    inline const std::string& aiName() const;
+
 private:
     float goodieProb_;
+    std::string aiAlgorithm_;
+    std::string aiName_;
 };
 
 float AIRobotTemplate::goodieProb() const
 {
     return goodieProb_;
+}
+
+const std::string& AIRobotTemplate::aiAlgorithm() const
+{
+    return aiAlgorithm_;
+}
+
+const std::string& AIRobotTemplate::aiName() const
+{
+    return aiName_;
 }
 
 } // end of namespace botlib

@@ -42,6 +42,7 @@
         "missileTemplateLibFile": "missile_template_lib.json",
         "aiRobotTemplateLibFile": "ai_robot_template_lib.json",
         "particleEffectTemplateLibFile": "particle_effect_template_lib.json",
+        "chaseShootAIParamLibFile": "chase_shoot_ai_param_lib.json",
         "playerTemplateFile": "player_template.json"
     },
     "game": {

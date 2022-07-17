@@ -21,6 +21,7 @@ void GameLib::load(const AppConfig& cfg)
     playerTemplate_.init(cfg.playerTemplateFile(),
                          missileTemplateLib_,
                          componentTemplateLib_);
+    aiLib_.init(cfg.chaseShootAIParamLibFile());
 
     calculateMaxObjSpan();
     calculateMaxCollideBreath();

@@ -77,6 +77,8 @@ public:
 
     inline const std::string& particleEffectTemplateLibFile() const;
 
+    inline const std::string& chaseShootAIParamLibFile() const;
+
     inline const std::string& playerTemplateFile() const;
 
     inline float mapPoolSizeFactor() const;
@@ -129,6 +131,7 @@ private:
     std::string goodieTemplateLibFile_;
     std::string aiRobotTemplateLibFile_;
     std::string particleEffectTemplateLibFile_;
+    std::string chaseShootAIParamLibFile_;
     std::string playerTemplateFile_;
     float mapPoolSizeFactor_;
     unsigned int timeDeltaHistoryLen_;
@@ -277,6 +280,11 @@ const std::string& AppConfig::aiRobotTemplateLibFile() const
 const std::string& AppConfig::particleEffectTemplateLibFile() const
 {
     return particleEffectTemplateLibFile_;
+}
+
+const std::string& AppConfig::chaseShootAIParamLibFile() const
+{
+    return chaseShootAIParamLibFile_;
 }
 
 const std::string& AppConfig::playerTemplateFile() const

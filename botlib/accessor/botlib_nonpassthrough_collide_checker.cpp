@@ -10,8 +10,8 @@ namespace botlib {
 
 namespace {
 
-bool check(GameObject* obj,
-           GameObject* thisObj)
+bool check(const GameObject* obj,
+           const GameObject* thisObj)
 {
     return obj != thisObj &&
            obj->state() == GameObjectState::ALIVE &&
@@ -21,7 +21,7 @@ bool check(GameObject* obj,
 
 } // end of unnamed namespace
 
-NonpassthroughCollideChecker::NonpassthroughCollideChecker(GameObject* obj,
+NonpassthroughCollideChecker::NonpassthroughCollideChecker(const GameObject* obj,
                                                            Vector2& delta1)
     : obj_(obj)
     , collide_(false)

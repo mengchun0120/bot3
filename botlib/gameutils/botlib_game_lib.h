@@ -11,6 +11,7 @@
 #include <botlib_ai_robot_template.h>
 #include <botlib_particle_effect_template.h>
 #include <botlib_player_template.h>
+#include <botlib_ai_lib.h>
 #include <botlib_typedef.h>
 
 namespace mcdane {
@@ -50,6 +51,8 @@ public:
 
     inline const PlayerTemplate& playerTemplate() const;
 
+    inline const AILib& aiLib() const;
+
     inline float maxObjSpan() const;
 
     inline float maxCollideBreath() const;
@@ -88,6 +91,7 @@ private:
     AIRobotTemplateLib aiRobotTemplateLib_;
     ParticleEffectTemplateLib particleEffectTemplateLib_;
     PlayerTemplate playerTemplate_;
+    AILib aiLib_;
     float maxObjSpan_;
     float maxCollideBreath_;
 };
@@ -144,6 +148,11 @@ const ParticleEffectTemplate* GameLib::findParticleEffectTemplate(
 const PlayerTemplate& GameLib::playerTemplate() const
 {
     return playerTemplate_;
+}
+
+const AILib& GameLib::aiLib() const
+{
+    return aiLib_;
 }
 
 float GameLib::maxObjSpan() const

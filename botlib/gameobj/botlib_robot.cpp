@@ -3,7 +3,6 @@
 #include <commonlib_collide.h>
 #include <commonlib_string_utils.h>
 #include <botlib_game_map.h>
-#include <botlib_nonpassthrough_collide_checker.h>
 #include <botlib_passthrough_collide_checker.h>
 #include <botlib_missile.h>
 #include <botlib_game_object_dumper.h>
@@ -19,7 +18,6 @@ Robot::Robot()
     , energy_(0.0f)
     , movingEnabled_(false)
     , shootingEnabled_(false)
-    , lastShootTime_(Clock::now())
 {
 }
 
@@ -39,7 +37,10 @@ void Robot::init(const RobotTemplate* t,
     damageFactor_ = 1.0f;
     resetSpeed();
     hpIndicator_.reset(pos(), hpRatio());
+    timeSinceLastShoot_ = 0.0f;
     dyingTime_ = 0.0f;
+    movingEnabled_ = false;
+    shootingEnabled_ = false;
 }
 
 void Robot::present() const
@@ -54,12 +55,14 @@ void Robot::update(GameMap& map,
 {
     if (state_ == GameObjectState::ALIVE)
     {
+        timeSinceLastShoot_ += timeDelta;
+
         if (movingEnabled_)
         {
             updatePos(map, dumper, timeDelta);
         }
 
-        if (shootingEnabled_)
+        if (state_ == GameObjectState::ALIVE && shootingEnabled_)
         {
             updateShooting(map, dumper);
         }
@@ -236,17 +239,7 @@ void Robot::updatePos(GameMap& map,
                       float timeDelta)
 {
     Vector2 delta = speed_ * timeDelta;
-
-    bool collideBoundary = checkRectCollideBoundary(delta,
-                                                    collideRegion(),
-                                                    map.boundary(),
-                                                    delta);
-
-    bool collideObjs = checkNonpassthroughCollide(delta, map);
-    if (collideBoundary || collideObjs)
-    {
-        setMovingEnabled(false);
-    }
+    map.checkCollision(delta, this);
 
     shiftPos(delta);
     map.repositionObj(this);
@@ -254,17 +247,15 @@ void Robot::updatePos(GameMap& map,
     checkPassthroughCollide(map, dumper);
 }
 
-bool Robot::checkNonpassthroughCollide(Vector2& delta,
-                                       GameMap& map)
+void Robot::updateShooting(GameMap& map,
+                           GameObjectDumper& dumper)
 {
-    NonpassthroughCollideChecker checker(this, delta);
-    Region<int> area = map.getCollideArea(collideRegion(), delta[0], delta[1]);
+    if (timeSinceLastShoot_ < fireIntervalMS())
+    {
+        return;
+    }
 
-    map.accessRegion(area, checker);
-
-    delta = checker.delta();
-
-    return checker.collide();
+    shoot(map, dumper);
 }
 
 void Robot::checkPassthroughCollide(GameMap& map,
@@ -275,22 +266,8 @@ void Robot::checkPassthroughCollide(GameMap& map,
     map.accessRegion(r, checker);
 }
 
-void Robot::updateShooting(GameMap& map,
-                           GameObjectDumper& dumper)
-{
-    TimePoint thisTime = Clock::now();
-
-    if (timeDistMs(lastShootTime_, thisTime) < fireIntervalMS())
-    {
-        return;
-    }
-
-    shoot(map, dumper, thisTime);
-}
-
 void Robot::shoot(GameMap& map,
-                  GameObjectDumper& dumper,
-                  const TimePoint& t)
+                  GameObjectDumper& dumper)
 {
     for (unsigned int i = 0; i < firePoints_.size(); ++i)
     {
@@ -304,7 +281,7 @@ void Robot::shoot(GameMap& map,
         map.addObj(missile);
     }
 
-    lastShootTime_ = t;
+    timeSinceLastShoot_ = 0.0f;
 }
 
 } // end of namespace botlib

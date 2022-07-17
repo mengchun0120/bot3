@@ -1,5 +1,5 @@
-#include <sstream>
 #include <commonlib_log.h>
+#include <botlib_ai.h>
 #include <botlib_ai_robot.h>
 
 using namespace mcdane::commonlib;
@@ -7,24 +7,35 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+AIRobot::AIRobot()
+    : ai_(nullptr)
+{
+}
+
+AIRobot::~AIRobot()
+{
+    delete ai_;
+}
+
 void AIRobot::init(const AIRobotTemplate* t,
                    const Vector2& pos1,
                    const Vector2& direction1)
 {
+    ai_ = AI::create(t->aiAlgorithm(), t->aiName());
+
     Robot::init(t, Side::AI, pos1, direction1);
 }
 
-rapidjson::Value AIRobot::toJson(
-                rapidjson::Document::AllocatorType& allocator) const
+void AIRobot::update(GameMap& map,
+                     GameObjectDumper& dumper,
+                     float timeDelta)
 {
-    using namespace rapidjson;
+    if (ai_ && state() == GameObjectState::ALIVE)
+    {
+        ai_->apply(*this, map, timeDelta);
+    }
 
-    Value v(kObjectType);
-
-    v.AddMember("class", "AIRobot", allocator);
-    v.AddMember("base", Robot::toJson(allocator), allocator);
-
-    return v;
+    Robot::update(map, dumper, timeDelta);
 }
 
 } // end of namespace botlib

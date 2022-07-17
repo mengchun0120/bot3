@@ -48,13 +48,6 @@ void Player::initEffects()
     );
 }
 
-void Player::updatePos(GameMap& map,
-                       GameObjectDumper& dumper,
-                       float timeDelta)
-{
-    Robot::updatePos(map, dumper, timeDelta);
-}
-
 void Player::addGoodieEffect(const GoodieTemplate* t)
 {
     GoodieEffect* e = findGoodieEffect(t->goodieType());

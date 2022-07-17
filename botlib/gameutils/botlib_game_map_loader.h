@@ -54,8 +54,6 @@ private:
     std::string templateStr_;
     commonlib::Vector2 pos_;
     commonlib::Vector2 direction_;
-    bool movingEnabled_;
-    bool shootingEnabled_;
     std::string sideStr_;
     std::vector<commonlib::JsonParamPtr> commonParams_;
     std::vector<commonlib::JsonParamPtr> tileParams_;

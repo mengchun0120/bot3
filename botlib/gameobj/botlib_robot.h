@@ -85,22 +85,19 @@ protected:
 
     void resetFirePointsAndDirections();
 
-    virtual void updatePos(GameMap& map,
-                           GameObjectDumper& dumper,
-                           float timeDelta);
+    void updatePos(GameMap& map,
+                   GameObjectDumper& dumper,
+                   float timeDelta);
 
-    bool checkNonpassthroughCollide(commonlib::Vector2& delta,
-                                    GameMap& map);
+    void updateShooting(GameMap& map,
+                        GameObjectDumper& dumper);
+
 
     void checkPassthroughCollide(GameMap& map,
                                  GameObjectDumper& dumper);
 
-    virtual void updateShooting(GameMap& map,
-                                GameObjectDumper& dumper);
-
     void shoot(GameMap& map,
-               GameObjectDumper& dumper,
-               const commonlib::TimePoint& t);
+               GameObjectDumper& dumper);
 
 protected:
     Side side_;
@@ -112,7 +109,7 @@ protected:
     commonlib::Vector2 speed_;
     HPIndicator hpIndicator_;
     bool shootingEnabled_;
-    commonlib::TimePoint lastShootTime_;
+    float timeSinceLastShoot_;
     float dyingTime_;
     float fireIntervalMS_;
     float speedNorm_;
