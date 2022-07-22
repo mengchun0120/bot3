@@ -89,6 +89,7 @@ set(BOTLIB_TEMPLATE_SRC
     template/botlib_missile_template.cpp
     template/botlib_particle_effect_template.cpp
     template/botlib_player_template.cpp
+    template/botlib_progress_pie_template.cpp
     template/botlib_robot_template.cpp
     template/botlib_tile_template.cpp)
 

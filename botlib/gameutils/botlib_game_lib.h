@@ -11,6 +11,7 @@
 #include <botlib_missile_template.h>
 #include <botlib_ai_robot_template.h>
 #include <botlib_particle_effect_template.h>
+#include <botlib_progress_pie_template.h>
 #include <botlib_player_template.h>
 #include <botlib_ai_lib.h>
 #include <botlib_typedef.h>
@@ -52,6 +53,9 @@ public:
     inline const ParticleEffectTemplate* findParticleEffectTemplate(
                                             const std::string& name) const;
 
+    inline const ProgressPieTemplate* findProgressPieTemplate(
+                                            const std::string& name) const;
+
     inline const PlayerTemplate& playerTemplate() const;
 
     inline const AILib& aiLib() const;
@@ -79,6 +83,8 @@ private:
         const std::string& particleEffectTemplateLibFile,
         const std::string& dataDir);
 
+    void initProgressPieTemplateLib(const std::string& progressPieTemplateLibFile);
+
     void initMissileTemplateLib(const std::string& missileTemplateLibFile);
 
     void initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile);
@@ -97,6 +103,7 @@ private:
     MissileTemplateLib missileTemplateLib_;
     AIRobotTemplateLib aiRobotTemplateLib_;
     ParticleEffectTemplateLib particleEffectTemplateLib_;
+    ProgressPieTemplateLib progressPieTemplateLib_;
     PlayerTemplate playerTemplate_;
     AILib aiLib_;
     float maxObjSpan_;
@@ -155,6 +162,12 @@ const ParticleEffectTemplate* GameLib::findParticleEffectTemplate(
                                         const std::string& name) const
 {
     return particleEffectTemplateLib_.search(name);
+}
+
+const ProgressPieTemplate* GameLib::findProgressPieTemplate(
+                                            const std::string& name) const
+{
+    return progressPieTemplateLib_.search(name);
 }
 
 const PlayerTemplate& GameLib::playerTemplate() const

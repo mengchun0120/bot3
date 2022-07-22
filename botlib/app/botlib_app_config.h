@@ -85,6 +85,8 @@ public:
 
     inline const std::string& chaseShootAIParamLibFile() const;
 
+    inline const std::string& progressPieTemplateLibFile() const;
+
     inline const std::string& playerTemplateFile() const;
 
     inline float mapPoolSizeFactor() const;
@@ -141,6 +143,7 @@ private:
     std::string particleEffectTemplateLibFile_;
     std::string particleEffectDataDir_;
     std::string chaseShootAIParamLibFile_;
+    std::string progressPieTemplateLibFile_;
     std::string playerTemplateFile_;
     float mapPoolSizeFactor_;
     unsigned int timeDeltaHistoryLen_;
@@ -309,6 +312,11 @@ const std::string& AppConfig::particleEffectDataDir() const
 const std::string& AppConfig::chaseShootAIParamLibFile() const
 {
     return chaseShootAIParamLibFile_;
+}
+
+const std::string& AppConfig::progressPieTemplateLibFile() const
+{
+    return progressPieTemplateLibFile_;
 }
 
 const std::string& AppConfig::playerTemplateFile() const
