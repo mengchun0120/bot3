@@ -63,6 +63,10 @@ public:
 
     inline const std::string& textureLibFile() const;
 
+    inline const std::string& vertexArrayLibFile() const;
+
+    inline const std::string& vertexArrayDataDir() const;
+
     inline const std::string& rectLibFile() const;
 
     inline const std::string& componentTemplateLibFile() const;
@@ -76,6 +80,8 @@ public:
     inline const std::string& aiRobotTemplateLibFile() const;
 
     inline const std::string& particleEffectTemplateLibFile() const;
+
+    inline const std::string& particleEffectDataDir() const;
 
     inline const std::string& chaseShootAIParamLibFile() const;
 
@@ -124,6 +130,8 @@ private:
     std::string gameScreenConfigFile_;
     std::string hpIndicatorConfigFile_;
     std::string textureLibFile_;
+    std::string vertexArrayLibFile_;
+    std::string vertexArrayDataDir_;
     std::string rectLibFile_;
     std::string componentTemplateLibFile_;
     std::string tileTemplateLibFile_;
@@ -131,6 +139,7 @@ private:
     std::string goodieTemplateLibFile_;
     std::string aiRobotTemplateLibFile_;
     std::string particleEffectTemplateLibFile_;
+    std::string particleEffectDataDir_;
     std::string chaseShootAIParamLibFile_;
     std::string playerTemplateFile_;
     float mapPoolSizeFactor_;
@@ -247,6 +256,16 @@ const std::string& AppConfig::textureLibFile() const
     return textureLibFile_;
 }
 
+const std::string& AppConfig::vertexArrayLibFile() const
+{
+    return vertexArrayLibFile_;
+}
+
+const std::string& AppConfig::vertexArrayDataDir() const
+{
+    return vertexArrayDataDir_;
+}
+
 const std::string& AppConfig::rectLibFile() const
 {
     return rectLibFile_;
@@ -280,6 +299,11 @@ const std::string& AppConfig::aiRobotTemplateLibFile() const
 const std::string& AppConfig::particleEffectTemplateLibFile() const
 {
     return particleEffectTemplateLibFile_;
+}
+
+const std::string& AppConfig::particleEffectDataDir() const
+{
+    return particleEffectDataDir_;
 }
 
 const std::string& AppConfig::chaseShootAIParamLibFile() const

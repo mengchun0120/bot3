@@ -1,5 +1,8 @@
 #include <commonlib_log.h>
+#include <commonlib_json_param.h>
+#include <commonlib_file_utils.h>
 #include <botlib_app_config.h>
+#include <botlib_constants.h>
 #include <botlib_game_lib.h>
 
 using namespace mcdane::commonlib;
@@ -7,15 +10,53 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+namespace {
+
+void initVertexArray(VertexArray& va,
+                     const rapidjson::Value& v,
+                     const std::string& dataDir)
+{
+    std::vector<std::string> files;
+    std::vector<JsonParamPtr> params{
+        jsonParam(files, "data_files")
+    };
+
+    parse(params, v);
+
+    if (files.empty())
+    {
+        THROW_EXCEPT(ParseException, "Empty data for VertexArray");
+    }
+
+    std::vector<std::vector<Vector2>> data;
+    std::vector<BufferBlock> blocks;
+
+    data.resize(files.size());
+    blocks.resize(files.size());
+    for (unsigned int i = 0; i < files.size(); ++i)
+    {
+        readList(data[i], constructPath({dataDir, files[i]}));
+        blocks[i].data_ = data[i].data();
+        blocks[i].numVertices_ = data[i].size();
+        blocks[i].vertexSize_ = Constants::POS_SIZE;
+        blocks[i].stride_ = 0;
+    }
+
+    va.load(blocks.begin(), blocks.end());
+}
+
+} // end of unnamed namespace
+
 void GameLib::load(const AppConfig& cfg)
 {
     initTextureLib(cfg.textureLibFile(), cfg.picDir());
+    initVertexArrayLib(cfg.vertexArrayLibFile(), cfg.vertexArrayDataDir());
     initRectLib(cfg.rectLibFile());
     initComponentTemplateLib(cfg.componentTemplateLibFile());
     initTileTemplateLib(cfg.tileTemplateLibFile());
     initGoodieTemplateLib(cfg.goodieTemplateLibFile());
     initParticleEffectTemplateLib(cfg.particleEffectTemplateLibFile(),
-                                  cfg.libDir());
+                                  cfg.particleEffectDataDir());
     initMissileTemplateLib(cfg.missileTemplateLibFile());
     initAIRobotTemplateLib(cfg.aiRobotTemplateLibFile());
     playerTemplate_.init(cfg.playerTemplateFile(),
@@ -46,6 +87,21 @@ void GameLib::initTextureLib(const std::string& textureLibFile,
     textureLib_.init(textureLibFile, parser);
 
     LOG_DEBUG << "textureLib loaded successfully" << LOG_END;
+}
+
+void GameLib::initVertexArrayLib(const std::string& vertexArrayLibFile,
+                                 const std::string& dataDir)
+{
+    auto parser = [&](VertexArray& va,
+                      const std::string& name,
+                      const rapidjson::Value& v)
+    {
+        initVertexArray(va, v, dataDir);
+    };
+
+    vertexArrayLib_.init(vertexArrayLibFile, parser);
+
+    LOG_DEBUG << "vertexArrayLib loaded successfully" << LOG_END;
 }
 
 void GameLib::initRectLib(const std::string& rectLibFile)
@@ -108,13 +164,13 @@ void GameLib::initGoodieTemplateLib(const std::string& goodieTemplateLibFile)
 
 void GameLib::initParticleEffectTemplateLib(
     const std::string& particleEffectTemplateLibFile,
-    const std::string& libDir)
+    const std::string& dataDir)
 {
     auto parser = [&](ParticleEffectTemplate& t,
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        t.init(v, textureLib_, libDir);
+        t.init(v, textureLib_, dataDir);
     };
 
     particleEffectTemplateLib_.init(particleEffectTemplateLibFile, parser);

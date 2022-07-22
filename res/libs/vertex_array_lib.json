@@ -1,0 +1,5 @@
+{
+    "progress_pie": {
+        "data_files": ["progress_pie_pos.txt"]
+    }
+}

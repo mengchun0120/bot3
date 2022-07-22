@@ -80,11 +80,11 @@ void ParticleEffectTemplate::loadVertexData(
                                 const std::string& startPosFile,
                                 const std::string& directionFile,
                                 const std::string& initSpeedFile,
-                                const std::string& libDir)
+                                const std::string& dataDir)
 {
-    readList(startPos, constructPath({libDir, startPosFile}));
-    readList(direction, constructPath({libDir, directionFile}));
-    readList(initSpeed, constructPath({libDir, initSpeedFile}));
+    readList(startPos, constructPath({dataDir, startPosFile}));
+    readList(direction, constructPath({dataDir, directionFile}));
+    readList(initSpeed, constructPath({dataDir, initSpeedFile}));
 
     if (startPos.empty())
     {

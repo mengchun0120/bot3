@@ -155,6 +155,10 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
     std::vector<JsonParamPtr> params{
         jsonParam(textureLibFile_, {"libraries", "textureLibFile"},
                   true, k_nonEmptyStrV),
+        jsonParam(vertexArrayLibFile_, {"libraries", "vertexArrayLibFile"},
+                  true, k_nonEmptyStrV),
+        jsonParam(vertexArrayDataDir_, {"libraries", "vertexArrayDataDir"},
+                  true, k_nonEmptyStrV),
         jsonParam(rectLibFile_, {"libraries", "rectLibFile"},
                   true, k_nonEmptyStrV),
         jsonParam(componentTemplateLibFile_,
@@ -171,6 +175,8 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
         jsonParam(particleEffectTemplateLibFile_,
                   {"libraries", "particleEffectTemplateLibFile"},
                   true, k_nonEmptyStrV),
+        jsonParam(particleEffectDataDir_, {"libraries", "particleEffectDataDir"},
+                  true, k_nonEmptyStrV),
         jsonParam(chaseShootAIParamLibFile_,
                   {"libraries", "chaseShootAIParamLibFile"},
                   true, k_nonEmptyStrV),
@@ -181,6 +187,8 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
     parse(params, doc);
 
     textureLibFile_ = constructPath({libDir_, textureLibFile_});
+    vertexArrayLibFile_ = constructPath({libDir_, vertexArrayLibFile_});
+    vertexArrayDataDir_ = constructPath({libDir_, vertexArrayDataDir_});
     rectLibFile_ = constructPath({libDir_, rectLibFile_});
     componentTemplateLibFile_ = constructPath({libDir_, componentTemplateLibFile_});
     tileTemplateLibFile_ = constructPath({libDir_, tileTemplateLibFile_});
@@ -189,6 +197,7 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
     aiRobotTemplateLibFile_ = constructPath({libDir_, aiRobotTemplateLibFile_});
     particleEffectTemplateLibFile_ = constructPath(
                                      {libDir_, particleEffectTemplateLibFile_});
+    particleEffectDataDir_ = constructPath({libDir_, particleEffectDataDir_});
     chaseShootAIParamLibFile_ = constructPath({libDir_, chaseShootAIParamLibFile_});
     playerTemplateFile_ = constructPath({libDir_, playerTemplateFile_});
 }

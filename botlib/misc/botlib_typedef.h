@@ -11,6 +11,7 @@ template <typename T>
 class LinkedList;
 
 class Texture;
+class VertexArray;
 
 } // end of namespace commonlib
 } // end of namespace mcdane
@@ -28,6 +29,7 @@ class AIRobotTemplate;
 class ParticleEffectTemplate;
 
 using TextureLib = commonlib::NamedMap<commonlib::Texture>;
+using VertexArrayLib = commonlib::NamedMap<commonlib::VertexArray>;
 using RectLib = commonlib::NamedMap<Rectangle>;
 using ComponentTemplateLib = commonlib::NamedMap<ComponentTemplate>;
 using TileTemplateLib = commonlib::NamedMap<TileTemplate>;
@@ -36,6 +38,7 @@ using MissileTemplateLib = commonlib::NamedMap<MissileTemplate>;
 using AIRobotTemplateLib = commonlib::NamedMap<AIRobotTemplate>;
 using ParticleEffectTemplateLib = commonlib::NamedMap<ParticleEffectTemplate>;
 using GameObjectList = commonlib::LinkedList<GameObject>;
+
 
 } // end of namespace botlib
 } // end of namespace mcdane

@@ -3,6 +3,7 @@
 
 #include <commonlib_named_map.h>
 #include <commonlib_texture.h>
+#include <commonlib_vertex_array.h>
 #include <botlib_rectangle.h>
 #include <botlib_component_template.h>
 #include <botlib_tile_template.h>
@@ -28,6 +29,8 @@ public:
     void load(const AppConfig& cfg);
 
     inline const commonlib::Texture* findTexture(const std::string& name) const;
+
+    inline const commonlib::VertexArray* findVertexArray(const std::string& name) const;
 
     inline const Rectangle* findRect(const std::string& name) const;
 
@@ -61,6 +64,9 @@ private:
     void initTextureLib(const std::string& textureLibFile,
                         const std::string& picDir);
 
+    void initVertexArrayLib(const std::string& vertexArrayLibFile,
+                            const std::string& dataDir);
+
     void initRectLib(const std::string& rectLibFile);
 
     void initComponentTemplateLib(const std::string& componentTemplateLibFile);
@@ -71,7 +77,7 @@ private:
 
     void initParticleEffectTemplateLib(
         const std::string& particleEffectTemplateLibFile,
-        const std::string& libDir);
+        const std::string& dataDir);
 
     void initMissileTemplateLib(const std::string& missileTemplateLibFile);
 
@@ -83,6 +89,7 @@ private:
 
 private:
     TextureLib textureLib_;
+    VertexArrayLib vertexArrayLib_;
     RectLib rectLib_;
     ComponentTemplateLib componentTemplateLib_;
     TileTemplateLib tileTemplateLib_;
@@ -99,6 +106,11 @@ private:
 const commonlib::Texture* GameLib::findTexture(const std::string& name) const
 {
     return textureLib_.search(name);
+}
+
+const commonlib::VertexArray* GameLib::findVertexArray(const std::string& name) const
+{
+    return vertexArrayLib_.search(name);
 }
 
 const Rectangle* GameLib::findRect(const std::string& name) const

@@ -27,7 +27,7 @@ public:
 
     void init(const rapidjson::Value& v,
               const TextureLib& textureLib,
-              const std::string& libDir);
+              const std::string& dataDir);
 
     inline int numParticles() const;
 
