@@ -39,6 +39,7 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_missile.cpp
     gameobj/botlib_particle_effect.cpp
     gameobj/botlib_player.cpp
+    gameobj/botlib_progress_pie.cpp
     gameobj/botlib_robot.cpp
     gameobj/botlib_side.cpp
     gameobj/botlib_tile.cpp)

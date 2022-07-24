@@ -28,6 +28,14 @@ void ProgressPieTemplate::init(const rapidjson::Value& v,
         THROW_EXCEPT(ParseException,
                      "Failed to find VertexArray " + vertexArrayName);
     }
+
+    if (va_->numVertices(0) % 3 != 0)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Number of vertices must be multiples of 3");
+    }
+
+    numTriangles_ = va_->numVertices(0) / 3;
 }
 
 } // end of namespace botlib

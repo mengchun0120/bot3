@@ -1,6 +1,20 @@
 import click
 import math
 
+start_angle = click.option("-s",
+                           "--start-angle",
+                           default=0.0,
+                           type=float,
+                           required=True,
+                           help="Start angle")
+
+clockwise = click.option("-c",
+                         "--clockwise",
+                         default=False,
+                         type=bool,
+                         required=True,
+                         help="Generate circle clockwise or not")
+
 radius = click.option("-r",
                       "--radius",
                       default=1.0,
@@ -37,15 +51,24 @@ def validate_params(radius, num_edges):
         print("num_edges must be greater than 3")
         exit(1)
 
-def gen_data(radius, num_edges, has_texture):
+def gen_data(start_angle, clockwise, radius, num_edges, has_texture):
     positions = []
     texture_coords = []
+
     delta = 2.0 * math.pi / num_edges
-    theta = delta
-    prev_x = 1.0
-    prev_y = 0.0
-    prev_tex_x = 1.0
-    prev_tex_y = 0.5
+    if clockwise:
+        delta = -delta
+
+    theta = start_angle * math.pi / 180.0
+    cos_theta = math.cos(theta)
+    sin_theta = math.sin(theta)
+
+    prev_x = radius * cos_theta
+    prev_y = radius * sin_theta
+    prev_tex_x = 0.5 + 0.5 * cos_theta
+    prev_tex_y = 0.5 + 0.5 * sin_theta
+
+    theta += delta
 
     for _ in range(num_edges):
         cos_theta = math.cos(theta)
@@ -87,13 +110,16 @@ def write_data(prefix, positions, texture_coords):
                 f.write(f"{coord[0]} {coord[1]}\n")
 
 @click.command()
+@start_angle
+@clockwise
 @radius
 @num_edges
 @has_texture
 @prefix
-def gen_circle(radius, num_edges, has_texture, prefix):
+def gen_circle(start_angle, clockwise, radius, num_edges, has_texture, prefix):
     validate_params(radius, num_edges)
-    positions, texture_coords = gen_data(radius, num_edges, has_texture)
+    positions, texture_coords = gen_data(start_angle, clockwise,
+                                         radius, num_edges, has_texture)
     write_data(prefix, positions, texture_coords)
 
 if __name__ == "__main__":

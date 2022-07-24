@@ -30,11 +30,14 @@ public:
 
     inline float alpha() const;
 
+    inline int numTriangles() const;
+
 private:
     const commonlib::VertexArray* va_;
     commonlib::Color backgroundColor_;
     commonlib::Color frontColor_;
     float alpha_;
+    int numTriangles_;
 };
 
 const commonlib::VertexArray* ProgressPieTemplate::va() const
@@ -55,6 +58,11 @@ const commonlib::Color& ProgressPieTemplate::frontColor() const
 float ProgressPieTemplate::alpha() const
 {
     return alpha_;
+}
+
+int ProgressPieTemplate::numTriangles() const
+{
+    return numTriangles_;
 }
 
 } // end of namespace botlib
