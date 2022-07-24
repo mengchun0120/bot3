@@ -23,7 +23,8 @@
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
-        ]
+        ],
+        "progressPie": "armor_enhancer_progress_pie"
     },
     "damage amplifier": {
         "duration": 30000.0,
@@ -36,7 +37,8 @@
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
-        ]
+        ],
+        "progressPie": "damage_amplifier_progress_pie"
     },
     "attack accelerator": {
         "duration": 30000.0,
@@ -49,7 +51,8 @@
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
-        ]
+        ],
+        "progressPie": "attack_accelerator_progress_pie"
     },
     "speed accelerator": {
         "duration": 30000.0,
@@ -62,6 +65,7 @@
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
-        ]
+        ],
+        "progressPie": "speed_accelerator_progress_pie"
     }
 }

@@ -1,6 +1,7 @@
 #include <commonlib_exception.h>
-#include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
+#include <commonlib_named_map.h>
+#include <botlib_progress_pie_template.h>
 #include <botlib_goodie_template.h>
 
 using namespace mcdane::commonlib;
@@ -10,7 +11,8 @@ namespace botlib {
 
 void GoodieTemplate::init(GoodieType goodieType1,
                           const rapidjson::Value& v,
-                          const ComponentTemplateLib& componentTemplateLib)
+                          const ComponentTemplateLib& componentTemplateLib,
+                          const ProgressPieTemplateLib& progressPieTemplateLib)
 {
     if (!isValid(goodieType1))
     {
@@ -19,13 +21,29 @@ void GoodieTemplate::init(GoodieType goodieType1,
 
     goodieType_ = goodieType1;
 
+    std::string pieName;
     std::vector<JsonParamPtr> params{
         jsonParam(duration_, {"duration"}, true, ge(0.0f)),
         jsonParam(weight_, {"weight"}, true, gt(0.0f)),
-        jsonParam(factor_, {"factor"}, false)
+        jsonParam(factor_, {"factor"}, false),
+        jsonParam(pieName, {"progressPie"}, false)
     };
 
     parse(params, v);
+
+    if (!pieName.empty())
+    {
+        progressPieTemplate_ = progressPieTemplateLib.search(pieName);
+        if (!progressPieTemplate_)
+        {
+            THROW_EXCEPT(InvalidArgumentException,
+                         "Failed to find progressPieTemplate: " + pieName);
+        }
+    }
+    else
+    {
+        progressPieTemplate_ = nullptr;
+    }
 
     CompositeObjectTemplate::init(GameObjectType::GOODIE, v, componentTemplateLib);
 

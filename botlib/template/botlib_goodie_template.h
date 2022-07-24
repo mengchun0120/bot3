@@ -21,7 +21,8 @@ public:
 
     void init(GoodieType goodieType1,
               const rapidjson::Value& v,
-              const ComponentTemplateLib& componentTemplateLib);
+              const ComponentTemplateLib& componentTemplateLib,
+              const ProgressPieTemplateLib& progressPieTemplateLib);
 
     inline GoodieType goodieType() const;
 
@@ -35,6 +36,8 @@ public:
 
     inline const DeactivateGoodieAction& deactivateAction() const;
 
+    inline const ProgressPieTemplate* progressPieTemplate() const;
+
 private:
     void initActions();
 
@@ -45,6 +48,7 @@ private:
     float factor_;
     ActivateGoodieAction activateAction_;
     DeactivateGoodieAction deactivateAction_;
+    const ProgressPieTemplate* progressPieTemplate_;
 };
 
 GoodieType GoodieTemplate::goodieType() const
@@ -75,6 +79,11 @@ const ActivateGoodieAction& GoodieTemplate::activateAction() const
 const DeactivateGoodieAction& GoodieTemplate::deactivateAction() const
 {
     return deactivateAction_;
+}
+
+const ProgressPieTemplate* GoodieTemplate::progressPieTemplate() const
+{
+    return progressPieTemplate_;
 }
 
 } // end of namespace botlib

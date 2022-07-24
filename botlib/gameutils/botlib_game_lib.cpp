@@ -54,10 +54,10 @@ void GameLib::load(const AppConfig& cfg)
     initRectLib(cfg.rectLibFile());
     initComponentTemplateLib(cfg.componentTemplateLibFile());
     initTileTemplateLib(cfg.tileTemplateLibFile());
-    initGoodieTemplateLib(cfg.goodieTemplateLibFile());
     initParticleEffectTemplateLib(cfg.particleEffectTemplateLibFile(),
                                   cfg.particleEffectDataDir());
     initProgressPieTemplateLib(cfg.progressPieTemplateLibFile());
+    initGoodieTemplateLib(cfg.goodieTemplateLibFile());
     initMissileTemplateLib(cfg.missileTemplateLibFile());
     initAIRobotTemplateLib(cfg.aiRobotTemplateLibFile());
     playerTemplate_.init(cfg.playerTemplateFile(),
@@ -155,7 +155,7 @@ void GameLib::initGoodieTemplateLib(const std::string& goodieTemplateLibFile)
                       const rapidjson::Value& v)
     {
         GoodieType type = toGoodieType(name);
-        t.init(type, v, componentTemplateLib_);
+        t.init(type, v, componentTemplateLib_, progressPieTemplateLib_);
     };
 
     goodieTemplateLib_.init(goodieTemplateLibFile, parser);

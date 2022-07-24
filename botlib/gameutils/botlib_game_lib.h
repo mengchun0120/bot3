@@ -77,13 +77,13 @@ private:
 
     void initTileTemplateLib(const std::string& tileTemplateLibFile);
 
-    void initGoodieTemplateLib(const std::string& goodieTemplateLibFile);
-
     void initParticleEffectTemplateLib(
         const std::string& particleEffectTemplateLibFile,
         const std::string& dataDir);
 
     void initProgressPieTemplateLib(const std::string& progressPieTemplateLibFile);
+
+    void initGoodieTemplateLib(const std::string& goodieTemplateLibFile);
 
     void initMissileTemplateLib(const std::string& missileTemplateLibFile);
 
@@ -99,11 +99,11 @@ private:
     RectLib rectLib_;
     ComponentTemplateLib componentTemplateLib_;
     TileTemplateLib tileTemplateLib_;
-    GoodieTemplateLib goodieTemplateLib_;
     MissileTemplateLib missileTemplateLib_;
     AIRobotTemplateLib aiRobotTemplateLib_;
     ParticleEffectTemplateLib particleEffectTemplateLib_;
     ProgressPieTemplateLib progressPieTemplateLib_;
+    GoodieTemplateLib goodieTemplateLib_;
     PlayerTemplate playerTemplate_;
     AILib aiLib_;
     float maxObjSpan_;
