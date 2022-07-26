@@ -282,7 +282,10 @@ void GameMapLoader::addPlayer(GameMap& map,
     parse(robotParams_, v);
 
     Player* player = new Player();
-    player->init(&t, pos_, direction_);
+    float goodieY, goodieStartX, goodieSpacing;
+
+    calculatePlayerGoodiePos(goodieY, goodieStartX, goodieSpacing);
+    player->init(&t, pos_, direction_, goodieY, goodieStartX, goodieSpacing);
 
     map.addObj(player);
 }
@@ -303,6 +306,24 @@ bool GameMapLoader::checkCollide(GameMap& map,
     map.accessRegion(area, checker);
 
     return checker.collide();
+}
+
+void GameMapLoader::calculatePlayerGoodiePos(float& goodieY,
+                                             float& goodieStartX,
+                                             float& goodieSpacing)
+{
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    const GameLib& lib = Context::gameLib();
+    int goodieCount = lastingGoodieTypeCount();
+    float radius = lib.maxProgressPieRadius();
+
+    goodieY = viewportHeight_ - cfg.goodieTopMargin() - radius;
+
+    goodieStartX = viewportWidth_ - cfg.goodieRightMargin() -
+                   (goodieCount - 1) * cfg.goodieSpacing() -
+                   (2*goodieCount - 1) * radius;
+
+    goodieSpacing = 2 * radius + cfg.goodieSpacing();
 }
 
 } // end of namespace botlib

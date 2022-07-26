@@ -243,7 +243,7 @@ T* LinkedList<T>::unlinkFront()
 
     if (first_ != last_)
     {
-        first_ = first_->next();
+        first_ = static_cast<T*>(first_->next());
         first_->setPrev(nullptr);
     }
     else
@@ -270,7 +270,7 @@ T* LinkedList<T>::unlinkBack()
 
     if (first_ != last_)
     {
-        last_ = last_->prev();
+        last_ = static_cast<T*>(last_->prev());
         last_->setNext(nullptr);
     }
     else
@@ -304,7 +304,7 @@ void LinkedList<T>::unlink(T* t)
     }
     else
     {
-        first_ = t->next();
+        first_ = static_cast<T*>(t->next());
     }
 
     if (t->next())
@@ -313,7 +313,7 @@ void LinkedList<T>::unlink(T* t)
     }
     else
     {
-        last_ = t->prev();
+        last_ = static_cast<T*>(t->prev());
     }
 
     t->setPrev(nullptr);
@@ -359,7 +359,7 @@ void LinkedList<T>::clear()
     T* next;
     for (T* cur = first_; cur; cur = next)
     {
-        next = cur->next();
+        next = static_cast<T*>(cur->next());
         del(cur);
     }
 

@@ -14,6 +14,7 @@ void ProgressPieTemplate::init(const rapidjson::Value& v,
 {
     std::string vertexArrayName;
     std::vector<JsonParamPtr> params{
+        jsonParam(radius_, "radius", true, gt(0.0f)),
         jsonParam(vertexArrayName, "vertexArray", true, k_nonEmptyStrV),
         jsonParam(backgroundColor_, "backgroundColor"),
         jsonParam(frontColor_, "frontColor"),

@@ -47,6 +47,10 @@ private:
     bool checkCollide(GameMap& map,
                       float collideBreath);
 
+    void calculatePlayerGoodiePos(float& goodieY,
+                                  float& goodieStartX,
+                                  float& goodieSpacing);
+
 private:
     float viewportWidth_;
     float viewportHeight_;

@@ -64,6 +64,8 @@ public:
 
     inline float maxCollideBreath() const;
 
+    inline float maxProgressPieRadius() const;
+
 private:
     void initTextureLib(const std::string& textureLibFile,
                         const std::string& picDir);
@@ -93,6 +95,8 @@ private:
 
     void calculateMaxCollideBreath();
 
+    void calculateMaxProgressPieRadius();
+
 private:
     TextureLib textureLib_;
     VertexArrayLib vertexArrayLib_;
@@ -108,6 +112,7 @@ private:
     AILib aiLib_;
     float maxObjSpan_;
     float maxCollideBreath_;
+    float maxProgressPieRadius_;
 };
 
 const commonlib::Texture* GameLib::findTexture(const std::string& name) const
@@ -188,6 +193,11 @@ float GameLib::maxObjSpan() const
 float GameLib::maxCollideBreath() const
 {
     return maxCollideBreath_;
+}
+
+float GameLib::maxProgressPieRadius() const
+{
+    return maxProgressPieRadius_;
 }
 
 } // end of namespace botlib

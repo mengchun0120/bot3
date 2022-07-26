@@ -38,6 +38,8 @@ void GameScreen::init(const Vector2& viewportSize,
 
     loadMap(viewportSize, cfg.mapFile());
     objDumper_.init(cfg.dumperPoolSize());
+    viewportSize_ = viewportSize;
+    overlayViewportOrigin_ = viewportSize / 2.0f;
 }
 
 void GameScreen::update(float timeDelta)
@@ -60,6 +62,10 @@ void GameScreen::present()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     map_.present();
+    if (map_.player())
+    {
+        presentOverlay();
+    }
     glFlush();
 }
 
@@ -185,6 +191,16 @@ void GameScreen::updateObjects(float timeDelta)
 {
     GameObjectUpdater updater(map_, objDumper_, timeDelta);
     map_.accessRegion(map_.presentArea(), updater);
+}
+
+void GameScreen::presentOverlay()
+{
+    SimpleShaderProgram& program = Context::graphics().simpleShader();
+    program.use();
+    program.setViewportOrigin(overlayViewportOrigin_);
+    program.setViewportSize(viewportSize_);
+
+    map_.player()->presentGoodies();
 }
 
 } // end of namespace botlib

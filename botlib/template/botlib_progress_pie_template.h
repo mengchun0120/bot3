@@ -22,6 +22,8 @@ public:
     void init(const rapidjson::Value& v,
               const VertexArrayLib& vertexArrayLib);
 
+    inline float radius() const;
+
     inline const commonlib::VertexArray* va() const;
 
     inline const commonlib::Color& backgroundColor() const;
@@ -33,12 +35,18 @@ public:
     inline int numTriangles() const;
 
 private:
+    float radius_;
     const commonlib::VertexArray* va_;
     commonlib::Color backgroundColor_;
     commonlib::Color frontColor_;
     float alpha_;
     int numTriangles_;
 };
+
+float ProgressPieTemplate::radius() const
+{
+    return radius_;
+}
 
 const commonlib::VertexArray* ProgressPieTemplate::va() const
 {

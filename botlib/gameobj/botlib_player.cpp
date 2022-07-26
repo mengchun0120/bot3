@@ -9,77 +9,105 @@ namespace botlib {
 
 void Player::init(const PlayerTemplate* t,
                   const Vector2& pos1,
-                  const Vector2& direction1)
+                  const Vector2& direction1,
+                  float goodieY,
+                  float goodieStartX,
+                  float goodieSpacing)
 {
     Robot::init(t, Side::PLAYER, pos1, direction1);
-    initEffects();
+    initGoodies();
+    goodieY_ = goodieY;
+    goodieStartX_ = goodieStartX;
+    goodieSpacing_ = goodieSpacing;
 }
 
 void Player::update(GameMap& map,
                     GameObjectDumper& dumper,
                     float timeDelta)
 {
-    updateGoodieEffects(timeDelta);
+    updateGoodies(timeDelta);
     Robot::update(map, dumper, timeDelta);
 }
 
-void Player::initEffects()
+void Player::initGoodies()
 {
-    effectPool_.init(lastingGoodieTypeCount());
+    auto initFunc = [](Goodie& g)
+    {
+        g.initPie();
+    };
 
-    effects_.setDeleter(
-        [this](GoodieEffect* e)
+    goodiePool_.init(lastingGoodieTypeCount(), initFunc);
+
+    goodies_.setDeleter(
+        [this](Goodie* g)
         {
-            effectPool_.free(e);
+            goodiePool_.free(g);
         }
     );
 }
 
-void Player::addGoodieEffect(const GoodieTemplate* t)
+void Player::addGoodie(const GoodieTemplate* t)
 {
-    GoodieEffect* e = findGoodieEffect(t->goodieType());
-    if (e)
+    Goodie* g = findGoodie(t->goodieType());
+    if (g)
     {
-        e->reset();
+        g->reset();
         return;
     }
 
-    e = effectPool_.alloc();
-    e->init(t);
-    effects_.pushBack(e);
+    g = goodiePool_.alloc();
+    g->init(t, nextGoodiePos(), Vector2{1.0f, 0.0f}, true);
+    goodies_.pushBack(g);
 
-    LOG_INFO << "Added GoodieEffect " << e->type() << LOG_END;
+    LOG_INFO << "Added Goodie " << g->goodieType() << LOG_END;
 }
 
-void Player::updateGoodieEffects(float timeDelta)
+void Player::presentGoodies()
 {
-    GoodieEffect* e, * next;
-
-    for (e = effects_.first(); e; e = next)
+    for (Goodie* g = goodies_.first(); g; g = static_cast<Goodie*>(g->next()))
     {
-        next = e->next();
+        g->present();
+    }
+}
 
-        if (e->update(*this, timeDelta))
+void Player::updateGoodies(float timeDelta)
+{
+    Goodie* g, * next;
+
+    for (g = goodies_.first(); g; g = next)
+    {
+        next = static_cast<Goodie*>(g->next());
+
+        g->updateActivated(*this, timeDelta);
+
+        if (!g->activated())
         {
-            LOG_INFO << "GoodieEffect expired " << e->type() << LOG_END;
-            effects_.remove(e);
+            LOG_INFO << "Goodie expired " << g->goodieType()
+                     << LOG_END;
+            goodies_.remove(g);
         }
     }
 }
 
-GoodieEffect* Player::findGoodieEffect(GoodieType type)
+Goodie* Player::findGoodie(GoodieType type)
 {
-    GoodieEffect* e;
+    Goodie* g;
 
-    for (e = effects_.first(); e; e = e->next())
+    for (g = goodies_.first(); g; g = static_cast<Goodie*>(g->next()))
     {
-        if (e->type() == type)
+        if (g->goodieType() == type)
         {
             break;
         }
     }
 
-    return e;
+    return g;
+}
+
+Vector2 Player::nextGoodiePos()
+{
+    return Vector2{goodieStartX_ + goodies_.size() * goodieSpacing_,
+                   goodieY_};
 }
 
 } // end of namespace botlib

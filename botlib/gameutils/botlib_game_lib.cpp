@@ -67,10 +67,7 @@ void GameLib::load(const AppConfig& cfg)
 
     calculateMaxObjSpan();
     calculateMaxCollideBreath();
-
-    LOG_DEBUG << "maxObjSpan=" << maxObjSpan_
-              << "maxCollideBreath=" << maxCollideBreath_
-              << LOG_END;
+    calculateMaxProgressPieRadius();
 
     LOG_INFO << "GameLib loaded successfull" << LOG_END;
 }
@@ -263,6 +260,25 @@ void GameLib::calculateMaxCollideBreath()
     aiRobotTemplateLib_.traverse(accessor);
 
     LOG_INFO << "maxCollideBreath=" << maxCollideBreath_ << LOG_END;
+}
+
+void GameLib::calculateMaxProgressPieRadius()
+{
+    maxProgressPieRadius_ = 0.0f;
+
+    auto accessor = [this](const ProgressPieTemplate& t)->bool
+    {
+        if (t.radius() > maxProgressPieRadius_)
+        {
+            maxProgressPieRadius_ = t.radius();
+        }
+
+        return true;
+    };
+
+    progressPieTemplateLib_.traverse(accessor);
+
+    LOG_INFO << "maxProgressPieRadius=" << maxProgressPieRadius_ << LOG_END;
 }
 
 } // end of namespace botlib

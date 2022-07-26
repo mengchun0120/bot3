@@ -49,9 +49,13 @@ private:
 
     inline bool isPlayerAvailable();
 
+    void presentOverlay();
+
 private:
     GameMap map_;
     GameObjectDumper objDumper_;
+    commonlib::Vector2 viewportSize_;
+    commonlib::Vector2 overlayViewportOrigin_;
 };
 
 bool GameScreen::isPlayerAvailable()

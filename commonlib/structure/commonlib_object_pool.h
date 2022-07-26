@@ -2,6 +2,7 @@
 #define INCLUDED_COMMONLIB_OBJECT_POOL_H
 
 #include <sstream>
+#include <functional>
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
 
@@ -11,6 +12,8 @@ namespace commonlib {
 template <typename T>
 class ObjectPool {
 public:
+    using InitFunc = std::function<void(T&)>;
+
     ObjectPool();
 
     ObjectPool(unsigned int size);
@@ -18,6 +21,8 @@ public:
     virtual ~ObjectPool();
 
     void init(unsigned int size);
+
+    void init(unsigned int size, InitFunc func);
 
     T* alloc();
 
@@ -75,6 +80,17 @@ void ObjectPool<T>::init(unsigned int size)
 
     initPool(size);
     initNext(size);
+}
+
+template <typename T>
+void ObjectPool<T>::init(unsigned int size, InitFunc func)
+{
+    init(size);
+
+    for (unsigned int i = 0; i < size; ++i)
+    {
+        func(pool_[i]);
+    }
 }
 
 template <typename T>

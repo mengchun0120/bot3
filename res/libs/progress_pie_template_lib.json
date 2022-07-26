@@ -1,23 +1,27 @@
 {
     "armor_enhancer_progress_pie": {
+        "radius": 30.0,
         "vertexArray": "progress_pie",
         "backgroundColor": [173, 221, 255, 255],
         "frontColor": [123, 172, 255, 255],
         "alpha": 0.7
     },
     "damage_amplifier_progress_pie": {
+        "radius": 30.0,
         "vertexArray": "progress_pie",
         "backgroundColor": [215, 238, 216, 255],
         "frontColor": [117, 203, 138, 255],
         "alpha": 0.7
     },
     "attack_accelerator_progress_pie": {
+        "radius": 30.0,
         "vertexArray": "progress_pie",
         "backgroundColor": [255, 233, 220, 255],
         "frontColor": [255, 203, 138, 255],
         "alpha": 0.7
     },
     "speed_accelerator_progress_pie": {
+        "radius": 30.0,
         "vertexArray": "progress_pie",
         "backgroundColor": [255, 255, 255, 255],
         "frontColor": [255, 209, 185, 255],
