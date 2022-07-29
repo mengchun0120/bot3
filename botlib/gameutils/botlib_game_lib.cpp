@@ -57,6 +57,7 @@ void GameLib::load(const AppConfig& cfg)
     initParticleEffectTemplateLib(cfg.particleEffectTemplateLibFile(),
                                   cfg.particleEffectDataDir());
     initProgressPieTemplateLib(cfg.progressPieTemplateLibFile());
+    initProgressBarTemplateLib(cfg.progressBarTemplateLibFile());
     initGoodieTemplateLib(cfg.goodieTemplateLibFile());
     initMissileTemplateLib(cfg.missileTemplateLibFile());
     initAIRobotTemplateLib(cfg.aiRobotTemplateLibFile());
@@ -189,6 +190,21 @@ void GameLib::initProgressPieTemplateLib(
     progressPieTemplateLib_.init(progressPieTemplateLibFile, parser);
 
     LOG_DEBUG << "progressPieTemplateLib loaded successfully" << LOG_END;
+}
+
+void GameLib::initProgressBarTemplateLib(
+                            const std::string& progressBarTemplateLibFile)
+{
+    auto parser = [&](ProgressBarTemplate& t,
+                      const std::string& name,
+                      const rapidjson::Value& v)
+    {
+        t.init(v, vertexArrayLib_);
+    };
+
+    progressBarTemplateLib_.init(progressBarTemplateLibFile, parser);
+
+    LOG_DEBUG << "progressBarTemplateLib loaded successfully" << LOG_END;
 }
 
 void GameLib::initMissileTemplateLib(const std::string& missileTemplateLibFile)

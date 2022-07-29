@@ -183,6 +183,9 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
         jsonParam(progressPieTemplateLibFile_,
                   {"libraries", "progressPieTemplateLibFile"},
                   true, k_nonEmptyStrV),
+        jsonParam(progressBarTemplateLibFile_,
+                  {"libraries", "progressBarTemplateLibFile"},
+                  true, k_nonEmptyStrV),
         jsonParam(playerTemplateFile_, {"libraries", "playerTemplateFile"},
                   true, k_nonEmptyStrV)
     };
@@ -204,6 +207,8 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
     chaseShootAIParamLibFile_ = constructPath({libDir_, chaseShootAIParamLibFile_});
     progressPieTemplateLibFile_ = constructPath(
                                     {libDir_, progressPieTemplateLibFile_});
+    progressBarTemplateLibFile_ = constructPath(
+                                    {libDir_, progressBarTemplateLibFile_});
     playerTemplateFile_ = constructPath({libDir_, playerTemplateFile_});
 }
 
