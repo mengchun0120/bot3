@@ -40,6 +40,7 @@ void GameScreen::init(const Vector2& viewportSize,
     objDumper_.init(cfg.dumperPoolSize());
     viewportSize_ = viewportSize;
     overlayViewportOrigin_ = viewportSize / 2.0f;
+    initProgressBar();
 }
 
 void GameScreen::update(float timeDelta)
@@ -51,6 +52,11 @@ void GameScreen::update(float timeDelta)
 
     clearMapUpdated();
     updateObjects(timeDelta);
+
+    if (map_.player())
+    {
+        updateProgressBar();
+    }
 
     if (!objDumper_.empty())
     {
@@ -94,6 +100,36 @@ void GameScreen::loadMap(const Vector2& viewportSize,
     GameMapLoader loader(viewportSize[0], viewportSize[1]);
 
     loader.load(map_, mapFile);
+}
+
+void GameScreen::initProgressBar()
+{
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    const GameLib& lib = Context::gameLib();
+
+    const ProgressBarTemplate* armorBarTemplate =
+                             lib.findProgressBarTemplate("armor_progress_bar");
+    if (!armorBarTemplate)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Failed to find armor_progress_bar");
+    }
+
+    const ProgressBarTemplate* energyBarTemplate =
+                             lib.findProgressBarTemplate("energy_progress_bar");
+    if (!energyBarTemplate)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Failed to find energy_progress_bar");
+    }
+
+    const Vector2& armorBarMargin = cfg.armorProgressBarMargin();
+    const Vector2& energyBarMargin = cfg.energyProgressBarMargin();
+    Vector2 armorBarPos{armorBarMargin[0], viewportSize_[1] - armorBarMargin[1]};
+    Vector2 energyBarPos{energyBarMargin[0], viewportSize_[1] - energyBarMargin[1]};
+
+    armorProgressBar_.init(armorBarTemplate, armorBarPos);
+    energyProgressBar_.init(energyBarTemplate, energyBarPos);
 }
 
 bool GameScreen::processMouseButton(const MouseButtonEvent& e)
@@ -193,6 +229,12 @@ void GameScreen::updateObjects(float timeDelta)
     map_.accessRegion(map_.presentArea(), updater);
 }
 
+void GameScreen::updateProgressBar()
+{
+    armorProgressBar_.setRatio(map_.player()->armorRatio());
+    energyProgressBar_.setRatio(map_.player()->energyRatio());
+}
+
 void GameScreen::presentOverlay()
 {
     SimpleShaderProgram& program = Context::graphics().simpleShader();
@@ -201,6 +243,8 @@ void GameScreen::presentOverlay()
     program.setViewportSize(viewportSize_);
 
     map_.player()->presentGoodies();
+    armorProgressBar_.present();
+    energyProgressBar_.present();
 }
 
 } // end of namespace botlib

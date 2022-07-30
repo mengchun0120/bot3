@@ -4,6 +4,7 @@
 #include <botlib_game_map.h>
 #include <botlib_game_object_dumper.h>
 #include <botlib_player.h>
+#include <botlib_progress_bar.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -31,6 +32,8 @@ private:
     void loadMap(const commonlib::Vector2& viewportSize,
                  const std::string& mapFile);
 
+    void initProgressBar();
+
     bool processMouseButton(const commonlib::MouseButtonEvent& e);
 
     bool processMouseMove(const commonlib::MouseMoveEvent& e);
@@ -47,6 +50,8 @@ private:
 
     void updateObjects(float timeDelta);
 
+    void updateProgressBar();
+
     inline bool isPlayerAvailable();
 
     void presentOverlay();
@@ -56,6 +61,8 @@ private:
     GameObjectDumper objDumper_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 overlayViewportOrigin_;
+    ProgressBar armorProgressBar_;
+    ProgressBar energyProgressBar_;
 };
 
 bool GameScreen::isPlayerAvailable()
