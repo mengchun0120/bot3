@@ -1,24 +1,31 @@
 #include <cmath>
 #include <commonlib_log.h>
+#include <commonlib_exception.h>
 #include <commonlib_math_utils.h>
 #include <botlib_context.h>
-#include <botlib_progress_pie.h>
+#include <botlib_progress_bar_template.h>
+#include <botlib_progress_bar.h>
 
 using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
 
-void ProgressPie::init(const ProgressPieTemplate* t,
+void ProgressBar::init(const ProgressBarTemplate* t,
                        const commonlib::Vector2& pos)
 {
+    if (!t)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "t is null");
+    }
+
     t_ = t;
     pos_ = pos;
     finishedVertices_ = 0;
-    leftVertices_ = t_->va()->numVertices(0);
+    leftVertices_ = t_->va()->numVertices(0) - finishedVertices_;
 }
 
-void ProgressPie::present()
+void ProgressBar::present()
 {
     SimpleShaderProgram& program = Context::graphics().simpleShader();
 
@@ -32,24 +39,23 @@ void ProgressPie::present()
     if (finishedVertices_ > 0)
     {
         program.setColor(t_->backgroundColor());
-        glDrawArrays(GL_TRIANGLES, 0, finishedVertices_);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, finishedVertices_);
     }
 
     if (leftVertices_ > 0)
     {
         program.setColor(t_->frontColor());
-        glDrawArrays(GL_TRIANGLES, finishedVertices_, leftVertices_);
+        glDrawArrays(GL_TRIANGLE_STRIP, finishedVertices_, leftVertices_);
     }
 }
 
-void ProgressPie::setFinishedRatio(float ratio)
+void ProgressBar::setRatio(float ratio)
 {
     ratio = clamp(ratio, 0.0f, 1.0f);
-    finishedVertices_ = static_cast<int>(floor(t_->numTriangles() * ratio)) * 3;
+    finishedVertices_ = 2 + static_cast<int>(floor(ratio * t_->numBlocks())) * 2;
     leftVertices_ = t_->va()->numVertices(0) - finishedVertices_;
 }
 
 } // end of namespace botlib
 } // end of namespace mcdane
-
 

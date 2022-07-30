@@ -19,7 +19,8 @@ void ProgressBarTemplate::init(const rapidjson::Value& v,
         jsonParam(height_, "height", true, gt(0.0f)),
         jsonParam(frontColor_, "frontColor"),
         jsonParam(backgroundColor_, "backgroundColor"),
-        jsonParam(vertexArrayName, "vertexArray", true, k_nonEmptyStrV)
+        jsonParam(vertexArrayName, "vertexArray", true, k_nonEmptyStrV),
+        jsonParam(alpha_, "alpha", true, gt(0.0f) && le(1.0f))
     };
 
     parse(params, v);
@@ -30,6 +31,8 @@ void ProgressBarTemplate::init(const rapidjson::Value& v,
         THROW_EXCEPT(ParseException,
                      "Failed to find vertexArray " + vertexArrayName);
     }
+
+    numBlocks_ = (va_->numVertices(0) - 2) / 2;
 }
 
 } // end of namespace botlib

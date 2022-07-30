@@ -27,12 +27,18 @@ public:
 
     inline const commonlib::VertexArray* va() const;
 
+    inline float alpha() const;
+
+    inline int numBlocks() const;
+
 private:
     float width_;
     float height_;
     commonlib::Color frontColor_;
     commonlib::Color backgroundColor_;
     const commonlib::VertexArray* va_;
+    float alpha_;
+    int numBlocks_;
 };
 
 float ProgressBarTemplate::width() const
@@ -58,6 +64,16 @@ const commonlib::Color& ProgressBarTemplate::backgroundColor() const
 const commonlib::VertexArray* ProgressBarTemplate::va() const
 {
     return va_;
+}
+
+float ProgressBarTemplate::alpha() const
+{
+    return alpha_;
+}
+
+int ProgressBarTemplate::numBlocks() const
+{
+    return numBlocks_;
 }
 
 } // end of namespace botlib
