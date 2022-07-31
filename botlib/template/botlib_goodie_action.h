@@ -26,9 +26,9 @@ void activateDamageAmplifier(const GoodieTemplate* t, Player& player);
 
 void deactivateDamageAmplifier(Player& player);
 
-void activateArmorEnhancer(const GoodieTemplate* t, Player& player);
+void activateGodMode(const GoodieTemplate* t, Player& player);
 
-void deactivateArmorEnhancer(Player& player);
+void deactivateGodMode(Player& player);
 
 } // end of namespace botlib
 } // end of namespace mcdane

@@ -1,4 +1,5 @@
 #include <sstream>
+#include <algorithm>
 #include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <commonlib_string_utils.h>
@@ -41,6 +42,7 @@ void Robot::init(const RobotTemplate* t,
     dyingTime_ = 0.0f;
     movingEnabled_ = false;
     shootingEnabled_ = false;
+    resetArmorReduceRatio();
 }
 
 void Robot::present() const
@@ -109,17 +111,18 @@ void Robot::addHP(float delta)
         return;
     }
 
-    const RobotTemplate* t = getTemplate();
-
-    if (invincible())
+    if (invincible() or delta == 0.0f)
     {
         return;
     }
 
-    hp_ = clamp(hp_+delta, 0.0f, t->hp());
-    if (hp_ <= 0.0f)
+    if (delta > 0.0f)
     {
-        setState(GameObjectState::DYING);
+        refillHP(delta);
+    }
+    else
+    {
+        doDamage(-delta);
     }
 
     hpIndicator_.reset(pos(), hpRatio());
@@ -263,6 +266,37 @@ void Robot::shoot(GameMap& map,
     }
 
     timeSinceLastShoot_ = 0.0f;
+}
+
+void Robot::refillHP(float hpIncrease)
+{
+    hp_ = std::min(hp_ + hpIncrease, getTemplate()->hp());
+}
+
+void Robot::doDamage(float damage)
+{
+    if (armor_ > 0.0f)
+    {
+        armor_ = std::max(armor_ - armorReduceRatio_ * damage, 0.0f);
+        resetArmorReduceRatio();
+    }
+    else
+    {
+        hp_ = std::max(hp_ - damage, 0.0f);
+        if (hp_ <= 0.0f)
+        {
+            setState(GameObjectState::DYING);
+        }
+    }
+}
+
+void Robot::resetArmorReduceRatio()
+{
+    constexpr float MIN_RATIO = 0.1f;
+    constexpr float MAX_RATIO = 1.0f;
+    constexpr float SLOPE = (MIN_RATIO - MAX_RATIO) / 1000.0f;
+
+    armorReduceRatio_ = clamp(MAX_RATIO + SLOPE * armor_, MIN_RATIO, MAX_RATIO);
 }
 
 } // end of namespace botlib

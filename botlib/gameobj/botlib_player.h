@@ -33,10 +33,6 @@ public:
 
     void presentGoodies();
 
-    inline float armorRatio() const;
-
-    inline float energyRatio() const;
-
 protected:
     void initGoodies();
 
@@ -57,16 +53,6 @@ protected:
 const PlayerTemplate* Player::getTemplate() const
 {
     return static_cast<const PlayerTemplate*>(t_);
-}
-
-float Player::armorRatio() const
-{
-    return armor_ / getTemplate()->armor();
-}
-
-float Player::energyRatio() const
-{
-    return energy_ / getTemplate()->energy();
 }
 
 } // end of namespace botlib

@@ -1,5 +1,5 @@
 {
-    "armor_enhancer_progress_pie": {
+    "god_mode_progress_pie": {
         "radius": 30.0,
         "vertexArray": "progress_pie",
         "backgroundColor": [173, 221, 255, 255],

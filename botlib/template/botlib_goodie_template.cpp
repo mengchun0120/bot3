@@ -71,10 +71,10 @@ void GoodieTemplate::initActions()
             deactivateAction_ = deactivateSpeedAccelerator;
             break;
         }
-        case GoodieType::ARMOR_ENHANCER:
+        case GoodieType::GOD_MODE:
         {
-            activateAction_ = activateArmorEnhancer;
-            deactivateAction_ = deactivateArmorEnhancer;
+            activateAction_ = activateGodMode;
+            deactivateAction_ = deactivateGodMode;
             break;
         }
         case GoodieType::DAMAGE_AMPLIFIER:

@@ -7,11 +7,11 @@ namespace mcdane {
 namespace botlib {
 
 static std::string k_goodieTypeStr[] = {
-    "health filler",
-    "damage amplifier",
-    "attack accelerator",
-    "speed accelerator",
-    "armor enhancer"
+    "health_filler",
+    "damage_amplifier",
+    "attack_accelerator",
+    "speed_accelerator",
+    "god_mode"
 };
 
 const std::string& toString(GoodieType type)

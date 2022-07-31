@@ -71,8 +71,8 @@
         "texture": "health_filler",
         "rect": "goodie"
     },
-    "armor_enhancer": {
-        "texture": "armor_enhancer",
+    "god_mode": {
+        "texture": "god_mode",
         "rect": "goodie"
     },
     "damage_amplifier": {

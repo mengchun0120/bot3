@@ -43,6 +43,10 @@ public:
 
     inline float hpRatio() const;
 
+    inline float armorRatio() const;
+
+    inline float energyRatio() const;
+
     inline float fireIntervalMS() const;
 
     inline bool shootingEnabled() const;
@@ -96,6 +100,12 @@ protected:
     void shoot(GameMap& map,
                GameObjectDumper& dumper);
 
+    void refillHP(float hpIncrease);
+
+    void doDamage(float damage);
+
+    void resetArmorReduceRatio();
+
 protected:
     Side side_;
     float hp_;
@@ -112,6 +122,7 @@ protected:
     float speedNorm_;
     float armor_;
     float damageFactor_;
+    float armorReduceRatio_;
 };
 
 const RobotTemplate* Robot::getTemplate() const
@@ -168,6 +179,17 @@ float Robot::hpRatio() const
 {
     return hp_ / getTemplate()->hp();
 }
+
+float Robot::armorRatio() const
+{
+    return armor_ / getTemplate()->armor();
+}
+
+float Robot::energyRatio() const
+{
+    return energy_ / getTemplate()->energy();
+}
+
 
 float Robot::fireIntervalMS() const
 {

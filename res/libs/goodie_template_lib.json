@@ -1,5 +1,5 @@
 {
-    "health filler": {
+    "health_filler": {
         "duration": 0.0,
         "weight": 100.0,
         "collideBreath": 20.0,
@@ -12,21 +12,21 @@
             }
         ]
     },
-    "armor enhancer": {
+    "god_mode": {
         "duration": 60000.0,
         "weight": 20.0,
         "factor": 3.0,
         "collideBreath": 20.0,
         "components": [
             {
-                "template": "armor_enhancer",
+                "template": "god_mode",
                 "pos": [0.0, 0.0],
                 "direction": [1.0, 0.0]
             }
         ],
-        "progressPie": "armor_enhancer_progress_pie"
+        "progressPie": "god_mode_progress_pie"
     },
-    "damage amplifier": {
+    "damage_amplifier": {
         "duration": 30000.0,
         "weight": 20.0,
         "factor": 2.0,
@@ -40,7 +40,7 @@
         ],
         "progressPie": "damage_amplifier_progress_pie"
     },
-    "attack accelerator": {
+    "attack_accelerator": {
         "duration": 30000.0,
         "weight": 20.0,
         "factor": 0.4,
@@ -54,7 +54,7 @@
         ],
         "progressPie": "attack_accelerator_progress_pie"
     },
-    "speed accelerator": {
+    "speed_accelerator": {
         "duration": 30000.0,
         "weight": 20.0,
         "factor": 2.0,

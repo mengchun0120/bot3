@@ -59,8 +59,8 @@
     "damage_amplifier": {
         "file": "damage_amplifier.png"
     },
-    "armor_enhancer": {
-        "file": "armor_enhancer.png"
+    "god_mode": {
+        "file": "god_mode.png"
     },
     "attack_accelerator": {
         "file": "attack_accelerator.png"

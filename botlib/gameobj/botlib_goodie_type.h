@@ -12,7 +12,7 @@ enum class GoodieType {
     DAMAGE_AMPLIFIER,
     ATTACK_ACCELERATOR,
     SPEED_ACCELERATOR,
-    ARMOR_ENHANCER,
+    GOD_MODE,
     COUNT
 };
 

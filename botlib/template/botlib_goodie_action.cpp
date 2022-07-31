@@ -58,15 +58,14 @@ void deactivateDamageAmplifier(Player& player)
     player.setDamageFactor(1.0f);
 }
 
-void activateArmorEnhancer(const GoodieTemplate* t, Player& player)
+void activateGodMode(const GoodieTemplate* t, Player& player)
 {
-    float armor = player.getTemplate()->armor() * t->factor();
-    player.setArmor(armor);
+    player.setFlag(GameObject::FLAG_INVINCIBLE, true);
 }
 
-void deactivateArmorEnhancer(Player& player)
+void deactivateGodMode(Player& player)
 {
-    player.setArmor(player.getTemplate()->armor());
+    player.setFlag(GameObject::FLAG_INVINCIBLE, false);
 }
 
 } // end of namespace botlib

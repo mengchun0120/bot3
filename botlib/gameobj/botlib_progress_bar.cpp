@@ -21,7 +21,7 @@ void ProgressBar::init(const ProgressBarTemplate* t,
 
     t_ = t;
     pos_ = pos;
-    finishedVertices_ = 0;
+    finishedVertices_ = 2;
     leftVertices_ = t_->va()->numVertices(0) - finishedVertices_;
 }
 
@@ -36,7 +36,7 @@ void ProgressBar::present()
     program.setUseDirection(false);
     program.setAlpha(t_->alpha());
 
-    if (finishedVertices_ > 0)
+    if (finishedVertices_ > 2)
     {
         program.setColor(t_->backgroundColor());
         glDrawArrays(GL_TRIANGLE_STRIP, 0, finishedVertices_);
@@ -45,14 +45,19 @@ void ProgressBar::present()
     if (leftVertices_ > 0)
     {
         program.setColor(t_->frontColor());
-        glDrawArrays(GL_TRIANGLE_STRIP, finishedVertices_, leftVertices_);
+        glDrawArrays(GL_TRIANGLE_STRIP, finishedVertices_ - 2, leftVertices_);
     }
+
+    program.setPositionTexPos(*(t_->borderVertexArray()));
+    program.setColor(t_->borderColor());
+    glDrawArrays(GL_LINE_LOOP, 0, t_->borderVertexArray()->numVertices(0));
 }
 
 void ProgressBar::setRatio(float ratio)
 {
-    ratio = clamp(ratio, 0.0f, 1.0f);
-    finishedVertices_ = 2 + static_cast<int>(floor(ratio * t_->numBlocks())) * 2;
+    float finishedRatio = clamp(1.0f-ratio, 0.0f, 1.0f);
+    finishedVertices_ = 2 + static_cast<int>(
+                                floor(finishedRatio * t_->numBlocks())) * 2;
     leftVertices_ = t_->va()->numVertices(0) - finishedVertices_;
 }
 

@@ -4,5 +4,8 @@
     },
     "progress_bar": {
         "data_files": ["progress_bar_pos.txt"]
+    },
+    "progress_bar_border": {
+        "data_files": ["progress_bar_border_pos.txt"]
     }
 }
