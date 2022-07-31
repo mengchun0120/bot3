@@ -31,12 +31,15 @@ public:
 
     inline float explodeBreath() const;
 
+    inline float energyCost() const;
+
     inline const ParticleEffectTemplate* explodeEffectTemplate() const;
 
 private:
     float damage_;
     float speed_;
     float explodeBreath_;
+    float energyCost_;
     const ParticleEffectTemplate* explodeEffectTemplate_;
 };
 
@@ -53,6 +56,11 @@ float MissileTemplate::speed() const
 float MissileTemplate::explodeBreath() const
 {
     return explodeBreath_;
+}
+
+float MissileTemplate::energyCost() const
+{
+    return energyCost_;
 }
 
 const ParticleEffectTemplate* MissileTemplate::explodeEffectTemplate() const

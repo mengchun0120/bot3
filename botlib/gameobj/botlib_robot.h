@@ -106,6 +106,8 @@ protected:
 
     void resetArmorReduceRatio();
 
+    void updateEnergy(float timeDelta);
+
 protected:
     Side side_;
     float hp_;

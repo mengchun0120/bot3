@@ -68,6 +68,8 @@ void Robot::update(GameMap& map,
         {
             updateShooting(map, dumper);
         }
+
+        updateEnergy(timeDelta);
     }
     else if (state_ == GameObjectState::DYING)
     {
@@ -253,14 +255,18 @@ void Robot::checkPassthroughCollide(GameMap& map,
 void Robot::shoot(GameMap& map,
                   GameObjectDumper& dumper)
 {
+    const MissileTemplate* t = getTemplate()->missileTemplate();
+
     for (unsigned int i = 0; i < firePoints_.size(); ++i)
     {
+        if (energy_ < t->energyCost())
+        {
+            break;
+        }
+
         Missile* missile = new Missile();
-        missile->init(getTemplate()->missileTemplate(),
-                      side_,
-                      firePoints_[i],
-                      fireDirections_[i],
-                      damageFactor_);
+        missile->init(t, side_, firePoints_[i], fireDirections_[i], damageFactor_);
+        energy_ -= t->energyCost();
 
         map.addObj(missile);
     }
@@ -297,6 +303,12 @@ void Robot::resetArmorReduceRatio()
     constexpr float SLOPE = (MIN_RATIO - MAX_RATIO) / 1000.0f;
 
     armorReduceRatio_ = clamp(MAX_RATIO + SLOPE * armor_, MIN_RATIO, MAX_RATIO);
+}
+
+void Robot::updateEnergy(float timeDelta)
+{
+    energy_ = std::min(energy_ + timeDelta * getTemplate()->rechargeRate(),
+                       getTemplate()->energy());
 }
 
 } // end of namespace botlib

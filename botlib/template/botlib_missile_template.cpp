@@ -38,6 +38,7 @@ void MissileTemplate::init(
         jsonParam(damage_, "damage", true, gt(0.0f)),
         jsonParam(speed_, "speed", true, gt(0.0f)),
         jsonParam(explodeBreath_, "explodeBreath", true, gt(0.0f)),
+        jsonParam(energyCost_, "energyCost", true, ge(0.0f)),
         jsonParam(explodeEffectName, "explodeEffect", true, k_nonEmptyStrV)
     };
 

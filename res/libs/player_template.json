@@ -6,7 +6,7 @@
     "armor": 100.0,
     "speed": 0.2,
     "energy": 100.0,
-    "rechargeRate": 20.0,
+    "rechargeRate": 0.001,
     "missile": "green_missile",
     "fireIntervalMS": 200.0,
     "components": [

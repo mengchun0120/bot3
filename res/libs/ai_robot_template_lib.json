@@ -6,7 +6,7 @@
         "armor": 0.0,
         "speed": 0.2,
         "energy": 100.0,
-        "rechargeRate": 20.0,
+        "rechargeRate": 0.001,
         "missile": "red_missile",
         "fireIntervalMS": 1500.0,
         "components": [
@@ -41,7 +41,7 @@
         "armor": 0.0,
         "speed": 0.2,
         "energy": 100.0,
-        "rechargeRate": 20.0,
+        "rechargeRate": 0.001,
         "missile": "blue_missile",
         "fireIntervalMS": 1500.0,
         "components": [
@@ -76,7 +76,7 @@
         "armor": 0.0,
         "speed": 0.2,
         "energy": 100.0,
-        "rechargeRate": 20.0,
+        "rechargeRate": 0.001,
         "missile": "orange_missile",
         "fireIntervalMS": 1500.0,
         "components": [
