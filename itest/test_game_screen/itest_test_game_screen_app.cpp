@@ -104,6 +104,7 @@ void TestGameScreenApp::exitApp()
 
 void TestGameScreenApp::switchScreen(botlib::ScreenType screenType)
 {
+    setRunning(false);
 }
 
 } // end of namespace itest

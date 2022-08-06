@@ -5,6 +5,7 @@
 #include <botlib_game_object_dumper.h>
 #include <botlib_player.h>
 #include <botlib_progress_bar.h>
+#include <botlib_message_box.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -17,7 +18,7 @@ public:
     GameScreen(const commonlib::Vector2& viewportSize,
                const AppActions actions);
 
-    ~GameScreen() override;
+    ~GameScreen() override = default;
 
     void init(const commonlib::Vector2& viewportSize,
               const AppActions actions);
@@ -34,6 +35,12 @@ private:
 
     void initProgressBar();
 
+    void initMessageBox();
+
+    bool processInputEndGame(const commonlib::InputEvent& e);
+
+    bool processInputGame(const commonlib::InputEvent& e);
+
     bool processMouseButton(const commonlib::MouseButtonEvent& e);
 
     bool processMouseMove(const commonlib::MouseMoveEvent& e);
@@ -46,8 +53,6 @@ private:
 
     void updatePlayer(float timeDelta);
 
-    void clearMapUpdated();
-
     void updateObjects(float timeDelta);
 
     void updateProgressBar();
@@ -56,6 +61,10 @@ private:
 
     void presentOverlay();
 
+    void showVictory();
+
+    void showFail();
+
 private:
     GameMap map_;
     GameObjectDumper objDumper_;
@@ -63,6 +72,7 @@ private:
     commonlib::Vector2 overlayViewportOrigin_;
     ProgressBar armorProgressBar_;
     ProgressBar energyProgressBar_;
+    MessageBox msgBox_;
 };
 
 bool GameScreen::isPlayerAvailable()

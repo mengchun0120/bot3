@@ -16,16 +16,6 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-namespace {
-
-inline bool isPlayer(GameObject* obj)
-{
-    return obj->type() == GameObjectType::ROBOT &&
-           static_cast<Robot*>(obj)->side() == Side::PLAYER;
-}
-
-} // end of unnamed namespace
-
 int GameMap::getLayer(GameObjectType t)
 {
     switch(t)
@@ -58,6 +48,7 @@ void GameMap::init(unsigned int rows,
     setBoundary(rows, cols);
     setViewportSize(viewportWidth, viewportHeight);
     setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
+    aiRobotCount_ = 0;
 }
 
 void GameMap::present()
@@ -80,10 +71,18 @@ void GameMap::addObj(GameObject* obj)
     cells_[rowIdx][colIdx][layer].pushFront(obj);
     obj->setMapPos(rowIdx, colIdx);
 
-    if (isPlayer(obj))
+    if (obj->type() == GameObjectType::ROBOT)
     {
-        player_ = static_cast<Player*>(obj);
-        setViewportOrigin(player_->x(), player_->y());
+        Robot* robot = static_cast<Robot*>(obj);
+        if (robot->side() == Side::PLAYER)
+        {
+            player_ = static_cast<Player*>(obj);
+            setViewportOrigin(player_->x(), player_->y());
+        }
+        else
+        {
+            ++aiRobotCount_;
+        }
     }
 
     LOG_DEBUG << "added " << obj->type() << " " << obj->id() << LOG_END;
@@ -112,9 +111,17 @@ void GameMap::repositionObj(GameObject* obj)
 
 void GameMap::removeObj(GameObject* obj)
 {
-    if (isPlayer(obj))
+    if (obj->type() == GameObjectType::ROBOT)
     {
-        player_ = nullptr;
+        Robot* robot = static_cast<Robot*>(obj);
+        if (robot->side() == Side::PLAYER)
+        {
+            player_ = nullptr;
+        }
+        else
+        {
+            --aiRobotCount_;
+        }
     }
 
     int layer = getLayer(obj->type());
@@ -340,6 +347,33 @@ bool GameMap::checkNonpassthroughCollide(commonlib::Vector2& delta,
     delta = checker.delta();
 
     return checker.collide();
+}
+
+std::string GameMap::detail()
+{
+    std::ostringstream oss;
+    for (int r = 0; r < rowCount(); ++r)
+    {
+        for (int c = 0; c < colCount(); ++c)
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                auto& q = cells_[r][c][i];
+                if (q.empty())
+                {
+                    continue;
+                }
+
+                oss << r << ":" << c << ":" << i << " ";
+                for (GameObject* o = q.first(); o; o = o->next())
+                {
+                    oss << o->type() << ":" << o->id();
+                }
+                oss << std::endl;
+            }
+        }
+    }
+    return oss.str();
 }
 
 } // end of namespace botlib

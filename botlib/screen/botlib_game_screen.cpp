@@ -19,20 +19,16 @@ GameScreen::GameScreen(const Vector2& viewportSize,
     init(viewportSize, actions);
 }
 
-GameScreen::~GameScreen()
-{
-}
-
 void GameScreen::init(const Vector2& viewportSize,
                       const AppActions actions)
 {
-    Screen::init(actions);
-
     if (viewportSize[0] <= 0.0f || viewportSize[1] <= 0.0f)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Invalid viewportSize " + stringVal(viewportSize));
     }
+
+    Screen::init(actions);
 
     const GameScreenConfig& cfg = Context::gameScreenConfig();
 
@@ -41,16 +37,21 @@ void GameScreen::init(const Vector2& viewportSize,
     viewportSize_ = viewportSize;
     overlayViewportOrigin_ = viewportSize / 2.0f;
     initProgressBar();
+    initMessageBox();
 }
 
 void GameScreen::update(float timeDelta)
 {
+    if (msgBox_.visible())
+    {
+        return;
+    }
+
     if (map_.player())
     {
         updatePlayer(timeDelta);
     }
 
-    clearMapUpdated();
     updateObjects(timeDelta);
 
     if (map_.player())
@@ -62,36 +63,35 @@ void GameScreen::update(float timeDelta)
     {
         objDumper_.clear(map_);
     }
+
+    if (map_.player() == nullptr)
+    {
+        showFail();
+    }
+    else if(map_.aiRobotCount() == 0)
+    {
+        showVictory();
+    }
 }
 
 void GameScreen::present()
 {
     glClear(GL_COLOR_BUFFER_BIT);
+
     map_.present();
-    if (map_.player())
-    {
-        presentOverlay();
-    }
+    presentOverlay();
+
     glFlush();
 }
 
 bool GameScreen::processInput(const InputEvent &e)
 {
-    switch (e.type())
+    if (!msgBox_.visible())
     {
-        case EventType::MOUSE_BUTTON:
-            return processMouseButton(e.mouseButtonEvent());
-        case EventType::MOUSE_MOVE:
-            return processMouseMove(e.mouseMoveEvent());
-        case EventType::KEY:
-            return processKey(e.keyEvent());
-        default:
-            THROW_EXCEPT(InvalidArgumentException,
-                         "Invalid event-type: " +
-                         std::to_string(static_cast<int>(e.type())));
+        return processInputGame(e);
     }
 
-    return true;
+    return processInputEndGame(e);
 }
 
 void GameScreen::loadMap(const Vector2& viewportSize,
@@ -130,6 +130,45 @@ void GameScreen::initProgressBar()
 
     armorProgressBar_.init(armorBarTemplate, armorBarPos);
     energyProgressBar_.init(energyBarTemplate, energyBarPos);
+}
+
+void GameScreen::initMessageBox()
+{
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+
+    msgBox_.init(viewportSize_[0] / 2.0f, viewportSize_[1] / 2.0f,
+                 cfg.msgBoxWidth(), cfg.msgBoxHeight(),
+                 "", MessageBox::BUTTON_OK);
+}
+
+bool GameScreen::processInputEndGame(const commonlib::InputEvent& e)
+{
+    msgBox_.process(e);
+    if (msgBox_.buttonClicked() == MessageBox::BUTTON_OK)
+    {
+        actions_.switchAction_(ScreenType::START);
+    }
+
+    return true;
+}
+
+bool GameScreen::processInputGame(const commonlib::InputEvent& e)
+{
+    switch (e.type())
+    {
+        case EventType::MOUSE_BUTTON:
+            return processMouseButton(e.mouseButtonEvent());
+        case EventType::MOUSE_MOVE:
+            return processMouseMove(e.mouseMoveEvent());
+        case EventType::KEY:
+            return processKey(e.keyEvent());
+        default:
+            THROW_EXCEPT(InvalidArgumentException,
+                         "Invalid event-type: " +
+                         std::to_string(static_cast<int>(e.type())));
+    }
+
+    return true;
 }
 
 bool GameScreen::processMouseButton(const MouseButtonEvent& e)
@@ -217,14 +256,11 @@ void GameScreen::updatePlayer(float timeDelta)
     map_.setViewportOrigin(player->x(), player->y());
 }
 
-void GameScreen::clearMapUpdated()
+void GameScreen::updateObjects(float timeDelta)
 {
     GameObjectFlagResetter flagResetter(GameObject::FLAG_UPDATED, false);
     map_.accessRegion(map_.presentArea(), flagResetter);
-}
 
-void GameScreen::updateObjects(float timeDelta)
-{
     GameObjectUpdater updater(map_, objDumper_, timeDelta);
     map_.accessRegion(map_.presentArea(), updater);
 }
@@ -242,9 +278,32 @@ void GameScreen::presentOverlay()
     program.setViewportOrigin(overlayViewportOrigin_);
     program.setViewportSize(viewportSize_);
 
-    map_.player()->presentGoodies();
+    if (map_.player())
+    {
+        map_.player()->presentGoodies();
+    }
+
     armorProgressBar_.present();
     energyProgressBar_.present();
+
+    if (msgBox_.visible())
+    {
+        msgBox_.present();
+    }
+}
+
+void GameScreen::showVictory()
+{
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    msgBox_.setText(cfg.victoryMsg());
+    msgBox_.setVisible(true);
+}
+
+void GameScreen::showFail()
+{
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    msgBox_.setText(cfg.failMsg());
+    msgBox_.setVisible(true);
 }
 
 } // end of namespace botlib

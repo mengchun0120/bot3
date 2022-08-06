@@ -83,6 +83,8 @@ void Label::present() const
     SimpleShaderProgram& program = g.simpleShader();
     const TextSystem& textSys = g.textSys();
 
+    program.setAlpha(1.0f);
+
     rect_.draw(program, &pos_, nullptr, &backColor_, &borderColor_, 0, nullptr);
     if (text_.size() > 0)
     {

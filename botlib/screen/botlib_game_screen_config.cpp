@@ -22,7 +22,11 @@ void GameScreenConfig::init(const std::string& configFile)
         jsonParam(goodieTopMargin_, "goodieTopMargin", true, gt(0.0f)),
         jsonParam(goodieRightMargin_, "goodieRightMargin", true, gt(0.0f)),
         jsonParam(armorProgressBarMargin_, "armorProgressBarMargin"),
-        jsonParam(energyProgressBarMargin_, "energyProgressBarMargin")
+        jsonParam(energyProgressBarMargin_, "energyProgressBarMargin"),
+        jsonParam(msgBoxWidth_, {"messageBox", "width"}, true, gt(0.0f)),
+        jsonParam(msgBoxHeight_, {"messageBox", "height"}, true, gt(0.0f)),
+        jsonParam(victoryMsg_, {"messageBox", "victoryMsg"}, true, k_nonEmptyStrV),
+        jsonParam(failMsg_, {"messageBox", "failMsg"}, true, k_nonEmptyStrV)
     };
 
     parse(params, doc);

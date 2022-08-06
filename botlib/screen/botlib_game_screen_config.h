@@ -27,6 +27,14 @@ public:
 
     inline const commonlib::Vector2& energyProgressBarMargin() const;
 
+    inline float msgBoxWidth() const;
+
+    inline float msgBoxHeight() const;
+
+    inline const std::string& victoryMsg() const;
+
+    inline const std::string& failMsg() const;
+
 private:
     std::string mapFile_;
     int dumperPoolSize_;
@@ -35,6 +43,10 @@ private:
     float goodieRightMargin_;
     commonlib::Vector2 armorProgressBarMargin_;
     commonlib::Vector2 energyProgressBarMargin_;
+    float msgBoxWidth_;
+    float msgBoxHeight_;
+    std::string victoryMsg_;
+    std::string failMsg_;
 };
 
 const std::string& GameScreenConfig::mapFile() const
@@ -70,6 +82,26 @@ const commonlib::Vector2& GameScreenConfig::armorProgressBarMargin() const
 const commonlib::Vector2& GameScreenConfig::energyProgressBarMargin() const
 {
     return energyProgressBarMargin_;
+}
+
+float GameScreenConfig::msgBoxWidth() const
+{
+    return msgBoxWidth_;
+}
+
+float GameScreenConfig::msgBoxHeight() const
+{
+    return msgBoxHeight_;
+}
+
+const std::string& GameScreenConfig::victoryMsg() const
+{
+    return victoryMsg_;
+}
+
+const std::string& GameScreenConfig::failMsg() const
+{
+    return failMsg_;
 }
 
 } // end of namespace botlib

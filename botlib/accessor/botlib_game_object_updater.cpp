@@ -15,7 +15,7 @@ GameObjectUpdater::GameObjectUpdater(GameMap& map,
 
 bool GameObjectUpdater::run(GameObject* obj)
 {
-    if (obj->updated())
+    if (obj->updated() && obj->state() == GameObjectState::DEAD)
     {
         return true;
     }

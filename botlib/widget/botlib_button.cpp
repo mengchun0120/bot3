@@ -61,6 +61,8 @@ void Button::present() const
     const TextSystem& textSys = g.textSys();
     const ButtonConfig& cfg = Context::buttonConfig();
 
+    program.setAlpha(1.0f);
+
     rect_.draw(program, &pos_, nullptr, nullptr, nullptr,
                cfg.texture().id(), nullptr);
 

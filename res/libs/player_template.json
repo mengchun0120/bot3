@@ -8,7 +8,7 @@
     "energy": 100.0,
     "rechargeRate": 0.001,
     "missile": "green_missile",
-    "fireIntervalMS": 200.0,
+    "fireIntervalMS": 1000.0,
     "components": [
         {
             "template": "green_base",

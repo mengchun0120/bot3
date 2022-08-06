@@ -76,6 +76,8 @@ public:
 
     inline Player* player();
 
+    inline int aiRobotCount() const;
+
     void setViewportOrigin(float x,
                            float y);
 
@@ -121,6 +123,8 @@ private:
     bool checkNonpassthroughCollide(commonlib::Vector2& delta,
                                     const GameObject* obj);
 
+    std::string detail();
+
 private:
     float maxObjSpan_;
     float maxCollideBreath_;
@@ -136,6 +140,7 @@ private:
     commonlib::Region<float> viewableRegion_;
     commonlib::Region<int> presentArea_;
     Player* player_;
+    int aiRobotCount_;
 };
 
 int GameMap::rowCount() const
@@ -196,6 +201,11 @@ const Player* GameMap::player() const
 Player* GameMap::player()
 {
     return player_;
+}
+
+int GameMap::aiRobotCount() const
+{
+    return aiRobotCount_;
 }
 
 bool GameMap::canSee(const GameObject* obj) const
