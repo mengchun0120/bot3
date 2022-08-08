@@ -4,6 +4,7 @@
 #include <botlib_missile.h>
 #include <botlib_goodie.h>
 #include <botlib_player.h>
+#include <botlib_update_context.h>
 #include <botlib_game_object_dumper.h>
 #include <botlib_passthrough_collide_checker.h>
 
@@ -12,11 +13,9 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-PassthroughCollideChecker::PassthroughCollideChecker(GameMap& map,
-                                                     GameObjectDumper& dumper,
+PassthroughCollideChecker::PassthroughCollideChecker(UpdateContext& cxt,
                                                      Robot* robot)
-    : map_(map)
-    , dumper_(dumper)
+    : cxt_(cxt)
     , robot_(robot)
 {
 }
@@ -49,7 +48,7 @@ void PassthroughCollideChecker::collideMissile(Missile* missile)
                                         missile->collideRegion());
     if (collide)
     {
-        missile->explode(map_, dumper_);
+        missile->explode(cxt_);
     }
 }
 
@@ -68,7 +67,7 @@ void PassthroughCollideChecker::collideGoodie(Goodie* goodie)
     {
         goodie->activate(*player);
         LOG_INFO << "Activated goodie " << goodie->type() << LOG_END;
-        dumper_.add(goodie);
+        cxt_.dumper()->add(goodie);
     }
 }
 

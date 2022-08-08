@@ -36,8 +36,10 @@ void GameScreen::init(const Vector2& viewportSize,
     objDumper_.init(cfg.dumperPoolSize());
     viewportSize_ = viewportSize;
     overlayViewportOrigin_ = viewportSize / 2.0f;
+    cxt_.init(&map_, &objDumper_, std::bind(&GameScreen::onAIRobotDeath, this));
     initProgressBar();
     initMessageBox();
+    initAIRobotCount();
 }
 
 void GameScreen::update(float timeDelta)
@@ -47,12 +49,14 @@ void GameScreen::update(float timeDelta)
         return;
     }
 
+    cxt_.setTimeDelta(timeDelta);
+
     if (map_.player())
     {
-        updatePlayer(timeDelta);
+        updatePlayer();
     }
 
-    updateObjects(timeDelta);
+    updateObjects();
 
     if (map_.player())
     {
@@ -139,6 +143,18 @@ void GameScreen::initMessageBox()
     msgBox_.init(viewportSize_[0] / 2.0f, viewportSize_[1] / 2.0f,
                  cfg.msgBoxWidth(), cfg.msgBoxHeight(),
                  "", MessageBox::BUTTON_OK);
+}
+
+void GameScreen::initAIRobotCount()
+{
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    const Vector2& iconMargin = cfg.aiRobotCountIconMargin();
+    const Vector2& textMargin = cfg.aiRobotCountTextMargin();
+    Vector2 iconPos{iconMargin[0], viewportSize_[1] - iconMargin[1]};
+
+    aiRobotCountIcon_.init(cfg.aiRobotCountIconTemplate(), iconPos);
+    aiRobotCountPos_.init({textMargin[0], viewportSize_[1] - textMargin[1]});
+    updateAIRobotCount();
 }
 
 bool GameScreen::processInputEndGame(const commonlib::InputEvent& e)
@@ -249,19 +265,19 @@ void GameScreen::processForwardKey(const KeyEvent& e)
     map_.player()->setMovingEnabled(enabled);
 }
 
-void GameScreen::updatePlayer(float timeDelta)
+void GameScreen::updatePlayer()
 {
     Player* player = map_.player();
-    player->update(map_, objDumper_, timeDelta);
+    player->update(cxt_);
     map_.setViewportOrigin(player->x(), player->y());
 }
 
-void GameScreen::updateObjects(float timeDelta)
+void GameScreen::updateObjects()
 {
     GameObjectFlagResetter flagResetter(GameObject::FLAG_UPDATED, false);
     map_.accessRegion(map_.presentArea(), flagResetter);
 
-    GameObjectUpdater updater(map_, objDumper_, timeDelta);
+    GameObjectUpdater updater(cxt_);
     map_.accessRegion(map_.presentArea(), updater);
 }
 
@@ -271,9 +287,17 @@ void GameScreen::updateProgressBar()
     energyProgressBar_.setRatio(map_.player()->energyRatio());
 }
 
+void GameScreen::updateAIRobotCount()
+{
+    aiRobotCountStr_ = std::to_string(map_.aiRobotCount());
+}
+
 void GameScreen::presentOverlay()
 {
     SimpleShaderProgram& program = Context::graphics().simpleShader();
+    const TextSystem& textSys = Context::graphics().textSys();
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+
     program.use();
     program.setViewportOrigin(overlayViewportOrigin_);
     program.setViewportSize(viewportSize_);
@@ -283,8 +307,14 @@ void GameScreen::presentOverlay()
         map_.player()->presentGoodies();
     }
 
+    program.setAlpha(1.0f);
+
     armorProgressBar_.present();
     energyProgressBar_.present();
+
+    aiRobotCountIcon_.present();
+    textSys.draw(program, aiRobotCountStr_, aiRobotCountPos_,
+                 cfg.aiRobotCountTextSize(), &cfg.aiRobotCountTextColor());
 
     if (msgBox_.visible())
     {
@@ -304,6 +334,12 @@ void GameScreen::showFail()
     const GameScreenConfig& cfg = Context::gameScreenConfig();
     msgBox_.setText(cfg.failMsg());
     msgBox_.setVisible(true);
+}
+
+void GameScreen::onAIRobotDeath()
+{
+    map_.decreaseAIRobotCount();
+    updateAIRobotCount();
 }
 
 } // end of namespace botlib

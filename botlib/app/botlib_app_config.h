@@ -89,6 +89,8 @@ public:
 
     inline const std::string& progressBarTemplateLibFile() const;
 
+    inline const std::string& iconTemplateLibFile() const;
+
     inline const std::string& playerTemplateFile() const;
 
     inline float mapPoolSizeFactor() const;
@@ -147,6 +149,7 @@ private:
     std::string chaseShootAIParamLibFile_;
     std::string progressPieTemplateLibFile_;
     std::string progressBarTemplateLibFile_;
+    std::string iconTemplateLibFile_;
     std::string playerTemplateFile_;
     float mapPoolSizeFactor_;
     unsigned int timeDeltaHistoryLen_;
@@ -325,6 +328,11 @@ const std::string& AppConfig::progressPieTemplateLibFile() const
 const std::string& AppConfig::progressBarTemplateLibFile() const
 {
     return progressBarTemplateLibFile_;
+}
+
+const std::string& AppConfig::iconTemplateLibFile() const
+{
+    return iconTemplateLibFile_;
 }
 
 const std::string& AppConfig::playerTemplateFile() const

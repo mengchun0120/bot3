@@ -67,5 +67,8 @@
     },
     "speed_accelerator": {
         "file": "speed_accelerator.png"
+    },
+    "ai_robot_icon": {
+        "file": "ai_robot_icon.png"
     }
 }

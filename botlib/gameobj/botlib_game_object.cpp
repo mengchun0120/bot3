@@ -1,9 +1,10 @@
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
-#include <botlib_game_object.h>
+#include <botlib_update_context.h>
 #include <botlib_game_object_dumper.h>
 #include <botlib_game_map.h>
+#include <botlib_game_object.h>
 
 using namespace mcdane::commonlib;
 
@@ -36,15 +37,13 @@ void GameObject::init(const GameObjectTemplate* t,
                         y()-collideBreath(), y()+collideBreath());
 }
 
-void GameObject::update(GameMap& map,
-                        GameObjectDumper& dumper,
-                        float timeDelta)
+void GameObject::update(UpdateContext& cxt)
 {
     setUpdated(true);
 
-    if (canBeDumped(map))
+    if (state_ != GameObjectState::DEAD && canBeDumped(*(cxt.map())))
     {
-        dumper.add(this);
+        cxt.dumper()->add(this);
     }
 }
 

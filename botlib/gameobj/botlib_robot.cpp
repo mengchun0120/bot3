@@ -3,6 +3,7 @@
 #include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <commonlib_string_utils.h>
+#include <botlib_update_context.h>
 #include <botlib_game_map.h>
 #include <botlib_passthrough_collide_checker.h>
 #include <botlib_missile.h>
@@ -51,32 +52,30 @@ void Robot::present() const
     hpIndicator_.present();
 }
 
-void Robot::update(GameMap& map,
-                   GameObjectDumper& dumper,
-                   float timeDelta)
+void Robot::update(UpdateContext& cxt)
 {
     if (state_ == GameObjectState::ALIVE)
     {
-        timeSinceLastShoot_ += timeDelta;
+        timeSinceLastShoot_ += cxt.timeDelta();
 
         if (movingEnabled_)
         {
-            updatePos(map, dumper, timeDelta);
+            updatePos(cxt);
         }
 
         if (state_ == GameObjectState::ALIVE && shootingEnabled_)
         {
-            updateShooting(map, dumper);
+            updateShooting(cxt);
         }
 
-        updateEnergy(timeDelta);
+        updateEnergy(cxt.timeDelta());
     }
     else if (state_ == GameObjectState::DYING)
     {
-        dyingTime_ += timeDelta;
+        dyingTime_ += cxt.timeDelta();
         if (dyingTime_ >= getTemplate()->dyingDuration())
         {
-            dumper.add(this);
+            cxt.dumper()->add(this);
         }
         else
         {
@@ -84,7 +83,7 @@ void Robot::update(GameMap& map,
         }
     }
 
-    GameObject::update(map, dumper, timeDelta);
+    GameObject::update(cxt);
 }
 
 void Robot::shiftPos(const Vector2& delta)
@@ -108,26 +107,41 @@ void Robot::setMovingEnabled(bool b)
 
 void Robot::addHP(float delta)
 {
-    if (state_ != GameObjectState::ALIVE)
+    if (state_ != GameObjectState::ALIVE || delta <= 0.0f)
     {
         return;
     }
 
-    if (invincible() or delta == 0.0f)
+    hp_ = std::min(hp_ + delta, getTemplate()->hp());
+    hpIndicator_.reset(pos(), hpRatio());
+}
+
+void Robot::doDamage(float damage, UpdateContext& cxt)
+{
+    if (state_ != GameObjectState::ALIVE || damage <= 0.0f || invincible())
     {
         return;
     }
 
-    if (delta > 0.0f)
+    if (armor_ > 0.0f)
     {
-        refillHP(delta);
+        armor_ = std::max(armor_ - armorReduceRatio_ * damage, 0.0f);
+        resetArmorReduceRatio();
     }
     else
     {
-        doDamage(-delta);
-    }
+        hp_ = std::max(hp_ - damage, 0.0f);
+        if (hp_ <= 0.0f)
+        {
+            setState(GameObjectState::DYING);
+            if (side_ == Side::AI)
+            {
+                cxt.onAIRobotDeath();
+            }
+        }
 
-    hpIndicator_.reset(pos(), hpRatio());
+        hpIndicator_.reset(pos(), hpRatio());
+    }
 }
 
 void Robot::setShootingEnabled(bool b)
@@ -220,41 +234,39 @@ void Robot::resetSpeed()
     speed_ = speedNorm_ * direction_;
 }
 
-void Robot::updatePos(GameMap& map,
-                      GameObjectDumper& dumper,
-                      float timeDelta)
+void Robot::updatePos(UpdateContext& cxt)
 {
-    Vector2 delta = speed_ * timeDelta;
-    map.checkCollision(delta, this);
+    GameMap& map = *(cxt.map());
+    Vector2 delta = speed_ * cxt.timeDelta();
 
+    map.checkCollision(delta, this);
     shiftPos(delta);
     map.repositionObj(this);
 
-    checkPassthroughCollide(map, dumper);
+    checkPassthroughCollide(cxt);
 }
 
-void Robot::updateShooting(GameMap& map,
-                           GameObjectDumper& dumper)
+void Robot::updateShooting(UpdateContext& cxt)
 {
     if (timeSinceLastShoot_ < fireIntervalMS())
     {
         return;
     }
 
-    shoot(map, dumper);
+    shoot(cxt);
 }
 
-void Robot::checkPassthroughCollide(GameMap& map,
-                                    GameObjectDumper& dumper)
+void Robot::checkPassthroughCollide(UpdateContext& cxt)
 {
-    PassthroughCollideChecker checker(map, dumper, this);
+    GameMap& map = *(cxt.map());
+    PassthroughCollideChecker checker(cxt, this);
     Region<int> r = map.getCollideArea(collideRegion());
     map.accessRegion(r, checker);
 }
 
-void Robot::shoot(GameMap& map,
-                  GameObjectDumper& dumper)
+void Robot::shoot(UpdateContext& cxt)
 {
+    GameMap& map = *(cxt.map());
     const MissileTemplate* t = getTemplate()->missileTemplate();
 
     for (unsigned int i = 0; i < firePoints_.size(); ++i)
@@ -272,28 +284,6 @@ void Robot::shoot(GameMap& map,
     }
 
     timeSinceLastShoot_ = 0.0f;
-}
-
-void Robot::refillHP(float hpIncrease)
-{
-    hp_ = std::min(hp_ + hpIncrease, getTemplate()->hp());
-}
-
-void Robot::doDamage(float damage)
-{
-    if (armor_ > 0.0f)
-    {
-        armor_ = std::max(armor_ - armorReduceRatio_ * damage, 0.0f);
-        resetArmorReduceRatio();
-    }
-    else
-    {
-        hp_ = std::max(hp_ - damage, 0.0f);
-        if (hp_ <= 0.0f)
-        {
-            setState(GameObjectState::DYING);
-        }
-    }
 }
 
 void Robot::resetArmorReduceRatio()

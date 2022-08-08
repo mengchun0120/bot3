@@ -24,9 +24,8 @@ public:
 
     void setAction(RobotAction a);
 
-    void update(GameMap& map,
-                GameObjectDumper& dumper,
-                float timeDelta) override;
+    void update(UpdateContext& cxt) override;
+
 private:
     AI* ai_;
 };

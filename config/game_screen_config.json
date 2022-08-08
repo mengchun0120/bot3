@@ -11,5 +11,12 @@
         "height": 160.0,
         "victoryMsg": "You are victorious",
         "failMsg": "You are defeated"
+    },
+    "aiRobotCount": {
+        "iconMargin": [400.0, 70.0],
+        "icon": "ai_robot_icon",
+        "textMargin": [440.0, 90.0],
+        "textSize": "big",
+        "textColor": [190, 190, 190, 255]
     }
 }

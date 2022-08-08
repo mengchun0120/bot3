@@ -61,6 +61,7 @@ void GameLib::load(const AppConfig& cfg)
     initGoodieTemplateLib(cfg.goodieTemplateLibFile());
     initMissileTemplateLib(cfg.missileTemplateLibFile());
     initAIRobotTemplateLib(cfg.aiRobotTemplateLibFile());
+    initIconTemplateLib(cfg.iconTemplateLibFile());
     playerTemplate_.init(cfg.playerTemplateFile(),
                          missileTemplateLib_,
                          componentTemplateLib_);
@@ -233,6 +234,20 @@ void GameLib::initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile)
     aiRobotTemplateLib_.init(aiRobotTemplateLibFile, parser);
 
     LOG_DEBUG << "aiRobotTemplateLib loaded successfully" << LOG_END;
+}
+
+void GameLib::initIconTemplateLib(const std::string& iconTemplateLibFile)
+{
+    auto parser = [&](IconTemplate& t,
+                      const std::string& name,
+                      const rapidjson::Value& v)
+    {
+        t.init(v, textureLib_, rectLib_);
+    };
+
+    iconTemplateLib_.init(iconTemplateLibFile, parser);
+
+    LOG_DEBUG << "iconTemplateLib loaded successfully" << LOG_END;
 }
 
 void GameLib::calculateMaxObjSpan()

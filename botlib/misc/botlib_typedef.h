@@ -29,6 +29,7 @@ class AIRobotTemplate;
 class ParticleEffectTemplate;
 class ProgressPieTemplate;
 class ProgressBarTemplate;
+class IconTemplate;
 
 using TextureLib = commonlib::NamedMap<commonlib::Texture>;
 using VertexArrayLib = commonlib::NamedMap<commonlib::VertexArray>;
@@ -41,6 +42,7 @@ using AIRobotTemplateLib = commonlib::NamedMap<AIRobotTemplate>;
 using ParticleEffectTemplateLib = commonlib::NamedMap<ParticleEffectTemplate>;
 using ProgressPieTemplateLib = commonlib::NamedMap<ProgressPieTemplate>;
 using ProgressBarTemplateLib = commonlib::NamedMap<ProgressBarTemplate>;
+using IconTemplateLib = commonlib::NamedMap<IconTemplate>;
 using GameObjectList = commonlib::LinkedList<GameObject>;
 
 

@@ -14,10 +14,9 @@ class AIRobot;
 
 class MissileHitChecker: public GameMapAccessor {
 public:
-    MissileHitChecker(GameMap& map,
+    MissileHitChecker(UpdateContext& cxt,
                       Missile& missile,
-                      bool inflictDamage=false,
-                      GameObjectDumper* dumper=nullptr);
+                      bool inflictDamage=false);
 
     inline bool collide() const;
 
@@ -29,10 +28,9 @@ private:
     void generateGoodie(AIRobot* robot);
 
 private:
-    GameMap& map_;
+    UpdateContext& cxt_;
     Missile& missile_;
     bool inflictDamage_;
-    GameObjectDumper* dumper_;
     bool collide_;
 };
 

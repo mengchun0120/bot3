@@ -35,6 +35,7 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_goodie_type.cpp
     gameobj/botlib_hp_indicator.cpp
     gameobj/botlib_hp_indicator_config.cpp
+    gameobj/botlib_icon.cpp
     gameobj/botlib_missile.cpp
     gameobj/botlib_particle_effect.cpp
     gameobj/botlib_player.cpp
@@ -42,7 +43,8 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_progress_pie.cpp
     gameobj/botlib_robot.cpp
     gameobj/botlib_side.cpp
-    gameobj/botlib_tile.cpp)
+    gameobj/botlib_tile.cpp
+    gameobj/botlib_update_context.cpp)
 
 set(BOTLIB_GAMEUTILS_SRC
     gameutils/botlib_context.cpp
@@ -87,6 +89,7 @@ set(BOTLIB_TEMPLATE_SRC
     template/botlib_game_object_template.cpp
     template/botlib_goodie_action.cpp
     template/botlib_goodie_template.cpp
+    template/botlib_icon_template.cpp
     template/botlib_missile_template.cpp
     template/botlib_particle_effect_template.cpp
     template/botlib_player_template.cpp

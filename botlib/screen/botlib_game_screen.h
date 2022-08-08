@@ -6,6 +6,8 @@
 #include <botlib_player.h>
 #include <botlib_progress_bar.h>
 #include <botlib_message_box.h>
+#include <botlib_icon.h>
+#include <botlib_update_context.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -37,6 +39,8 @@ private:
 
     void initMessageBox();
 
+    void initAIRobotCount();
+
     bool processInputEndGame(const commonlib::InputEvent& e);
 
     bool processInputGame(const commonlib::InputEvent& e);
@@ -51,11 +55,13 @@ private:
 
     void processForwardKey(const commonlib::KeyEvent& e);
 
-    void updatePlayer(float timeDelta);
+    void updatePlayer();
 
-    void updateObjects(float timeDelta);
+    void updateObjects();
 
     void updateProgressBar();
+
+    void updateAIRobotCount();
 
     inline bool isPlayerAvailable();
 
@@ -65,14 +71,20 @@ private:
 
     void showFail();
 
+    void onAIRobotDeath();
+
 private:
     GameMap map_;
     GameObjectDumper objDumper_;
+    UpdateContext cxt_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 overlayViewportOrigin_;
     ProgressBar armorProgressBar_;
     ProgressBar energyProgressBar_;
     MessageBox msgBox_;
+    Icon aiRobotCountIcon_;
+    commonlib::Vector2 aiRobotCountPos_;
+    std::string aiRobotCountStr_;
 };
 
 bool GameScreen::isPlayerAvailable()

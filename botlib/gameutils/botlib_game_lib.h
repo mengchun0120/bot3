@@ -13,6 +13,7 @@
 #include <botlib_particle_effect_template.h>
 #include <botlib_progress_pie_template.h>
 #include <botlib_progress_bar_template.h>
+#include <botlib_icon_template.h>
 #include <botlib_player_template.h>
 #include <botlib_ai_lib.h>
 #include <botlib_typedef.h>
@@ -60,6 +61,8 @@ public:
     inline const ProgressBarTemplate* findProgressBarTemplate(
                                             const std::string& name) const;
 
+    inline const IconTemplate* findIconTemplate(const std::string& name) const;
+
     inline const PlayerTemplate& playerTemplate() const;
 
     inline const AILib& aiLib() const;
@@ -97,6 +100,8 @@ private:
 
     void initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile);
 
+    void initIconTemplateLib(const std::string& iconTemplateLibFile);
+
     void calculateMaxObjSpan();
 
     void calculateMaxCollideBreath();
@@ -117,6 +122,7 @@ private:
     GoodieTemplateLib goodieTemplateLib_;
     PlayerTemplate playerTemplate_;
     AILib aiLib_;
+    IconTemplateLib iconTemplateLib_;
     float maxObjSpan_;
     float maxCollideBreath_;
     float maxProgressPieRadius_;
@@ -186,6 +192,11 @@ const ProgressBarTemplate* GameLib::findProgressBarTemplate(
                                             const std::string& name) const
 {
     return progressBarTemplateLib_.search(name);
+}
+
+const IconTemplate* GameLib::findIconTemplate(const std::string& name) const
+{
+    return iconTemplateLib_.search(name);
 }
 
 const PlayerTemplate& GameLib::playerTemplate() const

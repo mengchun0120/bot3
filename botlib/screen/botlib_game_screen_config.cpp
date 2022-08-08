@@ -1,8 +1,10 @@
 #include <commonlib_log.h>
+#include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
 #include <commonlib_file_utils.h>
 #include <botlib_app_config.h>
+#include <botlib_context.h>
 #include <botlib_game_screen_config.h>
 
 using namespace mcdane::commonlib;
@@ -13,6 +15,8 @@ namespace botlib {
 void GameScreenConfig::init(const std::string& configFile)
 {
     rapidjson::Document doc;
+    std::string aiRobotCountIconName;
+    std::string aiRobotCountTextSizeStr;
     readJson(doc, configFile);
 
     std::vector<JsonParamPtr> params{
@@ -26,10 +30,28 @@ void GameScreenConfig::init(const std::string& configFile)
         jsonParam(msgBoxWidth_, {"messageBox", "width"}, true, gt(0.0f)),
         jsonParam(msgBoxHeight_, {"messageBox", "height"}, true, gt(0.0f)),
         jsonParam(victoryMsg_, {"messageBox", "victoryMsg"}, true, k_nonEmptyStrV),
-        jsonParam(failMsg_, {"messageBox", "failMsg"}, true, k_nonEmptyStrV)
+        jsonParam(failMsg_, {"messageBox", "failMsg"}, true, k_nonEmptyStrV),
+        jsonParam(aiRobotCountIconMargin_, {"aiRobotCount", "iconMargin"}),
+        jsonParam(aiRobotCountIconName, {"aiRobotCount", "icon"},
+                  true, k_nonEmptyStrV),
+        jsonParam(aiRobotCountTextMargin_, {"aiRobotCount", "textMargin"}),
+        jsonParam(aiRobotCountTextSizeStr, {"aiRobotCount", "textSize"}, true,
+                  k_nonEmptyStrV),
+        jsonParam(aiRobotCountTextColor_, {"aiRobotCount", "textColor"})
     };
 
     parse(params, doc);
+
+    const GameLib& lib = Context::gameLib();
+    aiRobotCountIconTemplate_ = lib.findIconTemplate(aiRobotCountIconName);
+    if (!aiRobotCountIconTemplate_)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Failed to find texture " + aiRobotCountIconName);
+    }
+
+
+    aiRobotCountTextSize_ = toTextSize(aiRobotCountTextSizeStr);
 
     const AppConfig& cfg = AppConfig::instance();
 

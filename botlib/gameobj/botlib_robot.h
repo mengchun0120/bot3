@@ -53,9 +53,7 @@ public:
 
     void present() const override;
 
-    void update(GameMap& map,
-                GameObjectDumper& dumper,
-                float timeDelta) override;
+    void update(UpdateContext& cxt) override;
 
     void shiftPos(const commonlib::Vector2& delta) override;
 
@@ -64,6 +62,8 @@ public:
     void setMovingEnabled(bool b);
 
     void addHP(float delta);
+
+    void doDamage(float damage, UpdateContext& cxt);
 
     void setShootingEnabled(bool b);
 
@@ -86,23 +86,13 @@ protected:
 
     void resetFirePointsAndDirections();
 
-    void updatePos(GameMap& map,
-                   GameObjectDumper& dumper,
-                   float timeDelta);
+    void updatePos(UpdateContext& cxt);
 
-    void updateShooting(GameMap& map,
-                        GameObjectDumper& dumper);
+    void updateShooting(UpdateContext& cxt);
 
+    void checkPassthroughCollide(UpdateContext& cxt);
 
-    void checkPassthroughCollide(GameMap& map,
-                                 GameObjectDumper& dumper);
-
-    void shoot(GameMap& map,
-               GameObjectDumper& dumper);
-
-    void refillHP(float hpIncrease);
-
-    void doDamage(float damage);
+    void shoot(UpdateContext& cxt);
 
     void resetArmorReduceRatio();
 

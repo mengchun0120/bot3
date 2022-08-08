@@ -3,6 +3,9 @@
 
 #include <string>
 #include <commonlib_vector.h>
+#include <commonlib_color.h>
+#include <commonlib_texture.h>
+#include <botlib_text_size.h>
 
 namespace mcdane {
 namespace botlib {
@@ -35,6 +38,16 @@ public:
 
     inline const std::string& failMsg() const;
 
+    inline const commonlib::Vector2& aiRobotCountIconMargin() const;
+
+    inline const IconTemplate* aiRobotCountIconTemplate() const;
+
+    inline const commonlib::Vector2& aiRobotCountTextMargin() const;
+
+    inline TextSize aiRobotCountTextSize() const;
+
+    inline const commonlib::Color& aiRobotCountTextColor() const;
+
 private:
     std::string mapFile_;
     int dumperPoolSize_;
@@ -47,6 +60,11 @@ private:
     float msgBoxHeight_;
     std::string victoryMsg_;
     std::string failMsg_;
+    commonlib::Vector2 aiRobotCountIconMargin_;
+    const IconTemplate* aiRobotCountIconTemplate_;
+    commonlib::Vector2 aiRobotCountTextMargin_;
+    TextSize aiRobotCountTextSize_;
+    commonlib::Color aiRobotCountTextColor_;
 };
 
 const std::string& GameScreenConfig::mapFile() const
@@ -102,6 +120,31 @@ const std::string& GameScreenConfig::victoryMsg() const
 const std::string& GameScreenConfig::failMsg() const
 {
     return failMsg_;
+}
+
+const commonlib::Vector2& GameScreenConfig::aiRobotCountIconMargin() const
+{
+    return aiRobotCountIconMargin_;
+}
+
+const IconTemplate* GameScreenConfig::aiRobotCountIconTemplate() const
+{
+    return aiRobotCountIconTemplate_;
+}
+
+const commonlib::Vector2& GameScreenConfig::aiRobotCountTextMargin() const
+{
+    return aiRobotCountTextMargin_;
+}
+
+TextSize GameScreenConfig::aiRobotCountTextSize() const
+{
+    return aiRobotCountTextSize_;
+}
+
+const commonlib::Color& GameScreenConfig::aiRobotCountTextColor() const
+{
+    return aiRobotCountTextColor_;
 }
 
 } // end of namespace botlib

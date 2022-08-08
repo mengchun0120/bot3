@@ -1,5 +1,6 @@
 #include <commonlib_log.h>
 #include <botlib_context.h>
+#include <botlib_update_context.h>
 #include <botlib_game_map.h>
 #include <botlib_game_object_dumper.h>
 #include <botlib_particle_effect.h>
@@ -34,20 +35,18 @@ void ParticleEffect::present() const
     glDrawArrays(GL_POINTS, 0, t->numParticles());
 }
 
-void ParticleEffect::update(GameMap& map,
-                            GameObjectDumper& dumper,
-                            float timeDelta)
+void ParticleEffect::update(UpdateContext& cxt)
 {
     if (state_ == GameObjectState::ALIVE)
     {
-        elapsedTime_ += timeDelta;
+        elapsedTime_ += cxt.timeDelta();
         if (elapsedTime_ >= getTemplate()->duration())
         {
-            dumper.add(this);
+            cxt.dumper()->add(this);
         }
     }
 
-    GameObject::update(map, dumper, timeDelta);
+    GameObject::update(cxt);
 }
 
 bool ParticleEffect::canBeDumped(GameMap& map) const

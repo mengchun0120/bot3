@@ -118,10 +118,6 @@ void GameMap::removeObj(GameObject* obj)
         {
             player_ = nullptr;
         }
-        else
-        {
-            --aiRobotCount_;
-        }
     }
 
     int layer = getLayer(obj->type());
@@ -227,6 +223,17 @@ bool GameMap::checkCollision(Vector2& delta,
     bool collideObjs = checkNonpassthroughCollide(delta, obj);
 
     return collideBoundary || collideObjs;
+}
+
+void GameMap::decreaseAIRobotCount()
+{
+    if (aiRobotCount_ <= 0)
+    {
+        LOG_WARN << "Something is wrong. No AI robot left!" << LOG_END;
+        return;
+    }
+
+    --aiRobotCount_;
 }
 
 void GameMap::initMapCells(unsigned int rows,

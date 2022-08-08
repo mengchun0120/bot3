@@ -54,9 +54,7 @@ void Goodie::present() const
     CompositeObject::present();
 }
 
-void Goodie::update(GameMap& map,
-                    GameObjectDumper& dumper,
-                    float delta)
+void Goodie::update(UpdateContext& cxt)
 {
 }
 

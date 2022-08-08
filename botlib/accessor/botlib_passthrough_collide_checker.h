@@ -6,16 +6,14 @@
 namespace mcdane {
 namespace botlib {
 
-class GameMap;
+class UpdateContext;
 class Robot;
-class GameObjectDumper;
 class Missile;
 class Goodie;
 
 class PassthroughCollideChecker: public GameMapAccessor {
 public:
-    PassthroughCollideChecker(GameMap& map,
-                              GameObjectDumper& dumper,
+    PassthroughCollideChecker(UpdateContext& cxt,
                               Robot* robot);
 
     bool run(GameObject* obj) override;
@@ -26,8 +24,7 @@ private:
     void collideGoodie(Goodie* goodie);
 
 private:
-    GameMap& map_;
-    GameObjectDumper& dumper_;
+    UpdateContext& cxt_;
     Robot* robot_;
 };
 

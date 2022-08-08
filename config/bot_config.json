@@ -48,6 +48,7 @@
         "chaseShootAIParamLibFile": "chase_shoot_ai_param_lib.json",
         "progressPieTemplateLibFile": "progress_pie_template_lib.json",
         "progressBarTemplateLibFile": "progress_bar_template_lib.json",
+        "iconTemplateLibFile": "icon_template_lib.json",
         "playerTemplateFile": "player_template.json"
     },
     "game": {

@@ -3,6 +3,7 @@
 #include <commonlib_collide.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_string_utils.h>
+#include <botlib_update_context.h>
 #include <botlib_game_map.h>
 #include <botlib_particle_effect.h>
 #include <botlib_missile_hit_checker.h>
@@ -26,17 +27,10 @@ void Missile::init(const MissileTemplate* t,
     resetSpeed();
 }
 
-void Missile::update(GameMap& map,
-                     GameObjectDumper& dumper,
-                     float timeDelta)
+void Missile::update(UpdateContext& cxt)
 {
-    if (state_ != GameObjectState::ALIVE)
-    {
-        GameObject::update(map, dumper, timeDelta);
-        return;
-    }
-
-    Vector2 delta = speed_ * timeDelta;
+    Vector2 delta = speed_ * cxt.timeDelta();
+    GameMap& map = *(cxt.map());
 
     bool collideBoundary = checkRectCollideBoundary(delta, collideRegion(),
                                                     map.boundary(), delta);
@@ -44,14 +38,14 @@ void Missile::update(GameMap& map,
     shiftPos(delta);
     map.repositionObj(this);
 
-    bool collideObjs = checkCollideObjs(map);
+    bool collideObjs = checkCollideObjs(cxt);
 
     if (collideBoundary || collideObjs)
     {
-        explode(map, dumper);
+        explode(cxt);
     }
 
-    GameObject::update(map, dumper, timeDelta);
+    GameObject::update(cxt);
 }
 
 void Missile::setDirection(const commonlib::Vector2& direction1)
@@ -60,15 +54,15 @@ void Missile::setDirection(const commonlib::Vector2& direction1)
     resetSpeed();
 }
 
-void Missile::explode(GameMap& map,
-                      GameObjectDumper& dumper)
+void Missile::explode(UpdateContext& cxt)
 {
-    MissileHitChecker checker(map, *this, true, &dumper);
+    GameMap& map = *(cxt.map());
+    MissileHitChecker checker(cxt, *this, true);
     Region<int> area = map.getCollideArea(explodeRegion());
     map.accessRegion(area, checker);
 
     showExplodeEffect(map);
-    dumper.add(this);
+    cxt.dumper()->add(this);
 }
 
 void Missile::resetSpeed()
@@ -76,9 +70,10 @@ void Missile::resetSpeed()
     speed_ = speedNorm() * direction_;
 }
 
-bool Missile::checkCollideObjs(GameMap& map)
+bool Missile::checkCollideObjs(UpdateContext& cxt)
 {
-    MissileHitChecker checker(map, *this);
+    GameMap& map = *(cxt.map());
+    MissileHitChecker checker(cxt, *this);
     Region<int> area = map.getCollideArea(collideRegion());
     map.accessRegion(area, checker);
 

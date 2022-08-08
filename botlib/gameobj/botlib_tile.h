@@ -26,11 +26,9 @@ public:
 
     void present() const override;
 
-    void update(GameMap& map,
-                GameObjectDumper& dumper,
-                float delta) override;
+    void update(UpdateContext& cxt) override;
 
-    void addHP(float delta);
+    void doDamage(float damage);
 
     bool canBeDumped(GameMap& map) const override;
 

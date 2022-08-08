@@ -186,6 +186,8 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
         jsonParam(progressBarTemplateLibFile_,
                   {"libraries", "progressBarTemplateLibFile"},
                   true, k_nonEmptyStrV),
+        jsonParam(iconTemplateLibFile_, {"libraries", "iconTemplateLibFile"},
+                  true, k_nonEmptyStrV),
         jsonParam(playerTemplateFile_, {"libraries", "playerTemplateFile"},
                   true, k_nonEmptyStrV)
     };
@@ -209,6 +211,7 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
                                     {libDir_, progressPieTemplateLibFile_});
     progressBarTemplateLibFile_ = constructPath(
                                     {libDir_, progressBarTemplateLibFile_});
+    iconTemplateLibFile_ = constructPath({libDir_, iconTemplateLibFile_});
     playerTemplateFile_ = constructPath({libDir_, playerTemplateFile_});
 }
 

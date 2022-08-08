@@ -11,8 +11,9 @@
 namespace mcdane {
 namespace botlib {
 
+class UpdateContext;
 class GameMap;
-class GameObjectDumper;
+class GameObjectTemplate;
 
 class GameObject {
 public:
@@ -20,8 +21,6 @@ public:
         FLAG_INVINCIBLE = 0x00000001,
         FLAG_UPDATED = 0x00000002,
     };
-
-    using Deleter = std::function<void(GameObject*)>;
 
     GameObject();
 
@@ -78,9 +77,7 @@ public:
 
     inline const GameObject* next() const;
 
-    virtual void update(GameMap& map,
-                        GameObjectDumper& dumper,
-                        float timeDelta);
+    virtual void update(UpdateContext& cxt);
 
     virtual void present() const = 0;
 

@@ -30,14 +30,14 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
      inkscape:cx="207.33381"
-     inkscape:cy="114.39977"
+     inkscape:cy="114.14724"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1001"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:window-height="1002"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:pagecheckerboard="0">
     <inkscape:grid
@@ -115,6 +115,16 @@
        inkscape:export-xdpi="93.658539"
        inkscape:export-ydpi="93.658539"
        inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_gun.png" />
+    <rect
+       style="fill:#c3c3c4;fill-opacity:1;stroke:#000000;stroke-width:0.133439;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4524-0-4"
+       width="5.2905211"
+       height="5.3850131"
+       x="116.15604"
+       y="31.117088"
+       inkscape:export-xdpi="60.608818"
+       inkscape:export-ydpi="60.608818"
+       inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\ai_robot_icon.png" />
     <ellipse
        style="fill:#00ffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
        id="path163-1"
@@ -155,6 +165,16 @@
        inkscape:export-ydpi="90.606743"
        rx="2.0983622"
        ry="2.1651795" />
+    <ellipse
+       style="fill:#c3c3c4;fill-opacity:1;stroke:#000000;stroke-width:0.138929;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4518-5-7"
+       cx="118.8013"
+       cy="42.896759"
+       rx="8.3121557"
+       ry="8.3594036"
+       inkscape:export-xdpi="60.608818"
+       inkscape:export-ydpi="60.608818"
+       inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\ai_robot_icon.png" />
   </g>
   <g
      inkscape:groupmode="layer"

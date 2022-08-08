@@ -1,5 +1,6 @@
 #include <commonlib_log.h>
 #include <commonlib_math_utils.h>
+#include <botlib_update_context.h>
 #include <botlib_player.h>
 
 using namespace mcdane::commonlib;
@@ -21,12 +22,10 @@ void Player::init(const PlayerTemplate* t,
     goodieSpacing_ = goodieSpacing;
 }
 
-void Player::update(GameMap& map,
-                    GameObjectDumper& dumper,
-                    float timeDelta)
+void Player::update(UpdateContext& cxt)
 {
-    updateGoodies(timeDelta);
-    Robot::update(map, dumper, timeDelta);
+    updateGoodies(cxt.timeDelta());
+    Robot::update(cxt);
 }
 
 void Player::initGoodies()

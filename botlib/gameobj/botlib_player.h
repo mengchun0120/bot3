@@ -25,9 +25,7 @@ public:
 
     inline const PlayerTemplate* getTemplate() const;
 
-    void update(GameMap& map,
-                GameObjectDumper& dumper,
-                float timeDelta) override;
+    void update(UpdateContext& cxt) override;
 
     void addGoodie(const GoodieTemplate* t);
 

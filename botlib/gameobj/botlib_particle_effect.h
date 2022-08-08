@@ -21,9 +21,7 @@ public:
 
     void present() const override;
 
-    void update(GameMap& map,
-                GameObjectDumper& dumper,
-                float timeDelta) override;
+    void update(UpdateContext& cxt) override;
 
     bool canBeDumped(GameMap& map) const override;
 

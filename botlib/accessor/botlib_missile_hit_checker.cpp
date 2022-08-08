@@ -5,6 +5,7 @@
 #include <botlib_goodie.h>
 #include <botlib_ai_robot.h>
 #include <botlib_context.h>
+#include <botlib_update_context.h>
 #include <botlib_game_map.h>
 #include <botlib_game_object_dumper.h>
 #include <botlib_missile_hit_checker.h>
@@ -17,7 +18,7 @@ namespace botlib {
 namespace {
 
 inline bool isEnemyRobot(GameObject* obj,
-                            Missile& missile)
+                         Missile& missile)
 {
     return obj->type() == GameObjectType::ROBOT &&
            static_cast<Robot*>(obj)->side() != missile.side();
@@ -34,21 +35,14 @@ inline bool check(GameObject* obj, Missile& missile)
 
 } // end of unnamed namespace
 
-MissileHitChecker::MissileHitChecker(GameMap& map,
+MissileHitChecker::MissileHitChecker(UpdateContext& cxt,
                                      Missile& missile,
-                                     bool inflictDamage,
-                                     GameObjectDumper* dumper)
-    : map_(map)
+                                     bool inflictDamage)
+    : cxt_(cxt)
     , missile_(missile)
     , inflictDamage_(inflictDamage)
-    , dumper_(dumper)
     , collide_(false)
 {
-    if (inflictDamage_ && !dumper)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "dumper cannot be null if inflictDamage is true");
-    }
 }
 
 bool MissileHitChecker::run(GameObject* obj)
@@ -77,29 +71,32 @@ bool MissileHitChecker::run(GameObject* obj)
 
 void MissileHitChecker::doDamage(GameObject* obj)
 {
+    GameMap& map = *(cxt_.map());
+    GameObjectDumper* dumper = cxt_.dumper();
+
     if (obj->type() == GameObjectType::ROBOT)
     {
         Robot* robot = static_cast<Robot*>(obj);
-        robot->addHP(-missile_.damage());
+        robot->doDamage(missile_.damage(), cxt_);
 
         if (robot->state() != GameObjectState::ALIVE && robot->side() == Side::AI)
         {
             generateGoodie(static_cast<AIRobot*>(robot));
         }
 
-        if (robot->canBeDumped(map_))
+        if (robot->canBeDumped(map))
         {
-            dumper_->add(robot);
+            dumper->add(robot);
         }
     }
     else if (obj->type() == GameObjectType::TILE)
     {
         Tile* tile = static_cast<Tile*>(obj);
-        tile->addHP(-missile_.damage());
+        tile->doDamage(missile_.damage());
 
-        if (tile->canBeDumped(map_))
+        if (tile->canBeDumped(map))
         {
-            dumper_->add(tile);
+            dumper->add(tile);
         }
     }
 }
@@ -111,7 +108,7 @@ void MissileHitChecker::generateGoodie(AIRobot* robot)
                                 robot->pos());
     if (goodie)
     {
-        map_.addObj(goodie);
+        cxt_.map()->addObj(goodie);
     }
 }
 

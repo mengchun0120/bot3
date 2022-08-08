@@ -1,5 +1,6 @@
 #include <commonlib_log.h>
 #include <botlib_ai.h>
+#include <botlib_update_context.h>
 #include <botlib_ai_robot.h>
 
 using namespace mcdane::commonlib;
@@ -26,16 +27,14 @@ void AIRobot::init(const AIRobotTemplate* t,
     Robot::init(t, Side::AI, pos1, direction1);
 }
 
-void AIRobot::update(GameMap& map,
-                     GameObjectDumper& dumper,
-                     float timeDelta)
+void AIRobot::update(UpdateContext& cxt)
 {
     if (ai_ && state() == GameObjectState::ALIVE)
     {
-        ai_->apply(*this, map, timeDelta);
+        ai_->apply(*this, *(cxt.map()), cxt.timeDelta());
     }
 
-    Robot::update(map, dumper, timeDelta);
+    Robot::update(cxt);
 }
 
 } // end of namespace botlib

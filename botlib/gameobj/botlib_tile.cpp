@@ -3,6 +3,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_math_utils.h>
 #include <botlib_graphics.h>
+#include <botlib_update_context.h>
 #include <botlib_game_map.h>
 #include <botlib_game_object_dumper.h>
 #include <botlib_tile.h>
@@ -29,16 +30,14 @@ void Tile::present() const
     hpIndicator_.present();
 }
 
-void Tile::update(GameMap& map,
-                  GameObjectDumper& dumper,
-                  float delta)
+void Tile::update(UpdateContext& cxt)
 {
     if (state_ == GameObjectState::DYING)
     {
-        dyingTime_ += delta;
+        dyingTime_ += cxt.timeDelta();
         if (dyingTime_ >= getTemplate()->dyingDuration())
         {
-            dumper.add(this);
+            cxt.dumper()->add(this);
         }
         else
         {
@@ -46,19 +45,19 @@ void Tile::update(GameMap& map,
         }
     }
 
-    GameObject::update(map, dumper, delta);
+    GameObject::update(cxt);
 }
 
-void Tile::addHP(float delta)
+void Tile::doDamage(float damage)
 {
-    const TileTemplate* t = getTemplate();
-
-    if (invincible())
+    if (state() != GameObjectState::ALIVE || invincible() || damage <= 0.0f)
     {
         return;
     }
 
-    hp_ = clamp(hp_+delta, 0.0f, t->hp());
+    const TileTemplate* t = getTemplate();
+
+    hp_ = clamp(hp_-damage, 0.0f, t->hp());
     if (hp_ <= 0.0f)
     {
         setState(GameObjectState::DYING);

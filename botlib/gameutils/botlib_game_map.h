@@ -97,6 +97,8 @@ public:
     bool checkCollision(commonlib::Vector2& delta,
                         const GameObject* obj);
 
+    void decreaseAIRobotCount();
+
 private:
     void initObjDeleter();
 
@@ -116,9 +118,6 @@ private:
     void presentObjs();
 
     void presentParticleEffects();
-
-    rapidjson::Value cellsToJson(
-                rapidjson::Document::AllocatorType& allocator) const;
 
     bool checkNonpassthroughCollide(commonlib::Vector2& delta,
                                     const GameObject* obj);

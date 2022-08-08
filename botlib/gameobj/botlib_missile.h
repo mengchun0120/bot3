@@ -30,21 +30,18 @@ public:
 
     inline float damage() const;
 
-    void update(GameMap& map,
-                GameObjectDumper& dumper,
-                float timeDelta) override;
+    void update(UpdateContext& cxt) override;
 
     void setDirection(const commonlib::Vector2& direction1) override;
 
-    void explode(GameMap& map,
-                 GameObjectDumper& dumper);
+    void explode(UpdateContext& cxt);
 
     bool canBeDumped(GameMap& map) const override;
 
 private:
     void resetSpeed();
 
-    bool checkCollideObjs(GameMap& map);
+    bool checkCollideObjs(UpdateContext& cxt);
 
     commonlib::Region<float> explodeRegion();
 

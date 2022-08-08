@@ -31,9 +31,7 @@ public:
 
     void present() const override;
 
-    void update(GameMap& map,
-                GameObjectDumper& dumper,
-                float delta) override;
+    void update(UpdateContext& cxt) override;
 
     void updateActivated(Player& player,
                          float delta);
