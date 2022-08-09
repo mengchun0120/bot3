@@ -39,6 +39,8 @@ public:
     bool canBeDumped(GameMap& map) const override;
 
 private:
+    void updateAlive(UpdateContext& cxt);
+
     void resetSpeed();
 
     bool checkCollideObjs(UpdateContext& cxt);
@@ -51,6 +53,7 @@ private:
     Side side_;
     commonlib::Vector2 speed_;
     float damage_;
+    float livingTime_;
 };
 
 const MissileTemplate* Missile::getTemplate() const

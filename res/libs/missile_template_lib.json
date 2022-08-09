@@ -5,6 +5,7 @@
         "speed": 0.5,
         "explodeBreath": 18.0,
         "energyCost": 5.0,
+        "duration": 20000.0,
         "components": [
             {
                 "template": "green_missile",
@@ -20,6 +21,7 @@
         "speed": 0.1,
         "explodeBreath": 18.0,
         "energyCost": 5.0,
+        "duration": 5000.0,
         "components": [
             {
                 "template": "red_missile",
@@ -35,6 +37,7 @@
         "speed": 0.15,
         "explodeBreath": 18.0,
         "energyCost": 5.0,
+        "duration": 5000.0,
         "components": [
             {
                 "template": "blue_missile",
@@ -50,6 +53,7 @@
         "speed": 0.2,
         "explodeBreath": 18.0,
         "energyCost": 5.0,
+        "duration": 5000.0,
         "components": [
             {
                 "template": "orange_missile",

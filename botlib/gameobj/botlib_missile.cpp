@@ -24,23 +24,19 @@ void Missile::init(const MissileTemplate* t,
     CompositeObject::init(t, pos1, direction1);
     side_ = side;
     damage_ = t->damage() * damageFactor;
+    livingTime_ = 0.0f;
     resetSpeed();
 }
 
 void Missile::update(UpdateContext& cxt)
 {
-    Vector2 delta = speed_ * cxt.timeDelta();
-    GameMap& map = *(cxt.map());
+    livingTime_ += cxt.timeDelta();
 
-    bool collideBoundary = checkRectCollideBoundary(delta, collideRegion(),
-                                                    map.boundary(), delta);
-
-    shiftPos(delta);
-    map.repositionObj(this);
-
-    bool collideObjs = checkCollideObjs(cxt);
-
-    if (collideBoundary || collideObjs)
+    if (livingTime_ < getTemplate()->duration())
+    {
+        updateAlive(cxt);
+    }
+    else
     {
         explode(cxt);
     }
@@ -63,6 +59,25 @@ void Missile::explode(UpdateContext& cxt)
 
     showExplodeEffect(map);
     cxt.dumper()->add(this);
+}
+
+void Missile::updateAlive(UpdateContext& cxt)
+{
+    Vector2 delta = speed_ * cxt.timeDelta();
+    GameMap& map = *(cxt.map());
+
+    bool collideBoundary = checkRectCollideBoundary(delta, collideRegion(),
+                                                    map.boundary(), delta);
+
+    shiftPos(delta);
+    map.repositionObj(this);
+
+    bool collideObjs = checkCollideObjs(cxt);
+
+    if (collideBoundary || collideObjs)
+    {
+        explode(cxt);
+    }
 }
 
 void Missile::resetSpeed()

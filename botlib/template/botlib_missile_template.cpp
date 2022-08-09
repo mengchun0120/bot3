@@ -9,25 +9,6 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-MissileTemplate::MissileTemplate(
-                    float collideBreath1,
-                    float damage1,
-                    float speed1,
-                    float explodeBreath1,
-                    const ParticleEffectTemplate* explodeEffectTemplate1,
-                    std::vector<Component>&& components)
-    : CompositeObjectTemplate(
-        GameObjectType::MISSILE,
-        collideBreath1,
-        false,
-        std::forward<std::vector<Component>>(components))
-    , damage_(damage1)
-    , speed_(speed1)
-    , explodeBreath_(explodeBreath1)
-    , explodeEffectTemplate_(explodeEffectTemplate1)
-{
-}
-
 void MissileTemplate::init(
     const rapidjson::Value& v,
     const ParticleEffectTemplateLib& particleEffectTemplateLib,
@@ -39,6 +20,7 @@ void MissileTemplate::init(
         jsonParam(speed_, "speed", true, gt(0.0f)),
         jsonParam(explodeBreath_, "explodeBreath", true, gt(0.0f)),
         jsonParam(energyCost_, "energyCost", true, ge(0.0f)),
+        jsonParam(duration_, "duration", true, gt(0.0f)),
         jsonParam(explodeEffectName, "explodeEffect", true, k_nonEmptyStrV)
     };
 

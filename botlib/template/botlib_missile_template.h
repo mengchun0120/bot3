@@ -12,13 +12,6 @@ class MissileTemplate: public CompositeObjectTemplate {
 public:
     MissileTemplate() = default;
 
-    MissileTemplate(float collideBreath1,
-                    float damage1,
-                    float speed1,
-                    float explodeBreath1,
-                    const ParticleEffectTemplate* explodeEffectTemplate1,
-                    std::vector<Component>&& components);
-
     ~MissileTemplate() override = default;
 
     void init(const rapidjson::Value& v,
@@ -33,6 +26,8 @@ public:
 
     inline float energyCost() const;
 
+    inline float duration() const;
+
     inline const ParticleEffectTemplate* explodeEffectTemplate() const;
 
 private:
@@ -40,6 +35,7 @@ private:
     float speed_;
     float explodeBreath_;
     float energyCost_;
+    float duration_;
     const ParticleEffectTemplate* explodeEffectTemplate_;
 };
 
@@ -61,6 +57,11 @@ float MissileTemplate::explodeBreath() const
 float MissileTemplate::energyCost() const
 {
     return energyCost_;
+}
+
+float MissileTemplate::duration() const
+{
+    return duration_;
 }
 
 const ParticleEffectTemplate* MissileTemplate::explodeEffectTemplate() const
