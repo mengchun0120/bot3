@@ -33,6 +33,12 @@ public:
               T bottom1,
               T top1);
 
+    void init(const Region& other);
+
+    void init(std::initializer_list<T> i);
+
+    void init(const std::vector<T>& v);
+
     inline T left() const;
 
     inline T right() const;
@@ -65,17 +71,6 @@ private:
 };
 
 template <typename T>
-Region<T> shift(const Region<T>& r,
-                T deltaX,
-                T deltaY)
-{
-    return Region<T>(r.left() + deltaX,
-                     r.right() + deltaX,
-                     r.bottom() + deltaY,
-                     r.top() + deltaY);
-}
-
-template <typename T>
 Region<T>::Region(T left1,
                   T right1,
                   T bottom1,
@@ -90,7 +85,40 @@ Region<T>::Region(T left1,
 template <typename T>
 Region<T>::Region(std::initializer_list<T> i)
 {
-    if (i.size() != 4)
+    init(i);
+}
+
+template <typename T>
+Region<T>::Region(const std::vector<T>& v)
+{
+    init(v);
+}
+
+template <typename T>
+void Region<T>::init(T left1,
+                     T right1,
+                     T bottom1,
+                     T top1)
+{
+    left_ = left1;
+    right_ = right1;
+    bottom_ = bottom1;
+    top_ = top1;
+}
+
+template <typename T>
+void Region<T>::init(const Region& other)
+{
+    left_ = other.left_;
+    right_ = other.right_;
+    bottom_ = other.bottom_;
+    top_ = other.top_;
+}
+
+template <typename T>
+void Region<T>::init(std::initializer_list<T> i)
+{
+    if (i.size() < 4)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Initializer-list has wrong size");
@@ -111,9 +139,9 @@ Region<T>::Region(std::initializer_list<T> i)
 }
 
 template <typename T>
-Region<T>::Region(const std::vector<T>& v)
+void Region<T>::init(const std::vector<T>& v)
 {
-    if (v.size() != 4)
+    if (v.size() < 4)
     {
         THROW_EXCEPT(InvalidArgumentException, "v has wrong size");
     }
@@ -122,18 +150,6 @@ Region<T>::Region(const std::vector<T>& v)
     right_ = v[1];
     bottom_ = v[2];
     top_ = v[3];
-}
-
-template <typename T>
-void Region<T>::init(T left1,
-                     T right1,
-                     T bottom1,
-                     T top1)
-{
-    left_ = left1;
-    right_ = right1;
-    bottom_ = bottom1;
-    top_ = top1;
 }
 
 template <typename T>
@@ -187,10 +203,10 @@ void Region<T>::setTop(T top1)
 template <typename T>
 Region<T>& Region<T>::operator=(const Region& other)
 {
-    left_ = other.left();
-    right_ = other.right();
-    bottom_ = other.bottom();
-    top_ = other.top();
+    left_ = other.left_;
+    right_ = other.right_;
+    bottom_ = other.bottom_;
+    top_ = other.top_;
     return *this;
 }
 
@@ -214,8 +230,53 @@ bool Region<T>::contains(const T& x,
            y <= top_;
 }
 
+template <typename T>
+bool operator==(const Region<T>& r1, const Region<T>& r2)
+{
+    return r1.left() == r2.left() &&
+           r1.right() == r2.right() &&
+           r1.bottom() == r2.bottom() &&
+           r1.top() == r2.top();
+}
+
+template <typename T>
+Region<T> shift(const Region<T>& r,
+                T deltaX,
+                T deltaY)
+{
+    return Region<T>(r.left() + deltaX,
+                     r.right() + deltaX,
+                     r.bottom() + deltaY,
+                     r.top() + deltaY);
+}
+
+template <typename T>
+bool overlap(const Region<T>& r1,
+             const Region<T>& r2)
+{
+    return r1.left() <= r2.right() &&
+           r1.right() >= r2.left() &&
+           r1.bottom() <= r2.top() &&
+           r1.top() >= r2.bottom();
+}
+
 } // end of namespace commonlib
 } // end of namespace mcdane
+
+namespace std {
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os,
+                         const mcdane::commonlib::Region<T>& r)
+{
+    return os << "Region(left=" << r.left()
+              << ", right=" << r.right()
+              << ", bottom=" << r.bottom()
+              << ", top=" << r.top()
+              << ")";
+}
+
+} // end of namespace std
 
 #endif
 

@@ -52,6 +52,7 @@ set(BOTLIB_GAMEUTILS_SRC
     gameutils/botlib_game_map.cpp
     gameutils/botlib_game_map_loader.cpp
     gameutils/botlib_game_object_dumper.cpp
+    gameutils/botlib_game_utils.cpp
     gameutils/botlib_goodie_generator.cpp
     gameutils/botlib_time_delta_smoother.cpp)
 
