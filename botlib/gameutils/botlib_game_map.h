@@ -9,6 +9,7 @@
 #include <commonlib_linked_list.h>
 #include <commonlib_region.h>
 #include <botlib_game_object.h>
+#include <botlib_game_object_presenter.h>
 #include <botlib_typedef.h>
 
 namespace mcdane {
@@ -140,6 +141,7 @@ private:
     commonlib::Region<int> presentArea_;
     Player* player_;
     int aiRobotCount_;
+    GameObjectPresenter objPresenter_;
 };
 
 int GameMap::rowCount() const

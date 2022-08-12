@@ -6,7 +6,6 @@
 #include <commonlib_math_utils.h>
 #include <commonlib_collide.h>
 #include <botlib_context.h>
-#include <botlib_game_object_presenter.h>
 #include <botlib_nonpassthrough_collide_checker.h>
 #include <botlib_player.h>
 #include <botlib_game_map.h>
@@ -327,9 +326,7 @@ void GameMap::presentObjs()
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
-
-    GameObjectPresenter presenter;
-    accessRegion(presentArea_, presenter, 0, 3);
+    accessRegion(presentArea_, objPresenter_, 0, 3);
 }
 
 void GameMap::presentParticleEffects()
@@ -338,9 +335,7 @@ void GameMap::presentParticleEffects()
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
-
-    GameObjectPresenter presenter;
-    accessRegion(presentArea_, presenter, 3, 1);
+    accessRegion(presentArea_, objPresenter_, 3, 1);
 }
 
 bool GameMap::checkNonpassthroughCollide(commonlib::Vector2& delta,

@@ -8,6 +8,9 @@
 #include <botlib_message_box.h>
 #include <botlib_icon.h>
 #include <botlib_update_context.h>
+#include <botlib_game_object_remover.h>
+#include <botlib_game_object_flag_resetter.h>
+#include <botlib_game_object_updater.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -15,7 +18,7 @@ namespace botlib {
 
 class GameScreen: public Screen {
 public:
-    GameScreen() = default;
+    GameScreen();
 
     GameScreen(const commonlib::Vector2& viewportSize,
                const AppActions actions);
@@ -73,18 +76,24 @@ private:
 
     void onAIRobotDeath();
 
+    void clearObjectsFromMoveOutRegion(int moveOutRegionCount);
+
 private:
     GameMap map_;
     GameObjectDumper objDumper_;
     UpdateContext cxt_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 overlayViewportOrigin_;
+    GameObjectUpdater objUpdater_;
+    GameObjectFlagResetter objFlagResetter_;
+    GameObjectRemover objRemover_;
     ProgressBar armorProgressBar_;
     ProgressBar energyProgressBar_;
     MessageBox msgBox_;
     Icon aiRobotCountIcon_;
     commonlib::Vector2 aiRobotCountPos_;
     std::string aiRobotCountStr_;
+    std::vector<commonlib::Region<int>> moveOutRegions_;
 };
 
 bool GameScreen::isPlayerAvailable()

@@ -4,8 +4,7 @@
 #include <botlib_game_map_loader.h>
 #include <botlib_context.h>
 #include <botlib_player.h>
-#include <botlib_game_object_flag_resetter.h>
-#include <botlib_game_object_updater.h>
+#include <botlib_game_utils.h>
 #include <botlib_game_screen.h>
 
 using namespace mcdane::commonlib;
@@ -13,8 +12,18 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-GameScreen::GameScreen(const Vector2& viewportSize,
+GameScreen::GameScreen()
+    : objUpdater_(cxt_)
+    , objFlagResetter_(GameObject::FLAG_UPDATED, false)
+    , objRemover_(objDumper_, map_)
+{
+}
+
+GameScreen::GameScreen(const commonlib::Vector2& viewportSize,
                        const AppActions actions)
+    : objUpdater_(cxt_)
+    , objFlagResetter_(GameObject::FLAG_UPDATED, false)
+    , objRemover_(objDumper_, map_)
 {
     init(viewportSize, actions);
 }
@@ -40,6 +49,7 @@ void GameScreen::init(const Vector2& viewportSize,
     initProgressBar();
     initMessageBox();
     initAIRobotCount();
+    moveOutRegions_.resize(4);
 }
 
 void GameScreen::update(float timeDelta)
@@ -51,6 +61,8 @@ void GameScreen::update(float timeDelta)
 
     cxt_.setTimeDelta(timeDelta);
 
+    Region<int> prevArea = map_.presentArea();
+
     if (map_.player())
     {
         updatePlayer();
@@ -61,6 +73,12 @@ void GameScreen::update(float timeDelta)
     if (map_.player())
     {
         updateProgressBar();
+    }
+
+    int moveOutRegionCount = diff(moveOutRegions_, prevArea, map_.presentArea());
+    if (moveOutRegionCount > 0)
+    {
+        clearObjectsFromMoveOutRegion(moveOutRegionCount);
     }
 
     if (!objDumper_.empty())
@@ -274,11 +292,8 @@ void GameScreen::updatePlayer()
 
 void GameScreen::updateObjects()
 {
-    GameObjectFlagResetter flagResetter(GameObject::FLAG_UPDATED, false);
-    map_.accessRegion(map_.presentArea(), flagResetter);
-
-    GameObjectUpdater updater(cxt_);
-    map_.accessRegion(map_.presentArea(), updater);
+    map_.accessRegion(map_.presentArea(), objFlagResetter_);
+    map_.accessRegion(map_.presentArea(), objUpdater_);
 }
 
 void GameScreen::updateProgressBar()
@@ -340,6 +355,14 @@ void GameScreen::onAIRobotDeath()
 {
     map_.decreaseAIRobotCount();
     updateAIRobotCount();
+}
+
+void GameScreen::clearObjectsFromMoveOutRegion(int moveOutRegionCount)
+{
+    for (int i = 0; i < moveOutRegionCount; ++i)
+    {
+        map_.accessRegion(moveOutRegions_[i], objRemover_);
+    }
 }
 
 } // end of namespace botlib
