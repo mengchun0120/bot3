@@ -14,7 +14,7 @@ void PlayerTemplate::init(const std::string& playerTemplateFile,
     rapidjson::Document doc;
     readJson(doc, playerTemplateFile);
 
-    RobotTemplate::init(doc, missileTemplateLib, componentTemplateLib);
+    RobotTemplate::init("player", doc, missileTemplateLib, componentTemplateLib);
 }
 
 } // end of namespace botlib

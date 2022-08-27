@@ -8,6 +8,7 @@ set(BOTLIB_DIR
     ${CMAKE_SOURCE_DIR}/botlib/app
     ${CMAKE_SOURCE_DIR}/botlib/gameobj
     ${CMAKE_SOURCE_DIR}/botlib/gameutils
+    ${CMAKE_SOURCE_DIR}/botlib/map_generator
     ${CMAKE_SOURCE_DIR}/botlib/misc
     ${CMAKE_SOURCE_DIR}/botlib/opengl
     ${CMAKE_SOURCE_DIR}/botlib/screen
@@ -26,6 +27,6 @@ set(COMMONLIB_DIR
 
 add_subdirectory(commonlib)
 add_subdirectory(botlib)
-add_subdirectory(main)
+add_subdirectory(app)
 add_subdirectory(unittest)
 add_subdirectory(itest)

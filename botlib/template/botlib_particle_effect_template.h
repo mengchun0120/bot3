@@ -14,18 +14,10 @@ class ParticleEffectTemplate: public GameObjectTemplate {
 public:
     ParticleEffectTemplate() = default;
 
-    ParticleEffectTemplate(float acceleration1,
-                           float duration1,
-                           float particleSize1,
-                           const std::vector<commonlib::Vector2>& startPos,
-                           const std::vector<commonlib::Vector2>& direction,
-                           const std::vector<float>& initSpeed,
-                           const commonlib::Texture* texture1,
-                           const commonlib::Color& color1);
-
     ~ParticleEffectTemplate() override = default;
 
-    void init(const rapidjson::Value& v,
+    void init(const std::string& name,
+              const rapidjson::Value& v,
               const TextureLib& textureLib,
               const std::string& dataDir);
 

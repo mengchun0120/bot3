@@ -14,7 +14,8 @@ public:
 
     ~MissileTemplate() override = default;
 
-    void init(const rapidjson::Value& v,
+    void init(const std::string& name,
+              const rapidjson::Value& v,
               const ParticleEffectTemplateLib& particleEffectTemplateLib,
               const ComponentTemplateLib& componentTemplateLib);
 

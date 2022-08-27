@@ -139,7 +139,7 @@ void GameLib::initTileTemplateLib(const std::string& tileTemplateLibFile)
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        t.init(v, componentTemplateLib_);
+        t.init(name, v, componentTemplateLib_);
     };
 
     tileTemplateLib_.init(tileTemplateLibFile, parser);
@@ -154,7 +154,7 @@ void GameLib::initGoodieTemplateLib(const std::string& goodieTemplateLibFile)
                       const rapidjson::Value& v)
     {
         GoodieType type = toGoodieType(name);
-        t.init(type, v, componentTemplateLib_, progressPieTemplateLib_);
+        t.init(type, name, v, componentTemplateLib_, progressPieTemplateLib_);
     };
 
     goodieTemplateLib_.init(goodieTemplateLibFile, parser);
@@ -170,7 +170,7 @@ void GameLib::initParticleEffectTemplateLib(
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        t.init(v, textureLib_, dataDir);
+        t.init(name, v, textureLib_, dataDir);
     };
 
     particleEffectTemplateLib_.init(particleEffectTemplateLibFile, parser);
@@ -214,7 +214,7 @@ void GameLib::initMissileTemplateLib(const std::string& missileTemplateLibFile)
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        t.init(v, particleEffectTemplateLib_, componentTemplateLib_);
+        t.init(name, v, particleEffectTemplateLib_, componentTemplateLib_);
     };
 
     missileTemplateLib_.init(missileTemplateLibFile, parser);
@@ -228,7 +228,7 @@ void GameLib::initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile)
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        t.init(v, missileTemplateLib_, componentTemplateLib_);
+        t.init(name, v, missileTemplateLib_, componentTemplateLib_);
     };
 
     aiRobotTemplateLib_.init(aiRobotTemplateLibFile, parser);

@@ -11,7 +11,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void RobotTemplate::init(const rapidjson::Value& v,
+void RobotTemplate::init(const std::string& name,
+                         const rapidjson::Value& v,
                          const MissileTemplateLib& missileTemplateLib,
                          const ComponentTemplateLib& componentTemplateLib)
 {
@@ -40,7 +41,8 @@ void RobotTemplate::init(const rapidjson::Value& v,
                      "Failed to find MissileTemplate " + missileName);
     }
 
-    CompositeObjectTemplate::init(GameObjectType::ROBOT, v, componentTemplateLib);
+    CompositeObjectTemplate::init(GameObjectType::ROBOT, name,
+                                  v, componentTemplateLib);
 }
 
 } // end of namespace botlib

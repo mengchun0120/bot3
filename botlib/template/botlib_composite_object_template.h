@@ -13,19 +13,10 @@ class CompositeObjectTemplate: public GameObjectTemplate {
 public:
     CompositeObjectTemplate() = default;
 
-    CompositeObjectTemplate(GameObjectType t,
-                            float collideBreath,
-                            bool invincible,
-                            std::vector<Component>&& components);
-
     ~CompositeObjectTemplate() override = default;
 
     void init(GameObjectType t,
-              float collideBreath,
-              bool invincible,
-              std::vector<Component>&& components);
-
-    void init(GameObjectType t,
+              const std::string& name,
               const rapidjson::Value& v,
               const ComponentTemplateLib& componentTemplateLib);
 

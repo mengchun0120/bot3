@@ -22,8 +22,7 @@ set(BOTLIB_AI_SRC
 
 set(BOTLIB_APP_SRC
     app/botlib_app_actions.cpp
-    app/botlib_app_config.cpp
-    app/botlib_bot_app.cpp)
+    app/botlib_app_config.cpp)
 
 set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_ai_robot.cpp
@@ -56,6 +55,12 @@ set(BOTLIB_GAMEUTILS_SRC
     gameutils/botlib_game_utils.cpp
     gameutils/botlib_goodie_generator.cpp
     gameutils/botlib_time_delta_smoother.cpp)
+
+set(BOTLIB_MAP_GENERATOR_SRC
+    map_generator/botlib_game_map_generator.cpp
+    map_generator/botlib_game_map_generator_config.cpp
+    map_generator/botlib_island_map_generator.cpp
+    map_generator/botlib_island_map_generator_config.cpp)
 
 set(BOTLIB_MISC_SRC
     misc/botlib_constants.cpp
@@ -117,6 +122,7 @@ set(BOTLIB_SRC
     ${BOTLIB_AI_SRC}
     ${BOTLIB_GAMEOBJ_SRC}
     ${BOTLIB_GAMEUTILS_SRC}
+    ${BOTLIB_MAP_GENERATOR_SRC}
     ${BOTLIB_MISC_SRC}
     ${BOTLIB_OPENGL_SRC}
     ${BOTLIB_SCREEN_SRC}

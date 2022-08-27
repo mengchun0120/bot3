@@ -32,6 +32,8 @@ public:
 
     void traverse(NodeAccessor accessor) const;
 
+    void getAll(std::vector<const T*>& nodes) const;
+
     inline int size() const;
 
 private:
@@ -86,6 +88,23 @@ void NamedMap<T>::traverse(NodeAccessor accessor) const
         {
             break;
         }
+    }
+}
+
+template <typename T>
+void NamedMap<T>::getAll(std::vector<const T*>& nodes) const
+{
+    if (size() == 0)
+    {
+        return;
+    }
+
+    int i = 0;
+
+    nodes.resize(size());
+    for (auto it = map_.cbegin(); it != map_.end(); ++it, ++i)
+    {
+        nodes[i] = &(it->second);
     }
 }
 

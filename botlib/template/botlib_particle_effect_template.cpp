@@ -13,31 +13,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-ParticleEffectTemplate::ParticleEffectTemplate(float acceleration1,
-                                               float duration1,
-                                               float particleSize1,
-                                               const std::vector<Vector2>& startPos,
-                                               const std::vector<Vector2>& direction,
-                                               const std::vector<float>& initSpeed,
-                                               const Texture* texture1,
-                                               const Color& color1)
-    : GameObjectTemplate(GameObjectType::EFFECT, 0.0f, 0.0f)
-    , numParticles_(startPos.size())
-    , acceleration_(acceleration1)
-    , duration_(duration1)
-    , particleSize_(particleSize1)
-    , texture_(texture1)
-    , color_(color1)
-{
-    loadVertexArray(startPos, direction, initSpeed);
-    resetSpan(startPos, direction, initSpeed);
-
-    LOG_DEBUG << "numParticles=" << numParticles_
-              << " particleSize=" << particleSize_
-              << LOG_END;
-}
-
-void ParticleEffectTemplate::init(const rapidjson::Value& v,
+void ParticleEffectTemplate::init(const std::string& name,
+                                  const rapidjson::Value& v,
                                   const TextureLib& textureLib,
                                   const std::string& libDir)
 {
@@ -69,7 +46,7 @@ void ParticleEffectTemplate::init(const rapidjson::Value& v,
     loadVertexArray(startPos, direction, initSpeed);
     resetSpan(startPos, direction, initSpeed);
 
-    GameObjectTemplate::init(GameObjectType::EFFECT, v);
+    GameObjectTemplate::init(GameObjectType::EFFECT, name, v);
 }
 
 

@@ -20,6 +20,7 @@ public:
     ~GoodieTemplate() override = default;
 
     void init(GoodieType goodieType1,
+              const std::string& name,
               const rapidjson::Value& v,
               const ComponentTemplateLib& componentTemplateLib,
               const ProgressPieTemplateLib& progressPieTemplateLib);

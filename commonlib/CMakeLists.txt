@@ -30,6 +30,7 @@ set(COMMONLIB_MISC_SRC
     misc/commonlib_log.cpp
     misc/commonlib_out_utils.cpp
     misc/commonlib_parse.cpp
+    misc/commonlib_random.cpp
     misc/commonlib_string_utils.cpp
     misc/commonlib_time_utils.cpp
     misc/commonlib_validator.cpp)

@@ -4,12 +4,13 @@
 #include <botlib_context.h>
 #include <botlib_button.h>
 #include <botlib_start_screen.h>
-#include <botlib_bot_app.h>
+#include <bot_app.h>
 
 using namespace mcdane::commonlib;
+using namespace mcdane::botlib;
 
 namespace mcdane {
-namespace botlib {
+namespace bot {
 
 BotApp::BotApp(const std::string& configFile,
                const std::string& appDir)
@@ -106,6 +107,6 @@ void BotApp::exitApp()
     setRunning(false);
 }
 
-} // end of namespace botlib
+} // end of namespace bot
 } // end of namespace mcdane
 

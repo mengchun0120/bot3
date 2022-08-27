@@ -10,6 +10,7 @@ namespace mcdane {
 namespace botlib {
 
 void MissileTemplate::init(
+    const std::string& name,
     const rapidjson::Value& v,
     const ParticleEffectTemplateLib& particleEffectTemplateLib,
     const ComponentTemplateLib& componentTemplateLib)
@@ -33,7 +34,8 @@ void MissileTemplate::init(
                      "Failed to find explode effect " + explodeEffectName);
     }
 
-    CompositeObjectTemplate::init(GameObjectType::MISSILE, v, componentTemplateLib);
+    CompositeObjectTemplate::init(GameObjectType::MISSILE, name,
+                                  v, componentTemplateLib);
 }
 
 } // end of namespace botlib

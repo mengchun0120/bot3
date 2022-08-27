@@ -11,34 +11,14 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-CompositeObjectTemplate::CompositeObjectTemplate(
-                                    GameObjectType t,
-                                    float collideBreath,
-                                    bool invincible,
-                                    std::vector<Component>&& components)
-    : GameObjectTemplate(t, 0.0f, collideBreath, invincible)
-    , components_(std::forward<std::vector<Component>>(components))
-{
-    resetSpan();
-}
-
-void CompositeObjectTemplate::init(GameObjectType t,
-                                   float collideBreath,
-                                   bool invincible,
-                                   std::vector<Component>&& components)
-{
-    GameObjectTemplate::init(t, 0.0f, collideBreath, invincible);
-    components_ = std::move(components);
-    resetSpan();
-}
-
 void CompositeObjectTemplate::init(
     GameObjectType t,
+    const std::string& name,
     const rapidjson::Value& v,
     const ComponentTemplateLib& componentTemplateLib)
 {
     initComponents(v, componentTemplateLib);
-    GameObjectTemplate::init(t, v);
+    GameObjectTemplate::init(t, name, v);
     resetSpan();
 }
 

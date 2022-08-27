@@ -90,6 +90,10 @@ App::~App()
 #endif
 }
 
+void App::process()
+{
+}
+
 #ifdef DESKTOP_APP
 void App::setupWindow(unsigned int width,
                       unsigned int height,

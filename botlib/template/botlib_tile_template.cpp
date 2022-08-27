@@ -8,6 +8,7 @@ namespace mcdane {
 namespace botlib {
 
 void TileTemplate::init(
+    const std::string& name,
     const rapidjson::Value& v,
     const ComponentTemplateLib& componentTemplateLib)
 {
@@ -17,7 +18,8 @@ void TileTemplate::init(
     };
 
     parse(params, v);
-    CompositeObjectTemplate::init(GameObjectType::TILE, v, componentTemplateLib);
+    CompositeObjectTemplate::init(GameObjectType::TILE, name,
+                                  v, componentTemplateLib);
 }
 
 } // end of namespace botlib

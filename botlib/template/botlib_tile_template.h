@@ -12,7 +12,8 @@ public:
 
     ~TileTemplate() override = default;
 
-    void init(const rapidjson::Value& v,
+    void init(const std::string& name,
+              const rapidjson::Value& v,
               const ComponentTemplateLib& componentTemplateLib);
 
     inline float hp() const;

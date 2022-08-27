@@ -10,38 +10,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-GameObjectTemplate::GameObjectTemplate(GameObjectType t,
-                                       float span,
-                                       float collideBreath,
-                                       bool invincible)
-{
-    init(t, span, collideBreath, invincible);
-}
-
 void GameObjectTemplate::init(GameObjectType t,
-                              float span,
-                              float collideBreath,
-                              bool invincible)
-{
-    if (!isValidGameObjectType(t))
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid type " + std::to_string(static_cast<int>(t)));
-    }
-
-    if (span < 0.0f)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid span " + std::to_string(span));
-    }
-
-    type_ = t;
-    span_ = span;
-    collideBreath_ = collideBreath;
-    invincible_ = invincible;
-}
-
-void GameObjectTemplate::init(GameObjectType t,
+                              const std::string& name,
                               const rapidjson::Value& v)
 {
     if (!isValidGameObjectType(t))
@@ -51,6 +21,7 @@ void GameObjectTemplate::init(GameObjectType t,
     }
 
     type_ = t;
+    name_ = name;
 
     std::vector<JsonParamPtr> params{
         jsonParam(collideBreath_, "collideBreath", true, ge(0.0f)),

@@ -20,7 +20,7 @@ public:
 
     virtual ~App();
 
-    virtual void process() = 0;
+    virtual void process();
 
     void postProcess();
 
@@ -34,7 +34,7 @@ public:
         return window_;
     }
 
-    void run();
+    virtual void run();
 #endif
 
     float viewportWidth() const

@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_GAME_OBJECT_TEMPLATE_H
 #define INCLUDED_BOTLIB_GAME_OBJECT_TEMPLATE_H
 
+#include <string>
 #include <botlib_game_object_type.h>
 
 namespace mcdane {
@@ -10,22 +11,15 @@ class GameObjectTemplate {
 public:
     GameObjectTemplate() = default;
 
-    GameObjectTemplate(GameObjectType t,
-                       float span,
-                       float collideBreath,
-                       bool invincible=false);
-
     virtual ~GameObjectTemplate() = default;
 
     void init(GameObjectType t,
-              float span,
-              float collideBreath,
-              bool invincible=false);
-
-    void init(GameObjectType t,
+              const std::string& name,
               const rapidjson::Value& v);
 
     inline GameObjectType type() const;
+
+    inline const std::string& name() const;
 
     inline float span() const;
 
@@ -35,6 +29,7 @@ public:
 
 protected:
     GameObjectType type_;
+    std::string name_;
     float span_;
     float collideBreath_;
     bool invincible_;
@@ -43,6 +38,11 @@ protected:
 GameObjectType GameObjectTemplate::type() const
 {
     return type_;
+}
+
+const std::string& GameObjectTemplate::name() const
+{
+    return name_;
 }
 
 float GameObjectTemplate::span() const

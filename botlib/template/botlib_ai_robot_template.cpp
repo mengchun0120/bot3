@@ -11,7 +11,8 @@ AIRobotTemplate::AIRobotTemplate()
 {
 }
 
-void AIRobotTemplate::init(const rapidjson::Value& v,
+void AIRobotTemplate::init(const std::string& name,
+                           const rapidjson::Value& v,
                            const MissileTemplateLib& missileTemplateLib,
                            const ComponentTemplateLib& componentTemplateLib)
 {
@@ -23,7 +24,7 @@ void AIRobotTemplate::init(const rapidjson::Value& v,
 
     parse(params, v);
 
-    RobotTemplate::init(v, missileTemplateLib, componentTemplateLib);
+    RobotTemplate::init(name, v, missileTemplateLib, componentTemplateLib);
 }
 
 } // end of namespace botlib

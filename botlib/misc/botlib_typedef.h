@@ -45,7 +45,6 @@ using ProgressBarTemplateLib = commonlib::NamedMap<ProgressBarTemplate>;
 using IconTemplateLib = commonlib::NamedMap<IconTemplate>;
 using GameObjectList = commonlib::LinkedList<GameObject>;
 
-
 } // end of namespace botlib
 } // end of namespace mcdane
 
