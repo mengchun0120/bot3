@@ -100,6 +100,9 @@ public:
 
     void decreaseAIRobotCount();
 
+    bool canBePlaced(const commonlib::Vector2& pos,
+                     float collideBreath);
+
 private:
     void initObjDeleter();
 

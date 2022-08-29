@@ -1,4 +1,5 @@
 #include <ctime>
+#include <algorithm>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <botlib_game_lib.h>
@@ -47,9 +48,10 @@ void GameMapGenerator::initOccupied(int rowCount,
                                     int colCount)
 {
     occupied_.resize(rowCount);
-    for (auto& row: occupied_)
+    for (auto it = occupied_.begin(); it != occupied_.end(); ++it)
     {
-        row.resize(colCount);
+        it->resize(colCount);
+        std::fill(it->begin(), it->end(), false);
     }
 }
 
@@ -62,11 +64,6 @@ void GameMapGenerator::initAIRobotTemplates()
 {
     lib_.aiRobotTemplateLib().getAll(aiRobotTemplates_);
 }
-
-bool checkCollide(GameMap& map,
-                      const commonlib::Vector2& pos,
-                      float collideBreath);
-
 
 } // end of namespace botlib
 } // end of namespace mcdane

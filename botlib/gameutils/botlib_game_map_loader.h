@@ -44,9 +44,6 @@ private:
     void addPlayer(GameMap& map,
                    const rapidjson::Value& v);
 
-    bool checkCollide(GameMap& map,
-                      float collideBreath);
-
     void calculatePlayerGoodiePos(float& goodieY,
                                   float& goodieStartX,
                                   float& goodieSpacing);

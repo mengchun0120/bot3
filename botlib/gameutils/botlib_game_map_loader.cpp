@@ -10,7 +10,6 @@
 #include <botlib_ai_robot.h>
 #include <botlib_particle_effect.h>
 #include <botlib_player.h>
-#include <botlib_add_object_checker.h>
 #include <botlib_game_map_loader.h>
 
 using namespace mcdane::commonlib;
@@ -150,8 +149,7 @@ void GameMapLoader::addTile(GameMap& map,
                      "Failed to find TileTemplate " + templateStr_);
     }
 
-    bool collide = checkCollide(map, t->collideBreath());
-    if (collide)
+    if (!map.canBePlaced(pos_, t->collideBreath()))
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Tile " + templateStr_ + " cannot be placed in map");
@@ -177,8 +175,7 @@ void GameMapLoader::addGoodie(GameMap& map,
                      "Failed to find GoodieTemplate " + templateStr_);
     }
 
-    bool collide = checkCollide(map, t->collideBreath());
-    if (collide)
+    if (!map.canBePlaced(pos_, t->collideBreath()))
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Goodie " + templateStr_ + " cannot be placed in map");
@@ -204,8 +201,7 @@ void GameMapLoader::addMissile(GameMap& map,
                      "Failed to find MissileTemplate " + templateStr_);
     }
 
-    bool collide = checkCollide(map, t->collideBreath());
-    if (collide)
+    if (!map.canBePlaced(pos_, t->collideBreath()))
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Missile " + templateStr_ + " cannot be placed in map");
@@ -233,9 +229,7 @@ void GameMapLoader::addAIRobot(GameMap& map,
                      "Failed to find AIRobotTemplate " + templateStr_);
     }
 
-    bool collide = checkCollide(map, t->collideBreath());
-
-    if (collide)
+    if (!map.canBePlaced(pos_, t->collideBreath()))
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Robot " + templateStr_ + " cannot be placed in map");
@@ -271,9 +265,7 @@ void GameMapLoader::addPlayer(GameMap& map,
 {
     const PlayerTemplate& t = Context::gameLib().playerTemplate();
 
-    bool collide = checkCollide(map, t.collideBreath());
-
-    if (collide)
+    if (!map.canBePlaced(pos_, t.collideBreath()))
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Player cannot be placed in map");
@@ -288,24 +280,6 @@ void GameMapLoader::addPlayer(GameMap& map,
     player->init(&t, pos_, direction_, goodieY, goodieStartX, goodieSpacing);
 
     map.addObj(player);
-}
-
-bool GameMapLoader::checkCollide(GameMap& map,
-                                 float collideBreath)
-{
-    Region<float> r{pos_[0]-collideBreath, pos_[0]+collideBreath,
-                    pos_[1]-collideBreath, pos_[1]+collideBreath};
-
-    if (checkRectCollideBoundary(r, map.boundary()))
-    {
-        return true;
-    }
-
-    AddObjectChecker checker(r);
-    Region<int> area = map.getCollideArea(r);
-    map.accessRegion(area, checker);
-
-    return checker.collide();
 }
 
 void GameMapLoader::calculatePlayerGoodiePos(float& goodieY,

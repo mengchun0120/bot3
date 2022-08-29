@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.10)
 set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 
 set(BOTLIB_ACCESSOR_SRC
-    accessor/botlib_add_object_checker.cpp
     accessor/botlib_game_map_accessor.cpp
     accessor/botlib_game_object_flag_resetter.cpp
     accessor/botlib_game_object_presenter.cpp
@@ -11,7 +10,8 @@ set(BOTLIB_ACCESSOR_SRC
     accessor/botlib_game_object_updater.cpp
     accessor/botlib_missile_hit_checker.cpp
     accessor/botlib_nonpassthrough_collide_checker.cpp
-    accessor/botlib_passthrough_collide_checker.cpp)
+    accessor/botlib_passthrough_collide_checker.cpp
+    accessor/botlib_place_in_map_checker.cpp)
 
 set(BOTLIB_AI_SRC
     ai/botlib_ai.cpp

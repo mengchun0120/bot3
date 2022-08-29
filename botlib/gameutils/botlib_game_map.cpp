@@ -7,6 +7,7 @@
 #include <commonlib_collide.h>
 #include <botlib_context.h>
 #include <botlib_nonpassthrough_collide_checker.h>
+#include <botlib_place_in_map_checker.h>
 #include <botlib_player.h>
 #include <botlib_game_map.h>
 
@@ -204,7 +205,10 @@ void GameMap::accessRegion(const Region<int>& r,
                 for (GameObject* obj = objs.first(); obj; obj = next)
                 {
                     next = obj->next();
-                    accessor.run(obj);
+                    if (!accessor.run(obj))
+                    {
+                        return;
+                    }
                 }
             }
         }
@@ -233,6 +237,23 @@ void GameMap::decreaseAIRobotCount()
     }
 
     --aiRobotCount_;
+}
+
+bool GameMap::canBePlaced(const commonlib::Vector2& pos,
+                          float collideBreath)
+{
+    Region<float> region{pos[0]-collideBreath, pos[0]+collideBreath,
+                         pos[1]-collideBreath, pos[1]+collideBreath};
+
+    if (checkRectCollideBoundary(region, boundary()))
+    {
+        return false;
+    }
+
+    PlaceInMapChecker checker(region);
+    accessRegion(getCollideArea(region), checker, 0, 2);
+
+    return !checker.collide();
 }
 
 void GameMap::initMapCells(unsigned int rows,

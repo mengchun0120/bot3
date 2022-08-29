@@ -1,5 +1,5 @@
-#ifndef INCLUDED_BOTLIB_ADD_OBJECT_CHECHER
-#define INCLUDED_BOTLIB_ADD_OBJECT_CHECHER
+#ifndef INCLUDED_BOTLIB_PLACE_IN_MAP_CHECHER
+#define INCLUDED_BOTLIB_PLACE_IN_MAP_CHECHER
 
 #include <commonlib_region.h>
 #include <botlib_game_map_accessor.h>
@@ -7,9 +7,9 @@
 namespace mcdane {
 namespace botlib {
 
-class AddObjectChecker: public GameMapAccessor {
+class PlaceInMapChecker: public GameMapAccessor {
 public:
-    AddObjectChecker(const commonlib::Region<float>& collideRegion);
+    PlaceInMapChecker(const commonlib::Region<float>& collideRegion);
 
     void reset(const commonlib::Region<float>& collideRegion);
 
@@ -22,7 +22,7 @@ private:
     commonlib::Region<float> collideRegion_;
 };
 
-bool AddObjectChecker::collide() const
+bool PlaceInMapChecker::collide() const
 {
     return collide_;
 }
