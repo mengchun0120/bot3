@@ -32,6 +32,8 @@ public:
 
     static int getLayer(GameObjectType type);
 
+    inline static int getAbsCellIdx(float x);
+
     GameMap() = default;
 
     ~GameMap() = default;
@@ -147,6 +149,11 @@ private:
     GameObjectPresenter objPresenter_;
 };
 
+int GameMap::getAbsCellIdx(float x)
+{
+    return static_cast<int>(floor(x / k_cellBreath));
+}
+
 int GameMap::rowCount() const
 {
     return static_cast<int>(cells_.size());
@@ -194,7 +201,7 @@ const commonlib::Region<int>& GameMap::presentArea() const
 
 int GameMap::getCellIdx(float x) const
 {
-    return static_cast<int>(floor(x / k_cellBreath)) + extraCell_;
+    return getAbsCellIdx(x) + extraCell_;
 }
 
 const Player* GameMap::player() const

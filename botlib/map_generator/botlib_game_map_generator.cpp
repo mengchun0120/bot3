@@ -44,6 +44,23 @@ const AIRobotTemplate* GameMapGenerator::randoAIRobotTemplate()
     return aiRobotTemplates_[index];
 }
 
+void GameMapGenerator::addObj(GameMap& map,
+                              const GameObject* obj)
+{
+    int startRow = GameMap::getAbsCellIdx(obj->collideBottom());
+    int endRow = GameMap::getAbsCellIdx(obj->collideTop());
+    int startCol = GameMap::getAbsCellIdx(obj->collideLeft());
+    int endCol = GameMap::getAbsCellIdx(obj->collideRight());
+
+    for (int r = startRow; r <= endRow; ++r)
+    {
+        for (int c = startCol; c <= endCol; ++c)
+        {
+            occupied_[r][c] = true;
+        }
+    }
+}
+
 void GameMapGenerator::initOccupied(int rowCount,
                                     int colCount)
 {
