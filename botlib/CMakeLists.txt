@@ -5,6 +5,7 @@ set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 set(BOTLIB_ACCESSOR_SRC
     accessor/botlib_game_map_accessor.cpp
     accessor/botlib_game_object_flag_resetter.cpp
+    accessor/botlib_game_object_jsonizer.cpp
     accessor/botlib_game_object_presenter.cpp
     accessor/botlib_game_object_remover.cpp
     accessor/botlib_game_object_updater.cpp

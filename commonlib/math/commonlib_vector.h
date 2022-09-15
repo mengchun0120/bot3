@@ -6,6 +6,7 @@
 #include <ostream>
 #include <istream>
 #include <array>
+#include <rapidjson/document.h>
 #include <commonlib_math_utils.h>
 #include <commonlib_algorithm.h>
 
@@ -43,6 +44,8 @@ struct Vector: public std::array<float, N> {
     Vector& operator*=(float f) noexcept;
 
     Vector& operator/=(float f) noexcept;
+
+    rapidjson::Value toJson(rapidjson::Document::AllocatorType& allocator) const;
 };
 
 using Vector2 = Vector<2>;
@@ -149,6 +152,21 @@ template <std::size_t N>
 Vector<N>& Vector<N>::operator/=(float f) noexcept
 {
     return *this *= (1.0f / f);
+}
+
+template <std::size_t N>
+rapidjson::Value Vector<N>::toJson(
+                            rapidjson::Document::AllocatorType& allocator) const
+{
+    rapidjson::Value json;
+
+    json.SetArray();
+    for (std::size_t i = 0; i < N; ++i)
+    {
+        json.PushBack((*this)[i], allocator);
+    }
+
+    return json;
 }
 
 template <std::size_t N>

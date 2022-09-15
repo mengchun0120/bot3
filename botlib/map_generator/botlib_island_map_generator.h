@@ -20,18 +20,17 @@ public:
 private:
     void addTiles(GameMap& map);
 
-    void addPlayer(GameMap& map);
-
-    void addAIRobots(GameMap& map);
-
     void addIsland(GameMap& map,
                    const TileTemplate* t,
-                   int islandWidth,
-                   int islandHeight);
+                   const commonlib::Vector2& startPos,
+                   int tileCountX,
+                   int tileCountY);
+
+    float randomIslandBreath(float mapBreath,
+                             float base);
 
 private:
     const IslandMapGeneratorConfig& cfg_;
-    
 };
 
 } // end of namespace botlib

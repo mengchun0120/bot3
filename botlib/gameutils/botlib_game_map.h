@@ -5,6 +5,7 @@
 #include <functional>
 #include <cmath>
 #include <string>
+#include <rapidjson/document.h>
 #include <commonlib_vector.h>
 #include <commonlib_linked_list.h>
 #include <commonlib_region.h>
@@ -59,6 +60,10 @@ public:
 
     inline int colCount() const;
 
+    inline int absRowCount() const;
+
+    inline int absColCount() const;
+
     inline float width() const;
 
     inline float height() const;
@@ -72,6 +77,8 @@ public:
     inline const commonlib::Region<float>& viewableRegion() const;
 
     inline const commonlib::Region<int>& presentArea() const;
+
+    inline const commonlib::Region<int> wholeArea() const;
 
     inline int getCellIdx(float x) const;
 
@@ -104,6 +111,8 @@ public:
 
     bool canBePlaced(const commonlib::Vector2& pos,
                      float collideBreath);
+
+    void toJson(rapidjson::Document& doc);
 
 private:
     void initObjDeleter();
@@ -164,6 +173,16 @@ int GameMap::colCount() const
     return static_cast<int>(cells_[0].size());
 }
 
+int GameMap::absRowCount() const
+{
+    return rowCount() - extraCell_ * 2;
+}
+
+int GameMap::absColCount() const
+{
+    return colCount() - extraCell_ * 2;
+}
+
 float GameMap::width() const
 {
     return boundary_.right();
@@ -197,6 +216,11 @@ const commonlib::Region<float>& GameMap::viewableRegion() const
 const commonlib::Region<int>& GameMap::presentArea() const
 {
     return presentArea_;
+}
+
+const commonlib::Region<int> GameMap::wholeArea() const
+{
+    return commonlib::Region<int>{0, colCount()-1, 0, rowCount()-1};
 }
 
 int GameMap::getCellIdx(float x) const

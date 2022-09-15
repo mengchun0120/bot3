@@ -15,6 +15,17 @@ class AIRobotTemplate;
 
 class GameMapGenerator {
 public:
+    struct CellCoord {
+        CellCoord() = default;
+
+        void init(int row,
+                  int col);
+
+        int row_;
+        int col_;
+    };
+
+public:
     GameMapGenerator(const GameLib& lib);
 
     virtual ~GameMapGenerator() = default;
@@ -29,30 +40,43 @@ protected:
                  float viewportWidth,
                  float viewportHeight);
 
-    const TileTemplate* randomTileTemplate();
+    const TileTemplate* randomTileTemplate(float maxCollideBreath);
 
-    const AIRobotTemplate* randoAIRobotTemplate();
+    const AIRobotTemplate* randomAIRobotTemplate();
 
     void addObj(GameMap& map,
-                const GameObject* obj);
+                GameObject* obj);
+
+    commonlib::Vector2 getCellCenter(const CellCoord& coord);
+
+    bool findPlaceForObj(commonlib::Vector2& pos,
+                         GameMap& map,
+                         const GameObjectTemplate* t);
+
+    void populateRobots(GameMap& map,
+                        int aiRobotCount);
+
+    void addPlayer(GameMap& map);
+
+    void addAIRobot(GameMap& map);
 
 private:
-    void initOccupied(int rowCount,
-                      int colCount);
+    void initFreeCellMap(int rowCount,
+                         int colCount);
 
     void initTileTemplates();
 
     void initAIRobotTemplates();
 
-    bool checkCollide(GameMap& map,
-                      const commonlib::Vector2& pos,
-                      float collideBreath);
+    int findTileTemplate(float maxCollideBreath);
 
 protected:
     const GameLib& lib_;
     std::vector<const TileTemplate*> tileTemplates_;
     std::vector<const AIRobotTemplate*> aiRobotTemplates_;
-    std::vector<std::vector<bool>> occupied_;
+    std::vector<std::vector<int>> freeCellMap_;
+    std::vector<CellCoord> freeCellCoords_;
+    int freeCellCount_;
     commonlib::Random rand_;
 };
 

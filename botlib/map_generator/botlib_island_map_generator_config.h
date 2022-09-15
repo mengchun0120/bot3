@@ -20,17 +20,11 @@ public:
 
     inline float maxIslandDist() const;
 
-    inline float minMargin() const;
-
-    inline float maxMargin() const;
-
 private:
     float minIslandBreath_;
     float maxIslandBreath_;
     float minIslandDist_;
     float maxIslandDist_;
-    float minMargin_;
-    float maxMargin_;
 };
 
 float IslandMapGeneratorConfig::minIslandBreath() const
@@ -51,16 +45,6 @@ float IslandMapGeneratorConfig::minIslandDist() const
 float IslandMapGeneratorConfig::maxIslandDist() const
 {
     return maxIslandDist_;
-}
-
-float IslandMapGeneratorConfig::minMargin() const
-{
-    return minMargin_;
-}
-
-float IslandMapGeneratorConfig::maxMargin() const
-{
-    return maxMargin_;
 }
 
 } // end of namespace botlib

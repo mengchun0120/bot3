@@ -2,6 +2,7 @@
 #define INCLUDED_COMMONLIB_RANDOM_H
 
 #include <random>
+#include <commonlib_vector.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -12,9 +13,16 @@ public:
 
     Random(int seed);
 
-    int randomInt(int min, int max);
+    int randomInt(int min,
+                  int max);
 
-    float randomFloat(float min=0.0f, float max=1.0f);
+    double randomDouble(double min=0.0,
+                        double max=1.0);
+
+    float randomFloat(float min=0.0f,
+                      float max=1.0f);
+
+    Vector2 randomDirection();
 
 private:
     std::default_random_engine engine_;

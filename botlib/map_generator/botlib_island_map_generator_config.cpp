@@ -20,9 +20,7 @@ void IslandMapGeneratorConfig::init(const std::string& fileName)
         jsonParam(minIslandBreath_, "minIslandBreath", true, gt(0.0f)),
         jsonParam(maxIslandBreath_, "maxIslandBreath", true, gt(0.0f)),
         jsonParam(minIslandDist_, "minIslandDist", true, gt(0.0f)),
-        jsonParam(maxIslandDist_, "maxIslandDist", true, gt(0.0f)),
-        jsonParam(minMargin_, "minMargin", true, gt(0.0f)),
-        jsonParam(maxMargin_, "maxMargin", true, gt(0.0f))
+        jsonParam(maxIslandDist_, "maxIslandDist", true, gt(0.0f))
     };
 
     parse(params, doc);

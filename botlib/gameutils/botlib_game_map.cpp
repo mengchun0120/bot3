@@ -7,6 +7,7 @@
 #include <commonlib_collide.h>
 #include <botlib_context.h>
 #include <botlib_nonpassthrough_collide_checker.h>
+#include <botlib_game_object_jsonizer.h>
 #include <botlib_place_in_map_checker.h>
 #include <botlib_player.h>
 #include <botlib_game_map.h>
@@ -254,6 +255,24 @@ bool GameMap::canBePlaced(const commonlib::Vector2& pos,
     accessRegion(getCollideArea(region), checker, 0, 2);
 
     return !checker.collide();
+}
+
+void GameMap::toJson(rapidjson::Document& doc)
+{
+    using namespace rapidjson;
+
+    auto& allocator = doc.GetAllocator();
+
+    doc.SetObject();
+    doc.AddMember("rows", absRowCount(), allocator);
+    doc.AddMember("cols", absColCount(), allocator);
+
+    Value objects(kArrayType);
+
+    GameObjectJsonizer jsonizer(objects, allocator);
+    accessRegion(wholeArea(), jsonizer);
+
+    doc.AddMember("objects", objects, allocator);
 }
 
 void GameMap::initMapCells(unsigned int rows,
