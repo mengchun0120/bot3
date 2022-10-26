@@ -60,6 +60,12 @@ rapidjson::Value jsonVal(const void* ptr,
     return jsonVal(stringVal(ptr), allocator);
 }
 
+rapidjson::Value jsonVal(const char* str,
+                         rapidjson::Document::AllocatorType& allocator)
+{
+    return jsonVal(std::string(str), allocator);
+}
+
 rapidjson::Value jsonVal(const std::string& s,
                         rapidjson::Document::AllocatorType& allocator)
 {

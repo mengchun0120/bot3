@@ -2,9 +2,16 @@
 #define INCLUDED_GENMAP_APP_H
 
 #include <commonlib_app.h>
-#include <botlib_game_lib.h>
 
 namespace mcdane {
+
+namespace botlib {
+
+class GameMap;
+class GameMapGenerator;
+
+} // end of namespace botlib
+
 namespace genmap {
 
 class GenMapApp: public commonlib::App {
@@ -20,7 +27,12 @@ public:
     void run() override;
 
 private:
-    botlib::GameLib lib_;
+    void writeMap(const std::string& mapFile,
+                  botlib::GameMap& map);
+
+private:
+    std::string mapFile_;
+    botlib::GameMapGenerator* generator_;
 };
 
 } // end of namespace genmap

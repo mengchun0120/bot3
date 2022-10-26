@@ -9,6 +9,11 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+IslandMapGeneratorConfig::IslandMapGeneratorConfig(const std::string& fileName)
+{
+    init(fileName);
+}
+
 void IslandMapGeneratorConfig::init(const std::string& fileName)
 {
     rapidjson::Document doc;

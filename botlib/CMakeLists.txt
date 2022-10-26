@@ -60,6 +60,7 @@ set(BOTLIB_GAMEUTILS_SRC
 set(BOTLIB_MAP_GENERATOR_SRC
     map_generator/botlib_game_map_generator.cpp
     map_generator/botlib_game_map_generator_config.cpp
+    map_generator/botlib_game_map_generator_factory.cpp
     map_generator/botlib_island_map_generator.cpp
     map_generator/botlib_island_map_generator_config.cpp)
 

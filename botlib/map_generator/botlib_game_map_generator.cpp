@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
+#include <commonlib_region.h>
+#include <commonlib_math_utils.h>
 #include <botlib_game_lib.h>
 #include <botlib_player.h>
 #include <botlib_ai_robot.h>
@@ -14,8 +16,21 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void GameMapGenerator::CellCoord::init(int row,
-                                       int col)
+namespace {
+
+int getMapCellRowIdx(GameMap& map, int y)
+{
+    return clamp(GameMap::getAbsCellIdx(y), 0, map.absRowCount() - 1);
+}
+
+int getMapCellColIdx(GameMap& map, int x)
+{
+    return clamp(GameMap::getAbsCellIdx(x), 0, map.absColCount() - 1);
+}
+
+} // end of unnamed namespace
+
+void GameMapGenerator::CellCoord::init(int row, int col)
 {
     row_ = row;
     col_ = col;
@@ -26,6 +41,7 @@ GameMapGenerator::GameMapGenerator(const GameLib& lib)
 {
     initTileTemplates();
     initAIRobotTemplates();
+    initCellMarker();
 }
 
 void GameMapGenerator::initMap(GameMap& map,
@@ -60,37 +76,9 @@ const AIRobotTemplate* GameMapGenerator::randomAIRobotTemplate()
     return aiRobotTemplates_[index];
 }
 
-void GameMapGenerator::addObj(GameMap& map,
-                              GameObject* obj)
+void GameMapGenerator::addObj(GameMap& map, GameObject* obj)
 {
-    int startRow = GameMap::getAbsCellIdx(obj->collideBottom());
-    int endRow = GameMap::getAbsCellIdx(obj->collideTop());
-    int startCol = GameMap::getAbsCellIdx(obj->collideLeft());
-    int endCol = GameMap::getAbsCellIdx(obj->collideRight());
-
-    for (int row = startRow; row <= endRow; ++row)
-    {
-        for (int col = startCol; col <= endCol; ++col)
-        {
-            int& curIndex = freeCellMap_[row][col];
-
-            if (curIndex == -1)
-            {
-                continue;
-            }
-
-            if (curIndex != freeCellCount_ - 1)
-            {
-                CellCoord& lastCoord = freeCellCoords_[freeCellCount_-1];
-                freeCellCoords_[curIndex] = lastCoord;
-                freeCellMap_[lastCoord.row_][lastCoord.col_] = curIndex;
-            }
-
-            curIndex = -1;
-            --freeCellCount_;
-        }
-    }
-
+    markObjOccupied(map, obj);
     map.addObj(obj);
 }
 
@@ -131,8 +119,7 @@ bool GameMapGenerator::findPlaceForObj(Vector2& pos,
     return true;
 }
 
-void GameMapGenerator::populateRobots(GameMap& map,
-                                      int aiRobotCount)
+void GameMapGenerator::populateRobots(GameMap& map, int aiRobotCount)
 {
     addPlayer(map);
     for (int i = 0; i < aiRobotCount; ++i)
@@ -164,7 +151,7 @@ void GameMapGenerator::addAIRobot(GameMap& map)
 
     if (!findPlaceForObj(pos, map, t))
     {
-        THROW_EXCEPT(MyException, "Failed to find place for AI robot");
+        LOG_WARN << "Failed to find place for robot " << t->name() << LOG_END;
         return;
     }
 
@@ -174,8 +161,7 @@ void GameMapGenerator::addAIRobot(GameMap& map)
     addObj(map, robot);
 }
 
-void GameMapGenerator::initFreeCellMap(int rowCount,
-                                       int colCount)
+void GameMapGenerator::initFreeCellMap(int rowCount, int colCount)
 {
     freeCellCount_ = rowCount * colCount;
     freeCellMap_.resize(rowCount);
@@ -219,6 +205,13 @@ void GameMapGenerator::initAIRobotTemplates()
     }
 }
 
+void GameMapGenerator::initCellMarker()
+{
+    using namespace std::placeholders;
+
+    cellMarker_ = std::bind(&GameMapGenerator::markCellOccupied, this, _1, _2);
+}
+
 int GameMapGenerator::findTileTemplate(float maxCollideBreath)
 {
     int i;
@@ -232,6 +225,39 @@ int GameMapGenerator::findTileTemplate(float maxCollideBreath)
     }
 
     return i;
+}
+
+void GameMapGenerator::markObjOccupied(GameMap& map, GameObject* obj)
+{
+    Region<int> region{
+        getMapCellColIdx(map, obj->collideLeft()),
+        getMapCellColIdx(map, obj->collideRight()),
+        getMapCellRowIdx(map, obj->collideBottom()),
+        getMapCellRowIdx(map, obj->collideTop())
+    };
+    LOG_INFO << "Mark-occupied " << region << LOG_END;
+    region.iterate(cellMarker_, 1, 1);
+}
+
+bool GameMapGenerator::markCellOccupied(int col, int row)
+{
+    int& curIndex = freeCellMap_[row][col];
+
+    if (curIndex == -1)
+    {
+        return true;
+    }
+
+    if (curIndex != freeCellCount_ - 1)
+    {
+        CellCoord& lastCoord = freeCellCoords_[freeCellCount_-1];
+        freeCellCoords_[curIndex] = lastCoord;
+        freeCellMap_[lastCoord.row_][lastCoord.col_] = curIndex;
+    }
+
+    curIndex = -1;
+    --freeCellCount_;
+    return true;
 }
 
 } // end of namespace botlib

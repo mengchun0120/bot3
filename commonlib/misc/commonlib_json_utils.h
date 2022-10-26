@@ -19,6 +19,9 @@ const rapidjson::Value* findJson(const rapidjson::Value& json,
 rapidjson::Value jsonVal(const void* ptr,
                          rapidjson::Document::AllocatorType& allocator);
 
+rapidjson::Value jsonVal(const char* str,
+                         rapidjson::Document::AllocatorType& allocator);
+
 rapidjson::Value jsonVal(const std::string& s,
                          rapidjson::Document::AllocatorType& allocator);
 

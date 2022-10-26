@@ -12,31 +12,39 @@ namespace mcdane {
 namespace botlib {
 
 IslandMapGenerator::IslandMapGenerator(const GameLib& lib,
-                                       const IslandMapGeneratorConfig& cfg)
+                                       std::shared_ptr<IslandMapGeneratorConfig> cfg)
     : GameMapGenerator(lib)
     , cfg_(cfg)
 {
+    if (!cfg_)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "cfg is null");
+    }
 }
 
 void IslandMapGenerator::generate(GameMap& map,
                                   float viewportWidth,
                                   float viewportHeight)
 {
-    initMap(map, cfg_.rowCount(), cfg_.colCount(), viewportWidth, viewportHeight);
+    LOG_INFO << "Starting" << LOG_END;
+    initMap(map, cfg_->rowCount(), cfg_->colCount(), viewportWidth, viewportHeight);
+    LOG_INFO << "Map initialized" << LOG_END;
     addTiles(map);
-    populateRobots(map, cfg_.aiRobotCount());
+    LOG_INFO << "Tiles finished" << LOG_END;
+    populateRobots(map, cfg_->aiRobotCount());
+    LOG_INFO << "Robots finished" << LOG_END;
 }
 
 void IslandMapGenerator::addTiles(GameMap& map)
 {
-    float baseY = rand_.randomFloat(cfg_.minIslandDist(), cfg_.maxIslandDist());
-    float maxBaseY = map.height() - cfg_.minIslandBreath() - cfg_.minIslandDist();
-    float maxBaseX = map.width() - cfg_.minIslandBreath() - cfg_.minIslandDist();
+    float baseY = rand_.randomFloat(cfg_->minIslandDist(), cfg_->maxIslandDist());
+    float maxBaseY = map.height() - cfg_->minIslandBreath() - cfg_->minIslandDist();
+    float maxBaseX = map.width() - cfg_->minIslandBreath() - cfg_->minIslandDist();
 
     while (baseY <=  maxBaseY)
     {
-        float baseX = rand_.randomFloat(cfg_.minIslandDist(),
-                                        cfg_.maxIslandDist());
+        float baseX = rand_.randomFloat(cfg_->minIslandDist(),
+                                        cfg_->maxIslandDist());
         float maxIslandHeight = 0.0f;
 
         while (baseX <= maxBaseX)
@@ -59,6 +67,13 @@ void IslandMapGenerator::addTiles(GameMap& map)
             Vector2 startPos{baseX + t->collideBreath(),
                              baseY + t->collideBreath()};
 
+            LOG_INFO << "baseX=" << baseX
+                     << " baseY=" << baseY
+                     << " t=" << t->name()
+                     << " startPos=" << startPos
+                     << " tileCountX=" << tileCountX
+                     << " tileCountY=" << tileCountY << LOG_END;
+
             addIsland(map, t, startPos, tileCountX, tileCountY);
 
             float islandHeight = tileCountX * tileBreath;
@@ -68,13 +83,13 @@ void IslandMapGenerator::addTiles(GameMap& map)
             }
 
             float islandWidth = tileCountY * tileBreath;
-            float distX = rand_.randomFloat(cfg_.minIslandDist(),
-                                            cfg_.maxIslandDist());
+            float distX = rand_.randomFloat(cfg_->minIslandDist(),
+                                            cfg_->maxIslandDist());
             baseX += islandWidth + distX;
         }
 
-        float distY = rand_.randomFloat(cfg_.minIslandDist(),
-                                        cfg_.maxIslandDist());
+        float distY = rand_.randomFloat(cfg_->minIslandDist(),
+                                        cfg_->maxIslandDist());
         baseY += maxIslandHeight + distY;
     }
 }
@@ -102,11 +117,10 @@ void IslandMapGenerator::addIsland(GameMap& map,
     }
 }
 
-float IslandMapGenerator::randomIslandBreath(float mapBreath,
-                                             float base)
+float IslandMapGenerator::randomIslandBreath(float mapBreath, float base)
 {
-    float maxBreath = mapBreath - cfg_.minIslandDist() - base;
-    return rand_.randomFloat(cfg_.minIslandBreath(), maxBreath);
+    float maxBreath = mapBreath - cfg_->minIslandDist() - base;
+    return rand_.randomFloat(cfg_->minIslandBreath(), maxBreath);
 }
 
 } // end of namespace botlib

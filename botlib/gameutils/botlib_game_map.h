@@ -88,8 +88,7 @@ public:
 
     inline int aiRobotCount() const;
 
-    void setViewportOrigin(float x,
-                           float y);
+    void setViewportOrigin(float x, float y);
 
     commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r,
                                           float deltaX,
@@ -117,14 +116,11 @@ public:
 private:
     void initObjDeleter();
 
-    void initMapCells(unsigned int rows,
-                      unsigned int cols);
+    void initMapCells(unsigned int rows, unsigned int cols);
 
-    void setBoundary(unsigned int rows,
-                     unsigned int cols);
+    void setBoundary(unsigned int rows, unsigned int cols);
 
-    void setViewportSize(float viewportWidth,
-                         float viewportHeight);
+    void setViewportSize(float viewportWidth, float viewportHeight);
 
     void resetViewableRegion();
 

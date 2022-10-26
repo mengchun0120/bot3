@@ -126,8 +126,7 @@ void GameMap::removeObj(GameObject* obj)
     cells_[obj->row()][obj->col()][layer].remove(obj);
 }
 
-void GameMap::setViewportOrigin(float x,
-                                float y)
+void GameMap::setViewportOrigin(float x, float y)
 {
     viewportOrigin_[0] = clamp(x, minViewportOrigin_[0], maxViewportOrigin_[0]);
     viewportOrigin_[1] = clamp(y, minViewportOrigin_[1], maxViewportOrigin_[1]);
@@ -275,8 +274,7 @@ void GameMap::toJson(rapidjson::Document& doc)
     doc.AddMember("objects", objects, allocator);
 }
 
-void GameMap::initMapCells(unsigned int rows,
-                           unsigned int cols)
+void GameMap::initMapCells(unsigned int rows, unsigned int cols)
 {
     unsigned int rowCount = rows + extraCell_*2;
     unsigned int colCount = cols + extraCell_*2;
@@ -293,16 +291,15 @@ void GameMap::initMapCells(unsigned int rows,
 
         for (auto colIt = rowIt->begin(); colIt != rowIt->end(); ++colIt)
         {
-            for (auto objIt = colIt->begin(); objIt != colIt->end(); ++objIt)
+            for (auto listIt = colIt->begin(); listIt != colIt->end(); ++listIt)
             {
-                objIt->setDeleter(objDeleter);
+                listIt->setDeleter(objDeleter);
             }
         }
     }
 }
 
-void GameMap::setBoundary(unsigned int rows,
-                          unsigned int cols)
+void GameMap::setBoundary(unsigned int rows, unsigned int cols)
 {
     if (rows < k_minRows)
     {

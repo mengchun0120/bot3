@@ -63,6 +63,11 @@ public:
     bool contains(const T& x,
                   const T& y) const;
 
+    template <typename F>
+    void iterate(F& func,
+                 T deltaX,
+                 T deltaY);
+
 private:
     T left_;
     T right_;
@@ -218,6 +223,24 @@ void Region<T>::shift(T deltaX,
     right_ += deltaX;
     bottom_ += deltaY;
     top_ += deltaY;
+}
+
+template <typename T>
+template <typename F>
+void Region<T>::iterate(F& func,
+                        T deltaX,
+                        T deltaY)
+{
+    for (T y = bottom_; y <= top_; y += deltaY)
+    {
+        for (T x = left_; x <= right_; x += deltaX)
+        {
+            if (!func(x, y))
+            {
+                break;
+            }
+        }
+    }
 }
 
 template <typename T>

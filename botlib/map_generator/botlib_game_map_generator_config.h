@@ -8,10 +8,6 @@ namespace botlib {
 
 class GameMapGeneratorConfig {
 public:
-    static constexpr int MIN_CELL_COUNT = 40;
-    static constexpr int MAX_CELL_COUNT = 128;
-
-public:
     GameMapGeneratorConfig() = default;
 
     virtual ~GameMapGeneratorConfig() = default;

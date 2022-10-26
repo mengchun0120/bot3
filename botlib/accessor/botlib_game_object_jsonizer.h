@@ -15,6 +15,11 @@ public:
     bool run(GameObject* obj) override;
 
 private:
+    rapidjson::Value robotJson(GameObject* obj);
+
+    rapidjson::Value tileJson(GameObject* obj);
+
+private:
     rapidjson::Value& objects_;
     rapidjson::Document::AllocatorType& allocator_;
 };
