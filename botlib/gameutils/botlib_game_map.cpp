@@ -143,24 +143,24 @@ Region<int> GameMap::getCollideArea(const Region<float>& r,
 
     if (std::signbit(deltaX))
     {
-        startX = r.left() + deltaX - maxCollideBreath_;
-        endX = r.right() + maxCollideBreath_;
+        startX = r.left() - maxCollideBreath_;
+        endX = r.right() + deltaX + maxCollideBreath_;
     }
     else
     {
-        startX = r.left() - maxCollideBreath_;
-        endX = r.right() + deltaX + maxCollideBreath_;
+        startX = r.left() + deltaX - maxCollideBreath_;
+        endX = r.right() + maxCollideBreath_;
     }
 
     if (std::signbit(deltaY))
     {
-        startY = r.bottom() + deltaY - maxCollideBreath_;
-        endY = r.top() + maxCollideBreath_;
+        startY = r.bottom() - maxCollideBreath_;
+        endY = r.top() + deltaY + maxCollideBreath_;
     }
     else
     {
-        startY = r.bottom() - maxCollideBreath_;
-        endY = r.top() + deltaY + maxCollideBreath_;
+        startY = r.bottom() + deltaY - maxCollideBreath_;
+        endY = r.top() + maxCollideBreath_;
     }
 
     int bottom = clamp(getCellIdx(startY), 0, rowCount()-1);
