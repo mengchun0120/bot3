@@ -42,6 +42,8 @@ void GameMap::init(unsigned int rows,
                    float maxObjSpan,
                    float maxCollideBreath)
 {
+    using namespace std::placeholders;
+
     maxObjSpan_ = maxObjSpan;
     maxCollideBreath_ = maxCollideBreath;
     extraCell_ = static_cast<int>(ceil(maxObjSpan_ / k_cellBreath));
@@ -50,6 +52,7 @@ void GameMap::init(unsigned int rows,
     setViewportSize(viewportWidth, viewportHeight);
     setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
     aiRobotCount_ = 0;
+    objPresenter_ = std::bind(&GameMap::presentObj, this, _1);
 }
 
 void GameMap::present()
@@ -387,13 +390,25 @@ void GameMap::resetPresentArea()
     presentArea_.init(startCol, endCol, startRow, endRow);
 }
 
+bool GameMap::presentObj(GameObject* obj)
+{
+    if (obj->state() == GameObjectState::DEAD)
+    {
+        return true;
+    }
+
+    obj->present();
+
+    return true;
+}
+
 void GameMap::presentObjs()
 {
     SimpleShaderProgram& program = Context::graphics().simpleShader();
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
-    accessRegion(presentArea_, objPresenter_, 0, 3);
+    traverse(presentArea_, objPresenter_, 0, 3);
 }
 
 void GameMap::presentParticleEffects()
@@ -402,7 +417,7 @@ void GameMap::presentParticleEffects()
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
-    accessRegion(presentArea_, objPresenter_, 3, 1);
+    traverse(presentArea_, objPresenter_, 3, 1);
 }
 
 bool GameMap::checkNonpassthroughCollide(commonlib::Vector2& delta,

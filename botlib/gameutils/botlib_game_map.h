@@ -10,7 +10,6 @@
 #include <commonlib_linked_list.h>
 #include <commonlib_region.h>
 #include <botlib_game_object.h>
-#include <botlib_game_object_presenter.h>
 #include <botlib_typedef.h>
 
 namespace mcdane {
@@ -132,6 +131,8 @@ private:
 
     void resetPresentArea();
 
+    bool presentObj(GameObject* obj);
+
     void presentObjs();
 
     void presentParticleEffects();
@@ -157,7 +158,7 @@ private:
     commonlib::Region<int> presentArea_;
     Player* player_;
     int aiRobotCount_;
-    GameObjectPresenter objPresenter_;
+    Accessor objPresenter_;
 };
 
 int GameMap::getAbsCellIdx(float x)
