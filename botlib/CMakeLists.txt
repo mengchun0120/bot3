@@ -44,8 +44,7 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_progress_pie.cpp
     gameobj/botlib_robot.cpp
     gameobj/botlib_side.cpp
-    gameobj/botlib_tile.cpp
-    gameobj/botlib_update_context.cpp)
+    gameobj/botlib_tile.cpp)
 
 set(BOTLIB_GAMEUTILS_SRC
     gameutils/botlib_context.cpp
@@ -55,7 +54,8 @@ set(BOTLIB_GAMEUTILS_SRC
     gameutils/botlib_game_object_dumper.cpp
     gameutils/botlib_game_utils.cpp
     gameutils/botlib_goodie_generator.cpp
-    gameutils/botlib_time_delta_smoother.cpp)
+    gameutils/botlib_time_delta_smoother.cpp
+    gameutils/botlib_update_context.cpp)
 
 set(BOTLIB_MAP_GENERATOR_SRC
     map_generator/botlib_game_map_generator.cpp

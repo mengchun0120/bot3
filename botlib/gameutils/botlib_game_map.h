@@ -24,6 +24,7 @@ public:
     static constexpr int k_layerCount = 4;
 
     using Cell = std::array<GameObjectList, k_layerCount>;
+    using Accessor = std::function<bool(GameObject*)>;
 
     static constexpr float k_cellBreath = 40.0f;
     static constexpr unsigned int k_minRows = 30;
@@ -100,6 +101,11 @@ public:
                       GameMapAccessor& accessor,
                       int startLayer=0,
                       int layerCount=k_layerCount);
+
+    void traverse(const commonlib::Region<int>& r,
+                  Accessor& accessor,
+                  int startLayer=0,
+                  int layerCount=k_layerCount);
 
     inline bool canSee(const GameObject* obj) const;
 

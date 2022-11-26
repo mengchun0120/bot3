@@ -215,6 +215,36 @@ void GameMap::accessRegion(const Region<int>& r,
     }
 }
 
+void GameMap::traverse(const Region<int>& r,
+                       Accessor& accessor,
+                       int startLayer,
+                       int layerCount)
+{
+    int endLayer = startLayer + layerCount - 1;
+
+    for (int layer = startLayer; layer <= endLayer; ++layer)
+    {
+        for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
+        {
+            auto& row = cells_[rowIdx];
+            for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
+            {
+                GameObjectList& objs = row[colIdx][layer];
+                GameObject* next;
+                for (GameObject* obj = objs.first(); obj; obj = next)
+                {
+                    next = obj->next();
+                    if (!accessor(obj))
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
 bool GameMap::checkCollision(Vector2& delta,
                              const GameObject* obj)
 {
