@@ -12,9 +12,14 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+bool clearUpdateFlag(GameObject *obj)
+{
+    obj->setFlag(GameObject::FLAG_UPDATED, false);
+    return true;
+}
+
 GameScreen::GameScreen()
     : objUpdater_(cxt_)
-    , objFlagResetter_(GameObject::FLAG_UPDATED, false)
     , objRemover_(objDumper_, map_)
 {
 }
@@ -22,7 +27,6 @@ GameScreen::GameScreen()
 GameScreen::GameScreen(const commonlib::Vector2& viewportSize,
                        const AppActions actions)
     : objUpdater_(cxt_)
-    , objFlagResetter_(GameObject::FLAG_UPDATED, false)
     , objRemover_(objDumper_, map_)
 {
     init(viewportSize, actions);
@@ -292,7 +296,7 @@ void GameScreen::updatePlayer()
 
 void GameScreen::updateObjects()
 {
-    map_.accessRegion(map_.presentArea(), objFlagResetter_);
+    map_.traverse(map_.presentArea(), clearUpdateFlag);
     map_.accessRegion(map_.presentArea(), objUpdater_);
 }
 

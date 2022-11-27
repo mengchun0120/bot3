@@ -9,7 +9,6 @@
 #include <botlib_icon.h>
 #include <botlib_update_context.h>
 #include <botlib_game_object_remover.h>
-#include <botlib_game_object_flag_resetter.h>
 #include <botlib_game_object_updater.h>
 #include <botlib_screen.h>
 
@@ -85,7 +84,6 @@ private:
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 overlayViewportOrigin_;
     GameObjectUpdater objUpdater_;
-    GameObjectFlagResetter objFlagResetter_;
     GameObjectRemover objRemover_;
     ProgressBar armorProgressBar_;
     ProgressBar energyProgressBar_;
