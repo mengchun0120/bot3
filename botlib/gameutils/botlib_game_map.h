@@ -23,7 +23,6 @@ public:
     static constexpr int k_layerCount = 4;
 
     using Cell = std::array<GameObjectList, k_layerCount>;
-    using Accessor = std::function<bool(GameObject*)>;
 
     static constexpr float k_cellBreath = 40.0f;
     static constexpr unsigned int k_minRows = 30;
@@ -101,8 +100,9 @@ public:
                       int startLayer=0,
                       int layerCount=k_layerCount);
 
+    template <typename F>
     void traverse(const commonlib::Region<int>& r,
-                  Accessor& accessor,
+                  F& accessor,
                   int startLayer=0,
                   int layerCount=k_layerCount);
 
@@ -131,8 +131,6 @@ private:
 
     void resetPresentArea();
 
-    bool presentObj(GameObject* obj);
-
     void presentObjs();
 
     void presentParticleEffects();
@@ -158,7 +156,6 @@ private:
     commonlib::Region<int> presentArea_;
     Player* player_;
     int aiRobotCount_;
-    Accessor objPresenter_;
 };
 
 int GameMap::getAbsCellIdx(float x)
@@ -249,6 +246,36 @@ int GameMap::aiRobotCount() const
 bool GameMap::canSee(const GameObject* obj) const
 {
     return presentArea_.contains(obj->col(), obj->row());
+}
+
+template <typename F>
+void GameMap::traverse(const commonlib::Region<int>& r,
+                       F& accessor,
+                       int startLayer,
+                       int layerCount)
+{
+    int endLayer = startLayer + layerCount - 1;
+
+    for (int layer = startLayer; layer <= endLayer; ++layer)
+    {
+        for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
+        {
+            auto& row = cells_[rowIdx];
+            for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
+            {
+                GameObjectList& objs = row[colIdx][layer];
+                GameObject* next;
+                for (GameObject* obj = objs.first(); obj; obj = next)
+                {
+                    next = obj->next();
+                    if (!accessor(obj))
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+    }
 }
 
 } // end of namespace botlib

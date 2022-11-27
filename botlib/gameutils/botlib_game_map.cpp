@@ -17,6 +17,18 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+bool presentObj(GameObject* obj)
+{
+    if (obj->state() == GameObjectState::DEAD)
+    {
+        return true;
+    }
+
+    obj->present();
+
+    return true;
+}
+
 int GameMap::getLayer(GameObjectType t)
 {
     switch(t)
@@ -52,7 +64,6 @@ void GameMap::init(unsigned int rows,
     setViewportSize(viewportWidth, viewportHeight);
     setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
     aiRobotCount_ = 0;
-    objPresenter_ = std::bind(&GameMap::presentObj, this, _1);
 }
 
 void GameMap::present()
@@ -218,36 +229,6 @@ void GameMap::accessRegion(const Region<int>& r,
     }
 }
 
-void GameMap::traverse(const Region<int>& r,
-                       Accessor& accessor,
-                       int startLayer,
-                       int layerCount)
-{
-    int endLayer = startLayer + layerCount - 1;
-
-    for (int layer = startLayer; layer <= endLayer; ++layer)
-    {
-        for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
-        {
-            auto& row = cells_[rowIdx];
-            for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
-            {
-                GameObjectList& objs = row[colIdx][layer];
-                GameObject* next;
-                for (GameObject* obj = objs.first(); obj; obj = next)
-                {
-                    next = obj->next();
-                    if (!accessor(obj))
-                    {
-                        return;
-                    }
-                }
-            }
-        }
-    }
-
-}
-
 bool GameMap::checkCollision(Vector2& delta,
                              const GameObject* obj)
 {
@@ -390,25 +371,13 @@ void GameMap::resetPresentArea()
     presentArea_.init(startCol, endCol, startRow, endRow);
 }
 
-bool GameMap::presentObj(GameObject* obj)
-{
-    if (obj->state() == GameObjectState::DEAD)
-    {
-        return true;
-    }
-
-    obj->present();
-
-    return true;
-}
-
 void GameMap::presentObjs()
 {
     SimpleShaderProgram& program = Context::graphics().simpleShader();
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
-    traverse(presentArea_, objPresenter_, 0, 3);
+    traverse(presentArea_, presentObj, 0, 3);
 }
 
 void GameMap::presentParticleEffects()
@@ -417,7 +386,7 @@ void GameMap::presentParticleEffects()
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
-    traverse(presentArea_, objPresenter_, 3, 1);
+    traverse(presentArea_, presentObj, 3, 1);
 }
 
 bool GameMap::checkNonpassthroughCollide(commonlib::Vector2& delta,
