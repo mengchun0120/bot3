@@ -6,8 +6,7 @@ set(BOTLIB_ACCESSOR_SRC
     accessor/botlib_game_map_accessor.cpp
     accessor/botlib_game_object_jsonizer.cpp
     accessor/botlib_game_object_remover.cpp
-    accessor/botlib_game_object_updater.cpp
-    accessor/botlib_passthrough_collide_checker.cpp)
+    accessor/botlib_game_object_updater.cpp)
 
 set(BOTLIB_AI_SRC
     ai/botlib_ai.cpp

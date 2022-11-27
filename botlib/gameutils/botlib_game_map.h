@@ -5,6 +5,7 @@
 #include <functional>
 #include <cmath>
 #include <string>
+#include <initializer_list>
 #include <rapidjson/document.h>
 #include <commonlib_vector.h>
 #include <commonlib_linked_list.h>
@@ -105,6 +106,16 @@ public:
                   F& accessor,
                   int startLayer=0,
                   int layerCount=k_layerCount);
+
+    template <typename F>
+    void traverse(const commonlib::Region<int>& r,
+                  F& accessor,
+                  std::initializer_list<int> layers);
+
+    template <typename F>
+    bool traverseLayer(const commonlib::Region<int>& r,
+                       F& accessor,
+                       int layer);
 
     inline bool canSee(const GameObject* obj) const;
 
@@ -258,24 +269,51 @@ void GameMap::traverse(const commonlib::Region<int>& r,
 
     for (int layer = startLayer; layer <= endLayer; ++layer)
     {
-        for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
+        if (!traverseLayer(r, accessor, layer))
         {
-            auto& row = cells_[rowIdx];
-            for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
+            return;
+        }
+    }
+}
+
+template <typename F>
+void GameMap::traverse(const commonlib::Region<int>& r,
+                       F& accessor,
+                       std::initializer_list<int> layers)
+{
+    for (auto it = layers.begin(); it != layers.end(); ++it)
+    {
+        if (!traverseLayer(r, accessor, *it))
+        {
+            return;
+        }
+    }
+}
+
+template <typename F>
+bool GameMap::traverseLayer(const commonlib::Region<int>& r,
+                            F& accessor,
+                            int layer)
+{
+    for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
+    {
+        auto& row = cells_[rowIdx];
+        for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
+        {
+            GameObjectList& objs = row[colIdx][layer];
+            GameObject* next;
+            for (GameObject* obj = objs.first(); obj; obj = next)
             {
-                GameObjectList& objs = row[colIdx][layer];
-                GameObject* next;
-                for (GameObject* obj = objs.first(); obj; obj = next)
+                next = obj->next();
+                if (!accessor(obj))
                 {
-                    next = obj->next();
-                    if (!accessor(obj))
-                    {
-                        return;
-                    }
+                    return false;
                 }
             }
         }
     }
+
+    return true;
 }
 
 } // end of namespace botlib
