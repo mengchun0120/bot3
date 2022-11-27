@@ -15,58 +15,6 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-class NonpassthroughCollideChecker {
-public:
-    NonpassthroughCollideChecker(const GameObject* obj, Vector2& delta1)
-        : obj_(obj)
-        , collide_(false)
-        , delta_(delta1)
-    {
-    }
-
-    bool collide() const
-    {
-        return collide_;
-    }
-
-    const Vector2& delta() const
-    {
-        return delta_;
-    }
-
-    bool operator()(GameObject* obj);
-
-private:
-    const GameObject* obj_;
-    bool collide_;
-    commonlib::Vector2 delta_;
-};
-
-bool NonpassthroughCollideChecker::operator()(GameObject* o)
-{
-    bool check = o != obj_ &&
-                 o->state() == GameObjectState::ALIVE &&
-                 (o->type() == GameObjectType::ROBOT ||
-                  o->type() == GameObjectType::TILE);
-
-    if (!check)
-    {
-        return true;
-    }
-
-    bool collide = checkRectCollideRect(delta_,
-                                        obj_->collideRegion(),
-                                        o->collideRegion(),
-                                        delta_);
-
-    if (collide)
-    {
-        collide_ = true;
-    }
-
-    return true;
-}
-
 class PlaceInMapChecker {
 public:
     PlaceInMapChecker(const commonlib::Region<float>& collideRegion)
@@ -97,9 +45,6 @@ bool PlaceInMapChecker::operator()(GameObject* obj)
 
     if (checkRectCollideRect(obj->collideRegion(), collideRegion_))
     {
-        LOG_INFO << "check " << obj->type() << " " << obj->id() << " "
-                 << obj->collideRegion() << " " << collideRegion_
-                 << LOG_END;
         collide_ = true;
         return false;
     }
@@ -482,14 +427,32 @@ void GameMap::presentParticleEffects()
 bool GameMap::checkNonpassthroughCollide(commonlib::Vector2& delta,
                                          const GameObject* obj)
 {
-    NonpassthroughCollideChecker checker(obj, delta);
     Region<int> area = getCollideArea(obj->collideRegion(), delta[0], delta[1]);
+    bool collide = false;
+    auto checker = [&](GameObject* o)->bool
+    {
+        bool check = o != obj &&
+                     o->state() == GameObjectState::ALIVE &&
+                     (o->type() == GameObjectType::ROBOT ||
+                      o->type() == GameObjectType::TILE);
+
+        if (!check)
+        {
+            return true;
+        }
+
+        if (checkRectCollideRect(delta, obj->collideRegion(),
+                                 o->collideRegion(), delta))
+        {
+            collide = true;
+        }
+
+        return true;
+    };
 
     traverse(area, checker, 0, 2);
 
-    delta = checker.delta();
-
-    return checker.collide();
+    return collide;
 }
 
 std::string GameMap::detail()
