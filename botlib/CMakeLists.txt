@@ -9,7 +9,6 @@ set(BOTLIB_ACCESSOR_SRC
     accessor/botlib_game_object_remover.cpp
     accessor/botlib_game_object_updater.cpp
     accessor/botlib_missile_hit_checker.cpp
-    accessor/botlib_nonpassthrough_collide_checker.cpp
     accessor/botlib_passthrough_collide_checker.cpp
     accessor/botlib_place_in_map_checker.cpp)
 

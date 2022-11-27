@@ -6,7 +6,6 @@
 #include <commonlib_math_utils.h>
 #include <commonlib_collide.h>
 #include <botlib_context.h>
-#include <botlib_nonpassthrough_collide_checker.h>
 #include <botlib_game_object_jsonizer.h>
 #include <botlib_place_in_map_checker.h>
 #include <botlib_player.h>
@@ -16,6 +15,66 @@ using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
+
+class NonpassthroughCollideChecker {
+public:
+    NonpassthroughCollideChecker(const GameObject* obj, Vector2& delta1);
+
+    inline bool collide() const;
+
+    inline const Vector2& delta() const;
+
+    bool operator()(GameObject* obj);
+
+private:
+    const GameObject* obj_;
+    bool collide_;
+    commonlib::Vector2 delta_;
+};
+
+NonpassthroughCollideChecker::NonpassthroughCollideChecker(const GameObject* obj,
+                                                           Vector2& delta1)
+    : obj_(obj)
+    , collide_(false)
+    , delta_(delta1)
+{
+}
+
+bool NonpassthroughCollideChecker::collide() const
+{
+    return collide_;
+}
+
+const Vector2& NonpassthroughCollideChecker::delta() const
+{
+    return delta_;
+}
+
+bool NonpassthroughCollideChecker::operator()(GameObject* o)
+{
+    bool check = o != obj_ &&
+                 o->state() == GameObjectState::ALIVE &&
+                 (o->type() == GameObjectType::ROBOT ||
+                  o->type() == GameObjectType::TILE);
+
+    if (!check)
+    {
+        return true;
+    }
+
+    bool collide = checkRectCollideRect(delta_,
+                                        obj_->collideRegion(),
+                                        o->collideRegion(),
+                                        delta_);
+
+    if (collide)
+    {
+        collide_ = true;
+    }
+
+    return true;
+}
+
 
 bool presentObj(GameObject* obj)
 {
@@ -395,7 +454,7 @@ bool GameMap::checkNonpassthroughCollide(commonlib::Vector2& delta,
     NonpassthroughCollideChecker checker(obj, delta);
     Region<int> area = getCollideArea(obj->collideRegion(), delta[0], delta[1]);
 
-    accessRegion(area, checker);
+    traverse(area, checker, 0, 2);
 
     delta = checker.delta();
 
