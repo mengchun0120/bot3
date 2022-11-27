@@ -3,17 +3,133 @@
 #include <commonlib_collide.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_string_utils.h>
+#include <botlib_context.h>
 #include <botlib_update_context.h>
 #include <botlib_game_map.h>
 #include <botlib_particle_effect.h>
-#include <botlib_missile_hit_checker.h>
 #include <botlib_game_object_dumper.h>
+#include <botlib_tile.h>
+#include <botlib_ai_robot.h>
+#include <botlib_goodie.h>
 #include <botlib_missile.h>
 
 using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
+
+class MissileHitChecker {
+public:
+    MissileHitChecker(UpdateContext& cxt,
+                      Missile& missile,
+                      bool inflictDamage=false)
+        : cxt_(cxt)
+        , missile_(missile)
+        , inflictDamage_(inflictDamage)
+        , collide_(false)
+    {
+    }
+
+    bool collide() const
+    {
+        return collide_;
+    }
+
+    bool operator()(GameObject* obj);
+
+private:
+    bool check(GameObject* obj)
+    {
+        return obj != static_cast<GameObject*>(&missile_) &&
+               obj->state() == GameObjectState::ALIVE &&
+                (obj->type() == GameObjectType::TILE ||
+                 isEnemyRobot(obj));
+    }
+
+    bool isEnemyRobot(GameObject* obj)
+    {
+        return obj->type() == GameObjectType::ROBOT &&
+               static_cast<Robot*>(obj)->side() != missile_.side();
+    }
+
+    void doDamage(GameObject* obj);
+
+    void generateGoodie(AIRobot* robot);
+
+private:
+    UpdateContext& cxt_;
+    Missile& missile_;
+    bool inflictDamage_;
+    bool collide_;
+};
+
+bool MissileHitChecker::operator()(GameObject* obj)
+{
+    if (!check(obj))
+    {
+        return true;
+    }
+
+    bool collide1 = checkRectCollideRect(missile_.collideRegion(),
+                                         obj->collideRegion());
+    if (!collide1)
+    {
+        return true;
+    }
+
+    collide_ = true;
+
+    if (inflictDamage_)
+    {
+        doDamage(obj);
+    }
+
+    return true;
+}
+
+void MissileHitChecker::doDamage(GameObject* obj)
+{
+    GameMap& map = *(cxt_.map());
+    GameObjectDumper* dumper = cxt_.dumper();
+
+    if (obj->type() == GameObjectType::ROBOT)
+    {
+        Robot* robot = static_cast<Robot*>(obj);
+        robot->doDamage(missile_.damage(), cxt_);
+
+        if (robot->state() != GameObjectState::ALIVE && robot->side() == Side::AI)
+        {
+            generateGoodie(static_cast<AIRobot*>(robot));
+        }
+
+        if (robot->canBeDumped(map))
+        {
+            dumper->add(robot);
+        }
+    }
+    else if (obj->type() == GameObjectType::TILE)
+    {
+        Tile* tile = static_cast<Tile*>(obj);
+        tile->doDamage(missile_.damage());
+
+        if (tile->canBeDumped(map))
+        {
+            dumper->add(tile);
+        }
+    }
+}
+
+void MissileHitChecker::generateGoodie(AIRobot* robot)
+{
+    GoodieGenerator& g = Context::goodieGenerator();
+    Goodie* goodie = g.generate(robot->getTemplate()->goodieProb(),
+                                robot->pos());
+    if (goodie)
+    {
+        cxt_.map()->addObj(goodie);
+    }
+}
+
 
 void Missile::init(const MissileTemplate* t,
                    Side side,
@@ -55,7 +171,7 @@ void Missile::explode(UpdateContext& cxt)
     GameMap& map = *(cxt.map());
     MissileHitChecker checker(cxt, *this, true);
     Region<int> area = map.getCollideArea(explodeRegion());
-    map.accessRegion(area, checker);
+    map.traverse(area, checker, 0, 2);
 
     showExplodeEffect(map);
     cxt.dumper()->add(this);
@@ -90,7 +206,7 @@ bool Missile::checkCollideObjs(UpdateContext& cxt)
     GameMap& map = *(cxt.map());
     MissileHitChecker checker(cxt, *this);
     Region<int> area = map.getCollideArea(collideRegion());
-    map.accessRegion(area, checker);
+    map.traverse(area, checker, 0, 2);
 
     return checker.collide();
 }
