@@ -15,43 +15,6 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-class PlaceInMapChecker {
-public:
-    PlaceInMapChecker(const commonlib::Region<float>& collideRegion)
-        : collide_(false)
-        , collideRegion_(collideRegion)
-    {
-    }
-
-    bool collide() const
-    {
-        return collide_;
-    }
-
-    bool operator()(GameObject* obj);
-
-private:
-    bool collide_;
-    commonlib::Region<float> collideRegion_;
-};
-
-bool PlaceInMapChecker::operator()(GameObject* obj)
-{
-    if (obj->state() != GameObjectState::ALIVE ||
-        !isNonPassthroughObjType(obj->type()))
-    {
-        return true;
-    }
-
-    if (checkRectCollideRect(obj->collideRegion(), collideRegion_))
-    {
-        collide_ = true;
-        return false;
-    }
-
-    return true;
-}
-
 bool presentObj(GameObject* obj)
 {
     if (obj->state() == GameObjectState::DEAD)
@@ -299,10 +262,27 @@ bool GameMap::canBePlaced(const commonlib::Vector2& pos,
         return false;
     }
 
-    PlaceInMapChecker checker(region);
+    bool collide = false;
+    auto checker = [&](GameObject* obj)->bool
+    {
+        if (obj->state() != GameObjectState::ALIVE ||
+            !isNonPassthroughObjType(obj->type()))
+        {
+            return true;
+        }
+
+        if (checkRectCollideRect(obj->collideRegion(), region))
+        {
+            collide = true;
+            return false;
+        }
+
+        return true;
+    };
+
     traverse(getCollideArea(region), checker, 0, 2);
 
-    return !checker.collide();
+    return !collide;
 }
 
 void GameMap::toJson(rapidjson::Document& doc)
