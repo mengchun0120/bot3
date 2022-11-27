@@ -7,7 +7,6 @@
 #include <commonlib_collide.h>
 #include <botlib_context.h>
 #include <botlib_game_object_jsonizer.h>
-#include <botlib_place_in_map_checker.h>
 #include <botlib_player.h>
 #include <botlib_game_map.h>
 
@@ -18,11 +17,22 @@ namespace botlib {
 
 class NonpassthroughCollideChecker {
 public:
-    NonpassthroughCollideChecker(const GameObject* obj, Vector2& delta1);
+    NonpassthroughCollideChecker(const GameObject* obj, Vector2& delta1)
+        : obj_(obj)
+        , collide_(false)
+        , delta_(delta1)
+    {
+    }
 
-    inline bool collide() const;
+    bool collide() const
+    {
+        return collide_;
+    }
 
-    inline const Vector2& delta() const;
+    const Vector2& delta() const
+    {
+        return delta_;
+    }
 
     bool operator()(GameObject* obj);
 
@@ -31,24 +41,6 @@ private:
     bool collide_;
     commonlib::Vector2 delta_;
 };
-
-NonpassthroughCollideChecker::NonpassthroughCollideChecker(const GameObject* obj,
-                                                           Vector2& delta1)
-    : obj_(obj)
-    , collide_(false)
-    , delta_(delta1)
-{
-}
-
-bool NonpassthroughCollideChecker::collide() const
-{
-    return collide_;
-}
-
-const Vector2& NonpassthroughCollideChecker::delta() const
-{
-    return delta_;
-}
 
 bool NonpassthroughCollideChecker::operator()(GameObject* o)
 {
@@ -75,6 +67,45 @@ bool NonpassthroughCollideChecker::operator()(GameObject* o)
     return true;
 }
 
+class PlaceInMapChecker {
+public:
+    PlaceInMapChecker(const commonlib::Region<float>& collideRegion)
+        : collide_(false)
+        , collideRegion_(collideRegion)
+    {
+    }
+
+    bool collide() const
+    {
+        return collide_;
+    }
+
+    bool operator()(GameObject* obj);
+
+private:
+    bool collide_;
+    commonlib::Region<float> collideRegion_;
+};
+
+bool PlaceInMapChecker::operator()(GameObject* obj)
+{
+    if (obj->state() != GameObjectState::ALIVE ||
+        !isNonPassthroughObjType(obj->type()))
+    {
+        return true;
+    }
+
+    if (checkRectCollideRect(obj->collideRegion(), collideRegion_))
+    {
+        LOG_INFO << "check " << obj->type() << " " << obj->id() << " "
+                 << obj->collideRegion() << " " << collideRegion_
+                 << LOG_END;
+        collide_ = true;
+        return false;
+    }
+
+    return true;
+}
 
 bool presentObj(GameObject* obj)
 {
@@ -324,7 +355,7 @@ bool GameMap::canBePlaced(const commonlib::Vector2& pos,
     }
 
     PlaceInMapChecker checker(region);
-    accessRegion(getCollideArea(region), checker, 0, 2);
+    traverse(getCollideArea(region), checker, 0, 2);
 
     return !checker.collide();
 }
