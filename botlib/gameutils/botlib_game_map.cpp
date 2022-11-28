@@ -6,7 +6,6 @@
 #include <commonlib_math_utils.h>
 #include <commonlib_collide.h>
 #include <botlib_context.h>
-#include <botlib_game_object_jsonizer.h>
 #include <botlib_player.h>
 #include <botlib_game_map.h>
 
@@ -198,35 +197,6 @@ Region<int> GameMap::getCollideArea(const Region<float>& r) const
     return Region<int>(left, right, bottom, top);
 }
 
-void GameMap::accessRegion(const Region<int>& r,
-                           GameMapAccessor& accessor,
-                           int startLayer,
-                           int layerCount)
-{
-    int endLayer = startLayer + layerCount - 1;
-
-    for (int layer = startLayer; layer <= endLayer; ++layer)
-    {
-        for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
-        {
-            auto& row = cells_[rowIdx];
-            for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
-            {
-                GameObjectList& objs = row[colIdx][layer];
-                GameObject* next;
-                for (GameObject* obj = objs.first(); obj; obj = next)
-                {
-                    next = obj->next();
-                    if (!accessor.run(obj))
-                    {
-                        return;
-                    }
-                }
-            }
-        }
-    }
-}
-
 bool GameMap::checkCollision(Vector2& delta,
                              const GameObject* obj)
 {
@@ -297,9 +267,15 @@ void GameMap::toJson(rapidjson::Document& doc)
 
     Value objects(kArrayType);
 
-    GameObjectJsonizer jsonizer(objects, allocator);
-    accessRegion(wholeArea(), jsonizer);
+    auto jsonizer = [&](GameObject* obj)->bool
+    {
+        Value v(kObjectType);
+        obj->toJson(v, allocator);
+        objects.PushBack(v, allocator);
+        return true;
+    };
 
+    traverse(wholeArea(), jsonizer);
     doc.AddMember("objects", objects, allocator);
 }
 

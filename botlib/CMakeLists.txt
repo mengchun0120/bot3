@@ -2,10 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 
 set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 
-set(BOTLIB_ACCESSOR_SRC
-    accessor/botlib_game_map_accessor.cpp
-    accessor/botlib_game_object_jsonizer.cpp)
-
 set(BOTLIB_AI_SRC
     ai/botlib_ai.cpp
     ai/botlib_ai_lib.cpp
@@ -111,7 +107,6 @@ set(BOTLIB_WIDGET_SRC
     widget/botlib_widget_group.cpp)
 
 set(BOTLIB_SRC
-    ${BOTLIB_ACCESSOR_SRC}
     ${BOTLIB_APP_SRC}
     ${BOTLIB_AI_SRC}
     ${BOTLIB_GAMEOBJ_SRC}

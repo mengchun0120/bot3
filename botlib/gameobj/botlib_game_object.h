@@ -105,6 +105,9 @@ public:
 
     virtual bool canBeDumped(GameMap& map) const = 0;
 
+    virtual void toJson(rapidjson::Value& v,
+                        rapidjson::Document::AllocatorType& allocator);
+
 protected:
     static unsigned int k_curId;
 

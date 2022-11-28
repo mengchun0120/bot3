@@ -32,6 +32,9 @@ public:
 
     bool canBeDumped(GameMap& map) const override;
 
+    void toJson(rapidjson::Value& v,
+                rapidjson::Document::AllocatorType& allocator) override;
+
 private:
     float hp_;
     HPIndicator hpIndicator_;

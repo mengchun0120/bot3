@@ -56,6 +56,13 @@ void CompositeObject::setAlpha(float alpha1)
     alpha_ = clamp(alpha1, 0.0f, 1.0f);
 }
 
+void CompositeObject::toJson(rapidjson::Value& v,
+                             rapidjson::Document::AllocatorType& allocator)
+{
+    GameObject::toJson(v, allocator);
+    v.AddMember("direction", direction_.toJson(allocator), allocator);
+}
+
 void CompositeObject::initComponents()
 {
     const CompositeObjectTemplate* t = getTemplate();

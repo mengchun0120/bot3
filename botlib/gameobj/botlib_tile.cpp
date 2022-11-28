@@ -71,6 +71,13 @@ bool Tile::canBeDumped(GameMap& map) const
     return state_ == GameObjectState::DYING && !map.canSee(this);
 }
 
+void Tile::toJson(rapidjson::Value& v,
+                  rapidjson::Document::AllocatorType& allocator)
+{
+    CompositeObject::toJson(v, allocator);
+    v.AddMember("type", jsonVal("tile", allocator), allocator);
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

@@ -31,6 +31,9 @@ public:
 
     void presentGoodies();
 
+    void toJson(rapidjson::Value& v,
+                rapidjson::Document::AllocatorType& allocator) override;
+
 protected:
     void initGoodies();
 

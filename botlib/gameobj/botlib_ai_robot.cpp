@@ -37,6 +37,13 @@ void AIRobot::update(UpdateContext& cxt)
     Robot::update(cxt);
 }
 
+void AIRobot::toJson(rapidjson::Value& v,
+                     rapidjson::Document::AllocatorType& allocator)
+{
+    Robot::toJson(v, allocator);
+    v.AddMember("type", jsonVal("robot", allocator), allocator);
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

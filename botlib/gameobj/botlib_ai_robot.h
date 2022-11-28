@@ -26,6 +26,9 @@ public:
 
     void update(UpdateContext& cxt) override;
 
+    void toJson(rapidjson::Value& v,
+                rapidjson::Document::AllocatorType& allocator) override;
+
 private:
     AI* ai_;
 };

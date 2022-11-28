@@ -96,11 +96,6 @@ public:
 
     commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r) const;
 
-    void accessRegion(const commonlib::Region<int>& r,
-                      GameMapAccessor& accessor,
-                      int startLayer=0,
-                      int layerCount=k_layerCount);
-
     template <typename F>
     void traverse(const commonlib::Region<int>& r,
                   F& accessor,

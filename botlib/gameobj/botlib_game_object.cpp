@@ -98,6 +98,13 @@ void GameObject::setFlag(Flag flag,
     }
 }
 
+void GameObject::toJson(rapidjson::Value& v,
+                        rapidjson::Document::AllocatorType& allocator)
+{
+    v.AddMember("template", jsonVal(t_->name(), allocator), allocator);
+    v.AddMember("pos", pos_.toJson(allocator), allocator);
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

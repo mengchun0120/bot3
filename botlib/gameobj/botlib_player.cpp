@@ -69,6 +69,13 @@ void Player::presentGoodies()
     }
 }
 
+void Player::toJson(rapidjson::Value& v,
+                    rapidjson::Document::AllocatorType& allocator)
+{
+    Robot::toJson(v, allocator);
+    v.AddMember("type", jsonVal("player", allocator), allocator);
+}
+
 void Player::updateGoodies(float timeDelta)
 {
     Goodie* g, * next;
