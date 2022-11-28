@@ -9,7 +9,6 @@
 #include <botlib_icon.h>
 #include <botlib_update_context.h>
 #include <botlib_game_object_remover.h>
-#include <botlib_game_object_updater.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -59,6 +58,8 @@ private:
 
     void updatePlayer();
 
+    void clearUpdateFlags();
+
     void updateObjects();
 
     void updateProgressBar();
@@ -83,7 +84,6 @@ private:
     UpdateContext cxt_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 overlayViewportOrigin_;
-    GameObjectUpdater objUpdater_;
     GameObjectRemover objRemover_;
     ProgressBar armorProgressBar_;
     ProgressBar energyProgressBar_;

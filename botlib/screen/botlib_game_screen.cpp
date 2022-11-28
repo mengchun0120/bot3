@@ -12,22 +12,14 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-bool clearUpdateFlag(GameObject *obj)
-{
-    obj->setFlag(GameObject::FLAG_UPDATED, false);
-    return true;
-}
-
 GameScreen::GameScreen()
-    : objUpdater_(cxt_)
-    , objRemover_(objDumper_, map_)
+    : objRemover_(objDumper_, map_)
 {
 }
 
 GameScreen::GameScreen(const commonlib::Vector2& viewportSize,
                        const AppActions actions)
-    : objUpdater_(cxt_)
-    , objRemover_(objDumper_, map_)
+    : objRemover_(objDumper_, map_)
 {
     init(viewportSize, actions);
 }
@@ -72,6 +64,7 @@ void GameScreen::update(float timeDelta)
         updatePlayer();
     }
 
+    clearUpdateFlags();
     updateObjects();
 
     if (map_.player())
@@ -294,10 +287,31 @@ void GameScreen::updatePlayer()
     map_.setViewportOrigin(player->x(), player->y());
 }
 
+void GameScreen::clearUpdateFlags()
+{
+    auto clearUpdateFlag = [](GameObject *obj)->bool
+    {
+        obj->setFlag(GameObject::FLAG_UPDATED, false);
+        return true;
+    };
+
+    map_.traverse(map_.presentArea(), clearUpdateFlag);
+}
+
 void GameScreen::updateObjects()
 {
-    map_.traverse(map_.presentArea(), clearUpdateFlag);
-    map_.accessRegion(map_.presentArea(), objUpdater_);
+    auto updater = [&](GameObject* obj)->bool
+    {
+        if (obj->updated() && obj->state() == GameObjectState::DEAD)
+        {
+            return true;
+        }
+
+        obj->update(cxt_);
+        return true;
+    };
+
+    map_.traverse(map_.presentArea(), updater);
 }
 
 void GameScreen::updateProgressBar()
