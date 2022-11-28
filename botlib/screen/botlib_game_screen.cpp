@@ -12,14 +12,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-GameScreen::GameScreen()
-    : objRemover_(objDumper_, map_)
-{
-}
-
 GameScreen::GameScreen(const commonlib::Vector2& viewportSize,
                        const AppActions actions)
-    : objRemover_(objDumper_, map_)
 {
     init(viewportSize, actions);
 }
@@ -300,7 +294,7 @@ void GameScreen::clearUpdateFlags()
 
 void GameScreen::updateObjects()
 {
-    auto updater = [&](GameObject* obj)->bool
+    auto updater = [this](GameObject* obj)->bool
     {
         if (obj->updated() && obj->state() == GameObjectState::DEAD)
         {
@@ -377,9 +371,19 @@ void GameScreen::onAIRobotDeath()
 
 void GameScreen::clearObjectsFromMoveOutRegion(int moveOutRegionCount)
 {
+    auto remover = [this](GameObject* obj)->bool
+    {
+        if (obj->state() != GameObjectState::DEAD && obj->canBeDumped(map_))
+        {
+            objDumper_.add(obj);
+        }
+
+        return true;
+    };
+
     for (int i = 0; i < moveOutRegionCount; ++i)
     {
-        map_.accessRegion(moveOutRegions_[i], objRemover_);
+        map_.traverse(moveOutRegions_[i], remover);
     }
 }
 

@@ -8,7 +8,6 @@
 #include <botlib_message_box.h>
 #include <botlib_icon.h>
 #include <botlib_update_context.h>
-#include <botlib_game_object_remover.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -16,7 +15,7 @@ namespace botlib {
 
 class GameScreen: public Screen {
 public:
-    GameScreen();
+    GameScreen() = default;
 
     GameScreen(const commonlib::Vector2& viewportSize,
                const AppActions actions);
@@ -84,7 +83,6 @@ private:
     UpdateContext cxt_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 overlayViewportOrigin_;
-    GameObjectRemover objRemover_;
     ProgressBar armorProgressBar_;
     ProgressBar energyProgressBar_;
     MessageBox msgBox_;
