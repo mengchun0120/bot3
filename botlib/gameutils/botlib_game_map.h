@@ -20,18 +20,28 @@ class GameMapAccessor;
 class Player;
 
 class GameMap: public commonlib::Object {
-public:
+private:
     static constexpr int k_layerCount = 4;
+
+    enum Layer {
+        LAYER_TILE_GOODIE,
+        LAYER_ROBOT,
+        LAYER_MISSILE,
+        LAYER_EFFECT
+    };
+
+    static const Layer k_objLayerMap[k_gameObjTypeCount];
 
     using Cell = std::array<GameObjectList, k_layerCount>;
 
-    static constexpr float k_cellBreath = 40.0f;
+public:
     static constexpr unsigned int k_minRows = 30;
     static constexpr unsigned int k_minCols = 40;
+    static constexpr float k_cellBreath = 40.0f;
+
 
 public:
-
-    static int getLayer(GameObjectType type);
+    inline static int getLayer(GameObjectType type);
 
     inline static int getAbsCellIdx(float x);
 
@@ -163,6 +173,11 @@ private:
     Player* player_;
     int aiRobotCount_;
 };
+
+int GameMap::getLayer(GameObjectType type)
+{
+    return k_objLayerMap[static_cast<int>(type)];
+}
 
 int GameMap::getAbsCellIdx(float x)
 {

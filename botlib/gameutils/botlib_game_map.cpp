@@ -26,23 +26,14 @@ bool presentObj(GameObject* obj)
     return true;
 }
 
-int GameMap::getLayer(GameObjectType t)
-{
-    switch(t)
-    {
-        case GameObjectType::TILE:
-        case GameObjectType::GOODIE:
-            return 0;
-        case GameObjectType::ROBOT:
-            return 1;
-        case GameObjectType::MISSILE:
-            return 2;
-        case GameObjectType::EFFECT:
-            return 3;
-        default:
-            THROW_EXCEPT(InvalidArgumentException, "Invalid GameObjectType");
-    }
-}
+const GameMap::Layer GameMap::k_objLayerMap[k_gameObjTypeCount] = {
+    LAYER_TILE_GOODIE,
+    LAYER_TILE_GOODIE,
+    LAYER_ROBOT,
+    LAYER_MISSILE,
+    LAYER_EFFECT
+};
+
 
 void GameMap::init(unsigned int rows,
                    unsigned int cols,

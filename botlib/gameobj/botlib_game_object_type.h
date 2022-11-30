@@ -16,6 +16,8 @@ enum class GameObjectType {
     COUNT
 };
 
+constexpr int k_gameObjTypeCount = static_cast<int>(GameObjectType::COUNT);
+
 inline bool isValidGameObjectType(GameObjectType t)
 {
     return static_cast<int>(GameObjectType::TILE) <= static_cast<int>(t) &&
