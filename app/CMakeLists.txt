@@ -4,3 +4,4 @@ project(bot CXX)
 
 add_subdirectory(bot)
 add_subdirectory(genmap)
+add_subdirectory(showmap)
