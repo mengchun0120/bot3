@@ -21,6 +21,12 @@ ScreenManager::~ScreenManager()
     delete curScreen_;
 }
 
+void ScreenManager::init2(Screen* startScreen)
+{
+    prevScreen_ = nullptr;
+    curScreen_ = startScreen;
+}
+
 void ScreenManager::init(ScreenType startScreenType,
                          const commonlib::Vector2& viewportSize,
                          const AppActions& actions)
@@ -56,6 +62,12 @@ bool ScreenManager::processInput(const commonlib::InputEvent &e)
     }
 
     return curScreen_->processInput(e);
+}
+
+void ScreenManager::switchScreen2(Screen* newScreen)
+{
+    prevScreen_ = curScreen_;
+    curScreen_ = newScreen;
 }
 
 void ScreenManager::switchScreen(ScreenType type)

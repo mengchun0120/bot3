@@ -100,6 +100,8 @@ public:
 
     void setViewportOrigin(float x, float y);
 
+    void setViewportOrigin(const commonlib::Vector2& p);
+
     commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r,
                                           float deltaX,
                                           float deltaY) const;

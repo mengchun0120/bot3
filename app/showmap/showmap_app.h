@@ -5,35 +5,35 @@
 #include <commonlib_input_manager.h>
 #include <botlib_time_delta_smoother.h>
 #include <botlib_screen_manager.h>
-#include <botlib_input_manager.h>
 #include <botlib_app_actions.h>
 
 namespace mcdane {
 namespace showmap {
 
-class ShowMapApp: commonlib::App {
+class ShowMapApp: public commonlib::App {
 public:
-    BotApp(const std::string& configFile,
-           const std::string& mapFile,
-           const std::string& appDir);
+    ShowMapApp(const std::string& configFile,
+               const std::string& mapFile,
+               const std::string& appDir);
 
-    ~BotApp() override;
+    ~ShowMapApp() override;
 
     void process() override;
 
 private:
     void init(const std::string& configFile,
-              const std::string& appDir);
+              const std::string& appDir,
+              const std::string& mapFile);
 
     void setupOpenGL();
 
-    void setupGame();
+    void setupGame(const std::string& mapFile);
 
     void setupDeltaSmoother();
 
     void setupActions();
 
-    void setupScreen();
+    void setupScreen(const std::string& mapFile);
 
     void setupInput();
 

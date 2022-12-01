@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
+#include <showmap_app.h>
 
 using namespace mcdane::commonlib;
 using namespace mcdane::showmap;
@@ -38,7 +39,7 @@ void parseArguments(Arguments& args, int argc, char* argv[])
                          "v",
                          "logLevel",
                          "Log level",
-                         true),
+                         true,
                          k_nonEmptyStrV),
         Argument::create(args.mapFile_,
                          "mapFile",
@@ -104,7 +105,6 @@ int main(int argc,
     try
     {
         ShowMapApp app(args.appConfigFile_, args.appDir_, args.mapFile_);
-
         app.run();
     }
     catch (const std::exception& e)

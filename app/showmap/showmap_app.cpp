@@ -1,20 +1,26 @@
+#include <botlib_app_config.h>
+#include <botlib_context.h>
+#include <botlib_showmap_screen.h>
 #include <showmap_app.h>
+
+using namespace mcdane::commonlib;
+using namespace mcdane::botlib;
 
 namespace mcdane {
 namespace showmap {
 
-BotApp::BotApp(const std::string& configFile,
-               const std::string& mapFile,
-               const std::string& appDir)
+ShowMapApp::ShowMapApp(const std::string& configFile,
+                       const std::string& mapFile,
+                       const std::string& appDir)
 {
-    init(configFile, appDir);
+    init(configFile, appDir, mapFile);
 }
 
-BotApp::~BotApp() override
+ShowMapApp::~ShowMapApp()
 {
 }
 
-void BotApp::process() override
+void ShowMapApp::process()
 {
     InputManager::getInstance().processInput(inputProcessor_);
 
@@ -28,8 +34,9 @@ void BotApp::process() override
     postProcess();
 }
 
-void BotApp::init(const std::string& configFile,
-                  const std::string& appDir)
+void ShowMapApp::init(const std::string& configFile,
+                      const std::string& appDir,
+                      const std::string& mapFile)
 {
     AppConfig::init(configFile, appDir);
     const AppConfig& cfg = AppConfig::instance();
@@ -37,46 +44,48 @@ void BotApp::init(const std::string& configFile,
     setupWindow(cfg.width(), cfg.height(), cfg.title());
 #endif
     Context::init(cfg);
-    setupOpenGL(cfg);
-    setupGame(cfg);
+    setupOpenGL();
+    setupGame(mapFile);
 }
 
-void BotApp::setupOpenGL()
+void ShowMapApp::setupOpenGL()
 {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-void BotApp::setupGame()
+void ShowMapApp::setupGame(const std::string& mapFile)
 {
     setupDeltaSmoother();
     setupActions();
-    setupScreen();
+    setupScreen(mapFile);
     setupInput();
 }
 
-void BotApp::setupDeltaSmoother()
+void ShowMapApp::setupDeltaSmoother()
 {
     const AppConfig& cfg = AppConfig::instance();
     deltaSmoother_.init(cfg.timeDeltaHistoryLen());
     deltaSmoother_.start();
 }
 
-void BotApp::setupActions()
+void ShowMapApp::setupActions()
 {
     using namespace std::placeholders;
 
-    actions_.exitAction_ = std::bind(&BotApp::exitApp, this);
+    actions_.exitAction_ = std::bind(&ShowMapApp::exitApp, this);
     actions_.switchAction_ = std::bind(&ScreenManager::switchScreen,
                                        &screenManager_, _1);
 }
 
-void BotApp::setupScreen()
+void ShowMapApp::setupScreen(const std::string& mapFile)
 {
+    Screen* screen = new ShowMapScreen(viewportSize(), actions_, mapFile);
+    screenManager_.init2(screen);
 }
 
-void BotApp::setupInput()
+void ShowMapApp::setupInput()
 {
     using namespace std::placeholders;
 
@@ -93,7 +102,7 @@ void BotApp::setupInput()
     InputManager::getInstance().enable();
 }
 
-void BotApp::exitApp()
+void ShowMapApp::exitApp()
 {
     setRunning(false);
 }

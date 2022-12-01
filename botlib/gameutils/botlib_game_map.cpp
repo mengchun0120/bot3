@@ -128,6 +128,11 @@ void GameMap::removeObj(GameObject* obj)
     cells_[obj->row()][obj->col()][layer].remove(obj);
 }
 
+void GameMap::setViewportOrigin(const commonlib::Vector2& p)
+{
+    setViewportOrigin(p[0], p[1]);
+}
+
 void GameMap::setViewportOrigin(float x, float y)
 {
     viewportOrigin_[0] = clamp(x, minViewportOrigin_[0], maxViewportOrigin_[0]);
