@@ -100,7 +100,7 @@ int main(int argc,
         exit(1);
     }
 
-    LOG_INFO << "Initialization complete" << LOG_END;
+    LOG_INFO << "Initialization complete " << args.appDir_ << " " << args.mapFile_ << LOG_END;
 
     try
     {

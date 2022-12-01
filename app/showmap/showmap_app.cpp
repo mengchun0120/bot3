@@ -10,8 +10,8 @@ namespace mcdane {
 namespace showmap {
 
 ShowMapApp::ShowMapApp(const std::string& configFile,
-                       const std::string& mapFile,
-                       const std::string& appDir)
+                       const std::string& appDir,
+                       const std::string& mapFile)
 {
     init(configFile, appDir, mapFile);
 }

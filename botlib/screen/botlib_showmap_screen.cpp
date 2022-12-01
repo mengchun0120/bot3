@@ -40,9 +40,7 @@ bool ShowMapScreen::processInput(const commonlib::InputEvent& e)
         case EventType::KEY:
             return processKey(e.keyEvent());
         default:
-            THROW_EXCEPT(InvalidArgumentException,
-                         "Invalid event-type: " +
-                         std::to_string(static_cast<int>(e.type())));
+            break;
     }
 
     return true;
@@ -58,6 +56,11 @@ void ShowMapScreen::loadMap(const commonlib::Vector2& viewportSize,
 
 bool ShowMapScreen::processKey(const commonlib::KeyEvent& e)
 {
+    if (e.action_ != GLFW_PRESS)
+    {
+        return true;
+    }
+
     switch(e.key_)
     {
         case GLFW_KEY_UP:
@@ -102,7 +105,7 @@ bool ShowMapScreen::processDownKey()
 bool ShowMapScreen::processRightKey()
 {
     Vector2 p = map_.viewportOrigin();
-    p[0] -= k_deltaPerStroke;
+    p[0] += k_deltaPerStroke;
     map_.setViewportOrigin(p);
     return true;
 }

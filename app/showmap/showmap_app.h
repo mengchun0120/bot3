@@ -13,8 +13,8 @@ namespace showmap {
 class ShowMapApp: public commonlib::App {
 public:
     ShowMapApp(const std::string& configFile,
-               const std::string& mapFile,
-               const std::string& appDir);
+               const std::string& appDir,
+               const std::string& mapFile);
 
     ~ShowMapApp() override;
 
