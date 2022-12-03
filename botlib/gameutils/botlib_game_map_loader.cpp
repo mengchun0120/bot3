@@ -152,7 +152,8 @@ void GameMapLoader::addTile(GameMap& map,
     if (!map.canBePlaced(pos_, t->collideBreath()))
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Tile " + templateStr_ + " cannot be placed in map");
+                     "Tile " + templateStr_ + " cannot be placed in map at "
+                     + pos_.toString());
     }
 
     parse(tileParams_, v);
@@ -178,7 +179,8 @@ void GameMapLoader::addGoodie(GameMap& map,
     if (!map.canBePlaced(pos_, t->collideBreath()))
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Goodie " + templateStr_ + " cannot be placed in map");
+                     "Goodie " + templateStr_ + " cannot be placed in map at "
+                     + pos_.toString());
     }
 
     parse(goodieParams_, v);
@@ -204,7 +206,8 @@ void GameMapLoader::addMissile(GameMap& map,
     if (!map.canBePlaced(pos_, t->collideBreath()))
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Missile " + templateStr_ + " cannot be placed in map");
+                     "Missile " + templateStr_ + " cannot be placed in map at "
+                     + pos_.toString());
     }
 
     parse(missileParams_, v);
@@ -232,7 +235,8 @@ void GameMapLoader::addAIRobot(GameMap& map,
     if (!map.canBePlaced(pos_, t->collideBreath()))
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Robot " + templateStr_ + " cannot be placed in map");
+                     "Robot " + templateStr_ + " cannot be placed in map at "
+                     + pos_.toString());
     }
 
     parse(robotParams_, v);
@@ -268,7 +272,7 @@ void GameMapLoader::addPlayer(GameMap& map,
     if (!map.canBePlaced(pos_, t.collideBreath()))
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     "Player cannot be placed in map");
+                     "Player cannot be placed in map at " + pos_.toString());
     }
 
     parse(robotParams_, v);

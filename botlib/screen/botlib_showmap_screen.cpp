@@ -56,7 +56,7 @@ void ShowMapScreen::loadMap(const commonlib::Vector2& viewportSize,
 
 bool ShowMapScreen::processKey(const commonlib::KeyEvent& e)
 {
-    if (e.action_ != GLFW_PRESS)
+    if (e.action_ != GLFW_PRESS && e.action_ != GLFW_REPEAT)
     {
         return true;
     }

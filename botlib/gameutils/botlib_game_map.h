@@ -36,7 +36,7 @@ private:
 
 public:
     static constexpr unsigned int k_minRows = 30;
-    static constexpr unsigned int k_minCols = 40;
+    static constexpr unsigned int k_minCols = 30;
     static constexpr float k_cellBreath = 40.0f;
 
 

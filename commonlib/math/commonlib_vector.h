@@ -46,6 +46,8 @@ struct Vector: public std::array<float, N> {
     Vector& operator/=(float f) noexcept;
 
     rapidjson::Value toJson(rapidjson::Document::AllocatorType& allocator) const;
+
+    std::string toString() const;
 };
 
 using Vector2 = Vector<2>;
@@ -167,6 +169,25 @@ rapidjson::Value Vector<N>::toJson(
     }
 
     return json;
+}
+
+template <std::size_t N>
+std::string Vector<N>::toString() const
+{
+    std::ostringstream oss;
+
+    oss << '[';
+    if (N > 0)
+    {
+        oss << (*this)[0];
+        for (std::size_t i = 1; i < N; ++i)
+        {
+            oss << ", " << (*this)[i];
+        }
+    }
+    oss << ']';
+
+    return oss.str();
 }
 
 template <std::size_t N>
@@ -320,18 +341,7 @@ template <std::size_t N>
 std::ostream& operator<<(std::ostream& os,
                          const mcdane::commonlib::Vector<N>& v)
 {
-    os << '[';
-    if (N > 0)
-    {
-        os << v[0];
-        for (std::size_t i = 1; i < N; ++i)
-        {
-            os << ", " << v[i];
-        }
-    }
-    os << ']';
-
-    return os;
+    return os << v.toString();
 }
 
 template <std::size_t N>

@@ -1,17 +1,17 @@
 {
-    "rows": 50,
-    "cols": 50,
+    "rows": 30,
+    "cols": 30,
     "objects": [
         {
             "type": "player",
             "template": "player",
-            "pos": [100.0, 240.0],
+            "pos": [100.0, 100.0],
             "direction": [1.0, 0.0]
         },
         {
             "type": "robot",
             "template": "red_robot",
-            "pos": [100.0, 480.0],
+            "pos": [100.0, 300.0],
             "direction": [1.0, 0.0]
         },
         {
@@ -85,6 +85,404 @@
             "template": "steel_tile",
             "pos": [220.0, 400.0],
             "direction": [1.0, 0.0]
+        },
+        
+        {
+            "type": "robot",
+            "template": "blue_robot",
+            "pos": [500.0, 300.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [500.0, 200.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [540.0, 200.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [580.0, 200.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [620.0, 200.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [620.0, 240.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [620.0, 280.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [620.0, 320.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [620.0, 360.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [500.0, 400.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [540.0, 400.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [580.0, 400.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "clay_tile",
+            "pos": [620.0, 400.0],
+            "direction": [1.0, 0.0]
+        },
+            
+        {
+            "type": "robot",
+            "template": "orange_robot",
+            "pos": [900.0, 300.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "fireland_tile",
+            "pos": [900.0, 200.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "fireland_tile",
+            "pos": [940.0, 200.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "fireland_tile",
+            "pos": [980.0, 200.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "fireland_tile",
+            "pos": [1020.0, 200.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "fireland_tile",
+            "pos": [1020.0, 240.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "fireland_tile",
+            "pos": [1020.0, 280.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "fireland_tile",
+            "pos": [1020.0, 320.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "fireland_tile",
+            "pos": [1020.0, 360.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "fireland_tile",
+            "pos": [900.0, 400.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "fireland_tile",
+            "pos": [940.0, 400.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "fireland_tile",
+            "pos": [980.0, 400.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "fireland_tile",
+            "pos": [1020.0, 400.0],
+            "direction": [1.0, 0.0]
+        },
+           
+           
+        {
+            "type": "robot",
+            "template": "red_robot",
+            "pos": [100.0, 900.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [100.0, 800.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [140.0, 800.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [180.0, 800.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [220.0, 800.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [220.0, 840.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [220.0, 880.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [220.0, 920.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [220.0, 960.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [100.0, 1000.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [140.0, 1000.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [180.0, 1000.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "steel_tile",
+            "pos": [220.0, 1000.0],
+            "direction": [1.0, 0.0]
+        },
+        
+        {
+            "type": "robot",
+            "template": "orange_robot",
+            "pos": [500.0, 900.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [500.0, 800.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [540.0, 800.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [580.0, 800.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [620.0, 800.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [620.0, 840.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [620.0, 880.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [620.0, 920.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [620.0, 960.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [500.0, 1000.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [540.0, 1000.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [580.0, 1000.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "bush_tile",
+            "pos": [620.0, 1000.0],
+            "direction": [1.0, 0.0]
+        },
+            
+        {
+            "type": "robot",
+            "template": "red_robot",
+            "pos": [900.0, 900.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "ice_tile",
+            "pos": [900.0, 800.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "ice_tile",
+            "pos": [940.0, 800.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "ice_tile",
+            "pos": [980.0, 800.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "ice_tile",
+            "pos": [1020.0, 800.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "ice_tile",
+            "pos": [1020.0, 840.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "ice_tile",
+            "pos": [1020.0, 880.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "ice_tile",
+            "pos": [1020.0, 920.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "ice_tile",
+            "pos": [1020.0, 960.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "ice_tile",
+            "pos": [900.0, 1000.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "ice_tile",
+            "pos": [940.0, 1000.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "ice_tile",
+            "pos": [980.0, 1000.0],
+            "direction": [1.0, 0.0]
+        },
+        {
+            "type": "tile",
+            "template": "ice_tile",
+            "pos": [1020.0, 1000.0],
+            "direction": [1.0, 0.0]
         }
+
+
     ]
 }
