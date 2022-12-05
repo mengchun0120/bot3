@@ -1,6 +1,5 @@
 #include <botlib_app_config.h>
 #include <botlib_context.h>
-#include <botlib_showmap_screen.h>
 #include <showmap_app.h>
 
 using namespace mcdane::commonlib;
@@ -26,11 +25,10 @@ void ShowMapApp::process()
 
     if (running())
     {
-        screenManager_.update(deltaSmoother_.curTimeDelta());
-        screenManager_.present();
+        screen_.update(deltaSmoother_.curTimeDelta());
+        screen_.present();
     }
 
-    screenManager_.postProcess();
     postProcess();
 }
 
@@ -75,14 +73,11 @@ void ShowMapApp::setupActions()
     using namespace std::placeholders;
 
     actions_.exitAction_ = std::bind(&ShowMapApp::exitApp, this);
-    actions_.switchAction_ = std::bind(&ScreenManager::switchScreen,
-                                       &screenManager_, _1);
 }
 
 void ShowMapApp::setupScreen(const std::string& mapFile)
 {
-    Screen* screen = new ShowMapScreen(viewportSize(), actions_, mapFile);
-    screenManager_.init2(screen);
+    screen_.init(viewportSize(), actions_, mapFile);
 }
 
 void ShowMapApp::setupInput()
@@ -95,8 +90,8 @@ void ShowMapApp::setupInput()
                                viewportHeight(),
                                cfg.inputQueueCapacity());
 
-    inputProcessor_ = std::bind(&ScreenManager::processInput,
-                                &screenManager_,
+    inputProcessor_ = std::bind(&ShowMapScreen::processInput,
+                                &screen_,
                                 _1);
 
     InputManager::getInstance().enable();
