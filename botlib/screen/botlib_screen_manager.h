@@ -13,8 +13,6 @@ public:
 
     ~ScreenManager();
 
-    void init2(Screen* startScreen);
-
     void init(ScreenType startScreenType,
               const commonlib::Vector2& viewportSize,
               const AppActions& actions);
@@ -24,8 +22,6 @@ public:
     void present();
 
     bool processInput(const commonlib::InputEvent &e);
-
-    void switchScreen2(Screen* newScreen);
 
     void switchScreen(ScreenType type);
 

@@ -13,13 +13,15 @@ namespace mcdane {
 namespace botlib {
 
 GameScreen::GameScreen(const commonlib::Vector2& viewportSize,
-                       const AppActions actions)
+                       const AppActions actions,
+                       ScreenType nextScreenType)
 {
     init(viewportSize, actions);
 }
 
 void GameScreen::init(const Vector2& viewportSize,
-                      const AppActions actions)
+                      const AppActions actions,
+                      ScreenType nextScreenType)
 {
     if (viewportSize[0] <= 0.0f || viewportSize[1] <= 0.0f)
     {
@@ -31,6 +33,7 @@ void GameScreen::init(const Vector2& viewportSize,
 
     const GameScreenConfig& cfg = Context::gameScreenConfig();
 
+    nextScreenType_ = nextScreenType;
     loadMap(viewportSize, cfg.mapFile());
     objDumper_.init(cfg.dumperPoolSize());
     viewportSize_ = viewportSize;
@@ -169,9 +172,19 @@ void GameScreen::initAIRobotCount()
 bool GameScreen::processInputEndGame(const commonlib::InputEvent& e)
 {
     msgBox_.process(e);
-    if (msgBox_.buttonClicked() == MessageBox::BUTTON_OK)
+
+    if (msgBox_.buttonClicked() != MessageBox::BUTTON_OK)
     {
-        actions_.switchAction_(ScreenType::START);
+        return true;
+    }
+
+    if (nextScreenType_ != ScreenType::NONE)
+    {
+        actions_.switchAction_(nextScreenType_);
+    }
+    else
+    {
+        actions_.exitAction_();
     }
 
     return true;

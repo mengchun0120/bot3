@@ -18,12 +18,14 @@ public:
     GameScreen() = default;
 
     GameScreen(const commonlib::Vector2& viewportSize,
-               const AppActions actions);
+               const AppActions actions,
+               ScreenType nextScreenType=ScreenType::NONE);
 
     ~GameScreen() override = default;
 
     void init(const commonlib::Vector2& viewportSize,
-              const AppActions actions);
+              const AppActions actions,
+              ScreenType nextScreenType=ScreenType::NONE);
 
     void update(float timeDelta) override;
 
@@ -78,6 +80,7 @@ private:
     void clearObjectsFromMoveOutRegion(int moveOutRegionCount);
 
 private:
+    ScreenType nextScreenType_;
     GameMap map_;
     GameObjectDumper objDumper_;
     UpdateContext cxt_;
