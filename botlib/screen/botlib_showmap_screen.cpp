@@ -1,4 +1,5 @@
 #include <commonlib_exception.h>
+#include <botlib_context.h>
 #include <botlib_game_map_loader.h>
 #include <botlib_showmap_screen.h>
 
@@ -8,18 +9,19 @@ namespace mcdane {
 namespace botlib {
 
 ShowMapScreen::ShowMapScreen(const commonlib::Vector2& viewportSize,
-                             const AppActions actions,
-                             const std::string& mapFile)
+                             AppActions actions,
+                             ScreenType nextScreenType)
 {
-    init(viewportSize, actions, mapFile);
+    init(viewportSize, actions, nextScreenType);
 }
 
 void ShowMapScreen::init(const commonlib::Vector2& viewportSize,
-                         const AppActions actions,
-                         const std::string& mapFile)
+                         AppActions actions,
+                         ScreenType nextScreenType)
 {
     Screen::init(actions);
-    loadMap(viewportSize, mapFile);
+    nextScreenType_ = nextScreenType;
+    loadMap(viewportSize);
 }
 
 void ShowMapScreen::update(float timeDelta)
@@ -46,12 +48,13 @@ bool ShowMapScreen::processInput(const commonlib::InputEvent& e)
     return true;
 }
 
-void ShowMapScreen::loadMap(const commonlib::Vector2& viewportSize,
-                            const std::string& mapFile)
+void ShowMapScreen::loadMap(const commonlib::Vector2& viewportSize)
 {
+    const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
+
     GameMapLoader loader(viewportSize[0], viewportSize[1]);
 
-    loader.load(map_, mapFile);
+    loader.load(map_, cfg.mapFile());
 }
 
 bool ShowMapScreen::processKey(const commonlib::KeyEvent& e)
@@ -63,6 +66,10 @@ bool ShowMapScreen::processKey(const commonlib::KeyEvent& e)
 
     switch(e.key_)
     {
+        case GLFW_KEY_ESCAPE:
+        {
+            return processEscKey();
+        }
         case GLFW_KEY_UP:
         {
             return processUpKey();
@@ -86,35 +93,67 @@ bool ShowMapScreen::processKey(const commonlib::KeyEvent& e)
     return true;
 }
 
+bool ShowMapScreen::processEscKey()
+{
+    if (nextScreenType_ == ScreenType::NONE)
+    {
+        if (actions_.exitAction_)
+        {
+            actions_.exitAction_();
+        }
+    }
+    else
+    {
+        if (actions_.switchAction_)
+        {
+            actions_.switchAction_(nextScreenType_);
+        }
+    }
+
+    return true;
+}
+
 bool ShowMapScreen::processUpKey()
 {
+    const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
     Vector2 p = map_.viewportOrigin();
-    p[1] += k_deltaPerStroke;
+
+    p[1] += cfg.deltaPerStroke();
     map_.setViewportOrigin(p);
+
     return true;
 }
 
 bool ShowMapScreen::processDownKey()
 {
+    const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
     Vector2 p = map_.viewportOrigin();
-    p[1] -= k_deltaPerStroke;
+
+    p[1] -= cfg.deltaPerStroke();
     map_.setViewportOrigin(p);
+
     return true;
 }
 
 bool ShowMapScreen::processRightKey()
 {
+    const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
     Vector2 p = map_.viewportOrigin();
-    p[0] += k_deltaPerStroke;
+
+    p[0] += cfg.deltaPerStroke();
     map_.setViewportOrigin(p);
+
     return true;
 }
 
 bool ShowMapScreen::processLeftKey()
 {
+    const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
     Vector2 p = map_.viewportOrigin();
-    p[0] -= k_deltaPerStroke;
+
+    p[0] -= cfg.deltaPerStroke();
     map_.setViewportOrigin(p);
+
     return true;
 }
 

@@ -12,14 +12,14 @@ public:
     ShowMapScreen() = default;
 
     ShowMapScreen(const commonlib::Vector2& viewportSize,
-                  const AppActions actions,
-                  const std::string& mapFile);
+                  AppActions actions,
+                  ScreenType nextScreenType=ScreenType::NONE);
 
     ~ShowMapScreen() override = default;
 
     void init(const commonlib::Vector2& viewportSize,
-              const AppActions actions,
-              const std::string& mapFile);
+              AppActions actions,
+              ScreenType nextScreenType=ScreenType::NONE);
 
     void update(float timeDelta) override;
 
@@ -28,10 +28,11 @@ public:
     bool processInput(const commonlib::InputEvent& e) override;
 
 private:
-    void loadMap(const commonlib::Vector2& viewportSize,
-                 const std::string& mapFile);
+    void loadMap(const commonlib::Vector2& viewportSize);
 
     bool processKey(const commonlib::KeyEvent& e);
+
+    bool processEscKey();
 
     bool processUpKey();
 
@@ -42,8 +43,8 @@ private:
     bool processLeftKey();
 
 private:
-    static constexpr float k_deltaPerStroke = 20.0f;
     GameMap map_;
+    ScreenType nextScreenType_;
 };
 
 } // end of namespace botlib

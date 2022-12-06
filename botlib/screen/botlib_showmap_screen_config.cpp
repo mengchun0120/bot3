@@ -13,7 +13,7 @@ void ShowMapScreenConfig::init(const std::string& cfgFile)
     readJson(doc, cfgFile);
 
     std::vector<JsonParamPtr> params{
-        jsonParam(mapFile_, "mapFile", true, k_nonEmptyStrV),
+        jsonParam(mapFile_, "mapFile", false, k_nonEmptyStrV),
         jsonParam(deltaPerStroke_, "deltaPerStroke", true, gt(0.0f))
     };
 

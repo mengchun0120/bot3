@@ -56,7 +56,6 @@ void ShowMapApp::setupOpenGL()
 void ShowMapApp::setupGame(const std::string& mapFile)
 {
     setupDeltaSmoother();
-    setupActions();
     setupScreen(mapFile);
     setupInput();
 }
@@ -68,16 +67,15 @@ void ShowMapApp::setupDeltaSmoother()
     deltaSmoother_.start();
 }
 
-void ShowMapApp::setupActions()
-{
-    using namespace std::placeholders;
-
-    actions_.exitAction_ = std::bind(&ShowMapApp::exitApp, this);
-}
-
 void ShowMapApp::setupScreen(const std::string& mapFile)
 {
-    screen_.init(viewportSize(), actions_, mapFile);
+    ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
+    cfg.setMapFile(mapFile);
+
+    AppActions actions;
+    actions.exitAction_ = std::bind(&ShowMapApp::exitApp, this);
+
+    screen_.init(viewportSize(), actions);
 }
 
 void ShowMapApp::setupInput()

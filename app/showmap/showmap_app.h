@@ -30,8 +30,6 @@ private:
 
     void setupDeltaSmoother();
 
-    void setupActions();
-
     void setupScreen(const std::string& mapFile);
 
     void setupInput();
@@ -41,7 +39,6 @@ private:
 private:
     botlib::TimeDeltaSmoother deltaSmoother_;
     commonlib::InputProcessor inputProcessor_;
-    botlib::AppActions actions_;
     botlib::ShowMapScreen screen_;
 };
 
