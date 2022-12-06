@@ -70,6 +70,7 @@ set(BOTLIB_SCREEN_SRC
     screen/botlib_screen_manager.cpp
     screen/botlib_screen_type.cpp
     screen/botlib_showmap_screen.cpp
+    screen/botlib_showmap_screen_config.cpp
     screen/botlib_start_screen.cpp
     screen/botlib_start_screen_config.cpp)
 

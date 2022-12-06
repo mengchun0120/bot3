@@ -16,6 +16,7 @@ LabelConfig Context::k_labelConfig;
 MessageBoxConfig Context::k_msgBoxConfig;
 StartScreenConfig Context::k_startScreenConfig;
 GameScreenConfig Context::k_gameScreenConfig;
+ShowMapScreenConfig Context::k_showMapScreenConfig;
 GoodieGenerator Context::k_goodieGenerator;
 
 void Context::init(const AppConfig& cfg)
@@ -28,6 +29,7 @@ void Context::init(const AppConfig& cfg)
     k_msgBoxConfig.init(cfg.messageBoxConfigFile());
     k_startScreenConfig.init(cfg.startScreenConfigFile());
     k_gameScreenConfig.init(cfg.gameScreenConfigFile());
+    k_showMapScreenConfig.init(cfg.showMapScreenConfigFile());
     k_goodieGenerator.init(k_gameLib.goodieTemplateLib());
 
     LOG_INFO << "Context initialized successfully" << LOG_END;
