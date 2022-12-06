@@ -1,26 +1,25 @@
 #include <botlib_app_config.h>
 #include <botlib_context.h>
-#include <botlib_button.h>
-#include <botlib_hp_indicator.h>
-#include <itest_test_game_screen_app.h>
+#include <rungame_app.h>
 
 using namespace mcdane::commonlib;
 using namespace mcdane::botlib;
 
 namespace mcdane {
-namespace itest {
+namespace rungame {
 
-TestGameScreenApp::TestGameScreenApp(const std::string& configFile,
-                                     const std::string& appDir)
+RunGameApp::RunGameApp(const std::string& configFile,
+                       const std::string& appDir,
+                       const std::string& mapFile)
 {
     AppConfig::init(configFile, appDir);
     setupWindow();
     Context::init(AppConfig::instance());
     setupOpenGL();
-    setupGame();
+    setupGame(mapFile);
 }
 
-void TestGameScreenApp::process()
+void RunGameApp::process()
 {
     InputManager::getInstance().processInput(inputProcessor_);
     deltaSmoother_.update();
@@ -34,14 +33,14 @@ void TestGameScreenApp::process()
     postProcess();
 }
 
-void TestGameScreenApp::setupWindow()
+void RunGameApp::setupWindow()
 {
     const AppConfig& cfg = AppConfig::instance();
 
     App::setupWindow(cfg.width(), cfg.height(), cfg.title());
 }
 
-void TestGameScreenApp::setupOpenGL()
+void RunGameApp::setupOpenGL()
 {
     glEnable(GL_BLEND);
     glEnable(GL_PROGRAM_POINT_SIZE);
@@ -49,15 +48,14 @@ void TestGameScreenApp::setupOpenGL()
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-void TestGameScreenApp::setupGame()
+void RunGameApp::setupGame(const std::string& mapFile)
 {
     setupDeltaSmoother();
-    setupActions();
-    setupScreen();
+    setupScreen(mapFile);
     setupInput();
 }
 
-void TestGameScreenApp::setupDeltaSmoother()
+void RunGameApp::setupDeltaSmoother()
 {
     const AppConfig& cfg = AppConfig::instance();
 
@@ -65,22 +63,16 @@ void TestGameScreenApp::setupDeltaSmoother()
     deltaSmoother_.start();
 }
 
-void TestGameScreenApp::setupActions()
+void RunGameApp::setupScreen(const std::string& mapFile)
 {
-    using namespace std::placeholders;
+    AppActions actions;
 
-    actions_.exitAction_ = std::bind(&TestGameScreenApp::exitApp, this);
-    actions_.switchAction_ = std::bind(&TestGameScreenApp::switchScreen,
-                                       this,
-                                       _1);
+    actions.exitAction_ = std::bind(&RunGameApp::exitApp, this);
+    Context::gameScreenConfig().setMapFile(mapFile);
+    screen_.init(viewportSize(), actions);
 }
 
-void TestGameScreenApp::setupScreen()
-{
-    screen_.init(viewportSize(), actions_);
-}
-
-void TestGameScreenApp::setupInput()
+void RunGameApp::setupInput()
 {
     using namespace std::placeholders;
 
@@ -97,16 +89,11 @@ void TestGameScreenApp::setupInput()
     InputManager::getInstance().enable();
 }
 
-void TestGameScreenApp::exitApp()
+void RunGameApp::exitApp()
 {
     setRunning(false);
 }
 
-void TestGameScreenApp::switchScreen(botlib::ScreenType screenType)
-{
-    setRunning(false);
-}
-
-} // end of namespace itest
+} // end of namespace rungame
 } // end of namespace mcdane
 

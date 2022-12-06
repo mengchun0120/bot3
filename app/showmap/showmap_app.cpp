@@ -69,12 +69,10 @@ void ShowMapApp::setupDeltaSmoother()
 
 void ShowMapApp::setupScreen(const std::string& mapFile)
 {
-    ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
-    cfg.setMapFile(mapFile);
-
     AppActions actions;
-    actions.exitAction_ = std::bind(&ShowMapApp::exitApp, this);
 
+    actions.exitAction_ = std::bind(&ShowMapApp::exitApp, this);
+    Context::showMapScreenConfig().setMapFile(mapFile);
     screen_.init(viewportSize(), actions);
 }
 

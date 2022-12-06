@@ -18,6 +18,8 @@ public:
 
     inline const std::string& mapFile() const;
 
+    void setMapFile(const std::string& fileName);
+
     inline int dumperPoolSize() const;
 
     inline float goodieSpacing() const;

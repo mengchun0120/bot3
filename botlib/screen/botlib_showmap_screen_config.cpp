@@ -1,5 +1,8 @@
+#include <commonlib_log.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
+#include <commonlib_file_utils.h>
+#include <botlib_app_config.h>
 #include <botlib_showmap_screen_config.h>
 
 using namespace mcdane::commonlib;
@@ -18,11 +21,19 @@ void ShowMapScreenConfig::init(const std::string& cfgFile)
     };
 
     parse(params, doc);
+
+    const AppConfig& cfg = AppConfig::instance();
+
+    mapFile_ = constructPath({cfg.mapDir(), mapFile_});
+
+    LOG_INFO << "ShowMapScreenConfig initialized successfully" << LOG_END;
 }
 
 void ShowMapScreenConfig::setMapFile(const std::string& fileName)
 {
-    mapFile_ = fileName;
+    const AppConfig& cfg = AppConfig::instance();
+
+    mapFile_ = constructPath({cfg.mapDir(), fileName});
 }
 
 } // end of namespace botlib

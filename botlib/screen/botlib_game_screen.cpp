@@ -180,11 +180,17 @@ bool GameScreen::processInputEndGame(const commonlib::InputEvent& e)
 
     if (nextScreenType_ != ScreenType::NONE)
     {
-        actions_.switchAction_(nextScreenType_);
+        if (actions_.switchAction_)
+        {
+            actions_.switchAction_(nextScreenType_);
+        }
     }
     else
     {
-        actions_.exitAction_();
+        if (actions_.exitAction_)
+        {
+            actions_.exitAction_();
+        }
     }
 
     return true;

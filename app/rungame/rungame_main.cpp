@@ -3,30 +3,33 @@
 #include <cstdlib>
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
-#include <itest_test_game_screen_app.h>
+#include <rungame_app.h>
 
 using namespace mcdane::commonlib;
-using namespace mcdane::itest;
+using namespace mcdane::rungame;
 
 struct Arguments {
     std::string configFile_;
     std::string logLevelStr_;
     std::string logFile_;
     std::string appDir_;
+    std::string mapFile_;
 };
 
 void parseArguments(Arguments& args, int argc, char* argv[])
 {
     ArgumentParser parser;
     parser.init({
-        Argument::create(args.configFile_, "configFile", "c", "config",
+        Argument::create(args.configFile_, "appConfig", "c", "appConfig",
                          "Config file", false, k_nonEmptyStrV),
         Argument::create(args.logLevelStr_, "logLevel", "v", "logLevel",
                          "Log level", true),
-        Argument::create(args.logFile_, "logFile", "l", "log",
+        Argument::create(args.logFile_, "logFile", "l", "logFile",
                          "Log file", false, k_nonEmptyStrV),
         Argument::create(args.appDir_, "appDir", "a", "appDir",
                          "App directory", false, k_nonEmptyStrV),
+        Argument::create(args.mapFile_, "mapFile", "m", "mapFile",
+                         "Map File", true, k_nonEmptyStrV)
     });
 
     parser.parse(argc, argv);
@@ -74,7 +77,7 @@ int main(int argc, char* argv[])
 
     try
     {
-        TestGameScreenApp app(args.configFile_, args.appDir_);
+        RunGameApp app(args.configFile_, args.appDir_, args.mapFile_);
         app.run();
     }
     catch (const std::exception& e)

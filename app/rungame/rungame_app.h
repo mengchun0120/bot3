@@ -7,14 +7,15 @@
 #include <botlib_game_screen.h>
 
 namespace mcdane {
-namespace itest {
+namespace rungame {
 
-class TestGameScreenApp: public commonlib::App {
+class RunGameApp: public commonlib::App {
 public:
-    TestGameScreenApp(const std::string& configFile,
-                      const std::string& appDir);
+    RunGameApp(const std::string& configFile,
+               const std::string& appDir,
+               const std::string& mapFile);
 
-    ~TestGameScreenApp() = default;
+    ~RunGameApp() = default;
 
     void process() override;
 
@@ -23,28 +24,23 @@ private:
 
     void setupOpenGL();
 
-    void setupGame();
+    void setupGame(const std::string& mapFile);
 
     void setupDeltaSmoother();
 
-    void setupActions();
-
-    void setupScreen();
+    void setupScreen(const std::string& mapFile);
 
     void setupInput();
 
     void exitApp();
 
-    void switchScreen(botlib::ScreenType screenType);
-
 private:
-    botlib::AppActions actions_;
     botlib::TimeDeltaSmoother deltaSmoother_;
     commonlib::InputProcessor inputProcessor_;
     botlib::GameScreen screen_;
 };
 
-} // end of namespace itest
+} // end of namespace rungame
 } // end of namespace mcdane
 
 #endif

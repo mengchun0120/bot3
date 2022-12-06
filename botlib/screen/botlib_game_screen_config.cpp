@@ -60,6 +60,12 @@ void GameScreenConfig::init(const std::string& configFile)
     LOG_INFO << "GameScreenConfig initialized successfully" << LOG_END;
 }
 
+void GameScreenConfig::setMapFile(const std::string& fileName)
+{
+    const AppConfig& cfg = AppConfig::instance();
+    mapFile_ = constructPath({cfg.mapDir(), fileName});
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 
