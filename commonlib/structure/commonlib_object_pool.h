@@ -1,10 +1,7 @@
 #ifndef INCLUDED_COMMONLIB_OBJECT_POOL_H
 #define INCLUDED_COMMONLIB_OBJECT_POOL_H
 
-#include <sstream>
-#include <functional>
 #include <commonlib_exception.h>
-#include <commonlib_json_utils.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -12,8 +9,6 @@ namespace commonlib {
 template <typename T>
 class ObjectPool {
 public:
-    using InitFunc = std::function<void(T&)>;
-
     ObjectPool();
 
     ObjectPool(unsigned int size);
@@ -22,9 +17,11 @@ public:
 
     void init(unsigned int size);
 
-    void init(unsigned int size, InitFunc func);
+    template <typename INITFUNC>
+    void init(unsigned int size, INITFUNC f);
 
-    T* alloc();
+    template <typename... Args>
+    T* alloc(Args&&... args);
 
     void free(T* t);
 
@@ -53,6 +50,8 @@ ObjectPool<T>::ObjectPool()
     , upper_(nullptr)
     , size_(0)
     , next_(nullptr)
+    , firstFree_(-1)
+    , freeCount_(0)
 {
 }
 
@@ -83,28 +82,31 @@ void ObjectPool<T>::init(unsigned int size)
 }
 
 template <typename T>
-void ObjectPool<T>::init(unsigned int size, InitFunc func)
+template <typename INITFUNC>
+void ObjectPool<T>::init(unsigned int size, INITFUNC f)
 {
     init(size);
 
     for (unsigned int i = 0; i < size; ++i)
     {
-        func(pool_[i]);
+        f(pool_[i]);
     }
 }
 
 template <typename T>
-T* ObjectPool<T>::alloc()
+template <typename... Args>
+T* ObjectPool<T>::alloc(Args&&... args)
 {
     T* t;
 
     if (firstFree_ < 0)
     {
-        t = new T();
+        t = new T(std::forward<Args>(args)...);
     }
     else
     {
         t = &pool_[firstFree_];
+        new (t) T(std::forward<Args>(args)...);
         firstFree_ = next_[firstFree_];
         --freeCount_;
     }

@@ -11,7 +11,7 @@ namespace botlib {
 class GameMap;
 
 class GameObjectDumper {
-public:
+private:
     class Item {
     public:
         inline Item();
