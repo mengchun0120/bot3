@@ -206,10 +206,6 @@ void Robot::doDamage(float damage, UpdateContext& cxt)
         if (hp_ <= 0.0f)
         {
             setState(GameObjectState::DYING);
-            if (side_ == Side::AI)
-            {
-                cxt.onAIRobotDeath();
-            }
         }
 
         hpIndicator_.reset(pos(), hpRatio());

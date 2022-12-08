@@ -98,6 +98,8 @@ public:
 
     inline int aiRobotCount() const;
 
+    inline const std::string& aiRobotCountStr() const;
+
     void setViewportOrigin(float x, float y);
 
     void setViewportOrigin(const commonlib::Vector2& p);
@@ -129,8 +131,6 @@ public:
     bool checkCollision(commonlib::Vector2& delta,
                         const GameObject* obj);
 
-    void decreaseAIRobotCount();
-
     bool canBePlaced(const commonlib::Vector2& pos,
                      float collideBreath);
 
@@ -158,6 +158,8 @@ private:
 
     std::string detail();
 
+    void updateAIRobotCountStr();
+
 private:
     float maxObjSpan_;
     float maxCollideBreath_;
@@ -174,6 +176,7 @@ private:
     commonlib::Region<int> presentArea_;
     Player* player_;
     int aiRobotCount_;
+    std::string aiRobotCountStr_;
 };
 
 int GameMap::getLayer(GameObjectType type)
@@ -264,6 +267,11 @@ Player* GameMap::player()
 int GameMap::aiRobotCount() const
 {
     return aiRobotCount_;
+}
+
+const std::string& GameMap::aiRobotCountStr() const
+{
+    return aiRobotCountStr_;
 }
 
 bool GameMap::canSee(const GameObject* obj) const

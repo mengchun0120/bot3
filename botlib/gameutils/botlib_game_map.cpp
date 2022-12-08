@@ -52,6 +52,7 @@ void GameMap::init(unsigned int rows,
     setViewportSize(viewportWidth, viewportHeight);
     setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
     aiRobotCount_ = 0;
+    updateAIRobotCountStr();
 }
 
 void GameMap::present()
@@ -85,6 +86,7 @@ void GameMap::addObj(GameObject* obj)
         else
         {
             ++aiRobotCount_;
+            updateAIRobotCountStr();
         }
     }
 
@@ -120,6 +122,11 @@ void GameMap::removeObj(GameObject* obj)
         if (robot->side() == Side::PLAYER)
         {
             player_ = nullptr;
+        }
+        else
+        {
+            --aiRobotCount_;
+            updateAIRobotCountStr();
         }
     }
 
@@ -204,17 +211,6 @@ bool GameMap::checkCollision(Vector2& delta,
     bool collideObjs = checkNonpassthroughCollide(delta, obj);
 
     return collideBoundary || collideObjs;
-}
-
-void GameMap::decreaseAIRobotCount()
-{
-    if (aiRobotCount_ <= 0)
-    {
-        LOG_WARN << "Something is wrong. No AI robot left!" << LOG_END;
-        return;
-    }
-
-    --aiRobotCount_;
 }
 
 bool GameMap::canBePlaced(const commonlib::Vector2& pos,
@@ -432,6 +428,11 @@ std::string GameMap::detail()
         }
     }
     return oss.str();
+}
+
+void GameMap::updateAIRobotCountStr()
+{
+    aiRobotCountStr_ = std::to_string(aiRobotCount_);
 }
 
 } // end of namespace botlib

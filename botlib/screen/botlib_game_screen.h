@@ -65,8 +65,6 @@ private:
 
     void updateProgressBar();
 
-    void updateAIRobotCount();
-
     inline bool isPlayerAvailable();
 
     void presentOverlay();
@@ -74,8 +72,6 @@ private:
     void showVictory();
 
     void showFail();
-
-    void onAIRobotDeath();
 
     void clearObjectsFromMoveOutRegion(int moveOutRegionCount);
 

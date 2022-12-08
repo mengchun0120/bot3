@@ -11,13 +11,10 @@ class GameObjectDumper;
 
 class UpdateContext {
 public:
-    using AIRobotDeathListener = std::function<void()>;
-
     UpdateContext() = default;
 
     void init(GameMap* map1,
-              GameObjectDumper* dumper1,
-              AIRobotDeathListener listener);
+              GameObjectDumper* dumper1);
 
     inline GameMap* map();
 
@@ -27,13 +24,10 @@ public:
 
     void setTimeDelta(float timeDelta1);
 
-    void onAIRobotDeath();
-
 private:
     GameMap* map_;
     GameObjectDumper* dumper_;
     float timeDelta_;
-    AIRobotDeathListener aiRobotDeathListener_;
 };
 
 GameMap* UpdateContext::map()

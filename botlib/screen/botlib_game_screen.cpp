@@ -38,7 +38,7 @@ void GameScreen::init(const Vector2& viewportSize,
     objDumper_.init(cfg.dumperPoolSize());
     viewportSize_ = viewportSize;
     overlayViewportOrigin_ = viewportSize / 2.0f;
-    cxt_.init(&map_, &objDumper_, std::bind(&GameScreen::onAIRobotDeath, this));
+    cxt_.init(&map_, &objDumper_);
     initProgressBar();
     initMessageBox();
     initAIRobotCount();
@@ -166,7 +166,6 @@ void GameScreen::initAIRobotCount()
 
     aiRobotCountIcon_.init(cfg.aiRobotCountIconTemplate(), iconPos);
     aiRobotCountPos_.init({textMargin[0], viewportSize_[1] - textMargin[1]});
-    updateAIRobotCount();
 }
 
 bool GameScreen::processInputEndGame(const commonlib::InputEvent& e)
@@ -333,11 +332,6 @@ void GameScreen::updateProgressBar()
     energyProgressBar_.setRatio(map_.player()->energyRatio());
 }
 
-void GameScreen::updateAIRobotCount()
-{
-    aiRobotCountStr_ = std::to_string(map_.aiRobotCount());
-}
-
 void GameScreen::presentOverlay()
 {
     SimpleShaderProgram& program = Context::graphics().simpleShader();
@@ -359,7 +353,7 @@ void GameScreen::presentOverlay()
     energyProgressBar_.present();
 
     aiRobotCountIcon_.present();
-    textSys.draw(program, aiRobotCountStr_, aiRobotCountPos_,
+    textSys.draw(program, map_.aiRobotCountStr(), aiRobotCountPos_,
                  cfg.aiRobotCountTextSize(), &cfg.aiRobotCountTextColor());
 
     if (msgBox_.visible())
@@ -380,12 +374,6 @@ void GameScreen::showFail()
     const GameScreenConfig& cfg = Context::gameScreenConfig();
     msgBox_.setText(cfg.failMsg());
     msgBox_.setVisible(true);
-}
-
-void GameScreen::onAIRobotDeath()
-{
-    map_.decreaseAIRobotCount();
-    updateAIRobotCount();
 }
 
 void GameScreen::clearObjectsFromMoveOutRegion(int moveOutRegionCount)
