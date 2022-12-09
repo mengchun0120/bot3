@@ -82,9 +82,10 @@ bool MissileHitChecker::operator()(GameObject* obj)
     if (inflictDamage_)
     {
         doDamage(obj);
+        return true;
     }
 
-    return true;
+    return false;
 }
 
 void MissileHitChecker::doDamage(GameObject* obj)

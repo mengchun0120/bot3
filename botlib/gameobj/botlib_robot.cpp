@@ -337,13 +337,8 @@ void Robot::shoot(UpdateContext& cxt)
     GameMap& map = *(cxt.map());
     const MissileTemplate* t = getTemplate()->missileTemplate();
 
-    for (unsigned int i = 0; i < firePoints_.size(); ++i)
+    for (unsigned int i = 0; i < firePoints_.size() && energy_ >= t->energyCost(); ++i)
     {
-        if (energy_ < t->energyCost())
-        {
-            break;
-        }
-
         Missile* missile = new Missile();
         missile->init(t, side_, firePoints_[i], fireDirections_[i], damageFactor_);
         energy_ -= t->energyCost();
