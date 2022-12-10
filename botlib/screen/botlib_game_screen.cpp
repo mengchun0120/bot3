@@ -4,7 +4,6 @@
 #include <botlib_game_map_loader.h>
 #include <botlib_context.h>
 #include <botlib_player.h>
-#include <botlib_game_utils.h>
 #include <botlib_game_screen.h>
 
 using namespace mcdane::commonlib;

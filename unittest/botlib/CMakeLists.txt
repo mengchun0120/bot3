@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.10)
 set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 
 set(UNITTEST_BOTLIB_SRC
-    test_botlib_game_utils.cpp
     test_botlib_main.cpp)
 
 add_definitions(${CPP_COMPILE_FLAG})

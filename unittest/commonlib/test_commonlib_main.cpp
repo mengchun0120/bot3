@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     testNamedMap();
     testLinkedList();
     testCollide();
+    testRegion();
 
     std::cout << "Test successful" << std::endl;
 }

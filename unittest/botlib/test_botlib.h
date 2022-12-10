@@ -4,8 +4,6 @@
 namespace mcdane {
 namespace botlib {
 
-void testGameUtils();
-
 } // end of namespace botlib
 } // end of namespace mcdane
 

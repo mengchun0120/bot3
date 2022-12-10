@@ -1,15 +1,10 @@
 #include <cassert>
 #include <algorithm>
-#include <iostream>
 #include <commonlib_region.h>
-#include <commonlib_out_utils.h>
-#include <botlib_game_utils.h>
-#include <test_botlib.h>
-
-using namespace mcdane::commonlib;
+#include <test_commonlib.h>
 
 namespace mcdane {
-namespace botlib {
+namespace commonlib {
 
 bool checkDiffResult(const std::vector<Region<int>>& result,
                  const std::vector<Region<int>>& expected)
@@ -105,16 +100,12 @@ void testDiffRegion_Overlap()
     assert(num == 0);
 }
 
-void testDiffRegion()
+void testRegion()
 {
     testDiffRegion_NonOverlap();
     testDiffRegion_Overlap();
 }
 
-void testGameUtils()
-{
-    testDiffRegion();
-}
 
-} // end of namespace botlib
+} // end of namespace commonlib
 } // end of namespace mcdane

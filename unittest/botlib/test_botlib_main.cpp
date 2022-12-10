@@ -5,7 +5,5 @@ int main()
 {
     using namespace mcdane::botlib;
 
-    testGameUtils();
-
     std::cout << "Test successful" << std::endl;
 }

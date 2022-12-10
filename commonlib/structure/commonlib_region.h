@@ -283,6 +283,10 @@ bool overlap(const Region<T>& r1,
            r1.top() >= r2.bottom();
 }
 
+int diff(std::vector<commonlib::Region<int>>& result,
+         const commonlib::Region<int>& r1,
+         const commonlib::Region<int>& r2);
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 

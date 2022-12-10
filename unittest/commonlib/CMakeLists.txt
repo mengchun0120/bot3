@@ -15,6 +15,7 @@ set(UNITTEST_COMMONLIB_SRC
     test_commonlib_matrix.cpp
     test_commonlib_named_map.cpp
     test_commonlib_object_pool.cpp
+    test_commonlib_region.cpp
     test_commonlib_validator.cpp
     test_commonlib_vector.cpp)
 
