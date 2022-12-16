@@ -8,29 +8,25 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-Graphics Context::k_graphics;
-GameLib Context::k_gameLib;
-HPIndicatorConfig Context::k_hpIndicatorConfig;
-ButtonConfig Context::k_buttonConfig;
-LabelConfig Context::k_labelConfig;
-MessageBoxConfig Context::k_msgBoxConfig;
-StartScreenConfig Context::k_startScreenConfig;
-GameScreenConfig Context::k_gameScreenConfig;
-ShowMapScreenConfig Context::k_showMapScreenConfig;
-GoodieGenerator Context::k_goodieGenerator;
+std::shared_ptr<Context> Context::k_instance;
 
 void Context::init(const AppConfig& cfg)
 {
-    k_graphics.init(cfg);
-    k_gameLib.load(cfg);
-    k_hpIndicatorConfig.init(cfg.hpIndicatorConfigFile());
-    k_buttonConfig.init(cfg.buttonConfigFile(), cfg.picDir());
-    k_labelConfig.init(cfg.labelConfigFile());
-    k_msgBoxConfig.init(cfg.messageBoxConfigFile());
-    k_startScreenConfig.init(cfg.startScreenConfigFile());
-    k_gameScreenConfig.init(cfg.gameScreenConfigFile());
-    k_showMapScreenConfig.init(cfg.showMapScreenConfigFile());
-    k_goodieGenerator.init(k_gameLib.goodieTemplateLib());
+    k_instance.reset(new Context(cfg));
+}
+
+Context::Context(const AppConfig& cfg)
+{
+    graphics_.init(cfg);
+    gameLib_.load(cfg);
+    hpIndicatorConfig_.init(cfg.hpIndicatorConfigFile());
+    buttonConfig_.init(cfg.buttonConfigFile(), cfg.picDir());
+    labelConfig_.init(cfg.labelConfigFile());
+    msgBoxConfig_.init(cfg.messageBoxConfigFile());
+    startScreenConfig_.init(cfg.startScreenConfigFile());
+    gameScreenConfig_.init(cfg.gameScreenConfigFile());
+    showMapScreenConfig_.init(cfg.showMapScreenConfigFile());
+    goodieGenerator_.init(gameLib_.goodieTemplateLib());
 
     LOG_INFO << "Context initialized successfully" << LOG_END;
 }

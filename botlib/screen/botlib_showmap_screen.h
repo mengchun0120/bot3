@@ -13,13 +13,20 @@ public:
 
     ShowMapScreen(const commonlib::Vector2& viewportSize,
                   AppActions actions,
-                  ScreenType nextScreenType=ScreenType::NONE);
+                  ScreenType nextScreenType=ScreenType::NONE,
+                  bool initMap=true);
 
     ~ShowMapScreen() override = default;
 
+    GameMap& map()
+    {
+        return map_;
+    }
+
     void init(const commonlib::Vector2& viewportSize,
               AppActions actions,
-              ScreenType nextScreenType=ScreenType::NONE);
+              ScreenType nextScreenType=ScreenType::NONE,
+              bool initMap=true);
 
     void update(float timeDelta) override;
 

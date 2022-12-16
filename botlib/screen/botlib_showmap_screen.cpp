@@ -10,18 +10,23 @@ namespace botlib {
 
 ShowMapScreen::ShowMapScreen(const commonlib::Vector2& viewportSize,
                              AppActions actions,
-                             ScreenType nextScreenType)
+                             ScreenType nextScreenType,
+                             bool initMap)
 {
     init(viewportSize, actions, nextScreenType);
 }
 
 void ShowMapScreen::init(const commonlib::Vector2& viewportSize,
                          AppActions actions,
-                         ScreenType nextScreenType)
+                         ScreenType nextScreenType,
+                         bool initMap)
 {
     Screen::init(actions);
     nextScreenType_ = nextScreenType;
-    loadMap(viewportSize);
+    if (initMap)
+    {
+        loadMap(viewportSize);
+    }
 }
 
 void ShowMapScreen::update(float timeDelta)

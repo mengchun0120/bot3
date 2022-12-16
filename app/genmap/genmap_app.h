@@ -2,6 +2,9 @@
 #define INCLUDED_GENMAP_APP_H
 
 #include <commonlib_app.h>
+#include <commonlib_input_manager.h>
+#include <botlib_time_delta_smoother.h>
+#include <botlib_showmap_screen.h>
 
 namespace mcdane {
 
@@ -22,17 +25,39 @@ public:
               const std::string& algorithmConfigFile,
               const std::string& mapFile);
 
-    ~GenMapApp() override;
+    ~GenMapApp() override = default;
 
-    void run() override;
-
-private:
-    void writeMap(const std::string& mapFile,
-                  botlib::GameMap& map);
+    void process() override;
 
 private:
-    std::string mapFile_;
-    botlib::GameMapGenerator* generator_;
+    void init(const std::string& appConfigFile,
+              const std::string& appDir,
+              const std::string& algorithm,
+              const std::string& algorithmConfigFile,
+              const std::string& mapFile);
+
+    void generateMap(const std::string& algorithm,
+                     const std::string& algorithmConfigFile,
+                     const std::string& mapFile);
+
+    void writeMap(const std::string& mapFile);
+
+    void setupOpenGL();
+
+    void setupGame();
+
+    void setupDeltaSmoother();
+
+    void setupScreen();
+
+    void setupInput();
+
+    void exitApp();
+
+private:
+    botlib::TimeDeltaSmoother deltaSmoother_;
+    commonlib::InputProcessor inputProcessor_;
+    botlib::ShowMapScreen screen_;
 };
 
 } // end of namespace genmap

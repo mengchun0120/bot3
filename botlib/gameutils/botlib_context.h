@@ -43,66 +43,70 @@ public:
     inline static GoodieGenerator& goodieGenerator();
 
 private:
-    static Graphics k_graphics;
-    static GameLib k_gameLib;
-    static HPIndicatorConfig k_hpIndicatorConfig;
-    static ButtonConfig k_buttonConfig;
-    static LabelConfig k_labelConfig;
-    static MessageBoxConfig k_msgBoxConfig;
-    static StartScreenConfig k_startScreenConfig;
-    static GameScreenConfig k_gameScreenConfig;
-    static ShowMapScreenConfig k_showMapScreenConfig;
-    static GoodieGenerator k_goodieGenerator;
+    Context(const AppConfig& cfg);
+
+private:
+    static std::shared_ptr<Context> k_instance;
+    Graphics graphics_;
+    GameLib gameLib_;
+    HPIndicatorConfig hpIndicatorConfig_;
+    ButtonConfig buttonConfig_;
+    LabelConfig labelConfig_;
+    MessageBoxConfig msgBoxConfig_;
+    StartScreenConfig startScreenConfig_;
+    GameScreenConfig gameScreenConfig_;
+    ShowMapScreenConfig showMapScreenConfig_;
+    GoodieGenerator goodieGenerator_;
 };
 
 Graphics& Context::graphics()
 {
-    return k_graphics;
+    return k_instance->graphics_;
 }
 
 const GameLib& Context::gameLib()
 {
-    return k_gameLib;
+    return k_instance->gameLib_;
 }
 
 const HPIndicatorConfig& Context::hpIndicatorConfig()
 {
-    return k_hpIndicatorConfig;
+    return k_instance->hpIndicatorConfig_;
 }
 
 const ButtonConfig& Context::buttonConfig()
 {
-    return k_buttonConfig;
+    return k_instance->buttonConfig_;
 }
 
 const LabelConfig& Context::labelConfig()
 {
-    return k_labelConfig;
+    return k_instance->labelConfig_;
 }
 
 const MessageBoxConfig& Context::msgBoxConfig()
 {
-    return k_msgBoxConfig;
+    return k_instance->msgBoxConfig_;
 }
 
 const StartScreenConfig& Context::startScreenConfig()
 {
-    return k_startScreenConfig;
+    return k_instance->startScreenConfig_;
 }
 
 GameScreenConfig& Context::gameScreenConfig()
 {
-    return k_gameScreenConfig;
+    return k_instance->gameScreenConfig_;
 }
 
 ShowMapScreenConfig& Context::showMapScreenConfig()
 {
-    return k_showMapScreenConfig;
+    return k_instance->showMapScreenConfig_;
 }
 
 GoodieGenerator& Context::goodieGenerator()
 {
-    return k_goodieGenerator;
+    return k_instance->goodieGenerator_;
 }
 
 } // end of namespace botlib
