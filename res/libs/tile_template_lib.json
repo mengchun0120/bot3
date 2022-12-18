@@ -1,6 +1,6 @@
 {
     "steel_tile": {
-        "collideBreath": 20.0,
+        "collideBreath": 15.0,
         "invincible": true,
         "hp": 100.0,
         "components": [
@@ -13,7 +13,7 @@
         "dyingDuration": 1000.0
     },
     "ice_tile": {
-        "collideBreath": 20.0,
+        "collideBreath": 15.0,
         "invincible": false,
         "hp": 20.0,
         "components": [
@@ -26,7 +26,7 @@
         "dyingDuration": 1000.0
     },
     "clay_tile": {
-        "collideBreath": 20.0,
+        "collideBreath": 15.0,
         "invincible": false,
         "hp": 30.0,
         "components": [
@@ -39,7 +39,7 @@
         "dyingDuration": 1000.0
     },
     "fireland_tile": {
-        "collideBreath": 20.0,
+        "collideBreath": 15.0,
         "invincible": false,
         "hp": 40.0,
         "components": [
@@ -52,7 +52,7 @@
         "dyingDuration": 1000.0
     },
     "bush_tile": {
-        "collideBreath": 20.0,
+        "collideBreath": 15.0,
         "invincible": false,
         "hp": 50.0,
         "components": [
