@@ -76,13 +76,13 @@ void IslandMapGenerator::addTiles(GameMap& map)
 
             addIsland(map, t, startPos, tileCountX, tileCountY);
 
-            float islandHeight = tileCountX * tileBreath;
+            float islandHeight = tileCountY * tileBreath;
             if (islandHeight > maxIslandHeight)
             {
                 maxIslandHeight = islandHeight;
             }
 
-            float islandWidth = tileCountY * tileBreath;
+            float islandWidth = tileCountX * tileBreath;
             float distX = rand_.randomFloat(cfg_->minIslandDist(),
                                             cfg_->maxIslandDist());
             baseX += islandWidth + distX;
@@ -102,6 +102,7 @@ void IslandMapGenerator::addIsland(GameMap& map,
 {
     float delta = 2.0f * t->collideBreath();
     Vector2 pos;
+    Vector2 direction{1.0f, 0.0f};
 
     pos[1] = startPos[1];
     for (int row = 0; row < tileCountY; ++row, pos[1] += delta)
@@ -110,7 +111,6 @@ void IslandMapGenerator::addIsland(GameMap& map,
         for (int col = 0; col < tileCountX; ++col, pos[0] += delta)
         {
             Tile* tile = new Tile();
-            Vector2 direction = rand_.randomDirection();
             tile->init(t, pos, direction);
             addObj(map, tile);
         }
@@ -119,7 +119,9 @@ void IslandMapGenerator::addIsland(GameMap& map,
 
 float IslandMapGenerator::randomIslandBreath(float mapBreath, float base)
 {
-    float maxBreath = mapBreath - cfg_->minIslandDist() - base;
+
+    float maxBreath = std::min(mapBreath - cfg_->minIslandDist() - base,
+                               cfg_->maxIslandBreath());
     return rand_.randomFloat(cfg_->minIslandBreath(), maxBreath);
 }
 

@@ -4,6 +4,6 @@
     "aiRobotCount": 30,
     "minIslandBreath": 80.0,
     "maxIslandBreath": 160.0,
-    "minIslandDist": 80.0,
-    "maxIslandDist": 100.0
+    "minIslandDist": 200.0,
+    "maxIslandDist": 200.0
 }

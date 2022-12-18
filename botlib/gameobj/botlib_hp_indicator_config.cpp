@@ -1,7 +1,7 @@
 #include <commonlib_log.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
-#include <botlib_context.h>
+#include <botlib_text_system.h>
 #include <botlib_hp_indicator_config.h>
 
 using namespace mcdane::commonlib;
@@ -9,7 +9,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void HPIndicatorConfig::init(const std::string& fileName)
+void HPIndicatorConfig::init(const TextSystem& textSys,
+                             const std::string& fileName)
 {
     rapidjson::Document doc;
     readJson(doc, fileName);
@@ -23,16 +24,14 @@ void HPIndicatorConfig::init(const std::string& fileName)
     parse(params, doc);
 
     textSize_ = toTextSize(textSizeStr);
-    initSize();
+    initSize(textSys);
+
+    LOG_INFO << "HPIndicatorConfig initialized successfully" << LOG_END;
 }
 
-void HPIndicatorConfig::initSize()
+void HPIndicatorConfig::initSize(const TextSystem& textSys)
 {
-    Graphics& g = Context::graphics();
-
-    LOG_INFO << "textSys=" << &(g.textSys()) << LOG_END;
-
-    halfHeight_ = g.textSys().getHeight(textSize_) / 2.0f;
+    halfHeight_ = textSys.getHeight(textSize_) / 2.0f;
 }
 
 } // end of namespace botlib

@@ -235,7 +235,6 @@ void GameMapGenerator::markObjOccupied(GameMap& map, GameObject* obj)
         getMapCellRowIdx(map, obj->collideBottom()),
         getMapCellRowIdx(map, obj->collideTop())
     };
-    LOG_INFO << "Mark-occupied " << region << LOG_END;
     region.iterate(cellMarker_, 1, 1);
 }
 

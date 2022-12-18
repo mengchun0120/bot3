@@ -10,11 +10,14 @@
 namespace mcdane {
 namespace botlib {
 
+class GameLib;
+
 class GameScreenConfig {
 public:
     GameScreenConfig() = default;
 
-    void init(const std::string& configFile);
+    void init(const GameLib& gameLib,
+              const std::string& configFile);
 
     inline const std::string& mapFile() const;
 

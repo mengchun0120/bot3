@@ -19,12 +19,12 @@ Context::Context(const AppConfig& cfg)
 {
     graphics_.init(cfg);
     gameLib_.load(cfg);
-    hpIndicatorConfig_.init(cfg.hpIndicatorConfigFile());
+    hpIndicatorConfig_.init(graphics_.textSys(), cfg.hpIndicatorConfigFile());
     buttonConfig_.init(cfg.buttonConfigFile(), cfg.picDir());
     labelConfig_.init(cfg.labelConfigFile());
     msgBoxConfig_.init(cfg.messageBoxConfigFile());
     startScreenConfig_.init(cfg.startScreenConfigFile());
-    gameScreenConfig_.init(cfg.gameScreenConfigFile());
+    gameScreenConfig_.init(gameLib_, cfg.gameScreenConfigFile());
     showMapScreenConfig_.init(cfg.showMapScreenConfigFile());
     goodieGenerator_.init(gameLib_.goodieTemplateLib());
 

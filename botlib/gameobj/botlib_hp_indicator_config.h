@@ -9,7 +9,7 @@
 namespace mcdane {
 namespace botlib {
 
-class Graphics;
+class TextSystem;
 
 class HPIndicatorConfig {
 public:
@@ -17,7 +17,8 @@ public:
 
     ~HPIndicatorConfig() = default;
 
-    void init(const std::string& fileName);
+    void init(const TextSystem& textSys,
+              const std::string& fileName);
 
     inline TextSize textSize() const;
 
@@ -27,7 +28,7 @@ public:
 
 private:
 
-    void initSize();
+    void initSize(const TextSystem& textSys);
 
 private:
     TextSize textSize_;

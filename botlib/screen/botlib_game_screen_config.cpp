@@ -12,7 +12,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void GameScreenConfig::init(const std::string& configFile)
+void GameScreenConfig::init(const GameLib& gameLib,
+                            const std::string& configFile)
 {
     rapidjson::Document doc;
     std::string aiRobotCountIconName;
@@ -42,8 +43,7 @@ void GameScreenConfig::init(const std::string& configFile)
 
     parse(params, doc);
 
-    const GameLib& lib = Context::gameLib();
-    aiRobotCountIconTemplate_ = lib.findIconTemplate(aiRobotCountIconName);
+    aiRobotCountIconTemplate_ = gameLib.findIconTemplate(aiRobotCountIconName);
     if (!aiRobotCountIconTemplate_)
     {
         THROW_EXCEPT(InvalidArgumentException,

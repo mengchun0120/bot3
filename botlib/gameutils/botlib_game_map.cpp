@@ -90,7 +90,8 @@ void GameMap::addObj(GameObject* obj)
         }
     }
 
-    LOG_DEBUG << "added " << obj->type() << " " << obj->id() << LOG_END;
+    LOG_DEBUG << "added " << obj->type() << " " << obj->id()
+              << " row=" << rowIdx << " col=" << colIdx << LOG_END;
 }
 
 void GameMap::repositionObj(GameObject* obj)
@@ -310,7 +311,9 @@ void GameMap::setBoundary(unsigned int rows, unsigned int cols)
                      "Invalid cols " + std::to_string(cols));
     }
 
-    boundary_.init(0.0f, rows * k_cellBreath, 0.0f, cols * k_cellBreath);
+    boundary_.init(0.0f, cols * k_cellBreath, 0.0f, rows * k_cellBreath);
+
+    LOG_INFO << "Map width=" << width() << " height=" << height() << LOG_END;
 }
 
 void GameMap::setViewportSize(float viewportWidth,
