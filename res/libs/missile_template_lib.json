@@ -1,7 +1,7 @@
 {
     "green_missile": {
         "collideBreath": 8.0,
-        "damage": 10.0,
+        "damage": 40.0,
         "speed": 0.5,
         "explodeBreath": 18.0,
         "energyCost": 5.0,

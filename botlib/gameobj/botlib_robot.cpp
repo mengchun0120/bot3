@@ -3,6 +3,7 @@
 #include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <commonlib_string_utils.h>
+#include <botlib_context.h>
 #include <botlib_update_context.h>
 #include <botlib_game_map.h>
 #include <botlib_game_object_dumper.h>
@@ -121,7 +122,10 @@ void Robot::init(const RobotTemplate* t,
 void Robot::present() const
 {
     CompositeObject::present();
-    hpIndicator_.present();
+    if (Context::gameConfig().showHPIndicator())
+    {
+        hpIndicator_.present();
+    }
 }
 
 void Robot::update(UpdateContext& cxt)

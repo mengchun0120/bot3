@@ -11,6 +11,7 @@
 #include <botlib_start_screen_config.h>
 #include <botlib_game_screen_config.h>
 #include <botlib_showmap_screen_config.h>
+#include <botlib_game_config.h>
 #include <botlib_goodie_generator.h>
 
 namespace mcdane {
@@ -40,6 +41,8 @@ public:
 
     inline static ShowMapScreenConfig& showMapScreenConfig();
 
+    inline static GameConfig& gameConfig();
+
     inline static GoodieGenerator& goodieGenerator();
 
 private:
@@ -56,6 +59,7 @@ private:
     StartScreenConfig startScreenConfig_;
     GameScreenConfig gameScreenConfig_;
     ShowMapScreenConfig showMapScreenConfig_;
+    GameConfig gameConfig_;
     GoodieGenerator goodieGenerator_;
 };
 
@@ -102,6 +106,11 @@ GameScreenConfig& Context::gameScreenConfig()
 ShowMapScreenConfig& Context::showMapScreenConfig()
 {
     return k_instance->showMapScreenConfig_;
+}
+
+GameConfig& Context::gameConfig()
+{
+    return k_instance->gameConfig_;
 }
 
 GoodieGenerator& Context::goodieGenerator()

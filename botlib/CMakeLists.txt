@@ -36,6 +36,7 @@ set(BOTLIB_GAMEOBJ_SRC
 
 set(BOTLIB_GAMEUTILS_SRC
     gameutils/botlib_context.cpp
+    gameutils/botlib_game_config.cpp
     gameutils/botlib_game_lib.cpp
     gameutils/botlib_game_map.cpp
     gameutils/botlib_game_map_loader.cpp

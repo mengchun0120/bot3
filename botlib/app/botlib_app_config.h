@@ -61,6 +61,8 @@ public:
 
     inline const std::string& showMapScreenConfigFile() const;
 
+    inline const std::string& gameConfigFile() const;
+
     inline const std::string& hpIndicatorConfigFile() const;
 
     inline const std::string& textureLibFile() const;
@@ -137,6 +139,7 @@ private:
     std::string startScreenConfigFile_;
     std::string gameScreenConfigFile_;
     std::string showMapScreenConfigFile_;
+    std::string gameConfigFile_;
     std::string hpIndicatorConfigFile_;
     std::string textureLibFile_;
     std::string vertexArrayLibFile_;
@@ -261,6 +264,11 @@ const std::string& AppConfig::gameScreenConfigFile() const
 const std::string& AppConfig::showMapScreenConfigFile() const
 {
     return showMapScreenConfigFile_;
+}
+
+const std::string& AppConfig::gameConfigFile() const
+{
+    return gameConfigFile_;
 }
 
 const std::string& AppConfig::hpIndicatorConfigFile() const

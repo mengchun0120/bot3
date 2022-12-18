@@ -26,6 +26,7 @@ Context::Context(const AppConfig& cfg)
     startScreenConfig_.init(cfg.startScreenConfigFile());
     gameScreenConfig_.init(gameLib_, cfg.gameScreenConfigFile());
     showMapScreenConfig_.init(cfg.showMapScreenConfigFile());
+    gameConfig_.init(cfg.gameConfigFile());
     goodieGenerator_.init(gameLib_.goodieTemplateLib());
 
     LOG_INFO << "Context initialized successfully" << LOG_END;

@@ -32,6 +32,7 @@
         "startScreenConfigFile": "start_screen_config.json",
         "gameScreenConfigFile": "game_screen_config.json",
         "showMapScreenConfigFile": "showmap_screen_config.json",
+        "gameConfigFile": "game_config.json",
         "hpIndicatorConfigFile": "hp_indicator_config.json"
     },
     "libraries": {

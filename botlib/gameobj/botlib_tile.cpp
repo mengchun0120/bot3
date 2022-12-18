@@ -2,7 +2,7 @@
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_math_utils.h>
-#include <botlib_graphics.h>
+#include <botlib_context.h>
 #include <botlib_update_context.h>
 #include <botlib_game_map.h>
 #include <botlib_game_object_dumper.h>
@@ -27,7 +27,11 @@ void Tile::init(const TileTemplate* t,
 void Tile::present() const
 {
     CompositeObject::present();
-    hpIndicator_.present();
+
+    if (Context::gameConfig().showHPIndicator())
+    {
+        hpIndicator_.present();
+    }
 }
 
 void Tile::update(UpdateContext& cxt)

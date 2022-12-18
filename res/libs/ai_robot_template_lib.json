@@ -2,7 +2,7 @@
     "red_robot": {
         "collideBreath": 25.0,
         "invincible": false,
-        "hp": 120.0,
+        "hp": 40.0,
         "armor": 0.0,
         "speed": 0.2,
         "energy": 100.0,
@@ -37,7 +37,7 @@
     "blue_robot": {
         "collideBreath": 25.0,
         "invincible": false,
-        "hp": 120.0,
+        "hp": 40.0,
         "armor": 0.0,
         "speed": 0.2,
         "energy": 100.0,
@@ -72,7 +72,7 @@
     "orange_robot": {
         "collideBreath": 25.0,
         "invincible": false,
-        "hp": 120.0,
+        "hp": 40.0,
         "armor": 0.0,
         "speed": 0.2,
         "energy": 100.0,
