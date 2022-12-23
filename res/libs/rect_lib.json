@@ -19,6 +19,11 @@
         "height": 16.0,
         "hasTexture": true
     },
+    "guided_missile": {
+        "width": 19.0,
+        "height": 16.0,
+        "hasTexture": true
+    },
     "goodie": {
         "width": 40.0,
         "height": 40.0,

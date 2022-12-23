@@ -62,5 +62,24 @@
             }
         ],
         "explodeEffect": "orange_explosion"
+    },
+    "green_guided_missile": {
+        "collideBreath": 8.0,
+        "damage": 40.0,
+        "speed": 0.7,
+        "explodeBreath": 20.0,
+        "energyCost": 10.0,
+        "duration": 8000.0,
+        "components": [
+            {
+                "template": "green_guided_missile",
+                "pos": [0.0, 0.0],
+                "direction": [1.0, 0.0]
+            }
+        ],
+        "explodeEffect": "green_big_explosion",
+        "guided": true,
+        "searchBreath": 200.0,
+        "acceleration": 0.5
     }
 }

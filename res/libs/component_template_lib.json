@@ -31,6 +31,10 @@
         "texture": "green_missile",
         "rect": "missile"
     },
+    "green_guided_missile": {
+        "texture": "green_guided_missile",
+        "rect": "guided_missile"
+    },
     "red_base": {
         "texture": "red_base",
         "rect": "base"

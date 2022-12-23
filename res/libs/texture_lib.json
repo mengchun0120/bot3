@@ -23,6 +23,9 @@
     "green_missile": {
         "file": "green_missile.png"
     },
+    "green_guided_missile": {
+        "file": "green_guided_missile.png"
+    },
     "red_base": {
         "file": "red_base.png"
     },

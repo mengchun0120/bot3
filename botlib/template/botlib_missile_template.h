@@ -10,7 +10,7 @@ class ParticleEffectTemplate;
 
 class MissileTemplate: public CompositeObjectTemplate {
 public:
-    MissileTemplate() = default;
+    MissileTemplate();
 
     ~MissileTemplate() override = default;
 
@@ -31,6 +31,12 @@ public:
 
     inline const ParticleEffectTemplate* explodeEffectTemplate() const;
 
+    inline bool guided() const;
+
+    inline float searchBreath() const;
+
+    inline float acceleration() const;
+
 private:
     float damage_;
     float speed_;
@@ -38,6 +44,9 @@ private:
     float energyCost_;
     float duration_;
     const ParticleEffectTemplate* explodeEffectTemplate_;
+    bool guided_;
+    float searchBreath_;
+    float acceleration_;
 };
 
 float MissileTemplate::damage() const
@@ -68,6 +77,21 @@ float MissileTemplate::duration() const
 const ParticleEffectTemplate* MissileTemplate::explodeEffectTemplate() const
 {
     return explodeEffectTemplate_;
+}
+
+bool MissileTemplate::guided() const
+{
+    return guided_;
+}
+
+float MissileTemplate::searchBreath() const
+{
+    return searchBreath_;
+}
+
+float MissileTemplate::acceleration() const
+{
+    return acceleration_;
 }
 
 } // end of namespace botlib

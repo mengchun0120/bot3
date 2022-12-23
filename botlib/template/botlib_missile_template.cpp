@@ -9,6 +9,19 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+MissileTemplate::MissileTemplate()
+    : damage_(0.0f)
+    , speed_(0.0f)
+    , explodeBreath_(0.0f)
+    , energyCost_(0.0f)
+    , duration_(0.0f)
+    , explodeEffectTemplate_(nullptr)
+    , guided_(false)
+    , searchBreath_(0.0f)
+    , acceleration_(0.0f)
+{
+}
+
 void MissileTemplate::init(
     const std::string& name,
     const rapidjson::Value& v,
@@ -22,7 +35,10 @@ void MissileTemplate::init(
         jsonParam(explodeBreath_, "explodeBreath", true, gt(0.0f)),
         jsonParam(energyCost_, "energyCost", true, ge(0.0f)),
         jsonParam(duration_, "duration", true, gt(0.0f)),
-        jsonParam(explodeEffectName, "explodeEffect", true, k_nonEmptyStrV)
+        jsonParam(explodeEffectName, "explodeEffect", true, k_nonEmptyStrV),
+        jsonParam(guided_, "guided", false),
+        jsonParam(searchBreath_, "searchBreath", false, ge(0.0f)),
+        jsonParam(acceleration_, "acceleration", false, ge(0.0f))
     };
 
     parse(params, v);
