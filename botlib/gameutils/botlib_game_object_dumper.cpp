@@ -24,7 +24,7 @@ void GameObjectDumper::add(GameObject* obj)
     }
 
     GameObjectItem* item = pool_.alloc();
-    item->setObj(obj);
+    item->setItem(obj);
     objs_.pushBack(item);
     obj->setState(GameObjectState::DEAD);
 
@@ -33,14 +33,14 @@ void GameObjectDumper::add(GameObject* obj)
 
 void GameObjectDumper::clear(GameMap& map)
 {
-    GameObjectItem* item;
-    while ((item = objs_.unlinkFront()))
+    GameObjectItem* i;
+    while ((i = objs_.unlinkFront()))
     {
-        LOG_DEBUG << "removed " << item->obj()->type() << " "
-                  << item->obj()->id() << LOG_END;
+        LOG_DEBUG << "removed " << i->item()->type() << " "
+                  << i->item()->id() << LOG_END;
 
-        map.removeObj(item->obj());
-        pool_.free(item);
+        map.removeObj(i->item());
+        pool_.free(i);
     }
 }
 

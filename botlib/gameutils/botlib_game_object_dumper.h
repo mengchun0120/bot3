@@ -1,10 +1,10 @@
 #ifndef INCLUDED_BOTLIB_GAME_OBJECT_DUMPER_H
 #define INCLUDED_BOTLIB_GAME_OBJECT_DUMPER_H
 
+#include <commonlib_linked_item.h>
 #include <commonlib_object_pool.h>
 #include <commonlib_linked_list.h>
-#include <botlib_game_object.h>
-#include <botlib_game_object_item.h>
+#include <botlib_typedef.h>
 
 namespace mcdane {
 namespace botlib {

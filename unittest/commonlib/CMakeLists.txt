@@ -9,6 +9,7 @@ set(UNITTEST_COMMONLIB_SRC
     test_commonlib_exception.cpp
     test_commonlib_fixed_queue.cpp
     test_commonlib_json_param.cpp
+    test_commonlib_linked_item.cpp
     test_commonlib_linked_list.cpp
     test_commonlib_log.cpp
     test_commonlib_main.cpp

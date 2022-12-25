@@ -45,6 +45,7 @@ set(COMMONLIB_OPENGL_SRC
 
 set(COMMONLIB_STRUCTURE_SRC
     structure/commonlib_fixed_queue.cpp
+    structure/commonlib_linked_item.cpp
     structure/commonlib_linked_list.cpp
     structure/commonlib_named_map.cpp
     structure/commonlib_object_pool.cpp

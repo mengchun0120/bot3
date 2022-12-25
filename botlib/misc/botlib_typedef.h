@@ -8,6 +8,9 @@ template <typename T>
 class NamedMap;
 
 template <typename T>
+class LinkedItem;
+
+template <typename T>
 class LinkedList;
 
 class Texture;
@@ -44,6 +47,7 @@ using ProgressPieTemplateLib = commonlib::NamedMap<ProgressPieTemplate>;
 using ProgressBarTemplateLib = commonlib::NamedMap<ProgressBarTemplate>;
 using IconTemplateLib = commonlib::NamedMap<IconTemplate>;
 using GameObjectList = commonlib::LinkedList<GameObject>;
+using GameObjectItem = commonlib::LinkedItem<GameObject*>;
 
 } // end of namespace botlib
 } // end of namespace mcdane
