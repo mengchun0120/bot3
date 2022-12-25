@@ -13,6 +13,9 @@ class LinkedItem;
 template <typename T>
 class LinkedList;
 
+template <typename T>
+class ObjectPool;
+
 class Texture;
 class VertexArray;
 
@@ -48,6 +51,7 @@ using ProgressBarTemplateLib = commonlib::NamedMap<ProgressBarTemplate>;
 using IconTemplateLib = commonlib::NamedMap<IconTemplate>;
 using GameObjectList = commonlib::LinkedList<GameObject>;
 using GameObjectItem = commonlib::LinkedItem<GameObject*>;
+using GameObjectItemPool = commonlib::ObjectPool<GameObjectItem>;
 
 } // end of namespace botlib
 } // end of namespace mcdane

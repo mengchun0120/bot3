@@ -78,6 +78,7 @@ private:
 private:
     ScreenType nextScreenType_;
     GameMap map_;
+    GameObjectItemPool itemPool_;
     GameObjectDumper objDumper_;
     UpdateContext cxt_;
     commonlib::Vector2 viewportSize_;

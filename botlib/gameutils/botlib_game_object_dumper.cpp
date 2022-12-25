@@ -7,12 +7,15 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void GameObjectDumper::init(int poolSize)
+void GameObjectDumper::init(GameObjectItemPool* pool)
 {
-    using namespace std::placeholders;
-
-    pool_.init(poolSize);
-    objs_.setDeleter(std::bind(&GameObjectDumper::del, this, _1));
+    pool_ = pool;
+    objs_.setDeleter(
+        [&](GameObjectItem* item)
+        {
+            pool_->free(item);
+        }
+    );
 }
 
 void GameObjectDumper::add(GameObject* obj)
@@ -23,7 +26,7 @@ void GameObjectDumper::add(GameObject* obj)
         return;
     }
 
-    GameObjectItem* item = pool_.alloc();
+    GameObjectItem* item = pool_->alloc();
     item->setItem(obj);
     objs_.pushBack(item);
     obj->setState(GameObjectState::DEAD);
@@ -40,13 +43,8 @@ void GameObjectDumper::clear(GameMap& map)
                   << i->item()->id() << LOG_END;
 
         map.removeObj(i->item());
-        pool_.free(i);
+        pool_->free(i);
     }
-}
-
-void GameObjectDumper::del(GameObjectItem* item)
-{
-    pool_.free(item);
 }
 
 } // end of namespace botlib

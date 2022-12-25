@@ -19,7 +19,7 @@ public:
 
     ~GameObjectDumper() = default;
 
-    void init(int poolSize);
+    void init(GameObjectItemPool* pool);
 
     void add(GameObject* obj);
 
@@ -28,11 +28,8 @@ public:
     void clear(GameMap& map);
 
 private:
-    void del(GameObjectItem* item);
-
-private:
     commonlib::LinkedList<GameObjectItem> objs_;
-    commonlib::ObjectPool<GameObjectItem> pool_;
+    GameObjectItemPool* pool_;
 };
 
 bool GameObjectDumper::empty() const

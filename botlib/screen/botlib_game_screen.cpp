@@ -34,10 +34,11 @@ void GameScreen::init(const Vector2& viewportSize,
 
     nextScreenType_ = nextScreenType;
     loadMap(viewportSize, cfg.mapFile());
-    objDumper_.init(cfg.dumperPoolSize());
+    itemPool_.init(cfg.gameObjItemPoolSize());
+    objDumper_.init(&itemPool_);
     viewportSize_ = viewportSize;
     overlayViewportOrigin_ = viewportSize / 2.0f;
-    cxt_.init(&map_, &objDumper_);
+    cxt_.init(&map_, &itemPool_, &objDumper_);
     initProgressBar();
     initMessageBox();
     initAIRobotCount();

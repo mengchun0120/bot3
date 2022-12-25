@@ -23,7 +23,7 @@ public:
 
     void setMapFile(const std::string& fileName);
 
-    inline int dumperPoolSize() const;
+    inline int gameObjItemPoolSize() const;
 
     inline float goodieSpacing() const;
 
@@ -55,7 +55,7 @@ public:
 
 private:
     std::string mapFile_;
-    int dumperPoolSize_;
+    int gameObjItemPoolSize_;
     float goodieSpacing_;
     float goodieTopMargin_;
     float goodieRightMargin_;
@@ -77,9 +77,9 @@ const std::string& GameScreenConfig::mapFile() const
     return mapFile_;
 }
 
-int GameScreenConfig::dumperPoolSize() const
+int GameScreenConfig::gameObjItemPoolSize() const
 {
-    return dumperPoolSize_;
+    return gameObjItemPoolSize_;
 }
 
 float GameScreenConfig::goodieSpacing() const

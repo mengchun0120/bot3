@@ -1,6 +1,8 @@
 #ifndef INCLUDED_BOTLIB_UPDATE_CONTEXT_H
 #define INCLUDED_BOTLIB_UPDATE_CONTEXT_H
 
+#include <botlib_typedef.h>
+
 namespace mcdane {
 namespace botlib {
 
@@ -12,9 +14,12 @@ public:
     UpdateContext() = default;
 
     void init(GameMap* map1,
+              GameObjectItemPool* itemPool,
               GameObjectDumper* dumper1);
 
     inline GameMap* map();
+
+    inline GameObjectItemPool* itemPool();
 
     inline GameObjectDumper* dumper();
 
@@ -24,6 +29,7 @@ public:
 
 private:
     GameMap* map_;
+    GameObjectItemPool* itemPool_;
     GameObjectDumper* dumper_;
     float timeDelta_;
 };
@@ -31,6 +37,11 @@ private:
 GameMap* UpdateContext::map()
 {
     return map_;
+}
+
+GameObjectItemPool* UpdateContext::itemPool()
+{
+    return itemPool_;
 }
 
 GameObjectDumper* UpdateContext::dumper()
