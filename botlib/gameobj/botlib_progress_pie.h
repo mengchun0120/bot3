@@ -19,6 +19,8 @@ public:
 
     void setFinishedRatio(float ratio);
 
+    void setPos(const commonlib::Vector2& pos);
+
 private:
     const ProgressPieTemplate* t_;
     commonlib::Vector2 pos_;

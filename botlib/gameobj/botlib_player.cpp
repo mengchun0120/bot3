@@ -57,8 +57,6 @@ void Player::addGoodie(const GoodieTemplate* t)
     g = goodiePool_.alloc();
     g->init(t, nextGoodiePos(), Vector2{1.0f, 0.0f}, true);
     goodies_.pushBack(g);
-
-    LOG_INFO << "Added Goodie " << g->goodieType() << LOG_END;
 }
 
 void Player::presentGoodies()
@@ -79,6 +77,7 @@ void Player::toJson(rapidjson::Value& v,
 void Player::updateGoodies(float timeDelta)
 {
     Goodie* g, * next;
+    bool updated = false;
 
     for (g = goodies_.first(); g; g = next)
     {
@@ -91,7 +90,13 @@ void Player::updateGoodies(float timeDelta)
             LOG_INFO << "Goodie expired " << g->goodieType()
                      << LOG_END;
             goodies_.remove(g);
+            updated = true;
         }
+    }
+
+    if (updated)
+    {
+        updateGoodiePos();
     }
 }
 
@@ -114,6 +119,17 @@ Vector2 Player::nextGoodiePos()
 {
     return Vector2{goodieStartX_ + goodies_.size() * goodieSpacing_,
                    goodieY_};
+}
+
+void Player::updateGoodiePos()
+{
+    Vector2 p{goodieStartX_, goodieY_};
+
+    for (Goodie* g = goodies_.first(); g; g = static_cast<Goodie*>(g->next()))
+    {
+        g->setPos(p);
+        p[0] += goodieSpacing_;
+    }
 }
 
 } // end of namespace botlib

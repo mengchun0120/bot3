@@ -33,6 +33,8 @@ public:
 
     void update(UpdateContext& cxt) override;
 
+    void setPos(const commonlib::Vector2& pos1) override;
+
     void updateActivated(Player& player,
                          float delta);
 

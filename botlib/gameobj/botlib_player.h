@@ -43,6 +43,8 @@ protected:
 
     commonlib::Vector2 nextGoodiePos();
 
+    void updateGoodiePos();
+
 protected:
     commonlib::ObjectPool<Goodie> goodiePool_;
     commonlib::LinkedList<Goodie> goodies_;

@@ -57,7 +57,7 @@
     "speed_accelerator": {
         "duration": 30000.0,
         "weight": 20.0,
-        "factor": 2.0,
+        "factor": 1.5,
         "collideBreath": 20.0,
         "components": [
             {

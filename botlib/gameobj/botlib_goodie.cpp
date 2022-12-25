@@ -58,6 +58,12 @@ void Goodie::update(UpdateContext& cxt)
 {
 }
 
+void Goodie::setPos(const commonlib::Vector2& pos1)
+{
+    CompositeObject::setPos(pos1);
+    pie_->setPos(pos1);
+}
+
 void Goodie::updateActivated(Player& player,
                              float delta)
 {
