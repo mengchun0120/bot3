@@ -42,7 +42,7 @@ void ParticleEffect::update(UpdateContext& cxt)
         elapsedTime_ += cxt.timeDelta();
         if (elapsedTime_ >= getTemplate()->duration())
         {
-            cxt.dumper()->add(this);
+            cxt.dumper().add(this);
         }
     }
 

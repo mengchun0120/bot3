@@ -43,7 +43,7 @@ void GameObject::update(UpdateContext& cxt)
 
     if (state_ != GameObjectState::DEAD && canBeDumped(*(cxt.map())))
     {
-        cxt.dumper()->add(this);
+        cxt.dumper().add(this);
     }
 }
 

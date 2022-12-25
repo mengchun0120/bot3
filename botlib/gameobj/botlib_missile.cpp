@@ -56,7 +56,7 @@ void Missile::explode(UpdateContext& cxt)
     map.traverse(area, checker, 0, 2);
 
     showExplodeEffect(map);
-    cxt.dumper()->add(this);
+    cxt.dumper().add(this);
 }
 
 void Missile::updateAlive(UpdateContext& cxt)

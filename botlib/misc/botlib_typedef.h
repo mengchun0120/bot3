@@ -1,6 +1,8 @@
 #ifndef INCLUDED_BOTLIB_TYPEDEF_H
 #define INCLUDED_BOTLIB_TYPEDEF_H
 
+#include <functional>
+
 namespace mcdane {
 namespace commonlib {
 
@@ -52,6 +54,7 @@ using IconTemplateLib = commonlib::NamedMap<IconTemplate>;
 using GameObjectList = commonlib::LinkedList<GameObject>;
 using GameObjectItem = commonlib::LinkedItem<GameObject*>;
 using GameObjectItemPool = commonlib::ObjectPool<GameObjectItem>;
+using GameObjItemDeleter = std::function<void(GameObjectItem*)>;
 
 } // end of namespace botlib
 } // end of namespace mcdane

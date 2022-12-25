@@ -34,11 +34,9 @@ void GameScreen::init(const Vector2& viewportSize,
 
     nextScreenType_ = nextScreenType;
     loadMap(viewportSize, cfg.mapFile());
-    itemPool_.init(cfg.gameObjItemPoolSize());
-    objDumper_.init(&itemPool_);
     viewportSize_ = viewportSize;
     overlayViewportOrigin_ = viewportSize / 2.0f;
-    cxt_.init(&map_, &itemPool_, &objDumper_);
+    cxt_.init(&map_, cfg.gameObjItemPoolSize());
     initProgressBar();
     initMessageBox();
     initAIRobotCount();
@@ -75,9 +73,9 @@ void GameScreen::update(float timeDelta)
         clearObjectsFromMoveOutRegion(moveOutRegionCount);
     }
 
-    if (!objDumper_.empty())
+    if (!cxt_.dumper().empty())
     {
-        objDumper_.clear(map_);
+        cxt_.dumper().clear(map_);
     }
 
     if (map_.player() == nullptr)
@@ -382,7 +380,7 @@ void GameScreen::clearObjectsFromMoveOutRegion(int moveOutRegionCount)
     {
         if (obj->state() != GameObjectState::DEAD && obj->canBeDumped(map_))
         {
-            objDumper_.add(obj);
+            cxt_.dumper().add(obj);
         }
 
         return true;

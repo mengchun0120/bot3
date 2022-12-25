@@ -19,7 +19,8 @@ public:
 
     ~GameObjectDumper() = default;
 
-    void init(GameObjectItemPool* pool);
+    void init(GameObjectItemPool* pool,
+              GameObjItemDeleter& itemDeleter);
 
     void add(GameObject* obj);
 

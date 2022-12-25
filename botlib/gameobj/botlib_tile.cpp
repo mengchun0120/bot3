@@ -41,7 +41,7 @@ void Tile::update(UpdateContext& cxt)
         dyingTime_ += cxt.timeDelta();
         if (dyingTime_ >= getTemplate()->dyingDuration())
         {
-            cxt.dumper()->add(this);
+            cxt.dumper().add(this);
         }
         else
         {

@@ -52,7 +52,7 @@ bool MissileHitChecker::operator()(GameObject* obj)
 void MissileHitChecker::doDamage(GameObject* obj)
 {
     GameMap& map = *(cxt_.map());
-    GameObjectDumper* dumper = cxt_.dumper();
+    GameObjectDumper& dumper = cxt_.dumper();
 
     if (obj->type() == GameObjectType::ROBOT)
     {
@@ -66,7 +66,7 @@ void MissileHitChecker::doDamage(GameObject* obj)
 
         if (robot->canBeDumped(map))
         {
-            dumper->add(robot);
+            dumper.add(robot);
         }
     }
     else if (obj->type() == GameObjectType::TILE)
@@ -76,7 +76,7 @@ void MissileHitChecker::doDamage(GameObject* obj)
 
         if (tile->canBeDumped(map))
         {
-            dumper->add(tile);
+            dumper.add(tile);
         }
     }
 }

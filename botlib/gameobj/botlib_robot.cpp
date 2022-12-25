@@ -84,7 +84,7 @@ void PassthroughCollideChecker::collideGoodie(Goodie* goodie)
     {
         goodie->activate(*player);
         LOG_INFO << "Activated goodie " << goodie->type() << LOG_END;
-        cxt_.dumper()->add(goodie);
+        cxt_.dumper().add(goodie);
     }
 }
 
@@ -151,7 +151,7 @@ void Robot::update(UpdateContext& cxt)
         dyingTime_ += cxt.timeDelta();
         if (dyingTime_ >= getTemplate()->dyingDuration())
         {
-            cxt.dumper()->add(this);
+            cxt.dumper().add(this);
         }
         else
         {

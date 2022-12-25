@@ -7,15 +7,11 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void GameObjectDumper::init(GameObjectItemPool* pool)
+void GameObjectDumper::init(GameObjectItemPool* pool,
+                            GameObjItemDeleter& itemDeleter)
 {
     pool_ = pool;
-    objs_.setDeleter(
-        [&](GameObjectItem* item)
-        {
-            pool_->free(item);
-        }
-    );
+    objs_.setDeleter(itemDeleter);
 }
 
 void GameObjectDumper::add(GameObject* obj)
