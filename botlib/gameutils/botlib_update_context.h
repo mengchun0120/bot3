@@ -1,8 +1,6 @@
 #ifndef INCLUDED_BOTLIB_UPDATE_CONTEXT_H
 #define INCLUDED_BOTLIB_UPDATE_CONTEXT_H
 
-#include <functional>
-
 namespace mcdane {
 namespace botlib {
 

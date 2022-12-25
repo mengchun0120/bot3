@@ -26,6 +26,7 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_hp_indicator_config.cpp
     gameobj/botlib_icon.cpp
     gameobj/botlib_missile.cpp
+    gameobj/botlib_missile_hit_checker.cpp
     gameobj/botlib_particle_effect.cpp
     gameobj/botlib_player.cpp
     gameobj/botlib_progress_bar.cpp
