@@ -8,6 +8,8 @@
 namespace mcdane {
 namespace botlib {
 
+class Robot;
+
 class Missile: public CompositeObject {
 public:
     Missile() = default;
@@ -38,6 +40,8 @@ public:
 
     bool canBeDumped(GameMap& map) const override;
 
+    void notify(GameObject* obj) override;
+
 private:
     void updateAlive(UpdateContext& cxt);
 
@@ -49,11 +53,14 @@ private:
 
     void showExplodeEffect(GameMap& map);
 
+    void setTarget(Robot* robot, GameObjItemPool& pool);
+
 private:
     Side side_;
     commonlib::Vector2 speed_;
     float damage_;
     float livingTime_;
+    Robot* target_;
 };
 
 const MissileTemplate* Missile::getTemplate() const

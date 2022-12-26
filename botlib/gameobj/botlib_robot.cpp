@@ -215,6 +215,7 @@ void Robot::doDamage(float damage, UpdateContext& cxt)
         if (hp_ <= 0.0f)
         {
             setState(GameObjectState::DYING);
+            notifyAndClearMonitors();
         }
 
         hpIndicator_.reset(pos(), hpRatio());
@@ -271,6 +272,18 @@ void Robot::setDamageFactor(float factor)
     damageFactor_ = factor;
 }
 
+void Robot::resetSpeed()
+{
+    speed_ = speedNorm_ * direction_;
+}
+
+void Robot::addMonitor(GameObject* obj,
+                       GameObjItemPool& pool)
+{
+    GameObjectItem* item = pool.alloc(obj);
+    monitors_.pushBack(item);
+}
+
 void Robot::initFirePointsAndDirections()
 {
     const RobotTemplate* t = getTemplate();
@@ -304,11 +317,6 @@ void Robot::resetFirePointsAndDirections()
         rotate(d[0], d[1], direction_[0], direction_[1]);
         fireDirections_[i] = d;
     }
-}
-
-void Robot::resetSpeed()
-{
-    speed_ = speedNorm_ * direction_;
 }
 
 void Robot::updatePos(UpdateContext& cxt)
@@ -371,6 +379,16 @@ void Robot::updateEnergy(float timeDelta)
 {
     energy_ = std::min(energy_ + timeDelta * getTemplate()->rechargeRate(),
                        getTemplate()->energy());
+}
+
+void Robot::notifyAndClearMonitors()
+{
+    for (GameObjectItem* i = monitors_.first(); i; i = i->next())
+    {
+        i->item()->notify(this);
+    }
+
+    monitors_.clear();
 }
 
 } // end of namespace botlib

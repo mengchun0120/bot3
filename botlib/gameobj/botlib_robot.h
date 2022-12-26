@@ -83,6 +83,9 @@ public:
 
     void resetSpeed();
 
+    void addMonitor(GameObject* obj,
+                    GameObjItemPool& pool);
+
 protected:
     void initFirePointsAndDirections();
 
@@ -101,6 +104,8 @@ protected:
     void resetArmorReduceRatio();
 
     void updateEnergy(float timeDelta);
+
+    void notifyAndClearMonitors();
 
 protected:
     Side side_;

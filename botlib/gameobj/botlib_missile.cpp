@@ -24,6 +24,7 @@ void Missile::init(const MissileTemplate* t,
     damage_ = t->damage() * damageFactor;
     livingTime_ = 0.0f;
     resetSpeed();
+    target_ = nullptr;
 }
 
 void Missile::update(UpdateContext& cxt)
@@ -57,6 +58,19 @@ void Missile::explode(UpdateContext& cxt)
 
     showExplodeEffect(map);
     cxt.dumper().add(this);
+}
+
+bool Missile::canBeDumped(GameMap& map) const
+{
+    return state_ != GameObjectState::DEAD && !map.canSee(this);
+}
+
+void Missile::notify(GameObject* obj)
+{
+    if (static_cast<Robot*>(obj) == target_)
+    {
+        target_ = nullptr;
+    }
 }
 
 void Missile::updateAlive(UpdateContext& cxt)
@@ -106,9 +120,10 @@ void Missile::showExplodeEffect(GameMap& map)
     map.addObj(explodeEffect);
 }
 
-bool Missile::canBeDumped(GameMap& map) const
+void Missile::setTarget(Robot* robot, GameObjItemPool& pool)
 {
-    return state_ != GameObjectState::DEAD && !map.canSee(this);
+    target_ = robot;
+    robot->addMonitor(this, pool);
 }
 
 } // end of namespace botlib
