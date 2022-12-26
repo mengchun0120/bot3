@@ -34,6 +34,7 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_progress_pie.cpp
     gameobj/botlib_robot.cpp
     gameobj/botlib_side.cpp
+    gameobj/botlib_target_finder.cpp
     gameobj/botlib_tile.cpp)
 
 set(BOTLIB_GAMEUTILS_SRC

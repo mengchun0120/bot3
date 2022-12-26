@@ -17,7 +17,7 @@ class Robot: public CompositeObject {
 public:
     Robot();
 
-    ~Robot() override = default;
+    ~Robot() override;
 
     void init(const RobotTemplate* t,
               Side side,
@@ -85,6 +85,8 @@ public:
 
     void addMonitor(GameObject* obj,
                     GameObjItemPool& pool);
+
+    void removeMonitor(GameObject* obj);
 
 protected:
     void initFirePointsAndDirections();

@@ -47,6 +47,8 @@ void rotate(float& x,
 
 float sign(float x);
 
+int randInt(int min, int max);
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 

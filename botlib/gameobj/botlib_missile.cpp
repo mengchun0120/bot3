@@ -13,6 +13,19 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+Missile::Missile()
+    : target_(nullptr)
+{
+}
+
+Missile::~Missile()
+{
+    if (target_)
+    {
+        target_->removeMonitor(this);
+    }
+}
+
 void Missile::init(const MissileTemplate* t,
                    Side side,
                    const commonlib::Vector2& pos1,
@@ -24,7 +37,6 @@ void Missile::init(const MissileTemplate* t,
     damage_ = t->damage() * damageFactor;
     livingTime_ = 0.0f;
     resetSpeed();
-    target_ = nullptr;
 }
 
 void Missile::update(UpdateContext& cxt)
@@ -55,6 +67,12 @@ void Missile::explode(UpdateContext& cxt)
     MissileHitChecker checker(cxt, *this, true);
     Region<int> area = map.getCollideArea(explodeRegion());
     map.traverse(area, checker, 0, 2);
+
+    if (target_)
+    {
+        target_->removeMonitor(this);
+        target_ = nullptr;
+    }
 
     showExplodeEffect(map);
     cxt.dumper().add(this);

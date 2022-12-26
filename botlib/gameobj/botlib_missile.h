@@ -12,9 +12,9 @@ class Robot;
 
 class Missile: public CompositeObject {
 public:
-    Missile() = default;
+    Missile();
 
-    ~Missile() override = default;
+    ~Missile() override;
 
     void init(const MissileTemplate* t,
               Side side,

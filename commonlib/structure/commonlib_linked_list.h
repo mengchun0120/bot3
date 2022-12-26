@@ -56,6 +56,8 @@ public:
 
     void clear();
 
+    T* get(int index);
+
 private:
     void del(T* t);
 
@@ -379,6 +381,19 @@ void LinkedList<T>::del(T* t)
     {
         delete t;
     }
+}
+
+template <typename T>
+T* LinkedList<T>::get(int index)
+{
+    T* t = first_;
+
+    for(int i = 0; i < index && t; ++i)
+    {
+        t = t->next();
+    }
+
+    return t;
 }
 
 } // end of namespace commonlib

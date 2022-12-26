@@ -1,10 +1,14 @@
 #ifndef INCLUDED_COMMONLIB_OBJECT_POOL_H
 #define INCLUDED_COMMONLIB_OBJECT_POOL_H
 
+#include <functional>
 #include <commonlib_exception.h>
 
 namespace mcdane {
 namespace commonlib {
+
+template <typename T>
+using Deleter = std::function<void(T*)>;
 
 template <typename T>
 class ObjectPool {
@@ -25,12 +29,13 @@ public:
 
     void free(T* t);
 
-    int freeCount() const
-    {
-        return freeCount_;
-    }
+    inline int freeCount() const;
+
+    inline Deleter<T>& deleter();
 
 private:
+    void initDeleter();
+
     void initPool(unsigned int size);
 
     void initNext(unsigned int size);
@@ -42,6 +47,7 @@ private:
     int* next_;
     int firstFree_;
     int freeCount_;
+    Deleter<T> deleter_;
 };
 
 template <typename T>
@@ -53,11 +59,13 @@ ObjectPool<T>::ObjectPool()
     , firstFree_(-1)
     , freeCount_(0)
 {
+    initDeleter();
 }
 
 template <typename T>
 ObjectPool<T>::ObjectPool(unsigned int size)
 {
+    initDeleter();
     init(size);
 }
 
@@ -128,6 +136,26 @@ void ObjectPool<T>::free(T* t)
         firstFree_ = idx;
         ++freeCount_;
     }
+}
+
+template <typename T>
+int ObjectPool<T>::freeCount() const
+{
+    return freeCount_;
+}
+
+template <typename T>
+Deleter<T>& ObjectPool<T>::deleter()
+{
+    return deleter_;
+}
+
+template <typename T>
+void ObjectPool<T>::initDeleter()
+{
+    using namespace std::placeholders;
+
+    deleter_ = std::bind(&ObjectPool::free, this, _1);
 }
 
 template <typename T>

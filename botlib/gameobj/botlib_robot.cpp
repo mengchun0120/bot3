@@ -22,6 +22,14 @@ Robot::Robot()
 {
 }
 
+Robot::~Robot()
+{
+    if (!monitors_.empty())
+    {
+        notifyAndClearMonitors();
+    }
+}
+
 void Robot::init(const RobotTemplate* t,
                  Side side,
                  const Vector2& pos1,
@@ -208,6 +216,24 @@ void Robot::addMonitor(GameObject* obj,
 {
     GameObjectItem* item = pool.alloc(obj);
     monitors_.pushBack(item);
+}
+
+void Robot::removeMonitor(GameObject* obj)
+{
+    GameObjectItem* i = monitors_.first();
+
+    for (; i; i = i->next())
+    {
+        if (i->item() == obj)
+        {
+            break;
+        }
+    }
+
+    if (i)
+    {
+        monitors_.remove(i);
+    }
 }
 
 void Robot::initFirePointsAndDirections()

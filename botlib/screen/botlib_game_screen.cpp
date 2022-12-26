@@ -112,12 +112,7 @@ void GameScreen::loadMap(const Vector2& viewportSize,
                          const std::string& mapFile)
 {
     GameMapLoader loader(viewportSize[0], viewportSize[1]);
-    auto deleter = [&](GameObjectItem* o)
-    {
-        cxt_.itemPool().free(o);
-    };
-
-    loader.load(map_, mapFile, deleter);
+    loader.load(map_, mapFile, cxt_.itemPool().deleter());
 }
 
 void GameScreen::initProgressBar()

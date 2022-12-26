@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <commonlib_math_utils.h>
 
 namespace mcdane {
@@ -22,6 +23,12 @@ float sign(float x)
     }
 
     return x < 0.0f ? -1.0f : 1.0f;
+}
+
+int randInt(int min, int max)
+{
+    double r = static_cast<double>(rand()) * (max - min) / RAND_MAX + min;
+    return static_cast<int>(floor(r));
 }
 
 } // end of namespace commonlib

@@ -10,12 +10,7 @@ namespace botlib {
 void GameObjectDumper::init(GameObjItemPool* pool)
 {
     pool_ = pool;
-    objs_.setDeleter(
-        [&](GameObjectItem* o)
-        {
-            pool_->free(o);
-        }
-    );
+    objs_.setDeleter(pool_->deleter());
 }
 
 void GameObjectDumper::add(GameObject* obj)
