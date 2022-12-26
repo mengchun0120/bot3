@@ -28,6 +28,7 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_missile.cpp
     gameobj/botlib_missile_hit_checker.cpp
     gameobj/botlib_particle_effect.cpp
+    gameobj/botlib_passthrough_collide_checker.cpp
     gameobj/botlib_player.cpp
     gameobj/botlib_progress_bar.cpp
     gameobj/botlib_progress_pie.cpp
