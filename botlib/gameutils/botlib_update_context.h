@@ -19,9 +19,7 @@ public:
 
     inline GameMap* map();
 
-    inline GameObjectItemPool& itemPool();
-
-    inline GameObjItemDeleter& itemDeleter();
+    inline GameObjItemPool& itemPool();
 
     inline GameObjectDumper& dumper();
 
@@ -31,8 +29,7 @@ public:
 
 private:
     GameMap* map_;
-    GameObjectItemPool itemPool_;
-    GameObjItemDeleter itemDeleter_;
+    GameObjItemPool itemPool_;
     GameObjectDumper dumper_;
     float timeDelta_;
 };
@@ -42,14 +39,9 @@ GameMap* UpdateContext::map()
     return map_;
 }
 
-GameObjectItemPool& UpdateContext::itemPool()
+GameObjItemPool& UpdateContext::itemPool()
 {
     return itemPool_;
-}
-
-GameObjItemDeleter& UpdateContext::itemDeleter()
-{
-    return itemDeleter_;
 }
 
 GameObjectDumper& UpdateContext::dumper()

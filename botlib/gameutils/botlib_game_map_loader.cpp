@@ -55,13 +55,14 @@ GameMapLoader::GameMapLoader(float viewportWidth,
 }
 
 void GameMapLoader::load(GameMap& map,
-                         const std::string& fileName)
+                         const std::string& fileName,
+                         GameObjItemDeleter itemDeleter)
 {
     rapidjson::Document doc;
     readJson(doc, fileName);
 
     loadMapDimension(map, doc);
-    loadObjects(map, doc);
+    loadObjects(map, doc, itemDeleter);
 }
 
 void GameMapLoader::loadMapDimension(GameMap& map,
@@ -82,7 +83,8 @@ void GameMapLoader::loadMapDimension(GameMap& map,
 }
 
 void GameMapLoader::loadObjects(GameMap& map,
-                                const rapidjson::Document& doc)
+                                const rapidjson::Document& doc,
+                                GameObjItemDeleter itemDeleter)
 {
     if (!doc.HasMember("objects"))
     {
@@ -98,12 +100,13 @@ void GameMapLoader::loadObjects(GameMap& map,
     int numObjects = objects.Capacity();
     for (int i = 0; i < numObjects; ++i)
     {
-        parseAddObject(map, objects[i]);
+        parseAddObject(map, objects[i], itemDeleter);
     }
 }
 
 void GameMapLoader::parseAddObject(GameMap& map,
-                                   const rapidjson::Value& v)
+                                   const rapidjson::Value& v,
+                                   GameObjItemDeleter itemDeleter)
 {
     parse(commonParams_, v);
 
@@ -121,7 +124,7 @@ void GameMapLoader::parseAddObject(GameMap& map,
     }
     else if (typeStr_ == "robot")
     {
-        addAIRobot(map, v);
+        addAIRobot(map, v, itemDeleter);
     }
     else if (typeStr_ == "particleEffect")
     {
@@ -129,7 +132,7 @@ void GameMapLoader::parseAddObject(GameMap& map,
     }
     else if (typeStr_ == "player")
     {
-        addPlayer(map, v);
+        addPlayer(map, v, itemDeleter);
     }
     else
     {
@@ -221,7 +224,8 @@ void GameMapLoader::addMissile(GameMap& map,
 }
 
 void GameMapLoader::addAIRobot(GameMap& map,
-                             const rapidjson::Value& v)
+                               const rapidjson::Value& v,
+                               GameObjItemDeleter itemDeleter)
 {
     const GameLib& lib = Context::gameLib();
 
@@ -242,7 +246,7 @@ void GameMapLoader::addAIRobot(GameMap& map,
     parse(robotParams_, v);
 
     AIRobot* robot = new AIRobot();
-    robot->init(t, pos_, direction_);
+    robot->init(t, pos_, direction_, itemDeleter);
     map.addObj(robot);
 }
 
@@ -265,7 +269,8 @@ void GameMapLoader::addParticleEffect(GameMap& map,
 }
 
 void GameMapLoader::addPlayer(GameMap& map,
-                              const rapidjson::Value& v)
+                              const rapidjson::Value& v,
+                              GameObjItemDeleter itemDeleter)
 {
     const PlayerTemplate& t = Context::gameLib().playerTemplate();
 
@@ -281,7 +286,8 @@ void GameMapLoader::addPlayer(GameMap& map,
     float goodieY, goodieStartX, goodieSpacing;
 
     calculatePlayerGoodiePos(goodieY, goodieStartX, goodieSpacing);
-    player->init(&t, pos_, direction_, goodieY, goodieStartX, goodieSpacing);
+    player->init(&t, pos_, direction_, goodieY, goodieStartX,
+                 goodieSpacing, itemDeleter);
 
     map.addObj(player);
 }

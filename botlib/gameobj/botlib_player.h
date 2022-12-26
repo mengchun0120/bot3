@@ -21,7 +21,8 @@ public:
               const commonlib::Vector2& direction1,
               float goodieY,
               float goodieStartX,
-              float goodieSpacing);
+              float goodieSpacing,
+              GameObjItemDeleter itemDeleter=nullptr);
 
     inline const PlayerTemplate* getTemplate() const;
 

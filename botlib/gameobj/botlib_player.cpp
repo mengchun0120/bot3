@@ -13,9 +13,10 @@ void Player::init(const PlayerTemplate* t,
                   const Vector2& direction1,
                   float goodieY,
                   float goodieStartX,
-                  float goodieSpacing)
+                  float goodieSpacing,
+                  GameObjItemDeleter itemDeleter)
 {
-    Robot::init(t, Side::PLAYER, pos1, direction1);
+    Robot::init(t, Side::PLAYER, pos1, direction1, itemDeleter);
     initGoodies();
     goodieY_ = goodieY;
     goodieStartX_ = goodieStartX;

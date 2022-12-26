@@ -9,13 +9,7 @@ void UpdateContext::init(GameMap* map1, int itemPoolSize)
 {
     map_ = map1;
     itemPool_.init(itemPoolSize);
-
-    itemDeleter_ = [&](GameObjectItem* item)
-    {
-        itemPool_.free(item);
-    };
-
-    dumper_.init(&itemPool_, itemDeleter_);
+    dumper_.init(&itemPool_);
 }
 
 void UpdateContext::setTimeDelta(float timeDelta1)

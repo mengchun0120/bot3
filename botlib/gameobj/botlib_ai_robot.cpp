@@ -20,11 +20,11 @@ AIRobot::~AIRobot()
 
 void AIRobot::init(const AIRobotTemplate* t,
                    const Vector2& pos1,
-                   const Vector2& direction1)
+                   const Vector2& direction1,
+                   GameObjItemDeleter itemDeleter)
 {
+    Robot::init(t, Side::AI, pos1, direction1, itemDeleter);
     ai_ = AI::create(t->aiAlgorithm(), t->aiName());
-
-    Robot::init(t, Side::AI, pos1, direction1);
 }
 
 void AIRobot::update(UpdateContext& cxt)

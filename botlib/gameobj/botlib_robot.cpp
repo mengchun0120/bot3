@@ -99,7 +99,8 @@ Robot::Robot()
 void Robot::init(const RobotTemplate* t,
                  Side side,
                  const Vector2& pos1,
-                 const Vector2& direction1)
+                 const Vector2& direction1,
+                 GameObjItemDeleter itemDeleter)
 {
     CompositeObject::init(t, pos1, direction1);
     side_ = side;
@@ -117,6 +118,10 @@ void Robot::init(const RobotTemplate* t,
     movingEnabled_ = false;
     shootingEnabled_ = false;
     resetArmorReduceRatio();
+    if (itemDeleter)
+    {
+        monitors_.setDeleter(itemDeleter);
+    }
 }
 
 void Robot::present() const

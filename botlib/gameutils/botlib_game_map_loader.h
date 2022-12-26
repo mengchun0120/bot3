@@ -4,6 +4,7 @@
 #include <rapidjson/document.h>
 #include <commonlib_json_param.h>
 #include <botlib_game_map.h>
+#include <botlib_typedef.h>
 
 namespace mcdane {
 namespace botlib {
@@ -14,17 +15,20 @@ public:
                   float viewportHeight);
 
     void load(GameMap& map,
-              const std::string& fileName);
+              const std::string& fileName,
+              GameObjItemDeleter itemDeleter=nullptr);
 
 private:
     void loadMapDimension(GameMap& map,
                           const rapidjson::Document& doc);
 
     void loadObjects(GameMap& map,
-                     const rapidjson::Document& doc);
+                     const rapidjson::Document& doc,
+                     GameObjItemDeleter itemDeleter);
 
     void parseAddObject(GameMap& map,
-                        const rapidjson::Value& v);
+                        const rapidjson::Value& v,
+                        GameObjItemDeleter itemDeleter);
 
     void addTile(GameMap& map,
                  const rapidjson::Value& v);
@@ -36,13 +40,15 @@ private:
                     const rapidjson::Value& v);
 
     void addAIRobot(GameMap& map,
-                    const rapidjson::Value& v);
+                    const rapidjson::Value& v,
+                    GameObjItemDeleter itemDeleter);
 
     void addParticleEffect(GameMap& map,
                            const rapidjson::Value& v);
 
     void addPlayer(GameMap& map,
-                   const rapidjson::Value& v);
+                   const rapidjson::Value& v,
+                   GameObjItemDeleter itemDeleter);
 
     void calculatePlayerGoodiePos(float& goodieY,
                                   float& goodieStartX,

@@ -2,10 +2,13 @@
 #define INCLUDED_BOTLIB_ROBOT_H
 
 #include <commonlib_time_utils.h>
+#include <commonlib_linked_item.h>
+#include <commonlib_linked_list.h>
 #include <botlib_side.h>
 #include <botlib_hp_indicator.h>
 #include <botlib_robot_template.h>
 #include <botlib_composite_object.h>
+#include <botlib_typedef.h>
 
 namespace mcdane {
 namespace botlib {
@@ -19,7 +22,8 @@ public:
     void init(const RobotTemplate* t,
               Side side,
               const commonlib::Vector2& pos1,
-              const commonlib::Vector2& direction1);
+              const commonlib::Vector2& direction1,
+              GameObjItemDeleter itemDeleter=nullptr);
 
     inline const RobotTemplate* getTemplate() const;
 
@@ -115,6 +119,7 @@ protected:
     float armor_;
     float damageFactor_;
     float armorReduceRatio_;
+    GameObjItemList monitors_;
 };
 
 const RobotTemplate* Robot::getTemplate() const

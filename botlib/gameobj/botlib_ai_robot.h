@@ -18,7 +18,8 @@ public:
 
     void init(const AIRobotTemplate* t,
               const commonlib::Vector2& pos1,
-              const commonlib::Vector2& direction1);
+              const commonlib::Vector2& direction1,
+              GameObjItemDeleter itemDeleter=nullptr);
 
     inline const AIRobotTemplate* getTemplate() const;
 

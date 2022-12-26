@@ -33,10 +33,10 @@ void GameScreen::init(const Vector2& viewportSize,
     const GameScreenConfig& cfg = Context::gameScreenConfig();
 
     nextScreenType_ = nextScreenType;
+    cxt_.init(&map_, cfg.gameObjItemPoolSize());
     loadMap(viewportSize, cfg.mapFile());
     viewportSize_ = viewportSize;
     overlayViewportOrigin_ = viewportSize / 2.0f;
-    cxt_.init(&map_, cfg.gameObjItemPoolSize());
     initProgressBar();
     initMessageBox();
     initAIRobotCount();
@@ -112,8 +112,12 @@ void GameScreen::loadMap(const Vector2& viewportSize,
                          const std::string& mapFile)
 {
     GameMapLoader loader(viewportSize[0], viewportSize[1]);
+    auto deleter = [&](GameObjectItem* o)
+    {
+        cxt_.itemPool().free(o);
+    };
 
-    loader.load(map_, mapFile);
+    loader.load(map_, mapFile, deleter);
 }
 
 void GameScreen::initProgressBar()

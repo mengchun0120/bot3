@@ -53,7 +53,8 @@ using ProgressBarTemplateLib = commonlib::NamedMap<ProgressBarTemplate>;
 using IconTemplateLib = commonlib::NamedMap<IconTemplate>;
 using GameObjectList = commonlib::LinkedList<GameObject>;
 using GameObjectItem = commonlib::LinkedItem<GameObject*>;
-using GameObjectItemPool = commonlib::ObjectPool<GameObjectItem>;
+using GameObjItemPool = commonlib::ObjectPool<GameObjectItem>;
+using GameObjItemList = commonlib::LinkedList<GameObjectItem>;
 using GameObjItemDeleter = std::function<void(GameObjectItem*)>;
 
 } // end of namespace botlib

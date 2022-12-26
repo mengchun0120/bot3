@@ -19,8 +19,7 @@ public:
 
     ~GameObjectDumper() = default;
 
-    void init(GameObjectItemPool* pool,
-              GameObjItemDeleter& itemDeleter);
+    void init(GameObjItemPool* pool);
 
     void add(GameObject* obj);
 
@@ -30,7 +29,7 @@ public:
 
 private:
     commonlib::LinkedList<GameObjectItem> objs_;
-    GameObjectItemPool* pool_;
+    GameObjItemPool* pool_;
 };
 
 bool GameObjectDumper::empty() const
