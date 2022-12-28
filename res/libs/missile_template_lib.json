@@ -79,7 +79,6 @@
         ],
         "explodeEffect": "green_big_explosion",
         "guided": true,
-        "searchBreath": 200.0,
-        "acceleration": 0.5
+        "searchBreath": 200.0
     }
 }

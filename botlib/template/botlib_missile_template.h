@@ -35,8 +35,6 @@ public:
 
     inline float searchBreath() const;
 
-    inline float acceleration() const;
-
 private:
     float damage_;
     float speed_;
@@ -46,7 +44,6 @@ private:
     const ParticleEffectTemplate* explodeEffectTemplate_;
     bool guided_;
     float searchBreath_;
-    float acceleration_;
 };
 
 float MissileTemplate::damage() const
@@ -87,11 +84,6 @@ bool MissileTemplate::guided() const
 float MissileTemplate::searchBreath() const
 {
     return searchBreath_;
-}
-
-float MissileTemplate::acceleration() const
-{
-    return acceleration_;
 }
 
 } // end of namespace botlib

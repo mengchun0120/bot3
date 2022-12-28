@@ -13,6 +13,12 @@ Vector3 cross(const Vector3 &lhs,
     return v;
 }
 
+bool align(const Vector2& d1, const Vector2& d2)
+{
+    return fuzzyEqual(d1[0]*d2[1], d1[1]*d2[0]) &&
+           (std::signbit(d1[0]) == std::signbit(d2[0]));
+}
+
 } // end of namespace commonlib
 } // end of namespace mcdane
 

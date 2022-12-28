@@ -6,6 +6,7 @@
 #include <commonlib_math_utils.h>
 #include <commonlib_collide.h>
 #include <botlib_context.h>
+#include <botlib_missile.h>
 #include <botlib_player.h>
 #include <botlib_game_map.h>
 
@@ -89,9 +90,6 @@ void GameMap::addObj(GameObject* obj)
             updateAIRobotCountStr();
         }
     }
-
-    LOG_DEBUG << "added " << obj->type() << " " << obj->id()
-              << " row=" << rowIdx << " col=" << colIdx << LOG_END;
 }
 
 void GameMap::repositionObj(GameObject* obj)
@@ -201,6 +199,16 @@ Region<int> GameMap::getCollideArea(const Region<float>& r) const
     return Region<int>(left, right, bottom, top);
 }
 
+Region<int> GameMap::getCoverArea(const Region<float>& r) const
+{
+    int left = clamp(getCellIdx(r.left()), 0, colCount()-1);
+    int right = clamp(getCellIdx(r.right()), 0, colCount()-1);
+    int bottom = clamp(getCellIdx(r.bottom()), 0, rowCount()-1);
+    int top = clamp(getCellIdx(r.top()), 0, rowCount()-1);
+
+    return Region<int>(left, right, bottom, top);
+}
+
 bool GameMap::checkCollision(Vector2& delta,
                              const GameObject* obj)
 {
@@ -278,7 +286,6 @@ void GameMap::initMapCells(unsigned int rows, unsigned int cols)
     unsigned int colCount = cols + extraCell_*2;
     auto objDeleter = [](GameObject* obj)
     {
-        LOG_DEBUG << "deleted " << obj->type() << " " << obj->id() << LOG_END;
         delete obj;
     };
 

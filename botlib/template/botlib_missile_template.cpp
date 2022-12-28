@@ -18,7 +18,6 @@ MissileTemplate::MissileTemplate()
     , explodeEffectTemplate_(nullptr)
     , guided_(false)
     , searchBreath_(0.0f)
-    , acceleration_(0.0f)
 {
 }
 
@@ -37,8 +36,7 @@ void MissileTemplate::init(
         jsonParam(duration_, "duration", true, gt(0.0f)),
         jsonParam(explodeEffectName, "explodeEffect", true, k_nonEmptyStrV),
         jsonParam(guided_, "guided", false),
-        jsonParam(searchBreath_, "searchBreath", false, ge(0.0f)),
-        jsonParam(acceleration_, "acceleration", false, ge(0.0f))
+        jsonParam(searchBreath_, "searchBreath", false, ge(0.0f))
     };
 
     parse(params, v);

@@ -23,6 +23,13 @@ class GameMap: public commonlib::Object {
 private:
     static constexpr int k_layerCount = 4;
 
+    using Cell = std::array<GameObjectList, k_layerCount>;
+
+public:
+    static constexpr unsigned int k_minRows = 30;
+    static constexpr unsigned int k_minCols = 30;
+    static constexpr float k_cellBreath = 40.0f;
+
     enum Layer {
         LAYER_TILE_GOODIE,
         LAYER_ROBOT,
@@ -31,14 +38,6 @@ private:
     };
 
     static const Layer k_objLayerMap[k_gameObjTypeCount];
-
-    using Cell = std::array<GameObjectList, k_layerCount>;
-
-public:
-    static constexpr unsigned int k_minRows = 30;
-    static constexpr unsigned int k_minCols = 30;
-    static constexpr float k_cellBreath = 40.0f;
-
 
 public:
     inline static int getLayer(GameObjectType type);
@@ -109,6 +108,8 @@ public:
                                           float deltaY) const;
 
     commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r) const;
+
+    commonlib::Region<int> getCoverArea(const commonlib::Region<float>& r) const;
 
     template <typename F>
     void traverse(const commonlib::Region<int>& r,

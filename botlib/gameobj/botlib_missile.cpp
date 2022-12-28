@@ -6,6 +6,7 @@
 #include <botlib_particle_effect.h>
 #include <botlib_tile.h>
 #include <botlib_missile_hit_checker.h>
+#include <botlib_target_finder.h>
 #include <botlib_missile.h>
 
 using namespace mcdane::commonlib;
@@ -93,6 +94,11 @@ void Missile::notify(GameObject* obj)
 
 void Missile::updateAlive(UpdateContext& cxt)
 {
+    if (getTemplate()->guided())
+    {
+        updateForTarget(cxt);
+    }
+
     Vector2 delta = speed_ * cxt.timeDelta();
     GameMap& map = *(cxt.map());
 
@@ -107,6 +113,18 @@ void Missile::updateAlive(UpdateContext& cxt)
     if (collideBoundary || collideObjs)
     {
         explode(cxt);
+    }
+}
+
+void Missile::updateForTarget(UpdateContext& cxt)
+{
+    if (!target_)
+    {
+        searchTarget(cxt);
+    }
+    else
+    {
+        calibrateDirection();
     }
 }
 
@@ -138,10 +156,42 @@ void Missile::showExplodeEffect(GameMap& map)
     map.addObj(explodeEffect);
 }
 
-void Missile::setTarget(Robot* robot, GameObjItemPool& pool)
+void Missile::setTarget(Robot* robot, UpdateContext& cxt)
 {
     target_ = robot;
-    robot->addMonitor(this, pool);
+    robot->addMonitor(this, cxt.itemPool());
+    calibrateDirection();
+}
+
+void Missile::searchTarget(UpdateContext& cxt)
+{
+    Region<int> area = searchRegion(cxt.map());
+    TargetFinder finder(this, cxt.itemPool());
+
+    cxt.map()->traverse(area, finder, GameMap::LAYER_ROBOT, 1);
+
+    Robot *robot = finder.getTarget();
+    if (robot)
+    {
+        setTarget(robot, cxt);
+    }
+}
+
+void Missile::calibrateDirection()
+{
+    Vector2 targetDirection = target_->pos() - pos();
+    if (!align(targetDirection, direction()))
+    {
+        setDirection(targetDirection.normalize());
+    }
+}
+
+Region<int> Missile::searchRegion(GameMap* map)
+{
+    float searchBreath = getTemplate()->searchBreath();
+    Region<float> r(pos_[0] - searchBreath, pos_[0] + searchBreath,
+                    pos_[1] - searchBreath, pos_[1] + searchBreath);
+    return map->getCoverArea(r);
 }
 
 } // end of namespace botlib

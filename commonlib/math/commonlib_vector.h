@@ -15,7 +15,7 @@ namespace commonlib {
 
 template <std::size_t N>
 struct Vector: public std::array<float, N> {
-    Vector() = default;
+    explicit Vector(float v=0.0f) noexcept;
 
     template <typename Iterator>
     Vector(Iterator begin,
@@ -56,6 +56,15 @@ using Vector4 = Vector<4>;
 using Point2 = Vector2;
 using Point3 = Vector3;
 using Point4 = Vector4;
+
+template <std::size_t N>
+Vector<N>::Vector(float v) noexcept
+{
+    for (std::size_t i = 0; i < N; ++i)
+    {
+        (*this)[i] = v;
+    }
+}
 
 template <std::size_t N>
 template <typename Iterator>
@@ -276,6 +285,14 @@ bool fuzzyEqual(const Vector<N>& v1,
 }
 
 template <std::size_t N>
+bool fuzzyEqualZero(const Vector<N>& v1,
+                    float threshold=1e-06f)
+{
+    Vector<N> zero;
+    return fuzzyEqual(v1, zero, threshold);
+}
+
+template <std::size_t N>
 Vector<N> normalize(const Vector<N>& v)
 {
     return v / v.norm();
@@ -331,6 +348,8 @@ Vector<N> abs(const Vector<N>& v)
 
 Vector3 cross(const Vector3& lhs,
               const Vector3& rhs);
+
+bool align(const Vector2& d1, const Vector2& d2);
 
 } // end of namespace sharedlib
 } // end of namespace mcdane

@@ -13,8 +13,7 @@ class Robot;
 
 class TargetFinder {
 public:
-    TargetFinder(Missile* src,
-                 GameObjItemPool& pool);
+    TargetFinder(Missile* src, GameObjItemPool& pool);
 
     bool operator()(GameObject* obj);
 

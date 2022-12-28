@@ -9,8 +9,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-TargetFinder::TargetFinder(Missile* src,
-                           GameObjItemPool& pool)
+TargetFinder::TargetFinder(Missile* src, GameObjItemPool& pool)
     : src_(src)
     , pool_(pool)
     , candidates_(pool.deleter())

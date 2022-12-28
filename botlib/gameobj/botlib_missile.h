@@ -45,6 +45,8 @@ public:
 private:
     void updateAlive(UpdateContext& cxt);
 
+    void updateForTarget(UpdateContext& cxt);
+
     void resetSpeed();
 
     bool checkCollideObjs(UpdateContext& cxt);
@@ -53,7 +55,13 @@ private:
 
     void showExplodeEffect(GameMap& map);
 
-    void setTarget(Robot* robot, GameObjItemPool& pool);
+    void setTarget(Robot* robot, UpdateContext& cxt);
+
+    void searchTarget(UpdateContext& cxt);
+
+    void calibrateDirection();
+
+    commonlib::Region<int> searchRegion(GameMap* map);
 
 private:
     Side side_;
