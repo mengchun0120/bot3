@@ -1,7 +1,6 @@
 #ifndef INCLUDED_BOTLIB_TILE_H
 #define INCLUDED_BOTLIB_TILE_H
 
-#include <botlib_hp_indicator.h>
 #include <botlib_composite_object.h>
 #include <botlib_tile_template.h>
 
@@ -37,7 +36,6 @@ public:
 
 private:
     float hp_;
-    HPIndicator hpIndicator_;
     float dyingTime_;
 };
 

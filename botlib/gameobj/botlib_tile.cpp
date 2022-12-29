@@ -20,18 +20,12 @@ void Tile::init(const TileTemplate* t,
     CompositeObject::init(t, pos1, direction1);
     setInvincible(t->invincible());
     hp_ = t->hp();
-    hpIndicator_.reset(pos(), hpRatio());
     dyingTime_ = 0.0f;
 }
 
 void Tile::present() const
 {
     CompositeObject::present();
-
-    if (Context::gameConfig().showHPIndicator())
-    {
-        hpIndicator_.present();
-    }
 }
 
 void Tile::update(UpdateContext& cxt)
@@ -66,8 +60,6 @@ void Tile::doDamage(float damage)
     {
         setState(GameObjectState::DYING);
     }
-
-    hpIndicator_.reset(pos(), hpRatio());
 }
 
 bool Tile::canBeDumped(GameMap& map) const
