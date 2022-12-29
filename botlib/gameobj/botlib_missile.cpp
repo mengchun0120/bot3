@@ -77,6 +77,11 @@ void Missile::explode(UpdateContext& cxt)
 
     showExplodeEffect(map);
     cxt.dumper().add(this);
+
+    if (getTemplate()->splitCount() > 0)
+    {
+        shootSplitMissile(cxt);
+    }
 }
 
 bool Missile::canBeDumped(GameMap& map) const
@@ -192,6 +197,20 @@ Region<int> Missile::searchRegion(GameMap* map)
     Region<float> r(pos_[0] - searchBreath, pos_[0] + searchBreath,
                     pos_[1] - searchBreath, pos_[1] + searchBreath);
     return map->getCoverArea(r);
+}
+
+void Missile::shootSplitMissile(UpdateContext& cxt)
+{
+    int splitCount = getTemplate()->splitCount();
+    const MissileTemplate* t = getTemplate()->splitMissileTemplate();
+    const std::vector<Vector2>& directions = getTemplate()->splitMissileDirections();
+
+    for (int i = 0; i < splitCount; ++i)
+    {
+        Missile* m = new Missile();
+        m->init(t, side_, pos_, directions[i]);
+        cxt.map()->addObj(m);
+    }
 }
 
 } // end of namespace botlib

@@ -17,7 +17,8 @@ public:
     void init(const std::string& name,
               const rapidjson::Value& v,
               const ParticleEffectTemplateLib& particleEffectTemplateLib,
-              const ComponentTemplateLib& componentTemplateLib);
+              const ComponentTemplateLib& componentTemplateLib,
+              const MissileTemplateLib& missileTemplateLib);
 
     inline float damage() const;
 
@@ -35,6 +36,12 @@ public:
 
     inline float searchBreath() const;
 
+    inline int splitCount() const;
+
+    inline const MissileTemplate* splitMissileTemplate() const;
+
+    inline const std::vector<commonlib::Vector2> splitMissileDirections() const;
+
 private:
     float damage_;
     float speed_;
@@ -44,6 +51,9 @@ private:
     const ParticleEffectTemplate* explodeEffectTemplate_;
     bool guided_;
     float searchBreath_;
+    int splitCount_;
+    const MissileTemplate* splitMissileTemplate_;
+    std::vector<commonlib::Vector2> splitMissileDirections_;
 };
 
 float MissileTemplate::damage() const
@@ -84,6 +94,21 @@ bool MissileTemplate::guided() const
 float MissileTemplate::searchBreath() const
 {
     return searchBreath_;
+}
+
+int MissileTemplate::splitCount() const
+{
+    return splitCount_;
+}
+
+const MissileTemplate* MissileTemplate::splitMissileTemplate() const
+{
+    return splitMissileTemplate_;
+}
+
+const std::vector<commonlib::Vector2> MissileTemplate::splitMissileDirections() const
+{
+    return splitMissileDirections_;
 }
 
 } // end of namespace botlib

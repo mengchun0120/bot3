@@ -214,7 +214,8 @@ void GameLib::initMissileTemplateLib(const std::string& missileTemplateLibFile)
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        t.init(name, v, particleEffectTemplateLib_, componentTemplateLib_);
+        t.init(name, v, particleEffectTemplateLib_, componentTemplateLib_,
+               missileTemplateLib_);
     };
 
     missileTemplateLib_.init(missileTemplateLibFile, parser);

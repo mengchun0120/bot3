@@ -26,6 +26,12 @@
     "green_guided_missile": {
         "file": "green_guided_missile.png"
     },
+    "green_small_missile": {
+        "file": "green_small_missile.png"
+    },
+    "green_split_missile": {
+        "file": "green_split_missile.png"
+    },
     "red_base": {
         "file": "red_base.png"
     },

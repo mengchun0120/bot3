@@ -18,6 +18,8 @@ MissileTemplate::MissileTemplate()
     , explodeEffectTemplate_(nullptr)
     , guided_(false)
     , searchBreath_(0.0f)
+    , splitCount_(0)
+    , splitMissileTemplate_(nullptr)
 {
 }
 
@@ -25,9 +27,10 @@ void MissileTemplate::init(
     const std::string& name,
     const rapidjson::Value& v,
     const ParticleEffectTemplateLib& particleEffectTemplateLib,
-    const ComponentTemplateLib& componentTemplateLib)
+    const ComponentTemplateLib& componentTemplateLib,
+    const MissileTemplateLib& missileTemplateLib)
 {
-    std::string explodeEffectName;
+    std::string explodeEffectName, splitMissileName;
     std::vector<JsonParamPtr> params{
         jsonParam(damage_, "damage", true, gt(0.0f)),
         jsonParam(speed_, "speed", true, gt(0.0f)),
@@ -36,7 +39,10 @@ void MissileTemplate::init(
         jsonParam(duration_, "duration", true, gt(0.0f)),
         jsonParam(explodeEffectName, "explodeEffect", true, k_nonEmptyStrV),
         jsonParam(guided_, "guided", false),
-        jsonParam(searchBreath_, "searchBreath", false, ge(0.0f))
+        jsonParam(searchBreath_, "searchBreath", false, ge(0.0f)),
+        jsonParam(splitCount_, "splitCount", false, ge(0)),
+        jsonParam(splitMissileName, "splitMissile", false, k_nonEmptyStrV),
+        jsonParam(splitMissileDirections_, "splitMissileDirections", false)
     };
 
     parse(params, v);
@@ -46,6 +52,28 @@ void MissileTemplate::init(
     {
         THROW_EXCEPT(ParseException,
                      "Failed to find explode effect " + explodeEffectName);
+    }
+
+    if (splitCount_ > 0 && splitMissileName.empty())
+    {
+        THROW_EXCEPT(ParseException,
+                     "splitMissile is not specified");
+    }
+
+    if (!splitMissileName.empty())
+    {
+        splitMissileTemplate_ = missileTemplateLib.search(splitMissileName);
+        if (!splitMissileTemplate_)
+        {
+            THROW_EXCEPT(ParseException,
+                         "Failed to find missile " + splitMissileName);
+        }
+    }
+
+    if (static_cast<int>(splitMissileDirections_.size()) != splitCount_)
+    {
+        THROW_EXCEPT(ParseException,
+                     "Size of splitMissileDirections doesn't match splitCount");
     }
 
     CompositeObjectTemplate::init(GameObjectType::MISSILE, name,

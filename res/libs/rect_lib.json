@@ -24,6 +24,11 @@
         "height": 16.0,
         "hasTexture": true
     },
+    "small_missile": {
+        "width": 12.0,
+        "height": 12.0,
+        "hasTexture": true
+    },
     "goodie": {
         "width": 40.0,
         "height": 40.0,

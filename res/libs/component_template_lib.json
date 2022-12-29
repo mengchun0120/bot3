@@ -35,6 +35,14 @@
         "texture": "green_guided_missile",
         "rect": "guided_missile"
     },
+    "green_small_missile": {
+        "texture": "green_small_missile",
+        "rect": "small_missile"
+    },
+    "green_split_missile": {
+        "texture": "green_split_missile",
+        "rect": "missile"
+    },
     "red_base": {
         "texture": "red_base",
         "rect": "base"

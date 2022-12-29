@@ -63,13 +63,31 @@
         ],
         "explodeEffect": "orange_explosion"
     },
+    "green_small_missile": {
+        "collideBreath": 6.0,
+        "damage": 20.0,
+        "speed": 0.4,
+        "explodeBreath": 15.0,
+        "energyCost": 0.0,
+        "duration": 2000.0,
+        "components": [
+            {
+                "template": "green_small_missile",
+                "pos": [0.0, 0.0],
+                "direction": [1.0, 0.0]
+            }
+        ],
+        "explodeEffect": "green_small_explosion",
+        "guided": false,
+        "searchBreath": 0.0
+    },
     "green_guided_missile": {
         "collideBreath": 8.0,
         "damage": 40.0,
         "speed": 0.7,
         "explodeBreath": 20.0,
         "energyCost": 10.0,
-        "duration": 8000.0,
+        "duration": 10000.0,
         "components": [
             {
                 "template": "green_guided_missile",
@@ -80,5 +98,35 @@
         "explodeEffect": "green_big_explosion",
         "guided": true,
         "searchBreath": 200.0
+    },
+    "green_split_missile": {
+        "collideBreath": 8.0,
+        "damage": 30.0,
+        "speed": 0.7,
+        "explodeBreath": 20.0,
+        "energyCost": 10.0,
+        "duration": 10000.0,
+        "components": [
+            {
+                "template": "green_split_missile",
+                "pos": [0.0, 0.0],
+                "direction": [1.0, 0.0]
+            }
+        ],
+        "explodeEffect": "green_big_explosion",
+        "guided": false,
+        "searchBreath": 0.0,
+        "splitCount": 8,
+        "splitMissile": "green_small_missile",
+        "splitMissileDirections": [
+            [1.0, 0.0],
+            [0.0, 1.0],
+            [-1.0, 0.0],
+            [0.0, -1.0],
+            [0.70710678, 0.70710678],
+            [-0.70710678, 0.70710678],
+            [-0.70710678, -0.70710678],
+            [0.70710678, -0.70710678]
+        ]
     }
 }

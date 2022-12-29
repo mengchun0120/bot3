@@ -63,6 +63,8 @@ private:
 
     commonlib::Region<int> searchRegion(GameMap* map);
 
+    void shootSplitMissile(UpdateContext& cxt);
+
 private:
     Side side_;
     commonlib::Vector2 speed_;
