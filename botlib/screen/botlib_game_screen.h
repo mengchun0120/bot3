@@ -55,8 +55,6 @@ private:
 
     void processFireKey(const commonlib::KeyEvent& e);
 
-    void processForwardKey(const commonlib::KeyEvent& e);
-
     void updatePlayer();
 
     void clearUpdateFlags();

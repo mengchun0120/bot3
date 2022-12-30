@@ -218,7 +218,13 @@ bool GameScreen::processMouseButton(const MouseButtonEvent& e)
         return true;
     }
 
-    if (e.button_ == GLFW_MOUSE_BUTTON_LEFT)
+    if (e.button_ == GLFW_MOUSE_BUTTON_LEFT && e.action_ == GLFW_PRESS)
+    {
+        Vector2 p{e.x_, e.y_};
+        p += map_.viewportAnchor();
+        map_.player()->setDest(p);
+    }
+    else if (e.button_ == GLFW_MOUSE_BUTTON_RIGHT)
     {
         map_.player()->setShootingEnabled(e.action_ == GLFW_PRESS);
     }
@@ -229,6 +235,11 @@ bool GameScreen::processMouseButton(const MouseButtonEvent& e)
 bool GameScreen::processMouseMove(const MouseMoveEvent& e)
 {
     if (!isPlayerAvailable())
+    {
+        return true;
+    }
+
+    if (map_.player()->movingEnabled())
     {
         return true;
     }
@@ -249,6 +260,11 @@ bool GameScreen::processMouseMove(const MouseMoveEvent& e)
 
 bool GameScreen::processKey(const KeyEvent& e)
 {
+    if (!isPlayerAvailable())
+    {
+        return true;
+    }
+
     switch(e.key_)
     {
         case GLFW_KEY_A:
@@ -256,10 +272,12 @@ bool GameScreen::processKey(const KeyEvent& e)
             processFireKey(e);
             break;
         }
-        case GLFW_KEY_F:
+        case GLFW_KEY_S:
         {
-            processForwardKey(e);
-            break;
+            if (e.action_ == GLFW_PRESS)
+            {
+                map_.player()->setMovingEnabled(false);
+            }
         }
         default:
             break;
@@ -276,17 +294,6 @@ void GameScreen::processFireKey(const KeyEvent& e)
     }
 
     map_.player()->setShootingEnabled(e.action_ == GLFW_PRESS);
-}
-
-void GameScreen::processForwardKey(const KeyEvent& e)
-{
-    if (!isPlayerAvailable() || e.action_ != GLFW_RELEASE)
-    {
-        return;
-    }
-
-    bool enabled = !map_.player()->movingEnabled();
-    map_.player()->setMovingEnabled(enabled);
 }
 
 void GameScreen::updatePlayer()

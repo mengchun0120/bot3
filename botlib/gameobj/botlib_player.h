@@ -35,8 +35,12 @@ public:
     void toJson(rapidjson::Value& v,
                 rapidjson::Document::AllocatorType& allocator) override;
 
+    void setDest(const commonlib::Vector2& dest);
+
 protected:
     void initGoodies();
+
+    void updatePos(UpdateContext& cxt) override;
 
     void updateGoodies(float timeDelta);
 
@@ -52,6 +56,8 @@ protected:
     float goodieY_;
     float goodieStartX_;
     float goodieSpacing_;
+    commonlib::Vector2 dest_;
+    float timeToDest_;
 };
 
 const PlayerTemplate* Player::getTemplate() const

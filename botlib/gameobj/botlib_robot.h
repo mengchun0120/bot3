@@ -95,7 +95,7 @@ protected:
 
     void resetFirePointsAndDirections();
 
-    void updatePos(UpdateContext& cxt);
+    virtual void updatePos(UpdateContext& cxt);
 
     void updateShooting(UpdateContext& cxt);
 
