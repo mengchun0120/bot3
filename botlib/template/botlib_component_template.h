@@ -3,6 +3,7 @@
 
 #include <commonlib_named_object.h>
 #include <botlib_typedef.h>
+#include <botlib_component_type.h>
 
 namespace mcdane {
 namespace botlib {
@@ -11,17 +12,13 @@ class ComponentTemplate {
 public:
     ComponentTemplate() = default;
 
-    ComponentTemplate(const commonlib::Texture* texture1,
-                      const Rectangle* rect1);
-
     ~ComponentTemplate() = default;
-
-    void init(const commonlib::Texture* texture1,
-              const Rectangle* rect1);
 
     void init(const rapidjson::Value& v,
               const TextureLib& textureLib,
               const RectLib& rectLib);
+
+    inline ComponentType type() const;
 
     inline const commonlib::Texture* texture() const;
 
@@ -29,14 +26,23 @@ public:
 
     inline float span() const;
 
+    inline const commonlib::Vector2& firePos() const;
+
 private:
     void resetSpan();
 
 private:
+    ComponentType type_;
     const commonlib::Texture* texture_;
     const Rectangle* rect_;
     float span_;
+    commonlib::Vector2 firePos_;
 };
+
+ComponentType ComponentTemplate::type() const
+{
+    return type_;
+}
 
 const commonlib::Texture* ComponentTemplate::texture() const
 {
@@ -51,6 +57,11 @@ const Rectangle* ComponentTemplate::rect() const
 float ComponentTemplate::span() const
 {
     return span_;
+}
+
+const commonlib::Vector2& ComponentTemplate::firePos() const
+{
+    return firePos_;
 }
 
 } // end of namespace botlib

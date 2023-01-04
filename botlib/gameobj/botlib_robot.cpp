@@ -39,7 +39,6 @@ void Robot::init(const RobotTemplate* t,
     CompositeObject::init(t, pos1, direction1);
     side_ = side;
     hp_ = t->hp();
-    initFirePointsAndDirections();
     speedNorm_ = t->speed();
     energy_ = t->energy();
     armor_ = t->armor();
@@ -104,14 +103,12 @@ void Robot::update(UpdateContext& cxt)
 void Robot::shiftPos(const Vector2& delta)
 {
     CompositeObject::shiftPos(delta);
-    resetFirePointsAndDirections();
     hpIndicator_.shiftPos(delta);
 }
 
 void Robot::setDirection(const Vector2& direction1)
 {
     CompositeObject::setDirection(direction1);
-    resetFirePointsAndDirections();
     resetSpeed();
 }
 
@@ -236,41 +233,6 @@ void Robot::removeMonitor(GameObject* obj)
     }
 }
 
-void Robot::initFirePointsAndDirections()
-{
-    const RobotTemplate* t = getTemplate();
-
-    firePoints_.resize(t->numFirePoints());
-    fireDirections_.resize(t->numFirePoints());
-    resetFirePointsAndDirections();
-}
-
-void Robot::shiftFirePoints(const Vector2& delta)
-{
-    for (std::size_t i = 0; i < firePoints_.size(); ++i)
-    {
-        firePoints_[i] += delta;
-    }
-}
-
-void Robot::resetFirePointsAndDirections()
-{
-    const RobotTemplate* t = getTemplate();
-
-    for (std::size_t i = 0; i < firePoints_.size(); ++i)
-    {
-        Vector2 p = t->firePoint(i);
-
-        rotate(p[0], p[1], direction_[0], direction_[1]);
-        firePoints_[i] = pos_ + p;
-
-        Vector2 d = t->fireDirection(i);
-
-        rotate(d[0], d[1], direction_[0], direction_[1]);
-        fireDirections_[i] = d;
-    }
-}
-
 void Robot::updatePos(UpdateContext& cxt)
 {
     GameMap& map = *(cxt.map());
@@ -306,10 +268,15 @@ void Robot::shoot(UpdateContext& cxt)
     GameMap& map = *(cxt.map());
     const MissileTemplate* t = getTemplate()->missileTemplate();
 
-    for (unsigned int i = 0; i < firePoints_.size() && energy_ >= t->energyCost(); ++i)
+    for (auto it = components_.begin(); it != components_.end(); ++it)
     {
+        if (it->getTemplate()->type() != ComponentType::GUN)
+        {
+            continue;
+        }
+
         Missile* missile = new Missile();
-        missile->init(t, side_, firePoints_[i], fireDirections_[i], damageFactor_);
+        missile->init(t, side_, it->firePos(), it->direction(), damageFactor_);
         energy_ -= t->energyCost();
 
         map.addObj(missile);

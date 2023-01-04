@@ -4,6 +4,7 @@
 #include <commonlib_vector.h>
 #include <commonlib_object.h>
 #include <botlib_typedef.h>
+#include <botlib_component_type.h>
 
 namespace mcdane {
 namespace botlib {
@@ -15,10 +16,6 @@ public:
     Component();
 
     Component(const Component& other);
-
-    void init(const ComponentTemplate* t,
-              const commonlib::Vector2& pos1,
-              const commonlib::Vector2& direction1);
 
     void init(const rapidjson::Value& v,
               const ComponentTemplateLib& componentTemplateLib);
@@ -37,11 +34,13 @@ public:
 
     inline const commonlib::Vector2& direction() const;
 
+    inline const commonlib::Vector2& firePos() const;
+
     Component& operator=(const Component& other);
 
     void setTemplate(const ComponentTemplate* t);
 
-    void setPos(const commonlib::Vector2& pos1);
+    void setPos(const commonlib::Vector2& p);
 
     void shiftPos(const commonlib::Vector2& delta);
 
@@ -50,9 +49,13 @@ public:
     void present() const;
 
 private:
+    void resetFirePos();
+
+private:
     const ComponentTemplate* t_;
     commonlib::Vector2 pos_;
     commonlib::Vector2 direction_;
+    commonlib::Vector2 firePos_;
 };
 
 const ComponentTemplate* Component::getTemplate() const
@@ -88,6 +91,11 @@ float Component::directionY() const
 const commonlib::Vector2& Component::direction() const
 {
     return direction_;
+}
+
+const commonlib::Vector2& Component::firePos() const
+{
+    return firePos_;
 }
 
 } // end of namespace botlib

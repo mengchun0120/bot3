@@ -1,101 +1,130 @@
 {
     "steel_tile": {
+        "type": "tile",
         "texture": "steel_tile",
         "rect": "tile"
     },
     "ice_tile": {
+        "type": "tile",
         "texture": "ice_tile",
         "rect": "tile"
     },
     "clay_tile": {
+        "type": "tile",
         "texture": "clay_tile",
         "rect": "tile"
     },
     "fireland_tile": {
+        "type": "tile",
         "texture": "fireland_tile",
         "rect": "tile"
     },
     "bush_tile": {
+        "type": "tile",
         "texture": "bush_tile",
         "rect": "tile"
     },
     "green_base": {
+        "type": "base",
         "texture": "green_base",
         "rect": "base"
     },
     "green_gun": {
+        "type": "gun",
         "texture": "green_gun",
-        "rect": "gun"
+        "rect": "gun",
+        "firePos": [10.0, 0.0]
     },
     "green_missile": {
+        "type": "missile",
         "texture": "green_missile",
         "rect": "missile"
     },
     "green_guided_missile": {
+        "type": "missile",
         "texture": "green_guided_missile",
         "rect": "guided_missile"
     },
     "green_small_missile": {
+        "type": "missile",
         "texture": "green_small_missile",
         "rect": "small_missile"
     },
     "green_split_missile": {
+        "type": "missile",
         "texture": "green_split_missile",
         "rect": "missile"
     },
     "red_base": {
+        "type": "base",
         "texture": "red_base",
         "rect": "base"
     },
     "red_gun": {
+        "type": "gun",
         "texture": "red_gun",
-        "rect": "gun"
+        "rect": "gun",
+        "firePos": [10.0, 0.0]
     },
     "red_missile": {
+        "type": "missile",
         "texture": "red_missile",
         "rect": "missile"
     },
     "blue_base": {
+        "type": "base",
         "texture": "blue_base",
         "rect": "base"
     },
     "blue_gun": {
+        "type": "gun",
         "texture": "blue_gun",
-        "rect": "gun"
+        "rect": "gun",
+        "firePos": [10.0, 0.0]
     },
     "blue_missile": {
+        "type": "missile",
         "texture": "blue_missile",
         "rect": "missile"
     },
     "orange_base": {
+        "type": "base",
         "texture": "orange_base",
         "rect": "base"
     },
     "orange_gun": {
+        "type": "gun",
         "texture": "orange_gun",
-        "rect": "gun"
+        "rect": "gun",
+        "firePos": [10.0, 0.0]
     },
     "orange_missile": {
+        "type": "missile",
         "texture": "orange_missile",
         "rect": "missile"
     },
     "health_filler": {
+        "type": "goodie",
         "texture": "health_filler",
         "rect": "goodie"
     },
     "god_mode": {
+        "type": "goodie",
         "texture": "god_mode",
         "rect": "goodie"
     },
     "damage_amplifier": {
+        "type": "goodie",
         "texture": "damage_amplifier",
         "rect": "goodie"
     },
     "speed_accelerator": {
+        "type": "goodie",
         "texture": "speed_accelerator",
         "rect": "goodie"
     },
     "attack_accelerator": {
+        "type": "goodie",
         "texture": "attack_accelerator",
         "rect": "goodie"
     }

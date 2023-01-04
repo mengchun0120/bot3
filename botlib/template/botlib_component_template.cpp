@@ -12,55 +12,35 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-ComponentTemplate::ComponentTemplate(const Texture* texture1,
-                                     const Rectangle* rect1)
-{
-    init(texture1, rect1);
-}
-
-void ComponentTemplate::init(const Texture* texture1,
-                             const Rectangle* rect1)
-{
-    if (!texture1)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "texture is null");
-    }
-
-    if (!rect1)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "rect is null");
-    }
-
-    texture_ = texture1;
-    rect_ = rect1;
-    resetSpan();
-}
-
 void ComponentTemplate::init(const rapidjson::Value& v,
                              const TextureLib& textureLib,
                              const RectLib& rectLib)
 {
-    std::string textureName, rectName;
+    std::string typeStr, textureName, rectName;
     std::vector<JsonParamPtr> params{
+        jsonParam(typeStr, "type", true, k_nonEmptyStrV),
         jsonParam(textureName, "texture", true, k_nonEmptyStrV),
-        jsonParam(rectName, "rect", true, k_nonEmptyStrV)
+        jsonParam(rectName, "rect", true, k_nonEmptyStrV),
+        jsonParam(firePos_, "firePos", false)
     };
 
     parse(params, v);
 
-    const Texture* texture1 = textureLib.search(textureName);
-    if (!texture1)
+    type_ = toComponentType(typeStr);
+
+    texture_ = textureLib.search(textureName);
+    if (!texture_)
     {
         THROW_EXCEPT(ParseException, "Failed to find texture " + textureName);
     }
 
-    const Rectangle* rect1 = rectLib.search(rectName);
-    if (!rect1)
+    rect_ = rectLib.search(rectName);
+    if (!rect_)
     {
         THROW_EXCEPT(ParseException, "Failed to find rectangle " + rectName);
     }
 
-    init(texture1, rect1);
+    resetSpan();
 }
 
 void ComponentTemplate::resetSpan()

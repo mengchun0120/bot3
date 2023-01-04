@@ -25,10 +25,6 @@ void RobotTemplate::init(const std::string& name,
         jsonParam(rechargeRate_, "rechargeRate", true, ge(0.0f)),
         jsonParam(missileName, "missile", true, k_nonEmptyStrV),
         jsonParam(fireIntervalMS_, "fireIntervalMS", true, gt(0.0f)),
-        jsonParam(firePoints_, "firePoints", true,
-                  nonempty<std::vector<commonlib::Vector2>>()),
-        jsonParam(fireDirections_, "fireDirections", true,
-                  nonempty<std::vector<commonlib::Vector2>>()),
         jsonParam(dyingDuration_, "dyingDuration", true, gt(0.0f))
     };
 

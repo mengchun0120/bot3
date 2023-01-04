@@ -89,12 +89,6 @@ public:
     void removeMonitor(GameObject* obj);
 
 protected:
-    void initFirePointsAndDirections();
-
-    void shiftFirePoints(const commonlib::Vector2& delta);
-
-    void resetFirePointsAndDirections();
-
     virtual void updatePos(UpdateContext& cxt);
 
     void updateShooting(UpdateContext& cxt);
@@ -113,8 +107,6 @@ protected:
     Side side_;
     float hp_;
     float energy_;
-    std::vector<commonlib::Vector2> firePoints_;
-    std::vector<commonlib::Vector2> fireDirections_;
     bool movingEnabled_;
     commonlib::Vector2 speed_;
     HPIndicator hpIndicator_;

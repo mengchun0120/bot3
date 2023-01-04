@@ -23,40 +23,28 @@ Component::Component(const Component& other)
 {
 }
 
-void Component::init(const ComponentTemplate* t,
-                     const commonlib::Vector2& pos1,
-                     const commonlib::Vector2& direction1)
-{
-    if (!t)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "ComponentTemplate is null");
-    }
-
-    t_ = t;
-    pos_ = pos1;
-    direction_ = direction1;
-}
-
 void Component::init(const rapidjson::Value& v,
                      const ComponentTemplateLib& componentTemplateLib)
 {
     std::string templateName;
-    commonlib::Vector2 pos1, direction1;
     std::vector<JsonParamPtr> params{
         jsonParam(templateName, "template", true, k_nonEmptyStrV),
-        jsonParam(pos1, "pos"),
-        jsonParam(direction1, "direction")
+        jsonParam(pos_, "pos"),
+        jsonParam(direction_, "direction")
     };
 
     parse(params, v);
 
-    const ComponentTemplate* t = componentTemplateLib.search(templateName);
-    if (!t)
+    t_ = componentTemplateLib.search(templateName);
+    if (!t_)
     {
         THROW_EXCEPT(ParseException, "Failed to find template " + templateName);
     }
 
-    init(t, pos1, direction1);
+    if (t_->type() == ComponentType::GUN)
+    {
+        resetFirePos();
+    }
 }
 
 Component& Component::operator=(const Component& other)
@@ -77,19 +65,21 @@ void Component::setTemplate(const ComponentTemplate* t)
     t_ = t;
 }
 
-void Component::setPos(const commonlib::Vector2& pos1)
+void Component::setPos(const commonlib::Vector2& p)
 {
-    pos_ = pos1;
+    shiftPos(p - pos_);
 }
 
 void Component::shiftPos(const commonlib::Vector2& delta)
 {
     pos_ += delta;
+    firePos_ += delta;
 }
 
 void Component::setDirection(const commonlib::Vector2& direction1)
 {
     direction_ = direction1;
+    resetFirePos();
 }
 
 void Component::present() const
@@ -98,6 +88,14 @@ void Component::present() const
 
     t_->rect()->draw(program, &pos_, &direction_, nullptr, nullptr,
                      t_->texture()->id(), nullptr);
+}
+
+void Component::resetFirePos()
+{
+    Vector2 p = t_->firePos();
+
+    rotate(p[0], p[1], direction_[0], direction_[1]);
+    firePos_ = pos_ + p;
 }
 
 } // end of namespace botlib

@@ -19,13 +19,17 @@
             "template": "green_gun",
             "pos": [38.28427, 0.0],
             "direction": [1.0, 0.0]
+        },
+        {
+            "template": "green_gun",
+            "pos": [33.15515, 19.142135],
+            "direction": [0.8660254, 0.5]
+        },
+        {
+            "template": "green_gun",
+            "pos": [33.15515, -19.142135],
+            "direction": [0.8660254, -0.5]
         }
-    ],
-    "firePoints": [
-        [48.28427, 0.0]
-    ],
-    "fireDirections": [
-        [1.0, 0.0]
     ],
     "dyingDuration": 1000.0
 }
