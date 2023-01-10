@@ -13,6 +13,7 @@ set(BOTLIB_DIR
     ${CMAKE_SOURCE_DIR}/botlib/opengl
     ${CMAKE_SOURCE_DIR}/botlib/screen
     ${CMAKE_SOURCE_DIR}/botlib/shape
+    ${CMAKE_SOURCE_DIR}/botlib/skill
     ${CMAKE_SOURCE_DIR}/botlib/template
     ${CMAKE_SOURCE_DIR}/botlib/widget)
 

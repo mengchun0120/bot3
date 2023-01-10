@@ -67,6 +67,8 @@ public:
 
     void addHP(float delta);
 
+    void addEnergy(float delta);
+
     void doDamage(float damage, UpdateContext& cxt);
 
     void setShootingEnabled(bool b);

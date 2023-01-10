@@ -85,6 +85,15 @@ set(BOTLIB_SHAPE_SRC
     shape/botlib_tex_pos_array.cpp
     shape/botlib_tex_rectangle.cpp)
 
+set(BOTLIB_SKILL_SRC
+    skill/botlib_shoot_missile_skill.cpp
+    skill/botlib_shoot_missile_skill_template.cpp
+    skill/botlib_skill.cpp
+    skill/botlib_skill_flag.cpp
+    skill/botlib_skill_template.cpp
+    skill/botlib_skill_template_factory.cpp
+    skill/botlib_skill_type.cpp)
+
 set(BOTLIB_TEMPLATE_SRC
     template/botlib_ai_robot_template.cpp
     template/botlib_component_template.cpp
@@ -122,6 +131,7 @@ set(BOTLIB_SRC
     ${BOTLIB_OPENGL_SRC}
     ${BOTLIB_SCREEN_SRC}
     ${BOTLIB_SHAPE_SRC}
+    ${BOTLIB_SKILL_SRC}
     ${BOTLIB_TEMPLATE_SRC}
     ${BOTLIB_WIDGET_SRC})
 

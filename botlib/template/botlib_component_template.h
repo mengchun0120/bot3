@@ -1,7 +1,7 @@
 #ifndef INCLUDED_BOTLIB_COMPONENT_TEMPLATE_H
 #define INCLUDED_BOTLIB_COMPONENT_TEMPLATE_H
 
-#include <commonlib_named_object.h>
+#include <commonlib_vector.h>
 #include <botlib_typedef.h>
 #include <botlib_component_type.h>
 

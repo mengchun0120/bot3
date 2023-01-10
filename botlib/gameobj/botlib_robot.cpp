@@ -128,6 +128,11 @@ void Robot::addHP(float delta)
     hpIndicator_.reset(pos(), hpRatio());
 }
 
+void Robot::addEnergy(float delta)
+{
+    energy_ = clamp(energy_+delta, 0.0f, getTemplate()->energy());
+}
+
 void Robot::doDamage(float damage, UpdateContext& cxt)
 {
     if (state_ != GameObjectState::ALIVE || damage <= 0.0f || invincible())

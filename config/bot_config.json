@@ -44,6 +44,7 @@
         "tileTemplateLibFile": "tile_template_lib.json",
         "goodieTemplateLibFile": "goodie_template_lib.json",
         "missileTemplateLibFile": "missile_template_lib.json",
+        "skillTemplateLibFile": "skill_template_lib.json",
         "aiRobotTemplateLibFile": "ai_robot_template_lib.json",
         "particleEffectTemplateLibFile": "particle_effect_template_lib.json",
         "particleEffectDataDir": "particle_effect_data",

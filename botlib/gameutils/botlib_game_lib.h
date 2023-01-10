@@ -9,6 +9,7 @@
 #include <botlib_tile_template.h>
 #include <botlib_goodie_template.h>
 #include <botlib_missile_template.h>
+#include <botlib_skill_template.h>
 #include <botlib_ai_robot_template.h>
 #include <botlib_particle_effect_template.h>
 #include <botlib_progress_pie_template.h>
@@ -60,6 +61,8 @@ public:
 
     inline const MissileTemplate* findMissileTemplate(
                                             const std::string& name) const;
+
+    inline const SkillTemplateLib& skillTemplateLib() const;
 
     inline const AIRobotTemplateLib& aiRobotTemplateLib() const;
 
@@ -120,6 +123,8 @@ private:
 
     void initMissileTemplateLib(const std::string& missileTemplateLibFile);
 
+    void initSkillTemplateLib(const std::string& skillTemplateLibFile);
+
     void initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile);
 
     void initIconTemplateLib(const std::string& iconTemplateLibFile);
@@ -137,6 +142,7 @@ private:
     ComponentTemplateLib componentTemplateLib_;
     TileTemplateLib tileTemplateLib_;
     MissileTemplateLib missileTemplateLib_;
+    SkillTemplateLib skillTemplateLib_;
     AIRobotTemplateLib aiRobotTemplateLib_;
     ParticleEffectTemplateLib particleEffectTemplateLib_;
     ProgressPieTemplateLib progressPieTemplateLib_;
@@ -214,6 +220,11 @@ const GoodieTemplate* GameLib::findGoodieTemplate(const std::string& name) const
 const MissileTemplateLib& GameLib::missileTemplateLib() const
 {
     return missileTemplateLib_;
+}
+
+const SkillTemplateLib& GameLib::skillTemplateLib() const
+{
+    return skillTemplateLib_;
 }
 
 const MissileTemplate* GameLib::findMissileTemplate(

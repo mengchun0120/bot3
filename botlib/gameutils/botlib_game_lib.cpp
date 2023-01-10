@@ -3,6 +3,7 @@
 #include <commonlib_file_utils.h>
 #include <botlib_app_config.h>
 #include <botlib_constants.h>
+#include <botlib_skill_template_factory.h>
 #include <botlib_game_lib.h>
 
 using namespace mcdane::commonlib;
@@ -60,6 +61,7 @@ void GameLib::load(const AppConfig& cfg)
     initProgressBarTemplateLib(cfg.progressBarTemplateLibFile());
     initGoodieTemplateLib(cfg.goodieTemplateLibFile());
     initMissileTemplateLib(cfg.missileTemplateLibFile());
+    initSkillTemplateLib(cfg.skillTemplateLibFile());
     initAIRobotTemplateLib(cfg.aiRobotTemplateLibFile());
     initIconTemplateLib(cfg.iconTemplateLibFile());
     playerTemplate_.init(cfg.playerTemplateFile(),
@@ -221,6 +223,19 @@ void GameLib::initMissileTemplateLib(const std::string& missileTemplateLibFile)
     missileTemplateLib_.init(missileTemplateLibFile, parser);
 
     LOG_DEBUG << "missileTemplateLib loaded successfully" << LOG_END;
+}
+
+void GameLib::initSkillTemplateLib(const std::string& skillTemplateLibFile)
+{
+    auto parser = [&](std::unique_ptr<SkillTemplate>& ptr,
+                      const std::string& name,
+                      const rapidjson::Value& v)
+    {
+        SkillTemplate* t = SkillTemplateFactory::create(v);
+        ptr.reset(t);
+    };
+
+    skillTemplateLib_.init(skillTemplateLibFile, parser);
 }
 
 void GameLib::initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile)
