@@ -237,6 +237,8 @@ void GameLib::initSkillTemplateLib(const std::string& skillTemplateLibFile)
     };
 
     skillTemplateLib_.init(skillTemplateLibFile, parser);
+
+    LOG_DEBUG << "skillTemplateLib loaded successfully" << LOG_END;
 }
 
 void GameLib::initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile)

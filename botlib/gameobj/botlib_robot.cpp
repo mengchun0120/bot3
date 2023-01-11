@@ -6,6 +6,7 @@
 #include <botlib_game_map.h>
 #include <botlib_passthrough_collide_checker.h>
 #include <botlib_missile.h>
+#include <botlib_skill_factory.h>
 #include <botlib_robot.h>
 #include <botlib_goodie.h>
 
@@ -55,6 +56,7 @@ void Robot::init(const RobotTemplate* t,
     {
         monitors_.setDeleter(itemDeleter);
     }
+    initSkills();
 }
 
 void Robot::present() const
@@ -235,6 +237,18 @@ void Robot::removeMonitor(GameObject* obj)
     if (i)
     {
         monitors_.remove(i);
+    }
+}
+
+void Robot::initSkills()
+{
+    auto& skillTemplates = getTemplate()->skills();
+
+    skills_.resize(skillTemplates.size());
+    for (std::size_t i = 0; i < skills_.size(); ++i)
+    {
+        Skill* s = SkillFactory::create(skillTemplates[i], this);
+        skills_[i].reset(s);
     }
 }
 

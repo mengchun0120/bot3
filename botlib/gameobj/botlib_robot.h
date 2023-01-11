@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_ROBOT_H
 #define INCLUDED_BOTLIB_ROBOT_H
 
+#include <vector>
 #include <memory>
 #include <commonlib_time_utils.h>
 #include <commonlib_linked_item.h>
@@ -16,6 +17,9 @@ namespace mcdane {
 namespace botlib {
 
 class Robot: public CompositeObject {
+public:
+    using SkillList = std::vector<std::unique_ptr<Skill>>;
+
 public:
     Robot();
 
@@ -57,6 +61,10 @@ public:
 
     inline bool shootingEnabled() const;
 
+    inline const SkillList& skills() const;
+
+    inline SkillList& skills();
+
     void present() const override;
 
     void update(UpdateContext& cxt) override;
@@ -93,6 +101,8 @@ public:
     void removeMonitor(GameObject* obj);
 
 protected:
+    void initSkills();
+
     virtual void updatePos(UpdateContext& cxt);
 
     void updateShooting(UpdateContext& cxt);
@@ -123,6 +133,7 @@ protected:
     float damageFactor_;
     float armorReduceRatio_;
     GameObjItemList monitors_;
+    SkillList skills_;
 };
 
 const RobotTemplate* Robot::getTemplate() const
@@ -199,6 +210,16 @@ float Robot::fireIntervalMS() const
 bool Robot::shootingEnabled() const
 {
     return shootingEnabled_;
+}
+
+const Robot::SkillList& Robot::skills() const
+{
+    return skills_;
+}
+
+Robot::SkillList& Robot::skills()
+{
+    return skills_;
 }
 
 } // end of namespace botlib

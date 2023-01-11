@@ -1,9 +1,11 @@
 #include <utility>
+#include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>
 #include <commonlib_named_map.h>
 #include <botlib_missile_template.h>
+#include <botlib_skill_factory.h>
 #include <botlib_robot_template.h>
 
 using namespace mcdane::commonlib;

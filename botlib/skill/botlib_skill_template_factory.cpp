@@ -25,7 +25,7 @@ SkillTemplate* SkillTemplateFactory::create(const rapidjson::Value& v)
         {
             ShootMissileSkillTemplate *t = new ShootMissileSkillTemplate();
             t->init(v);
-            break;
+            return t;
         }
         default:
         {

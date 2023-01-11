@@ -18,8 +18,6 @@ public:
               Robot* robot,
               bool enabled1);
 
-    inline const SkillTemplate* getTemplate() const;
-
     inline bool enaled() const;
 
     void setEnabled(bool enabled1);
