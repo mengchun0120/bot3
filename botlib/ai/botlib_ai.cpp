@@ -8,41 +8,9 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-namespace {
-
-ChaseShootAI* createChaseShootAI(const std::string& name)
+void AI::init(AIRobot* robot)
 {
-    const AILib& lib = Context::gameLib().aiLib();
-    const ChaseShootAIParam* param = lib.findChaseShootAIParam(name);
-    if (!param)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Failed to find ChaseShootAIParam " + name);
-    }
-
-    ChaseShootAI* ai = new ChaseShootAI();
-    ai->init(param);
-    return ai;
-}
-
-} // end of unnamed namespace
-
-AI* AI::create(const std::string& algorithm,
-               const std::string& name)
-{
-    AI* ai = nullptr;
-
-    if (algorithm == "chase_shoot")
-    {
-        ai = createChaseShootAI(name);
-    }
-    else
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Unsupported AI algorithm " + algorithm);
-    }
-
-    return ai;
+    robot_ = robot;
 }
 
 } // end of namespace botlib

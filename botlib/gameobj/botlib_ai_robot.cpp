@@ -1,5 +1,6 @@
 #include <commonlib_log.h>
 #include <botlib_ai.h>
+#include <botlib_ai_factory.h>
 #include <botlib_update_context.h>
 #include <botlib_ai_robot.h>
 
@@ -24,14 +25,14 @@ void AIRobot::init(const AIRobotTemplate* t,
                    GameObjItemDeleter itemDeleter)
 {
     Robot::init(t, Side::AI, pos1, direction1, itemDeleter);
-    ai_ = AI::create(t->aiAlgorithm(), t->aiName());
+    ai_ = AIFactory::create(this, t->aiAlgorithm(), t->aiName());
 }
 
 void AIRobot::update(UpdateContext& cxt)
 {
     if (ai_ && state() == GameObjectState::ALIVE)
     {
-        ai_->apply(*this, *(cxt.map()), cxt.timeDelta());
+        ai_->apply(*(cxt.map()), cxt.timeDelta());
     }
 
     Robot::update(cxt);

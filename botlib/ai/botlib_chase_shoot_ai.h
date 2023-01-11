@@ -15,45 +15,38 @@ class ChaseShootAI: public AI {
 public:
     ChaseShootAI();
 
-    void init(const ChaseShootAIParam* params);
+    void init(AIRobot* robot,
+              const ChaseShootAIParam* params);
 
-    void apply(AIRobot& robot,
-               GameMap& map,
+    void apply(GameMap& map,
                float timeDelta) override;
 
 private:
-    void tryChangeAction(AIRobot& robot,
-                         const Player* player);
+    void checkSkill();
 
-    void resetAction(AIRobot& robot,
-                     RobotAction action);
+    void tryChangeAction(const Player* player);
 
-    void resetDirection(AIRobot& robot,
-                        const commonlib::Vector2& direction);
+    void resetAction(RobotAction action);
 
-    void applyAction(AIRobot& robot,
-                     GameMap& map,
+    void resetDirection(const commonlib::Vector2& direction);
+
+    void applyAction(GameMap& map,
                      float timeDelta);
 
-    void applyChaseAction(AIRobot& robot,
-                          GameMap& map,
+    void applyChaseAction(GameMap& map,
                           float timeDelta);
 
-    void applyShootAction(AIRobot& robot,
-                          GameMap& map,
+    void applyShootAction(GameMap& map,
                           float timeDelta);
 
-    bool findChaseDirection(AIRobot& robot,
-                            GameMap& map,
+    bool findChaseDirection(GameMap& map,
                             float timeDelta);
 
     bool tryFirstDirection(commonlib::Vector2& direction,
-                           AIRobot& robot,
                            GameMap& map,
                            float timeDelta);
 
-    int findNewDirection(AIRobot& robot,
-                         GameMap& map,
+    int findNewDirection(GameMap& map,
                          float timeDelta,
                          const commonlib::Vector2& refDirection);
 

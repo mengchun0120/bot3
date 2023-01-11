@@ -240,6 +240,32 @@ void Robot::removeMonitor(GameObject* obj)
     }
 }
 
+Skill* Robot::searchSkill(SkillType skillType)
+{
+    for (auto it = skills_.begin(); it != skills_.end(); ++it)
+    {
+        Skill* skill = it->get();
+        if (skill->getTemplate()->type() == skillType)
+        {
+            return skill;
+        }
+    }
+
+    return nullptr;
+}
+
+bool Robot::setSkillEnabled(SkillType skillType, bool enabled)
+{
+    Skill* skill = searchSkill(skillType);
+    if (skill)
+    {
+        skill->setEnabled(enabled);
+        return true;
+    }
+
+    return false;
+}
+
 void Robot::initSkills()
 {
     auto& skillTemplates = getTemplate()->skills();

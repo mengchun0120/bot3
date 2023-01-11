@@ -9,16 +9,17 @@ class GameMap;
 
 class AI {
 public:
-    static AI* create(const std::string& algorithm,
-                      const std::string& name);
-
     AI() = default;
 
     virtual ~AI() = default;
 
-    virtual void apply(AIRobot& robot,
-                       GameMap& map,
+    void init(AIRobot* robot);
+
+    virtual void apply(GameMap& map,
                        float timeDelta) = 0;
+
+protected:
+    AIRobot* robot_;
 };
 
 } // end of namespace botlib

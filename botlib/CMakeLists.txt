@@ -4,6 +4,7 @@ set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 
 set(BOTLIB_AI_SRC
     ai/botlib_ai.cpp
+    ai/botlib_ai_factory.cpp
     ai/botlib_ai_lib.cpp
     ai/botlib_chase_shoot_ai.cpp
     ai/botlib_chase_shoot_ai_param.cpp

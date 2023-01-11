@@ -61,10 +61,6 @@ public:
 
     inline bool shootingEnabled() const;
 
-    inline const SkillList& skills() const;
-
-    inline SkillList& skills();
-
     void present() const override;
 
     void update(UpdateContext& cxt) override;
@@ -99,6 +95,10 @@ public:
                     GameObjItemPool& pool);
 
     void removeMonitor(GameObject* obj);
+
+    Skill* searchSkill(SkillType skillType);
+
+    bool setSkillEnabled(SkillType skillType, bool enabled);
 
 protected:
     void initSkills();
@@ -210,16 +210,6 @@ float Robot::fireIntervalMS() const
 bool Robot::shootingEnabled() const
 {
     return shootingEnabled_;
-}
-
-const Robot::SkillList& Robot::skills() const
-{
-    return skills_;
-}
-
-Robot::SkillList& Robot::skills()
-{
-    return skills_;
 }
 
 } // end of namespace botlib

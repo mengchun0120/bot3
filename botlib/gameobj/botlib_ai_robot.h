@@ -2,7 +2,6 @@
 #define INCLUDED_BOTLIB_AI_ROBOT_H
 
 #include <botlib_ai_robot_template.h>
-#include <botlib_robot_action.h>
 #include <botlib_robot.h>
 
 namespace mcdane {
@@ -22,8 +21,6 @@ public:
               GameObjItemDeleter itemDeleter=nullptr);
 
     inline const AIRobotTemplate* getTemplate() const;
-
-    void setAction(RobotAction a);
 
     void update(UpdateContext& cxt) override;
 

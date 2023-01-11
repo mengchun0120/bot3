@@ -18,36 +18,46 @@ ChaseShootAI::ChaseShootAI()
 {
 }
 
-void ChaseShootAI::init(const ChaseShootAIParam* params)
+void ChaseShootAI::init(AIRobot* robot,
+                        const ChaseShootAIParam* params)
 {
+    AI::init(robot);
+    checkSkill();
     params_ = params;
     generator_.seed(time(nullptr));
     action_ = RobotAction::NONE;
     timeSinceLastDirectionChange_ = 0.0f;
 }
 
-void ChaseShootAI::apply(AIRobot& robot,
-                         GameMap& map,
+void ChaseShootAI::apply(GameMap& map,
                          float timeDelta)
 {
     timeSinceLastActionChange_ += timeDelta;
     timeSinceLastDirectionChange_ += timeDelta;
 
-    if (!map.canSee(&robot))
+    if (!map.canSee(robot_))
     {
-        resetAction(robot, RobotAction::NONE);
+        resetAction(RobotAction::NONE);
         return;
     }
 
-    tryChangeAction(robot, map.player());
-    applyAction(robot, map, timeDelta);
+    tryChangeAction(map.player());
+    applyAction(map, timeDelta);
 }
 
-void ChaseShootAI::tryChangeAction(AIRobot& robot,
-                                   const Player* player)
+void ChaseShootAI::checkSkill()
+{
+    if (robot_->searchSkill(SkillType::SHOOT_MISSILE) == nullptr)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Robot doesn't have SHOOT_MISSILE skill");
+    }
+}
+
+void ChaseShootAI::tryChangeAction(const Player* player)
 {
     bool rollDice = false;
-    float d = dist(robot.pos(), player->pos());
+    float d = dist(robot_->pos(), player->pos());
 
     switch (action_)
     {
@@ -55,7 +65,7 @@ void ChaseShootAI::tryChangeAction(AIRobot& robot,
         {
             if (d <= params_->stopChaseDist())
             {
-                resetAction(robot, RobotAction::SHOOT);
+                resetAction(RobotAction::SHOOT);
                 return;
             }
 
@@ -67,7 +77,7 @@ void ChaseShootAI::tryChangeAction(AIRobot& robot,
         {
             if (d <= params_->stopChaseDist())
             {
-                resetAction(robot, RobotAction::SHOOT);
+                resetAction(RobotAction::SHOOT);
                 return;
             }
 
@@ -96,11 +106,10 @@ void ChaseShootAI::tryChangeAction(AIRobot& robot,
 
     RobotAction newAction = distribution_(generator_) <= params_->chaseProb() ?
                                     RobotAction::CHASE : RobotAction::SHOOT;
-    resetAction(robot, newAction);
+    resetAction(newAction);
 }
 
-void ChaseShootAI::resetAction(AIRobot& robot,
-                               RobotAction action)
+void ChaseShootAI::resetAction(RobotAction action)
 {
     if (action_ == action)
     {
@@ -114,20 +123,20 @@ void ChaseShootAI::resetAction(AIRobot& robot,
     {
         case RobotAction::NONE:
         {
-            robot.setShootingEnabled(false);
-            robot.setMovingEnabled(false);
+            robot_->setShootingEnabled(false);
+            robot_->setMovingEnabled(false);
             break;
         }
         case RobotAction::CHASE:
         {
-            robot.setShootingEnabled(false);
-            robot.setMovingEnabled(true);
+            robot_->setShootingEnabled(false);
+            robot_->setMovingEnabled(true);
             break;
         }
         case RobotAction::SHOOT:
         {
-            robot.setMovingEnabled(false);
-            robot.setShootingEnabled(true);
+            robot_->setMovingEnabled(false);
+            robot_->setShootingEnabled(true);
             break;
         }
         default:
@@ -135,27 +144,25 @@ void ChaseShootAI::resetAction(AIRobot& robot,
     }
 }
 
-void ChaseShootAI::resetDirection(AIRobot& robot,
-                                  const commonlib::Vector2& direction)
+void ChaseShootAI::resetDirection(const commonlib::Vector2& direction)
 {
-    robot.setDirection(direction);
+    robot_->setDirection(direction);
     timeSinceLastDirectionChange_ = 0.0f;
 }
 
-void ChaseShootAI::applyAction(AIRobot& robot,
-                               GameMap& map,
+void ChaseShootAI::applyAction(GameMap& map,
                                float timeDelta)
 {
     switch(action_)
     {
         case RobotAction::CHASE:
         {
-            applyChaseAction(robot, map, timeDelta);
+            applyChaseAction(map, timeDelta);
             break;
         }
         case RobotAction::SHOOT:
         {
-            applyShootAction(robot, map, timeDelta);
+            applyShootAction(map, timeDelta);
             break;
         }
         default:
@@ -163,12 +170,11 @@ void ChaseShootAI::applyAction(AIRobot& robot,
     }
 }
 
-void ChaseShootAI::applyChaseAction(AIRobot& robot,
-                                    GameMap& map,
+void ChaseShootAI::applyChaseAction(GameMap& map,
                                     float timeDelta)
 {
-    Vector2 delta = timeDelta * robot.speed();
-    bool collide = map.checkCollision(delta, &robot);
+    Vector2 delta = timeDelta * robot_->speed();
+    bool collide = map.checkCollision(delta, robot_);
     bool changeDirection =
                 collide ||
                 timeSinceLastDirectionChange_ > params_->directionChangeInterval();
@@ -178,72 +184,68 @@ void ChaseShootAI::applyChaseAction(AIRobot& robot,
         return;
     }
 
-    if (!findChaseDirection(robot, map, timeDelta))
+    if (!findChaseDirection(map, timeDelta))
     {
-        resetAction(robot, RobotAction::SHOOT);
+        resetAction(RobotAction::SHOOT);
     }
 }
 
-void ChaseShootAI::applyShootAction(AIRobot& robot,
-                                    GameMap& map,
+void ChaseShootAI::applyShootAction(GameMap& map,
                                     float timeDelta)
 {
-    Vector2 direction = normalize(map.player()->pos() - robot.pos());
-    resetDirection(robot, direction);
+    Vector2 direction = normalize(map.player()->pos() - robot_->pos());
+    resetDirection(direction);
 }
 
-bool ChaseShootAI::findChaseDirection(AIRobot& robot,
-                                      GameMap& map,
+bool ChaseShootAI::findChaseDirection(GameMap& map,
                                       float timeDelta)
 {
     Vector2 refDirection;
 
-    if (tryFirstDirection(refDirection, robot, map, timeDelta))
+    if (tryFirstDirection(refDirection, map, timeDelta))
     {
         return true;
     }
 
-    int index = findNewDirection(robot, map, timeDelta, refDirection);
+    int index = findNewDirection(map, timeDelta, refDirection);
     if (index < 0)
     {
         return false;
     }
 
-    resetDirection(robot, directions_[index]);
+    resetDirection(directions_[index]);
     return true;
 }
 
 bool ChaseShootAI::tryFirstDirection(Vector2& direction,
-                                     AIRobot& robot,
                                      GameMap& map,
                                      float timeDelta)
 {
-    direction = normalize(map.player()->pos() - robot.pos());
+    direction = normalize(map.player()->pos() - robot_->pos());
 
-    Vector2 delta = direction * (robot.speedNorm() * timeDelta);
+    Vector2 delta = direction * (robot_->speedNorm() * timeDelta);
 
-    if (map.checkCollision(delta, &robot))
+    if (map.checkCollision(delta, robot_))
     {
         return false;
     }
 
-    resetDirection(robot, direction);
+    resetDirection(direction);
     return true;
 }
 
-int ChaseShootAI::findNewDirection(AIRobot& robot,
-                                   GameMap& map,
+int ChaseShootAI::findNewDirection(GameMap& map,
                                    float timeDelta,
                                    const Vector2& refDirection)
 {
     int tryDirections[NUM_DIRECTIONS];
-    float distDelta = robot.speedNorm() * timeDelta;
+    float distDelta = robot_->speedNorm() * timeDelta;
 
     sortDirections(tryDirections, refDirection);
     for (int i = 0; i < NUM_DIRECTIONS; ++i)
     {
         Vector2 delta = distDelta * directions_[tryDirections[i]];
-        if (!map.checkCollision(delta, &robot))
+        if (!map.checkCollision(delta, robot_))
         {
             return tryDirections[i];
         }
