@@ -9,12 +9,14 @@ namespace botlib {
 
 void PlayerTemplate::init(const std::string& playerTemplateFile,
                           const MissileTemplateLib& missileTemplateLib,
-                          const ComponentTemplateLib& componentTemplateLib)
+                          const ComponentTemplateLib& componentTemplateLib,
+                          const SkillTemplateLib& skillTemplateLib)
 {
     rapidjson::Document doc;
     readJson(doc, playerTemplateFile);
 
-    RobotTemplate::init("player", doc, missileTemplateLib, componentTemplateLib);
+    RobotTemplate::init("player", doc, missileTemplateLib, componentTemplateLib,
+                        skillTemplateLib);
 }
 
 } // end of namespace botlib

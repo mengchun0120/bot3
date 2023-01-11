@@ -31,5 +31,8 @@
             "direction": [0.8660254, -0.5]
         }
     ],
-    "dyingDuration": 1000.0
+    "dyingDuration": 1000.0,
+    "skills": [
+        "player_shoot_missile_skill"
+    ]
 }

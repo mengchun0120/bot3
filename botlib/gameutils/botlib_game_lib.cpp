@@ -66,7 +66,8 @@ void GameLib::load(const AppConfig& cfg)
     initIconTemplateLib(cfg.iconTemplateLibFile());
     playerTemplate_.init(cfg.playerTemplateFile(),
                          missileTemplateLib_,
-                         componentTemplateLib_);
+                         componentTemplateLib_,
+                         skillTemplateLib_);
     aiLib_.init(cfg.chaseShootAIParamLibFile());
 
     calculateMaxObjSpan();
@@ -244,7 +245,7 @@ void GameLib::initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile)
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        t.init(name, v, missileTemplateLib_, componentTemplateLib_);
+        t.init(name, v, missileTemplateLib_, componentTemplateLib_, skillTemplateLib_);
     };
 
     aiRobotTemplateLib_.init(aiRobotTemplateLibFile, parser);

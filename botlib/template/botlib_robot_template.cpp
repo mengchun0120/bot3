@@ -14,9 +14,11 @@ namespace botlib {
 void RobotTemplate::init(const std::string& name,
                          const rapidjson::Value& v,
                          const MissileTemplateLib& missileTemplateLib,
-                         const ComponentTemplateLib& componentTemplateLib)
+                         const ComponentTemplateLib& componentTemplateLib,
+                         const SkillTemplateLib& skillTemplateLib)
 {
     std::string missileName;
+    std::vector<std::string> skillNames;
     std::vector<JsonParamPtr> params{
         jsonParam(hp_, "hp", true, ge(0.0f)),
         jsonParam(armor_, "armor", true, ge(0.0f)),
@@ -25,7 +27,8 @@ void RobotTemplate::init(const std::string& name,
         jsonParam(rechargeRate_, "rechargeRate", true, ge(0.0f)),
         jsonParam(missileName, "missile", true, k_nonEmptyStrV),
         jsonParam(fireIntervalMS_, "fireIntervalMS", true, gt(0.0f)),
-        jsonParam(dyingDuration_, "dyingDuration", true, gt(0.0f))
+        jsonParam(dyingDuration_, "dyingDuration", true, gt(0.0f)),
+        jsonParam(skillNames, "skills", true),
     };
 
     parse(params, v);
@@ -37,8 +40,31 @@ void RobotTemplate::init(const std::string& name,
                      "Failed to find MissileTemplate " + missileName);
     }
 
+    initSkills(skillNames, skillTemplateLib);
+
     CompositeObjectTemplate::init(GameObjectType::ROBOT, name,
                                   v, componentTemplateLib);
+}
+
+void RobotTemplate::initSkills(const std::vector<std::string>& skillNames,
+                               const SkillTemplateLib& skillTemplateLib)
+{
+    if (skillNames.empty())
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Skills is empty");
+    }
+
+    skills_.resize(skillNames.size());
+    for (std::size_t i = 0; i < skills_.size(); ++i)
+    {
+        auto t = skillTemplateLib.search(skillNames[i]);
+        if (!t)
+        {
+            THROW_EXCEPT(InvalidArgumentException, "Invalid skill " + skillNames[i]);
+        }
+
+        skills_[i] = t->get();
+    }
 }
 
 } // end of namespace botlib

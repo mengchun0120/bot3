@@ -1,12 +1,14 @@
 #ifndef INCLUDED_BOTLIB_ROBOT_H
 #define INCLUDED_BOTLIB_ROBOT_H
 
+#include <memory>
 #include <commonlib_time_utils.h>
 #include <commonlib_linked_item.h>
 #include <commonlib_linked_list.h>
 #include <botlib_side.h>
 #include <botlib_hp_indicator.h>
 #include <botlib_robot_template.h>
+#include <botlib_skill.h>
 #include <botlib_composite_object.h>
 #include <botlib_typedef.h>
 

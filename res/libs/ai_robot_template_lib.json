@@ -26,7 +26,10 @@
         "ai": {
             "algorithm": "chase_shoot",
             "name": "rush_chaser"
-        }
+        },
+        "skills": [
+            "normal_shoot_missile_skill"
+        ]
     },
     "blue_robot": {
         "collideBreath": 25.0,
@@ -55,7 +58,10 @@
         "ai": {
             "algorithm": "chase_shoot",
             "name": "balanced_shooter"
-        }
+        },
+        "skills": [
+            "normal_shoot_missile_skill"
+        ]
     },
     "orange_robot": {
         "collideBreath": 25.0,
@@ -84,6 +90,9 @@
         "ai": {
             "algorithm": "chase_shoot",
             "name": "steady_shooter"
-        }
+        },
+        "skills": [
+            "normal_shoot_missile_skill"
+        ]
     }
 }

@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_ROBOT_TEMPLATE_H
 #define INCLUDED_BOTLIB_ROBOT_TEMPLATE_H
 
+#include <botlib_skill_template.h>
 #include <botlib_composite_object_template.h>
 
 namespace mcdane {
@@ -17,7 +18,8 @@ public:
     void init(const std::string& name,
               const rapidjson::Value& v,
               const MissileTemplateLib& missileTemplateLib,
-              const ComponentTemplateLib& componentTemplateLib);
+              const ComponentTemplateLib& componentTemplateLib,
+              const SkillTemplateLib& skillTemplateLib);
 
     inline float hp() const;
 
@@ -35,6 +37,12 @@ public:
 
     inline float dyingDuration() const;
 
+    inline const std::vector<const SkillTemplate*> skills() const;
+
+private:
+    void initSkills(const std::vector<std::string>& skillNames,
+                    const SkillTemplateLib& skillTemplateLib);
+
 protected:
     float hp_;
     float armor_;
@@ -44,6 +52,7 @@ protected:
     const MissileTemplate* missileTemplate_;
     float fireIntervalMS_;
     float dyingDuration_;
+    std::vector<const SkillTemplate*> skills_;
 };
 
 float RobotTemplate::hp() const
@@ -84,6 +93,11 @@ float RobotTemplate::fireIntervalMS() const
 float RobotTemplate::dyingDuration() const
 {
     return dyingDuration_;
+}
+
+const std::vector<const SkillTemplate*> RobotTemplate::skills() const
+{
+    return skills_;
 }
 
 } // end of namespace botlib

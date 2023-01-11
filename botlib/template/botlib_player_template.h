@@ -12,7 +12,8 @@ public:
 
     void init(const std::string& playerTemplateFile,
               const MissileTemplateLib& missileTemplateLib,
-              const ComponentTemplateLib& componentTemplateLib);
+              const ComponentTemplateLib& componentTemplateLib,
+              const SkillTemplateLib& skillTemplateLib);
 };
 
 } // end of namespace botlib
