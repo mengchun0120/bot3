@@ -266,6 +266,11 @@ bool Robot::setSkillEnabled(SkillType skillType, bool enabled)
     return false;
 }
 
+void Robot::setAction(RobotAction a)
+{
+    action_ = a;
+}
+
 void Robot::initSkills()
 {
     auto& skillTemplates = getTemplate()->skills();

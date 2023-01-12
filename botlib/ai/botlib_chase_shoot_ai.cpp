@@ -25,7 +25,6 @@ void ChaseShootAI::init(AIRobot* robot,
     checkSkill();
     params_ = params;
     generator_.seed(time(nullptr));
-    action_ = RobotAction::NONE;
     timeSinceLastDirectionChange_ = 0.0f;
 }
 
@@ -59,7 +58,7 @@ void ChaseShootAI::tryChangeAction(const Player* player)
     bool rollDice = false;
     float d = dist(robot_->pos(), player->pos());
 
-    switch (action_)
+    switch (robot_->action())
     {
         case RobotAction::NONE:
         {
@@ -111,15 +110,15 @@ void ChaseShootAI::tryChangeAction(const Player* player)
 
 void ChaseShootAI::resetAction(RobotAction action)
 {
-    if (action_ == action)
+    if (robot_->action() == action)
     {
         return;
     }
 
-    action_ = action;
+    robot_->setAction(action);
     timeSinceLastActionChange_ = 0.0f;
 
-    switch(action_)
+    switch(action)
     {
         case RobotAction::NONE:
         {
@@ -153,7 +152,7 @@ void ChaseShootAI::resetDirection(const commonlib::Vector2& direction)
 void ChaseShootAI::applyAction(GameMap& map,
                                float timeDelta)
 {
-    switch(action_)
+    switch(robot_->action())
     {
         case RobotAction::CHASE:
         {

@@ -62,7 +62,6 @@ private:
     const ChaseShootAIParam* params_;
     std::mt19937 generator_;
     std::uniform_real_distribution<float> distribution_;
-    RobotAction action_;
     float timeSinceLastActionChange_;
     float timeSinceLastDirectionChange_;
     std::vector<commonlib::Vector2> directions_;

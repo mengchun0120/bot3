@@ -26,6 +26,7 @@ void AIRobot::init(const AIRobotTemplate* t,
 {
     Robot::init(t, Side::AI, pos1, direction1, itemDeleter);
     ai_ = AIFactory::create(this, t->aiAlgorithm(), t->aiName());
+    action_ = RobotAction::NONE;
 }
 
 void AIRobot::update(UpdateContext& cxt)
