@@ -8,7 +8,6 @@
 #include <commonlib_linked_list.h>
 #include <botlib_side.h>
 #include <botlib_hp_indicator.h>
-#include <botlib_robot_action.h>
 #include <botlib_robot_template.h>
 #include <botlib_skill.h>
 #include <botlib_composite_object.h>
@@ -62,8 +61,6 @@ public:
 
     inline bool shootingEnabled() const;
 
-    inline RobotAction action() const;
-
     void present() const override;
 
     void update(UpdateContext& cxt) override;
@@ -103,8 +100,6 @@ public:
 
     bool setSkillEnabled(SkillType skillType, bool enabled);
 
-    void setAction(RobotAction a);
-
 protected:
     void initSkills();
 
@@ -138,7 +133,6 @@ protected:
     float damageFactor_;
     float armorReduceRatio_;
     GameObjItemList monitors_;
-    RobotAction action_;
     SkillList skills_;
 };
 
@@ -216,11 +210,6 @@ float Robot::fireIntervalMS() const
 bool Robot::shootingEnabled() const
 {
     return shootingEnabled_;
-}
-
-RobotAction Robot::action() const
-{
-    return action_;
 }
 
 } // end of namespace botlib

@@ -9,11 +9,15 @@ namespace botlib {
 
 class ShootMissileSkill: public Skill {
 public:
-    ShootMissileSkill() = default;
+    ShootMissileSkill();
+
+    ShootMissileSkill(const ShootMissileSkillTemplate* t,
+                      Robot* robot);
 
     ~ShootMissileSkill() = default;
 
-    void init(const ShootMissileSkillTemplate* t, Robot* robot);
+    void init(const ShootMissileSkillTemplate* t,
+              Robot* robot);
 
     inline const ShootMissileSkillTemplate* getTemplate() const;
 

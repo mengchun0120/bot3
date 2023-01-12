@@ -8,7 +8,9 @@ namespace botlib {
 
 class ShootMissileSkillTemplate: public SkillTemplate {
 public:
-    ShootMissileSkillTemplate() = default;
+    ShootMissileSkillTemplate();
+
+    ShootMissileSkillTemplate(const rapidjson::Value& v);
 
     void init(const rapidjson::Value& v);
 };

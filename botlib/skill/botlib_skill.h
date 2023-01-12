@@ -10,7 +10,11 @@ class UpdateContext;
 
 class Skill {
 public:
-    Skill() = default;
+    Skill();
+
+    Skill(const SkillTemplate* t,
+          Robot* robot,
+          bool enabled1);
 
     virtual ~Skill() = default;
 

@@ -10,7 +10,9 @@ namespace mcdane {
 namespace botlib {
 
 AIRobot::AIRobot()
-    : ai_(nullptr)
+    : Robot()
+    , ai_(nullptr)
+    , action_(RobotAction::NONE)
 {
 }
 
@@ -44,6 +46,11 @@ void AIRobot::toJson(rapidjson::Value& v,
 {
     Robot::toJson(v, allocator);
     v.AddMember("type", jsonVal("robot", allocator), allocator);
+}
+
+void AIRobot::setAction(RobotAction a)
+{
+    action_ = a;
 }
 
 } // end of namespace botlib

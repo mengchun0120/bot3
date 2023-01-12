@@ -3,6 +3,16 @@
 namespace mcdane {
 namespace botlib {
 
+ShootMissileSkillTemplate::ShootMissileSkillTemplate()
+    : SkillTemplate()
+{
+}
+
+ShootMissileSkillTemplate::ShootMissileSkillTemplate(const rapidjson::Value& v)
+{
+    init(v);
+}
+
 void ShootMissileSkillTemplate::init(const rapidjson::Value& v)
 {
     SkillTemplate::init(SkillType::SHOOT_MISSILE, v);

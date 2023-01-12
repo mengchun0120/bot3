@@ -10,7 +10,20 @@
 namespace mcdane {
 namespace botlib {
 
-void ShootMissileSkill::init(const ShootMissileSkillTemplate* t, Robot* robot)
+ShootMissileSkill::ShootMissileSkill()
+    : Skill()
+    , timeSinceLastShoot_(0.0f)
+{
+}
+
+ShootMissileSkill::ShootMissileSkill(const ShootMissileSkillTemplate* t,
+                                     Robot* robot)
+{
+    init(t, robot);
+}
+
+void ShootMissileSkill::init(const ShootMissileSkillTemplate* t,
+                             Robot* robot)
 {
     Skill::init(t, robot, true);
     timeSinceLastShoot_ = 0.0f;
@@ -25,6 +38,11 @@ bool ShootMissileSkill::available() const
 
 void ShootMissileSkill::apply(UpdateContext& cxt)
 {
+    if (!available())
+    {
+        return;
+    }
+
     GameMap& map = *(cxt.map());
     const MissileTemplate* missileTemplate = robot_->getTemplate()->missileTemplate();
     const std::vector<Component>& components = robot_->components();
