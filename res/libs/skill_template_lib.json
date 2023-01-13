@@ -1,11 +1,27 @@
 {
+    "player_move_skill": {
+        "type": "move",
+        "isOffensive": false,
+        "coolDown": 0.0,
+        "energyCost": 0.0,
+        "hasDest": true,
+        "speed": 0.2
+    },
+    "ai_move_skill": {
+        "type": "move",
+        "isOffensive": false,
+        "coolDown": 0.0,
+        "energyCost": 0.0,
+        "hasDest": true,
+        "speed": 0.2
+    },
     "player_shoot_missile_skill": {
         "type": "shoot-missile",
         "isOffensive": true,
         "coolDown": 1000.0,
         "energyCost": 5.0
     },
-    "normal_shoot_missile_skill": {
+    "ai_shoot_missile_skill": {
         "type": "shoot-missile",
         "isOffensive": true,
         "coolDown": 1500.0,

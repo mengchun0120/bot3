@@ -87,6 +87,8 @@ set(BOTLIB_SHAPE_SRC
     shape/botlib_tex_rectangle.cpp)
 
 set(BOTLIB_SKILL_SRC
+    skill/botlib_move_skill.cpp
+    skill/botlib_move_skill_template.cpp
     skill/botlib_shoot_missile_skill.cpp
     skill/botlib_shoot_missile_skill_template.cpp
     skill/botlib_skill.cpp

@@ -1,3 +1,4 @@
+#include <botlib_robot.h>
 #include <botlib_skill.h>
 
 namespace mcdane {
@@ -29,6 +30,11 @@ void Skill::init(const SkillTemplate* t,
 void Skill::setEnabled(bool enabled1)
 {
     enabled_ = enabled1;
+}
+
+void Skill::apply(UpdateContext& cxt)
+{
+    robot_->addEnergy(-t_->energyCost());
 }
 
 } // end of namespace botlib

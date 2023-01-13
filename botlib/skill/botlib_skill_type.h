@@ -8,6 +8,7 @@ namespace mcdane {
 namespace botlib {
 
 enum class SkillType {
+    MOVE,
     SHOOT_MISSILE,
 };
 

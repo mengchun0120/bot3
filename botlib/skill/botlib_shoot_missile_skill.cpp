@@ -46,9 +46,8 @@ void ShootMissileSkill::apply(UpdateContext& cxt)
     GameMap& map = *(cxt.map());
     const MissileTemplate* missileTemplate = robot_->getTemplate()->missileTemplate();
     const std::vector<Component>& components = robot_->components();
-    auto it = components.begin();
 
-    while (it != components.end() && robot_->energy() >= t_->energyCost())
+    for (auto it = components.begin(); it != components.end(); ++it)
     {
         if (it->getTemplate()->type() != ComponentType::GUN)
         {
@@ -59,14 +58,12 @@ void ShootMissileSkill::apply(UpdateContext& cxt)
         missile->init(missileTemplate, robot_->side(),
                       it->firePos(), it->direction(),
                       robot_->damageFactor());
-        robot_->addEnergy(-t_->energyCost());
-
         map.addObj(missile);
-
-        ++it;
     }
 
     timeSinceLastShoot_ = 0.0f;
+
+    Skill::apply(cxt);
 }
 
 void ShootMissileSkill::update(UpdateContext& cxt)

@@ -30,7 +30,7 @@ public:
 
     virtual bool available() const = 0;
 
-    virtual void apply(UpdateContext& cxt) = 0;
+    virtual void apply(UpdateContext& cxt);
 
     virtual void update(UpdateContext& cxt) = 0;
 

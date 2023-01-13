@@ -28,7 +28,8 @@
             "name": "rush_chaser"
         },
         "skills": [
-            "normal_shoot_missile_skill"
+            "ai_move_skill",
+            "ai_shoot_missile_skill"
         ]
     },
     "blue_robot": {
@@ -60,7 +61,8 @@
             "name": "balanced_shooter"
         },
         "skills": [
-            "normal_shoot_missile_skill"
+            "ai_move_skill",
+            "ai_shoot_missile_skill"
         ]
     },
     "orange_robot": {
@@ -92,7 +94,8 @@
             "name": "steady_shooter"
         },
         "skills": [
-            "normal_shoot_missile_skill"
+            "ai_move_skill",
+            "ai_shoot_missile_skill"
         ]
     }
 }

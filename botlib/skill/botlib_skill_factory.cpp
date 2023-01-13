@@ -1,4 +1,4 @@
-#include <botlib_shoot_missile_skill_template.h>
+#include <botlib_move_skill.h>
 #include <botlib_shoot_missile_skill.h>
 #include <botlib_skill_factory.h>
 
@@ -9,11 +9,16 @@ Skill* SkillFactory::create(const SkillTemplate* t, Robot* robot)
 {
     switch(t->type())
     {
+        case SkillType::MOVE:
+        {
+            return new MoveSkill(static_cast<const MoveSkillTemplate*>(t),
+                                 robot);
+        }
         case SkillType::SHOOT_MISSILE:
         {
-            ShootMissileSkill *skill = new ShootMissileSkill();
-            skill->init(static_cast<const ShootMissileSkillTemplate*>(t), robot);
-            return skill;
+            return new ShootMissileSkill(
+                            static_cast<const ShootMissileSkillTemplate*>(t),
+                            robot);
         }
         default:
         {

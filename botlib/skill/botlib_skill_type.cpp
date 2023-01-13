@@ -8,6 +8,7 @@ namespace mcdane {
 namespace botlib {
 
 static const std::vector<std::string> k_skillTypeStr{
+    "move",
     "shoot-missile",
 };
 

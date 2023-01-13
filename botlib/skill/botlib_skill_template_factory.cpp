@@ -1,5 +1,6 @@
 #include <commonlib_exception.h>
 #include <commonlib_json_param.h>
+#include <botlib_move_skill_template.h>
 #include <botlib_shoot_missile_skill_template.h>
 #include <botlib_skill_template_factory.h>
 
@@ -21,6 +22,10 @@ SkillTemplate* SkillTemplateFactory::create(const rapidjson::Value& v)
 
     switch(type)
     {
+        case SkillType::MOVE:
+        {
+            return new MoveSkillTemplate(v);
+        }
         case SkillType::SHOOT_MISSILE:
         {
             return new ShootMissileSkillTemplate(v);
