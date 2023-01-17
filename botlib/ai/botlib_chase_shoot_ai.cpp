@@ -15,6 +15,7 @@ namespace botlib {
 ChaseShootAI::ChaseShootAI()
     : distribution_(0.0f, 1.0f)
     , directions_{{1.0f, 0.0f}, {0.0f, 1.0f}, {-1.0f, 0.0f}, {0.0f, -1.0f}}
+    , action_(RobotAction::NONE)
 {
 }
 
@@ -58,7 +59,7 @@ void ChaseShootAI::tryChangeAction(const Player* player)
     bool rollDice = false;
     float d = dist(robot_->pos(), player->pos());
 
-    switch (robot_->action())
+    switch (action_)
     {
         case RobotAction::NONE:
         {
@@ -110,15 +111,15 @@ void ChaseShootAI::tryChangeAction(const Player* player)
 
 void ChaseShootAI::resetAction(RobotAction action)
 {
-    if (robot_->action() == action)
+    if (action_ == action)
     {
         return;
     }
 
-    robot_->setAction(action);
+    action_ = action;
     timeSinceLastActionChange_ = 0.0f;
 
-    switch(action)
+    switch(action_)
     {
         case RobotAction::NONE:
         {
@@ -152,7 +153,7 @@ void ChaseShootAI::resetDirection(const commonlib::Vector2& direction)
 void ChaseShootAI::applyAction(GameMap& map,
                                float timeDelta)
 {
-    switch(robot_->action())
+    switch(action_)
     {
         case RobotAction::CHASE:
         {

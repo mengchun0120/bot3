@@ -103,6 +103,8 @@ public:
 protected:
     void initSkills();
 
+    void updateSkills(UpdateContext& cxt);
+
     virtual void updatePos(UpdateContext& cxt);
 
     void updateShooting(UpdateContext& cxt);

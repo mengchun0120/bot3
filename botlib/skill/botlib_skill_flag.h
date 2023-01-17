@@ -5,7 +5,7 @@ namespace mcdane {
 namespace botlib {
 
 enum class SkillFlag: int {
-    OFFENSIVE = 0x00000001,
+    OFFENSIVE  = 0x00000001,
 };
 
 inline int operator|(SkillFlag f1, SkillFlag f2)

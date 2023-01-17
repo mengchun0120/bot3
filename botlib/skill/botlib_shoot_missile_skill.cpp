@@ -2,7 +2,6 @@
 #include <botlib_update_context.h>
 #include <botlib_component_template.h>
 #include <botlib_game_map.h>
-#include <botlib_robot.h>
 #include <botlib_missile.h>
 #include <botlib_skill_template.h>
 #include <botlib_shoot_missile_skill.h>
@@ -29,15 +28,10 @@ void ShootMissileSkill::init(const ShootMissileSkillTemplate* t,
     timeSinceLastShoot_ = 0.0f;
 }
 
-bool ShootMissileSkill::available() const
+void ShootMissileSkill::update(UpdateContext& cxt)
 {
-    return enabled_ &&
-           t_->energyCost() <= robot_->energy() &&
-           t_->coolDown() <= timeSinceLastShoot_;
-}
+    timeSinceLastShoot_ += cxt.timeDelta();
 
-void ShootMissileSkill::apply(UpdateContext& cxt)
-{
     if (!available())
     {
         return;
@@ -62,13 +56,12 @@ void ShootMissileSkill::apply(UpdateContext& cxt)
     }
 
     timeSinceLastShoot_ = 0.0f;
+    if (!getTemplate()->keepAlive())
+    {
+        setEnabled(false);
+    }
 
-    Skill::apply(cxt);
-}
-
-void ShootMissileSkill::update(UpdateContext& cxt)
-{
-    timeSinceLastShoot_ += cxt.timeDelta();
+    Skill::update(cxt);
 }
 
 } // end of namespace botlib

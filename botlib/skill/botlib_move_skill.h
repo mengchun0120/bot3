@@ -20,18 +20,14 @@ public:
 
     inline const MoveSkillTemplate* getTemplate() const;
 
-    inline bool available() const override;
-
-    void apply(UpdateContext& cxt) override;
-
     void update(UpdateContext& cxt) override;
 
     void setDest(const commonlib::Vector2& dest);
 
 private:
-    void applyWithoutDest(UpdateContext& cxt);
+    void updateWithoutDest(UpdateContext& cxt);
 
-    void applyWithDest(UpdateContext& cxt);
+    void updateWithDest(UpdateContext& cxt);
 
     void checkPassthroughCollide(UpdateContext& cxt);
 
@@ -44,12 +40,6 @@ protected:
 const MoveSkillTemplate* MoveSkill::getTemplate() const
 {
     return static_cast<const MoveSkillTemplate*>(t_);
-}
-
-bool MoveSkill::available() const
-{
-    return enabled_ &&
-           (!getTemplate()->hasDest() || destSet_);
 }
 
 } // end of namespace botlib

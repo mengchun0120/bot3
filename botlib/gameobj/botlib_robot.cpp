@@ -278,6 +278,18 @@ void Robot::initSkills()
     }
 }
 
+void Robot::updateSkills(UpdateContext& cxt)
+{
+    for (std::size_t i = 0; i < skills_.size(); ++i)
+    {
+        Skill* s = skills_[i].get();
+        if (state_ == GameObjectState::ALIVE && s->enabled())
+        {
+            s->update(cxt);
+        }
+    }
+}
+
 void Robot::updatePos(UpdateContext& cxt)
 {
     GameMap& map = *(cxt.map());

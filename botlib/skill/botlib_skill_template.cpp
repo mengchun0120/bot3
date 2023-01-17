@@ -19,9 +19,9 @@ void SkillTemplate::init(SkillType type, const rapidjson::Value& v)
 {
     type_ = type;
 
-    bool isOffensive;
+    bool isOffensive = false;
     std::vector<JsonParamPtr> params{
-        jsonParam(isOffensive, "isOffensive", true),
+        jsonParam(isOffensive, "isOffensive", false),
         jsonParam(coolDown_, "coolDown", false, ge(0.0f)),
         jsonParam(energyCost_, "energyCost", false, ge(0.0f)),
     };

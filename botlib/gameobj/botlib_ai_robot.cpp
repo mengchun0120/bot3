@@ -12,7 +12,6 @@ namespace botlib {
 AIRobot::AIRobot()
     : Robot()
     , ai_(nullptr)
-    , action_(RobotAction::NONE)
 {
 }
 
@@ -28,7 +27,6 @@ void AIRobot::init(const AIRobotTemplate* t,
 {
     Robot::init(t, Side::AI, pos1, direction1, itemDeleter);
     ai_ = AIFactory::create(this, t->aiAlgorithm(), t->aiName());
-    action_ = RobotAction::NONE;
 }
 
 void AIRobot::update(UpdateContext& cxt)
@@ -46,11 +44,6 @@ void AIRobot::toJson(rapidjson::Value& v,
 {
     Robot::toJson(v, allocator);
     v.AddMember("type", jsonVal("robot", allocator), allocator);
-}
-
-void AIRobot::setAction(RobotAction a)
-{
-    action_ = a;
 }
 
 } // end of namespace botlib

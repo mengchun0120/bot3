@@ -13,7 +13,17 @@ public:
     ShootMissileSkillTemplate(const rapidjson::Value& v);
 
     void init(const rapidjson::Value& v);
+
+    inline bool keepAlive() const;
+
+protected:
+    bool keepAlive_;
 };
+
+bool ShootMissileSkillTemplate::keepAlive() const
+{
+    return keepAlive_;
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

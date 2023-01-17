@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_SHOOT_MISSILE_SKILL_H
 #define INCLUDED_BOTLIB_SHOOT_MISSILE_SKILL_H
 
+#include <botlib_robot.h>
 #include <botlib_shoot_missile_skill_template.h>
 #include <botlib_skill.h>
 
@@ -21,9 +22,7 @@ public:
 
     inline const ShootMissileSkillTemplate* getTemplate() const;
 
-    bool available() const override;
-
-    void apply(UpdateContext& cxt) override;
+    inline bool available() const;
 
     void update(UpdateContext& cxt) override;
 
@@ -34,6 +33,12 @@ protected:
 const ShootMissileSkillTemplate* ShootMissileSkill::getTemplate() const
 {
     return static_cast<const ShootMissileSkillTemplate*>(t_);
+}
+
+bool ShootMissileSkill::available() const
+{
+    return t_->energyCost() <= robot_->energy() &&
+           t_->coolDown() <= timeSinceLastShoot_;
 }
 
 } // end of namespace botlib

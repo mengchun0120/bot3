@@ -29,27 +29,18 @@ void MoveSkill::init(const MoveSkillTemplate* t,
     destSet_ = false;
 }
 
-void MoveSkill::apply(UpdateContext& cxt)
-{
-    if (!available())
-    {
-        return;
-    }
-
-    if (getTemplate()->hasDest())
-    {
-        applyWithDest(cxt);
-    }
-    else
-    {
-        applyWithoutDest(cxt);
-    }
-
-    Skill::apply(cxt);
-}
-
 void MoveSkill::update(UpdateContext& cxt)
 {
+    if (!getTemplate()->hasDest())
+    {
+        updateWithoutDest(cxt);
+    }
+    else if (destSet_)
+    {
+        updateWithDest(cxt);
+    }
+
+    Skill::update(cxt);
 }
 
 void MoveSkill::setDest(const commonlib::Vector2& dest)
@@ -63,16 +54,15 @@ void MoveSkill::setDest(const commonlib::Vector2& dest)
     float dist = d.norm();
     timeToDest_ = dist / robot_->speedNorm();
     robot_->setDirection(d / dist);
-    setEnabled(true);
+    destSet_ = true;
 }
 
-void MoveSkill::applyWithoutDest(UpdateContext& cxt)
+void MoveSkill::updateWithoutDest(UpdateContext& cxt)
 {
     GameMap& map = *(cxt.map());
     Vector2 delta = robot_->speed() * cxt.timeDelta();
 
     bool collide = map.checkCollision(delta, robot_);
-
     if (collide)
     {
         setEnabled(false);
@@ -84,7 +74,7 @@ void MoveSkill::applyWithoutDest(UpdateContext& cxt)
     checkPassthroughCollide(cxt);
 }
 
-void MoveSkill::applyWithDest(UpdateContext& cxt)
+void MoveSkill::updateWithDest(UpdateContext& cxt)
 {
     bool reachDest = false;
     float timeDelta = cxt.timeDelta();
@@ -104,6 +94,7 @@ void MoveSkill::applyWithDest(UpdateContext& cxt)
     {
         timeToDest_ = 0.0f;
         setEnabled(false);
+        destSet_ = false;
     }
     else
     {

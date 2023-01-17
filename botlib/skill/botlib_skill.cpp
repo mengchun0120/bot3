@@ -27,12 +27,12 @@ void Skill::init(const SkillTemplate* t,
     enabled_ = enabled1;
 }
 
-void Skill::setEnabled(bool enabled1)
+void Skill::setEnabled(bool b)
 {
-    enabled_ = enabled1;
+    enabled_ = b;
 }
 
-void Skill::apply(UpdateContext& cxt)
+void Skill::update(UpdateContext& cxt)
 {
     robot_->addEnergy(-t_->energyCost());
 }

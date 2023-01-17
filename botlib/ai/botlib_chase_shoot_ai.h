@@ -65,6 +65,7 @@ private:
     float timeSinceLastActionChange_;
     float timeSinceLastDirectionChange_;
     std::vector<commonlib::Vector2> directions_;
+    RobotAction action_;
 };
 
 } // end of namespace botlib

@@ -14,23 +14,19 @@ public:
 
     Skill(const SkillTemplate* t,
           Robot* robot,
-          bool enabled1);
+          bool enabled1=false);
 
     virtual ~Skill() = default;
 
     void init(const SkillTemplate* t,
               Robot* robot,
-              bool enabled1);
+              bool enabled1=false);
 
     inline const SkillTemplate* getTemplate() const;
 
-    inline bool enaled() const;
+    inline bool enabled() const;
 
-    void setEnabled(bool enabled1);
-
-    virtual bool available() const = 0;
-
-    virtual void apply(UpdateContext& cxt);
+    void setEnabled(bool b);
 
     virtual void update(UpdateContext& cxt) = 0;
 
@@ -45,7 +41,7 @@ const SkillTemplate* Skill::getTemplate() const
     return t_;
 }
 
-bool Skill::enaled() const
+bool Skill::enabled() const
 {
     return enabled_;
 }

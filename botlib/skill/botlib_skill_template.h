@@ -4,6 +4,7 @@
 #include <memory>
 #include <rapidjson/document.h>
 #include <commonlib_named_map.h>
+#include <botlib_skill_flag.h>
 #include <botlib_skill_type.h>
 
 namespace mcdane {
@@ -20,6 +21,8 @@ public:
     inline int flags() const;
 
     inline int checkFlags(int f) const;
+
+    inline bool checkFlag(SkillFlag f) const;
 
     inline float coolDown() const;
 
@@ -57,6 +60,11 @@ float SkillTemplate::coolDown() const
 float SkillTemplate::energyCost() const
 {
     return energyCost_;
+}
+
+bool SkillTemplate::checkFlag(SkillFlag f) const
+{
+    return flags_ & static_cast<int>(f);
 }
 
 } // end of namespace botlib
