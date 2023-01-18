@@ -3,6 +3,7 @@
 #include <commonlib_string_utils.h>
 #include <botlib_game_map_loader.h>
 #include <botlib_context.h>
+#include <botlib_move_skill.h>
 #include <botlib_player.h>
 #include <botlib_game_screen.h>
 
@@ -239,7 +240,8 @@ bool GameScreen::processMouseMove(const MouseMoveEvent& e)
         return true;
     }
 
-    if (map_.player()->movingEnabled())
+    Skill *skill = map_.player()->searchSkill(SkillType::MOVE);
+    if (skill->enabled())
     {
         return true;
     }

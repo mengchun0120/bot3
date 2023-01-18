@@ -84,35 +84,6 @@ void Player::initGoodies()
     );
 }
 
-
-void Player::updatePos(UpdateContext& cxt)
-{
-    bool reachDest = false;
-    float timeDelta = cxt.timeDelta();
-    if (timeDelta >= timeToDest_)
-    {
-        timeDelta = timeToDest_;
-        reachDest = true;
-    }
-
-    Vector2 delta = speed_ * timeDelta;
-    bool collide = cxt.map()->checkCollision(delta, this);
-    shiftPos(delta);
-    cxt.map()->repositionObj(this);
-
-    if (reachDest || collide)
-    {
-        timeToDest_ = 0.0f;
-        setMovingEnabled(false);
-    }
-    else
-    {
-        timeToDest_ -= cxt.timeDelta();
-    }
-
-    checkPassthroughCollide(cxt);
-}
-
 void Player::updateGoodies(float timeDelta)
 {
     Goodie* g, * next;

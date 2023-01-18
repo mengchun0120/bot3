@@ -18,8 +18,6 @@ namespace botlib {
 Robot::Robot()
     : hp_(0.0f)
     , energy_(0.0f)
-    , movingEnabled_(false)
-    , shootingEnabled_(false)
 {
 }
 
@@ -49,8 +47,6 @@ void Robot::init(const RobotTemplate* t,
     hpIndicator_.reset(pos(), hpRatio());
     timeSinceLastShoot_ = 0.0f;
     dyingTime_ = 0.0f;
-    movingEnabled_ = false;
-    shootingEnabled_ = false;
     resetArmorReduceRatio();
     if (itemDeleter)
     {
@@ -94,11 +90,6 @@ void Robot::setDirection(const Vector2& direction1)
     resetSpeed();
 }
 
-void Robot::setMovingEnabled(bool b)
-{
-    movingEnabled_ = b;
-}
-
 void Robot::addHP(float delta)
 {
     if (state_ != GameObjectState::ALIVE || delta <= 0.0f)
@@ -138,11 +129,6 @@ void Robot::doDamage(float damage, UpdateContext& cxt)
 
         hpIndicator_.reset(pos(), hpRatio());
     }
-}
-
-void Robot::setShootingEnabled(bool b)
-{
-    shootingEnabled_ = b;
 }
 
 bool Robot::canBeDumped(GameMap& map) const
@@ -246,6 +232,25 @@ bool Robot::setSkillEnabled(SkillType skillType, bool enabled)
     return false;
 }
 
+void Robot::shoot(UpdateContext& cxt)
+{
+    GameMap& map = *(cxt.map());
+    const MissileTemplate* t = getTemplate()->missileTemplate();
+
+    for (auto it = components_.begin(); it != components_.end(); ++it)
+    {
+        if (it->getTemplate()->type() != ComponentType::GUN)
+        {
+            continue;
+        }
+
+        Missile* missile = new Missile();
+        missile->init(t, side_, it->firePos(), it->direction(), damageFactor_);
+
+        map.addObj(missile);
+    }
+}
+
 void Robot::initSkills()
 {
     auto& skillTemplates = getTemplate()->skills();
@@ -286,55 +291,6 @@ void Robot::updateSkills(UpdateContext& cxt)
         {
             s->update(cxt);
         }
-    }
-}
-
-void Robot::updatePos(UpdateContext& cxt)
-{
-    GameMap& map = *(cxt.map());
-    Vector2 delta = speed_ * cxt.timeDelta();
-
-    map.checkCollision(delta, this);
-    shiftPos(delta);
-    map.repositionObj(this);
-
-    checkPassthroughCollide(cxt);
-}
-
-void Robot::updateShooting(UpdateContext& cxt)
-{
-    if (timeSinceLastShoot_ < fireIntervalMS())
-    {
-        return;
-    }
-
-    shoot(cxt);
-}
-
-void Robot::checkPassthroughCollide(UpdateContext& cxt)
-{
-    GameMap& map = *(cxt.map());
-    PassthroughCollideChecker checker(cxt, this);
-    Region<int> r = map.getCollideArea(collideRegion());
-    map.traverse(r, checker, {0, 2});
-}
-
-void Robot::shoot(UpdateContext& cxt)
-{
-    GameMap& map = *(cxt.map());
-    const MissileTemplate* t = getTemplate()->missileTemplate();
-
-    for (auto it = components_.begin(); it != components_.end(); ++it)
-    {
-        if (it->getTemplate()->type() != ComponentType::GUN)
-        {
-            continue;
-        }
-
-        Missile* missile = new Missile();
-        missile->init(t, side_, it->firePos(), it->direction(), damageFactor_);
-
-        map.addObj(missile);
     }
 }
 

@@ -49,8 +49,6 @@ public:
 
     inline float rechargeRate() const;
 
-    inline bool movingEnabled() const;
-
     inline float hpRatio() const;
 
     inline float armorRatio() const;
@@ -58,8 +56,6 @@ public:
     inline float energyRatio() const;
 
     inline float fireIntervalMS() const;
-
-    inline bool shootingEnabled() const;
 
     void present() const override;
 
@@ -69,15 +65,11 @@ public:
 
     void setDirection(const commonlib::Vector2& direction1) override;
 
-    void setMovingEnabled(bool b);
-
     void addHP(float delta);
 
     void addEnergy(float delta);
 
     void doDamage(float damage, UpdateContext& cxt);
-
-    void setShootingEnabled(bool b);
 
     bool canBeDumped(GameMap& map) const override;
 
@@ -111,12 +103,6 @@ protected:
 
     void updateSkills(UpdateContext& cxt);
 
-    virtual void updatePos(UpdateContext& cxt);
-
-    void updateShooting(UpdateContext& cxt);
-
-    void checkPassthroughCollide(UpdateContext& cxt);
-
     void resetArmorReduceRatio();
 
     void updateEnergy(float timeDelta);
@@ -127,10 +113,8 @@ protected:
     Side side_;
     float hp_;
     float energy_;
-    bool movingEnabled_;
     commonlib::Vector2 speed_;
     HPIndicator hpIndicator_;
-    bool shootingEnabled_;
     float timeSinceLastShoot_;
     float dyingTime_;
     float fireIntervalMS_;
@@ -187,11 +171,6 @@ float Robot::rechargeRate() const
     return getTemplate()->rechargeRate();
 }
 
-bool Robot::movingEnabled() const
-{
-    return movingEnabled_;
-}
-
 float Robot::hpRatio() const
 {
     return hp_ / getTemplate()->hp();
@@ -207,15 +186,9 @@ float Robot::energyRatio() const
     return energy_ / getTemplate()->energy();
 }
 
-
 float Robot::fireIntervalMS() const
 {
     return fireIntervalMS_;
-}
-
-bool Robot::shootingEnabled() const
-{
-    return shootingEnabled_;
 }
 
 } // end of namespace botlib

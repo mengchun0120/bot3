@@ -40,8 +40,6 @@ public:
 protected:
     void initGoodies();
 
-    void updatePos(UpdateContext& cxt) override;
-
     void updateGoodies(float timeDelta);
 
     Goodie* findGoodie(GoodieType type);
