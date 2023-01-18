@@ -33,8 +33,6 @@ public:
 
     inline const MissileTemplate* missileTemplate() const;
 
-    inline float fireIntervalMS() const;
-
     inline float dyingDuration() const;
 
     inline const std::vector<const SkillTemplate*> skills() const;
@@ -50,7 +48,6 @@ protected:
     float energy_;
     float rechargeRate_;
     const MissileTemplate* missileTemplate_;
-    float fireIntervalMS_;
     float dyingDuration_;
     std::vector<const SkillTemplate*> skills_;
 };
@@ -83,11 +80,6 @@ float RobotTemplate::rechargeRate() const
 const MissileTemplate* RobotTemplate::missileTemplate() const
 {
     return missileTemplate_;
-}
-
-float RobotTemplate::fireIntervalMS() const
-{
-    return fireIntervalMS_;
 }
 
 float RobotTemplate::dyingDuration() const

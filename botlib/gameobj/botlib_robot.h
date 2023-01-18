@@ -75,8 +75,6 @@ public:
 
     void setSpeedNorm(float speedNorm1);
 
-    void setFireIntervalMS(float fireIntervalMS1);
-
     void setArmor(float armor1);
 
     void setDamageFactor(float factor);
@@ -89,6 +87,8 @@ public:
     void removeMonitor(GameObject* obj);
 
     Skill* searchSkill(SkillType skillType);
+
+    bool isSkillEnabled(SkillType skillType);
 
     bool setSkillEnabled(SkillType skillType, bool enabled);
 
@@ -117,7 +117,6 @@ protected:
     HPIndicator hpIndicator_;
     float timeSinceLastShoot_;
     float dyingTime_;
-    float fireIntervalMS_;
     float speedNorm_;
     float armor_;
     float damageFactor_;
@@ -184,11 +183,6 @@ float Robot::armorRatio() const
 float Robot::energyRatio() const
 {
     return energy_ / getTemplate()->energy();
-}
-
-float Robot::fireIntervalMS() const
-{
-    return fireIntervalMS_;
 }
 
 } // end of namespace botlib

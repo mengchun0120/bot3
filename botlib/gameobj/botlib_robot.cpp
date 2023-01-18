@@ -41,7 +41,6 @@ void Robot::init(const RobotTemplate* t,
     speedNorm_ = t->speed();
     energy_ = t->energy();
     armor_ = t->armor();
-    fireIntervalMS_ = t->fireIntervalMS();
     damageFactor_ = 1.0f;
     resetSpeed();
     hpIndicator_.reset(pos(), hpRatio());
@@ -146,16 +145,6 @@ void Robot::setSpeedNorm(float speedNorm1)
     speedNorm_ = speedNorm1;
 }
 
-void Robot::setFireIntervalMS(float fireIntervalMS1)
-{
-    if (fireIntervalMS1 < 0.0f)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid fireIntervalMS");
-    }
-
-    fireIntervalMS_ = fireIntervalMS1;
-}
-
 void Robot::setArmor(float armor1)
 {
     if (armor1 < 0.0f)
@@ -218,6 +207,12 @@ Skill* Robot::searchSkill(SkillType skillType)
     }
 
     return nullptr;
+}
+
+bool Robot::isSkillEnabled(SkillType skillType)
+{
+    Skill* skill = searchSkill(skillType);
+    return skill->enabled();
 }
 
 bool Robot::setSkillEnabled(SkillType skillType, bool enabled)

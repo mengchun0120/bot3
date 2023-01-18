@@ -24,9 +24,12 @@ public:
 
     inline bool available() const;
 
+    void setCoolDownFactor(float f);
+
     void update(UpdateContext& cxt) override;
 
 protected:
+    float coolDown_;
     float timeSinceLastShoot_;
 };
 
@@ -39,7 +42,7 @@ bool ShootMissileSkill::available() const
 {
     return enabled() &&
            t_->energyCost() <= robot_->energy() &&
-           t_->coolDown() <= timeSinceLastShoot_;
+           coolDown_ <= timeSinceLastShoot_;
 }
 
 } // end of namespace botlib

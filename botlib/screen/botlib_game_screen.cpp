@@ -61,7 +61,7 @@ void GameScreen::update(float timeDelta)
     }
 
     clearUpdateFlags();
-    updateObjects();
+    updateNonPlayerObjects();
 
     if (map_.player())
     {
@@ -240,8 +240,7 @@ bool GameScreen::processMouseMove(const MouseMoveEvent& e)
         return true;
     }
 
-    Skill *skill = map_.player()->searchSkill(SkillType::MOVE);
-    if (skill->enabled())
+    if (map_.player()->isSkillEnabled(SkillType::MOVE))
     {
         return true;
     }
@@ -276,10 +275,8 @@ bool GameScreen::processKey(const KeyEvent& e)
         }
         case GLFW_KEY_S:
         {
-            if (e.action_ == GLFW_PRESS)
-            {
-                map_.player()->setSkillEnabled(SkillType::MOVE, false);
-            }
+            processStopMoveKey(e);
+            break;
         }
         default:
             break;
@@ -290,14 +287,17 @@ bool GameScreen::processKey(const KeyEvent& e)
 
 void GameScreen::processFireKey(const KeyEvent& e)
 {
-    if (!isPlayerAvailable())
-    {
-        return;
-    }
-
     if (e.action_ == GLFW_PRESS)
     {
         map_.player()->setSkillEnabled(SkillType::SHOOT_MISSILE, true);
+    }
+}
+
+void GameScreen::processStopMoveKey(const commonlib::KeyEvent& e)
+{
+    if (e.action_ == GLFW_PRESS)
+    {
+        map_.player()->setSkillEnabled(SkillType::MOVE, false);
     }
 }
 
@@ -319,7 +319,7 @@ void GameScreen::clearUpdateFlags()
     map_.traverse(map_.presentArea(), clearUpdateFlag);
 }
 
-void GameScreen::updateObjects()
+void GameScreen::updateNonPlayerObjects()
 {
     auto updater = [this](GameObject* obj)->bool
     {

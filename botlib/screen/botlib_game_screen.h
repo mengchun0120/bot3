@@ -55,11 +55,13 @@ private:
 
     void processFireKey(const commonlib::KeyEvent& e);
 
+    void processStopMoveKey(const commonlib::KeyEvent& e);
+
     void updatePlayer();
 
     void clearUpdateFlags();
 
-    void updateObjects();
+    void updateNonPlayerObjects();
 
     void updateProgressBar();
 

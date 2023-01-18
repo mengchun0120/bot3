@@ -28,7 +28,6 @@ void RobotTemplate::init(const std::string& name,
         jsonParam(speed_, "speed", true, ge(0.0f)),
         jsonParam(rechargeRate_, "rechargeRate", true, ge(0.0f)),
         jsonParam(missileName, "missile", true, k_nonEmptyStrV),
-        jsonParam(fireIntervalMS_, "fireIntervalMS", true, gt(0.0f)),
         jsonParam(dyingDuration_, "dyingDuration", true, gt(0.0f)),
         jsonParam(skillNames, "skills", true),
     };

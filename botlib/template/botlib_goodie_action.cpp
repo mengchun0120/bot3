@@ -1,5 +1,6 @@
 #include <commonlib_log.h>
 #include <botlib_goodie.h>
+#include <botlib_shoot_missile_skill.h>
 #include <botlib_player.h>
 #include <botlib_goodie_action.h>
 
@@ -18,37 +19,30 @@ void activateHealthFiller(const GoodieTemplate* t,
 void activateAttackAccelerator(const GoodieTemplate* t,
                                Player& player)
 {
-    float intervalMS = player.getTemplate()->fireIntervalMS() * t->factor();
-    player.setFireIntervalMS(intervalMS);
+    ShootMissileSkill* s = static_cast<ShootMissileSkill*>(
+                                player.searchSkill(SkillType::SHOOT_MISSILE));
+    s->setCoolDownFactor(t->factor());
 }
 
 void deactivateAttackAccelerator(Player& player)
 {
-    player.setFireIntervalMS(player.getTemplate()->fireIntervalMS());
+    ShootMissileSkill* s = static_cast<ShootMissileSkill*>(
+                                player.searchSkill(SkillType::SHOOT_MISSILE));
+    s->setCoolDownFactor(1.0f);
 }
 
 void activateSpeedAccelerator(const GoodieTemplate* t,
                               Player& player)
 {
-    LOG_INFO << "SpeedAccel before activation speed="
-             << player.speedNorm() << LOG_END;
-
     float speedNorm = player.getTemplate()->speed() * t->factor();
     player.setSpeedNorm(speedNorm);
     player.resetSpeed();
-
-    LOG_INFO << "SpeedAccel after activation speed="
-             << player.speedNorm() << LOG_END;
-
 }
 
 void deactivateSpeedAccelerator(Player& player)
 {
     player.setSpeedNorm(player.getTemplate()->speed());
     player.resetSpeed();
-
-    LOG_INFO << "SpeedAccel deactivated speed="
-             << player.speedNorm() << LOG_END;
 }
 
 void activateDamageAmplifier(const GoodieTemplate* t,
