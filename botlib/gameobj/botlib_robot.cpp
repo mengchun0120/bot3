@@ -72,31 +72,11 @@ void Robot::update(UpdateContext& cxt)
 {
     if (state_ == GameObjectState::ALIVE)
     {
-        timeSinceLastShoot_ += cxt.timeDelta();
-
-        if (movingEnabled_)
-        {
-            updatePos(cxt);
-        }
-
-        if (state_ == GameObjectState::ALIVE && shootingEnabled_)
-        {
-            updateShooting(cxt);
-        }
-
-        updateEnergy(cxt.timeDelta());
+        updateAlive(cxt);
     }
     else if (state_ == GameObjectState::DYING)
     {
-        dyingTime_ += cxt.timeDelta();
-        if (dyingTime_ >= getTemplate()->dyingDuration())
-        {
-            cxt.dumper().add(this);
-        }
-        else
-        {
-            setAlpha(1.0f - dyingTime_ / getTemplate()->dyingDuration());
-        }
+        updateDying(cxt);
     }
 
     GameObject::update(cxt);
@@ -278,12 +258,31 @@ void Robot::initSkills()
     }
 }
 
+void Robot::updateAlive(UpdateContext& cxt)
+{
+    updateEnergy(cxt.timeDelta());
+    updateSkills(cxt);
+}
+
+void Robot::updateDying(UpdateContext& cxt)
+{
+    dyingTime_ += cxt.timeDelta();
+    if (dyingTime_ >= getTemplate()->dyingDuration())
+    {
+        cxt.dumper().add(this);
+    }
+    else
+    {
+        setAlpha(1.0f - dyingTime_ / getTemplate()->dyingDuration());
+    }
+}
+
 void Robot::updateSkills(UpdateContext& cxt)
 {
     for (std::size_t i = 0; i < skills_.size(); ++i)
     {
         Skill* s = skills_[i].get();
-        if (state_ == GameObjectState::ALIVE && s->enabled())
+        if (state_ == GameObjectState::ALIVE)
         {
             s->update(cxt);
         }
@@ -334,12 +333,9 @@ void Robot::shoot(UpdateContext& cxt)
 
         Missile* missile = new Missile();
         missile->init(t, side_, it->firePos(), it->direction(), damageFactor_);
-        energy_ -= t->energyCost();
 
         map.addObj(missile);
     }
-
-    timeSinceLastShoot_ = 0.0f;
 }
 
 void Robot::resetArmorReduceRatio()

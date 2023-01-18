@@ -9,6 +9,8 @@ namespace mcdane {
 namespace botlib {
 
 class ChaseShootAIParam;
+class MoveSkill;
+class ShootMissileSkill;
 class Player;
 
 class ChaseShootAI: public AI {
@@ -22,7 +24,7 @@ public:
                float timeDelta) override;
 
 private:
-    void checkSkill();
+    void initSkills();
 
     void tryChangeAction(const Player* player);
 
@@ -65,6 +67,8 @@ private:
     float timeSinceLastActionChange_;
     float timeSinceLastDirectionChange_;
     std::vector<commonlib::Vector2> directions_;
+    MoveSkill* moveSkill_;
+    ShootMissileSkill* shootSkill_;
     RobotAction action_;
 };
 

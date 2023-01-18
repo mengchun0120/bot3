@@ -31,6 +31,11 @@ void MoveSkill::init(const MoveSkillTemplate* t,
 
 void MoveSkill::update(UpdateContext& cxt)
 {
+    if (!enabled())
+    {
+        return;
+    }
+
     if (!getTemplate()->hasDest())
     {
         updateWithoutDest(cxt);
@@ -39,8 +44,6 @@ void MoveSkill::update(UpdateContext& cxt)
     {
         updateWithDest(cxt);
     }
-
-    Skill::update(cxt);
 }
 
 void MoveSkill::setDest(const commonlib::Vector2& dest)

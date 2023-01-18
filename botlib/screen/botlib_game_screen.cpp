@@ -224,9 +224,9 @@ bool GameScreen::processMouseButton(const MouseButtonEvent& e)
         p += map_.viewportAnchor();
         map_.player()->setDest(p);
     }
-    else if (e.button_ == GLFW_MOUSE_BUTTON_RIGHT)
+    else if (e.button_ == GLFW_MOUSE_BUTTON_RIGHT && e.action_ == GLFW_PRESS)
     {
-        map_.player()->setShootingEnabled(e.action_ == GLFW_PRESS);
+        map_.player()->setSkillEnabled(SkillType::SHOOT_MISSILE, true);
     }
 
     return true;
@@ -276,7 +276,7 @@ bool GameScreen::processKey(const KeyEvent& e)
         {
             if (e.action_ == GLFW_PRESS)
             {
-                map_.player()->setMovingEnabled(false);
+                map_.player()->setSkillEnabled(SkillType::MOVE, false);
             }
         }
         default:
@@ -293,7 +293,10 @@ void GameScreen::processFireKey(const KeyEvent& e)
         return;
     }
 
-    map_.player()->setShootingEnabled(e.action_ == GLFW_PRESS);
+    if (e.action_ == GLFW_PRESS)
+    {
+        map_.player()->setSkillEnabled(SkillType::SHOOT_MISSILE, true);
+    }
 }
 
 void GameScreen::updatePlayer()

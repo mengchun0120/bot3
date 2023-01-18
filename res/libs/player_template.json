@@ -8,7 +8,7 @@
     "energy": 100.0,
     "rechargeRate": 0.002,
     "missile": "green_split_missile",
-    "fireIntervalMS": 1000.0,
+    "fireIntervalMS": 500.0,
     "components": [
         {
             "template": "green_base",
@@ -33,6 +33,7 @@
     ],
     "dyingDuration": 1000.0,
     "skills": [
+        "player_move_skill",
         "player_shoot_missile_skill"
     ]
 }

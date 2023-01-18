@@ -12,19 +12,21 @@
         "isOffensive": false,
         "coolDown": 0.0,
         "energyCost": 0.0,
-        "hasDest": true,
+        "hasDest": false,
         "speed": 0.2
     },
     "player_shoot_missile_skill": {
         "type": "shoot-missile",
         "isOffensive": true,
         "coolDown": 1000.0,
-        "energyCost": 5.0
+        "energyCost": 5.0,
+        "keepAlive": false
     },
     "ai_shoot_missile_skill": {
         "type": "shoot-missile",
         "isOffensive": true,
         "coolDown": 1500.0,
-        "energyCost": 10.0
+        "energyCost": 5.0,
+        "keepAlive": true
     }
 }

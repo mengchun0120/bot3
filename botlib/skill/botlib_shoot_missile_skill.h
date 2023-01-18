@@ -37,7 +37,8 @@ const ShootMissileSkillTemplate* ShootMissileSkill::getTemplate() const
 
 bool ShootMissileSkill::available() const
 {
-    return t_->energyCost() <= robot_->energy() &&
+    return enabled() &&
+           t_->energyCost() <= robot_->energy() &&
            t_->coolDown() <= timeSinceLastShoot_;
 }
 

@@ -2,6 +2,7 @@
 #include <commonlib_math_utils.h>
 #include <botlib_update_context.h>
 #include <botlib_game_map.h>
+#include <botlib_move_skill.h>
 #include <botlib_player.h>
 
 using namespace mcdane::commonlib;
@@ -61,16 +62,9 @@ void Player::toJson(rapidjson::Value& v,
 
 void Player::setDest(const commonlib::Vector2& dest)
 {
-    Vector2 d = dest - pos_;
-    if (fuzzyEqualZero(d))
-    {
-        return;
-    }
-
-    float dist = d.norm();
-    timeToDest_ = dist / speedNorm();
-    setDirection(d / dist);
-    setMovingEnabled(true);
+    MoveSkill* s = static_cast<MoveSkill*>(searchSkill(SkillType::MOVE));
+    s->setDest(dest);
+    s->setEnabled(true);
 }
 
 void Player::initGoodies()

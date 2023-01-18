@@ -1,9 +1,11 @@
 #include <ctime>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
+#include <botlib_game_map.h>
+#include <botlib_move_skill.h>
+#include <botlib_shoot_missile_skill.h>
 #include <botlib_ai_robot.h>
 #include <botlib_player.h>
-#include <botlib_game_map.h>
 #include <botlib_chase_shoot_ai_param.h>
 #include <botlib_chase_shoot_ai.h>
 
@@ -15,6 +17,8 @@ namespace botlib {
 ChaseShootAI::ChaseShootAI()
     : distribution_(0.0f, 1.0f)
     , directions_{{1.0f, 0.0f}, {0.0f, 1.0f}, {-1.0f, 0.0f}, {0.0f, -1.0f}}
+    , moveSkill_(nullptr)
+    , shootSkill_(nullptr)
     , action_(RobotAction::NONE)
 {
 }
@@ -23,7 +27,7 @@ void ChaseShootAI::init(AIRobot* robot,
                         const ChaseShootAIParam* params)
 {
     AI::init(robot);
-    checkSkill();
+    initSkills();
     params_ = params;
     generator_.seed(time(nullptr));
     timeSinceLastDirectionChange_ = 0.0f;
@@ -45,9 +49,18 @@ void ChaseShootAI::apply(GameMap& map,
     applyAction(map, timeDelta);
 }
 
-void ChaseShootAI::checkSkill()
+void ChaseShootAI::initSkills()
 {
-    if (robot_->searchSkill(SkillType::SHOOT_MISSILE) == nullptr)
+    moveSkill_ = static_cast<MoveSkill*>(robot_->searchSkill(SkillType::MOVE));
+    if (!moveSkill_)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Robot doesn't have move skill");
+    }
+
+    shootSkill_ =
+        static_cast<ShootMissileSkill*>(robot_->searchSkill(SkillType::SHOOT_MISSILE));
+    if (!shootSkill_)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Robot doesn't have SHOOT_MISSILE skill");
@@ -123,20 +136,20 @@ void ChaseShootAI::resetAction(RobotAction action)
     {
         case RobotAction::NONE:
         {
-            robot_->setShootingEnabled(false);
-            robot_->setMovingEnabled(false);
+            moveSkill_->setEnabled(false);
+            shootSkill_->setEnabled(false);
             break;
         }
         case RobotAction::CHASE:
         {
-            robot_->setShootingEnabled(false);
-            robot_->setMovingEnabled(true);
+            moveSkill_->setEnabled(true);
+            shootSkill_->setEnabled(false);
             break;
         }
         case RobotAction::SHOOT:
         {
-            robot_->setMovingEnabled(false);
-            robot_->setShootingEnabled(true);
+            moveSkill_->setEnabled(false);
+            shootSkill_->setEnabled(true);
             break;
         }
         default:

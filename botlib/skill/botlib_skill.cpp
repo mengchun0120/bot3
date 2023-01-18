@@ -32,10 +32,5 @@ void Skill::setEnabled(bool b)
     enabled_ = b;
 }
 
-void Skill::update(UpdateContext& cxt)
-{
-    robot_->addEnergy(-t_->energyCost());
-}
-
 } // end of namespace botlib
 } // end of namespace mcdane

@@ -24,7 +24,7 @@ ShootMissileSkill::ShootMissileSkill(const ShootMissileSkillTemplate* t,
 void ShootMissileSkill::init(const ShootMissileSkillTemplate* t,
                              Robot* robot)
 {
-    Skill::init(t, robot, true);
+    Skill::init(t, robot);
     timeSinceLastShoot_ = 0.0f;
 }
 
@@ -37,31 +37,14 @@ void ShootMissileSkill::update(UpdateContext& cxt)
         return;
     }
 
-    GameMap& map = *(cxt.map());
-    const MissileTemplate* missileTemplate = robot_->getTemplate()->missileTemplate();
-    const std::vector<Component>& components = robot_->components();
-
-    for (auto it = components.begin(); it != components.end(); ++it)
-    {
-        if (it->getTemplate()->type() != ComponentType::GUN)
-        {
-            continue;
-        }
-
-        Missile* missile = new Missile();
-        missile->init(missileTemplate, robot_->side(),
-                      it->firePos(), it->direction(),
-                      robot_->damageFactor());
-        map.addObj(missile);
-    }
-
+    robot_->shoot(cxt);
+    robot_->addEnergy(-t_->energyCost());
     timeSinceLastShoot_ = 0.0f;
+
     if (!getTemplate()->keepAlive())
     {
         setEnabled(false);
     }
-
-    Skill::update(cxt);
 }
 
 } // end of namespace botlib

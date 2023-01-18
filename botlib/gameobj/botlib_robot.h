@@ -100,8 +100,14 @@ public:
 
     bool setSkillEnabled(SkillType skillType, bool enabled);
 
+    void shoot(UpdateContext& cxt);
+
 protected:
     void initSkills();
+
+    void updateAlive(UpdateContext& cxt);
+
+    void updateDying(UpdateContext& cxt);
 
     void updateSkills(UpdateContext& cxt);
 
@@ -110,8 +116,6 @@ protected:
     void updateShooting(UpdateContext& cxt);
 
     void checkPassthroughCollide(UpdateContext& cxt);
-
-    void shoot(UpdateContext& cxt);
 
     void resetArmorReduceRatio();
 
