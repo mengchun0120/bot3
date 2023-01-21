@@ -1,9 +1,5 @@
 #include <commonlib_log.h>
 #include <botlib_update_context.h>
-#include <botlib_component_template.h>
-#include <botlib_game_map.h>
-#include <botlib_missile.h>
-#include <botlib_skill_template.h>
 #include <botlib_shoot_missile_skill.h>
 
 namespace mcdane {

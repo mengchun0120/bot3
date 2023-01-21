@@ -232,7 +232,7 @@ void GameLib::initSkillTemplateLib(const std::string& skillTemplateLibFile)
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        SkillTemplate* t = SkillTemplateFactory::create(v);
+        SkillTemplate* t = SkillTemplateFactory::create(v, missileTemplateLib_);
         ptr.reset(t);
     };
 

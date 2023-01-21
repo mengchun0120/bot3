@@ -1,5 +1,6 @@
 #include <botlib_move_skill.h>
 #include <botlib_shoot_missile_skill.h>
+#include <botlib_blast_skill.h>
 #include <botlib_skill_factory.h>
 
 namespace mcdane {
@@ -19,6 +20,11 @@ Skill* SkillFactory::create(const SkillTemplate* t, Robot* robot)
             return new ShootMissileSkill(
                             static_cast<const ShootMissileSkillTemplate*>(t),
                             robot);
+        }
+        case SkillType::BLAST:
+        {
+            return new BlastSkill(static_cast<const BlastSkillTemplate*>(t),
+                                  robot);
         }
         default:
         {

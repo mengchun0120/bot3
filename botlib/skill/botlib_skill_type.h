@@ -10,6 +10,7 @@ namespace botlib {
 enum class SkillType {
     MOVE,
     SHOOT_MISSILE,
+    BLAST,
 };
 
 const std::string& toString(SkillType type);

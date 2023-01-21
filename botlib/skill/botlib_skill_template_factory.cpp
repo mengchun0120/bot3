@@ -2,6 +2,7 @@
 #include <commonlib_json_param.h>
 #include <botlib_move_skill_template.h>
 #include <botlib_shoot_missile_skill_template.h>
+#include <botlib_blast_skill_template.h>
 #include <botlib_skill_template_factory.h>
 
 using namespace mcdane::commonlib;
@@ -9,7 +10,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-SkillTemplate* SkillTemplateFactory::create(const rapidjson::Value& v)
+SkillTemplate* SkillTemplateFactory::create(const rapidjson::Value& v,
+                                            const MissileTemplateLib& missileLib)
 {
     std::string typeStr;
     std::vector<JsonParamPtr> params{
@@ -29,6 +31,10 @@ SkillTemplate* SkillTemplateFactory::create(const rapidjson::Value& v)
         case SkillType::SHOOT_MISSILE:
         {
             return new ShootMissileSkillTemplate(v);
+        }
+        case SkillType::BLAST:
+        {
+            return new BlastSkillTemplate(v, missileLib);
         }
         default:
         {
