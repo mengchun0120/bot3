@@ -11,7 +11,8 @@ namespace mcdane {
 namespace botlib {
 
 SkillTemplate* SkillTemplateFactory::create(const rapidjson::Value& v,
-                                            const MissileTemplateLib& missileLib)
+                                            const MissileTemplateLib& missileLib,
+                                            const std::string& skillDataDir)
 {
     std::string typeStr;
     std::vector<JsonParamPtr> params{
@@ -34,7 +35,7 @@ SkillTemplate* SkillTemplateFactory::create(const rapidjson::Value& v,
         }
         case SkillType::BLAST:
         {
-            return new BlastSkillTemplate(v, missileLib);
+            return new BlastSkillTemplate(v, missileLib, skillDataDir);
         }
         default:
         {

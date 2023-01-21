@@ -7,6 +7,23 @@
         "hasDest": true,
         "speed": 0.2
     },
+    "player_shoot_missile_skill": {
+        "type": "shoot-missile",
+        "isOffensive": true,
+        "coolDown": 1000.0,
+        "energyCost": 5.0,
+        "keepAlive": false
+    },
+    "player_blast_skill": {
+        "type": "blast",
+        "isOffensive": true,
+        "coolDown": 10000.0,
+        "energyCost": 20.0,
+        "keepAlive": false,
+        "missile": "green_blast_missile",
+        "firePosFile": "green_blast_skill_fire_pos.txt",
+        "fireDirectionFile": "green_blast_skill_fire_direction.txt"
+    },
     "ai_move_skill": {
         "type": "move",
         "isOffensive": false,
@@ -14,13 +31,6 @@
         "energyCost": 0.0,
         "hasDest": false,
         "speed": 0.2
-    },
-    "player_shoot_missile_skill": {
-        "type": "shoot-missile",
-        "isOffensive": true,
-        "coolDown": 1000.0,
-        "energyCost": 5.0,
-        "keepAlive": false
     },
     "ai_shoot_missile_skill": {
         "type": "shoot-missile",

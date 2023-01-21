@@ -61,7 +61,7 @@ void GameLib::load(const AppConfig& cfg)
     initProgressBarTemplateLib(cfg.progressBarTemplateLibFile());
     initGoodieTemplateLib(cfg.goodieTemplateLibFile());
     initMissileTemplateLib(cfg.missileTemplateLibFile());
-    initSkillTemplateLib(cfg.skillTemplateLibFile());
+    initSkillTemplateLib(cfg.skillTemplateLibFile(), cfg.skillDataDir());
     initAIRobotTemplateLib(cfg.aiRobotTemplateLibFile());
     initIconTemplateLib(cfg.iconTemplateLibFile());
     playerTemplate_.init(cfg.playerTemplateFile(),
@@ -226,13 +226,15 @@ void GameLib::initMissileTemplateLib(const std::string& missileTemplateLibFile)
     LOG_DEBUG << "missileTemplateLib loaded successfully" << LOG_END;
 }
 
-void GameLib::initSkillTemplateLib(const std::string& skillTemplateLibFile)
+void GameLib::initSkillTemplateLib(const std::string& skillTemplateLibFile,
+                                   const std::string& skillDataDir)
 {
     auto parser = [&](std::unique_ptr<SkillTemplate>& ptr,
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        SkillTemplate* t = SkillTemplateFactory::create(v, missileTemplateLib_);
+        SkillTemplate* t = SkillTemplateFactory::create(v, missileTemplateLib_,
+                                                        skillDataDir);
         ptr.reset(t);
     };
 

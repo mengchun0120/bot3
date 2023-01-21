@@ -50,6 +50,11 @@
         "texture": "green_small_missile",
         "rect": "small_missile"
     },
+    "green_blast_missile": {
+        "type": "missile",
+        "texture": "green_blast_missile",
+        "rect": "big_missile"
+    },
     "green_split_missile": {
         "type": "missile",
         "texture": "green_split_missile",

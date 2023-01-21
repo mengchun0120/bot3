@@ -22,7 +22,7 @@ void ShootMissileSkill::init(const ShootMissileSkillTemplate* t,
 {
     Skill::init(t, robot);
     coolDown_ = t->coolDown();
-    timeSinceLastShoot_ = 0.0f;
+    timeSinceLastShoot_ = t->coolDown();
 }
 
 void ShootMissileSkill::setCoolDownFactor(float f)
@@ -36,6 +36,10 @@ void ShootMissileSkill::update(UpdateContext& cxt)
 
     if (!available())
     {
+        if (!getTemplate()->keepAlive())
+        {
+            setEnabled(false);
+        }
         return;
     }
 

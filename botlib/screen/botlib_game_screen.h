@@ -57,6 +57,8 @@ private:
 
     void processStopMoveKey(const commonlib::KeyEvent& e);
 
+    void processBlastKey(const commonlib::KeyEvent& e);
+
     void updatePlayer();
 
     void clearUpdateFlags();

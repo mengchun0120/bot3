@@ -12,7 +12,8 @@ class SkillTemplate;
 class SkillTemplateFactory {
 public:
     static SkillTemplate* create(const rapidjson::Value& v,
-                                 const MissileTemplateLib& missileLib);
+                                 const MissileTemplateLib& missileLib,
+                                 const std::string& skillDataDir);
 };
 
 } // end of namespace botlib

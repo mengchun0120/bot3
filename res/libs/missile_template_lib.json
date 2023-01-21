@@ -128,5 +128,23 @@
             [-0.70710678, -0.70710678],
             [0.70710678, -0.70710678]
         ]
+    },
+    "green_blast_missile": {
+        "collideBreath": 8.0,
+        "damage": 40.0,
+        "speed": 0.7,
+        "explodeBreath": 40.0,
+        "energyCost": 0.0,
+        "duration": 10000.0,
+        "components": [
+            {
+                "template": "green_blast_missile",
+                "pos": [0.0, 0.0],
+                "direction": [1.0, 0.0]
+            }
+        ],
+        "explodeEffect": "green_big_explosion",
+        "guided": false,
+        "searchBreath": 0.0
     }
 }

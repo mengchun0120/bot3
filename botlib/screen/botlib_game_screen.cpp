@@ -278,6 +278,11 @@ bool GameScreen::processKey(const KeyEvent& e)
             processStopMoveKey(e);
             break;
         }
+        case GLFW_KEY_B:
+        {
+            processBlastKey(e);
+            break;
+        }
         default:
             break;
     }
@@ -298,6 +303,14 @@ void GameScreen::processStopMoveKey(const commonlib::KeyEvent& e)
     if (e.action_ == GLFW_PRESS)
     {
         map_.player()->setSkillEnabled(SkillType::MOVE, false);
+    }
+}
+
+void GameScreen::processBlastKey(const commonlib::KeyEvent& e)
+{
+    if (e.action_ == GLFW_PRESS)
+    {
+        map_.player()->setSkillEnabled(SkillType::BLAST, true);
     }
 }
 

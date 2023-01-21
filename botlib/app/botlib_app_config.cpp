@@ -176,6 +176,8 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
                   true, k_nonEmptyStrV),
         jsonParam(skillTemplateLibFile_, {"libraries", "skillTemplateLibFile"},
                   true, k_nonEmptyStrV),
+        jsonParam(skillDataDir_, {"libraries", "skillDataDir"},
+                  true, k_nonEmptyStrV),
         jsonParam(goodieTemplateLibFile_, {"libraries", "goodieTemplateLibFile"},
                   true, k_nonEmptyStrV),
         jsonParam(aiRobotTemplateLibFile_, {"libraries", "aiRobotTemplateLibFile"},
@@ -210,6 +212,7 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
     tileTemplateLibFile_ = constructPath({libDir_, tileTemplateLibFile_});
     missileTemplateLibFile_ = constructPath({libDir_, missileTemplateLibFile_});
     skillTemplateLibFile_ = constructPath({libDir_, skillTemplateLibFile_});
+    skillDataDir_ = constructPath({libDir_, skillDataDir_});
     goodieTemplateLibFile_ = constructPath({libDir_, goodieTemplateLibFile_});
     aiRobotTemplateLibFile_ = constructPath({libDir_, aiRobotTemplateLibFile_});
     particleEffectTemplateLibFile_ = constructPath(

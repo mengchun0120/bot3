@@ -24,7 +24,7 @@ BlastSkill::BlastSkill(const BlastSkillTemplate *t, Robot* robot)
 void BlastSkill::init(const BlastSkillTemplate *t, Robot* robot)
 {
     Skill::init(t, robot);
-    timeSinceLastBlast_ = 0.0f;
+    timeSinceLastBlast_ = t->coolDown();
 }
 
 void BlastSkill::update(UpdateContext& cxt)
@@ -33,6 +33,10 @@ void BlastSkill::update(UpdateContext& cxt)
 
     if (!available())
     {
+        if (!getTemplate()->keepAlive())
+        {
+            setEnabled(false);
+        }
         return;
     }
 

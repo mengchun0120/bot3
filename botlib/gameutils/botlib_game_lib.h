@@ -123,7 +123,8 @@ private:
 
     void initMissileTemplateLib(const std::string& missileTemplateLibFile);
 
-    void initSkillTemplateLib(const std::string& skillTemplateLibFile);
+    void initSkillTemplateLib(const std::string& skillTemplateLibFile,
+                              const std::string& skillDataDir);
 
     void initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile);
 

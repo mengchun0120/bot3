@@ -81,6 +81,8 @@ public:
 
     inline const std::string& skillTemplateLibFile() const;
 
+    inline const std::string& skillDataDir() const;
+
     inline const std::string& goodieTemplateLibFile() const;
 
     inline const std::string& aiRobotTemplateLibFile() const;
@@ -151,6 +153,7 @@ private:
     std::string tileTemplateLibFile_;
     std::string missileTemplateLibFile_;
     std::string skillTemplateLibFile_;
+    std::string skillDataDir_;
     std::string goodieTemplateLibFile_;
     std::string aiRobotTemplateLibFile_;
     std::string particleEffectTemplateLibFile_;
@@ -317,6 +320,11 @@ const std::string& AppConfig::missileTemplateLibFile() const
 const std::string& AppConfig::skillTemplateLibFile() const
 {
     return skillTemplateLibFile_;
+}
+
+const std::string& AppConfig::skillDataDir() const
+{
+    return skillDataDir_;
 }
 
 const std::string& AppConfig::goodieTemplateLibFile() const

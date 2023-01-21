@@ -19,6 +19,11 @@
         "height": 16.0,
         "hasTexture": true
     },
+    "big_missile": {
+        "width": 26.0,
+        "height": 26.0,
+        "hasTexture": true
+    },
     "guided_missile": {
         "width": 19.0,
         "height": 16.0,

@@ -22,7 +22,7 @@ BlastSkillTemplate::BlastSkillTemplate(const rapidjson::Value& v,
                                        const MissileTemplateLib& missileLib,
                                        const std::string& skillDataDir)
 {
-    init(v, missileLib);
+    init(v, missileLib, skillDataDir);
 }
 
 void BlastSkillTemplate::init(const rapidjson::Value& v,
