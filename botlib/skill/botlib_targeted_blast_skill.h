@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_TARGETED_BLAST_SKILL_H
 #define INCLUDED_BOTLIB_TARGETED_BLAST_SKILL_H
 
+#include <commonlib_linked_list.h>
 #include <botlib_targeted_blast_skill_template.h>
 #include <botlib_skill.h>
 

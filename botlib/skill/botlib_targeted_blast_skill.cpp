@@ -1,5 +1,10 @@
+#include <commonlib_log.h>
+#include <commonlib_math_utils.h>
 #include <botlib_update_context.h>
+#include <botlib_target_finder.h>
 #include <botlib_targeted_blast_skill.h>
+
+using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
@@ -23,7 +28,8 @@ void TargetedBlastSkill::update(UpdateContext& cxt)
         return;
     }
 
-
+    Side enemySide = robot_->side() == Side::AI ? Side::PLAYER : Side::AI;
+    TargetFinder finder = TargetFinder(enemySide, 1, cxt.
 }
 
 void TargetedBlastSkill::init(const TargetedBlastSkillTemplate* t,

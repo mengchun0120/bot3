@@ -9,10 +9,14 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-TargetFinder::TargetFinder(Missile* src, GameObjItemPool& pool)
-    : src_(src)
+TargetFinder::TargetFinder(Side side,
+                           int numTargets,
+                           GameObjItemList& targets,
+                           GameObjItemPool& pool)
+    : side_(side)
+    , numTargets_(numTargets)
+    , targets_(targets)
     , pool_(pool)
-    , candidates_(pool.deleter())
 {
 }
 
@@ -24,32 +28,28 @@ bool TargetFinder::operator()(GameObject* obj)
     }
 
     Robot* robot = static_cast<Robot*>(obj);
-    if (robot->state() != GameObjectState::ALIVE || robot->side() == src_->side())
+    if (robot->state() != GameObjectState::ALIVE || robot->side() != side_)
     {
         return true;
     }
 
     GameObjectItem* item = pool_.alloc(obj);
-    candidates_.pushBack(item);
+    targets_.pushBack(item);
 
     return true;
 }
 
-Robot* TargetFinder::getTarget()
+GameObjItemList& TargetFinder::getTargets()
 {
-    int maxIndex = candidates_.size() - 1;
-    if (maxIndex < 0)
+    int nonTargetCount = static_cast<int>(targets_.size()) - numTargets_;
+
+    for (int i = 0; i < nonTargetCount; ++i)
     {
-        return nullptr;
+        int index = randInt(0, static_cast<int>(targets_.size()) - 1);
+        targets_.remove(targets_.get(index));
     }
 
-    if (maxIndex == 0)
-    {
-        return static_cast<Robot*>(candidates_.first()->item());
-    }
-
-    int index = randInt(0, maxIndex);
-    return static_cast<Robot*>(candidates_.get(index)->item());
+    return targets_;
 }
 
 } // end of namespace botlib

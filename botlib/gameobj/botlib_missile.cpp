@@ -171,14 +171,16 @@ void Missile::setTarget(Robot* robot, UpdateContext& cxt)
 void Missile::searchTarget(UpdateContext& cxt)
 {
     Region<int> area = searchRegion(cxt.map());
-    TargetFinder finder(this, cxt.itemPool());
+    Side enemySide = side() == Side::AI ? Side::PLAYER : Side::AI;
+    GameObjItemList targets(cxt.itemPool().deleter());
+    TargetFinder finder(enemySide, 1, targets, cxt.itemPool());
 
     cxt.map()->traverse(area, finder, GameMap::LAYER_ROBOT, 1);
 
-    Robot *robot = finder.getTarget();
-    if (robot)
+    finder.getTargets();
+    if (!targets.empty())
     {
-        setTarget(robot, cxt);
+        setTarget(static_cast<Robot*>(targets.first()->item()), cxt);
     }
 }
 

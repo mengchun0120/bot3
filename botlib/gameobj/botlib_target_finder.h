@@ -3,26 +3,28 @@
 
 #include <commonlib_linked_list.h>
 #include <commonlib_linked_item.h>
+#include <botlib_side.h>
 #include <botlib_typedef.h>
 
 namespace mcdane {
 namespace botlib {
 
-class Missile;
-class Robot;
-
 class TargetFinder {
 public:
-    TargetFinder(Missile* src, GameObjItemPool& pool);
+    TargetFinder(Side side,
+                 int numTargets,
+                 GameObjItemList& targets,
+                 GameObjItemPool& pool);
 
     bool operator()(GameObject* obj);
 
-    Robot* getTarget();
+    GameObjItemList& getTargets();
 
 private:
-    Missile* src_;
+    Side side_;
+    int numTargets_;
+    GameObjItemList& targets_;
     GameObjItemPool& pool_;
-    GameObjItemList candidates_;
 };
 
 } // end of namespace botlib
