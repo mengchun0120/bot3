@@ -11,6 +11,7 @@ enum class SkillType {
     MOVE,
     SHOOT_MISSILE,
     BLAST,
+    TARGETED_BLAST,
 };
 
 const std::string& toString(SkillType type);

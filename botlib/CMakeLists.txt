@@ -98,7 +98,8 @@ set(BOTLIB_SKILL_SRC
     skill/botlib_skill_flag.cpp
     skill/botlib_skill_template.cpp
     skill/botlib_skill_template_factory.cpp
-    skill/botlib_skill_type.cpp)
+    skill/botlib_skill_type.cpp
+    skill/botlib_targeted_blast_skill_template.cpp)
 
 set(BOTLIB_TEMPLATE_SRC
     template/botlib_ai_robot_template.cpp

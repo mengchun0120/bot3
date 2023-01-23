@@ -3,6 +3,7 @@
 #include <botlib_move_skill_template.h>
 #include <botlib_shoot_missile_skill_template.h>
 #include <botlib_blast_skill_template.h>
+#include <botlib_targeted_blast_skill_template.h>
 #include <botlib_skill_template_factory.h>
 
 using namespace mcdane::commonlib;
@@ -36,6 +37,10 @@ SkillTemplate* SkillTemplateFactory::create(const rapidjson::Value& v,
         case SkillType::BLAST:
         {
             return new BlastSkillTemplate(v, missileLib, skillDataDir);
+        }
+        case SkillType::TARGETED_BLAST:
+        {
+            return new TargetedBlastSkillTemplate(v);
         }
         default:
         {
