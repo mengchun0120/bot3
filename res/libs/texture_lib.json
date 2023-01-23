@@ -35,6 +35,9 @@
     "green_blast_missile": {
         "file": "green_blast_missile.png"
     },
+    "green_star_missile": {
+        "file": "green_star_missile.png"
+    },
     "red_base": {
         "file": "red_base.png"
     },

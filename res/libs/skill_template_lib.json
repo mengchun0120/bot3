@@ -24,6 +24,17 @@
         "firePosFile": "green_blast_skill_fire_pos.txt",
         "fireDirectionFile": "green_blast_skill_fire_direction.txt"
     },
+    "player_targeted_blast_skill": {
+        "type": "targeted-blast",
+        "isOffensive": true,
+        "coolDown": 8000.0,
+        "energyCost": 30.0,
+        "keepAlive": false,
+        "numTargets": 3,
+        "missile": "green_star_missile",
+        "searchRange": 200.0,
+        "startRadius": 8.0
+    },
     "ai_move_skill": {
         "type": "move",
         "isOffensive": false,

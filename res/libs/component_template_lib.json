@@ -60,6 +60,11 @@
         "texture": "green_split_missile",
         "rect": "missile"
     },
+    "green_star_missile": {
+        "type": "missile",
+        "texture": "green_star_missile",
+        "rect": "missile"
+    },
     "red_base": {
         "type": "base",
         "texture": "red_base",

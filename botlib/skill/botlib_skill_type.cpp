@@ -11,7 +11,7 @@ static const std::vector<std::string> k_skillTypeStr{
     "move",
     "shoot-missile",
     "blast",
-    "guided-blast",
+    "targeted-blast",
 };
 
 const std::string& toString(SkillType type)

@@ -2,14 +2,6 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="210mm"
    height="297mm"
    viewBox="0 0 210 297"
@@ -18,8 +10,16 @@
    inkscape:export-filename="C:\Users\mengc\bot3\res\pics\red_base.png"
    inkscape:export-xdpi="90.606743"
    inkscape:export-ydpi="90.606743"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="pics.svg">
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="pics.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2">
     <linearGradient
@@ -76,18 +76,20 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8665198"
-     inkscape:cx="321.41118"
-     inkscape:cy="906.83432"
+     inkscape:zoom="5.7330396"
+     inkscape:cx="372.49001"
+     inkscape:cy="197.27755"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:window-width="1920"
-     inkscape:window-height="1027"
+     inkscape:window-height="1002"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:pagecheckerboard="0">
+     inkscape:pagecheckerboard="0"
+     inkscape:snap-to-guides="false"
+     inkscape:snap-grids="false">
     <inkscape:grid
        type="xygrid"
        id="grid4520" />
@@ -295,6 +297,39 @@
          inkscape:export-ydpi="90.606743"
          rx="3.6674829"
          ry="3.641999" />
+    </g>
+    <g
+       id="g1519"
+       inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\green_star_missile.png"
+       inkscape:export-xdpi="90.606743"
+       inkscape:export-ydpi="90.606743">
+      <ellipse
+         style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path163-1-2"
+         cx="114.70028"
+         cy="57.196369"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="1.6949451"
+         ry="1.6648045" />
+      <path
+         sodipodi:type="star"
+         style="fill:#007f00;fill-opacity:1;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
+         id="path1328"
+         inkscape:flatsided="false"
+         sodipodi:sides="5"
+         sodipodi:cx="400"
+         sodipodi:cy="190"
+         sodipodi:r1="10"
+         sodipodi:r2="5"
+         sodipodi:arg1="3.1415927"
+         sodipodi:arg2="3.7699112"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         transform="matrix(0.24143553,0,0,0.24125096,18.166106,11.369559)"
+         inkscape:transform-center-x="0.22471321"
+         d="m 390,190 5.95492,-2.93893 0.95491,-6.57164 4.63526,4.75529 6.54508,-1.12257 L 405,190 l 3.09017,5.87785 -6.54509,-1.12257 -4.63525,4.75529 -0.95492,-6.57164 z" />
     </g>
   </g>
   <g
