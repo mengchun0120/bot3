@@ -40,7 +40,7 @@ SkillTemplate* SkillTemplateFactory::create(const rapidjson::Value& v,
         }
         case SkillType::TARGETED_BLAST:
         {
-            return new TargetedBlastSkillTemplate(v);
+            return new TargetedBlastSkillTemplate(v, missileLib);
         }
         default:
         {

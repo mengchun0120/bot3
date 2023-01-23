@@ -7,7 +7,7 @@
     "speed": 0.2,
     "energy": 100.0,
     "rechargeRate": 0.002,
-    "missile": "green_split_missile",
+    "missile": "green_guided_missile",
     "fireIntervalMS": 500.0,
     "components": [
         {
