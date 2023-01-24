@@ -35,6 +35,7 @@
     "skills": [
         "player_move_skill",
         "player_shoot_missile_skill",
-        "player_blast_skill"
+        "player_blast_skill",
+        "player_targeted_blast_skill"
     ]
 }

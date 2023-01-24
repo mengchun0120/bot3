@@ -283,6 +283,11 @@ bool GameScreen::processKey(const KeyEvent& e)
             processBlastKey(e);
             break;
         }
+        case GLFW_KEY_W:
+        {
+            processTargetedBlastKey(e);
+            break;
+        }
         default:
             break;
     }
@@ -311,6 +316,15 @@ void GameScreen::processBlastKey(const commonlib::KeyEvent& e)
     if (e.action_ == GLFW_PRESS)
     {
         map_.player()->setSkillEnabled(SkillType::BLAST, true);
+    }
+}
+
+void GameScreen::processTargetedBlastKey(const commonlib::KeyEvent& e)
+{
+    if (e.action_ == GLFW_PRESS)
+    {
+        LOG_INFO << "processTargetBlastKey" << LOG_END;
+        map_.player()->setSkillEnabled(SkillType::TARGETED_BLAST, true);
     }
 }
 

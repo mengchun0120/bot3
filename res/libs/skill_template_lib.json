@@ -32,8 +32,8 @@
         "keepAlive": false,
         "numTargets": 3,
         "missile": "green_star_missile",
-        "searchRange": 200.0,
-        "startRadius": 8.0
+        "searchRange": 300.0,
+        "startRadius": 30.0
     },
     "ai_move_skill": {
         "type": "move",

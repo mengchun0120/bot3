@@ -20,13 +20,15 @@ TargetedBlastSkill::TargetedBlastSkill(const TargetedBlastSkillTemplate* t,
 
 void TargetedBlastSkill::update(UpdateContext& cxt)
 {
-    timeSinceLastBlast_ = cxt.timeDelta();
+    timeSinceLastBlast_ += cxt.timeDelta();
 
     if (!available())
     {
         checkEnabled();
         return;
     }
+
+    LOG_INFO << "TargetedBlastSkill update" << LOG_END;
 
     GameObjItemList targets(cxt.itemPool().deleter());
     findTargets(targets, cxt);
@@ -79,7 +81,7 @@ void TargetedBlastSkill::shootTargets(GameObjItemList& targets, UpdateContext& c
     for (GameObjectItem* i = targets.first(); i; i = i->next())
     {
         Vector2 direction = normalize(i->item()->pos() - robot_->pos());
-        Vector2 pos = direction * radius;
+        Vector2 pos = direction * radius + robot_->pos();
         Missile* missile = new Missile();
         missile->init(missileTemplate, robot_->side(), pos, direction);
         map.addObj(missile);

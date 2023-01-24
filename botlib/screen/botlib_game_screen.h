@@ -59,6 +59,8 @@ private:
 
     void processBlastKey(const commonlib::KeyEvent& e);
 
+    void processTargetedBlastKey(const commonlib::KeyEvent& e);
+
     void updatePlayer();
 
     void clearUpdateFlags();
