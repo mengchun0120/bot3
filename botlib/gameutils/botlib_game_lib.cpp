@@ -3,7 +3,7 @@
 #include <commonlib_file_utils.h>
 #include <botlib_app_config.h>
 #include <botlib_constants.h>
-#include <botlib_skill_template_factory.h>
+#include <botlib_skill_utils.h>
 #include <botlib_game_lib.h>
 
 using namespace mcdane::commonlib;
@@ -233,8 +233,8 @@ void GameLib::initSkillTemplateLib(const std::string& skillTemplateLibFile,
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        SkillTemplate* t = SkillTemplateFactory::create(v, missileTemplateLib_,
-                                                        skillDataDir);
+        SkillTemplate* t = createSkillTemplate(v, missileTemplateLib_,
+                                               skillDataDir);
         ptr.reset(t);
     };
 
