@@ -14,6 +14,14 @@ Goodie::Goodie()
 {
 }
 
+Goodie::Goodie(const GoodieTemplate* t,
+               const commonlib::Vector2& pos,
+               const commonlib::Vector2& direction,
+               bool activated1)
+{
+    init(t, pos, direction, activated1);
+}
+
 void Goodie::init(const GoodieTemplate* t,
                   const commonlib::Vector2& pos,
                   const commonlib::Vector2& direction,

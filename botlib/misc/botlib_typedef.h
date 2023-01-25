@@ -56,6 +56,7 @@ using GameObjectItem = commonlib::LinkedItem<GameObject*>;
 using GameObjItemPool = commonlib::ObjectPool<GameObjectItem>;
 using GameObjItemList = commonlib::LinkedList<GameObjectItem>;
 using GameObjItemDeleter = std::function<void(GameObjectItem*)>;
+using GameObjDeleter = std::function<void(GameObject*)>;
 
 } // end of namespace botlib
 } // end of namespace mcdane

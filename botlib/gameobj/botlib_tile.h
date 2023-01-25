@@ -11,6 +11,10 @@ class Tile: public CompositeObject {
 public:
     Tile() = default;
 
+    Tile(const TileTemplate* t,
+         const commonlib::Vector2& pos1,
+         const commonlib::Vector2& direction1);
+
     ~Tile() override = default;
 
     void init(const TileTemplate* t,

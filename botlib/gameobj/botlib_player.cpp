@@ -10,6 +10,17 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+Player::Player(const PlayerTemplate* t,
+               const commonlib::Vector2& pos1,
+               const commonlib::Vector2& direction1,
+               float goodieY,
+               float goodieStartX,
+               float goodieSpacing,
+               GameObjItemDeleter itemDeleter)
+{
+    init(t, pos1, direction1, goodieY, goodieStartX, goodieSpacing, itemDeleter);
+}
+
 void Player::init(const PlayerTemplate* t,
                   const Vector2& pos1,
                   const Vector2& direction1,

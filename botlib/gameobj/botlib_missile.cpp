@@ -19,6 +19,15 @@ Missile::Missile()
 {
 }
 
+Missile::Missile(const MissileTemplate* t,
+                 Side side,
+                 const commonlib::Vector2& pos1,
+                 const commonlib::Vector2& direction1,
+                 float damageFactor)
+{
+    init(t, side, pos1, direction1, damageFactor);
+}
+
 Missile::~Missile()
 {
     if (target_)

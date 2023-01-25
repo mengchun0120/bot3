@@ -13,6 +13,11 @@ class AIRobot: public Robot {
 public:
     AIRobot();
 
+    AIRobot(const AIRobotTemplate* t,
+            const commonlib::Vector2& pos1,
+            const commonlib::Vector2& direction1,
+            GameObjItemDeleter itemDeleter=nullptr);
+
     ~AIRobot() override;
 
     void init(const AIRobotTemplate* t,

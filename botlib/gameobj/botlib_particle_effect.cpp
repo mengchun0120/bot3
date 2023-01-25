@@ -10,8 +10,14 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+ParticleEffect::ParticleEffect(const ParticleEffectTemplate* t,
+                               const commonlib::Vector2& pos)
+{
+    init(t, pos);
+}
+
 void ParticleEffect::init(const ParticleEffectTemplate* t,
-                     const Vector2& pos)
+                          const Vector2& pos)
 {
     GameObject::init(t, pos);
     startTime_ = Clock::now();

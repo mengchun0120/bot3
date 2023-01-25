@@ -14,6 +14,12 @@ class Missile: public CompositeObject {
 public:
     Missile();
 
+    Missile(const MissileTemplate* t,
+            Side side,
+            const commonlib::Vector2& pos1,
+            const commonlib::Vector2& direction1,
+            float damageFactor=1.0f);
+
     ~Missile() override;
 
     void init(const MissileTemplate* t,

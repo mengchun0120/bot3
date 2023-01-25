@@ -14,6 +14,14 @@ class Player: public Robot {
 public:
     Player() = default;
 
+    Player(const PlayerTemplate* t,
+           const commonlib::Vector2& pos1,
+           const commonlib::Vector2& direction1,
+           float goodieY,
+           float goodieStartX,
+           float goodieSpacing,
+           GameObjItemDeleter itemDeleter=nullptr);
+
     ~Player() override = default;
 
     void init(const PlayerTemplate* t,

@@ -12,6 +12,9 @@ class ParticleEffect: public GameObject {
 public:
     ParticleEffect() = default;
 
+    ParticleEffect(const ParticleEffectTemplate* t,
+                   const commonlib::Vector2& pos);
+
     ~ParticleEffect() override = default;
 
     void init(const ParticleEffectTemplate* t,

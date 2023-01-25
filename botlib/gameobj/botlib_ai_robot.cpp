@@ -15,6 +15,14 @@ AIRobot::AIRobot()
 {
 }
 
+AIRobot::AIRobot(const AIRobotTemplate* t,
+                 const commonlib::Vector2& pos1,
+                 const commonlib::Vector2& direction1,
+                 GameObjItemDeleter itemDeleter)
+{
+    init(t, pos1, direction1, itemDeleter);
+}
+
 AIRobot::~AIRobot()
 {
     delete ai_;

@@ -13,6 +13,13 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+Tile::Tile(const TileTemplate* t,
+           const commonlib::Vector2& pos1,
+           const commonlib::Vector2& direction1)
+{
+    init(t, pos1, direction1);
+}
+
 void Tile::init(const TileTemplate* t,
                 const commonlib::Vector2& pos1,
                 const commonlib::Vector2& direction1)

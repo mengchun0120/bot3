@@ -20,6 +20,7 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_component_type.cpp
     gameobj/botlib_composite_object.cpp
     gameobj/botlib_game_object.cpp
+    gameobj/botlib_game_object_factory.cpp
     gameobj/botlib_game_object_state.cpp
     gameobj/botlib_game_object_type.cpp
     gameobj/botlib_goodie.cpp
