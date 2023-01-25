@@ -239,9 +239,9 @@ void Robot::shoot(UpdateContext& cxt)
             continue;
         }
 
-        Missile* missile = new Missile();
-        missile->init(t, side_, it->firePos(), it->direction(), damageFactor_);
-
+        Missile* missile =
+            cxt.factory().createMissile(t, side_, it->firePos(), it->direction(),
+                                        damageFactor_);
         map.addObj(missile);
     }
 }

@@ -21,7 +21,10 @@ void ShowMapScreen::init(const commonlib::Vector2& viewportSize,
                          ScreenType nextScreenType,
                          bool initMap)
 {
+    constexpr int MISSILE_POOL_SIZE = 1000;
+
     Screen::init(actions);
+    factory_.init(MISSILE_POOL_SIZE);
     nextScreenType_ = nextScreenType;
     if (initMap)
     {
@@ -57,7 +60,7 @@ void ShowMapScreen::loadMap(const commonlib::Vector2& viewportSize)
 {
     const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
 
-    GameMapLoader loader(viewportSize[0], viewportSize[1]);
+    GameMapLoader loader(viewportSize[0], viewportSize[1], factory_);
 
     loader.load(map_, cfg.mapFile());
 }

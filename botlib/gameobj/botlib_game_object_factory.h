@@ -15,6 +15,7 @@ class Goodie;
 class ParticleEffect;
 class AIRobot;
 class Player;
+class PlayerTemplate;
 
 class GameObjectFactory {
 public:

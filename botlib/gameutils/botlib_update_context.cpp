@@ -5,10 +5,13 @@
 namespace mcdane {
 namespace botlib {
 
-void UpdateContext::init(GameMap* map1, int itemPoolSize)
+void UpdateContext::init(GameMap* map1,
+                         int itemPoolSize,
+                         int missilePoolSize)
 {
     map_ = map1;
     itemPool_.init(itemPoolSize);
+    factory_.init(missilePoolSize);
     dumper_.init(&itemPool_);
 }
 

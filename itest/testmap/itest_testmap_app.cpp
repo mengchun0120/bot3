@@ -24,6 +24,7 @@ TestMapApp::TestMapApp(const std::string& configFile,
 
     Context::init(cfg);
     setupOpenGL();
+    factory_.init(1000);
     setupMap(mapFile);
 }
 
@@ -45,7 +46,7 @@ void TestMapApp::setupOpenGL()
 
 void TestMapApp::setupMap(const std::string& mapFile)
 {
-    GameMapLoader loader(viewportWidth(), viewportHeight());
+    GameMapLoader loader(viewportWidth(), viewportHeight(), factory_);
     loader.load(map_, mapFile);
 }
 

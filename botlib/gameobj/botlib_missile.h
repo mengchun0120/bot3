@@ -59,7 +59,7 @@ private:
 
     commonlib::Region<float> explodeRegion();
 
-    void showExplodeEffect(GameMap& map);
+    void showExplodeEffect(UpdateContext& cxt);
 
     void setTarget(Robot* robot, UpdateContext& cxt);
 

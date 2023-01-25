@@ -9,10 +9,13 @@
 namespace mcdane {
 namespace botlib {
 
+class GameObjectFactory;
+
 class GameMapLoader {
 public:
     GameMapLoader(float viewportWidth,
-                  float viewportHeight);
+                  float viewportHeight,
+                  GameObjectFactory& factory);
 
     void load(GameMap& map,
               const std::string& fileName,
@@ -57,6 +60,7 @@ private:
 private:
     float viewportWidth_;
     float viewportHeight_;
+    GameObjectFactory& factory_;
     std::string typeStr_;
     std::string templateStr_;
     commonlib::Vector2 pos_;

@@ -53,7 +53,8 @@ public:
               float viewportWidth,
               float viewportHeight,
               float maxObjSpan,
-              float maxCollideBreath);
+              float maxCollideBreath,
+              GameObjDeleter objDeleter = nullptr);
 
     void present();
 
@@ -140,7 +141,9 @@ public:
 private:
     void initObjDeleter();
 
-    void initMapCells(unsigned int rows, unsigned int cols);
+    void initMapCells(unsigned int rows,
+                      unsigned int cols,
+                      GameObjDeleter objDeleter);
 
     void setBoundary(unsigned int rows, unsigned int cols);
 

@@ -10,6 +10,7 @@
 #include <botlib_ai_robot.h>
 #include <botlib_particle_effect.h>
 #include <botlib_player.h>
+#include <botlib_game_object_factory.h>
 #include <botlib_game_map_loader.h>
 
 using namespace mcdane::commonlib;
@@ -18,8 +19,10 @@ namespace mcdane {
 namespace botlib {
 
 GameMapLoader::GameMapLoader(float viewportWidth,
-                             float viewportHeight)
-    : commonParams_{
+                             float viewportHeight,
+                             GameObjectFactory& factory)
+    : factory_(factory)
+    , commonParams_{
         jsonParam(typeStr_, "type", true, k_nonEmptyStrV),
         jsonParam(templateStr_, "template", true, k_nonEmptyStrV),
         jsonParam(pos_, "pos", true)
@@ -79,7 +82,7 @@ void GameMapLoader::loadMapDimension(GameMap& map,
     const GameLib& lib = Context::gameLib();
 
     map.init(rows, cols, viewportWidth_, viewportHeight_,
-             lib.maxObjSpan(), lib.maxCollideBreath());
+             lib.maxObjSpan(), lib.maxCollideBreath(), factory_.deleter());
 }
 
 void GameMapLoader::loadObjects(GameMap& map,
@@ -161,9 +164,7 @@ void GameMapLoader::addTile(GameMap& map,
 
     parse(tileParams_, v);
 
-    Tile* tile = new Tile();
-    tile->init(t, pos_, direction_);
-
+    Tile* tile = factory_.createTile(t, pos_, direction_);
     map.addObj(tile);
 }
 
@@ -188,9 +189,7 @@ void GameMapLoader::addGoodie(GameMap& map,
 
     parse(goodieParams_, v);
 
-    Goodie* goodie = new Goodie();
-    goodie->init(t, pos_, direction_);
-
+    Goodie* goodie = factory_.createGoodie(t, pos_, direction_);
     map.addObj(goodie);
 }
 
@@ -217,8 +216,7 @@ void GameMapLoader::addMissile(GameMap& map,
 
     Side side = strToSide(sideStr_);
 
-    Missile* missile = new Missile();
-    missile->init(t, side, pos_, direction_);
+    Missile* missile = factory_.createMissile(t, side, pos_, direction_);
 
     map.addObj(missile);
 }
@@ -245,8 +243,7 @@ void GameMapLoader::addAIRobot(GameMap& map,
 
     parse(robotParams_, v);
 
-    AIRobot* robot = new AIRobot();
-    robot->init(t, pos_, direction_, itemDeleter);
+    AIRobot* robot = factory_.createAIRobot(t, pos_, direction_, itemDeleter);
     map.addObj(robot);
 }
 
@@ -262,9 +259,7 @@ void GameMapLoader::addParticleEffect(GameMap& map,
                      "Failed to find ParticleEffectTemplate " + templateStr_);
     }
 
-    ParticleEffect* effect = new ParticleEffect();
-    effect->init(t, pos_);
-
+    ParticleEffect* effect = factory_.createParticleEffect(t, pos_);
     map.addObj(effect);
 }
 
@@ -282,13 +277,12 @@ void GameMapLoader::addPlayer(GameMap& map,
 
     parse(robotParams_, v);
 
-    Player* player = new Player();
     float goodieY, goodieStartX, goodieSpacing;
-
     calculatePlayerGoodiePos(goodieY, goodieStartX, goodieSpacing);
-    player->init(&t, pos_, direction_, goodieY, goodieStartX,
-                 goodieSpacing, itemDeleter);
 
+    Player* player = factory_.createPlayer(&t, pos_, direction_, goodieY,
+                                           goodieStartX, goodieSpacing,
+                                           itemDeleter);
     map.addObj(player);
 }
 

@@ -84,7 +84,7 @@ void Missile::explode(UpdateContext& cxt)
         target_ = nullptr;
     }
 
-    showExplodeEffect(map);
+    showExplodeEffect(cxt);
     cxt.dumper().add(this);
 
     if (getTemplate()->splitCount() > 0)
@@ -163,11 +163,12 @@ Region<float> Missile::explodeRegion()
     return Region<float>({x()-breath, x()+breath, y()-breath, y()+breath});
 }
 
-void Missile::showExplodeEffect(GameMap& map)
+void Missile::showExplodeEffect(UpdateContext& cxt)
 {
-    ParticleEffect* explodeEffect = new ParticleEffect();
-    explodeEffect->init(getTemplate()->explodeEffectTemplate(), pos_);
-    map.addObj(explodeEffect);
+    ParticleEffect* effect = cxt.factory().createParticleEffect(
+                                    getTemplate()->explodeEffectTemplate(),
+                                    pos_);
+    cxt.map()->addObj(effect);
 }
 
 void Missile::setTarget(Robot* robot, UpdateContext& cxt)
@@ -218,8 +219,7 @@ void Missile::shootSplitMissile(UpdateContext& cxt)
 
     for (int i = 0; i < splitCount; ++i)
     {
-        Missile* m = new Missile();
-        m->init(t, side_, pos_, directions[i]);
+        Missile* m = cxt.factory().createMissile(t, side_, pos_, directions[i]);
         cxt.map()->addObj(m);
     }
 }

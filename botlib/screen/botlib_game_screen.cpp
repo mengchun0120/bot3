@@ -34,7 +34,7 @@ void GameScreen::init(const Vector2& viewportSize,
     const GameScreenConfig& cfg = Context::gameScreenConfig();
 
     nextScreenType_ = nextScreenType;
-    cxt_.init(&map_, cfg.gameObjItemPoolSize());
+    cxt_.init(&map_, cfg.gameObjItemPoolSize(), cfg.missilePoolSize());
     loadMap(viewportSize, cfg.mapFile());
     viewportSize_ = viewportSize;
     overlayViewportOrigin_ = viewportSize / 2.0f;
@@ -112,7 +112,7 @@ bool GameScreen::processInput(const InputEvent &e)
 void GameScreen::loadMap(const Vector2& viewportSize,
                          const std::string& mapFile)
 {
-    GameMapLoader loader(viewportSize[0], viewportSize[1]);
+    GameMapLoader loader(viewportSize[0], viewportSize[1], cxt_.factory());
     loader.load(map_, mapFile, cxt_.itemPool().deleter());
 }
 

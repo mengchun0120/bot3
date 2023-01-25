@@ -49,8 +49,9 @@ void BlastSkill::update(UpdateContext& cxt)
     for (int i = 0; i < sz; ++i)
     {
         Vector2 pos = robot_->pos() + firePoints[i];
-        Missile* missile = new Missile();
-        missile->init(missileTemplate, robot_->side(), pos, fireDirections[i]);
+        Missile* missile =
+            cxt.factory().createMissile(missileTemplate, robot_->side(),
+                                        pos, fireDirections[i]);
         map.addObj(missile);
     }
 

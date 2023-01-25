@@ -25,6 +25,8 @@ public:
 
     inline int gameObjItemPoolSize() const;
 
+    inline int missilePoolSize() const;
+
     inline float goodieSpacing() const;
 
     inline float goodieTopMargin() const;
@@ -56,6 +58,7 @@ public:
 private:
     std::string mapFile_;
     int gameObjItemPoolSize_;
+    int missilePoolSize_;
     float goodieSpacing_;
     float goodieTopMargin_;
     float goodieRightMargin_;
@@ -80,6 +83,11 @@ const std::string& GameScreenConfig::mapFile() const
 int GameScreenConfig::gameObjItemPoolSize() const
 {
     return gameObjItemPoolSize_;
+}
+
+int GameScreenConfig::missilePoolSize() const
+{
+    return missilePoolSize_;
 }
 
 float GameScreenConfig::goodieSpacing() const

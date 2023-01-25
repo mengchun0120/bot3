@@ -1,6 +1,7 @@
 {
     "mapFile": "map_03.json",
     "gameObjItemPoolSize": 500,
+    "missilePoolSize": 500,
     "goodieSpacing": 30.0,
     "goodieTopMargin": 30.0,
     "goodieRightMargin": 30.0,

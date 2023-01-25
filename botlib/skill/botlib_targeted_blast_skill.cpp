@@ -82,8 +82,9 @@ void TargetedBlastSkill::shootTargets(GameObjItemList& targets, UpdateContext& c
     {
         Vector2 direction = normalize(i->item()->pos() - robot_->pos());
         Vector2 pos = direction * radius + robot_->pos();
-        Missile* missile = new Missile();
-        missile->init(missileTemplate, robot_->side(), pos, direction);
+        Missile* missile =
+            cxt.factory().createMissile(missileTemplate, robot_->side(),
+                                        pos, direction);
         map.addObj(missile);
     }
 }

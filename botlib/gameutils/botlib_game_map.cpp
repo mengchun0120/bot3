@@ -41,14 +41,15 @@ void GameMap::init(unsigned int rows,
                    float viewportWidth,
                    float viewportHeight,
                    float maxObjSpan,
-                   float maxCollideBreath)
+                   float maxCollideBreath,
+                   GameObjDeleter objDeleter)
 {
     using namespace std::placeholders;
 
     maxObjSpan_ = maxObjSpan;
     maxCollideBreath_ = maxCollideBreath;
     extraCell_ = static_cast<int>(ceil(maxObjSpan_ / k_cellBreath));
-    initMapCells(rows, cols);
+    initMapCells(rows, cols, objDeleter);
     setBoundary(rows, cols);
     setViewportSize(viewportWidth, viewportHeight);
     setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
@@ -280,14 +281,12 @@ void GameMap::toJson(rapidjson::Document& doc)
     doc.AddMember("objects", objects, allocator);
 }
 
-void GameMap::initMapCells(unsigned int rows, unsigned int cols)
+void GameMap::initMapCells(unsigned int rows,
+                           unsigned int cols,
+                           GameObjDeleter objDeleter)
 {
     unsigned int rowCount = rows + extraCell_*2;
     unsigned int colCount = cols + extraCell_*2;
-    auto objDeleter = [](GameObject* obj)
-    {
-        delete obj;
-    };
 
     cells_.resize(rowCount);
     for (auto rowIt = cells_.begin(); rowIt != cells_.end(); ++rowIt)

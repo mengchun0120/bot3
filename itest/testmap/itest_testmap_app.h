@@ -2,6 +2,7 @@
 #define INCLUDED_ITEST_TESTMAP_APP_H
 
 #include <commonlib_app.h>
+#include <botlib_game_object_factory.h>
 #include <botlib_game_map.h>
 
 namespace mcdane {
@@ -24,6 +25,7 @@ private:
 
 private:
     botlib::GameMap map_;
+    botlib::GameObjectFactory factory_;
 };
 
 } // end of namespace itest

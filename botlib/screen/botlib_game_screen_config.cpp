@@ -23,6 +23,7 @@ void GameScreenConfig::init(const GameLib& gameLib,
     std::vector<JsonParamPtr> params{
         jsonParam(mapFile_, "mapFile", true, k_nonEmptyStrV),
         jsonParam(gameObjItemPoolSize_, "gameObjItemPoolSize", true, gt(0)),
+        jsonParam(missilePoolSize_, "missilePoolSize", true, gt(0)),
         jsonParam(goodieSpacing_, "goodieSpacing", true, gt(0.0f)),
         jsonParam(goodieTopMargin_, "goodieTopMargin", true, gt(0.0f)),
         jsonParam(goodieRightMargin_, "goodieRightMargin", true, gt(0.0f)),

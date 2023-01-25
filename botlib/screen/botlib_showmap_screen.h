@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_SHOWMAP_SCREEN_H
 #define INCLUDED_BOTLIB_SHOWMAP_SCREEN_H
 
+#include <botlib_game_object_factory.h>
 #include <botlib_game_map.h>
 #include <botlib_screen.h>
 
@@ -50,6 +51,7 @@ private:
     bool processLeftKey();
 
 private:
+    GameObjectFactory factory_;
     GameMap map_;
     ScreenType nextScreenType_;
 };
