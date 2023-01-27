@@ -190,7 +190,7 @@ void GameLib::initProgressPieTemplateLib(
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        t.init(v, vertexArrayLib_);
+        t.init(v, vertexArrayLib_, rectLib_, textureLib_);
     };
 
     progressPieTemplateLib_.init(progressPieTemplateLibFile, parser);

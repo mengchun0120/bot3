@@ -22,6 +22,11 @@ public:
     void setPos(const commonlib::Vector2& pos);
 
 private:
+    void presentPie();
+
+    void presentIcon();
+
+private:
     const ProgressPieTemplate* t_;
     commonlib::Vector2 pos_;
     int finishedVertices_;

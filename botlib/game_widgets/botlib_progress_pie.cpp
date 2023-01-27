@@ -2,6 +2,7 @@
 #include <commonlib_log.h>
 #include <commonlib_math_utils.h>
 #include <botlib_context.h>
+#include <botlib_progress_pie_template.h>
 #include <botlib_progress_pie.h>
 
 using namespace mcdane::commonlib;
@@ -19,6 +20,15 @@ void ProgressPie::init(const ProgressPieTemplate* t,
 }
 
 void ProgressPie::present()
+{
+    presentPie();
+    if (t_->iconRect())
+    {
+        presentIcon();
+    }
+}
+
+void ProgressPie::presentPie()
 {
     SimpleShaderProgram& program = Context::graphics().simpleShader();
 
@@ -40,6 +50,14 @@ void ProgressPie::present()
         program.setColor(t_->frontColor());
         glDrawArrays(GL_TRIANGLES, finishedVertices_, leftVertices_);
     }
+}
+
+void ProgressPie::presentIcon()
+{
+    SimpleShaderProgram& program = Context::graphics().simpleShader();
+
+    t_->iconRect()->draw(program, &pos_, nullptr, nullptr, nullptr,
+                         t_->iconImage()->id(), nullptr);
 }
 
 void ProgressPie::setFinishedRatio(float ratio)

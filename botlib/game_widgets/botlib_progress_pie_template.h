@@ -17,10 +17,12 @@ namespace botlib {
 
 class ProgressPieTemplate {
 public:
-    ProgressPieTemplate() = default;
+    ProgressPieTemplate();
 
     void init(const rapidjson::Value& v,
-              const VertexArrayLib& vertexArrayLib);
+              const VertexArrayLib& vertexArrayLib,
+              const RectLib& rectLib,
+              const TextureLib& textureLib);
 
     inline float radius() const;
 
@@ -34,6 +36,19 @@ public:
 
     inline int numTriangles() const;
 
+    inline const Rectangle* iconRect() const;
+
+    inline const commonlib::Texture* iconImage() const;
+
+private:
+    void initVertexArray(const std::string& vertexArrayName,
+                         const VertexArrayLib& vertexArrayLib);
+
+    void initIcon(const std::string& iconRectName,
+                  const std::string& iconImageName,
+                  const RectLib& rectLib,
+                  const TextureLib& textureLib);
+
 private:
     float radius_;
     const commonlib::VertexArray* va_;
@@ -41,6 +56,8 @@ private:
     commonlib::Color frontColor_;
     float alpha_;
     int numTriangles_;
+    const Rectangle* iconRect_;
+    const commonlib::Texture* iconImage_;
 };
 
 float ProgressPieTemplate::radius() const
@@ -71,6 +88,16 @@ float ProgressPieTemplate::alpha() const
 int ProgressPieTemplate::numTriangles() const
 {
     return numTriangles_;
+}
+
+const Rectangle* ProgressPieTemplate::iconRect() const
+{
+    return iconRect_;
+}
+
+const commonlib::Texture* ProgressPieTemplate::iconImage() const
+{
+    return iconImage_;
 }
 
 } // end of namespace botlib
