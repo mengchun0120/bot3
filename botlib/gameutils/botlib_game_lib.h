@@ -4,6 +4,7 @@
 #include <commonlib_named_map.h>
 #include <commonlib_texture.h>
 #include <commonlib_vertex_array.h>
+#include <commonlib_input_map.h>
 #include <botlib_rectangle.h>
 #include <botlib_component_template.h>
 #include <botlib_tile_template.h>
@@ -26,11 +27,13 @@ class AppConfig;
 
 class GameLib {
 public:
-    GameLib() = default;
+    GameLib();
 
     ~GameLib() = default;
 
     void load(const AppConfig& cfg);
+
+    inline const commonlib::InputMap& inputMap() const;
 
     inline const TextureLib& textureLib() const;
 
@@ -137,6 +140,7 @@ private:
     void calculateMaxProgressPieRadius();
 
 private:
+    commonlib::InputMap inputMap_;
     TextureLib textureLib_;
     VertexArrayLib vertexArrayLib_;
     RectLib rectLib_;
@@ -156,6 +160,11 @@ private:
     float maxCollideBreath_;
     float maxProgressPieRadius_;
 };
+
+const commonlib::InputMap& GameLib::inputMap() const
+{
+    return inputMap_;
+}
 
 const TextureLib& GameLib::textureLib() const
 {

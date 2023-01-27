@@ -227,7 +227,7 @@ bool GameScreen::processMouseButton(const MouseButtonEvent& e)
     }
     else if (e.button_ == GLFW_MOUSE_BUTTON_RIGHT && e.action_ == GLFW_PRESS)
     {
-        map_.player()->setSkillEnabled(SkillType::SHOOT_MISSILE, true);
+        enableSkillForInput(GLFW_MOUSE_BUTTON_RIGHT);
     }
 
     return true;
@@ -266,66 +266,12 @@ bool GameScreen::processKey(const KeyEvent& e)
         return true;
     }
 
-    switch(e.key_)
+    if (e.action_ == GLFW_PRESS)
     {
-        case GLFW_KEY_A:
-        {
-            processFireKey(e);
-            break;
-        }
-        case GLFW_KEY_S:
-        {
-            processStopMoveKey(e);
-            break;
-        }
-        case GLFW_KEY_B:
-        {
-            processBlastKey(e);
-            break;
-        }
-        case GLFW_KEY_W:
-        {
-            processTargetedBlastKey(e);
-            break;
-        }
-        default:
-            break;
+        enableSkillForInput(e.key_);
     }
 
     return true;
-}
-
-void GameScreen::processFireKey(const KeyEvent& e)
-{
-    if (e.action_ == GLFW_PRESS)
-    {
-        map_.player()->setSkillEnabled(SkillType::SHOOT_MISSILE, true);
-    }
-}
-
-void GameScreen::processStopMoveKey(const commonlib::KeyEvent& e)
-{
-    if (e.action_ == GLFW_PRESS)
-    {
-        map_.player()->setSkillEnabled(SkillType::MOVE, false);
-    }
-}
-
-void GameScreen::processBlastKey(const commonlib::KeyEvent& e)
-{
-    if (e.action_ == GLFW_PRESS)
-    {
-        map_.player()->setSkillEnabled(SkillType::BLAST, true);
-    }
-}
-
-void GameScreen::processTargetedBlastKey(const commonlib::KeyEvent& e)
-{
-    if (e.action_ == GLFW_PRESS)
-    {
-        LOG_INFO << "processTargetBlastKey" << LOG_END;
-        map_.player()->setSkillEnabled(SkillType::TARGETED_BLAST, true);
-    }
 }
 
 void GameScreen::updatePlayer()
@@ -333,6 +279,15 @@ void GameScreen::updatePlayer()
     Player* player = map_.player();
     player->update(cxt_);
     map_.setViewportOrigin(player->x(), player->y());
+}
+
+void GameScreen::enableSkillForInput(int input)
+{
+    Skill* skill = map_.player()->findSkillForInput(input);
+    if (skill)
+    {
+        skill->setEnabled(true);
+    }
 }
 
 void GameScreen::clearUpdateFlags()

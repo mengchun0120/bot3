@@ -53,15 +53,9 @@ private:
 
     bool processKey(const commonlib::KeyEvent& e);
 
-    void processFireKey(const commonlib::KeyEvent& e);
-
-    void processStopMoveKey(const commonlib::KeyEvent& e);
-
-    void processBlastKey(const commonlib::KeyEvent& e);
-
-    void processTargetedBlastKey(const commonlib::KeyEvent& e);
-
     void updatePlayer();
+
+    void enableSkillForInput(int input);
 
     void clearUpdateFlags();
 

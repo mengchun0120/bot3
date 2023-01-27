@@ -45,8 +45,12 @@ public:
 
     void setDest(const commonlib::Vector2& dest);
 
+    Skill* findSkillForInput(int input);
+
 protected:
     void initGoodies();
+
+    void initSkillMap();
 
     void updateGoodies(float timeDelta);
 
@@ -59,6 +63,7 @@ protected:
 protected:
     commonlib::ObjectPool<Goodie> goodiePool_;
     commonlib::LinkedList<Goodie> goodies_;
+    std::unordered_map<int,Skill*> skillMap_;
     float goodieY_;
     float goodieStartX_;
     float goodieSpacing_;

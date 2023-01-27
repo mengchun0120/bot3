@@ -11,8 +11,6 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-namespace {
-
 void initVertexArray(VertexArray& va,
                      const rapidjson::Value& v,
                      const std::string& dataDir)
@@ -46,7 +44,10 @@ void initVertexArray(VertexArray& va,
     va.load(blocks.begin(), blocks.end());
 }
 
-} // end of unnamed namespace
+GameLib::GameLib()
+    : inputMap_()
+{
+}
 
 void GameLib::load(const AppConfig& cfg)
 {
@@ -67,7 +68,8 @@ void GameLib::load(const AppConfig& cfg)
     playerTemplate_.init(cfg.playerTemplateFile(),
                          missileTemplateLib_,
                          componentTemplateLib_,
-                         skillTemplateLib_);
+                         skillTemplateLib_,
+                         inputMap_);
     aiLib_.init(cfg.chaseShootAIParamLibFile());
 
     calculateMaxObjSpan();

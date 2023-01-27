@@ -31,6 +31,7 @@ void Player::init(const PlayerTemplate* t,
 {
     Robot::init(t, Side::PLAYER, pos1, direction1, itemDeleter);
     initGoodies();
+    initSkillMap();
     goodieY_ = goodieY;
     goodieStartX_ = goodieStartX;
     goodieSpacing_ = goodieSpacing;
@@ -78,6 +79,12 @@ void Player::setDest(const commonlib::Vector2& dest)
     s->setEnabled(true);
 }
 
+Skill* Player::findSkillForInput(int input)
+{
+    auto it = skillMap_.find(input);
+    return it != skillMap_.end() ? it->second : nullptr;
+}
+
 void Player::initGoodies()
 {
     auto initFunc = [](Goodie& g)
@@ -93,6 +100,23 @@ void Player::initGoodies()
             goodiePool_.free(g);
         }
     );
+}
+
+void Player::initSkillMap()
+{
+    auto& m = getTemplate()->inputSkillMap();
+    for (auto it = m.begin(); it != m.end(); ++it)
+    {
+        Skill* skill = searchSkill(it->second);
+        if (!skill)
+        {
+            LOG_WARN << "Skill " << toString(it->second)
+                     << " not configured for player" << LOG_END;
+            continue;
+        }
+
+        skillMap_[it->first] = skill;
+    }
 }
 
 void Player::updateGoodies(float timeDelta)

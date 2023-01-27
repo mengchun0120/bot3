@@ -1,5 +1,5 @@
-#ifndef include_sharedlib_opengl_h
-#define include_sharedlib_opengl_h
+#ifndef INCLUDED_COMMONLIB_OPENGL_H
+#define INCLUDED_COMMONLIB_OPENGL_H
 
 #if defined(_WIN32) || defined(__linux__)
 #define DESKTOP_APP

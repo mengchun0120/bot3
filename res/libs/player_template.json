@@ -37,5 +37,10 @@
         "player_shoot_missile_skill",
         "player_blast_skill",
         "player_targeted_blast_skill"
-    ]
+    ],
+    "inputSkillMap": {
+        "right-mouse": "shoot-missile",
+        "B": "blast",
+        "W": "targeted-blast"
+    }
 }
