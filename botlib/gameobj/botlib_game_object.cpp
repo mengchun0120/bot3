@@ -18,6 +18,8 @@ GameObject::GameObject()
     , flags_(0)
     , row_(0)
     , col_(0)
+    , prev_(nullptr)
+    , next_(nullptr)
 {
 }
 
@@ -29,6 +31,11 @@ void GameObject::init(const GameObjectTemplate* t,
         THROW_EXCEPT(InvalidArgumentException, "t is null");
     }
 
+    next_ = nullptr;
+    prev_ = nullptr;
+    flags_ = 0;
+    row_ = 0;
+    col_ = 0;
     t_ = t;
     pos_ = pos1;
     id_ = k_curId++;

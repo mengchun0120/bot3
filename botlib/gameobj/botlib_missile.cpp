@@ -15,7 +15,8 @@ namespace mcdane {
 namespace botlib {
 
 Missile::Missile()
-    : target_(nullptr)
+    : CompositeObject()
+    , target_(nullptr)
 {
 }
 

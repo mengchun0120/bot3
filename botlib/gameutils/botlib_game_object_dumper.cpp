@@ -21,8 +21,7 @@ void GameObjectDumper::add(GameObject* obj)
         return;
     }
 
-    GameObjectItem* item = pool_->alloc();
-    item->setItem(obj);
+    GameObjectItem* item = pool_->alloc(obj);
     objs_.pushBack(item);
     obj->setState(GameObjectState::DEAD);
 }

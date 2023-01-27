@@ -81,8 +81,8 @@ private:
 
 private:
     ScreenType nextScreenType_;
-    GameMap map_;
     UpdateContext cxt_;
+    GameMap map_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 overlayViewportOrigin_;
     ProgressBar armorProgressBar_;

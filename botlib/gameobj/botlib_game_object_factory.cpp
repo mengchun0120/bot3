@@ -19,6 +19,7 @@ GameObjectFactory::GameObjectFactory()
 void GameObjectFactory::init(int missilePoolSize)
 {
     missilePool_.init(missilePoolSize);
+    initDeleter();
 }
 
 Tile* GameObjectFactory::createTile(const TileTemplate* t,
