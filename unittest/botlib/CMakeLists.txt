@@ -3,13 +3,12 @@ cmake_minimum_required(VERSION 3.10)
 set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 
 set(UNITTEST_BOTLIB_SRC
-    test_botlib_main.cpp)
+    test_botlib_main.cpp
+)
 
 add_definitions(${CPP_COMPILE_FLAG})
 
-include_directories(${COMMONLIB_DIR}
-                    ${BOTLIB_DIR}
-                    ${CMAKE_SOURCE_DIR}/unittest/botlib)
+include_directories(. ${COMMONLIB_DIR} ${BOTLIB_DIR})
 
 add_executable(test_botlib ${UNITTEST_BOTLIB_SRC})
 

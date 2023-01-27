@@ -8,14 +8,16 @@ set(BOTLIB_DIR
     ${CMAKE_SOURCE_DIR}/botlib/app
     ${CMAKE_SOURCE_DIR}/botlib/gameobj
     ${CMAKE_SOURCE_DIR}/botlib/gameutils
+    ${CMAKE_SOURCE_DIR}/botlib/game_widgets
+    ${CMAKE_SOURCE_DIR}/botlib/map_accessor
     ${CMAKE_SOURCE_DIR}/botlib/map_generator
     ${CMAKE_SOURCE_DIR}/botlib/misc
     ${CMAKE_SOURCE_DIR}/botlib/opengl
     ${CMAKE_SOURCE_DIR}/botlib/screen
     ${CMAKE_SOURCE_DIR}/botlib/shape
     ${CMAKE_SOURCE_DIR}/botlib/skill
-    ${CMAKE_SOURCE_DIR}/botlib/template
-    ${CMAKE_SOURCE_DIR}/botlib/widget)
+    ${CMAKE_SOURCE_DIR}/botlib/ui_widgets
+)
 
 set(COMMONLIB_DIR
     ${CMAKE_SOURCE_DIR}/commonlib/app
@@ -24,7 +26,8 @@ set(COMMONLIB_DIR
     ${CMAKE_SOURCE_DIR}/commonlib/math
     ${CMAKE_SOURCE_DIR}/commonlib/misc
     ${CMAKE_SOURCE_DIR}/commonlib/opengl
-    ${CMAKE_SOURCE_DIR}/commonlib/structure)
+    ${CMAKE_SOURCE_DIR}/commonlib/structure
+)
 
 add_subdirectory(commonlib)
 add_subdirectory(botlib)

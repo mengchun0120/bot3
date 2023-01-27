@@ -4,13 +4,12 @@ set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 
 set(RUNGAME_SRC
     rungame_app.cpp
-    rungame_main.cpp)
+    rungame_main.cpp
+)
 
 add_definitions(${CPP_COMPILE_FLAG})
 
-include_directories(.
-                    ${COMMONLIB_DIR}
-                    ${BOTLIB_DIR})
+include_directories(. ${COMMONLIB_DIR} ${BOTLIB_DIR})
 
 add_executable(rungame ${RUNGAME_SRC})
 

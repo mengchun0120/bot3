@@ -18,12 +18,12 @@ set(UNITTEST_COMMONLIB_SRC
     test_commonlib_object_pool.cpp
     test_commonlib_region.cpp
     test_commonlib_validator.cpp
-    test_commonlib_vector.cpp)
+    test_commonlib_vector.cpp
+)
 
 add_definitions(${CPP_COMPILE_FLAG})
 
-include_directories(${COMMONLIB_DIR}
-                    ${CMAKE_SOURCE_DIR}/unittest/commonlib)
+include_directories(${COMMONLIB_DIR} ${CMAKE_SOURCE_DIR}/unittest/commonlib)
 
 add_executable(test_commonlib ${UNITTEST_COMMONLIB_SRC})
 

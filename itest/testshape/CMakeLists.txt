@@ -4,12 +4,9 @@ set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 
 add_definitions(${CPP_COMPILE_FLAG})
 
-include_directories(${COMMONLIB_DIR}
-                    ${BOTLIB_DIR}
-                    ${CMAKE_SOURCE_DIR}/itest/testshape)
+include_directories(. ${COMMONLIB_DIR} ${BOTLIB_DIR})
 
-add_executable(testshape itest_testshape_app.cpp
-                         testshape_main.cpp)
+add_executable(testshape itest_testshape_app.cpp testshape_main.cpp)
 
 set_property(TARGET testshape PROPERTY CXX_STANDARD 11)
 

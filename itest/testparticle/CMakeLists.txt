@@ -4,13 +4,13 @@ set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
 
 add_definitions(${CPP_COMPILE_FLAG})
 
-include_directories(${CMAKE_SOURCE_DIR}/commonlib/include
-                    ${CMAKE_SOURCE_DIR}/botlib/include
-                    ${CMAKE_SOURCE_DIR}/itest/testparticle)
+include_directories(. ${COMMONLIB_DIR} ${BOTLIB_DIR})
 
-add_executable(testparticle itest_particle_shader_program.cpp
-                            itest_test_particle_app.cpp
-                            test_particle_main.cpp)
+add_executable(testparticle
+    itest_particle_shader_program.cpp
+    itest_test_particle_app.cpp
+    test_particle_main.cpp
+)
 
 set_property(TARGET testparticle PROPERTY CXX_STANDARD 11)
 
