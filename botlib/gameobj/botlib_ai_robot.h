@@ -15,15 +15,13 @@ public:
 
     AIRobot(const AIRobotTemplate* t,
             const commonlib::Vector2& pos1,
-            const commonlib::Vector2& direction1,
-            GameObjItemDeleter itemDeleter=nullptr);
+            const commonlib::Vector2& direction1);
 
     ~AIRobot() override;
 
     void init(const AIRobotTemplate* t,
               const commonlib::Vector2& pos1,
-              const commonlib::Vector2& direction1,
-              GameObjItemDeleter itemDeleter=nullptr);
+              const commonlib::Vector2& direction1);
 
     inline const AIRobotTemplate* getTemplate() const;
 

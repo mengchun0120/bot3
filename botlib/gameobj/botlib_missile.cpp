@@ -16,7 +16,8 @@ namespace botlib {
 
 Missile::Missile()
     : CompositeObject()
-    , target_(nullptr)
+    , targetSet_(false)
+    , timeToTarget_(0.0f)
 {
 }
 
@@ -31,10 +32,6 @@ Missile::Missile(const MissileTemplate* t,
 
 Missile::~Missile()
 {
-    if (target_)
-    {
-        target_->removeMonitor(this);
-    }
 }
 
 void Missile::init(const MissileTemplate* t,
@@ -48,6 +45,8 @@ void Missile::init(const MissileTemplate* t,
     damage_ = t->damage() * damageFactor;
     livingTime_ = 0.0f;
     resetSpeed();
+    targetSet_ = false;
+    timeToTarget_ = 0.0f;
 }
 
 void Missile::update(UpdateContext& cxt)
@@ -79,12 +78,6 @@ void Missile::explode(UpdateContext& cxt)
     Region<int> area = map.getCollideArea(explodeRegion());
     map.traverse(area, checker, 0, 2);
 
-    if (target_)
-    {
-        target_->removeMonitor(this);
-        target_ = nullptr;
-    }
-
     showExplodeEffect(cxt);
     cxt.dumper().add(this);
 
@@ -97,14 +90,6 @@ void Missile::explode(UpdateContext& cxt)
 bool Missile::canBeDumped(GameMap& map) const
 {
     return state_ != GameObjectState::DEAD && !map.canSee(this);
-}
-
-void Missile::notify(GameObject* obj)
-{
-    if (static_cast<Robot*>(obj) == target_)
-    {
-        target_ = nullptr;
-    }
 }
 
 void Missile::updateAlive(UpdateContext& cxt)
@@ -128,18 +113,27 @@ void Missile::updateAlive(UpdateContext& cxt)
     if (collideBoundary || collideObjs)
     {
         explode(cxt);
+        return;
+    }
+
+    if (getTemplate()->guided() && targetSet_)
+    {
+        if (timeToTarget_ <= 0.0f)
+        {
+            searchAndSetTarget(cxt);
+        }
     }
 }
 
 void Missile::updateForTarget(UpdateContext& cxt)
 {
-    if (!target_)
+    if (!targetSet_)
     {
-        searchTarget(cxt);
+        searchAndSetTarget(cxt);
     }
     else
     {
-        calibrateDirection();
+        timeToTarget_ -= cxt.timeDelta();
     }
 }
 
@@ -172,15 +166,23 @@ void Missile::showExplodeEffect(UpdateContext& cxt)
     cxt.map()->addObj(effect);
 }
 
-void Missile::setTarget(Robot* robot, UpdateContext& cxt)
+void Missile::setTarget(const commonlib::Vector2& target)
 {
-    target_ = robot;
-    robot->addMonitor(this, cxt.itemPool());
-    calibrateDirection();
+    Vector2 p = target - pos();
+    float absSpeedX, absSpeedY;
+
+    setDirection(normalize(p));
+    absSpeedX = fabs(speed_[0]);
+    absSpeedY = fabs(speed_[1]);
+    timeToTarget_ = absSpeedX > absSpeedY ? fabs(p[0]) / absSpeedX :
+                                            fabs(p[1]) / absSpeedY;
+    targetSet_ = true;
 }
 
-void Missile::searchTarget(UpdateContext& cxt)
+void Missile::searchAndSetTarget(UpdateContext& cxt)
 {
+    targetSet_ = false;
+
     Region<int> area = searchRegion(cxt.map());
     Side enemySide = side() == Side::AI ? Side::PLAYER : Side::AI;
     GameObjItemList targets(cxt.itemPool().deleter());
@@ -191,16 +193,7 @@ void Missile::searchTarget(UpdateContext& cxt)
     finder.getTargets();
     if (!targets.empty())
     {
-        setTarget(static_cast<Robot*>(targets.first()->item()), cxt);
-    }
-}
-
-void Missile::calibrateDirection()
-{
-    Vector2 targetDirection = target_->pos() - pos();
-    if (!align(targetDirection, direction()))
-    {
-        setDirection(targetDirection.normalize());
+        setTarget(targets.first()->item()->pos());
     }
 }
 

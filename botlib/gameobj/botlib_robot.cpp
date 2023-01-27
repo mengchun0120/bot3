@@ -23,17 +23,12 @@ Robot::Robot()
 
 Robot::~Robot()
 {
-    if (!monitors_.empty())
-    {
-        notifyAndClearMonitors();
-    }
 }
 
 void Robot::init(const RobotTemplate* t,
                  Side side,
                  const Vector2& pos1,
-                 const Vector2& direction1,
-                 GameObjItemDeleter itemDeleter)
+                 const Vector2& direction1)
 {
     CompositeObject::init(t, pos1, direction1);
     side_ = side;
@@ -47,10 +42,6 @@ void Robot::init(const RobotTemplate* t,
     timeSinceLastShoot_ = 0.0f;
     dyingTime_ = 0.0f;
     resetArmorReduceRatio();
-    if (itemDeleter)
-    {
-        monitors_.setDeleter(itemDeleter);
-    }
     initSkills();
 }
 
@@ -123,7 +114,6 @@ void Robot::doDamage(float damage, UpdateContext& cxt)
         if (hp_ <= 0.0f)
         {
             setState(GameObjectState::DYING);
-            notifyAndClearMonitors();
         }
 
         hpIndicator_.reset(pos(), hpRatio());
@@ -168,31 +158,6 @@ void Robot::setDamageFactor(float factor)
 void Robot::resetSpeed()
 {
     speed_ = speedNorm_ * direction_;
-}
-
-void Robot::addMonitor(GameObject* obj,
-                       GameObjItemPool& pool)
-{
-    GameObjectItem* item = pool.alloc(obj);
-    monitors_.pushBack(item);
-}
-
-void Robot::removeMonitor(GameObject* obj)
-{
-    GameObjectItem* i = monitors_.first();
-
-    for (; i; i = i->next())
-    {
-        if (i->item() == obj)
-        {
-            break;
-        }
-    }
-
-    if (i)
-    {
-        monitors_.remove(i);
-    }
 }
 
 Skill* Robot::searchSkill(SkillType skillType)
@@ -302,16 +267,6 @@ void Robot::updateEnergy(float timeDelta)
 {
     energy_ = std::min(energy_ + timeDelta * getTemplate()->rechargeRate(),
                        getTemplate()->energy());
-}
-
-void Robot::notifyAndClearMonitors()
-{
-    for (GameObjectItem* i = monitors_.first(); i; i = i->next())
-    {
-        i->item()->notify(this);
-    }
-
-    monitors_.clear();
 }
 
 } // end of namespace botlib

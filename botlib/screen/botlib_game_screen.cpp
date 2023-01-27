@@ -113,7 +113,7 @@ void GameScreen::loadMap(const Vector2& viewportSize,
                          const std::string& mapFile)
 {
     GameMapLoader loader(viewportSize[0], viewportSize[1], cxt_.factory());
-    loader.load(map_, mapFile, cxt_.itemPool().deleter());
+    loader.load(map_, mapFile);
 }
 
 void GameScreen::initProgressBar()

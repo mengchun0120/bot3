@@ -112,10 +112,6 @@ void GameObject::toJson(rapidjson::Value& v,
     v.AddMember("pos", pos_.toJson(allocator), allocator);
 }
 
-void GameObject::notify(GameObject* src)
-{
-}
-
 } // end of namespace botlib
 } // end of namespace mcdane
 

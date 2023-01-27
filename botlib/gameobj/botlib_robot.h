@@ -28,8 +28,7 @@ public:
     void init(const RobotTemplate* t,
               Side side,
               const commonlib::Vector2& pos1,
-              const commonlib::Vector2& direction1,
-              GameObjItemDeleter itemDeleter=nullptr);
+              const commonlib::Vector2& direction1);
 
     inline const RobotTemplate* getTemplate() const;
 
@@ -81,9 +80,6 @@ public:
 
     void resetSpeed();
 
-    void addMonitor(GameObject* obj,
-                    GameObjItemPool& pool);
-
     void removeMonitor(GameObject* obj);
 
     Skill* searchSkill(SkillType skillType);
@@ -107,8 +103,6 @@ protected:
 
     void updateEnergy(float timeDelta);
 
-    void notifyAndClearMonitors();
-
 protected:
     Side side_;
     float hp_;
@@ -121,7 +115,6 @@ protected:
     float armor_;
     float damageFactor_;
     float armorReduceRatio_;
-    GameObjItemList monitors_;
     SkillList skills_;
 };
 

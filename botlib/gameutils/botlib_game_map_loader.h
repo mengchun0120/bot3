@@ -18,20 +18,17 @@ public:
                   GameObjectFactory& factory);
 
     void load(GameMap& map,
-              const std::string& fileName,
-              GameObjItemDeleter itemDeleter=nullptr);
+              const std::string& fileName);
 
 private:
     void loadMapDimension(GameMap& map,
                           const rapidjson::Document& doc);
 
     void loadObjects(GameMap& map,
-                     const rapidjson::Document& doc,
-                     GameObjItemDeleter itemDeleter);
+                     const rapidjson::Document& doc);
 
     void parseAddObject(GameMap& map,
-                        const rapidjson::Value& v,
-                        GameObjItemDeleter itemDeleter);
+                        const rapidjson::Value& v);
 
     void addTile(GameMap& map,
                  const rapidjson::Value& v);
@@ -43,15 +40,13 @@ private:
                     const rapidjson::Value& v);
 
     void addAIRobot(GameMap& map,
-                    const rapidjson::Value& v,
-                    GameObjItemDeleter itemDeleter);
+                    const rapidjson::Value& v);
 
     void addParticleEffect(GameMap& map,
                            const rapidjson::Value& v);
 
     void addPlayer(GameMap& map,
-                   const rapidjson::Value& v,
-                   GameObjItemDeleter itemDeleter);
+                   const rapidjson::Value& v);
 
     void calculatePlayerGoodiePos(float& goodieY,
                                   float& goodieStartX,

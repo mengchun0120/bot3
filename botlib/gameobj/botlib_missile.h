@@ -46,8 +46,6 @@ public:
 
     bool canBeDumped(GameMap& map) const override;
 
-    void notify(GameObject* obj) override;
-
 private:
     void updateAlive(UpdateContext& cxt);
 
@@ -61,11 +59,9 @@ private:
 
     void showExplodeEffect(UpdateContext& cxt);
 
-    void setTarget(Robot* robot, UpdateContext& cxt);
+    void setTarget(const commonlib::Vector2& target);
 
-    void searchTarget(UpdateContext& cxt);
-
-    void calibrateDirection();
+    void searchAndSetTarget(UpdateContext& cxt);
 
     commonlib::Region<int> searchRegion(GameMap* map);
 
@@ -76,7 +72,8 @@ private:
     commonlib::Vector2 speed_;
     float damage_;
     float livingTime_;
-    Robot* target_;
+    bool targetSet_;
+    float timeToTarget_;
 };
 
 const MissileTemplate* Missile::getTemplate() const

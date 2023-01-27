@@ -19,8 +19,7 @@ public:
            const commonlib::Vector2& direction1,
            float goodieY,
            float goodieStartX,
-           float goodieSpacing,
-           GameObjItemDeleter itemDeleter=nullptr);
+           float goodieSpacing);
 
     ~Player() override = default;
 
@@ -29,8 +28,7 @@ public:
               const commonlib::Vector2& direction1,
               float goodieY,
               float goodieStartX,
-              float goodieSpacing,
-              GameObjItemDeleter itemDeleter=nullptr);
+              float goodieSpacing);
 
     inline const PlayerTemplate* getTemplate() const;
 

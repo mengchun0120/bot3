@@ -44,16 +44,14 @@ public:
 
     AIRobot* createAIRobot(const AIRobotTemplate* t,
                            const commonlib::Vector2& pos,
-                           const commonlib::Vector2& direction,
-                           GameObjItemDeleter itemDeleter=nullptr);
+                           const commonlib::Vector2& direction);
 
     Player* createPlayer(const PlayerTemplate* t,
                          const commonlib::Vector2& pos,
                          const commonlib::Vector2& direction,
                          float goodieY,
                          float goodieStartX,
-                         float goodieSpacing,
-                         GameObjItemDeleter itemDeleter=nullptr);
+                         float goodieSpacing);
 
     inline GameObjDeleter& deleter();
 

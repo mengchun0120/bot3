@@ -17,10 +17,9 @@ AIRobot::AIRobot()
 
 AIRobot::AIRobot(const AIRobotTemplate* t,
                  const commonlib::Vector2& pos1,
-                 const commonlib::Vector2& direction1,
-                 GameObjItemDeleter itemDeleter)
+                 const commonlib::Vector2& direction1)
 {
-    init(t, pos1, direction1, itemDeleter);
+    init(t, pos1, direction1);
 }
 
 AIRobot::~AIRobot()
@@ -30,10 +29,9 @@ AIRobot::~AIRobot()
 
 void AIRobot::init(const AIRobotTemplate* t,
                    const Vector2& pos1,
-                   const Vector2& direction1,
-                   GameObjItemDeleter itemDeleter)
+                   const Vector2& direction1)
 {
-    Robot::init(t, Side::AI, pos1, direction1, itemDeleter);
+    Robot::init(t, Side::AI, pos1, direction1);
     ai_ = AIFactory::create(this, t->aiAlgorithm(), t->aiName());
 }
 

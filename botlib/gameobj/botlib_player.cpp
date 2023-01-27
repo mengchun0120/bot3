@@ -15,10 +15,9 @@ Player::Player(const PlayerTemplate* t,
                const commonlib::Vector2& direction1,
                float goodieY,
                float goodieStartX,
-               float goodieSpacing,
-               GameObjItemDeleter itemDeleter)
+               float goodieSpacing)
 {
-    init(t, pos1, direction1, goodieY, goodieStartX, goodieSpacing, itemDeleter);
+    init(t, pos1, direction1, goodieY, goodieStartX, goodieSpacing);
 }
 
 void Player::init(const PlayerTemplate* t,
@@ -26,10 +25,9 @@ void Player::init(const PlayerTemplate* t,
                   const Vector2& direction1,
                   float goodieY,
                   float goodieStartX,
-                  float goodieSpacing,
-                  GameObjItemDeleter itemDeleter)
+                  float goodieSpacing)
 {
-    Robot::init(t, Side::PLAYER, pos1, direction1, itemDeleter);
+    Robot::init(t, Side::PLAYER, pos1, direction1);
     initGoodies();
     initSkillMap();
     goodieY_ = goodieY;

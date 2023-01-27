@@ -108,8 +108,6 @@ public:
     virtual void toJson(rapidjson::Value& v,
                         rapidjson::Document::AllocatorType& allocator);
 
-    virtual void notify(GameObject* src);
-
 protected:
     static unsigned int k_curId;
 

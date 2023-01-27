@@ -54,10 +54,9 @@ ParticleEffect* GameObjectFactory::createParticleEffect(
 
 AIRobot* GameObjectFactory::createAIRobot(const AIRobotTemplate* t,
                                           const commonlib::Vector2& pos,
-                                          const commonlib::Vector2& direction,
-                                          GameObjItemDeleter itemDeleter)
+                                          const commonlib::Vector2& direction)
 {
-    return new AIRobot(t, pos, direction, itemDeleter);
+    return new AIRobot(t, pos, direction);
 }
 
 Player* GameObjectFactory::createPlayer(const PlayerTemplate* t,
@@ -65,11 +64,9 @@ Player* GameObjectFactory::createPlayer(const PlayerTemplate* t,
                                         const commonlib::Vector2& direction,
                                         float goodieY,
                                         float goodieStartX,
-                                        float goodieSpacing,
-                                        GameObjItemDeleter itemDeleter)
+                                        float goodieSpacing)
 {
-    return new Player(t, pos, direction, goodieY, goodieStartX, goodieSpacing,
-                      itemDeleter);
+    return new Player(t, pos, direction, goodieY, goodieStartX, goodieSpacing);
 }
 
 void GameObjectFactory::initDeleter()
