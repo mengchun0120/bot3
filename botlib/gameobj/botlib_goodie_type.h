@@ -32,6 +32,11 @@ inline unsigned int lastingGoodieTypeCount()
            static_cast<unsigned int>(GoodieType::DAMAGE_AMPLIFIER);
 }
 
+inline int lastingGoodieTypeIndex(GoodieType t)
+{
+    return static_cast<int>(t) - static_cast<int>(firstLastingGoodieType());
+}
+
 inline bool isValid(GoodieType type)
 {
     return static_cast<int>(GoodieType::HEALTH_FILLER) <= static_cast<int>(type) &&

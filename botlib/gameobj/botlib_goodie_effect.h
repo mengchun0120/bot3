@@ -9,21 +9,31 @@ namespace botlib {
 
 class GoodieEffect {
 public:
-    GoodieEffect() = nullptr;
+    GoodieEffect() = default;
 
-    GoodieEffect(GoodieType type1, float timeToLive1);
+    GoodieEffect(GoodieType type1, float lifeSpan1);
 
-    void init(GoodieType type1, float timeToLive1);
+    void init(GoodieType type1, float lifeSpan1);
 
     inline GoodieType type() const;
 
+    inline float lifeSpan() const;
+
     inline float timeToLive() const;
 
-    void reduceTime(float timeDelta);
+    inline float finishedRatio() const;
+
+    inline bool expired() const;
+
+    void reset();
+
+    void reduceTimeToLive(float timeDelta);
 
 private:
     GoodieType type_;
+    float lifeSpan_;
     float timeToLive_;
+    float finishedRatio_;
 };
 
 using GoodieEffectItem = commonlib::LinkedItem<GoodieEffect>;
@@ -33,9 +43,24 @@ GoodieType GoodieEffect::type() const
     return type_;
 }
 
+float GoodieEffect::lifeSpan() const
+{
+    return lifeSpan_;
+}
+
 float GoodieEffect::timeToLive() const
 {
     return timeToLive_;
+}
+
+float GoodieEffect::finishedRatio() const
+{
+    return finishedRatio_;
+}
+
+bool GoodieEffect::expired() const
+{
+    return timeToLive_ <= 0.0f;
 }
 
 } // end of namespace botlib

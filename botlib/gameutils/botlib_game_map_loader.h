@@ -48,10 +48,6 @@ private:
     void addPlayer(GameMap& map,
                    const rapidjson::Value& v);
 
-    void calculatePlayerGoodiePos(float& goodieY,
-                                  float& goodieStartX,
-                                  float& goodieSpacing);
-
 private:
     float viewportWidth_;
     float viewportHeight_;

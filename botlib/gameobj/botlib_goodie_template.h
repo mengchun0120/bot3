@@ -1,16 +1,11 @@
 #ifndef INCLUDED_BOTLIB_GOODIE_TEMPLATE_H
 #define INCLUDED_BOTLIB_GOODIE_TEMPLATE_H
 
-#include <functional>
 #include <botlib_goodie_type.h>
 #include <botlib_composite_object_template.h>
-#include <botlib_goodie_action.h>
 
 namespace mcdane {
 namespace botlib {
-
-class Goodie;
-class Player;
 
 class GoodieTemplate: public CompositeObjectTemplate {
 public:
@@ -31,20 +26,11 @@ public:
 
     inline float factor() const;
 
-    inline const ActivateGoodieAction& activateAction() const;
-
-    inline const DeactivateGoodieAction& deactivateAction() const;
-
-private:
-    void initActions();
-
 private:
     GoodieType goodieType_;
     float duration_;
     float weight_;
     float factor_;
-    ActivateGoodieAction activateAction_;
-    DeactivateGoodieAction deactivateAction_;
 };
 
 GoodieType GoodieTemplate::goodieType() const
@@ -65,16 +51,6 @@ float GoodieTemplate::weight() const
 float GoodieTemplate::factor() const
 {
     return factor_;
-}
-
-const ActivateGoodieAction& GoodieTemplate::activateAction() const
-{
-    return activateAction_;
-}
-
-const DeactivateGoodieAction& GoodieTemplate::deactivateAction() const
-{
-    return deactivateAction_;
 }
 
 } // end of namespace botlib

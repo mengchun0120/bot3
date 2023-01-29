@@ -31,6 +31,7 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_game_object_type.cpp
     gameobj/botlib_goodie.cpp
     gameobj/botlib_goodie_action.cpp
+    gameobj/botlib_goodie_effect.cpp
     gameobj/botlib_goodie_template.cpp
     gameobj/botlib_goodie_type.cpp
     gameobj/botlib_missile.cpp

@@ -1,12 +1,11 @@
 #ifndef INCLUDED_BOTLIB_PLAYER_H
 #define INCLUDED_BOTLIB_PLAYER_H
 
-#include <commonlib_linked_item.h>
 #include <commonlib_linked_list.h>
 #include <commonlib_object_pool.h>
-#include <botlib_player_template.h>
+#include <botlib_goodie_effect.h>
 #include <botlib_robot.h>
-#include <botlib_goodie.h>
+#include <botlib_player_template.h>
 
 namespace mcdane {
 namespace botlib {
@@ -17,27 +16,21 @@ public:
 
     Player(const PlayerTemplate* t,
            const commonlib::Vector2& pos1,
-           const commonlib::Vector2& direction1,
-           float goodieY,
-           float goodieStartX,
-           float goodieSpacing);
+           const commonlib::Vector2& direction1);
 
     ~Player() override = default;
 
     void init(const PlayerTemplate* t,
               const commonlib::Vector2& pos1,
-              const commonlib::Vector2& direction1,
-              float goodieY,
-              float goodieStartX,
-              float goodieSpacing);
+              const commonlib::Vector2& direction1);
 
     inline const PlayerTemplate* getTemplate() const;
 
+    inline const GoodieEffectItem* firstGoodieEffect() const;
+
     void update(UpdateContext& cxt) override;
 
-    void addGoodie(const GoodieTemplate* t);
-
-    void presentGoodies();
+    void addGoodieEffect(const GoodieTemplate* t);
 
     void toJson(rapidjson::Value& v,
                 rapidjson::Document::AllocatorType& allocator) override;
@@ -51,19 +44,14 @@ protected:
 
     void initSkillMap();
 
-    void updateGoodies(float timeDelta);
+    void updateGoodieEffects(float timeDelta);
 
-    Goodie* findGoodie(GoodieType type);
-
-    commonlib::Vector2 nextGoodiePos();
+    GoodieEffectItem* findGoodieEffect(GoodieType type);
 
 protected:
     commonlib::ObjectPool<GoodieEffectItem> goodieEffectPool_;
     commonlib::LinkedList<GoodieEffectItem> goodieEffects_;
     std::unordered_map<int,Skill*> skillMap_;
-    float goodieY_;
-    float goodieStartX_;
-    float goodieSpacing_;
     commonlib::Vector2 dest_;
     float timeToDest_;
 };
@@ -71,6 +59,11 @@ protected:
 const PlayerTemplate* Player::getTemplate() const
 {
     return static_cast<const PlayerTemplate*>(t_);
+}
+
+const GoodieEffectItem* Player::firstGoodieEffect() const
+{
+    return goodieEffects_.first();
 }
 
 } // end of namespace botlib

@@ -140,7 +140,7 @@ void GameMapGenerator::addPlayer(GameMap& map)
 
     Vector2 direction = rand_.randomDirection();
     Player* player = new Player();
-    player->init(t, pos, direction, 0.0f, 0.0f, 0.0f);
+    player->init(t, pos, direction);
     addObj(map, player);
 }
 

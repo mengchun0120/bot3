@@ -41,6 +41,7 @@ void GameScreen::init(const Vector2& viewportSize,
     initProgressBar();
     initMessageBox();
     initAIRobotCount();
+    initGoodiePies();
     moveOutRegions_.resize(4);
 }
 
@@ -169,8 +170,7 @@ void GameScreen::initAIRobotCount()
 void GameScreen::initGoodiePies()
 {
     initGoodiePiePos();
-
-
+    createGoodiePies();
 }
 
 void GameScreen::initGoodiePiePos()
@@ -180,9 +180,9 @@ void GameScreen::initGoodiePiePos()
     float radius = cfg.goodiePieTemplate(0)->radius();
     float x, y, spacing;
 
-    y = viewportHeight_ - cfg.goodieTopMargin() - radius;
+    y = viewportSize_[1] - cfg.goodieTopMargin() - radius;
 
-    x = viewportWidth_ - cfg.goodieRightMargin() -
+    x = viewportSize_[0] - cfg.goodieRightMargin() -
         (goodieCount - 1) * cfg.goodieSpacing() - (2*goodieCount - 1) * radius;
 
     spacing = 2 * radius + cfg.goodieSpacing();
@@ -192,6 +192,18 @@ void GameScreen::initGoodiePiePos()
     {
         goodiePiePos_[i].init({x, y});
         x += spacing;
+    }
+}
+
+void GameScreen::createGoodiePies()
+{
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    int goodieCount = lastingGoodieTypeCount();
+
+    goodiePies_.resize(goodieCount);
+    for (int i = 0; i < goodieCount; ++i)
+    {
+        goodiePies_[i].init(cfg.goodiePieTemplate(i));
     }
 }
 
@@ -364,7 +376,7 @@ void GameScreen::presentOverlay()
 
     if (map_.player())
     {
-        map_.player()->presentGoodies();
+        presentGoodiePies();
     }
 
     program.setAlpha(1.0f);
@@ -379,6 +391,20 @@ void GameScreen::presentOverlay()
     if (msgBox_.visible())
     {
         msgBox_.present();
+    }
+}
+
+void GameScreen::presentGoodiePies()
+{
+    const GoodieEffectItem* g;
+    int i = 0;
+    for (g = map_.player()->firstGoodieEffect(); g; g = g->next(), ++i)
+    {
+        const GoodieEffect& effect = g->item();
+        ProgressPie& pie = goodiePies_[lastingGoodieTypeIndex(effect.type())];
+
+        pie.setFinishedRatio(effect.finishedRatio());
+        pie.present(goodiePiePos_[i]);
     }
 }
 

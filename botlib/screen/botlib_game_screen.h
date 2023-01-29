@@ -48,6 +48,8 @@ private:
 
     void initGoodiePiePos();
 
+    void createGoodiePies();
+
     bool processInputEndGame(const commonlib::InputEvent& e);
 
     bool processInputGame(const commonlib::InputEvent& e);
@@ -72,6 +74,8 @@ private:
 
     void presentOverlay();
 
+    void presentGoodiePies();
+
     void showVictory();
 
     void showFail();
@@ -91,7 +95,7 @@ private:
     commonlib::Vector2 aiRobotCountPos_;
     std::string aiRobotCountStr_;
     std::vector<commonlib::Region<int>> moveOutRegions_;
-    std::vector<commonlib::Vector2> gooidePiePos_;
+    std::vector<commonlib::Vector2> goodiePiePos_;
     std::vector<ProgressPie> goodiePies_;
 };
 

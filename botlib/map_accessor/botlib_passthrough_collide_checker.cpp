@@ -63,8 +63,7 @@ void PassthroughCollideChecker::collideGoodie(Goodie* goodie)
                                         goodie->collideRegion());
     if (collide)
     {
-        goodie->activate(*player);
-        LOG_INFO << "Activated goodie " << goodie->type() << LOG_END;
+        player->addGoodieEffect(goodie->getTemplate());
         cxt_.dumper().add(goodie);
     }
 }

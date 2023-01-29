@@ -65,11 +65,6 @@ void ProgressPie::setFinishedRatio(float ratio)
     leftVertices_ = t_->va()->numVertices(0) - finishedVertices_;
 }
 
-void ProgressPie::setPos(const commonlib::Vector2& pos)
-{
-    pos_ = pos;
-}
-
 } // end of namespace botlib
 } // end of namespace mcdane
 

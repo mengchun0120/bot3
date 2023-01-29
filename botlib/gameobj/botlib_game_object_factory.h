@@ -48,10 +48,7 @@ public:
 
     Player* createPlayer(const PlayerTemplate* t,
                          const commonlib::Vector2& pos,
-                         const commonlib::Vector2& direction,
-                         float goodieY,
-                         float goodieStartX,
-                         float goodieSpacing);
+                         const commonlib::Vector2& direction);
 
     inline GameObjDeleter& deleter();
 

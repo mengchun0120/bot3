@@ -159,7 +159,7 @@ void GameLib::initGoodieTemplateLib(const std::string& goodieTemplateLibFile)
                       const rapidjson::Value& v)
     {
         GoodieType type = toGoodieType(name);
-        t.init(type, name, v, componentTemplateLib_, progressPieTemplateLib_);
+        t.init(type, name, v, componentTemplateLib_);
     };
 
     goodieTemplateLib_.init(goodieTemplateLibFile, parser);

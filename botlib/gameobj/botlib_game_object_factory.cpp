@@ -61,12 +61,9 @@ AIRobot* GameObjectFactory::createAIRobot(const AIRobotTemplate* t,
 
 Player* GameObjectFactory::createPlayer(const PlayerTemplate* t,
                                         const commonlib::Vector2& pos,
-                                        const commonlib::Vector2& direction,
-                                        float goodieY,
-                                        float goodieStartX,
-                                        float goodieSpacing)
+                                        const commonlib::Vector2& direction)
 {
-    return new Player(t, pos, direction, goodieY, goodieStartX, goodieSpacing);
+    return new Player(t, pos, direction);
 }
 
 void GameObjectFactory::initDeleter()

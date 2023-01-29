@@ -1,7 +1,6 @@
 #include <commonlib_exception.h>
 #include <commonlib_json_param.h>
 #include <commonlib_named_map.h>
-#include <botlib_progress_pie_template.h>
 #include <botlib_goodie_template.h>
 
 using namespace mcdane::commonlib;
@@ -32,47 +31,6 @@ void GoodieTemplate::init(GoodieType goodieType1,
     };
 
     parse(params, v);
-
-    initActions();
-}
-
-void GoodieTemplate::initActions()
-{
-    switch(goodieType_)
-    {
-        case GoodieType::HEALTH_FILLER:
-        {
-            activateAction_ = activateHealthFiller;
-            break;
-        }
-        case GoodieType::ATTACK_ACCELERATOR:
-        {
-            activateAction_ = activateAttackAccelerator;
-            deactivateAction_ = deactivateAttackAccelerator;
-            break;
-        }
-        case GoodieType::SPEED_ACCELERATOR:
-        {
-            activateAction_ = activateSpeedAccelerator;
-            deactivateAction_ = deactivateSpeedAccelerator;
-            break;
-        }
-        case GoodieType::GOD_MODE:
-        {
-            activateAction_ = activateGodMode;
-            deactivateAction_ = deactivateGodMode;
-            break;
-        }
-        case GoodieType::DAMAGE_AMPLIFIER:
-        {
-            activateAction_ = activateDamageAmplifier;
-            deactivateAction_ = deactivateDamageAmplifier;
-            break;
-        }
-        default:
-            THROW_EXCEPT(InvalidArgumentException, "Invalid goodieType");
-            break;
-    }
 }
 
 } // end of namespace botlib
