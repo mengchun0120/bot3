@@ -2,6 +2,7 @@
 #define INCLUDED_BOTLIB_GAME_SCREEN_CONFIG_H
 
 #include <string>
+#include <vector>
 #include <commonlib_vector.h>
 #include <commonlib_color.h>
 #include <commonlib_texture.h>
@@ -11,6 +12,7 @@ namespace mcdane {
 namespace botlib {
 
 class GameLib;
+class ProgressPieTemplate;
 
 class GameScreenConfig {
 public:
@@ -55,6 +57,13 @@ public:
 
     inline const commonlib::Color& aiRobotCountTextColor() const;
 
+    inline const ProgressPieTemplate* goodiePieTemplate(int idx) const;
+
+private:
+    void initGoodiePieTemplates(
+                    const std::vector<std::string>& goodiePieNames,
+                    const GameLib& gameLib);
+
 private:
     std::string mapFile_;
     int gameObjItemPoolSize_;
@@ -73,6 +82,7 @@ private:
     commonlib::Vector2 aiRobotCountTextMargin_;
     TextSize aiRobotCountTextSize_;
     commonlib::Color aiRobotCountTextColor_;
+    std::vector<const ProgressPieTemplate*> goodiePieTemplates_;
 };
 
 const std::string& GameScreenConfig::mapFile() const
@@ -158,6 +168,11 @@ TextSize GameScreenConfig::aiRobotCountTextSize() const
 const commonlib::Color& GameScreenConfig::aiRobotCountTextColor() const
 {
     return aiRobotCountTextColor_;
+}
+
+const ProgressPieTemplate* GameScreenConfig::goodiePieTemplate(int idx) const
+{
+    return goodiePieTemplates_[idx];
 }
 
 } // end of namespace botlib

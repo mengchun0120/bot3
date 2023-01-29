@@ -5,6 +5,7 @@
 #include <botlib_game_object_dumper.h>
 #include <botlib_player.h>
 #include <botlib_progress_bar.h>
+#include <botlib_progress_pie.h>
 #include <botlib_message_box.h>
 #include <botlib_icon.h>
 #include <botlib_update_context.h>
@@ -42,6 +43,10 @@ private:
     void initMessageBox();
 
     void initAIRobotCount();
+
+    void initGoodiePies();
+
+    void initGoodiePiePos();
 
     bool processInputEndGame(const commonlib::InputEvent& e);
 
@@ -86,6 +91,8 @@ private:
     commonlib::Vector2 aiRobotCountPos_;
     std::string aiRobotCountStr_;
     std::vector<commonlib::Region<int>> moveOutRegions_;
+    std::vector<commonlib::Vector2> gooidePiePos_;
+    std::vector<ProgressPie> goodiePies_;
 };
 
 bool GameScreen::isPlayerAvailable()

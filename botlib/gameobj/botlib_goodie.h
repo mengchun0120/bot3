@@ -40,8 +40,8 @@ public:
 
     void setPos(const commonlib::Vector2& pos1) override;
 
-    void updateActivated(Player& player,
-                         float delta);
+/*    void updateActivated(Player& player,
+                         float delta);*/
 
     bool canBeDumped(GameMap& map) const override;
 
@@ -52,7 +52,6 @@ public:
 private:
     float duration_;
     bool activated_;
-    ProgressPie* pie_;
 };
 
 const GoodieTemplate* Goodie::getTemplate() const

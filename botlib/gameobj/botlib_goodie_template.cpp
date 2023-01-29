@@ -12,9 +12,11 @@ namespace botlib {
 void GoodieTemplate::init(GoodieType goodieType1,
                           const std::string& name,
                           const rapidjson::Value& v,
-                          const ComponentTemplateLib& componentTemplateLib,
-                          const ProgressPieTemplateLib& progressPieTemplateLib)
+                          const ComponentTemplateLib& componentTemplateLib)
 {
+    CompositeObjectTemplate::init(GameObjectType::GOODIE, name,
+                                  v, componentTemplateLib);
+
     if (!isValid(goodieType1))
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid GoodieType");
@@ -27,27 +29,9 @@ void GoodieTemplate::init(GoodieType goodieType1,
         jsonParam(duration_, {"duration"}, true, ge(0.0f)),
         jsonParam(weight_, {"weight"}, true, gt(0.0f)),
         jsonParam(factor_, {"factor"}, false),
-        jsonParam(pieName, {"progressPie"}, false)
     };
 
     parse(params, v);
-
-    if (!pieName.empty())
-    {
-        progressPieTemplate_ = progressPieTemplateLib.search(pieName);
-        if (!progressPieTemplate_)
-        {
-            THROW_EXCEPT(InvalidArgumentException,
-                         "Failed to find progressPieTemplate: " + pieName);
-        }
-    }
-    else
-    {
-        progressPieTemplate_ = nullptr;
-    }
-
-    CompositeObjectTemplate::init(GameObjectType::GOODIE, name,
-                                  v, componentTemplateLib);
 
     initActions();
 }

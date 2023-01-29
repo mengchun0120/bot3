@@ -10,7 +10,6 @@ namespace botlib {
 
 Goodie::Goodie()
     : activated_(false)
-    , pie_(nullptr)
 {
 }
 
@@ -20,6 +19,10 @@ Goodie::Goodie(const GoodieTemplate* t,
                bool activated1)
 {
     init(t, pos, direction, activated1);
+}
+
+Goodie::~Goodie()
+{
 }
 
 void Goodie::init(const GoodieTemplate* t,
@@ -33,32 +36,11 @@ void Goodie::init(const GoodieTemplate* t,
     if (activated_)
     {
         duration_ = 0.0f;
-        if (!pie_)
-        {
-            pie_ = new ProgressPie();
-        }
-
-        pie_->init(t->progressPieTemplate(), pos);
     }
-}
-
-Goodie::~Goodie()
-{
-    delete pie_;
-}
-
-void Goodie::initPie()
-{
-    pie_ = new ProgressPie();
 }
 
 void Goodie::present() const
 {
-    if (activated_)
-    {
-        pie_->present();
-    }
-
     CompositeObject::present();
 }
 
@@ -69,10 +51,9 @@ void Goodie::update(UpdateContext& cxt)
 void Goodie::setPos(const commonlib::Vector2& pos1)
 {
     CompositeObject::setPos(pos1);
-    pie_->setPos(pos1);
 }
 
-void Goodie::updateActivated(Player& player,
+/*void Goodie::updateActivated(Player& player,
                              float delta)
 {
     if (!activated_)
@@ -97,7 +78,7 @@ void Goodie::updateActivated(Player& player,
     {
         action(player);
     }
-}
+}*/
 
 bool Goodie::canBeDumped(GameMap& map) const
 {
@@ -127,7 +108,6 @@ void Goodie::reset()
     }
 
     duration_ = 0.0f;
-    pie_->setFinishedRatio(0.0f);
 }
 
 } // end of namespace botlib

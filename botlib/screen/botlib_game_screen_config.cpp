@@ -18,6 +18,8 @@ void GameScreenConfig::init(const GameLib& gameLib,
     rapidjson::Document doc;
     std::string aiRobotCountIconName;
     std::string aiRobotCountTextSizeStr;
+    std::vector<std::string> goodiePieNames;
+
     readJson(doc, configFile);
 
     std::vector<JsonParamPtr> params{
@@ -39,7 +41,8 @@ void GameScreenConfig::init(const GameLib& gameLib,
         jsonParam(aiRobotCountTextMargin_, {"aiRobotCount", "textMargin"}),
         jsonParam(aiRobotCountTextSizeStr, {"aiRobotCount", "textSize"}, true,
                   k_nonEmptyStrV),
-        jsonParam(aiRobotCountTextColor_, {"aiRobotCount", "textColor"})
+        jsonParam(aiRobotCountTextColor_, {"aiRobotCount", "textColor"}),
+        jsonParam(goodiePieNames, {"goodiePies"}),
     };
 
     parse(params, doc);
@@ -57,6 +60,7 @@ void GameScreenConfig::init(const GameLib& gameLib,
     const AppConfig& cfg = AppConfig::instance();
 
     mapFile_ = constructPath({cfg.mapDir(), mapFile_});
+    initGoodiePieTemplates(goodiePieNames, gameLib);
 
     LOG_INFO << "GameScreenConfig initialized successfully" << LOG_END;
 }
@@ -65,6 +69,32 @@ void GameScreenConfig::setMapFile(const std::string& fileName)
 {
     const AppConfig& cfg = AppConfig::instance();
     mapFile_ = constructPath({cfg.mapDir(), fileName});
+}
+
+void GameScreenConfig::initGoodiePieTemplates(
+                    const std::vector<std::string>& goodiePieNames,
+                    const GameLib& gameLib)
+{
+    if (goodiePieNames.empty())
+    {
+        THROW_EXCEPT(InvalidArgumentException, "goodiePieNames is empty");
+    }
+
+    if (goodiePieNames.size() != lastingGoodieTypeCount())
+    {
+        THROW_EXCEPT(InvalidArgumentException, "goodiePieNames is invalid");
+    }
+
+    goodiePieTemplates_.resize(goodiePieNames.size());
+    for (unsigned int i = 0; i < goodiePieNames.size(); ++i)
+    {
+        goodiePieTemplates_[i] = gameLib.findProgressPieTemplate(goodiePieNames[i]);
+        if (!goodiePieTemplates_[i])
+        {
+            THROW_EXCEPT(InvalidArgumentException,
+                         "Failed to find ProgressPie " + goodiePieNames[i]);
+        }
+    }
 }
 
 } // end of namespace botlib

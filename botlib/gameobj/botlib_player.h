@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_PLAYER_H
 #define INCLUDED_BOTLIB_PLAYER_H
 
+#include <commonlib_linked_item.h>
 #include <commonlib_linked_list.h>
 #include <commonlib_object_pool.h>
 #include <botlib_player_template.h>
@@ -46,7 +47,7 @@ public:
     Skill* findSkillForInput(int input);
 
 protected:
-    void initGoodies();
+    void initGoodieEffects();
 
     void initSkillMap();
 
@@ -56,11 +57,9 @@ protected:
 
     commonlib::Vector2 nextGoodiePos();
 
-    void updateGoodiePos();
-
 protected:
-    commonlib::ObjectPool<Goodie> goodiePool_;
-    commonlib::LinkedList<Goodie> goodies_;
+    commonlib::ObjectPool<GoodieEffectItem> goodieEffectPool_;
+    commonlib::LinkedList<GoodieEffectItem> goodieEffects_;
     std::unordered_map<int,Skill*> skillMap_;
     float goodieY_;
     float goodieStartX_;

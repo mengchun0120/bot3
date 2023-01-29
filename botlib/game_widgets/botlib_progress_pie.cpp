@@ -10,30 +10,28 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void ProgressPie::init(const ProgressPieTemplate* t,
-                       const commonlib::Vector2& pos)
+void ProgressPie::init(const ProgressPieTemplate* t)
 {
     t_ = t;
-    pos_ = pos;
     finishedVertices_ = 0;
     leftVertices_ = t_->va()->numVertices(0);
 }
 
-void ProgressPie::present()
+void ProgressPie::present(const commonlib::Vector2& pos)
 {
-    presentPie();
+    presentPie(pos);
     if (t_->iconRect())
     {
-        presentIcon();
+        presentIcon(pos);
     }
 }
 
-void ProgressPie::presentPie()
+void ProgressPie::presentPie(const commonlib::Vector2& pos)
 {
     SimpleShaderProgram& program = Context::graphics().simpleShader();
 
     program.setUseObjRef(true);
-    program.setObjRef(pos_);
+    program.setObjRef(pos);
     program.setPositionTexPos(*(t_->va()));
     program.setUseColor(true);
     program.setUseDirection(false);
@@ -52,11 +50,11 @@ void ProgressPie::presentPie()
     }
 }
 
-void ProgressPie::presentIcon()
+void ProgressPie::presentIcon(const commonlib::Vector2& pos)
 {
     SimpleShaderProgram& program = Context::graphics().simpleShader();
 
-    t_->iconRect()->draw(program, &pos_, nullptr, nullptr, nullptr,
+    t_->iconRect()->draw(program, &pos, nullptr, nullptr, nullptr,
                          t_->iconImage()->id(), nullptr);
 }
 

@@ -166,6 +166,35 @@ void GameScreen::initAIRobotCount()
     aiRobotCountPos_.init({textMargin[0], viewportSize_[1] - textMargin[1]});
 }
 
+void GameScreen::initGoodiePies()
+{
+    initGoodiePiePos();
+
+
+}
+
+void GameScreen::initGoodiePiePos()
+{
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    int goodieCount = lastingGoodieTypeCount();
+    float radius = cfg.goodiePieTemplate(0)->radius();
+    float x, y, spacing;
+
+    y = viewportHeight_ - cfg.goodieTopMargin() - radius;
+
+    x = viewportWidth_ - cfg.goodieRightMargin() -
+        (goodieCount - 1) * cfg.goodieSpacing() - (2*goodieCount - 1) * radius;
+
+    spacing = 2 * radius + cfg.goodieSpacing();
+
+    goodiePiePos_.resize(goodieCount);
+    for (int i = 0; i < goodieCount; ++i)
+    {
+        goodiePiePos_[i].init({x, y});
+        x += spacing;
+    }
+}
+
 bool GameScreen::processInputEndGame(const commonlib::InputEvent& e)
 {
     msgBox_.process(e);

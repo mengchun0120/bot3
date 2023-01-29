@@ -12,27 +12,18 @@ namespace botlib {
 
 Player::Player(const PlayerTemplate* t,
                const commonlib::Vector2& pos1,
-               const commonlib::Vector2& direction1,
-               float goodieY,
-               float goodieStartX,
-               float goodieSpacing)
+               const commonlib::Vector2& direction1)
 {
-    init(t, pos1, direction1, goodieY, goodieStartX, goodieSpacing);
+    init(t, pos1, direction1);
 }
 
 void Player::init(const PlayerTemplate* t,
                   const Vector2& pos1,
-                  const Vector2& direction1,
-                  float goodieY,
-                  float goodieStartX,
-                  float goodieSpacing)
+                  const Vector2& direction1)
 {
     Robot::init(t, Side::PLAYER, pos1, direction1);
     initGoodies();
     initSkillMap();
-    goodieY_ = goodieY;
-    goodieStartX_ = goodieStartX;
-    goodieSpacing_ = goodieSpacing;
 }
 
 void Player::update(UpdateContext& cxt)
@@ -83,21 +74,10 @@ Skill* Player::findSkillForInput(int input)
     return it != skillMap_.end() ? it->second : nullptr;
 }
 
-void Player::initGoodies()
+void Player::initGoodieEffects()
 {
-    auto initFunc = [](Goodie& g)
-    {
-        g.initPie();
-    };
-
-    goodiePool_.init(lastingGoodieTypeCount(), initFunc);
-
-    goodies_.setDeleter(
-        [this](Goodie* g)
-        {
-            goodiePool_.free(g);
-        }
-    );
+    goodieEffectPool_.init(lastingGoodieTypeCount());
+    goodieEffects_.setDeleter(goodieEffectPool_.deleter());
 }
 
 void Player::initSkillMap()

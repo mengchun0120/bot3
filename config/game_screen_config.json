@@ -19,5 +19,11 @@
         "textMargin": [440.0, 90.0],
         "textSize": "big",
         "textColor": [190, 190, 190, 255]
-    }
+    },
+    "goodiePies": [
+        "damage_amplifier_progress_pie",
+        "attack_accelerator_progress_pie",
+        "speed_accelerator_progress_pie",
+        "god_mode_progress_pie"
+    ]
 }

@@ -21,6 +21,11 @@ inline unsigned int goodieTypeCount()
     return static_cast<unsigned int>(GoodieType::COUNT);
 }
 
+inline GoodieType firstLastingGoodieType()
+{
+    return GoodieType::DAMAGE_AMPLIFIER;
+}
+
 inline unsigned int lastingGoodieTypeCount()
 {
     return static_cast<unsigned int>(GoodieType::COUNT) -
