@@ -1,8 +1,6 @@
 #include <cmath>
-#include <sstream>
 #include <commonlib_exception.h>
 #include <commonlib_json_param.h>
-#include <commonlib_texture.h>
 #include <commonlib_named_map.h>
 #include <botlib_rectangle.h>
 #include <botlib_component_template.h>
@@ -13,14 +11,12 @@ namespace mcdane {
 namespace botlib {
 
 void ComponentTemplate::init(const rapidjson::Value& v,
-                             const TextureLib& textureLib,
-                             const RectLib& rectLib)
+                             const IconTemplateLib& iconLib)
 {
-    std::string typeStr, textureName, rectName;
+    std::string typeStr, iconName;
     std::vector<JsonParamPtr> params{
         jsonParam(typeStr, "type", true, k_nonEmptyStrV),
-        jsonParam(textureName, "texture", true, k_nonEmptyStrV),
-        jsonParam(rectName, "rect", true, k_nonEmptyStrV),
+        jsonParam(iconName, "icon", true, k_nonEmptyStrV),
         jsonParam(firePos_, "firePos", false)
     };
 
@@ -28,16 +24,11 @@ void ComponentTemplate::init(const rapidjson::Value& v,
 
     type_ = toComponentType(typeStr);
 
-    texture_ = textureLib.search(textureName);
-    if (!texture_)
+    icon_ = iconLib.search(iconName);
+    if (!icon_)
     {
-        THROW_EXCEPT(ParseException, "Failed to find texture " + textureName);
-    }
-
-    rect_ = rectLib.search(rectName);
-    if (!rect_)
-    {
-        THROW_EXCEPT(ParseException, "Failed to find rectangle " + rectName);
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Failed to find IconTemplate " + iconName);
     }
 
     resetSpan();
@@ -45,8 +36,8 @@ void ComponentTemplate::init(const rapidjson::Value& v,
 
 void ComponentTemplate::resetSpan()
 {
-    span_ = static_cast<float>(sqrt(rect_->width() * rect_->width() +
-                                    rect_->height() * rect_->height()) / 2.0);
+    span_ = static_cast<float>(sqrt(rect()->width() * rect()->width() +
+                                    rect()->height() * rect()->height()) / 2.0);
 }
 
 } // end of namespace botlib

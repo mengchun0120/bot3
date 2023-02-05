@@ -13,18 +13,16 @@ class CompositeObjectTemplate: public GameObjectTemplate {
 public:
     CompositeObjectTemplate() = default;
 
-    ~CompositeObjectTemplate() override = default;
+    ~CompositeObjectTemplate() override;
 
     void init(GameObjectType t,
               const std::string& name,
               const rapidjson::Value& v,
               const ComponentTemplateLib& componentTemplateLib);
 
-    inline unsigned int numComponents() const;
+    inline int numComponents() const;
 
     inline const Component& component(unsigned int i) const;
-
-    inline const std::vector<Component>& components() const;
 
 private:
     void initComponents(
@@ -34,22 +32,17 @@ private:
     void resetSpan();
 
 private:
-    std::vector<Component> components_;
+    std::vector<Component *> components_;
 };
 
-unsigned int CompositeObjectTemplate::numComponents() const
+int CompositeObjectTemplate::numComponents() const
 {
-    return components_.size();
+    return static_cast<int>(components_.size());
 }
 
 const Component& CompositeObjectTemplate::component(unsigned int i) const
 {
-    return components_[i];
-}
-
-const std::vector<Component>& CompositeObjectTemplate::components() const
-{
-    return components_;
+    return *(components_[i]);
 }
 
 } // end of namespace botlib

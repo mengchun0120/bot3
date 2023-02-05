@@ -110,6 +110,8 @@ private:
 
     void initRectLib(const std::string& rectLibFile);
 
+    void initIconTemplateLib(const std::string& iconTemplateLibFile);
+
     void initComponentTemplateLib(const std::string& componentTemplateLibFile);
 
     void initTileTemplateLib(const std::string& tileTemplateLibFile);
@@ -130,8 +132,6 @@ private:
                               const std::string& skillDataDir);
 
     void initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile);
-
-    void initIconTemplateLib(const std::string& iconTemplateLibFile);
 
     void calculateMaxObjSpan();
 

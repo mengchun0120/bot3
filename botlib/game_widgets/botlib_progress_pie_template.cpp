@@ -2,8 +2,7 @@
 #include <commonlib_json_param.h>
 #include <commonlib_named_map.h>
 #include <commonlib_vertex_array.h>
-#include <commonlib_texture.h>
-#include <botlib_rectangle.h>
+#include <botlib_icon_template.h>
 #include <botlib_progress_pie_template.h>
 
 using namespace mcdane::commonlib;
@@ -13,31 +12,28 @@ namespace botlib {
 
 ProgressPieTemplate::ProgressPieTemplate()
     : va_(nullptr)
-    , iconRect_(nullptr)
-    , iconImage_(nullptr)
 {
 }
 
 void ProgressPieTemplate::init(const rapidjson::Value& v,
                                const VertexArrayLib& vertexArrayLib,
-                               const RectLib& rectLib,
-                               const TextureLib& textureLib)
+                               const IconTemplateLib& iconLib)
 {
-    std::string vertexArrayName, iconRectName, iconImageName;
+    std::string vertexArrayName;
+    std::vector<std::string> iconNames;
     std::vector<JsonParamPtr> params{
         jsonParam(radius_, "radius", true, gt(0.0f)),
         jsonParam(vertexArrayName, "vertexArray", true, k_nonEmptyStrV),
         jsonParam(backgroundColor_, "backgroundColor"),
         jsonParam(frontColor_, "frontColor"),
         jsonParam(alpha_, "alpha", true, gt(0.0f) && le(1.0f)),
-        jsonParam(iconRectName, "iconRect", false, k_nonEmptyStrV),
-        jsonParam(iconImageName, "iconImage", false, k_nonEmptyStrV),
+        jsonParam(iconNames, "icons", false),
     };
 
     parse(params, v);
 
     initVertexArray(vertexArrayName, vertexArrayLib);
-    initIcon(iconRectName, iconImageName, rectLib, textureLib);
+    initIcons(iconNames, iconLib);
 }
 
 void ProgressPieTemplate::initVertexArray(const std::string& vertexArrayName,
@@ -59,38 +55,23 @@ void ProgressPieTemplate::initVertexArray(const std::string& vertexArrayName,
     numTriangles_ = va_->numVertices(0) / 3;
 }
 
-void ProgressPieTemplate::initIcon(const std::string& iconRectName,
-                                   const std::string& iconImageName,
-                                   const RectLib& rectLib,
-                                   const TextureLib& textureLib)
+void ProgressPieTemplate::initIcons(const std::vector<std::string>& iconNames,
+                                    const IconTemplateLib& iconLib)
 {
-    if (iconRectName.empty() && iconImageName.empty())
+    if (iconNames.empty())
     {
         return;
     }
 
-    if (!iconRectName.empty() && iconImageName.empty())
+    icons_.resize(iconNames.size());
+    for (unsigned int i = 0; i < iconNames.size(); ++i)
     {
-        THROW_EXCEPT(InvalidArgumentException, "iconRect not set");
-    }
-    else if (iconRectName.empty() && !iconImageName.empty())
-    {
-        THROW_EXCEPT(InvalidArgumentException, "iconImage not set");
-    }
-
-    iconRect_ = rectLib.search(iconRectName);
-    if (!iconRect_)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Failed to find rect " + iconRectName);
-    }
-
-
-    iconImage_ = textureLib.search(iconImageName);
-    if (!iconImage_)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Failed to find texture " + iconImageName);
+        icons_[i] = iconLib.search(iconNames[i]);
+        if (!icons_[i])
+        {
+            THROW_EXCEPT(InvalidArgumentException,
+                         "Failed to find IconTemplate " + iconNames[i]);
+        }
     }
 }
 

@@ -19,7 +19,7 @@ namespace botlib {
 class GameMapAccessor;
 class Player;
 
-class GameMap: public commonlib::Object {
+class GameMap {
 private:
     static constexpr int k_layerCount = 4;
 

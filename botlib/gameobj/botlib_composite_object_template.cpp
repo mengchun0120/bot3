@@ -11,6 +11,15 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+CompositeObjectTemplate::~CompositeObjectTemplate()
+{
+    int count = numComponents();
+    for (int i = 0; i < count; ++i)
+    {
+        delete components_[i];
+    }
+}
+
 void CompositeObjectTemplate::init(
     GameObjectType t,
     const std::string& name,
@@ -45,7 +54,8 @@ void CompositeObjectTemplate::initComponents(
     components_.resize(a->Capacity());
     for (unsigned int i = 0; i < a->Capacity(); ++i)
     {
-        components_[i].init((*a)[i], componentTemplateLib);
+        Component* c = new Component((*a)[i], componentTemplateLib);
+        components_[i] = c;
     }
 }
 
@@ -53,7 +63,7 @@ void CompositeObjectTemplate::resetSpan()
 {
     for (std::size_t i = 0; i < components_.size(); ++i)
     {
-        const Component& c = components_[i];
+        const Component& c = component(i);
         float s = c.pos().norm() + c.getTemplate()->span();
         if (s >= span_)
         {

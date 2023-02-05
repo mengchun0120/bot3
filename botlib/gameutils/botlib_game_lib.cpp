@@ -54,6 +54,7 @@ void GameLib::load(const AppConfig& cfg)
     initTextureLib(cfg.textureLibFile(), cfg.picDir());
     initVertexArrayLib(cfg.vertexArrayLibFile(), cfg.vertexArrayDataDir());
     initRectLib(cfg.rectLibFile());
+    initIconTemplateLib(cfg.iconTemplateLibFile());
     initComponentTemplateLib(cfg.componentTemplateLibFile());
     initTileTemplateLib(cfg.tileTemplateLibFile());
     initParticleEffectTemplateLib(cfg.particleEffectTemplateLibFile(),
@@ -64,7 +65,6 @@ void GameLib::load(const AppConfig& cfg)
     initMissileTemplateLib(cfg.missileTemplateLibFile());
     initSkillTemplateLib(cfg.skillTemplateLibFile(), cfg.skillDataDir());
     initAIRobotTemplateLib(cfg.aiRobotTemplateLibFile());
-    initIconTemplateLib(cfg.iconTemplateLibFile());
     playerTemplate_.init(cfg.playerTemplateFile(),
                          missileTemplateLib_,
                          componentTemplateLib_,
@@ -123,6 +123,20 @@ void GameLib::initRectLib(const std::string& rectLibFile)
     LOG_DEBUG << "rectLib loaded successfully" << LOG_END;
 }
 
+void GameLib::initIconTemplateLib(const std::string& iconTemplateLibFile)
+{
+    auto parser = [&](IconTemplate& t,
+                      const std::string& name,
+                      const rapidjson::Value& v)
+    {
+        t.init(v, textureLib_, rectLib_);
+    };
+
+    iconTemplateLib_.init(iconTemplateLibFile, parser);
+
+    LOG_DEBUG << "iconTemplateLib loaded successfully" << LOG_END;
+}
+
 void GameLib::initComponentTemplateLib(
                     const std::string& componentTemplateLibFile)
 {
@@ -130,7 +144,7 @@ void GameLib::initComponentTemplateLib(
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        t.init(v, textureLib_, rectLib_);
+        t.init(v, iconTemplateLib_);
     };
 
     componentTemplateLib_.init(componentTemplateLibFile, parser);
@@ -190,7 +204,7 @@ void GameLib::initProgressPieTemplateLib(
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        t.init(v, vertexArrayLib_, rectLib_, textureLib_);
+        t.init(v, vertexArrayLib_, iconTemplateLib_);
     };
 
     progressPieTemplateLib_.init(progressPieTemplateLibFile, parser);
@@ -257,20 +271,6 @@ void GameLib::initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile)
     aiRobotTemplateLib_.init(aiRobotTemplateLibFile, parser);
 
     LOG_DEBUG << "aiRobotTemplateLib loaded successfully" << LOG_END;
-}
-
-void GameLib::initIconTemplateLib(const std::string& iconTemplateLibFile)
-{
-    auto parser = [&](IconTemplate& t,
-                      const std::string& name,
-                      const rapidjson::Value& v)
-    {
-        t.init(v, textureLib_, rectLib_);
-    };
-
-    iconTemplateLib_.init(iconTemplateLibFile, parser);
-
-    LOG_DEBUG << "iconTemplateLib loaded successfully" << LOG_END;
 }
 
 void GameLib::calculateMaxObjSpan()

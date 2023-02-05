@@ -60,7 +60,7 @@ void GameScreenConfig::init(const GameLib& gameLib,
     const AppConfig& cfg = AppConfig::instance();
 
     mapFile_ = constructPath({cfg.mapDir(), mapFile_});
-    initGoodiePieTemplates(goodiePieNames, gameLib);
+    initGoodiePieTemplates(gameLib, goodiePieNames);
 
     LOG_INFO << "GameScreenConfig initialized successfully" << LOG_END;
 }
@@ -72,14 +72,9 @@ void GameScreenConfig::setMapFile(const std::string& fileName)
 }
 
 void GameScreenConfig::initGoodiePieTemplates(
-                    const std::vector<std::string>& goodiePieNames,
-                    const GameLib& gameLib)
+                    const GameLib& gameLib,
+                    const std::vector<std::string>& goodiePieNames)
 {
-    if (goodiePieNames.empty())
-    {
-        THROW_EXCEPT(InvalidArgumentException, "goodiePieNames is empty");
-    }
-
     if (goodiePieNames.size() != lastingGoodieTypeCount())
     {
         THROW_EXCEPT(InvalidArgumentException, "goodiePieNames is invalid");

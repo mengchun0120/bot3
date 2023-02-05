@@ -8,18 +8,16 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void Icon::init(const IconTemplate* t,
-                const commonlib::Vector2& pos)
+void Icon::init(const IconTemplate* t)
 {
     t_ = t;
-    pos_ = pos;
 }
 
-void Icon::present()
+void Icon::present(const commonlib::Vector2& pos)
 {
     SimpleShaderProgram& program = Context::graphics().simpleShader();
 
-    t_->rect()->draw(program, &pos_, nullptr, nullptr, nullptr,
+    t_->rect()->draw(program, &pos, nullptr, nullptr, nullptr,
                      t_->texture()->id(), nullptr);
 }
 

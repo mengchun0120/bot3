@@ -91,6 +91,7 @@ private:
     ProgressBar armorProgressBar_;
     ProgressBar energyProgressBar_;
     MessageBox msgBox_;
+    commonlib::Vector2 aiRobotIconPos_;
     Icon aiRobotCountIcon_;
     commonlib::Vector2 aiRobotCountPos_;
     std::string aiRobotCountStr_;

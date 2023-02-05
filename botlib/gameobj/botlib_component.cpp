@@ -16,6 +16,12 @@ Component::Component()
 {
 }
 
+Component::Component(const rapidjson::Value& v,
+                     const ComponentTemplateLib& componentTemplateLib)
+{
+    init(v, componentTemplateLib);
+}
+
 Component::Component(const Component& other)
     : t_(other.t_)
     , pos_(other.pos_)

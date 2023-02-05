@@ -11,9 +11,12 @@ namespace botlib {
 
 class ComponentTemplate;
 
-class Component: public commonlib::Object {
+class Component {
 public:
     Component();
+
+    Component(const rapidjson::Value& v,
+              const ComponentTemplateLib& componentTemplateLib);
 
     Component(const Component& other);
 

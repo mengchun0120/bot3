@@ -161,9 +161,9 @@ void GameScreen::initAIRobotCount()
     const GameScreenConfig& cfg = Context::gameScreenConfig();
     const Vector2& iconMargin = cfg.aiRobotCountIconMargin();
     const Vector2& textMargin = cfg.aiRobotCountTextMargin();
-    Vector2 iconPos{iconMargin[0], viewportSize_[1] - iconMargin[1]};
 
-    aiRobotCountIcon_.init(cfg.aiRobotCountIconTemplate(), iconPos);
+    aiRobotIconPos_.init({iconMargin[0], viewportSize_[1] - iconMargin[1]});
+    aiRobotCountIcon_.init(cfg.aiRobotCountIconTemplate());
     aiRobotCountPos_.init({textMargin[0], viewportSize_[1] - textMargin[1]});
 }
 
@@ -384,7 +384,7 @@ void GameScreen::presentOverlay()
     armorProgressBar_.present();
     energyProgressBar_.present();
 
-    aiRobotCountIcon_.present();
+    aiRobotCountIcon_.present(aiRobotIconPos_);
     textSys.draw(program, map_.aiRobotCountStr(), aiRobotCountPos_,
                  cfg.aiRobotCountTextSize(), &cfg.aiRobotCountTextColor());
 
@@ -401,10 +401,11 @@ void GameScreen::presentGoodiePies()
     for (g = map_.player()->firstGoodieEffect(); g; g = g->next(), ++i)
     {
         const GoodieEffect& effect = g->item();
-        ProgressPie& pie = goodiePies_[lastingGoodieTypeIndex(effect.type())];
+        int idx = lastingGoodieTypeIndex(effect.type());
+        ProgressPie& pie = goodiePies_[idx];
 
         pie.setFinishedRatio(effect.finishedRatio());
-        pie.present(goodiePiePos_[i]);
+        pie.present(goodiePiePos_[i], 0);
     }
 }
 

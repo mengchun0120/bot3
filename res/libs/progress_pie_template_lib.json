@@ -5,8 +5,9 @@
         "backgroundColor": [215, 238, 216, 255],
         "frontColor": [117, 203, 138, 255],
         "alpha": 0.7,
-        "iconRect": "goodie",
-        "iconImage": "damage_amplifier"
+        "icons": [
+            "damage_amplifier"
+        ]
     },
     "attack_accelerator_progress_pie": {
         "radius": 30.0,
@@ -14,8 +15,9 @@
         "backgroundColor": [255, 233, 220, 255],
         "frontColor": [255, 203, 138, 255],
         "alpha": 0.7,
-        "iconRect": "goodie",
-        "iconImage": "attack_accelerator"
+        "icons": [
+            "attack_accelerator"
+        ]
     },
     "speed_accelerator_progress_pie": {
         "radius": 30.0,
@@ -23,8 +25,9 @@
         "backgroundColor": [255, 255, 255, 255],
         "frontColor": [255, 209, 185, 255],
         "alpha": 0.7,
-        "iconRect": "goodie",
-        "iconImage": "speed_accelerator"
+        "icons": [
+            "speed_accelerator"
+        ]
     },
     "god_mode_progress_pie": {
         "radius": 30.0,
@@ -32,7 +35,8 @@
         "backgroundColor": [173, 221, 255, 255],
         "frontColor": [123, 172, 255, 255],
         "alpha": 0.7,
-        "iconRect": "goodie",
-        "iconImage": "god_mode"
+        "icons": [
+            "god_mode"
+        ]
     }
 }

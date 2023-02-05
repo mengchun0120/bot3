@@ -3,6 +3,7 @@
 
 #include <commonlib_vector.h>
 #include <botlib_typedef.h>
+#include <botlib_icon_template.h>
 #include <botlib_component_type.h>
 
 namespace mcdane {
@@ -15,14 +16,13 @@ public:
     ~ComponentTemplate() = default;
 
     void init(const rapidjson::Value& v,
-              const TextureLib& textureLib,
-              const RectLib& rectLib);
+              const IconTemplateLib& iconLib);
 
     inline ComponentType type() const;
 
-    inline const commonlib::Texture* texture() const;
-
     inline const Rectangle* rect() const;
+
+    inline const commonlib::Texture* texture() const;
 
     inline float span() const;
 
@@ -33,8 +33,7 @@ private:
 
 private:
     ComponentType type_;
-    const commonlib::Texture* texture_;
-    const Rectangle* rect_;
+    const IconTemplate* icon_;
     float span_;
     commonlib::Vector2 firePos_;
 };
@@ -44,14 +43,14 @@ ComponentType ComponentTemplate::type() const
     return type_;
 }
 
-const commonlib::Texture* ComponentTemplate::texture() const
-{
-    return texture_;
-}
-
 const Rectangle* ComponentTemplate::rect() const
 {
-    return rect_;
+    return icon_->rect();
+}
+
+const commonlib::Texture* ComponentTemplate::texture() const
+{
+    return icon_->texture();
 }
 
 float ComponentTemplate::span() const

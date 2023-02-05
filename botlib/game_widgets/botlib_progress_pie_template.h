@@ -1,8 +1,10 @@
 #ifndef INCLUDED_BOTLIB_PROGRESS_PIE_TEMPLATE_H
 #define INCLUDED_BOTLIB_PROGRESS_PIE_TEMPLATE_H
 
+#include <vector>
 #include <rapidjson/document.h>
 #include <commonlib_color.h>
+#include <botlib_icon_template.h>
 #include <botlib_typedef.h>
 
 namespace mcdane {
@@ -21,8 +23,7 @@ public:
 
     void init(const rapidjson::Value& v,
               const VertexArrayLib& vertexArrayLib,
-              const RectLib& rectLib,
-              const TextureLib& textureLib);
+              const IconTemplateLib& iconLib);
 
     inline float radius() const;
 
@@ -36,18 +37,16 @@ public:
 
     inline int numTriangles() const;
 
-    inline const Rectangle* iconRect() const;
+    inline int numIcons() const;
 
-    inline const commonlib::Texture* iconImage() const;
+    inline const IconTemplate* iconTemplate(int idx) const;
 
 private:
     void initVertexArray(const std::string& vertexArrayName,
                          const VertexArrayLib& vertexArrayLib);
 
-    void initIcon(const std::string& iconRectName,
-                  const std::string& iconImageName,
-                  const RectLib& rectLib,
-                  const TextureLib& textureLib);
+    void initIcons(const std::vector<std::string>& iconNames,
+                   const IconTemplateLib& iconLib);
 
 private:
     float radius_;
@@ -56,8 +55,7 @@ private:
     commonlib::Color frontColor_;
     float alpha_;
     int numTriangles_;
-    const Rectangle* iconRect_;
-    const commonlib::Texture* iconImage_;
+    std::vector<const IconTemplate*> icons_;
 };
 
 float ProgressPieTemplate::radius() const
@@ -90,14 +88,14 @@ int ProgressPieTemplate::numTriangles() const
     return numTriangles_;
 }
 
-const Rectangle* ProgressPieTemplate::iconRect() const
+int ProgressPieTemplate::numIcons() const
 {
-    return iconRect_;
+    return static_cast<int>(icons_.size());
 }
 
-const commonlib::Texture* ProgressPieTemplate::iconImage() const
+const IconTemplate* ProgressPieTemplate::iconTemplate(int idx) const
 {
-    return iconImage_;
+    return icons_[idx];
 }
 
 } // end of namespace botlib

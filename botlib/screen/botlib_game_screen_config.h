@@ -61,8 +61,8 @@ public:
 
 private:
     void initGoodiePieTemplates(
-                    const std::vector<std::string>& goodiePieNames,
-                    const GameLib& gameLib);
+                    const GameLib& gameLib,
+                    const std::vector<std::string>& goodiePieNames);
 
 private:
     std::string mapFile_;
