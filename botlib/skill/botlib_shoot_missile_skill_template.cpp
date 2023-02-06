@@ -13,14 +13,17 @@ ShootMissileSkillTemplate::ShootMissileSkillTemplate()
 {
 }
 
-ShootMissileSkillTemplate::ShootMissileSkillTemplate(const rapidjson::Value& v)
+ShootMissileSkillTemplate::ShootMissileSkillTemplate(
+                                const rapidjson::Value& v,
+                                const ProgressPieTemplateLib& progressPieLib)
 {
-    init(v);
+    init(v, progressPieLib);
 }
 
-void ShootMissileSkillTemplate::init(const rapidjson::Value& v)
+void ShootMissileSkillTemplate::init(const rapidjson::Value& v,
+                                     const ProgressPieTemplateLib& progressPieLib)
 {
-    SkillTemplate::init(SkillType::SHOOT_MISSILE, v);
+    SkillTemplate::init(SkillType::SHOOT_MISSILE, v, progressPieLib);
 
     std::vector<JsonParamPtr> params{
         jsonParam(keepAlive_, "keepAlive", false),

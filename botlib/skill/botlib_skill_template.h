@@ -4,17 +4,22 @@
 #include <memory>
 #include <rapidjson/document.h>
 #include <commonlib_named_map.h>
+#include <botlib_typedef.h>
 #include <botlib_skill_flag.h>
 #include <botlib_skill_type.h>
 
 namespace mcdane {
 namespace botlib {
 
+class ProgressPieTemplate;
+
 class SkillTemplate {
 public:
     SkillTemplate();
 
-    void init(SkillType type, const rapidjson::Value& v);
+    void init(SkillType type,
+              const rapidjson::Value& v,
+              const ProgressPieTemplateLib& progressPieLib);
 
     inline SkillType type() const;
 
@@ -28,11 +33,18 @@ public:
 
     inline float energyCost() const;
 
+    inline const ProgressPieTemplate* pieTemplate() const;
+
+private:
+    void initPie(const std::string& pieName,
+                 const ProgressPieTemplateLib& progressPieLib);
+
 protected:
     SkillType type_;
     int flags_;
     float coolDown_;
     float energyCost_;
+    const ProgressPieTemplate* pieTemplate_;
 };
 
 using SkillTemplateLib = commonlib::NamedMap<std::unique_ptr<SkillTemplate>>;
@@ -65,6 +77,11 @@ float SkillTemplate::energyCost() const
 bool SkillTemplate::checkFlag(SkillFlag f) const
 {
     return flags_ & static_cast<int>(f);
+}
+
+const ProgressPieTemplate* SkillTemplate::pieTemplate() const
+{
+    return pieTemplate_;
 }
 
 } // end of namespace botlib

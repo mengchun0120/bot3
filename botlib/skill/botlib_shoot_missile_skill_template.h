@@ -10,9 +10,11 @@ class ShootMissileSkillTemplate: public SkillTemplate {
 public:
     ShootMissileSkillTemplate();
 
-    ShootMissileSkillTemplate(const rapidjson::Value& v);
+    ShootMissileSkillTemplate(const rapidjson::Value& v,
+                              const ProgressPieTemplateLib& progressPieLib);
 
-    void init(const rapidjson::Value& v);
+    void init(const rapidjson::Value& v,
+              const ProgressPieTemplateLib& progressPieLib);
 
     inline bool keepAlive() const;
 

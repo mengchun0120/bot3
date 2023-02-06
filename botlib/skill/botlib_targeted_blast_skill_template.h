@@ -10,7 +10,8 @@ namespace botlib {
 class TargetedBlastSkillTemplate: public SkillTemplate {
 public:
     TargetedBlastSkillTemplate(const rapidjson::Value& v,
-                               const MissileTemplateLib& missileLib);
+                               const MissileTemplateLib& missileLib,
+                               const ProgressPieTemplateLib& progressPieLib);
 
     inline const MissileTemplate* missileTemplate() const;
 
@@ -24,7 +25,8 @@ public:
 
 private:
     void init(const rapidjson::Value& v,
-              const MissileTemplateLib& missileLib);
+              const MissileTemplateLib& missileLib,
+              const ProgressPieTemplateLib& progressPieLib);
 
 protected:
     const MissileTemplate* missileTemplate_;

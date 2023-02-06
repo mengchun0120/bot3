@@ -20,16 +20,18 @@ BlastSkillTemplate::BlastSkillTemplate()
 
 BlastSkillTemplate::BlastSkillTemplate(const rapidjson::Value& v,
                                        const MissileTemplateLib& missileLib,
+                                       const ProgressPieTemplateLib& progressPieLib,
                                        const std::string& skillDataDir)
 {
-    init(v, missileLib, skillDataDir);
+    init(v, missileLib, progressPieLib, skillDataDir);
 }
 
 void BlastSkillTemplate::init(const rapidjson::Value& v,
                               const MissileTemplateLib& missileLib,
+                              const ProgressPieTemplateLib& progressPieLib,
                               const std::string& skillDataDir)
 {
-    SkillTemplate::init(SkillType::BLAST, v);
+    SkillTemplate::init(SkillType::BLAST, v, progressPieLib);
 
     std::string missileName, firePosFile, fireDirectionFile;
     std::vector<JsonParamPtr> params{

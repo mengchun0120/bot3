@@ -11,16 +11,18 @@ namespace mcdane {
 namespace botlib {
 
 TargetedBlastSkillTemplate::TargetedBlastSkillTemplate(
-                                        const rapidjson::Value& v,
-                                        const MissileTemplateLib& missileLib)
+                                   const rapidjson::Value& v,
+                                   const MissileTemplateLib& missileLib,
+                                   const ProgressPieTemplateLib& progressPieLib)
 {
-    init(v, missileLib);
+    init(v, missileLib, progressPieLib);
 }
 
 void TargetedBlastSkillTemplate::init(const rapidjson::Value& v,
-                                      const MissileTemplateLib& missileLib)
+                                      const MissileTemplateLib& missileLib,
+                                      const ProgressPieTemplateLib& progressPieLib)
 {
-    SkillTemplate::init(SkillType::TARGETED_BLAST, v);
+    SkillTemplate::init(SkillType::TARGETED_BLAST, v, progressPieLib);
 
     std::string missileName;
     std::vector<JsonParamPtr> params{

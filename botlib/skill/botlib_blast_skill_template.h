@@ -16,10 +16,12 @@ public:
 
     BlastSkillTemplate(const rapidjson::Value& v,
                        const MissileTemplateLib& missileLib,
+                       const ProgressPieTemplateLib& progressPieLib,
                        const std::string& skillDataDir);
 
     void init(const rapidjson::Value& v,
               const MissileTemplateLib& missileLib,
+              const ProgressPieTemplateLib& progressPieLib,
               const std::string& skillDataDir);
 
     inline const std::vector<commonlib::Vector2>& firePoints() const;

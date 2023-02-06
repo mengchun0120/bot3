@@ -12,14 +12,16 @@ MoveSkillTemplate::MoveSkillTemplate()
 {
 }
 
-MoveSkillTemplate::MoveSkillTemplate(const rapidjson::Value& v)
+MoveSkillTemplate::MoveSkillTemplate(const rapidjson::Value& v,
+                                     const ProgressPieTemplateLib& progressPieLib)
 {
-    init(v);
+    init(v, progressPieLib);
 }
 
-void MoveSkillTemplate::init(const rapidjson::Value& v)
+void MoveSkillTemplate::init(const rapidjson::Value& v,
+                             const ProgressPieTemplateLib& progressPieLib)
 {
-    SkillTemplate::init(SkillType::MOVE, v);
+    SkillTemplate::init(SkillType::MOVE, v, progressPieLib);
 
     std::vector<JsonParamPtr> params{
         jsonParam(hasDest_, "hasDest", false),

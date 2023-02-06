@@ -249,7 +249,9 @@ void GameLib::initSkillTemplateLib(const std::string& skillTemplateLibFile,
                       const std::string& name,
                       const rapidjson::Value& v)
     {
-        SkillTemplate* t = createSkillTemplate(v, missileTemplateLib_,
+        SkillTemplate* t = createSkillTemplate(v,
+                                               missileTemplateLib_,
+                                               progressPieTemplateLib_,
                                                skillDataDir);
         ptr.reset(t);
     };

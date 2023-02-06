@@ -17,6 +17,7 @@ namespace botlib {
 
 SkillTemplate* createSkillTemplate(const rapidjson::Value& v,
                                    const MissileTemplateLib& missileLib,
+                                   const ProgressPieTemplateLib& progressPieLib,
                                    const std::string& skillDataDir)
 {
     std::string typeStr;
@@ -32,19 +33,19 @@ SkillTemplate* createSkillTemplate(const rapidjson::Value& v,
     {
         case SkillType::MOVE:
         {
-            return new MoveSkillTemplate(v);
+            return new MoveSkillTemplate(v, progressPieLib);
         }
         case SkillType::SHOOT_MISSILE:
         {
-            return new ShootMissileSkillTemplate(v);
+            return new ShootMissileSkillTemplate(v, progressPieLib);
         }
         case SkillType::BLAST:
         {
-            return new BlastSkillTemplate(v, missileLib, skillDataDir);
+            return new BlastSkillTemplate(v, missileLib, progressPieLib, skillDataDir);
         }
         case SkillType::TARGETED_BLAST:
         {
-            return new TargetedBlastSkillTemplate(v, missileLib);
+            return new TargetedBlastSkillTemplate(v, missileLib, progressPieLib);
         }
         default:
         {
