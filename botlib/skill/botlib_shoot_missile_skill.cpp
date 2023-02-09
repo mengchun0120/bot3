@@ -5,52 +5,24 @@
 namespace mcdane {
 namespace botlib {
 
-ShootMissileSkill::ShootMissileSkill()
-    : Skill()
-    , timeSinceLastShoot_(0.0f)
-{
-}
-
 ShootMissileSkill::ShootMissileSkill(const ShootMissileSkillTemplate* t,
-                                     Robot* robot)
+                                     Robot* robot,
+                                     bool enabled1)
 {
-    init(t, robot);
+    init(t, robot, enabled1);
 }
 
 void ShootMissileSkill::init(const ShootMissileSkillTemplate* t,
-                             Robot* robot)
+                             Robot* robot,
+                             bool enabled1)
 {
-    Skill::init(t, robot);
-    coolDown_ = t->coolDown();
-    timeSinceLastShoot_ = t->coolDown();
+    SkillWithCost::init(t, robot, enabled1);
 }
 
-void ShootMissileSkill::setCoolDownFactor(float f)
+bool ShootMissileSkill::apply(UpdateContext& cxt)
 {
-    coolDown_ *= f;
-}
-
-void ShootMissileSkill::update(UpdateContext& cxt)
-{
-    timeSinceLastShoot_ += cxt.timeDelta();
-
-    if (!available())
-    {
-        if (!getTemplate()->keepAlive())
-        {
-            setEnabled(false);
-        }
-        return;
-    }
-
     robot_->shoot(cxt);
-    robot_->addEnergy(-t_->energyCost());
-    timeSinceLastShoot_ = 0.0f;
-
-    if (!getTemplate()->keepAlive())
-    {
-        setEnabled(false);
-    }
+    return true;
 }
 
 } // end of namespace botlib

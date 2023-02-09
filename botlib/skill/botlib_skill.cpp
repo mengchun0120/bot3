@@ -1,5 +1,11 @@
+#include <algorithm>
+#include <commonlib_log.h>
+#include <commonlib_exception.h>
 #include <botlib_robot.h>
+#include <botlib_progress_pie.h>
 #include <botlib_skill.h>
+
+using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
@@ -16,6 +22,10 @@ Skill::Skill(const SkillTemplate* t,
              bool enabled1)
 {
     init(t, robot, enabled1);
+}
+
+Skill::~Skill()
+{
 }
 
 void Skill::init(const SkillTemplate* t,

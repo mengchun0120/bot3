@@ -1,48 +1,35 @@
 #ifndef INCLUDED_BOTLIB_SHOOT_MISSILE_SKILL_H
 #define INCLUDED_BOTLIB_SHOOT_MISSILE_SKILL_H
 
-#include <botlib_robot.h>
 #include <botlib_shoot_missile_skill_template.h>
-#include <botlib_skill.h>
+#include <botlib_skill_with_cost.h>
 
 namespace mcdane {
 namespace botlib {
 
-class ShootMissileSkill: public Skill {
+class ShootMissileSkill: public SkillWithCost {
 public:
-    ShootMissileSkill();
+    ShootMissileSkill() = default;
 
     ShootMissileSkill(const ShootMissileSkillTemplate* t,
-                      Robot* robot);
+                      Robot* robot,
+                      bool enabled1=false);
 
-    ~ShootMissileSkill() = default;
+    ~ShootMissileSkill() override = default;
 
     void init(const ShootMissileSkillTemplate* t,
-              Robot* robot);
+              Robot* robot,
+              bool enabled1=false);
 
     inline const ShootMissileSkillTemplate* getTemplate() const;
 
-    inline bool available() const;
-
-    void setCoolDownFactor(float f);
-
-    void update(UpdateContext& cxt) override;
-
 protected:
-    float coolDown_;
-    float timeSinceLastShoot_;
+    bool apply(UpdateContext& cxt) override;
 };
 
 const ShootMissileSkillTemplate* ShootMissileSkill::getTemplate() const
 {
     return static_cast<const ShootMissileSkillTemplate*>(t_);
-}
-
-bool ShootMissileSkill::available() const
-{
-    return enabled() &&
-           t_->energyCost() <= robot_->energy() &&
-           coolDown_ <= timeSinceLastShoot_;
 }
 
 } // end of namespace botlib

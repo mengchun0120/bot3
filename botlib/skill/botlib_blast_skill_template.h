@@ -30,8 +30,6 @@ public:
 
     inline const MissileTemplate* missileTemplate() const;
 
-    inline bool keepAlive() const;
-
 private:
     void readFirePosDirections(const std::string& firePosFile,
                                const std::string& fireDirectionFile,
@@ -41,7 +39,6 @@ protected:
     std::vector<commonlib::Vector2> firePoints_;
     std::vector<commonlib::Vector2> fireDirections_;
     const MissileTemplate* missileTemplate_;
-    bool keepAlive_;
 };
 
 const std::vector<commonlib::Vector2>& BlastSkillTemplate::firePoints() const
@@ -57,11 +54,6 @@ const std::vector<commonlib::Vector2>& BlastSkillTemplate::fireDirections() cons
 const MissileTemplate* BlastSkillTemplate::missileTemplate() const
 {
     return missileTemplate_;
-}
-
-bool BlastSkillTemplate::keepAlive() const
-{
-    return keepAlive_;
 }
 
 } // end of namespace botlib

@@ -21,8 +21,6 @@ public:
 
     inline float startRadius() const;
 
-    inline bool keepAlive() const;
-
 private:
     void init(const rapidjson::Value& v,
               const MissileTemplateLib& missileLib,
@@ -33,7 +31,6 @@ protected:
     int numTargets_;
     float searchRange_;
     float startRadius_;
-    bool keepAlive_;
 };
 
 const MissileTemplate* TargetedBlastSkillTemplate::missileTemplate() const
@@ -54,11 +51,6 @@ float TargetedBlastSkillTemplate::searchRange() const
 float TargetedBlastSkillTemplate::startRadius() const
 {
     return startRadius_;
-}
-
-bool TargetedBlastSkillTemplate::keepAlive() const
-{
-    return keepAlive_;
 }
 
 } // end of namespace botlib

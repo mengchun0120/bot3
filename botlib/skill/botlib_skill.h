@@ -7,6 +7,7 @@ namespace botlib {
 class SkillTemplate;
 class Robot;
 class UpdateContext;
+class ProgressPie;
 
 class Skill {
 public:
@@ -16,7 +17,7 @@ public:
           Robot* robot,
           bool enabled1=false);
 
-    virtual ~Skill() = default;
+    virtual ~Skill();
 
     void init(const SkillTemplate* t,
               Robot* robot,

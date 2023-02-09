@@ -15,17 +15,21 @@ class ProgressPie {
 public:
     ProgressPie() = default;
 
+    ProgressPie(const ProgressPieTemplate* t);
+
+    ~ProgressPie() = default;
+
     void init(const ProgressPieTemplate* t);
 
     void present(const commonlib::Vector2& pos,
-                 int iconIndex=-1);
+                 int iconIndex=-1) const;
 
     void setFinishedRatio(float ratio);
 
 private:
     void initIcons();
 
-    void presentPie(const commonlib::Vector2& pos);
+    void presentPie(const commonlib::Vector2& pos) const;
 
 private:
     const ProgressPieTemplate* t_;

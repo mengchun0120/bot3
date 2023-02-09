@@ -33,6 +33,8 @@ public:
 
     inline float energyCost() const;
 
+    inline bool keepAlive() const;
+
     inline const ProgressPieTemplate* pieTemplate() const;
 
 private:
@@ -44,6 +46,7 @@ protected:
     int flags_;
     float coolDown_;
     float energyCost_;
+    bool keepAlive_;
     const ProgressPieTemplate* pieTemplate_;
 };
 
@@ -77,6 +80,11 @@ float SkillTemplate::energyCost() const
 bool SkillTemplate::checkFlag(SkillFlag f) const
 {
     return flags_ & static_cast<int>(f);
+}
+
+bool SkillTemplate::keepAlive() const
+{
+    return keepAlive_;
 }
 
 const ProgressPieTemplate* SkillTemplate::pieTemplate() const

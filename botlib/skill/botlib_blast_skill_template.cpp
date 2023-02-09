@@ -14,7 +14,6 @@ namespace botlib {
 BlastSkillTemplate::BlastSkillTemplate()
     : SkillTemplate()
     , missileTemplate_(nullptr)
-    , keepAlive_(false)
 {
 }
 
@@ -38,7 +37,6 @@ void BlastSkillTemplate::init(const rapidjson::Value& v,
         jsonParam(firePosFile, "firePosFile", true, k_nonEmptyStrV),
         jsonParam(fireDirectionFile, "fireDirectionFile", true, k_nonEmptyStrV),
         jsonParam(missileName, "missile", true, k_nonEmptyStrV),
-        jsonParam(keepAlive_, "keepAlive", false),
     };
 
     parse(params, v);

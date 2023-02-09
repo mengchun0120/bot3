@@ -14,6 +14,7 @@ SkillTemplate::SkillTemplate()
     : flags_(0)
     , coolDown_(0.0f)
     , energyCost_(0.0f)
+    , keepAlive_(false)
     , pieTemplate_(nullptr)
 {
 }
@@ -30,7 +31,8 @@ void SkillTemplate::init(SkillType type,
         jsonParam(isOffensive, "isOffensive", false),
         jsonParam(coolDown_, "coolDown", false, ge(0.0f)),
         jsonParam(energyCost_, "energyCost", false, ge(0.0f)),
-        jsonParam(pieName, "pie", false, k_nonEmptyStrV),
+        jsonParam(keepAlive_, "keepAlive", false),
+        jsonParam(pieName, "pie", true, k_nonEmptyStrV),
     };
 
     parse(params, v);
@@ -56,6 +58,12 @@ void SkillTemplate::initPie(const std::string& pieName,
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Failed to find ProgressPie " + pieName);
+    }
+
+    if (pieTemplate_->numIcons() < 2)
+    {
+        THROW_EXCEPT(InvalidArgumentException,
+                     "ProgressPie for skill must have at least two icons");
     }
 }
 

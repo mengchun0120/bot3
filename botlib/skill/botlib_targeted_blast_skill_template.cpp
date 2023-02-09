@@ -30,7 +30,6 @@ void TargetedBlastSkillTemplate::init(const rapidjson::Value& v,
         jsonParam(numTargets_, {"numTargets"}, true, gt(0)),
         jsonParam(searchRange_, {"searchRange"}, true, gt(0.0f)),
         jsonParam(startRadius_, {"startRadius"}, true, gt(0.0f)),
-        jsonParam(keepAlive_, {"keepAlive"}, true),
     };
 
     parse(params, v);

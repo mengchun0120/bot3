@@ -13,7 +13,7 @@ void Icon::init(const IconTemplate* t)
     t_ = t;
 }
 
-void Icon::present(const commonlib::Vector2& pos)
+void Icon::present(const commonlib::Vector2& pos) const
 {
     SimpleShaderProgram& program = Context::graphics().simpleShader();
 

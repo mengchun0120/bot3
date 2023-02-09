@@ -14,7 +14,7 @@ public:
 
     void init(const IconTemplate* t);
 
-    void present(const commonlib::Vector2& pos);
+    void present(const commonlib::Vector2& pos) const;
 
 private:
     const IconTemplate* t_;

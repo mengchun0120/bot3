@@ -4,7 +4,6 @@
 #include <botlib_game_map.h>
 #include <botlib_target_finder.h>
 #include <botlib_missile.h>
-#include <botlib_robot.h>
 #include <botlib_targeted_blast_skill.h>
 
 using namespace mcdane::commonlib;
@@ -13,43 +12,31 @@ namespace mcdane {
 namespace botlib {
 
 TargetedBlastSkill::TargetedBlastSkill(const TargetedBlastSkillTemplate* t,
-                                       Robot* robot)
+                                       Robot* robot,
+                                       bool enabled1)
 {
-    init(t, robot);
+    init(t, robot, enabled1);
 }
 
-void TargetedBlastSkill::update(UpdateContext& cxt)
+void TargetedBlastSkill::init(const TargetedBlastSkillTemplate* t,
+                              Robot* robot,
+                              bool enabled1)
 {
-    timeSinceLastBlast_ += cxt.timeDelta();
+    SkillWithCost::init(t, robot, enabled1);
+}
 
-    if (!available())
-    {
-        checkEnabled();
-        return;
-    }
-
-    LOG_INFO << "TargetedBlastSkill update" << LOG_END;
-
+bool TargetedBlastSkill::apply(UpdateContext& cxt)
+{
     GameObjItemList targets(cxt.itemPool().deleter());
     findTargets(targets, cxt);
     if (targets.empty())
     {
-        checkEnabled();
-        return;
+        return false;
     }
 
     shootTargets(targets, cxt);
-    timeSinceLastBlast_ = 0.0f;
-    robot_->addEnergy(-t_->energyCost());
 
-    checkEnabled();
-}
-
-void TargetedBlastSkill::init(const TargetedBlastSkillTemplate* t,
-                              Robot* robot)
-{
-    Skill::init(t, robot);
-    timeSinceLastBlast_ = t_->coolDown();
+    return true;
 }
 
 commonlib::Region<int> TargetedBlastSkill::searchRegion(GameMap* map)
@@ -61,7 +48,8 @@ commonlib::Region<int> TargetedBlastSkill::searchRegion(GameMap* map)
     return map->getCoverArea(r);
 }
 
-void TargetedBlastSkill::findTargets(GameObjItemList& targets, UpdateContext& cxt)
+void TargetedBlastSkill::findTargets(GameObjItemList& targets,
+                                     UpdateContext& cxt)
 {
     Side enemySide = robot_->side() == Side::AI ? Side::PLAYER : Side::AI;
     Region<int> area = searchRegion(cxt.map());
@@ -72,7 +60,8 @@ void TargetedBlastSkill::findTargets(GameObjItemList& targets, UpdateContext& cx
     finder.getTargets();
 }
 
-void TargetedBlastSkill::shootTargets(GameObjItemList& targets, UpdateContext& cxt)
+void TargetedBlastSkill::shootTargets(GameObjItemList& targets,
+                                      UpdateContext& cxt)
 {
     const MissileTemplate* missileTemplate = getTemplate()->missileTemplate();
     float radius = getTemplate()->startRadius();

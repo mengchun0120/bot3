@@ -132,6 +132,7 @@ set(BOTLIB_SKILL_SRC
     skill/botlib_skill_template.cpp
     skill/botlib_skill_type.cpp
     skill/botlib_skill_utils.cpp
+    skill/botlib_skill_with_cost.cpp
     skill/botlib_targeted_blast_skill.cpp
     skill/botlib_targeted_blast_skill_template.cpp
 )
