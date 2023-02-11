@@ -93,8 +93,6 @@ public:
 
     inline Skill* skill(int i);
 
-    int skillPieCount() const;
-
 protected:
     void initSkills();
 

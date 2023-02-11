@@ -215,20 +215,6 @@ void Robot::shoot(UpdateContext& cxt)
     }
 }
 
-int Robot::skillPieCount() const
-{
-    int count = 0;
-    for (auto it = skills_.begin(); it != skills_.end(); ++it)
-    {
-        if ((*it)->hasPie())
-        {
-            ++count;
-        }
-    }
-
-    return count;
-}
-
 void Robot::initSkills()
 {
     auto& skillTemplates = getTemplate()->skills();

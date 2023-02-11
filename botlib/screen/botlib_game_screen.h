@@ -84,6 +84,8 @@ private:
 
     void clearObjectsFromMoveOutRegion(int moveOutRegionCount);
 
+    int skillPieCount();
+
     float skillPieRadius();
 
 private:

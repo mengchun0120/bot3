@@ -18,6 +18,11 @@ const std::string& toString(SkillType type);
 
 SkillType toSkillType(const std::string& typeStr);
 
+inline bool isSkillWithCost(SkillType type)
+{
+    return static_cast<int>(type) >= static_cast<int>(SHOOT_MISSILE);
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

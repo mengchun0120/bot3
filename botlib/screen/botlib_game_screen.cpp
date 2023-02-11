@@ -42,6 +42,7 @@ void GameScreen::init(const Vector2& viewportSize,
     initMessageBox();
     initAIRobotCount();
     initGoodiePies();
+    initSkillPiePos();
     moveOutRegions_.resize(4);
 }
 
@@ -197,7 +198,7 @@ void GameScreen::initGoodiePiePos()
 
 void GameScreen::initSkillPiePos()
 {
-    int pieCount = map_.player()->skillPieCount();
+    int pieCount = skillPieCount();
     if (pieCount <= 0)
     {
         return;
@@ -468,6 +469,24 @@ void GameScreen::clearObjectsFromMoveOutRegion(int moveOutRegionCount)
     }
 }
 
+int GameScreen::skillPieCount()
+{
+    Player* player = map_.player();
+    int skillCount = player->skillCount();
+    int pieCount = 0;
+
+    for (int i = 0; i < skillCount; ++i)
+    {
+        Skill* skill = player->skill(i);
+        if (isSkillWithCost(skill->type()))
+        {
+            ++pieCount;
+        }
+    }
+
+    return pieCount;
+}
+
 float GameScreen::skillPieRadius()
 {
     Player* player = map_.player();
@@ -476,9 +495,10 @@ float GameScreen::skillPieRadius()
 
     for (int i = 0; i < count; ++i)
     {
-        pie = player->skill(i)->getTemplate()->pieTemplate();
-        if (pie)
+        Skill* skill = player->skill(i);
+        if (isSkillWithCost(skill->type()))
         {
+            pie = skill->getTemplate();
             break;
         }
     }

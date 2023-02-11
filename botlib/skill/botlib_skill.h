@@ -26,6 +26,8 @@ public:
 
     inline const SkillTemplate* getTemplate() const;
 
+    inline SkillType type() const;
+
     inline bool enabled() const;
 
     inline bool hasPie() const;
@@ -43,6 +45,11 @@ protected:
 const SkillTemplate* Skill::getTemplate() const
 {
     return t_;
+}
+
+SkillType Skil::type() const
+{
+    return t_->type();
 }
 
 bool Skill::enabled() const
