@@ -23,6 +23,10 @@ Robot::Robot()
 
 Robot::~Robot()
 {
+    for (unsigned int i = 0; i < skills_.size(); ++i)
+    {
+        delete skills_[i];
+    }
 }
 
 void Robot::init(const RobotTemplate* t,
@@ -164,7 +168,7 @@ Skill* Robot::searchSkill(SkillType skillType)
 {
     for (auto it = skills_.begin(); it != skills_.end(); ++it)
     {
-        Skill* skill = it->get();
+        Skill* skill = *it;
         if (skill->getTemplate()->type() == skillType)
         {
             return skill;
@@ -211,6 +215,20 @@ void Robot::shoot(UpdateContext& cxt)
     }
 }
 
+int Robot::skillPieCount() const
+{
+    int count = 0;
+    for (auto it = skills_.begin(); it != skills_.end(); ++it)
+    {
+        if ((*it)->hasPie())
+        {
+            ++count;
+        }
+    }
+
+    return count;
+}
+
 void Robot::initSkills()
 {
     auto& skillTemplates = getTemplate()->skills();
@@ -218,8 +236,7 @@ void Robot::initSkills()
     skills_.resize(skillTemplates.size());
     for (std::size_t i = 0; i < skills_.size(); ++i)
     {
-        Skill* s = createSkill(skillTemplates[i], this);
-        skills_[i].reset(s);
+        skills_[i] = createSkill(skillTemplates[i], this);
     }
 }
 
@@ -246,10 +263,9 @@ void Robot::updateSkills(UpdateContext& cxt)
 {
     for (std::size_t i = 0; i < skills_.size(); ++i)
     {
-        Skill* s = skills_[i].get();
         if (state_ == GameObjectState::ALIVE)
         {
-            s->update(cxt);
+            skills_[i]->update(cxt);
         }
     }
 }

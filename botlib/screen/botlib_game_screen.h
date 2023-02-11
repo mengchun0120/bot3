@@ -48,6 +48,8 @@ private:
 
     void initGoodiePiePos();
 
+    void initSkillPiePos();
+
     void createGoodiePies();
 
     bool processInputEndGame(const commonlib::InputEvent& e);
@@ -82,6 +84,8 @@ private:
 
     void clearObjectsFromMoveOutRegion(int moveOutRegionCount);
 
+    float skillPieRadius();
+
 private:
     ScreenType nextScreenType_;
     UpdateContext cxt_;
@@ -98,6 +102,7 @@ private:
     std::vector<commonlib::Region<int>> moveOutRegions_;
     std::vector<commonlib::Vector2> goodiePiePos_;
     std::vector<ProgressPie> goodiePies_;
+    std::vector<commonlib::Vector2> skillPiePos_;
 };
 
 bool GameScreen::isPlayerAvailable()

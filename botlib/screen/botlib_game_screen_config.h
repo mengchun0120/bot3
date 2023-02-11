@@ -59,6 +59,12 @@ public:
 
     inline const ProgressPieTemplate* goodiePieTemplate(int idx) const;
 
+    inline float skillPieBottomMargin() const;
+
+    inline float skillPieRightMargin() const;
+
+    inline float skillPieSpacing() const;
+
 private:
     void initGoodiePieTemplates(
                     const GameLib& gameLib,
@@ -83,6 +89,9 @@ private:
     TextSize aiRobotCountTextSize_;
     commonlib::Color aiRobotCountTextColor_;
     std::vector<const ProgressPieTemplate*> goodiePieTemplates_;
+    float skillPieBottomMargin_;
+    float skillPieRightMargin_;
+    float skillPieSpacing_;
 };
 
 const std::string& GameScreenConfig::mapFile() const
@@ -173,6 +182,21 @@ const commonlib::Color& GameScreenConfig::aiRobotCountTextColor() const
 const ProgressPieTemplate* GameScreenConfig::goodiePieTemplate(int idx) const
 {
     return goodiePieTemplates_[idx];
+}
+
+float GameScreenConfig::skillPieBottomMargin() const
+{
+    return skillPieBottomMargin_;
+}
+
+float GameScreenConfig::skillPieRightMargin() const
+{
+    return skillPieRightMargin_;
+}
+
+float GameScreenConfig::skillPieSpacing() const
+{
+    return skillPieSpacing_;
 }
 
 } // end of namespace botlib

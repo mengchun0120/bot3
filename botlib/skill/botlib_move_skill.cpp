@@ -83,7 +83,6 @@ void MoveSkill::updateWithDest(UpdateContext& cxt)
     float timeDelta = cxt.timeDelta();
     if (timeDelta >= timeToDest_)
     {
-        timeDelta = timeToDest_;
         reachDest = true;
     }
 

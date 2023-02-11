@@ -32,7 +32,7 @@ void SkillTemplate::init(SkillType type,
         jsonParam(coolDown_, "coolDown", false, ge(0.0f)),
         jsonParam(energyCost_, "energyCost", false, ge(0.0f)),
         jsonParam(keepAlive_, "keepAlive", false),
-        jsonParam(pieName, "pie", true, k_nonEmptyStrV),
+        jsonParam(pieName, "pie", false, k_nonEmptyStrV),
     };
 
     parse(params, v);

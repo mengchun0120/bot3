@@ -195,6 +195,33 @@ void GameScreen::initGoodiePiePos()
     }
 }
 
+void GameScreen::initSkillPiePos()
+{
+    int pieCount = map_.player()->skillPieCount();
+    if (pieCount <= 0)
+    {
+        return;
+    }
+
+    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    float radius = skillPieRadius();
+    float x, y, spacing;
+
+    y = cfg.skillPieBottomMargin() + radius;
+
+    x = viewportSize_[0] - cfg.skillPieRightMargin() -
+        (pieCount - 1) * cfg.skillPieSpacing() - (2*pieCount - 1) * radius;
+
+    spacing = 2 * radius + cfg.skillPieSpacing();
+
+    skillPiePos_.resize(pieCount);
+    for (int i = 0; i < pieCount; ++i)
+    {
+        skillPiePos_[i].init({x, y});
+        x += spacing;
+    }
+}
+
 void GameScreen::createGoodiePies()
 {
     const GameScreenConfig& cfg = Context::gameScreenConfig();
@@ -439,6 +466,24 @@ void GameScreen::clearObjectsFromMoveOutRegion(int moveOutRegionCount)
     {
         map_.traverse(moveOutRegions_[i], remover);
     }
+}
+
+float GameScreen::skillPieRadius()
+{
+    Player* player = map_.player();
+    int count = player->skillCount();
+    const ProgressPieTemplate* pie = nullptr;
+
+    for (int i = 0; i < count; ++i)
+    {
+        pie = player->skill(i)->getTemplate()->pieTemplate();
+        if (pie)
+        {
+            break;
+        }
+    }
+
+    return pie->radius();
 }
 
 } // end of namespace botlib

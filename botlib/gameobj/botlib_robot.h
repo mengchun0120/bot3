@@ -2,7 +2,6 @@
 #define INCLUDED_BOTLIB_ROBOT_H
 
 #include <vector>
-#include <memory>
 #include <commonlib_time_utils.h>
 #include <commonlib_linked_item.h>
 #include <commonlib_linked_list.h>
@@ -18,7 +17,7 @@ namespace botlib {
 
 class Robot: public CompositeObject {
 public:
-    using SkillList = std::vector<std::unique_ptr<Skill>>;
+    using SkillList = std::vector<Skill*>;
 
 public:
     Robot();
@@ -89,6 +88,12 @@ public:
     bool setSkillEnabled(SkillType skillType, bool enabled);
 
     void shoot(UpdateContext& cxt);
+
+    inline int skillCount() const;
+
+    inline Skill* skill(int i);
+
+    int skillPieCount() const;
 
 protected:
     void initSkills();
@@ -176,6 +181,16 @@ float Robot::armorRatio() const
 float Robot::energyRatio() const
 {
     return energy_ / getTemplate()->energy();
+}
+
+int Robot::skillCount() const
+{
+    return static_cast<int>(skills_.size());
+}
+
+Skill* Robot::skill(int i)
+{
+    return skills_[i];
 }
 
 } // end of namespace botlib

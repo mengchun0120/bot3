@@ -25,5 +25,8 @@
         "attack_accelerator_progress_pie",
         "speed_accelerator_progress_pie",
         "god_mode_progress_pie"
-    ]
+    ],
+    "skillPieBottomMargin": 30.0,
+    "skillPieRightMargin": 30.0,
+    "skillPieSpacing": 30.0
 }

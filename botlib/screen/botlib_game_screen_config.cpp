@@ -43,6 +43,9 @@ void GameScreenConfig::init(const GameLib& gameLib,
                   k_nonEmptyStrV),
         jsonParam(aiRobotCountTextColor_, {"aiRobotCount", "textColor"}),
         jsonParam(goodiePieNames, {"goodiePies"}),
+        jsonParam(skillPieBottomMargin_, "skillPieBottomMargin", true, gt(0.0f)),
+        jsonParam(skillPieRightMargin_, "skillPieRightMargin", true, gt(0.0f)),
+        jsonParam(skillPieSpacing_, "skillPieSpacing", true, gt(0.0f)),
     };
 
     parse(params, doc);
