@@ -4,6 +4,7 @@
 #include <botlib_game_map_loader.h>
 #include <botlib_context.h>
 #include <botlib_move_skill.h>
+#include <botlib_skill_with_cost.h>
 #include <botlib_player.h>
 #include <botlib_game_screen.h>
 
@@ -405,6 +406,7 @@ void GameScreen::presentOverlay()
     if (map_.player())
     {
         presentGoodiePies();
+        presentSkillPies();
     }
 
     program.setAlpha(1.0f);
@@ -434,6 +436,26 @@ void GameScreen::presentGoodiePies()
 
         pie.setFinishedRatio(effect.finishedRatio());
         pie.present(goodiePiePos_[i], 0);
+    }
+}
+
+void GameScreen::presentSkillPies()
+{
+    Player* player = map_.player();
+    int posIdx = 0;
+    int skillCount = player->skillCount();
+    Skill* skill;
+    SkillWithCost* skill1;
+
+    for (int i = 0; i < skillCount; ++i)
+    {
+        skill = player->skill(i);
+        if (isSkillWithCost(skill->type()))
+        {
+            skill1 = static_cast<SkillWithCost*>(skill);
+            skill1->pie()->present(skillPiePos_[posIdx], skill1->curIconIndex());
+            ++posIdx;
+        }
     }
 }
 
@@ -498,7 +520,7 @@ float GameScreen::skillPieRadius()
         Skill* skill = player->skill(i);
         if (isSkillWithCost(skill->type()))
         {
-            pie = skill->getTemplate();
+            pie = skill->getTemplate()->pieTemplate();
             break;
         }
     }

@@ -85,7 +85,7 @@ void SkillWithCost::updatePie()
 {
     if (coolDown_ > 0.0f)
     {
-        float finishedRatio = std::max(timeSinceLastCast_ / coolDown_, 1.0f);
+        float finishedRatio = std::min(timeSinceLastCast_ / coolDown_, 1.0f);
         pie_->setFinishedRatio(finishedRatio);
     }
 

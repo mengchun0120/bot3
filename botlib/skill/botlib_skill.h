@@ -30,8 +30,6 @@ public:
 
     inline bool enabled() const;
 
-    inline bool hasPie() const;
-
     void setEnabled(bool b);
 
     virtual void update(UpdateContext& cxt) = 0;
@@ -47,7 +45,7 @@ const SkillTemplate* Skill::getTemplate() const
     return t_;
 }
 
-SkillType Skil::type() const
+SkillType Skill::type() const
 {
     return t_->type();
 }
@@ -55,11 +53,6 @@ SkillType Skil::type() const
 bool Skill::enabled() const
 {
     return enabled_;
-}
-
-bool Skill::hasPie() const
-{
-    return t_->pieTemplate() != nullptr;
 }
 
 } // end of namespace botlib

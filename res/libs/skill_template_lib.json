@@ -12,7 +12,8 @@
         "isOffensive": true,
         "coolDown": 1000.0,
         "energyCost": 5.0,
-        "keepAlive": false
+        "keepAlive": false,
+        "pie": "shoot_missile_skill_progress_pie"
     },
     "player_blast_skill": {
         "type": "blast",
@@ -22,7 +23,8 @@
         "keepAlive": false,
         "missile": "green_blast_missile",
         "firePosFile": "green_blast_skill_fire_pos.txt",
-        "fireDirectionFile": "green_blast_skill_fire_direction.txt"
+        "fireDirectionFile": "green_blast_skill_fire_direction.txt",
+        "pie": "blast_skill_progress_pie"
     },
     "player_targeted_blast_skill": {
         "type": "targeted-blast",
@@ -33,7 +35,8 @@
         "numTargets": 3,
         "missile": "green_star_missile",
         "searchRange": 300.0,
-        "startRadius": 30.0
+        "startRadius": 30.0,
+        "pie": "targeted_blast_skill_progress_pie"
     },
     "ai_move_skill": {
         "type": "move",

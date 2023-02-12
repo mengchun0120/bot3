@@ -112,5 +112,29 @@
     "attack_accelerator": {
         "texture": "attack_accelerator",
         "rect": "goodie"
+    },
+    "shoot_missile_skill_available": {
+        "texture": "shoot_missile_skill_available",
+        "rect": "skill"
+    },
+    "shoot_missile_skill_unavailable": {
+        "texture": "shoot_missile_skill_unavailable",
+        "rect": "skill"
+    },
+    "blast_skill_available": {
+        "texture": "blast_skill_available",
+        "rect": "skill"
+    },
+    "blast_skill_unavailable": {
+        "texture": "blast_skill_unavailable",
+        "rect": "skill"
+    },
+    "targeted_blast_skill_available": {
+        "texture": "targeted_blast_skill_available",
+        "rect": "skill"
+    },
+    "targeted_blast_skill_unavailable": {
+        "texture": "targeted_blast_skill_unavailable",
+        "rect": "skill"
     }
 }

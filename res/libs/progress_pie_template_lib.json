@@ -38,5 +38,38 @@
         "icons": [
             "god_mode"
         ]
+    },
+    "shoot_missile_skill_progress_pie": {
+        "radius": 30.0,
+        "vertexArray": "progress_pie",
+        "backgroundColor": [200, 230, 210, 255],
+        "frontColor": [110, 200, 130, 255],
+        "alpha": 0.7,
+        "icons": [
+            "shoot_missile_skill_available",
+            "shoot_missile_skill_unavailable"
+        ]
+    },
+    "blast_skill_progress_pie": {
+        "radius": 30.0,
+        "vertexArray": "progress_pie",
+        "backgroundColor": [200, 230, 210, 255],
+        "frontColor": [110, 200, 130, 255],
+        "alpha": 0.7,
+        "icons": [
+            "blast_skill_available",
+            "blast_skill_unavailable"
+        ]
+    },
+    "targeted_blast_skill_progress_pie": {
+        "radius": 30.0,
+        "vertexArray": "progress_pie",
+        "backgroundColor": [200, 230, 210, 255],
+        "frontColor": [110, 200, 130, 255],
+        "alpha": 0.7,
+        "icons": [
+            "targeted_blast_skill_available",
+            "targeted_blast_skill_unavailable"
+        ]
     }
 }

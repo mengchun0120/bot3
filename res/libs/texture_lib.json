@@ -85,5 +85,23 @@
     },
     "ai_robot_icon": {
         "file": "ai_robot_icon.png"
+    },
+    "shoot_missile_skill_available": {
+        "file": "shoot_missile_skill_available.png"
+    },
+    "shoot_missile_skill_unavailable": {
+        "file": "shoot_missile_skill_unavailable.png"
+    },
+    "blast_skill_available": {
+        "file": "blast_skill_available.png"
+    },
+    "blast_skill_unavailable": {
+        "file": "blast_skill_unavailable.png"
+    },
+    "targeted_blast_skill_available": {
+        "file": "targeted_blast_skill_available.png"
+    },
+    "targeted_blast_skill_unavailable": {
+        "file": "targeted_blast_skill_unavailable.png"
     }
 }

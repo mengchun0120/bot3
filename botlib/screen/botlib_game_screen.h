@@ -78,6 +78,8 @@ private:
 
     void presentGoodiePies();
 
+    void presentSkillPies();
+
     void showVictory();
 
     void showFail();
