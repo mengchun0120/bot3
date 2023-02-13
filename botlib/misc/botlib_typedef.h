@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_TYPEDEF_H
 #define INCLUDED_BOTLIB_TYPEDEF_H
 
+#include <memory>
 #include <functional>
 
 namespace mcdane {
@@ -38,6 +39,7 @@ class ParticleEffectTemplate;
 class ProgressPieTemplate;
 class ProgressBarTemplate;
 class IconTemplate;
+class SkillTemplate;
 
 using TextureLib = commonlib::NamedMap<commonlib::Texture>;
 using VertexArrayLib = commonlib::NamedMap<commonlib::VertexArray>;
@@ -51,6 +53,7 @@ using ParticleEffectTemplateLib = commonlib::NamedMap<ParticleEffectTemplate>;
 using ProgressPieTemplateLib = commonlib::NamedMap<ProgressPieTemplate>;
 using ProgressBarTemplateLib = commonlib::NamedMap<ProgressBarTemplate>;
 using IconTemplateLib = commonlib::NamedMap<IconTemplate>;
+using SkillTemplateLib = commonlib::NamedMap<std::unique_ptr<SkillTemplate>>;
 using GameObjectList = commonlib::LinkedList<GameObject>;
 using GameObjectItem = commonlib::LinkedItem<GameObject*>;
 using GameObjItemPool = commonlib::ObjectPool<GameObjectItem>;

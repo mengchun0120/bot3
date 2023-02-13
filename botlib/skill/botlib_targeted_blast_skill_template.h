@@ -1,17 +1,22 @@
 #ifndef INCLUDED_BOTLIB_TARGETED_BLAST_SKILL_TEMPLATE_H
 #define INCLUDED_BOTLIB_TARGETED_BLAST_SKILL_TEMPLATE_H
 
-#include <botlib_typedef.h>
-#include <botlib_skill_template.h>
+#include <botlib_skill_with_cost_template.h>
 
 namespace mcdane {
 namespace botlib {
 
-class TargetedBlastSkillTemplate: public SkillTemplate {
+class TargetedBlastSkillTemplate: public SkillWithCostTemplate {
 public:
+    TargetedBlastSkillTemplate();
+
     TargetedBlastSkillTemplate(const rapidjson::Value& v,
                                const MissileTemplateLib& missileLib,
                                const ProgressPieTemplateLib& progressPieLib);
+
+    void init(const rapidjson::Value& v,
+              const MissileTemplateLib& missileLib,
+              const ProgressPieTemplateLib& progressPieLib);
 
     inline const MissileTemplate* missileTemplate() const;
 
@@ -20,11 +25,6 @@ public:
     inline float searchRange() const;
 
     inline float startRadius() const;
-
-private:
-    void init(const rapidjson::Value& v,
-              const MissileTemplateLib& missileLib,
-              const ProgressPieTemplateLib& progressPieLib);
 
 protected:
     const MissileTemplate* missileTemplate_;

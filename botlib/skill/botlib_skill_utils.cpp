@@ -33,7 +33,7 @@ SkillTemplate* createSkillTemplate(const rapidjson::Value& v,
     {
         case SkillType::MOVE:
         {
-            return new MoveSkillTemplate(v, progressPieLib);
+            return new MoveSkillTemplate(v);
         }
         case SkillType::SHOOT_MISSILE:
         {

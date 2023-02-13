@@ -1,4 +1,4 @@
-#include <botlib_skill_flag.h>
+#include <botlib_barrage_skill_template.h>
 
 namespace mcdane {
 namespace botlib {

@@ -39,11 +39,13 @@ void SkillWithCost::init(const SkillTemplate* t,
 {
     Skill::init(t, robot, enabled1);
 
-    coolDown_ = t->coolDown();
-    timeSinceLastCast_ = t->coolDown();
-    if (t_->pieTemplate())
+    const SkillWithCostTemplate* t1 = getTemplate();
+
+    coolDown_ = t1->coolDown();
+    timeSinceLastCast_ = t1->coolDown();
+    if (t1->pieTemplate())
     {
-        pie_ = new ProgressPie(t_->pieTemplate());
+        pie_ = new ProgressPie(t1->pieTemplate());
         curIconIndex_ = 0;
     }
 }
@@ -64,7 +66,7 @@ void SkillWithCost::update(UpdateContext& cxt)
 
     if (apply(cxt))
     {
-        robot_->addEnergy(-t_->energyCost());
+        robot_->addEnergy(getTemplate()->energyCost());
         timeSinceLastCast_ = 0.0f;
     }
 
@@ -94,7 +96,7 @@ void SkillWithCost::updatePie()
 
 void SkillWithCost::checkEnabled()
 {
-    if (!getTemplate()->keepAlive())
+    if (!getTemplate()->checkFlag(SkillStaticFlag::KEEPALIVE))
     {
         setEnabled(false);
     }

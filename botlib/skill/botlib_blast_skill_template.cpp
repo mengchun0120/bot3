@@ -12,7 +12,7 @@ namespace mcdane {
 namespace botlib {
 
 BlastSkillTemplate::BlastSkillTemplate()
-    : SkillTemplate()
+    : SkillWithCostTemplate()
     , missileTemplate_(nullptr)
 {
 }
@@ -30,7 +30,7 @@ void BlastSkillTemplate::init(const rapidjson::Value& v,
                               const ProgressPieTemplateLib& progressPieLib,
                               const std::string& skillDataDir)
 {
-    SkillTemplate::init(SkillType::BLAST, v, progressPieLib);
+    SkillWithCostTemplate::init(SkillType::BLAST, v, progressPieLib);
 
     std::string missileName, firePosFile, fireDirectionFile;
     std::vector<JsonParamPtr> params{

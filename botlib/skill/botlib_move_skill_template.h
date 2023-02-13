@@ -10,11 +10,9 @@ class MoveSkillTemplate: public SkillTemplate {
 public:
     MoveSkillTemplate();
 
-    MoveSkillTemplate(const rapidjson::Value& v,
-                      const ProgressPieTemplateLib& progressPieLib);
+    MoveSkillTemplate(const rapidjson::Value& v);
 
-    void init(const rapidjson::Value& v,
-              const ProgressPieTemplateLib& progressPieLib);
+    void init(const rapidjson::Value& v);
 
     inline bool hasDest() const;
 

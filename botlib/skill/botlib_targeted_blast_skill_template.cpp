@@ -10,6 +10,15 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+TargetedBlastSkillTemplate::TargetedBlastSkillTemplate()
+    : SkillWithCostTemplate()
+    , missileTemplate_(nullptr)
+    , numTargets_(0)
+    , searchRange_(0.0f)
+    , startRadius_(0.0f)
+{
+}
+
 TargetedBlastSkillTemplate::TargetedBlastSkillTemplate(
                                    const rapidjson::Value& v,
                                    const MissileTemplateLib& missileLib,
@@ -22,14 +31,14 @@ void TargetedBlastSkillTemplate::init(const rapidjson::Value& v,
                                       const MissileTemplateLib& missileLib,
                                       const ProgressPieTemplateLib& progressPieLib)
 {
-    SkillTemplate::init(SkillType::TARGETED_BLAST, v, progressPieLib);
+    SkillWithCostTemplate::init(SkillType::TARGETED_BLAST, v, progressPieLib);
 
     std::string missileName;
     std::vector<JsonParamPtr> params{
-        jsonParam(missileName, {"missile"}, true, k_nonEmptyStrV),
-        jsonParam(numTargets_, {"numTargets"}, true, gt(0)),
-        jsonParam(searchRange_, {"searchRange"}, true, gt(0.0f)),
-        jsonParam(startRadius_, {"startRadius"}, true, gt(0.0f)),
+        jsonParam(missileName, "missile", true, k_nonEmptyStrV),
+        jsonParam(numTargets_, "numTargets", true, gt(0)),
+        jsonParam(searchRange_, "searchRange", true, gt(0.0f)),
+        jsonParam(startRadius_, "startRadius", true, gt(0.0f)),
     };
 
     parse(params, v);

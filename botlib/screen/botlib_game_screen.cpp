@@ -3,6 +3,7 @@
 #include <commonlib_string_utils.h>
 #include <botlib_game_map_loader.h>
 #include <botlib_context.h>
+#include <botlib_skill_with_cost.h>
 #include <botlib_move_skill.h>
 #include <botlib_skill_with_cost.h>
 #include <botlib_player.h>
@@ -514,13 +515,16 @@ float GameScreen::skillPieRadius()
     Player* player = map_.player();
     int count = player->skillCount();
     const ProgressPieTemplate* pie = nullptr;
+    Skill *skill;
+    SkillWithCost* skill1;
 
     for (int i = 0; i < count; ++i)
     {
-        Skill* skill = player->skill(i);
+        skill = player->skill(i);
         if (isSkillWithCost(skill->type()))
         {
-            pie = skill->getTemplate()->pieTemplate();
+            skill1 = static_cast<SkillWithCost*>(skill);
+            pie = skill1->getTemplate()->pieTemplate();
             break;
         }
     }

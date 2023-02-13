@@ -1,8 +1,9 @@
 #ifndef INCLUDED_BOTLIB_SKILL_WITH_COST_H
 #define INCLUDED_BOTLIB_SKILL_WITH_COST_H
 
-#include <botlib_skill.h>
 #include <botlib_robot.h>
+#include <botlib_skill_with_cost_template.h>
+#include <botlib_skill.h>
 
 namespace mcdane {
 namespace botlib {
@@ -20,6 +21,8 @@ public:
     void init(const SkillTemplate* t,
               Robot* robot,
               bool enabled1=false);
+
+    inline const SkillWithCostTemplate* getTemplate() const;
 
     inline const ProgressPie* pie() const;
 
@@ -47,6 +50,11 @@ protected:
     int curIconIndex_;
 };
 
+const SkillWithCostTemplate* SkillWithCost::getTemplate() const
+{
+    return static_cast<const SkillWithCostTemplate*>(t_);
+}
+
 const ProgressPie* SkillWithCost::pie() const
 {
     return pie_;
@@ -59,7 +67,7 @@ int SkillWithCost::curIconIndex() const
 
 bool SkillWithCost::available() const
 {
-    return robot_->energy() >= t_->energyCost() &&
+    return robot_->energy() >= getTemplate()->energyCost() &&
            timeSinceLastCast_ >= coolDown_;
 }
 

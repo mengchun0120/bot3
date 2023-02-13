@@ -4,13 +4,12 @@
 #include <string>
 #include <vector>
 #include <commonlib_vector.h>
-#include <botlib_typedef.h>
-#include <botlib_skill_template.h>
+#include <botlib_skill_with_cost_template.h>
 
 namespace mcdane {
 namespace botlib {
 
-class BlastSkillTemplate: public SkillTemplate {
+class BlastSkillTemplate: public SkillWithCostTemplate {
 public:
     BlastSkillTemplate();
 

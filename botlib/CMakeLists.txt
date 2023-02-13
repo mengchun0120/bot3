@@ -128,11 +128,12 @@ set(BOTLIB_SKILL_SRC
     skill/botlib_shoot_missile_skill.cpp
     skill/botlib_shoot_missile_skill_template.cpp
     skill/botlib_skill.cpp
-    skill/botlib_skill_flag.cpp
+    skill/botlib_skill_static_flag.cpp
     skill/botlib_skill_template.cpp
     skill/botlib_skill_type.cpp
     skill/botlib_skill_utils.cpp
     skill/botlib_skill_with_cost.cpp
+    skill/botlib_skill_with_cost_template.cpp
     skill/botlib_targeted_blast_skill.cpp
     skill/botlib_targeted_blast_skill_template.cpp
 )
