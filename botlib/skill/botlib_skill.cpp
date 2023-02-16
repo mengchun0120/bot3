@@ -33,6 +33,7 @@ void Skill::init(const SkillTemplate* t,
                  bool enabled1)
 {
     t_ = t;
+    flags_ = 0;
     robot_ = robot;
     setEnabled(enabled1);
 }

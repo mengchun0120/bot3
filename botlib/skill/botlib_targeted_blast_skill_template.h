@@ -11,14 +11,10 @@ public:
     TargetedBlastSkillTemplate();
 
     TargetedBlastSkillTemplate(const rapidjson::Value& v,
-                               const MissileTemplateLib& missileLib,
                                const ProgressPieTemplateLib& progressPieLib);
 
     void init(const rapidjson::Value& v,
-              const MissileTemplateLib& missileLib,
               const ProgressPieTemplateLib& progressPieLib);
-
-    inline const MissileTemplate* missileTemplate() const;
 
     inline int numTargets() const;
 
@@ -27,16 +23,10 @@ public:
     inline float startRadius() const;
 
 protected:
-    const MissileTemplate* missileTemplate_;
     int numTargets_;
     float searchRange_;
     float startRadius_;
 };
-
-const MissileTemplate* TargetedBlastSkillTemplate::missileTemplate() const
-{
-    return missileTemplate_;
-}
 
 int TargetedBlastSkillTemplate::numTargets() const
 {

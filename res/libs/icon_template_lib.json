@@ -136,5 +136,13 @@
     "targeted_blast_skill_unavailable": {
         "texture": "targeted_blast_skill_unavailable",
         "rect": "skill"
+    },
+    "barrage_skill_available": {
+        "texture": "barrage_skill_available",
+        "rect": "skill"
+    },
+    "barrage_skill_unavailable": {
+        "texture": "barrage_skill_unavailable",
+        "rect": "skill"
     }
 }

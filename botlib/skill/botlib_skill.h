@@ -1,7 +1,7 @@
 #ifndef INCLUDED_BOTLIB_SKILL_H
 #define INCLUDED_BOTLIB_SKILL_H
 
-#include <botlib_dynamic_flag.h>
+#include <botlib_dynamic_skill_flag.h>
 #include <botlib_skill_template.h>
 
 namespace mcdane {
@@ -31,11 +31,15 @@ public:
 
     inline bool enabled() const;
 
+    inline bool inProcess() const;
+
     inline bool checkFlag(DynamicSkillFlag f) const;
 
     inline bool checkFlags(int f) const;
 
     inline void setEnabled(bool b);
+
+    inline void setInProcess(bool b);
 
     inline void setFlag(DynamicSkillFlag f, bool b);
 
@@ -62,6 +66,11 @@ bool Skill::enabled() const
     return checkFlag(DynamicSkillFlag::ENABLED);
 }
 
+bool Skill::inProcess() const
+{
+    return checkFlag(DynamicSkillFlag::INPROCESS);
+}
+
 bool Skill::checkFlag(DynamicSkillFlag f) const
 {
     return flags_ & static_cast<int>(f);
@@ -77,9 +86,21 @@ void Skill::setEnabled(bool b)
     setFlag(DynamicSkillFlag::ENABLED, b);
 }
 
+void Skill::setInProcess(bool b)
+{
+    setFlag(DynamicSkillFlag::INPROCESS, b);
+}
+
 void Skill::setFlag(DynamicSkillFlag f, bool b)
 {
-    
+    if (b)
+    {
+        flags_ |= static_cast<int>(f);
+    }
+    else
+    {
+        flags_ &= ~static_cast<int>(f);
+    }
 }
 
 } // end of namespace botlib

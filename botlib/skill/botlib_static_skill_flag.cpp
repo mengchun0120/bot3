@@ -1,4 +1,4 @@
-#include <botlib_skill_static_flag.h>
+#include <botlib_static_skill_flag.h>
 
 namespace mcdane {
 namespace botlib {

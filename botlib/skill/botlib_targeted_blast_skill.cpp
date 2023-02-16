@@ -63,7 +63,7 @@ void TargetedBlastSkill::findTargets(GameObjItemList& targets,
 void TargetedBlastSkill::shootTargets(GameObjItemList& targets,
                                       UpdateContext& cxt)
 {
-    const MissileTemplate* missileTemplate = getTemplate()->missileTemplate();
+    const MissileTemplate* missileTemplate = robot_->getTemplate()->missileTemplate();
     float radius = getTemplate()->startRadius();
     GameMap& map = *(cxt.map());
 

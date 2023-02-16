@@ -2,7 +2,7 @@
 #define INCLUDED_BOTLIB_SKILL_TEMPLATE_H
 
 #include <rapidjson/document.h>
-#include <botlib_skill_static_flag.h>
+#include <botlib_static_skill_flag.h>
 #include <botlib_skill_type.h>
 
 namespace mcdane {
@@ -21,9 +21,13 @@ public:
 
     inline int flags() const;
 
+    inline bool isOffensive() const;
+
+    inline bool keepAlive() const;
+
     inline int checkFlags(int f) const;
 
-    inline bool checkFlag(SkillStaticFlag f) const;
+    inline bool checkFlag(StaticSkillFlag f) const;
 
 protected:
     SkillType type_;
@@ -40,12 +44,22 @@ int SkillTemplate::flags() const
     return flags_;
 }
 
+bool SkillTemplate::isOffensive() const
+{
+    return checkFlag(StaticSkillFlag::OFFENSIVE);
+}
+
+bool SkillTemplate::keepAlive() const
+{
+    return checkFlag(StaticSkillFlag::KEEPALIVE);
+}
+
 int SkillTemplate::checkFlags(int f) const
 {
     return flags_ & f;
 }
 
-bool SkillTemplate::checkFlag(SkillStaticFlag f) const
+bool SkillTemplate::checkFlag(StaticSkillFlag f) const
 {
     return flags_ & static_cast<int>(f);
 }

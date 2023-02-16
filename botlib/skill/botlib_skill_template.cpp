@@ -27,12 +27,12 @@ void SkillTemplate::init(SkillType type,
 
     if (isOffensive)
     {
-        flags_ = flags_ | SkillStaticFlag::OFFENSIVE;
+        flags_ = flags_ | StaticSkillFlag::OFFENSIVE;
     }
 
     if (keepAlive)
     {
-        flags_ = flags_ | SkillStaticFlag::KEEPALIVE;
+        flags_ = flags_ | StaticSkillFlag::KEEPALIVE;
     }
 }
 

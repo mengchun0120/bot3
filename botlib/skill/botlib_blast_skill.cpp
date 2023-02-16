@@ -28,7 +28,7 @@ bool BlastSkill::apply(UpdateContext& cxt)
     GameMap& map = *(cxt.map());
     auto& firePoints = getTemplate()->firePoints();
     auto& fireDirections = getTemplate()->fireDirections();
-    const MissileTemplate* missileTemplate = getTemplate()->missileTemplate();
+    const MissileTemplate* missileTemplate = robot_->getTemplate()->missileTemplate();
     int sz = static_cast<int>(firePoints.size());
 
     for (int i = 0; i < sz; ++i)

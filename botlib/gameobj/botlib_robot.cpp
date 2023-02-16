@@ -199,7 +199,7 @@ bool Robot::setSkillEnabled(SkillType skillType, bool enabled)
 void Robot::shoot(UpdateContext& cxt)
 {
     GameMap& map = *(cxt.map());
-    const MissileTemplate* t = getTemplate()->missileTemplate();
+    const MissileTemplate* missileTemplate = getTemplate()->missileTemplate();
 
     for (auto it = components_.begin(); it != components_.end(); ++it)
     {
@@ -209,7 +209,8 @@ void Robot::shoot(UpdateContext& cxt)
         }
 
         Missile* missile =
-            cxt.factory().createMissile(t, side_, it->firePos(), it->direction(),
+            cxt.factory().createMissile(missileTemplate, side_,
+                                        it->firePos(), it->direction(),
                                         damageFactor_);
         map.addObj(missile);
     }

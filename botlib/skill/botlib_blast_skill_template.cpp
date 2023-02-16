@@ -13,42 +13,31 @@ namespace botlib {
 
 BlastSkillTemplate::BlastSkillTemplate()
     : SkillWithCostTemplate()
-    , missileTemplate_(nullptr)
 {
 }
 
 BlastSkillTemplate::BlastSkillTemplate(const rapidjson::Value& v,
-                                       const MissileTemplateLib& missileLib,
                                        const ProgressPieTemplateLib& progressPieLib,
                                        const std::string& skillDataDir)
 {
-    init(v, missileLib, progressPieLib, skillDataDir);
+    init(v, progressPieLib, skillDataDir);
 }
 
 void BlastSkillTemplate::init(const rapidjson::Value& v,
-                              const MissileTemplateLib& missileLib,
                               const ProgressPieTemplateLib& progressPieLib,
                               const std::string& skillDataDir)
 {
     SkillWithCostTemplate::init(SkillType::BLAST, v, progressPieLib);
 
-    std::string missileName, firePosFile, fireDirectionFile;
+    std::string firePosFile, fireDirectionFile;
     std::vector<JsonParamPtr> params{
         jsonParam(firePosFile, "firePosFile", true, k_nonEmptyStrV),
         jsonParam(fireDirectionFile, "fireDirectionFile", true, k_nonEmptyStrV),
-        jsonParam(missileName, "missile", true, k_nonEmptyStrV),
     };
 
     parse(params, v);
 
     readFirePosDirections(firePosFile, fireDirectionFile, skillDataDir);
-
-    missileTemplate_ = missileLib.search(missileName);
-    if (!missileTemplate_)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Cannot find missile template " + missileName);
-    }
 }
 
 void BlastSkillTemplate::readFirePosDirections(

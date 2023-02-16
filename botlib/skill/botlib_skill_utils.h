@@ -12,7 +12,6 @@ class Skill;
 class Robot;
 
 SkillTemplate* createSkillTemplate(const rapidjson::Value& v,
-                                   const MissileTemplateLib& missileLib,
                                    const ProgressPieTemplateLib& progressPieLib,
                                    const std::string& skillDataDir);
 

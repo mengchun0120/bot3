@@ -58,9 +58,13 @@ void SkillWithCost::update(UpdateContext& cxt)
         updatePie();
     }
 
-    if (!enabled() || !available())
+    if (!inProcess() && (!enabled() || !available()))
     {
-        checkEnabled();
+        if (!getTemplate()->keepAlive())
+        {
+            setEnabled(false);
+        }
+
         return;
     }
 
@@ -70,7 +74,10 @@ void SkillWithCost::update(UpdateContext& cxt)
         timeSinceLastCast_ = 0.0f;
     }
 
-    checkEnabled();
+    if (!inProcess() && !getTemplate()->keepAlive())
+    {
+        setEnabled(false);
+    }
 }
 
 void SkillWithCost::setCoolDownFactor(float f)
@@ -92,14 +99,6 @@ void SkillWithCost::updatePie()
     }
 
     curIconIndex_ = available() ? 0 : 1;
-}
-
-void SkillWithCost::checkEnabled()
-{
-    if (!getTemplate()->checkFlag(SkillStaticFlag::KEEPALIVE))
-    {
-        setEnabled(false);
-    }
 }
 
 } // end of namespace botlib

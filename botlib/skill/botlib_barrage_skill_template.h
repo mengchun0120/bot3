@@ -11,33 +11,23 @@ public:
     BarrageSkillTemplate();
 
     BarrageSkillTemplate(const rapidjson::Value& v,
-                         const MissileTemplateLib& missileLib,
                          const ProgressPieTemplateLib& progressPieLib);
 
     void init(const rapidjson::Value& v,
-              const MissileTemplateLib& missileLib,
               const ProgressPieTemplateLib& progressPieLib);
 
-    inline const MissileTemplate* missileTemplate() const;
-
-    inline int numMissiles() const;
+    inline int maxShootTimes() const;
 
     inline float shootInterval() const;
 
 protected:
-    const MissileTemplate* missileTemplate_;
-    int numMissiles_;
+    int maxShootTimes_;
     float shootInterval_;
 };
 
-const MissileTemplate* BarrageSkillTemplate::missileTemplate() const
+int BarrageSkillTemplate::maxShootTimes() const
 {
-    return missileTemplate_;
-}
-
-int BarrageSkillTemplate::numMissiles() const
-{
-    return numMissiles_;
+    return maxShootTimes_;
 }
 
 float BarrageSkillTemplate::shootInterval() const

@@ -14,20 +14,16 @@ public:
     BlastSkillTemplate();
 
     BlastSkillTemplate(const rapidjson::Value& v,
-                       const MissileTemplateLib& missileLib,
                        const ProgressPieTemplateLib& progressPieLib,
                        const std::string& skillDataDir);
 
     void init(const rapidjson::Value& v,
-              const MissileTemplateLib& missileLib,
               const ProgressPieTemplateLib& progressPieLib,
               const std::string& skillDataDir);
 
     inline const std::vector<commonlib::Vector2>& firePoints() const;
 
     inline const std::vector<commonlib::Vector2>& fireDirections() const;
-
-    inline const MissileTemplate* missileTemplate() const;
 
 private:
     void readFirePosDirections(const std::string& firePosFile,
@@ -37,7 +33,6 @@ private:
 protected:
     std::vector<commonlib::Vector2> firePoints_;
     std::vector<commonlib::Vector2> fireDirections_;
-    const MissileTemplate* missileTemplate_;
 };
 
 const std::vector<commonlib::Vector2>& BlastSkillTemplate::firePoints() const
@@ -48,11 +43,6 @@ const std::vector<commonlib::Vector2>& BlastSkillTemplate::firePoints() const
 const std::vector<commonlib::Vector2>& BlastSkillTemplate::fireDirections() const
 {
     return fireDirections_;
-}
-
-const MissileTemplate* BlastSkillTemplate::missileTemplate() const
-{
-    return missileTemplate_;
 }
 
 } // end of namespace botlib

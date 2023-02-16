@@ -41,8 +41,6 @@ protected:
 
     void updatePie();
 
-    void checkEnabled();
-
 protected:
     float coolDown_;
     float timeSinceLastCast_;

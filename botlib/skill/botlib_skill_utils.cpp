@@ -1,3 +1,4 @@
+#include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_json_param.h>
 #include <botlib_move_skill_template.h>
@@ -9,6 +10,7 @@
 #include <botlib_shoot_missile_skill.h>
 #include <botlib_blast_skill.h>
 #include <botlib_targeted_blast_skill.h>
+#include <botlib_barrage_skill.h>
 #include <botlib_skill_utils.h>
 
 using namespace mcdane::commonlib;
@@ -17,7 +19,6 @@ namespace mcdane {
 namespace botlib {
 
 SkillTemplate* createSkillTemplate(const rapidjson::Value& v,
-                                   const MissileTemplateLib& missileLib,
                                    const ProgressPieTemplateLib& progressPieLib,
                                    const std::string& skillDataDir)
 {
@@ -42,19 +43,20 @@ SkillTemplate* createSkillTemplate(const rapidjson::Value& v,
         }
         case SkillType::BLAST:
         {
-            return new BlastSkillTemplate(v, missileLib, progressPieLib, skillDataDir);
+            return new BlastSkillTemplate(v, progressPieLib, skillDataDir);
         }
         case SkillType::TARGETED_BLAST:
         {
-            return new TargetedBlastSkillTemplate(v, missileLib, progressPieLib);
+            return new TargetedBlastSkillTemplate(v, progressPieLib);
         }
         case SkillType::BARRAGE:
         {
-            return new BarrageSkillTemplate(v, missileLib, progressPieLib);
+            return new BarrageSkillTemplate(v, progressPieLib);
         }
         default:
         {
-            break;
+            std::string typeStr = std::to_string(static_cast<int>(type));
+            THROW_EXCEPT(InvalidArgumentException, "Invalid skill " + typeStr);
         }
     }
 
@@ -87,9 +89,16 @@ Skill* createSkill(const SkillTemplate* t, Robot* robot)
                             static_cast<const TargetedBlastSkillTemplate*>(t),
                             robot);
         }
+        case SkillType::BARRAGE:
+        {
+            return new BarrageSkill(
+                            static_cast<const BarrageSkillTemplate*>(t),
+                            robot);
+        }
         default:
         {
-            break;
+            std::string typeStr = std::to_string(static_cast<int>(t->type()));
+            THROW_EXCEPT(InvalidArgumentException, "Invalid skill " + typeStr);
         }
     }
 

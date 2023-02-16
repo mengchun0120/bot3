@@ -2,6 +2,14 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="210mm"
    height="297mm"
    viewBox="0 0 210 297"
@@ -10,16 +18,8 @@
    inkscape:export-filename="C:\Users\mengc\bot3\res\pics\red_base.png"
    inkscape:export-xdpi="90.606743"
    inkscape:export-ydpi="90.606743"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
-   sodipodi:docname="pics.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:dc="http://purl.org/dc/elements/1.1/">
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="pics.svg">
   <defs
      id="defs2">
     <linearGradient
@@ -76,14 +76,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8665198"
-     inkscape:cx="507.75857"
-     inkscape:cy="255.36192"
+     inkscape:zoom="2.0269356"
+     inkscape:cx="592.44721"
+     inkscape:cy="878.96276"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:window-width="1920"
-     inkscape:window-height="1002"
+     inkscape:window-height="1027"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -696,6 +696,194 @@
          style="fill:#b4b4b4;fill-opacity:1;stroke:#b4b4b4;stroke-width:1.21198;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 171.21369,87.144384 h 6.30283"
          id="path15659-4-1-3" />
+    </g>
+    <g
+       id="g991">
+      <ellipse
+         style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0"
+         cx="100.64146"
+         cy="83.055321"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-2"
+         cx="104.81853"
+         cy="78.225578"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-21"
+         cx="108.86507"
+         cy="73.656891"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-24"
+         cx="104.4922"
+         cy="86.188133"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-2-8"
+         cx="108.66927"
+         cy="81.358391"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-21-3"
+         cx="112.71581"
+         cy="76.789703"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-7"
+         cx="108.01661"
+         cy="89.320938"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-2-6"
+         cx="112.19368"
+         cy="84.491196"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-21-8"
+         cx="116.24022"
+         cy="79.922508"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+    </g>
+    <g
+       transform="translate(18.176818,17.883115)"
+       id="g991-8"
+       style="fill:#b4b4b4;fill-opacity:1">
+      <ellipse
+         style="fill:#b4b4b4;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-28"
+         cx="100.64146"
+         cy="83.055321"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#b4b4b4;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-2-69"
+         cx="104.81853"
+         cy="78.225578"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#b4b4b4;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-21-4"
+         cx="108.86507"
+         cy="73.656891"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#b4b4b4;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-24-4"
+         cx="104.4922"
+         cy="86.188133"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#b4b4b4;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-2-8-5"
+         cx="108.66927"
+         cy="81.358391"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#b4b4b4;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-21-3-0"
+         cx="112.71581"
+         cy="76.789703"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#b4b4b4;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-7-8"
+         cx="108.01661"
+         cy="89.320938"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#b4b4b4;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-2-6-6"
+         cx="112.19368"
+         cy="84.491196"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
+      <ellipse
+         style="fill:#b4b4b4;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.25009;stroke-opacity:1"
+         id="path163-1-6-2-0-21-8-2"
+         cx="116.24022"
+         cy="79.922508"
+         inkscape:export-filename="C:\Users\cmeng26\Documents\chun_private\bot3\res\pics\blue_missile.png"
+         inkscape:export-xdpi="90.606743"
+         inkscape:export-ydpi="90.606743"
+         rx="2.0983622"
+         ry="2.1651795" />
     </g>
   </g>
   <g

@@ -21,10 +21,9 @@
         "coolDown": 10000.0,
         "energyCost": 20.0,
         "keepAlive": false,
-        "missile": "green_blast_missile",
+        "pie": "blast_skill_progress_pie",
         "firePosFile": "green_blast_skill_fire_pos.txt",
-        "fireDirectionFile": "green_blast_skill_fire_direction.txt",
-        "pie": "blast_skill_progress_pie"
+        "fireDirectionFile": "green_blast_skill_fire_direction.txt"
     },
     "player_targeted_blast_skill": {
         "type": "targeted-blast",
@@ -32,11 +31,20 @@
         "coolDown": 8000.0,
         "energyCost": 30.0,
         "keepAlive": false,
+        "pie": "targeted_blast_skill_progress_pie",
         "numTargets": 3,
-        "missile": "green_star_missile",
         "searchRange": 300.0,
-        "startRadius": 30.0,
-        "pie": "targeted_blast_skill_progress_pie"
+        "startRadius": 30.0
+    },
+    "player_barrage_skill": {
+        "type": "barrage",
+        "isOffensive": true,
+        "coolDown": 12000.0,
+        "energyCost": 30.0,
+        "keepAlive": false,
+        "pie": "barrage_skill_progress_pie",
+        "maxShootTimes": 5,
+        "shootInterval": 200.0
     },
     "ai_move_skill": {
         "type": "move",
