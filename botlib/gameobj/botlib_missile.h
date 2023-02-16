@@ -18,7 +18,8 @@ public:
             Side side,
             const commonlib::Vector2& pos1,
             const commonlib::Vector2& direction1,
-            float damageFactor=1.0f);
+            float damageFactor=1.0f,
+            bool guided1=false);
 
     ~Missile() override;
 
@@ -26,7 +27,8 @@ public:
               Side side,
               const commonlib::Vector2& pos1,
               const commonlib::Vector2& direction1,
-              float damageFactor=1.0f);
+              float damageFactor=1.0f,
+              bool guided1=false);
 
     inline const MissileTemplate* getTemplate() const;
 

@@ -1,11 +1,10 @@
 #ifndef INCLUDED_BOTLIB_GAME_OBJECT_H
 #define INCLUDED_BOTLIB_GAME_OBJECT_H
 
-#include <functional>
-#include <ostream>
 #include <commonlib_vector.h>
 #include <commonlib_region.h>
 #include <botlib_game_object_state.h>
+#include <botlib_game_obj_flag.h>
 #include <botlib_game_object_template.h>
 
 namespace mcdane {
@@ -17,11 +16,6 @@ class GameObjectTemplate;
 
 class GameObject {
 public:
-    enum Flag {
-        FLAG_INVINCIBLE = 0x00000001,
-        FLAG_UPDATED = 0x00000002,
-    };
-
     GameObject();
 
     virtual ~GameObject() = default;
@@ -59,11 +53,13 @@ public:
 
     inline int flags() const;
 
-    inline bool getFlag(Flag flag) const;
+    inline bool getFlag(GameObjFlag f) const;
 
     inline bool invincible() const;
 
     inline bool updated() const;
+
+    inline bool guided() const;
 
     inline unsigned int row() const;
 
@@ -96,8 +92,9 @@ public:
 
     void setUpdated(bool b);
 
-    void setFlag(Flag flag,
-                 bool b);
+    void setGuided(bool b);
+
+    void setFlag(GameObjFlag flag, bool b);
 
     inline void setPrev(GameObject* o);
 
@@ -198,19 +195,24 @@ int GameObject::flags() const
     return flags_;
 }
 
-bool GameObject::getFlag(Flag flag) const
+bool GameObject::getFlag(GameObjFlag f) const
 {
-    return flags_ & flag;
+    return flags_ & static_cast<int>(f);
 }
 
 bool GameObject::invincible() const
 {
-    return flags_ & FLAG_INVINCIBLE;
+    return getFlag(GameObjFlag::INVINCIBLE);
 }
 
 bool GameObject::updated() const
 {
-    return flags_ & FLAG_UPDATED;
+    return getFlag(GameObjFlag::UPDATED);
+}
+
+bool GameObject::guided() const
+{
+    return getFlag(GameObjFlag::GUIDED);
 }
 
 unsigned int GameObject::row() const

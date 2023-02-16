@@ -365,7 +365,7 @@ void GameScreen::clearUpdateFlags()
 {
     auto clearUpdateFlag = [](GameObject *obj)->bool
     {
-        obj->setFlag(GameObject::FLAG_UPDATED, false);
+        obj->setUpdated(false);
         return true;
     };
 

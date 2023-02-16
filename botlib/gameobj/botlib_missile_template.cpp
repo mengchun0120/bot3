@@ -16,7 +16,6 @@ MissileTemplate::MissileTemplate()
     , energyCost_(0.0f)
     , duration_(0.0f)
     , explodeEffectTemplate_(nullptr)
-    , guided_(false)
     , searchBreath_(0.0f)
     , splitCount_(0)
     , splitMissileTemplate_(nullptr)
@@ -38,7 +37,6 @@ void MissileTemplate::init(
         jsonParam(energyCost_, "energyCost", true, ge(0.0f)),
         jsonParam(duration_, "duration", true, gt(0.0f)),
         jsonParam(explodeEffectName, "explodeEffect", true, k_nonEmptyStrV),
-        jsonParam(guided_, "guided", false),
         jsonParam(searchBreath_, "searchBreath", false, ge(0.0f)),
         jsonParam(splitCount_, "splitCount", false, ge(0)),
         jsonParam(splitMissileName, "splitMissile", false, k_nonEmptyStrV),

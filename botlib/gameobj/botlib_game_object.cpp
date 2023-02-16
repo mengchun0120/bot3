@@ -84,24 +84,28 @@ void GameObject::setState(GameObjectState newState)
 
 void GameObject::setInvincible(bool b)
 {
-    setFlag(FLAG_INVINCIBLE, b);
+    setFlag(GameObjFlag::INVINCIBLE, b);
 }
 
 void GameObject::setUpdated(bool b)
 {
-    setFlag(FLAG_UPDATED, b);
+    setFlag(GameObjFlag::UPDATED, b);
 }
 
-void GameObject::setFlag(Flag flag,
-                         bool b)
+void GameObject::setGuided(bool b)
+{
+    setFlag(GameObjFlag::GUIDED, b);
+}
+
+void GameObject::setFlag(GameObjFlag f, bool b)
 {
     if (b)
     {
-        flags_ |= flag;
+        flags_ |= static_cast<int>(f);
     }
     else
     {
-        flags_ &= ~flag;
+        flags_ &= ~static_cast<int>(f);
     }
 }
 

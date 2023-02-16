@@ -36,7 +36,7 @@ void activateSpeedAccelerator(const GoodieTemplate* t, Player& player)
 
 void activateGodMode(const GoodieTemplate* t, Player& player)
 {
-    player.setFlag(GameObject::FLAG_INVINCIBLE, true);
+    player.setInvincible(true);
 }
 
 void deactivateDamageAmplifier(Player& player)
@@ -59,7 +59,7 @@ void deactivateSpeedAccelerator(Player& player)
 
 void deactivateGodMode(Player& player)
 {
-    player.setFlag(GameObject::FLAG_INVINCIBLE, false);
+    player.setInvincible(false);
 }
 
 void activateGoodie(const GoodieTemplate* t, Player& player)

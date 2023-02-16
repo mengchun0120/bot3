@@ -25,9 +25,10 @@ Missile::Missile(const MissileTemplate* t,
                  Side side,
                  const commonlib::Vector2& pos1,
                  const commonlib::Vector2& direction1,
-                 float damageFactor)
+                 float damageFactor,
+                 bool guided1)
 {
-    init(t, side, pos1, direction1, damageFactor);
+    init(t, side, pos1, direction1, damageFactor, guided1);
 }
 
 Missile::~Missile()
@@ -38,10 +39,12 @@ void Missile::init(const MissileTemplate* t,
                    Side side,
                    const commonlib::Vector2& pos1,
                    const commonlib::Vector2& direction1,
-                   float damageFactor)
+                   float damageFactor,
+                   bool guided1)
 {
     CompositeObject::init(t, pos1, direction1);
     side_ = side;
+    setGuided(guided1);
     damage_ = t->damage() * damageFactor;
     livingTime_ = 0.0f;
     resetSpeed();
@@ -94,7 +97,7 @@ bool Missile::canBeDumped(GameMap& map) const
 
 void Missile::updateAlive(UpdateContext& cxt)
 {
-    if (getTemplate()->guided())
+    if (guided())
     {
         updateForTarget(cxt);
     }
@@ -116,7 +119,7 @@ void Missile::updateAlive(UpdateContext& cxt)
         return;
     }
 
-    if (getTemplate()->guided() && targetSet_)
+    if (guided() && targetSet_)
     {
         if (timeToTarget_ <= 0.0f)
         {

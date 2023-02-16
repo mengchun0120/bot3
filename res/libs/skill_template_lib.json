@@ -44,7 +44,7 @@
         "keepAlive": false,
         "pie": "barrage_skill_progress_pie",
         "maxShootTimes": 5,
-        "shootInterval": 200.0
+        "shootInterval": 80.0
     },
     "ai_move_skill": {
         "type": "move",

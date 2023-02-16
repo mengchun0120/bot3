@@ -32,8 +32,6 @@ public:
 
     inline const ParticleEffectTemplate* explodeEffectTemplate() const;
 
-    inline bool guided() const;
-
     inline float searchBreath() const;
 
     inline int splitCount() const;
@@ -49,7 +47,6 @@ private:
     float energyCost_;
     float duration_;
     const ParticleEffectTemplate* explodeEffectTemplate_;
-    bool guided_;
     float searchBreath_;
     int splitCount_;
     const MissileTemplate* splitMissileTemplate_;
@@ -84,11 +81,6 @@ float MissileTemplate::duration() const
 const ParticleEffectTemplate* MissileTemplate::explodeEffectTemplate() const
 {
     return explodeEffectTemplate_;
-}
-
-bool MissileTemplate::guided() const
-{
-    return guided_;
 }
 
 float MissileTemplate::searchBreath() const

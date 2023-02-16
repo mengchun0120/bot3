@@ -24,6 +24,7 @@ set(BOTLIB_GAMEOBJ_SRC
     gameobj/botlib_component_type.cpp
     gameobj/botlib_composite_object.cpp
     gameobj/botlib_composite_object_template.cpp
+    gameobj/botlib_game_obj_flag.cpp
     gameobj/botlib_game_object.cpp
     gameobj/botlib_game_object_factory.cpp
     gameobj/botlib_game_object_state.cpp
