@@ -12,8 +12,8 @@ namespace botlib {
 
 Skill::Skill()
     : t_(nullptr)
+    , flags_(0)
     , robot_(nullptr)
-    , enabled_(false)
 {
 }
 
@@ -34,12 +34,7 @@ void Skill::init(const SkillTemplate* t,
 {
     t_ = t;
     robot_ = robot;
-    enabled_ = enabled1;
-}
-
-void Skill::setEnabled(bool b)
-{
-    enabled_ = b;
+    setEnabled(enabled1);
 }
 
 } // end of namespace botlib

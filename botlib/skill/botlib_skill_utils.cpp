@@ -4,6 +4,7 @@
 #include <botlib_shoot_missile_skill_template.h>
 #include <botlib_blast_skill_template.h>
 #include <botlib_targeted_blast_skill_template.h>
+#include <botlib_barrage_skill_template.h>
 #include <botlib_move_skill.h>
 #include <botlib_shoot_missile_skill.h>
 #include <botlib_blast_skill.h>
@@ -46,6 +47,10 @@ SkillTemplate* createSkillTemplate(const rapidjson::Value& v,
         case SkillType::TARGETED_BLAST:
         {
             return new TargetedBlastSkillTemplate(v, missileLib, progressPieLib);
+        }
+        case SkillType::BARRAGE:
+        {
+            return new BarrageSkillTemplate(v, missileLib, progressPieLib);
         }
         default:
         {

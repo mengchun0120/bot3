@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_SKILL_H
 #define INCLUDED_BOTLIB_SKILL_H
 
+#include <botlib_dynamic_flag.h>
 #include <botlib_skill_template.h>
 
 namespace mcdane {
@@ -30,14 +31,20 @@ public:
 
     inline bool enabled() const;
 
-    void setEnabled(bool b);
+    inline bool checkFlag(DynamicSkillFlag f) const;
+
+    inline bool checkFlags(int f) const;
+
+    inline void setEnabled(bool b);
+
+    inline void setFlag(DynamicSkillFlag f, bool b);
 
     virtual void update(UpdateContext& cxt) = 0;
 
 protected:
     const SkillTemplate* t_;
+    int flags_;
     Robot* robot_;
-    bool enabled_;
 };
 
 const SkillTemplate* Skill::getTemplate() const
@@ -52,7 +59,27 @@ SkillType Skill::type() const
 
 bool Skill::enabled() const
 {
-    return enabled_;
+    return checkFlag(DynamicSkillFlag::ENABLED);
+}
+
+bool Skill::checkFlag(DynamicSkillFlag f) const
+{
+    return flags_ & static_cast<int>(f);
+}
+
+bool Skill::checkFlags(int f) const
+{
+    return flags_ & f;
+}
+
+void Skill::setEnabled(bool b)
+{
+    setFlag(DynamicSkillFlag::ENABLED, b);
+}
+
+void Skill::setFlag(DynamicSkillFlag f, bool b)
+{
+    
 }
 
 } // end of namespace botlib
