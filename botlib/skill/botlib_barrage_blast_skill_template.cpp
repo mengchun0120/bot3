@@ -2,33 +2,39 @@
 #include <commonlib_exception.h>
 #include <commonlib_json_param.h>
 #include <commonlib_file_utils.h>
-#include <botlib_blast_skill_template.h>
+#include <botlib_barrage_blast_skill_template.h>
 
 using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
 
-BlastSkillTemplate::BlastSkillTemplate()
+BarrageBlastSkillTemplate::BarrageBlastSkillTemplate()
     : SkillWithCostTemplate()
+    , maxShootTimes_(0)
+    , shootInterval_(0.0f)
 {
 }
 
-BlastSkillTemplate::BlastSkillTemplate(const rapidjson::Value& v,
-                                       const ProgressPieTemplateLib& progressPieLib,
-                                       const std::string& skillDataDir)
+BarrageBlastSkillTemplate::BarrageBlastSkillTemplate(
+                            const rapidjson::Value& v,
+                            const ProgressPieTemplateLib& progressPieLib,
+                            const std::string& skillDataDir)
 {
     init(v, progressPieLib, skillDataDir);
 }
 
-void BlastSkillTemplate::init(const rapidjson::Value& v,
-                              const ProgressPieTemplateLib& progressPieLib,
-                              const std::string& skillDataDir)
+void BarrageBlastSkillTemplate::init(
+                            const rapidjson::Value& v,
+                            const ProgressPieTemplateLib& progressPieLib,
+                            const std::string& skillDataDir)
 {
-    SkillWithCostTemplate::init(SkillType::BLAST, v, progressPieLib);
+    SkillWithCostTemplate::init(SkillType::BARRAGE_BLAST, v, progressPieLib);
 
     std::string firePosFile, fireDirectionFile;
     std::vector<JsonParamPtr> params{
+        jsonParam(maxShootTimes_, "maxShootTimes", true, gt(0)),
+        jsonParam(shootInterval_, "shootInterval", true, gt(0.0f)),
         jsonParam(firePosFile, "firePosFile", true, k_nonEmptyStrV),
         jsonParam(fireDirectionFile, "fireDirectionFile", true, k_nonEmptyStrV),
     };
@@ -38,10 +44,10 @@ void BlastSkillTemplate::init(const rapidjson::Value& v,
     readFirePosDirections(firePosFile, fireDirectionFile, skillDataDir);
 }
 
-void BlastSkillTemplate::readFirePosDirections(
-                                const std::string& firePosFile,
-                                const std::string& fireDirectionFile,
-                                const std::string& skillDataDir)
+void BarrageBlastSkillTemplate::readFirePosDirections(
+                            const std::string& firePosFile,
+                            const std::string& fireDirectionFile,
+                            const std::string& skillDataDir)
 {
     readList(firePoints_, constructPath({skillDataDir, firePosFile}));
     readList(fireDirections_, constructPath({skillDataDir, fireDirectionFile}));

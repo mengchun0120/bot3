@@ -122,6 +122,8 @@ set(BOTLIB_SHAPE_SRC
 )
 
 set(BOTLIB_SKILL_SRC
+    skill/botlib_barrage_blast_skill.cpp
+    skill/botlib_barrage_blast_skill_template.cpp
     skill/botlib_barrage_skill.cpp
     skill/botlib_barrage_skill_template.cpp
     skill/botlib_blast_skill.cpp

@@ -46,6 +46,18 @@
         "maxShootTimes": 5,
         "shootInterval": 80.0
     },
+    "player_barrage_blast_skill": {
+        "type": "barrage-blast",
+        "isOffensive": true,
+        "coolDown": 12000.0,
+        "energyCost": 30.0,
+        "keepAlive": false,
+        "pie": "barrage_blast_skill_progress_pie",
+        "maxShootTimes": 5,
+        "shootInterval": 80.0,
+        "firePosFile": "green_barrage_blast_skill_fire_pos.txt",
+        "fireDirectionFile": "green_barrage_blast_skill_fire_direction.txt"
+    },
     "ai_move_skill": {
         "type": "move",
         "isOffensive": false,

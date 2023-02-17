@@ -109,5 +109,11 @@
     },
     "barrage_skill_unavailable": {
         "file": "barrage_skill_unavailable.png"
+    },
+    "barrage_blast_skill_available": {
+        "file": "barrage_blast_skill_available.png"
+    },
+    "barrage_blast_skill_unavailable": {
+        "file": "barrage_blast_skill_unavailable.png"
     }
 }

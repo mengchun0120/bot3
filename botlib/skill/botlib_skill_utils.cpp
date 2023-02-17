@@ -6,11 +6,13 @@
 #include <botlib_blast_skill_template.h>
 #include <botlib_targeted_blast_skill_template.h>
 #include <botlib_barrage_skill_template.h>
+#include <botlib_barrage_blast_skill_template.h>
 #include <botlib_move_skill.h>
 #include <botlib_shoot_missile_skill.h>
 #include <botlib_blast_skill.h>
 #include <botlib_targeted_blast_skill.h>
 #include <botlib_barrage_skill.h>
+#include <botlib_barrage_blast_skill.h>
 #include <botlib_skill_utils.h>
 
 using namespace mcdane::commonlib;
@@ -53,6 +55,10 @@ SkillTemplate* createSkillTemplate(const rapidjson::Value& v,
         {
             return new BarrageSkillTemplate(v, progressPieLib);
         }
+        case SkillType::BARRAGE_BLAST:
+        {
+            return new BarrageBlastSkillTemplate(v, progressPieLib, skillDataDir);
+        }
         default:
         {
             std::string typeStr = std::to_string(static_cast<int>(type));
@@ -93,6 +99,12 @@ Skill* createSkill(const SkillTemplate* t, Robot* robot)
         {
             return new BarrageSkill(
                             static_cast<const BarrageSkillTemplate*>(t),
+                            robot);
+        }
+        case SkillType::BARRAGE_BLAST:
+        {
+            return new BarrageBlastSkill(
+                            static_cast<const BarrageBlastSkillTemplate*>(t),
                             robot);
         }
         default:

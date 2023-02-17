@@ -13,6 +13,7 @@ enum class SkillType {
     BLAST,
     TARGETED_BLAST,
     BARRAGE,
+    BARRAGE_BLAST,
 };
 
 const std::string& toString(SkillType type);
