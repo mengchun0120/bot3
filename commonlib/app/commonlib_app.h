@@ -20,8 +20,10 @@ public:
     bool init(unsigned int width,
               unsigned int height,
               const std::string& title);
-#elifdef __ANDROID__
-    bool init();
+#endif
+
+#ifdef __ANDROID__
+    bool init(android_app *app);
 #endif
 
     virtual void process();
@@ -70,12 +72,16 @@ private:
     void killSurface();
 
     void killContext();
+
+    void handleEglError(EGLint error);
 #endif
 
 private:
 #ifdef DESKTOP_APP
     GLFWwindow *window_;
-#elifdef __ANDROID__
+#endif
+
+#ifdef __ANDROID__
     android_app *app_;
     bool hasFocus_, visible_, hasWindow_;
     EGLDisplay display_;
@@ -83,18 +89,24 @@ private:
     EGLContext context_;
     EGLConfig config_;
 #endif
+
     commonlib::Point2 viewportSize_;
     bool running_;
 };
 
-inline bool App::shouldRun() const
-{
 #ifdef DESKTOP_APP
+bool App::shouldRun() const
+{
     return 0 == glfwWindowShouldClose(window_) && running_;
-#elifdef __ANDROID__
-    return hasFocus_ && visible_ && hasWindow_;
-#endif
 }
+#endif
+
+#ifdef __ANDROID__
+bool App::shouldRun() const
+{
+    return hasFocus_ && visible_ && hasWindow_;
+}
+#endif
 
 } // end of namespace commonlib
 } // end of namespace mcdane

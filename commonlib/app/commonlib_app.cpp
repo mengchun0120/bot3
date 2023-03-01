@@ -1,30 +1,81 @@
 #include <game-activity/native_app_glue/android_native_app_glue.h>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
-#include <commonlib_opengl_utils.h>
 #include <commonlib_app.h>
 
 namespace mcdane {
 namespace commonlib {
 
-App::App()
-{
+
 #ifdef DESKTOP_APP
+ App::App()
+{
     window_ = nullptr;
-#endif
 }
 
 App::~App()
 {
-#ifdef DESKTOP_APP
     if (!window_)
     {
         glfwTerminate();
     }
-#endif
 }
+#endif
 
 #ifdef __ANDROID__
+
+static void handleCmdProxy(struct android_app *app, int32_t cmd) {
+    App *a = reinterpret_cast<App*>(app->userData);
+    a->handleCommand(cmd);
+}
+
+static int handleInputProxy(struct android_app *app, AInputEvent *event) {
+    App *a = reinterpret_cast<App*>(app->userData);
+    return a->handleInput(event) ? 1 : 0;
+}
+
+App::App()
+    : app_(nullptr)
+    , hasFocus_(false)
+    , visible_(false)
+    , hasWindow_(false)
+    , display_(EGL_NO_DISPLAY)
+    , surface_(EGL_NO_SURFACE)
+    , context_(EGL_NO_CONTEXT)
+    , config_(0)
+{
+}
+
+App::~App()
+{
+
+}
+
+bool App::init(android_app *app)
+{
+    if (!initDisplay())
+    {
+        return false;
+    }
+
+    if (!initSurface()) {
+        return false;
+    }
+
+    if (!initContext())
+    {
+        return false;
+    }
+
+    if (EGL_FALSE == eglMakeCurrent(display_, surface_, surface_, context_)) {
+        LOG_ERROR << "eglMakeCurrent failed, EGL error " << eglGetError() << LOG_END;
+        handleEglError(eglGetError());
+        return false;
+    }
+
+    return true;
+}
+
 bool App::initDisplay()
 {
     display_ = eglGetDisplay(EGL_DEFAULT_DISPLAY);
@@ -131,6 +182,31 @@ void App::killContext()
     LOG_INFO << "NativeEngine: Context killed successfully." << LOG_END;
 }
 
+void App::handleEglError(EGLint error)
+{
+    switch (error)
+    {
+        case EGL_CONTEXT_LOST:
+            LOG_ERROR << "egl error: EGL_CONTEXT_LOST. Recreating context." << LOG_END;
+            killContext();
+            return;
+        case EGL_BAD_CONTEXT:
+            LOG_ERROR << "egl error: EGL_BAD_CONTEXT. Recreating context." << LOG_END;
+            killContext();
+            return;
+        case EGL_BAD_DISPLAY:
+            LOG_ERROR << "egl error: EGL_BAD_DISPLAY. Recreating display." << LOG_END;
+            killDisplay();
+            return;
+        case EGL_BAD_SURFACE:
+            LOG_ERROR << "egl error: EGL_BAD_SURFACE. Recreating display." << LOG_END;
+            killSurface();
+            return;
+        default:
+            LOG_ERROR << "unknown egl error: " << error << LOG_END;
+            return;
+    }
+}
 #endif
 
 void App::process()

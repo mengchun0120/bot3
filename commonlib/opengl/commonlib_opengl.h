@@ -5,7 +5,9 @@
 #define DESKTOP_APP
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#elif defined(__ANDROID__)
+#endif
+
+#ifdef __ANDROID__
 #include <EGL/egl.h>
 #include <GLES3/gl3.h>
 #endif
