@@ -4,7 +4,7 @@
 namespace mcdane {
 namespace commonlib {
 
-namespace {
+std::shared_ptr<InputManager> InputManager::k_inputManager;
 
 bool validateInputManager(const std::string& func)
 {
@@ -16,11 +16,13 @@ bool validateInputManager(const std::string& func)
         return false;
     }
 
+#ifdef DESKTOP_APP
     if (mgr.eventsFull())
     {
         LOG_WARN << "Input-event queue is full" << LOG_END;
         return false;
     }
+#endif
 
     return true;
 }
@@ -71,10 +73,6 @@ void handleKey(GLFWwindow* window,
 
     InputManager::getInstance().addKeyEvent(key, scancode, action, mods);
 }
-
-} // end of unnamed namespace
-
-std::shared_ptr<InputManager> InputManager::k_inputManager;
 
 void InputManager::initInstance(GLFWwindow* window,
                                 float viewportHeight,
@@ -150,9 +148,12 @@ void InputManager::disable()
 
 void InputManager::clear()
 {
+#ifdef DESKTOP_APP
     events_.clear();
+#endif
 }
 
+#ifdef DESKTOP_APP
 void InputManager::processInput(InputProcessor& processor)
 {
     while (!events_.empty())
@@ -166,7 +167,6 @@ void InputManager::processInput(InputProcessor& processor)
     }
 }
 
-#ifdef DESKTOP_APP
 bool InputManager::addMouseButtonEvent(float x,
                                        float y,
                                        int button,
@@ -200,4 +200,3 @@ bool InputManager::addKeyEvent(int key,
 
 } // end of namespace commonlib
 } // end of namespace mcdane
-

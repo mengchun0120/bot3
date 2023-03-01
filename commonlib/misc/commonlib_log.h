@@ -87,8 +87,8 @@ Logger& operator<<(Logger& logger, const T& t)
     }
 
 #else
-#define LOG_START(level) LOGGER
-#define LOG_END << "";
+#define LOG_START(level) *LOGGER
+#define LOG_END "";
 #endif // ENABLE_LOG
 
 #define LOG_DEBUG LOG_START(mcdane::commonlib::Logger::LEVEL_DEBUG)

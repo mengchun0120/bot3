@@ -1,3 +1,4 @@
+#include <game-activity/native_app_glue/android_native_app_glue.h>
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
 #include <commonlib_file_utils.h>
@@ -5,6 +6,203 @@
 
 namespace mcdane {
 namespace commonlib {
+
+#ifdef DESKTOP_APP
+void initGLFW()
+{
+    if (!glfwInit())
+    {
+        THROW_EXCEPT(OpenGLException, "glfwInit failed");
+    }
+}
+
+void setWindowHints()
+{
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+}
+
+GLFWwindow *createWindow(unsigned int width,
+                         unsigned int height,
+                         const std::string& title)
+{
+    GLFWwindow *window = glfwCreateWindow(width, height, title.c_str(),
+                                          nullptr, nullptr);
+    if (!window)
+    {
+        THROW_EXCEPT(OpenGLException, "glfwCreateWindow failed");
+    }
+
+    return window;
+}
+
+void makeContextCurrent(GLFWwindow *window)
+{
+    glfwMakeContextCurrent(window);
+}
+
+void setupInputMode(GLFWwindow *window)
+{
+    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+}
+
+void initGLEW()
+{
+    glewExperimental = GL_TRUE;
+    if (glewInit() != GLEW_OK)
+    {
+        THROW_EXCEPT(OpenGLException, "glewInit failed");
+    }
+}
+
+GLFWwindow * setupEnv(float& viewportWidth,
+                      float& viewportHeight,
+                      unsigned int width,
+                      unsinged int height,
+                      const std::string& title)
+{
+    initGLFW();
+    setWindowHints();
+
+    GLFWwindow *window = createWindow(width, height, title);
+    makeContextCurrent(window);
+    setupInputMode(window);
+    initGLEW();
+
+    glfwGetFramebufferSize(window, &width, &height);
+    viewportWidth = static_cast<float>(width);
+    viewportWidth = static_cast<float>(height);
+
+    return window;
+}
+#elifdef __ANDROID__
+bool initDisplay(EGLDisplay &display)
+{
+    display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+    if (EGL_FALSE == eglInitialize(display, nullptr, nullptr)) {
+        LOG_ERROR << "Failed to init display, error " << eglGetError() << LOG_END;
+        return false;
+    }
+
+    LOG_INFO << "Display initialized successfully" << LOG_END;
+
+    return true;
+}
+
+bool initSurface(EGLSurface &surface,
+                 EGLConfig &config,
+                 android_app *app,
+                 EGLDisplay display)
+{
+    EGLint numConfigs;
+    const EGLint attribs[] = {
+        EGL_RENDERABLE_TYPE,
+        EGL_OPENGL_ES3_BIT,  // request OpenGL ES 3.0
+        EGL_SURFACE_TYPE,
+        EGL_WINDOW_BIT,
+        EGL_BLUE_SIZE,
+        8,
+        EGL_GREEN_SIZE,
+        8,
+        EGL_RED_SIZE,
+        8,
+        EGL_DEPTH_SIZE,
+        16,
+        EGL_NONE
+    };
+
+    eglChooseConfig(display, attribs, &config, 1, &numConfigs);
+
+    // create EGL surface
+    surface = eglCreateWindowSurface(display, config, app->window, nullptr);
+    if (surface == EGL_NO_SURFACE) {
+        LOG_ERROR << "Failed to create EGL surface, EGL error " << eglGetError() << LOG_END;
+        return false;
+    }
+
+    LOG_INFO << "Successfully initialized surface." << LOG_END;
+
+    return true;
+}
+
+bool initContext(EGLContext &context,
+                 EGLDisplay display,
+                 EGLConfig config)
+{
+    EGLint attribs[] = {
+        EGL_CONTEXT_CLIENT_VERSION,
+        3,
+        EGL_NONE
+    };  // OpenGL 3.0
+
+    // create EGL context
+    context = eglCreateContext(display, config, nullptr,attribs);
+    if (context == EGL_NO_CONTEXT) {
+        LOG_ERROR << "Failed to create EGL context, EGL error " << eglGetError() << LOG_END;
+        return false;
+    }
+
+    LOG_INFO << "Initialized context successfully" << LOG_END;
+
+    return true;
+}
+
+void HandleEglError(EGLint error)
+{
+    switch (error)
+    {
+        case EGL_CONTEXT_LOST:
+            LOG_ERROR << "egl error: EGL_CONTEXT_LOST. Recreating context." << LOG_END;
+            KillContext();
+            return true;
+        case EGL_BAD_CONTEXT:
+            LOGW("NativeEngine: egl error: EGL_BAD_CONTEXT. Recreating context.");
+            KillContext();
+            return true;
+        case EGL_BAD_DISPLAY:
+            LOGW("NativeEngine: egl error: EGL_BAD_DISPLAY. Recreating display.");
+            KillDisplay();
+            return true;
+        case EGL_BAD_SURFACE:
+            LOGW("NativeEngine: egl error: EGL_BAD_SURFACE. Recreating display.");
+            KillSurface();
+            return true;
+        default:
+            LOGW("NativeEngine: unknown egl error: %d", error);
+            return false;
+    }
+}
+
+bool setupEnv(EGLDisplay &display,
+              EGLSurface &surface,
+              EGLContext &context,
+              EGLConfig &config,
+              android_app *app)
+{
+    if (!initDisplay(display))
+    {
+        return false;
+    }
+
+    if (!initSurface(surface, config, app, display)) {
+        return false;
+    }
+
+    if (!initContext(context, display, config))
+    {
+        return false;
+    }
+
+    if (EGL_FALSE == eglMakeCurrent(display, surface, surface, context)) {
+        LOG_ERROR << "eglMakeCurrent failed, EGL error " << eglGetError() << LOG_END;
+        HandleEglError(eglGetError());
+    }
+}
+#endif
 
 void validateTexPos(const Point2& texPos)
 {
@@ -185,4 +383,3 @@ void destroyProgram(GLuint program)
 
 } // end of namespace commonlib
 } // end of namespace mcdane
-

@@ -9,7 +9,9 @@
 namespace mcdane {
 namespace commonlib {
 
+#ifdef DESKTOP_APP
 using InputProcessor = std::function<bool(const InputEvent&)>;
+#endif
 
 class InputManager {
 public:
@@ -31,11 +33,12 @@ public:
 
     void clear();
 
+#ifdef DESTKOP_APP
     inline bool eventsFull() const;
+
 
     void processInput(InputProcessor& processor);
 
-#ifdef DESKTOP_APP
     bool addMouseButtonEvent(float x,
                              float y,
                              int button,
@@ -63,8 +66,8 @@ private:
 
 #ifdef DESKTOP_APP
     GLFWwindow* window_;
-#endif
     FixedQueue<InputEvent> events_;
+#endif
     bool enabled_;
     float viewportHeight_;
 };
@@ -79,10 +82,12 @@ bool InputManager::enabled() const
     return enabled_;
 }
 
+#ifdef DESKTOP_APP
 bool InputManager::eventsFull() const
 {
     return events_.full();
 }
+#endif
 
 } // end of namespace commonlib
 } // end of namespace mcdane

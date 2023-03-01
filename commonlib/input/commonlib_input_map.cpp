@@ -17,6 +17,7 @@ int InputMap::get(const std::string& name) const
 
 void InputMap::init()
 {
+#ifdef DESKTOP_APP
     map_ = {
         {"right-mouse", GLFW_MOUSE_BUTTON_RIGHT},
         {"0",           GLFW_KEY_0},
@@ -56,6 +57,7 @@ void InputMap::init()
         {"Y",           GLFW_KEY_Y},
         {"Z",           GLFW_KEY_Z},
     };
+#endif
 }
 
 } // end of namespace commonlib

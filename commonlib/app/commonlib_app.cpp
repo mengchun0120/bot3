@@ -1,84 +1,18 @@
+#include <game-activity/native_app_glue/android_native_app_glue.h>
+#include <commonlib_log.h>
 #include <commonlib_exception.h>
+#include <commonlib_opengl_utils.h>
 #include <commonlib_app.h>
 
 namespace mcdane {
 namespace commonlib {
 
-#ifdef DESKTOP_APP
-
-void initGLFW()
-{
-    if (!glfwInit())
-    {
-        THROW_EXCEPT(OpenGLException, "glfwInit failed");
-    }
-}
-
-void setWindowHints()
-{
-    glfwWindowHint(GLFW_SAMPLES, 4);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-}
-
-GLFWwindow *createWindow(unsigned int width,
-                         unsigned int height,
-                         const std::string& title)
-{
-    GLFWwindow *window = glfwCreateWindow(width, height, title.c_str(),
-                                          nullptr, nullptr);
-    if (!window)
-    {
-        THROW_EXCEPT(OpenGLException, "glfwCreateWindow failed");
-    }
-
-    return window;
-}
-
-void makeContextCurrent(GLFWwindow *window)
-{
-    glfwMakeContextCurrent(window);
-}
-
-void setupInputMode(GLFWwindow *window)
-{
-    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-}
-
-void initGLEW()
-{
-    glewExperimental = GL_TRUE;
-    if (glewInit() != GLEW_OK)
-    {
-        THROW_EXCEPT(OpenGLException, "glewInit failed");
-    }
-}
-
-inline bool running(GLFWwindow *window)
-{
-    return 0 == glfwWindowShouldClose(window);
-}
-
-#endif
-
 App::App()
-    : window_(nullptr)
 {
-}
-
 #ifdef DESKTOP_APP
-App::App(unsigned int width,
-         unsigned int height,
-         const std::string& title)
-    : App()
-{
-    running_ = false;
-    setupWindow(width, height, title);
-}
+    window_ = nullptr;
 #endif
+}
 
 App::~App()
 {
@@ -90,37 +24,127 @@ App::~App()
 #endif
 }
 
-void App::process()
+#ifdef __ANDROID__
+bool App::initDisplay()
 {
+    display_ = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+    if (EGL_FALSE == eglInitialize(display_, nullptr, nullptr)) {
+        LOG_ERROR << "Failed to init display, error " << eglGetError() << LOG_END;
+        return false;
+    }
+
+    LOG_INFO << "Display initialized successfully" << LOG_END;
+
+    return true;
 }
 
-#ifdef DESKTOP_APP
-void App::setupWindow(unsigned int width,
-                      unsigned int height,
-                      const std::string& title)
+bool App::initSurface()
 {
-    initGLFW();
-    setWindowHints();
-    window_ = createWindow(width, height, title);
-    makeContextCurrent(window_);
-    setupInputMode(window_);
-    initGLEW();
+    EGLint numConfigs;
+    const EGLint attribs[] = {
+            EGL_RENDERABLE_TYPE,
+            EGL_OPENGL_ES3_BIT,  // request OpenGL ES 3.0
+            EGL_SURFACE_TYPE,
+            EGL_WINDOW_BIT,
+            EGL_BLUE_SIZE,
+            8,
+            EGL_GREEN_SIZE,
+            8,
+            EGL_RED_SIZE,
+            8,
+            EGL_DEPTH_SIZE,
+            16,
+            EGL_NONE
+    };
 
-    int w, h;
-    glfwGetFramebufferSize(window_, &w, &h);
-    viewportSize_[0] = static_cast<float>(w);
-    viewportSize_[1] = static_cast<float>(h);
+    eglChooseConfig(display_, attribs, &config_, 1, &numConfigs);
+
+    surface_ = eglCreateWindowSurface(display_, config_, app_->window, nullptr);
+    if (surface_ == EGL_NO_SURFACE) {
+        LOG_ERROR << "Failed to create EGL surface, EGL error " << eglGetError() << LOG_END;
+        return false;
+    }
+
+    LOG_INFO << "Successfully initialized surface." << LOG_END;
+
+    return true;
+}
+
+bool App::initContext()
+{
+    EGLint attribs[] = {
+        EGL_CONTEXT_CLIENT_VERSION,
+        3,
+        EGL_NONE
+    };  // OpenGL 3.0
+
+    context_ = eglCreateContext(display_, config_, nullptr,attribs);
+    if (context_ == EGL_NO_CONTEXT) {
+        LOG_ERROR << "Failed to create EGL context, EGL error " << eglGetError() << LOG_END;
+        return false;
+    }
+
+    LOG_INFO << "Initialized context successfully" << LOG_END;
+
+    return true;
+}
+
+void App::killDisplay()
+{
+    killContext();
+    killSurface();
+
+    if (display_ != EGL_NO_DISPLAY) {
+        LOG_INFO << "Terminating display" << LOG_END;
+
+        eglTerminate(display_);
+        display_ = EGL_NO_DISPLAY;
+    }
+
+    LOG_INFO << "Display killed successfully." << LOG_END;
+}
+
+void App::killSurface()
+{
+    eglMakeCurrent(display_, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+    if (surface_ != EGL_NO_SURFACE) {
+        LOG_INFO << "Killing surface ..." << LOG_END;
+
+        eglDestroySurface(display_, surface_);
+        surface_ = EGL_NO_SURFACE;
+    }
+
+    LOG_INFO << "Surface killed successfully." << LOG_END;
+}
+
+void App::killContext()
+{
+    eglMakeCurrent(display_, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+
+    if (context_ != EGL_NO_CONTEXT) {
+        LOG_INFO << "Killing context ..." << LOG_END;
+
+        eglDestroyContext(display_, context_);
+        context_ = EGL_NO_CONTEXT;
+    }
+
+    LOG_INFO << "NativeEngine: Context killed successfully." << LOG_END;
+}
+
+#endif
+
+void App::process()
+{
 }
 
 void App::run()
 {
     running_ = true;
-    while (0 == glfwWindowShouldClose(window_) && running_)
+    while (shouldRun())
     {
         process();
     }
 }
-#endif
 
 void App::postProcess()
 {
@@ -132,4 +156,3 @@ void App::postProcess()
 
 } // end of namespace commonlib
 } // end of namespace mcdane
-
