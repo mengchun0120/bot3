@@ -33,7 +33,7 @@ public:
 
     void clear();
 
-#ifdef DESTKOP_APP
+#ifdef DESKTOP_APP
     inline bool eventsFull() const;
 
 

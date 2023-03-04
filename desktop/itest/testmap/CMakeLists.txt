@@ -1,14 +1,12 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.22.1)
 
-set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
-
-add_definitions(${CPP_COMPILE_FLAG})
-
-include_directories(. ${COMMONLIB_DIR} ${BOTLIB_DIR})
+include_directories(
+    .
+    ${COMMONLIB_INCLUDE_DIR}
+    ${BOTLIB_INCLUDE_DIR}
+)
 
 add_executable(testmap itest_testmap_app.cpp testmap_main.cpp)
-
-set_property(TARGET testmap PROPERTY CXX_STANDARD 11)
 
 if(UNIX)
     target_link_libraries(testmap botlib commonlib GL GLEW glfw3 dl m Xrandr

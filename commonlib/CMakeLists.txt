@@ -2,4 +2,8 @@ cmake_minimum_required(VERSION 3.22.1)
 
 include(commonlib.cmake)
 
-add_library(commonlib STATIC ${commonlib_source_files})
+include_directories(${COMMONLIB_INCLUDE_DIR})
+
+add_library(commonlib STATIC ${COMMONLIB_SOURCE_FILES})
+
+#set_property(TARGET commonlib PROPERTY CXX_STANDARD 11)

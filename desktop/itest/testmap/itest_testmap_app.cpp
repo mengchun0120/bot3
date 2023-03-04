@@ -1,5 +1,6 @@
 #include <iostream>
 #include <commonlib_log.h>
+#include <commonlib_file_utils.h>
 #include <botlib_app_config.h>
 #include <botlib_context.h>
 #include <botlib_hp_indicator.h>
@@ -18,14 +19,14 @@ TestMapApp::TestMapApp(const std::string& configFile,
 {
     AppConfig::init(configFile, appDir);
 
-    setupWindow(1000, 800, "test game map");
+    init(1000, 800, "test game map");
 
     const AppConfig& cfg = AppConfig::instance();
 
     Context::init(cfg);
-    setupOpenGL();
+//    setupOpenGL();
     factory_.init(1000);
-    setupMap(mapFile);
+    setupMap(constructPath({cfg.mapDir(), mapFile}));
 }
 
 void TestMapApp::process()
@@ -33,16 +34,14 @@ void TestMapApp::process()
     glClear(GL_COLOR_BUFFER_BIT);
     map_.present();
     glFlush();
-
-    postProcess();
 }
 
-void TestMapApp::setupOpenGL()
+/*void TestMapApp::setupOpenGL()
 {
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
+}*/
 
 void TestMapApp::setupMap(const std::string& mapFile)
 {

@@ -19,8 +19,6 @@ public:
     void process() override;
 
 private:
-    void setupOpenGL();
-
     void setupMap(const std::string& mapFile);
 
 private:

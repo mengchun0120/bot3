@@ -7,26 +7,8 @@
 #include <commonlib_opengl.h>
 #include <commonlib_vector.h>
 
-#ifdef __ANDROID__
-struct android_app;
-#endif
-
 namespace mcdane {
 namespace commonlib {
-
-#ifdef DESKTOP_APP
-GLFWwindow * setupEnv(float& viewportWidth,
-                      float& viewportHeight,
-                      unsigned int width,
-                      unsinged int height,
-                      const std::string& title);
-#elifdef __ANDROID__
-bool setupEnv(EGLDisplay &eglDisplay,
-              EGLSurface &eglSurface,
-              EGLContext &eglContext,
-              EGLConfig &eglConfig,
-              android_app *app);
-#endif
 
 void validateTexPos(const Point2& texPos);
 

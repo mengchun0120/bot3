@@ -17,8 +17,8 @@ public:
 
     void process() override;
 
-private:
-    void setupOpenGL();
+protected:
+    void setupShader();
 
     void setupShapeColor();
 

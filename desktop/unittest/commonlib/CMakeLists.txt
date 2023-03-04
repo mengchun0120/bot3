@@ -1,8 +1,7 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.22.1)
 
-set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
-
-set(UNITTEST_COMMONLIB_SRC
+list(APPEND
+    UNITTEST_COMMONLIB_SRC
     test_commonlib_argument.cpp
     test_commonlib_argument_parser.cpp
     test_commonlib_collide.cpp
@@ -21,13 +20,12 @@ set(UNITTEST_COMMONLIB_SRC
     test_commonlib_vector.cpp
 )
 
-add_definitions(${CPP_COMPILE_FLAG})
-
-include_directories(${COMMONLIB_DIR} ${CMAKE_SOURCE_DIR}/unittest/commonlib)
+include_directories(
+    .
+    ${COMMONLIB_INCLUDE_DIR}
+)
 
 add_executable(test_commonlib ${UNITTEST_COMMONLIB_SRC})
-
-set_property(TARGET test_commonlib PROPERTY CXX_STANDARD 11)
 
 if(UNIX)
     target_link_libraries(test_commonlib commonlib GL GLEW glfw3 dl m Xrandr

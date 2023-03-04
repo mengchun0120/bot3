@@ -37,7 +37,7 @@ AppConfig::AppConfig(const std::string& fileName,
                      const std::string& appDir)
 {
     rapidjson::Document doc;
-    readJson(doc, fileName);
+    readJson(doc, constructPath({appDir, fileName}));
 
     loadBasics(doc);
     loadDirectories(doc, appDir);

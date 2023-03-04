@@ -1,4 +1,6 @@
+#ifdef __ANDROID__
 #include <game-activity/native_app_glue/android_native_app_glue.h>
+#endif
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
 #include <commonlib_file_utils.h>
@@ -6,91 +8,6 @@
 
 namespace mcdane {
 namespace commonlib {
-
-#ifdef DESKTOP_APP
-void initGLFW()
-{
-    if (!glfwInit())
-    {
-        THROW_EXCEPT(OpenGLException, "glfwInit failed");
-    }
-}
-
-void setWindowHints()
-{
-    glfwWindowHint(GLFW_SAMPLES, 4);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-}
-
-GLFWwindow *createWindow(unsigned int width,
-                         unsigned int height,
-                         const std::string& title)
-{
-    GLFWwindow *window = glfwCreateWindow(width, height, title.c_str(),
-                                          nullptr, nullptr);
-    if (!window)
-    {
-        THROW_EXCEPT(OpenGLException, "glfwCreateWindow failed");
-    }
-
-    return window;
-}
-
-void makeContextCurrent(GLFWwindow *window)
-{
-    glfwMakeContextCurrent(window);
-}
-
-void setupInputMode(GLFWwindow *window)
-{
-    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-}
-
-void initGLEW()
-{
-    glewExperimental = GL_TRUE;
-    if (glewInit() != GLEW_OK)
-    {
-        THROW_EXCEPT(OpenGLException, "glewInit failed");
-    }
-}
-
-GLFWwindow * setupEnv(float& viewportWidth,
-                      float& viewportHeight,
-                      unsigned int width,
-                      unsinged int height,
-                      const std::string& title)
-{
-    initGLFW();
-    setWindowHints();
-
-    GLFWwindow *window = createWindow(width, height, title);
-    makeContextCurrent(window);
-    setupInputMode(window);
-    initGLEW();
-
-    glfwGetFramebufferSize(window, &width, &height);
-    viewportWidth = static_cast<float>(width);
-    viewportWidth = static_cast<float>(height);
-
-    return window;
-}
-#elifdef __ANDROID__
-
-
-bool setupEnv(EGLDisplay &display,
-              EGLSurface &surface,
-              EGLContext &context,
-              EGLConfig &config,
-              android_app *app)
-{
-
-}
-#endif
 
 void validateTexPos(const Point2& texPos)
 {

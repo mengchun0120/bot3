@@ -15,23 +15,15 @@ TestShapeApp::TestShapeApp(const std::string& configFile,
 {
     AppConfig::init(configFile, appDir);
 
-#ifdef DESKTOP_APP
-    setupWindow(1000, 800, "Test Shape");
-#endif
-
+    init(1000, 800, "Test Shape");
     Context::init(AppConfig::instance());
-
-    setupOpenGL();
+    setupShader();
     setupShapeColor();
     setupTexture(appDir);
 }
 
-void TestShapeApp::setupOpenGL()
+void TestShapeApp::setupShader()
 {
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
     Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
     SimpleShaderProgram& program = Context::graphics().simpleShader();
 
@@ -61,8 +53,8 @@ void TestShapeApp::setupShapeColor()
 
 void TestShapeApp::setupTexture(const std::string& appDir)
 {
-    std::string imageFile = constructPath(appDir,
-                                          {"itest", "testshape", "baby.png"});
+    std::string imageFile = constructPath(
+            {appDir, "desktop", "itest", "testshape", "baby.png"});
     texture_.init(imageFile);
 
     float w = static_cast<float>(texture_.width()) / 4.0f;
@@ -95,8 +87,6 @@ void TestShapeApp::process()
                  TextSize::TINY, &fillColor_);
 
     glFlush();
-
-    postProcess();
 }
 
 } // end of namespace itest

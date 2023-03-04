@@ -10,6 +10,10 @@ struct android_app;
 namespace mcdane {
 namespace commonlib {
 
+struct AppSavedState {
+    bool hasFocus_;
+};
+
 class App {
 public:
     App();
@@ -17,20 +21,20 @@ public:
     virtual ~App();
 
 #ifdef DESKTOP_APP
-    bool init(unsigned int width,
+    void init(unsigned int width,
               unsigned int height,
               const std::string& title);
 #endif
 
 #ifdef __ANDROID__
     bool init(android_app *app);
+
+    void handleCommand(int32_t cmd);
 #endif
 
     virtual void process();
 
-    void postProcess();
-
-    virtual void run();
+    void run();
 
     float viewportWidth() const
     {
@@ -59,7 +63,7 @@ public:
 
     inline bool shouldRun() const;
 
-private:
+protected:
 #ifdef __ANDROID__
     bool initDisplay();
 
@@ -67,14 +71,32 @@ private:
 
     bool initContext();
 
-    void killDisplay();
+    virtual void handleInitWindow();
 
-    void killSurface();
+    virtual void handleSaveState();
 
-    void killContext();
+    virtual void handleTermWindow();
 
-    void handleEglError(EGLint error);
+    virtual void handleGainedFocus();
+
+    virtual void handleLostFocus();
+
+    virtual void handlePause();
+
+    virtual void handleResume();
+
+    virtual void handleStart();
+
+    virtual void handleStop();
+
+    virtual void handleWindowResized();
+
+    virtual void handleConfigChanged();
+
+    virtual void handleLowMemory();
 #endif
+
+    void setupOpenGL();
 
 private:
 #ifdef DESKTOP_APP
@@ -83,6 +105,7 @@ private:
 
 #ifdef __ANDROID__
     android_app *app_;
+    AppSavedState savedState_;
     bool hasFocus_, visible_, hasWindow_;
     EGLDisplay display_;
     EGLSurface surface_;

@@ -1,18 +1,17 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.22.1)
 
-set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG")
-
-set(UNITTEST_BOTLIB_SRC
+list(APPEND
+    UNITTEST_BOTLIB_SRC
     test_botlib_main.cpp
 )
 
-add_definitions(${CPP_COMPILE_FLAG})
-
-include_directories(. ${COMMONLIB_DIR} ${BOTLIB_DIR})
+include_directories(
+    .
+    ${COMMONLIB_INCLUDE_DIR}
+    ${BOTLIB_INCLUDE_DIR}
+)
 
 add_executable(test_botlib ${UNITTEST_BOTLIB_SRC})
-
-set_property(TARGET test_botlib PROPERTY CXX_STANDARD 11)
 
 if(UNIX)
     target_link_libraries(test_botlib botlib commonlib GL GLEW glfw3 dl m Xrandr

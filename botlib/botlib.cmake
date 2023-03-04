@@ -1,200 +1,200 @@
 list(APPEND
-    ${botlib_src_dir}/botlib_ai_src
-    ${botlib_src_dir}/ai/botlib_ai.cpp
-    ${botlib_src_dir}/ai/botlib_ai_factory.cpp
-    ${botlib_src_dir}/ai/botlib_ai_lib.cpp
-    ${botlib_src_dir}/ai/botlib_chase_shoot_ai.cpp
-    ${botlib_src_dir}/ai/botlib_chase_shoot_ai_param.cpp
-    ${botlib_src_dir}/ai/botlib_robot_action.cpp
+    BOTLIB_AI_SRC
+    ${BOTLIB_SRC_DIR}/ai/botlib_ai.cpp
+    ${BOTLIB_SRC_DIR}/ai/botlib_ai_factory.cpp
+    ${BOTLIB_SRC_DIR}/ai/botlib_ai_lib.cpp
+    ${BOTLIB_SRC_DIR}/ai/botlib_chase_shoot_ai.cpp
+    ${BOTLIB_SRC_DIR}/ai/botlib_chase_shoot_ai_param.cpp
+    ${BOTLIB_SRC_DIR}/ai/botlib_robot_action.cpp
 )
 
 list(APPEND
-    ${botlib_src_dir}/botlib_app_src
-    ${botlib_src_dir}/app/botlib_app_actions.cpp
-    ${botlib_src_dir}/app/botlib_app_config.cpp
+    BOTLIB_APP_SRC
+    ${BOTLIB_SRC_DIR}/app/botlib_app_actions.cpp
+    ${BOTLIB_SRC_DIR}/app/botlib_app_config.cpp
 )
 
 list(APPEND
-    ${botlib_src_dir}/botlib_gameobj_src
-    ${botlib_src_dir}/gameobj/botlib_ai_robot.cpp
-    ${botlib_src_dir}/gameobj/botlib_ai_robot_template.cpp
-    ${botlib_src_dir}/gameobj/botlib_component.cpp
-    ${botlib_src_dir}/gameobj/botlib_component_template.cpp
-    ${botlib_src_dir}/gameobj/botlib_component_type.cpp
-    ${botlib_src_dir}/gameobj/botlib_composite_object.cpp
-    ${botlib_src_dir}/gameobj/botlib_composite_object_template.cpp
-    ${botlib_src_dir}/gameobj/botlib_game_obj_flag.cpp
-    ${botlib_src_dir}/gameobj/botlib_game_object.cpp
-    ${botlib_src_dir}/gameobj/botlib_game_object_factory.cpp
-    ${botlib_src_dir}/gameobj/botlib_game_object_state.cpp
-    ${botlib_src_dir}/gameobj/botlib_game_object_template.cpp
-    ${botlib_src_dir}/gameobj/botlib_game_object_type.cpp
-    ${botlib_src_dir}/gameobj/botlib_goodie.cpp
-    ${botlib_src_dir}/gameobj/botlib_goodie_action.cpp
-    ${botlib_src_dir}/gameobj/botlib_goodie_effect.cpp
-    ${botlib_src_dir}/gameobj/botlib_goodie_template.cpp
-    ${botlib_src_dir}/gameobj/botlib_goodie_type.cpp
-    ${botlib_src_dir}/gameobj/botlib_missile.cpp
-    ${botlib_src_dir}/gameobj/botlib_missile_template.cpp
-    ${botlib_src_dir}/gameobj/botlib_particle_effect.cpp
-    ${botlib_src_dir}/gameobj/botlib_particle_effect_template.cpp
-    ${botlib_src_dir}/gameobj/botlib_player.cpp
-    ${botlib_src_dir}/gameobj/botlib_player_template.cpp
-    ${botlib_src_dir}/gameobj/botlib_robot.cpp
-    ${botlib_src_dir}/gameobj/botlib_robot_template.cpp
-    ${botlib_src_dir}/gameobj/botlib_side.cpp
-    ${botlib_src_dir}/gameobj/botlib_tile.cpp
-    ${botlib_src_dir}/gameobj/botlib_tile_template.cpp
+    BOTLIB_GAMEOBJ_SRC
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_ai_robot.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_ai_robot_template.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_component.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_component_template.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_component_type.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_composite_object.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_composite_object_template.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_game_obj_flag.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_game_object.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_game_object_factory.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_game_object_state.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_game_object_template.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_game_object_type.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_goodie.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_goodie_action.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_goodie_effect.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_goodie_template.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_goodie_type.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_missile.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_missile_template.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_particle_effect.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_particle_effect_template.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_player.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_player_template.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_robot.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_robot_template.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_side.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_tile.cpp
+    ${BOTLIB_SRC_DIR}/gameobj/botlib_tile_template.cpp
 )
 
 list(APPEND
-    ${botlib_src_dir}/botlib_gameutils_src
-    ${botlib_src_dir}/gameutils/botlib_context.cpp
-    ${botlib_src_dir}/gameutils/botlib_game_config.cpp
-    ${botlib_src_dir}/gameutils/botlib_game_lib.cpp
-    ${botlib_src_dir}/gameutils/botlib_game_map.cpp
-    ${botlib_src_dir}/gameutils/botlib_game_map_loader.cpp
-    ${botlib_src_dir}/gameutils/botlib_game_object_dumper.cpp
-    ${botlib_src_dir}/gameutils/botlib_goodie_generator.cpp
-    ${botlib_src_dir}/gameutils/botlib_time_delta_smoother.cpp
-    ${botlib_src_dir}/gameutils/botlib_update_context.cpp
+    BOTLIB_GAMEUTILS_SRC
+    ${BOTLIB_SRC_DIR}/gameutils/botlib_context.cpp
+    ${BOTLIB_SRC_DIR}/gameutils/botlib_game_config.cpp
+    ${BOTLIB_SRC_DIR}/gameutils/botlib_game_lib.cpp
+    ${BOTLIB_SRC_DIR}/gameutils/botlib_game_map.cpp
+    ${BOTLIB_SRC_DIR}/gameutils/botlib_game_map_loader.cpp
+    ${BOTLIB_SRC_DIR}/gameutils/botlib_game_object_dumper.cpp
+    ${BOTLIB_SRC_DIR}/gameutils/botlib_goodie_generator.cpp
+    ${BOTLIB_SRC_DIR}/gameutils/botlib_time_delta_smoother.cpp
+    ${BOTLIB_SRC_DIR}/gameutils/botlib_update_context.cpp
 )
 
 list(APPEND
-    ${botlib_src_dir}/botlib_game_widgets_src
-    ${botlib_src_dir}/game_widgets/botlib_hp_indicator.cpp
-    ${botlib_src_dir}/game_widgets/botlib_hp_indicator_config.cpp
-    ${botlib_src_dir}/game_widgets/botlib_icon.cpp
-    ${botlib_src_dir}/game_widgets/botlib_icon_template.cpp
-    ${botlib_src_dir}/game_widgets/botlib_progress_bar.cpp
-    ${botlib_src_dir}/game_widgets/botlib_progress_bar_template.cpp
-    ${botlib_src_dir}/game_widgets/botlib_progress_pie.cpp
-    ${botlib_src_dir}/game_widgets/botlib_progress_pie_template.cpp
+    BOTLIB_GAME_WIDGETS_SRC
+    ${BOTLIB_SRC_DIR}/game_widgets/botlib_hp_indicator.cpp
+    ${BOTLIB_SRC_DIR}/game_widgets/botlib_hp_indicator_config.cpp
+    ${BOTLIB_SRC_DIR}/game_widgets/botlib_icon.cpp
+    ${BOTLIB_SRC_DIR}/game_widgets/botlib_icon_template.cpp
+    ${BOTLIB_SRC_DIR}/game_widgets/botlib_progress_bar.cpp
+    ${BOTLIB_SRC_DIR}/game_widgets/botlib_progress_bar_template.cpp
+    ${BOTLIB_SRC_DIR}/game_widgets/botlib_progress_pie.cpp
+    ${BOTLIB_SRC_DIR}/game_widgets/botlib_progress_pie_template.cpp
 )
 
 list(APPEND
-    ${botlib_src_dir}/botlib_map_accessor_src
-    ${botlib_src_dir}/map_accessor/botlib_missile_hit_checker.cpp
-    ${botlib_src_dir}/map_accessor/botlib_missile_hit_checker.h
-    ${botlib_src_dir}/map_accessor/botlib_passthrough_collide_checker.cpp
-    ${botlib_src_dir}/map_accessor/botlib_passthrough_collide_checker.h
-    ${botlib_src_dir}/map_accessor/botlib_target_finder.cpp
-    ${botlib_src_dir}/map_accessor/botlib_target_finder.h
+    BOTLIB_MAP_ACCESSOR_SRC
+    ${BOTLIB_SRC_DIR}/map_accessor/botlib_missile_hit_checker.cpp
+    ${BOTLIB_SRC_DIR}/map_accessor/botlib_missile_hit_checker.h
+    ${BOTLIB_SRC_DIR}/map_accessor/botlib_passthrough_collide_checker.cpp
+    ${BOTLIB_SRC_DIR}/map_accessor/botlib_passthrough_collide_checker.h
+    ${BOTLIB_SRC_DIR}/map_accessor/botlib_target_finder.cpp
+    ${BOTLIB_SRC_DIR}/map_accessor/botlib_target_finder.h
 )
 
 list(APPEND
-    ${botlib_src_dir}/botlib_map_generator_src
-    ${botlib_src_dir}/map_generator/botlib_game_map_generator.cpp
-    ${botlib_src_dir}/map_generator/botlib_game_map_generator_config.cpp
-    ${botlib_src_dir}/map_generator/botlib_game_map_generator_factory.cpp
-    ${botlib_src_dir}/map_generator/botlib_island_map_generator.cpp
-    ${botlib_src_dir}/map_generator/botlib_island_map_generator_config.cpp
+    BOTLIB_MAP_GENERATOR_SRC
+    ${BOTLIB_SRC_DIR}/map_generator/botlib_game_map_generator.cpp
+    ${BOTLIB_SRC_DIR}/map_generator/botlib_game_map_generator_config.cpp
+    ${BOTLIB_SRC_DIR}/map_generator/botlib_game_map_generator_factory.cpp
+    ${BOTLIB_SRC_DIR}/map_generator/botlib_island_map_generator.cpp
+    ${BOTLIB_SRC_DIR}/map_generator/botlib_island_map_generator_config.cpp
 )
 
 list(APPEND
-    ${botlib_src_dir}/botlib_misc_src
-    ${botlib_src_dir}/misc/botlib_constants.cpp
-    ${botlib_src_dir}/misc/botlib_typedef.cpp
+    BOTLIB_MISC_SRC
+    ${BOTLIB_SRC_DIR}/misc/botlib_constants.cpp
+    ${BOTLIB_SRC_DIR}/misc/botlib_typedef.cpp
 )
 
 list(APPEND
-    ${botlib_src_dir}/botlib_opengl_src
-    ${botlib_src_dir}/opengl/botlib_graphics.cpp
-    ${botlib_src_dir}/opengl/botlib_particle_shader_program.cpp
-    ${botlib_src_dir}/opengl/botlib_simple_shader_program.cpp
-    ${botlib_src_dir}/opengl/botlib_text_size.cpp
-    ${botlib_src_dir}/opengl/botlib_text_system.cpp
+    BOTLIB_OPENGL_SRC
+    ${BOTLIB_SRC_DIR}/opengl/botlib_graphics.cpp
+    ${BOTLIB_SRC_DIR}/opengl/botlib_particle_shader_program.cpp
+    ${BOTLIB_SRC_DIR}/opengl/botlib_simple_shader_program.cpp
+    ${BOTLIB_SRC_DIR}/opengl/botlib_text_size.cpp
+    ${BOTLIB_SRC_DIR}/opengl/botlib_text_system.cpp
 )
 
 list(APPEND
-    ${botlib_src_dir}/botlib_screen_src
-    ${botlib_src_dir}/screen/botlib_game_screen.cpp
-    ${botlib_src_dir}/screen/botlib_game_screen_config.cpp
-    ${botlib_src_dir}/screen/botlib_screen.cpp
-    ${botlib_src_dir}/screen/botlib_screen_manager.cpp
-    ${botlib_src_dir}/screen/botlib_screen_type.cpp
-    ${botlib_src_dir}/screen/botlib_showmap_screen.cpp
-    ${botlib_src_dir}/screen/botlib_showmap_screen_config.cpp
-    ${botlib_src_dir}/screen/botlib_start_screen.cpp
-    ${botlib_src_dir}/screen/botlib_start_screen_config.cpp
+    BOTLIB_SCREEN_SRC
+    ${BOTLIB_SRC_DIR}/screen/botlib_game_screen.cpp
+    ${BOTLIB_SRC_DIR}/screen/botlib_game_screen_config.cpp
+    ${BOTLIB_SRC_DIR}/screen/botlib_screen.cpp
+    ${BOTLIB_SRC_DIR}/screen/botlib_screen_manager.cpp
+    ${BOTLIB_SRC_DIR}/screen/botlib_screen_type.cpp
+    ${BOTLIB_SRC_DIR}/screen/botlib_showmap_screen.cpp
+    ${BOTLIB_SRC_DIR}/screen/botlib_showmap_screen_config.cpp
+    ${BOTLIB_SRC_DIR}/screen/botlib_start_screen.cpp
+    ${BOTLIB_SRC_DIR}/screen/botlib_start_screen_config.cpp
 )
 
 list(APPEND
-    ${botlib_src_dir}/botlib_shape_src
-    ${botlib_src_dir}/shape/botlib_polygon.cpp
-    ${botlib_src_dir}/shape/botlib_rectangle.cpp
-    ${botlib_src_dir}/shape/botlib_shape.cpp
-    ${botlib_src_dir}/shape/botlib_tex_pos_array.cpp
-    ${botlib_src_dir}/shape/botlib_tex_rectangle.cpp
+    BOTLIB_SHAPE_SRC
+    ${BOTLIB_SRC_DIR}/shape/botlib_polygon.cpp
+    ${BOTLIB_SRC_DIR}/shape/botlib_rectangle.cpp
+    ${BOTLIB_SRC_DIR}/shape/botlib_shape.cpp
+    ${BOTLIB_SRC_DIR}/shape/botlib_tex_pos_array.cpp
+    ${BOTLIB_SRC_DIR}/shape/botlib_tex_rectangle.cpp
 )
 
 list(APPEND
-    ${botlib_src_dir}/botlib_skill_src
-    ${botlib_src_dir}/skill/botlib_barrage_blast_skill.cpp
-    ${botlib_src_dir}/skill/botlib_barrage_blast_skill_template.cpp
-    ${botlib_src_dir}/skill/botlib_barrage_skill.cpp
-    ${botlib_src_dir}/skill/botlib_barrage_skill_template.cpp
-    ${botlib_src_dir}/skill/botlib_blast_skill.cpp
-    ${botlib_src_dir}/skill/botlib_blast_skill_template.cpp
-    ${botlib_src_dir}/skill/botlib_dynamic_skill_flag.cpp
-    ${botlib_src_dir}/skill/botlib_move_skill.cpp
-    ${botlib_src_dir}/skill/botlib_move_skill_template.cpp
-    ${botlib_src_dir}/skill/botlib_shoot_missile_skill.cpp
-    ${botlib_src_dir}/skill/botlib_shoot_missile_skill_template.cpp
-    ${botlib_src_dir}/skill/botlib_skill.cpp
-    ${botlib_src_dir}/skill/botlib_skill_template.cpp
-    ${botlib_src_dir}/skill/botlib_skill_type.cpp
-    ${botlib_src_dir}/skill/botlib_skill_utils.cpp
-    ${botlib_src_dir}/skill/botlib_skill_with_cost.cpp
-    ${botlib_src_dir}/skill/botlib_skill_with_cost_template.cpp
-    ${botlib_src_dir}/skill/botlib_static_skill_flag.cpp
-    ${botlib_src_dir}/skill/botlib_targeted_blast_skill.cpp
-    ${botlib_src_dir}/skill/botlib_targeted_blast_skill_template.cpp
+    BOTLIB_SKILL_SRC
+    ${BOTLIB_SRC_DIR}/skill/botlib_barrage_blast_skill.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_barrage_blast_skill_template.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_barrage_skill.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_barrage_skill_template.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_blast_skill.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_blast_skill_template.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_dynamic_skill_flag.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_move_skill.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_move_skill_template.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_shoot_missile_skill.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_shoot_missile_skill_template.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_skill.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_skill_template.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_skill_type.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_skill_utils.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_skill_with_cost.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_skill_with_cost_template.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_static_skill_flag.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_targeted_blast_skill.cpp
+    ${BOTLIB_SRC_DIR}/skill/botlib_targeted_blast_skill_template.cpp
 )
 
 list(APPEND
-    ${botlib_src_dir}/botlib_ui_widgets_src
-    ${botlib_src_dir}/ui_widgets/botlib_align.cpp
-    ${botlib_src_dir}/ui_widgets/botlib_button.cpp
-    ${botlib_src_dir}/ui_widgets/botlib_button_config.cpp
-    ${botlib_src_dir}/ui_widgets/botlib_label.cpp
-    ${botlib_src_dir}/ui_widgets/botlib_label_config.cpp
-    ${botlib_src_dir}/ui_widgets/botlib_message_box.cpp
-    ${botlib_src_dir}/ui_widgets/botlib_message_box_config.cpp
-    ${botlib_src_dir}/ui_widgets/botlib_widget.cpp
-    ${botlib_src_dir}/ui_widgets/botlib_widget_group.cpp
+    BOTLIB_UI_WIDGETS_SRC
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_align.cpp
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_button.cpp
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_button_config.cpp
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_label.cpp
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_label_config.cpp
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_message_box.cpp
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_message_box_config.cpp
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_widget.cpp
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_widget_group.cpp
 )
 
 list(APPEND
-    botlib_source_files
-    ${botlib_app_src}
-    ${botlib_ai_src}
-    ${botlib_gameobj_src}
-    ${botlib_gameutils_src}
-    ${botlib_game_widgets_src}
-    ${botlib_map_accessor_src}
-    ${botlib_map_generator_src}
-    ${botlib_misc_src}
-    ${botlib_opengl_src}
-    ${botlib_screen_src}
-    ${botlib_shape_src}
-    ${botlib_skill_src}
-    ${botlib_ui_widgets_src}
+    BOTLIB_SOURCE_FILES
+    ${BOTLIB_APP_SRC}
+    ${BOTLIB_AI_SRC}
+    ${BOTLIB_GAMEOBJ_SRC}
+    ${BOTLIB_GAMEUTILS_SRC}
+    ${BOTLIB_GAME_WIDGETS_SRC}
+    ${BOTLIB_MAP_ACCESSOR_SRC}
+    ${BOTLIB_MAP_GENERATOR_SRC}
+    ${BOTLIB_MISC_SRC}
+    ${BOTLIB_OPENGL_SRC}
+    ${BOTLIB_SCREEN_SRC}
+    ${BOTLIB_SHAPE_SRC}
+    ${BOTLIB_SKILL_SRC}
+    ${BOTLIB_UI_WIDGETS_SRC}
 )
 
 list(APPEND
-    botlib_include_dir
-    ${botlib_src_dir}/app
-    ${botlib_src_dir}/ai
-    ${botlib_src_dir}/gameobj
-    ${botlib_src_dir}/gameutils
-    ${botlib_src_dir}/game_widgets
-    ${botlib_src_dir}/map_accessor
-    ${botlib_src_dir}/map_generator
-    ${botlib_src_dir}/misc
-    ${botlib_src_dir}/opengl
-    ${botlib_src_dir}/screen
-    ${botlib_src_dir}/shape
-    ${botlib_src_dir}/skill
-    ${botlib_src_dir}/ui_widgets
+    BOTLIB_INCLUDE_DIR
+    ${BOTLIB_SRC_DIR}/app
+    ${BOTLIB_SRC_DIR}/ai
+    ${BOTLIB_SRC_DIR}/gameobj
+    ${BOTLIB_SRC_DIR}/gameutils
+    ${BOTLIB_SRC_DIR}/game_widgets
+    ${BOTLIB_SRC_DIR}/map_accessor
+    ${BOTLIB_SRC_DIR}/map_generator
+    ${BOTLIB_SRC_DIR}/misc
+    ${BOTLIB_SRC_DIR}/opengl
+    ${BOTLIB_SRC_DIR}/screen
+    ${BOTLIB_SRC_DIR}/shape
+    ${BOTLIB_SRC_DIR}/skill
+    ${BOTLIB_SRC_DIR}/ui_widgets
 )
