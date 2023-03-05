@@ -20,7 +20,7 @@ public:
     bool processInput(const commonlib::InputEvent& e);
 
 private:
-    void setupOpenGL();
+    void setupShader();
 
     void setupWidgets();
 
@@ -36,6 +36,7 @@ private:
     botlib::WidgetGroup widgets_;
     botlib::MessageBox msgBox_;
     commonlib::InputProcessor inputProcessor_;
+    commonlib::Color fillColor_;
 };
 
 } // end of namespace itest

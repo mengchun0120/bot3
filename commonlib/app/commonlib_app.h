@@ -24,6 +24,8 @@ public:
     void init(unsigned int width,
               unsigned int height,
               const std::string& title);
+
+    inline GLFWwindow* window();
 #endif
 
 #ifdef __ANDROID__
@@ -36,30 +38,15 @@ public:
 
     void run();
 
-    float viewportWidth() const
-    {
-        return viewportSize_[0];
-    }
+    inline float viewportWidth() const;
 
-    float viewportHeight() const
-    {
-        return viewportSize_[1];
-    }
+    inline float viewportHeight() const;
 
-    const commonlib::Point2& viewportSize() const
-    {
-        return viewportSize_;
-    }
+    inline const commonlib::Point2& viewportSize() const;
 
-    inline bool running() const
-    {
-        return running_;
-    }
+    inline bool running() const;
 
-    void setRunning(bool running)
-    {
-        running_ = running;
-    }
+    inline void setRunning(bool running);
 
     inline bool shouldRun() const;
 
@@ -117,7 +104,37 @@ private:
     bool running_;
 };
 
+float App::viewportWidth() const
+{
+    return viewportSize_[0];
+}
+
+float App::viewportHeight() const
+{
+    return viewportSize_[1];
+}
+
+const commonlib::Point2& App::viewportSize() const
+{
+    return viewportSize_;
+}
+
+bool App::running() const
+{
+    return running_;
+}
+
+void App::setRunning(bool running)
+{
+    running_ = running;
+}
+
 #ifdef DESKTOP_APP
+GLFWwindow* App::window()
+{
+    return window_;
+}
+
 bool App::shouldRun() const
 {
     return 0 == glfwWindowShouldClose(window_) && running_;

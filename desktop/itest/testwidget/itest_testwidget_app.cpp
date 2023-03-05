@@ -16,12 +16,12 @@ TestWidgetApp::TestWidgetApp(const std::string& configFile,
 {
     AppConfig::init(configFile, appDir);
 
-    setupWindow(1000, 800, "test widgets");
+    init(1000, 800, "test widgets");
 
     const AppConfig& cfg = AppConfig::instance();
 
     Context::init(cfg);
-    setupOpenGL();
+    setupShader();
     setupWidgets();
     setupInput();
 }
@@ -37,9 +37,8 @@ void TestWidgetApp::process()
     {
         msgBox_.present();
     }
-    glFlush();
 
-    postProcess();
+    glFlush();
 }
 
 bool TestWidgetApp::processInput(const commonlib::InputEvent& e)
@@ -64,18 +63,16 @@ bool TestWidgetApp::processInput(const commonlib::InputEvent& e)
     return true;
 }
 
-void TestWidgetApp::setupOpenGL()
+void TestWidgetApp::setupShader()
 {
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
     Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
     SimpleShaderProgram& shader = Context::graphics().simpleShader();
 
     shader.use();
     shader.setViewportSize(viewportSize());
     shader.setViewportOrigin(viewportOrigin);
+
+    fillColor_.init({255, 125, 0, 255});
 }
 
 void TestWidgetApp::setupWidgets()

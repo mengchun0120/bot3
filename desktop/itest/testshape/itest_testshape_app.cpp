@@ -71,6 +71,7 @@ void TestShapeApp::process()
 
     glClear(GL_COLOR_BUFFER_BIT);
 
+    program.setAlpha(1.0f);
     triangle_.draw(program, &trianglePos_, nullptr, &fillColor_,
                    nullptr, 0, nullptr);
     square_.draw(program, &squarePos_, nullptr, &fillColor_,

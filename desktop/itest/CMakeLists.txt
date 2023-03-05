@@ -5,5 +5,5 @@ include(${BOTLIB_SRC_DIR}/botlib.cmake)
 
 add_subdirectory(testmap)
 add_subdirectory(testshape)
-#add_subdirectory(testwidget)
+add_subdirectory(testwidget)
 

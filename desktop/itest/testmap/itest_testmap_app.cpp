@@ -24,7 +24,6 @@ TestMapApp::TestMapApp(const std::string& configFile,
     const AppConfig& cfg = AppConfig::instance();
 
     Context::init(cfg);
-//    setupOpenGL();
     factory_.init(1000);
     setupMap(constructPath({cfg.mapDir(), mapFile}));
 }
@@ -35,13 +34,6 @@ void TestMapApp::process()
     map_.present();
     glFlush();
 }
-
-/*void TestMapApp::setupOpenGL()
-{
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}*/
 
 void TestMapApp::setupMap(const std::string& mapFile)
 {

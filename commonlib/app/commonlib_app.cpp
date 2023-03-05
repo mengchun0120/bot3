@@ -121,7 +121,8 @@ void App::setupOpenGL()
 
 static AppSavedState k_appSavedState{false};
 
-static void handleCmdProxy(struct android_app *app, int32_t cmd) {
+static void handleCmdProxy(struct android_app *app, int32_t cmd)
+{
     App *a = reinterpret_cast<App*>(app->userData);
     a->handleCommand(cmd);
 }
