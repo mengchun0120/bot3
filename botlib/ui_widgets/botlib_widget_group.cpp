@@ -52,9 +52,10 @@ void WidgetGroup::setWidget(unsigned int idx,
     widgets_[idx].reset(widget);
 }
 
+#ifdef DESKTOP_APP
 void WidgetGroup::process(const commonlib::InputEvent& event)
 {
-#ifdef DESKTOP_APP
+
     switch (event.type())
     {
         case EventType::KEY:
@@ -77,8 +78,8 @@ void WidgetGroup::process(const commonlib::InputEvent& event)
             THROW_EXCEPT(InvalidArgumentException, "Invalid event type ");
         }
     }
-#endif
 }
+#endif
 
 void WidgetGroup::present()
 {
@@ -178,4 +179,3 @@ int WidgetGroup::findWidget(float x,
 
 } // end of namespace botlib
 } // end of namespace mcdane
-

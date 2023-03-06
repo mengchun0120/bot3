@@ -19,7 +19,9 @@ public:
 
     void present() override;
 
+#ifdef  DESKTOP_APP
     bool processInput(const commonlib::InputEvent &e) override;
+#endif
 
 private:
     void initWidgets(const commonlib::Vector2& viewportSize);
@@ -48,4 +50,3 @@ private:
 } // end of namespace mcdane
 
 #endif
-

@@ -40,6 +40,7 @@ void StartScreen::present()
     glFlush();
 }
 
+#ifdef DESKTOP_APP
 bool StartScreen::processInput(const InputEvent &e)
 {
     if (e.type() == EventType::KEY)
@@ -53,6 +54,7 @@ bool StartScreen::processInput(const InputEvent &e)
     widgets_.process(e);
     return true;
 }
+#endif
 
 void StartScreen::initWidgets(const commonlib::Vector2& viewportSize)
 {
@@ -136,4 +138,3 @@ bool StartScreen::processKeyEvent(const KeyEvent& e)
 
 } // end of namespace botlib
 } // end of namespace mcdane
-

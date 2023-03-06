@@ -23,7 +23,9 @@ public:
     void setWidget(unsigned int idx,
                    Widget* widget);
 
+#ifdef DESKTOP_APP
     void process(const commonlib::InputEvent& event);
+#endif
 
     void present();
 
@@ -72,4 +74,3 @@ void WidgetGroup::setVisible(bool v)
 } // end of namespace mcdane
 
 #endif
-

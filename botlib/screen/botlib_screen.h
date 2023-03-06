@@ -21,7 +21,9 @@ public:
 
     virtual void present() = 0;
 
+#ifdef DESKTOP_APP
     virtual bool processInput(const commonlib::InputEvent &e) = 0;
+#endif
 
 protected:
     AppActions actions_;
@@ -32,4 +34,3 @@ protected:
 } // end of namespace mcdane
 
 #endif
-

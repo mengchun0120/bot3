@@ -33,10 +33,8 @@ public:
 
     void present() override;
 
+#ifdef DESKTOP_APP
     bool processInput(const commonlib::InputEvent& e) override;
-
-private:
-    void loadMap(const commonlib::Vector2& viewportSize);
 
     bool processKey(const commonlib::KeyEvent& e);
 
@@ -49,6 +47,10 @@ private:
     bool processRightKey();
 
     bool processLeftKey();
+#endif
+
+private:
+    void loadMap(const commonlib::Vector2& viewportSize);
 
 private:
     GameObjectFactory factory_;

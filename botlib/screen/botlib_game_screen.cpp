@@ -103,6 +103,7 @@ void GameScreen::present()
     glFlush();
 }
 
+#ifdef DESKTOP_APP
 bool GameScreen::processInput(const InputEvent &e)
 {
     if (!msgBox_.visible())
@@ -112,6 +113,115 @@ bool GameScreen::processInput(const InputEvent &e)
 
     return processInputEndGame(e);
 }
+
+bool GameScreen::processInputEndGame(const commonlib::InputEvent& e)
+{
+    msgBox_.process(e);
+
+    if (msgBox_.buttonClicked() != MessageBox::BUTTON_OK)
+    {
+        return true;
+    }
+
+    if (nextScreenType_ != ScreenType::NONE)
+    {
+        if (actions_.switchAction_)
+        {
+            actions_.switchAction_(nextScreenType_);
+        }
+    }
+    else
+    {
+        if (actions_.exitAction_)
+        {
+            actions_.exitAction_();
+        }
+    }
+
+    return true;
+}
+
+bool GameScreen::processInputGame(const commonlib::InputEvent& e)
+{
+    switch (e.type())
+    {
+        case EventType::MOUSE_BUTTON:
+            return processMouseButton(e.mouseButtonEvent());
+        case EventType::MOUSE_MOVE:
+            return processMouseMove(e.mouseMoveEvent());
+        case EventType::KEY:
+            return processKey(e.keyEvent());
+        default:
+            THROW_EXCEPT(InvalidArgumentException,
+                         "Invalid event-type: " +
+                         std::to_string(static_cast<int>(e.type())));
+    }
+
+    return true;
+}
+
+bool GameScreen::processMouseButton(const MouseButtonEvent& e)
+{
+    if (!isPlayerAvailable())
+    {
+        return true;
+    }
+
+    if (e.button_ == GLFW_MOUSE_BUTTON_LEFT && e.action_ == GLFW_PRESS)
+    {
+        Vector2 p{e.x_, e.y_};
+        p += map_.viewportAnchor();
+        map_.player()->setDest(p);
+    }
+    else if (e.button_ == GLFW_MOUSE_BUTTON_RIGHT && e.action_ == GLFW_PRESS)
+    {
+        enableSkillForInput(GLFW_MOUSE_BUTTON_RIGHT);
+    }
+
+    return true;
+}
+
+bool GameScreen::processMouseMove(const MouseMoveEvent& e)
+{
+    if (!isPlayerAvailable())
+    {
+        return true;
+    }
+
+    if (map_.player()->isSkillEnabled(SkillType::MOVE))
+    {
+        return true;
+    }
+
+    Vector2 p{e.x_, e.y_};
+    p += map_.viewportAnchor();
+
+    if (fuzzyEqual(p, map_.player()->pos(), 0.2f))
+    {
+        return true;
+    }
+
+    Vector2 direction = normalize(p - map_.player()->pos());
+    map_.player()->setDirection(direction);
+
+    return true;
+}
+
+bool GameScreen::processKey(const KeyEvent& e)
+{
+    if (!isPlayerAvailable())
+    {
+        return true;
+    }
+
+    if (e.action_ == GLFW_PRESS)
+    {
+        enableSkillForInput(e.key_);
+    }
+
+    return true;
+}
+#endif
 
 void GameScreen::loadMap(const Vector2& viewportSize,
                          const std::string& mapFile)
@@ -235,114 +345,6 @@ void GameScreen::createGoodiePies()
     {
         goodiePies_[i].init(cfg.goodiePieTemplate(i));
     }
-}
-
-bool GameScreen::processInputEndGame(const commonlib::InputEvent& e)
-{
-    msgBox_.process(e);
-
-    if (msgBox_.buttonClicked() != MessageBox::BUTTON_OK)
-    {
-        return true;
-    }
-
-    if (nextScreenType_ != ScreenType::NONE)
-    {
-        if (actions_.switchAction_)
-        {
-            actions_.switchAction_(nextScreenType_);
-        }
-    }
-    else
-    {
-        if (actions_.exitAction_)
-        {
-            actions_.exitAction_();
-        }
-    }
-
-    return true;
-}
-
-bool GameScreen::processInputGame(const commonlib::InputEvent& e)
-{
-    switch (e.type())
-    {
-        case EventType::MOUSE_BUTTON:
-            return processMouseButton(e.mouseButtonEvent());
-        case EventType::MOUSE_MOVE:
-            return processMouseMove(e.mouseMoveEvent());
-        case EventType::KEY:
-            return processKey(e.keyEvent());
-        default:
-            THROW_EXCEPT(InvalidArgumentException,
-                         "Invalid event-type: " +
-                         std::to_string(static_cast<int>(e.type())));
-    }
-
-    return true;
-}
-
-bool GameScreen::processMouseButton(const MouseButtonEvent& e)
-{
-    if (!isPlayerAvailable())
-    {
-        return true;
-    }
-
-    if (e.button_ == GLFW_MOUSE_BUTTON_LEFT && e.action_ == GLFW_PRESS)
-    {
-        Vector2 p{e.x_, e.y_};
-        p += map_.viewportAnchor();
-        map_.player()->setDest(p);
-    }
-    else if (e.button_ == GLFW_MOUSE_BUTTON_RIGHT && e.action_ == GLFW_PRESS)
-    {
-        enableSkillForInput(GLFW_MOUSE_BUTTON_RIGHT);
-    }
-
-    return true;
-}
-
-bool GameScreen::processMouseMove(const MouseMoveEvent& e)
-{
-    if (!isPlayerAvailable())
-    {
-        return true;
-    }
-
-    if (map_.player()->isSkillEnabled(SkillType::MOVE))
-    {
-        return true;
-    }
-
-    Vector2 p{e.x_, e.y_};
-    p += map_.viewportAnchor();
-
-    if (fuzzyEqual(p, map_.player()->pos(), 0.2f))
-    {
-        return true;
-    }
-
-    Vector2 direction = normalize(p - map_.player()->pos());
-    map_.player()->setDirection(direction);
-
-    return true;
-}
-
-bool GameScreen::processKey(const KeyEvent& e)
-{
-    if (!isPlayerAvailable())
-    {
-        return true;
-    }
-
-    if (e.action_ == GLFW_PRESS)
-    {
-        enableSkillForInput(e.key_);
-    }
-
-    return true;
 }
 
 void GameScreen::updatePlayer()
@@ -534,4 +536,3 @@ float GameScreen::skillPieRadius()
 
 } // end of namespace botlib
 } // end of namespace mcdane
-

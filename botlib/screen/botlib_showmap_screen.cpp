@@ -43,6 +43,7 @@ void ShowMapScreen::present()
     glFlush();
 }
 
+#ifdef DESKTOP_APP
 bool ShowMapScreen::processInput(const commonlib::InputEvent& e)
 {
     switch (e.type())
@@ -54,15 +55,6 @@ bool ShowMapScreen::processInput(const commonlib::InputEvent& e)
     }
 
     return true;
-}
-
-void ShowMapScreen::loadMap(const commonlib::Vector2& viewportSize)
-{
-    const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
-
-    GameMapLoader loader(viewportSize[0], viewportSize[1], factory_);
-
-    loader.load(map_, cfg.mapFile());
 }
 
 bool ShowMapScreen::processKey(const commonlib::KeyEvent& e)
@@ -163,6 +155,16 @@ bool ShowMapScreen::processLeftKey()
     map_.setViewportOrigin(p);
 
     return true;
+}
+#endif
+
+void ShowMapScreen::loadMap(const commonlib::Vector2& viewportSize)
+{
+    const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
+
+    GameMapLoader loader(viewportSize[0], viewportSize[1], factory_);
+
+    loader.load(map_, cfg.mapFile());
 }
 
 } // end of namespace botlib

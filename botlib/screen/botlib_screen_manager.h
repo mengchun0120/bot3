@@ -21,7 +21,9 @@ public:
 
     void present();
 
+#ifdef DESKTOP_APP
     bool processInput(const commonlib::InputEvent &e);
+#endif
 
     void switchScreen(ScreenType type);
 
@@ -47,4 +49,3 @@ private:
 } // end of namespace mcdane
 
 #endif
-

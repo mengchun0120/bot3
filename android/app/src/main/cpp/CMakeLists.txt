@@ -2,18 +2,18 @@ cmake_minimum_required(VERSION 3.22.1)
 
 project("robot")
 
-set(dependencies_include_dir "../../../../../dependencies/include")
+set(DEPENDENCIES_INCLUDE_DIR "../../../../../dependencies/include")
 
-set(commonlib_src_dir "../../../../../commonlib")
-include(${commonlib_src_dir}/commonlib.cmake)
+set(COMMONLIB_SRC_DIR "../../../../../commonlib")
+include(${COMMONLIB_SRC_DIR}/commonlib.cmake)
 
-set(botlib_src_dir "../../../../../botlib")
-include(${botlib_src_dir}/botlib.cmake)
+set(BOTLIB_SRC_DIR "../../../../../botlib")
+include(${BOTLIB_SRC_DIR}/botlib.cmake)
 
 include_directories(
-    ${commonlib_include_dir}
-    ${botlib_include_dir}
-    ${dependencies_include_dir}
+    ${COMMONLIB_INCLUDE_DIR}
+    ${BOTLIB_INCLUDE_DIR}
+    ${DEPENDENCIES_INCLUDE_DIR}
     "."
 )
 
@@ -36,7 +36,8 @@ add_library(
     Shader.cpp
     TextureAsset.cpp
     Utility.cpp
-    ${commonlib_source_files}
+    ${COMMONLIB_SOURCE_FILES}
+    ${BOTLIB_SOURCE_FILES}
 )
 
 target_link_libraries(

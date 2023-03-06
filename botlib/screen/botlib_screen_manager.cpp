@@ -48,6 +48,7 @@ void ScreenManager::present()
     }
 }
 
+#ifdef DESKTOP_APP
 bool ScreenManager::processInput(const commonlib::InputEvent &e)
 {
     if (!curScreen_)
@@ -57,6 +58,7 @@ bool ScreenManager::processInput(const commonlib::InputEvent &e)
 
     return curScreen_->processInput(e);
 }
+#endif
 
 void ScreenManager::switchScreen(ScreenType type)
 {
@@ -108,4 +110,3 @@ Screen* ScreenManager::createScreen(ScreenType screenType)
 
 } // end of namespace botlib
 } // end of namespace mcdane
-
