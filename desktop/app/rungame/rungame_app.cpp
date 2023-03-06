@@ -13,9 +13,9 @@ RunGameApp::RunGameApp(const std::string& configFile,
                        const std::string& mapFile)
 {
     AppConfig::init(configFile, appDir);
-    setupWindow();
+    const AppConfig& cfg = AppConfig::instance();
+    init(cfg.width(), cfg.height(), cfg.title());
     Context::init(AppConfig::instance());
-    setupOpenGL();
     setupGame(mapFile);
 }
 
@@ -29,23 +29,6 @@ void RunGameApp::process()
         screen_.update(deltaSmoother_.curTimeDelta());
         screen_.present();
     }
-
-    postProcess();
-}
-
-void RunGameApp::setupWindow()
-{
-    const AppConfig& cfg = AppConfig::instance();
-
-    App::setupWindow(cfg.width(), cfg.height(), cfg.title());
-}
-
-void RunGameApp::setupOpenGL()
-{
-    glEnable(GL_BLEND);
-    glEnable(GL_PROGRAM_POINT_SIZE);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void RunGameApp::setupGame(const std::string& mapFile)

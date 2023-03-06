@@ -20,10 +20,6 @@ public:
     void process() override;
 
 private:
-    void setupWindow();
-
-    void setupOpenGL();
-
     void setupGame(const std::string& mapFile);
 
     void setupDeltaSmoother();

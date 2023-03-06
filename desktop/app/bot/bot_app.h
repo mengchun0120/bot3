@@ -26,11 +26,6 @@ public:
     }
 
 private:
-    void init(const std::string& configFile,
-              const std::string& appDir);
-
-    void setupOpenGL(const botlib::AppConfig& cfg);
-
     void setupGame(const botlib::AppConfig& cfg);
 
     void setupDeltaSmoother(const botlib::AppConfig& cfg);

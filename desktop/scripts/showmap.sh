@@ -6,5 +6,5 @@ fi
 ./build/app/showmap/showmap --appConfig config/bot_config.json \
                             --logFile showmap.log \
                             --logLevel DEBUG \
-                            --appDir . \
+                            --appDir .. \
                             --mapFile $1

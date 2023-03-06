@@ -22,7 +22,13 @@ GenMapApp::GenMapApp(const std::string& appConfigFile,
                      const std::string& algorithmConfigFile,
                      const std::string& mapFile)
 {
-    init(appConfigFile, appDir, algorithm, algorithmConfigFile, mapFile);
+    AppConfig::init(appConfigFile, appDir);
+    const AppConfig& cfg = AppConfig::instance();
+    init(cfg.width(), cfg.height(), cfg.title());
+    Context::init(cfg);
+    setupOpenGL();
+    setupGame();
+    generateMap(algorithm, algorithmConfigFile, mapFile, appDir);
 }
 
 void GenMapApp::process()
@@ -34,38 +40,22 @@ void GenMapApp::process()
         screen_.update(deltaSmoother_.curTimeDelta());
         screen_.present();
     }
-
-    postProcess();
-}
-
-void GenMapApp::init(const std::string& appConfigFile,
-                     const std::string& appDir,
-                     const std::string& algorithm,
-                     const std::string& algorithmConfigFile,
-                     const std::string& mapFile)
-{
-    AppConfig::init(appConfigFile, appDir);
-    const AppConfig& cfg = AppConfig::instance();
-#ifdef DESKTOP_APP
-    setupWindow(cfg.width(), cfg.height(), cfg.title());
-#endif
-    Context::init(cfg);
-    setupOpenGL();
-    setupGame();
-    generateMap(algorithm, algorithmConfigFile, mapFile);
 }
 
 void GenMapApp::generateMap(const std::string& algorithm,
                             const std::string& algorithmConfigFile,
-                            const std::string& mapFile)
+                            const std::string& mapFile,
+                            const std::string& appDir)
 {
+    std::string cfgFile = constructPath({appDir, algorithmConfigFile});
+
     LOG_INFO << "Generating map using algorithm=" << algorithm
-             << " algorithmConfigFile=" << algorithmConfigFile << LOG_END;
+             << " algorithmConfigFile=" << cfgFile << LOG_END;
 
     std::unique_ptr<GameMapGenerator> generator(
                     GameMapGeneratorFactory::create(algorithm,
                                                     Context::gameLib(),
-                                                    algorithmConfigFile));
+                                                    cfgFile));
 
     generator->generate(screen_.map(), viewportWidth(), viewportHeight());
     writeMap(mapFile);
@@ -89,13 +79,6 @@ void GenMapApp::writeMap(const std::string& mapFile)
     doc.Accept(writer);
 
     LOG_INFO << "Map written succcessfully" << LOG_END;
-}
-
-void GenMapApp::setupOpenGL()
-{
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void GenMapApp::setupGame()

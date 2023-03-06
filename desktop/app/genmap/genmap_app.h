@@ -30,19 +30,12 @@ public:
     void process() override;
 
 private:
-    void init(const std::string& appConfigFile,
-              const std::string& appDir,
-              const std::string& algorithm,
-              const std::string& algorithmConfigFile,
-              const std::string& mapFile);
-
     void generateMap(const std::string& algorithm,
                      const std::string& algorithmConfigFile,
-                     const std::string& mapFile);
+                     const std::string& mapFile,
+                     const std::string& appDir);
 
     void writeMap(const std::string& mapFile);
-
-    void setupOpenGL();
 
     void setupGame();
 

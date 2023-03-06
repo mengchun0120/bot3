@@ -6,5 +6,5 @@ fi
 ./build/app/rungame/rungame --appConfig config/bot_config.json \
                             --logFile rungame.log \
                             --logLevel DEBUG \
-                            --appDir . \
+                            --appDir .. \
                             --mapFile $1

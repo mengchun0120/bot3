@@ -13,8 +13,7 @@ add_executable(
 )
 
 if(UNIX)
-    target_link_libraries(testwidget botlib commonlib GL GLEW glfw3 dl m Xrandr
-                          Xi X11 Xxf86vm Xinerama Xcursor pthread)
+    target_link_libraries(testwidget botlib commonlib ${LIB})
 elseif(MINGW)
-    target_link_libraries(testwidget botlib commonlib opengl32 glfw3 glew32)
+    target_link_libraries(testwidget botlib commonlib ${LIB})
 endif()

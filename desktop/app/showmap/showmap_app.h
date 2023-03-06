@@ -20,12 +20,6 @@ public:
     void process() override;
 
 private:
-    void init(const std::string& configFile,
-              const std::string& appDir,
-              const std::string& mapFile);
-
-    void setupOpenGL();
-
     void setupGame(const std::string& mapFile);
 
     void setupDeltaSmoother();

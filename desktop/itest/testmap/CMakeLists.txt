@@ -9,8 +9,7 @@ include_directories(
 add_executable(testmap itest_testmap_app.cpp testmap_main.cpp)
 
 if(UNIX)
-    target_link_libraries(testmap botlib commonlib GL GLEW glfw3 dl m Xrandr
-                          Xi X11 Xxf86vm Xinerama Xcursor pthread)
+    target_link_libraries(testmap botlib commonlib ${LIB})
 elseif(MINGW)
-    target_link_libraries(testmap botlib commonlib opengl32 glfw3 glew32)
+    target_link_libraries(testmap botlib commonlib ${LIB})
 endif()

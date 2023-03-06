@@ -14,9 +14,12 @@ namespace bot {
 
 BotApp::BotApp(const std::string& configFile,
                const std::string& appDir)
-    : App()
 {
-    init(configFile, appDir);
+    AppConfig::init(configFile, appDir);
+    const AppConfig& cfg = AppConfig::instance();
+    init(cfg.width(), cfg.height(), cfg.title());
+    Context::init(cfg);
+    setupGame(cfg);
 }
 
 BotApp::~BotApp()
@@ -34,27 +37,6 @@ void BotApp::process()
     }
 
     screenManager_.postProcess();
-    postProcess();
-}
-
-void BotApp::init(const std::string& configFile,
-                  const std::string& appDir)
-{
-    AppConfig::init(configFile, appDir);
-    const AppConfig& cfg = AppConfig::instance();
-#ifdef DESKTOP_APP
-    setupWindow(cfg.width(), cfg.height(), cfg.title());
-#endif
-    Context::init(cfg);
-    setupOpenGL(cfg);
-    setupGame(cfg);
-}
-
-void BotApp::setupOpenGL(const AppConfig& cfg)
-{
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void BotApp::setupGame(const AppConfig& cfg)

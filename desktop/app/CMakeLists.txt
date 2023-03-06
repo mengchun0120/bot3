@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-project(bot CXX)
+include(${COMMONLIB_SRC_DIR}/commonlib.cmake)
+include(${BOTLIB_SRC_DIR}/botlib.cmake)
 
 add_subdirectory(bot)
 add_subdirectory(genmap)

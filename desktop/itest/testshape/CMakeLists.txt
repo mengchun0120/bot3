@@ -9,8 +9,7 @@ include_directories(
 add_executable(testshape itest_testshape_app.cpp testshape_main.cpp)
 
 if(UNIX)
-    target_link_libraries(testshape botlib commonlib GL GLEW glfw3 dl m Xrandr
-                          Xi X11 Xxf86vm Xinerama Xcursor pthread)
+    target_link_libraries(testshape botlib commonlib ${LIB})
 elseif(MINGW)
-    target_link_libraries(testshape botlib commonlib opengl32 glfw3 glew32)
+    target_link_libraries(testshape botlib commonlib ${LIB})
 endif()

@@ -7,7 +7,7 @@ mapFile=$1
 ./build/app/genmap/genmap --appConfig config/bot_config.json \
                           --logFile genmap.log \
                           --logLevel DEBUG \
-                          --appDir . \
+                          --appDir .. \
                           --algorithm island \
                           --algorithmConfig config/island_gen_map_config.json \
                           --mapFile $mapFile

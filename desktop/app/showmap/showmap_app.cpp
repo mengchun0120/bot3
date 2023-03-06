@@ -12,7 +12,11 @@ ShowMapApp::ShowMapApp(const std::string& configFile,
                        const std::string& appDir,
                        const std::string& mapFile)
 {
-    init(configFile, appDir, mapFile);
+    AppConfig::init(configFile, appDir);
+    const AppConfig& cfg = AppConfig::instance();
+    init(cfg.width(), cfg.height(), cfg.title());
+    Context::init(cfg);
+    setupGame(mapFile);
 }
 
 ShowMapApp::~ShowMapApp()
@@ -28,29 +32,6 @@ void ShowMapApp::process()
         screen_.update(deltaSmoother_.curTimeDelta());
         screen_.present();
     }
-
-    postProcess();
-}
-
-void ShowMapApp::init(const std::string& configFile,
-                      const std::string& appDir,
-                      const std::string& mapFile)
-{
-    AppConfig::init(configFile, appDir);
-    const AppConfig& cfg = AppConfig::instance();
-#ifdef DESKTOP_APP
-    setupWindow(cfg.width(), cfg.height(), cfg.title());
-#endif
-    Context::init(cfg);
-    setupOpenGL();
-    setupGame(mapFile);
-}
-
-void ShowMapApp::setupOpenGL()
-{
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void ShowMapApp::setupGame(const std::string& mapFile)

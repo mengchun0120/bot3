@@ -14,8 +14,16 @@ set(BOTLIB_BUILD_DIR ${BUILD_DIR}/botlib)
 
 add_definitions(${CPP_COMPILE_FLAG})
 
+if(UNIX)
+    list(APPEND LIB
+         GL GLEW glfw3 dl m Xrandr Xi X11 Xxf86vm Xinerama Xcursor pthread)
+elseif(MINGW)
+    list(APPEND LIB
+         opengl32 glfw3 glew32)
+endif()
+
 add_subdirectory(${COMMONLIB_SRC_DIR} ${COMMONLIB_BUILD_DIR})
 add_subdirectory(${BOTLIB_SRC_DIR} ${BOTLIB_BUILD_DIR})
-#add_subdirectory(app)
+add_subdirectory(app)
 add_subdirectory(unittest)
 add_subdirectory(itest)
