@@ -121,18 +121,9 @@ void App::setupOpenGL()
 
 #ifdef __ANDROID__
 
-static AppSavedState k_appSavedState{false};
-
-static void handleCmdProxy(struct android_app *app, int32_t cmd)
-{
-    App *a = reinterpret_cast<App*>(app->userData);
-    a->handleCommand(cmd);
-}
-
 App::App()
     : app_(nullptr)
     , hasFocus_(false)
-    , visible_(false)
     , display_(EGL_NO_DISPLAY)
     , surface_(EGL_NO_SURFACE)
     , context_(EGL_NO_CONTEXT)
@@ -161,7 +152,6 @@ App::~App()
 bool App::init(android_app *app)
 {
     app_ = app;
-    handleInitWindow();
 
     if (!initDisplay())
     {
@@ -191,12 +181,7 @@ bool App::init(android_app *app)
 
 void App::handleCommand(int32_t cmd)
 {
-    LOG_DEBUG << "Handling command " << cmd << LOG_END;
-
     switch (cmd) {
-        case APP_CMD_SAVE_STATE:
-            handleSaveState();
-            break;
         case APP_CMD_GAINED_FOCUS:
             handleGainedFocus();
             break;
@@ -205,15 +190,6 @@ void App::handleCommand(int32_t cmd)
             break;
         case APP_CMD_PAUSE:
             handlePause();
-            break;
-        case APP_CMD_RESUME:
-            handleResume();
-            break;
-        case APP_CMD_STOP:
-            handleStop();
-            break;
-        case APP_CMD_START:
-            handleStart();
             break;
         case APP_CMD_WINDOW_RESIZED:
             handleWindowResized();
@@ -229,8 +205,8 @@ void App::handleCommand(int32_t cmd)
             break;
     }
 
-    LOG_DEBUG << "Status: hasFocus=" << hasFocus_ << " visible=" << visible_
-              << " display=" << display_ << " surface=" << surface_ << " context=" << context_
+    LOG_DEBUG << "Status: hasFocus=" << hasFocus_ << " display=" << display_
+              << " surface=" << surface_ << " context=" << context_
               << " config=" << config_ << LOG_END;
 }
 
@@ -339,37 +315,11 @@ void App::setupOpenGL()
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-void App::handleInitWindow()
-{
-    LOG_DEBUG << "Handling APP_CMD_INIT_WINDOW" << LOG_END;
-
-    if (app_->window) {
-        if (app_->savedStateSize == sizeof(savedState_) && app_->savedState) {
-            savedState_ = *reinterpret_cast<AppSavedState*>(app_->savedState);
-            hasFocus_ = savedState_.hasFocus_;
-        } else {
-            hasFocus_ = k_appSavedState.hasFocus_;
-        }
-    }
-}
-
-void App::handleSaveState()
-{
-    LOG_DEBUG << "Handling APP_CMD_SAVE_STATE" << LOG_END;
-
-    savedState_.hasFocus_ = hasFocus_;
-    app_->savedState = malloc(sizeof(savedState_));
-    *reinterpret_cast<AppSavedState*>(app_->savedState) = savedState_;
-    app_->savedStateSize = sizeof(savedState_);
-}
-
 void App::handleGainedFocus()
 {
     LOG_DEBUG << "Handling APP_CMD_GAINED_FOCUS" << LOG_END;
 
     hasFocus_ = true;
-    savedState_.hasFocus_ = true;
-    k_appSavedState.hasFocus_ = true;
 }
 
 void App::handleLostFocus()
@@ -377,32 +327,11 @@ void App::handleLostFocus()
     LOG_DEBUG << "Handling APP_CMD_LOST_FOCUS" << LOG_END;
 
     hasFocus_ = false;
-    savedState_.hasFocus_ = false;
-    k_appSavedState.hasFocus_ = false;
 }
 
 void App::handlePause()
 {
     LOG_DEBUG << "Handling APP_CMD_PAUSE" << LOG_END;
-}
-
-void App::handleResume()
-{
-    LOG_DEBUG << "Handling APP_CMD_RESUME" << LOG_END;
-}
-
-void App::handleStart()
-{
-    LOG_DEBUG << "Handling APP_CMD_START" << LOG_END;
-
-    visible_ = false;
-}
-
-void App::handleStop()
-{
-    LOG_DEBUG << "Handling APP_CMD_STOP" << LOG_END;
-
-    visible_ = true;
 }
 
 void App::handleWindowResized()

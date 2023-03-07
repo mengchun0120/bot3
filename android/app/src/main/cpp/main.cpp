@@ -17,6 +17,7 @@ void handle_cmd(android_app *pApp, int32_t cmd) {
     switch (cmd) {
         case APP_CMD_INIT_WINDOW:
         {
+            LOG_INFO << "Init-window" << LOG_END;
             RobotApp* app = new RobotApp();
             pApp->userData = app;
             app->init(pApp);
@@ -31,8 +32,11 @@ void handle_cmd(android_app *pApp, int32_t cmd) {
         }
         default:
         {
-            RobotApp* app = reinterpret_cast<RobotApp*>(pApp->userData);
-            app->handleCommand(cmd);
+            if (pApp->userData)
+            {
+                RobotApp* app = reinterpret_cast<RobotApp*>(pApp->userData);
+                app->handleCommand(cmd);
+            }
             break;
         }
     }

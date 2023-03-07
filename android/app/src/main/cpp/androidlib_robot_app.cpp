@@ -21,7 +21,7 @@ RobotApp::~RobotApp()
 
 bool RobotApp::init(android_app* app)
 {
-    if (App::init(app))
+    if (!App::init(app))
     {
         LOG_ERROR << "Failed to initialize RobotApp" << LOG_END;
         return false;

@@ -60,21 +60,11 @@ protected:
 
     bool chooseConfig();
 
-    virtual void handleInitWindow();
-
-    virtual void handleSaveState();
-
     virtual void handleGainedFocus();
 
     virtual void handleLostFocus();
 
     virtual void handlePause();
-
-    virtual void handleResume();
-
-    virtual void handleStart();
-
-    virtual void handleStop();
 
     virtual void handleWindowResized();
 
@@ -92,8 +82,7 @@ private:
 
 #ifdef __ANDROID__
     android_app *app_;
-    AppSavedState savedState_;
-    bool hasFocus_, visible_;
+    bool hasFocus_;
     EGLDisplay display_;
     EGLSurface surface_;
     EGLContext context_;
@@ -144,7 +133,7 @@ bool App::shouldRun() const
 #ifdef __ANDROID__
 bool App::shouldRun() const
 {
-    return hasFocus_ && visible_ && running_;
+    return hasFocus_ && running_;
 }
 #endif
 
