@@ -31,6 +31,7 @@ add_library(
     SHARED
     main.cpp
     androidlib_android_out.cpp
+    androidlib_robot_app.cpp
     AndroidOut.cpp
     Renderer.cpp
     Shader.cpp

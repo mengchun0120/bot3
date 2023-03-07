@@ -1,12 +1,13 @@
 #include <jni.h>
 
-#include "AndroidOut.h"
-#include "Renderer.h"
-
 #include <game-activity/GameActivity.cpp>
 #include <game-text-input/gametextinput.cpp>
-#include <androidlib_android_out.h>
 #include <commonlib_log.h>
+#include <androidlib_android_out.h>
+#include <androidlib_robot_app.h>
+
+using namespace mcdane::commonlib;
+using namespace mcdane::androidlib;
 
 extern "C" {
 
@@ -15,55 +16,57 @@ extern "C" {
 void handle_cmd(android_app *pApp, int32_t cmd) {
     switch (cmd) {
         case APP_CMD_INIT_WINDOW:
+        {
+            RobotApp* app = new RobotApp();
+            pApp->userData = app;
+            app->init(pApp);
             break;
+        }
         case APP_CMD_TERM_WINDOW:
+        {
+            RobotApp* app = reinterpret_cast<RobotApp*>(pApp->userData);
+            pApp->userData = nullptr;
+            delete app;
             break;
+        }
         default:
+        {
+            RobotApp* app = reinterpret_cast<RobotApp*>(pApp->userData);
+            app->handleCommand(cmd);
             break;
+        }
     }
 }
 
-void initLog()
-{
-    mcdane::commonlib::Logger::initInstance(mcdane::androidlib::aout);
-}
-
-/*!
- * This the main entry point for a native activity
- */
 void android_main(struct android_app *pApp)
 {
-    initLog();
+    Logger::initInstance(mcdane::androidlib::aout);
 
     LOG_DEBUG << "Welcome to Robot" << LOG_END;
 
-    // register an event handler for Android events
     pApp->onAppCmd = handle_cmd;
 
-    // This sets up a typical game/event loop. It will run until the app is destroyed.
     int events;
     android_poll_source *pSource;
-    do {
-        // Process all pending events before running game logic.
+    while(true) {
         if (ALooper_pollAll(0, nullptr, &events, (void **) &pSource) >= 0) {
             if (pSource) {
                 pSource->process(pApp, pSource);
             }
         }
 
-        // Check if any user data is associated. This is assigned in handle_cmd
-        if (pApp->userData) {
-
-            // We know that our user data is a Renderer, so reinterpret cast it. If you change your
-            // user data remember to change it here
-            /*auto *pRenderer = reinterpret_cast<Renderer *>(pApp->userData);
-
-            // Process game input
-            pRenderer->handleInput();
-
-            // Render a frame
-            pRenderer->render();*/
+        if (pApp->destroyRequested)
+        {
+            return;
         }
-    } while (!pApp->destroyRequested);
+
+        if (pApp->userData) {
+            RobotApp *app = reinterpret_cast<RobotApp*>(pApp->userData);
+            if (app->shouldRun()) {
+                app->process();
+            }
+        }
+    }
 }
+
 }

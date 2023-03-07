@@ -1,4 +1,6 @@
 #ifdef __ANDROID__
+#include <memory>
+#include <algorithm>
 #include <game-activity/native_app_glue/android_native_app_glue.h>
 #endif
 #include <commonlib_log.h>
@@ -131,11 +133,9 @@ App::App()
     : app_(nullptr)
     , hasFocus_(false)
     , visible_(false)
-    , hasWindow_(false)
     , display_(EGL_NO_DISPLAY)
     , surface_(EGL_NO_SURFACE)
     , context_(EGL_NO_CONTEXT)
-    , config_(0)
     , viewportSize_{0.0f, 0.0f}
     , running_(false)
 {
@@ -161,7 +161,7 @@ App::~App()
 bool App::init(android_app *app)
 {
     app_ = app;
-    app_->onAppCmd = handleCmdProxy;
+    handleInitWindow();
 
     if (!initDisplay())
     {
@@ -184,30 +184,9 @@ bool App::init(android_app *app)
 
     setupOpenGL();
 
+    running_ = true;
+
     return true;
-}
-
-void App::run()
-{
-    while (true) {
-        int events;
-        struct android_poll_source *source;
-
-        while ((ALooper_pollAll(shouldRun() ? 0 : -1, NULL, &events,
-                                (void **) &source)) >= 0) {
-            if (source) {
-                source->process(app_, source);
-            }
-
-            if (app_->destroyRequested) {
-                return;
-            }
-        }
-
-        if (shouldRun()) {
-            process();
-        }
-    }
 }
 
 void App::handleCommand(int32_t cmd)
@@ -217,12 +196,6 @@ void App::handleCommand(int32_t cmd)
     switch (cmd) {
         case APP_CMD_SAVE_STATE:
             handleSaveState();
-            break;
-        case APP_CMD_INIT_WINDOW:
-            handleInitWindow();
-            break;
-        case APP_CMD_TERM_WINDOW:
-            handleTermWindow();
             break;
         case APP_CMD_GAINED_FOCUS:
             handleGainedFocus();
@@ -257,8 +230,7 @@ void App::handleCommand(int32_t cmd)
     }
 
     LOG_DEBUG << "Status: hasFocus=" << hasFocus_ << " visible=" << visible_
-              << " hasWindow=" << hasWindow_ << " display=" << display_
-              << " surface=" << surface_ << " context=" << context_
+              << " display=" << display_ << " surface=" << surface_ << " context=" << context_
               << " config=" << config_ << LOG_END;
 }
 
@@ -277,27 +249,14 @@ bool App::initDisplay()
 
 bool App::initSurface()
 {
-    EGLint numConfigs;
-    const EGLint attribs[] = {
-        EGL_RENDERABLE_TYPE,
-        EGL_OPENGL_ES3_BIT,  // request OpenGL ES 3.0
-        EGL_SURFACE_TYPE,
-        EGL_WINDOW_BIT,
-        EGL_BLUE_SIZE,
-        8,
-        EGL_GREEN_SIZE,
-        8,
-        EGL_RED_SIZE,
-        8,
-        EGL_DEPTH_SIZE,
-        16,
-        EGL_NONE
-    };
-
-    eglChooseConfig(display_, attribs, &config_, 1, &numConfigs);
+    if (!chooseConfig())
+    {
+        return false;
+    }
 
     surface_ = eglCreateWindowSurface(display_, config_, app_->window, nullptr);
-    if (surface_ == EGL_NO_SURFACE) {
+    if (surface_ == EGL_NO_SURFACE)
+    {
         LOG_ERROR << "Failed to create EGL surface, EGL error " << eglGetError() << LOG_END;
         return false;
     }
@@ -313,7 +272,7 @@ bool App::initContext()
         EGL_CONTEXT_CLIENT_VERSION,
         3,
         EGL_NONE
-    };  // OpenGL 3.0
+    };
 
     context_ = eglCreateContext(display_, config_, nullptr,attribs);
     if (context_ == EGL_NO_CONTEXT) {
@@ -322,6 +281,52 @@ bool App::initContext()
     }
 
     LOG_INFO << "Initialized context successfully" << LOG_END;
+
+    return true;
+}
+
+bool App::chooseConfig()
+{
+    constexpr EGLint attribs[] = {
+            EGL_RENDERABLE_TYPE, EGL_OPENGL_ES3_BIT,
+            EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+            EGL_BLUE_SIZE, 8,
+            EGL_GREEN_SIZE, 8,
+            EGL_RED_SIZE, 8,
+            EGL_DEPTH_SIZE, 24,
+            EGL_NONE
+    };
+
+    EGLint numConfigs;
+    eglChooseConfig(display_, attribs, nullptr, 0, &numConfigs);
+
+    // get the list of configurations
+    std::unique_ptr<EGLConfig[]> supportedConfigs(new EGLConfig[numConfigs]);
+    eglChooseConfig(display_, attribs, supportedConfigs.get(), numConfigs, &numConfigs);
+
+    EGLConfig *cfg, *last = supportedConfigs.get() + numConfigs;
+    for (cfg = supportedConfigs.get(); cfg != last; ++cfg)
+    {
+        EGLint red, green, blue, depth;
+        if (eglGetConfigAttrib(display_, *cfg, EGL_RED_SIZE, &red)
+            && eglGetConfigAttrib(display_, *cfg, EGL_GREEN_SIZE, &green)
+            && eglGetConfigAttrib(display_, *cfg, EGL_BLUE_SIZE, &blue)
+            && eglGetConfigAttrib(display_, *cfg, EGL_DEPTH_SIZE, &depth))
+        {
+            if (red == 8 && green == 8 && blue == 8 && depth == 24)
+            {
+                break;
+            }
+        }
+    }
+
+    if (cfg == last)
+    {
+        LOG_ERROR << "Failed to find config" << LOG_END;
+        return false;
+    }
+
+    config_ = *cfg;
 
     return true;
 }
@@ -338,8 +343,7 @@ void App::handleInitWindow()
 {
     LOG_DEBUG << "Handling APP_CMD_INIT_WINDOW" << LOG_END;
 
-    if (app_->window != NULL) {
-        hasWindow_ = true;
+    if (app_->window) {
         if (app_->savedStateSize == sizeof(savedState_) && app_->savedState) {
             savedState_ = *reinterpret_cast<AppSavedState*>(app_->savedState);
             hasFocus_ = savedState_.hasFocus_;
@@ -357,13 +361,6 @@ void App::handleSaveState()
     app_->savedState = malloc(sizeof(savedState_));
     *reinterpret_cast<AppSavedState*>(app_->savedState) = savedState_;
     app_->savedStateSize = sizeof(savedState_);
-}
-
-void App::handleTermWindow()
-{
-    LOG_DEBUG << "Handling APP_CMD_TERM_WINDOW" << LOG_END;
-
-    hasWindow_ = false;
 }
 
 void App::handleGainedFocus()

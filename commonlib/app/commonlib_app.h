@@ -26,6 +26,8 @@ public:
               const std::string& title);
 
     inline GLFWwindow* window();
+
+    void run();
 #endif
 
 #ifdef __ANDROID__
@@ -35,8 +37,6 @@ public:
 #endif
 
     virtual void process();
-
-    void run();
 
     inline float viewportWidth() const;
 
@@ -58,11 +58,11 @@ protected:
 
     bool initContext();
 
+    bool chooseConfig();
+
     virtual void handleInitWindow();
 
     virtual void handleSaveState();
-
-    virtual void handleTermWindow();
 
     virtual void handleGainedFocus();
 
@@ -93,7 +93,7 @@ private:
 #ifdef __ANDROID__
     android_app *app_;
     AppSavedState savedState_;
-    bool hasFocus_, visible_, hasWindow_;
+    bool hasFocus_, visible_;
     EGLDisplay display_;
     EGLSurface surface_;
     EGLContext context_;
@@ -144,7 +144,7 @@ bool App::shouldRun() const
 #ifdef __ANDROID__
 bool App::shouldRun() const
 {
-    return hasFocus_ && visible_ && hasWindow_;
+    return hasFocus_ && visible_ && running_;
 }
 #endif
 
