@@ -19,7 +19,9 @@ namespace mcdane {
 namespace commonlib {
 
 #ifdef __ANDROID__
-std::string readTextFromAssets(AAssetManager *assetManager, const std::string &fileName);
+bool readTextFromAssets(std::string &str,
+                        AAssetManager *assetManager,
+                        const std::string &fileName);
 #endif
 
 std::string getFileSeparator();
@@ -30,6 +32,8 @@ std::string constructPath(std::initializer_list<std::string> pathParts);
 
 std::string constructPath(const std::string& dir,
                           const std::vector<std::string>& path);
+
+std::string constructPath(const std::vector<std::string>& path);
 
 template <typename T>
 void readList(std::vector<T>& v,

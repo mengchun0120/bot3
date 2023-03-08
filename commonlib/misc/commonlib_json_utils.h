@@ -5,10 +5,21 @@
 #include <vector>
 #include <array>
 #include <cstdint>
+
+#ifdef __ANDROID__
+#include <android/asset_manager.h>
+#endif
+
 #include <rapidjson/document.h>
 
 namespace mcdane {
 namespace commonlib {
+
+#ifdef __ANDROID__
+bool readJsonFromAssets(rapidjson::Document &doc,
+                        AAssetManager *assetManager,
+                        const std::string &fileName);
+#endif
 
 void readJson(rapidjson::Document& doc,
               const std::string& fileName);

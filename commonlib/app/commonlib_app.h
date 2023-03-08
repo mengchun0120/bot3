@@ -4,18 +4,17 @@
 #include <string>
 #include <commonlib_vector.h>
 #include <commonlib_opengl.h>
-
-struct android_app;
+#ifdef __ANDROID__
+#include <game-activity/native_app_glue/android_native_app_glue.h>
+#endif
 
 namespace mcdane {
 namespace commonlib {
 
-struct AppSavedState {
-    bool hasFocus_;
-};
-
 class App {
 public:
+    inline static App *instance();
+
     App();
 
     virtual ~App();
@@ -34,6 +33,10 @@ public:
     bool init(android_app *app);
 
     void handleCommand(int32_t cmd);
+
+    inline android_app * app();
+
+    inline AAssetManager * assetManager();
 #endif
 
     virtual void process();
@@ -76,6 +79,8 @@ protected:
     void setupOpenGL();
 
 protected:
+    static App *k_instance;
+
 #ifdef DESKTOP_APP
     GLFWwindow *window_;
 #endif
@@ -92,6 +97,11 @@ protected:
     commonlib::Point2 viewportSize_;
     bool running_;
 };
+
+App * App::instance()
+{
+    return k_instance;
+}
 
 float App::viewportWidth() const
 {
@@ -131,6 +141,16 @@ bool App::shouldRun() const
 #endif
 
 #ifdef __ANDROID__
+android_app * App::app()
+{
+    return app_;
+}
+
+AAssetManager * App::assetManager()
+{
+    return app_->activity->assetManager;
+}
+
 bool App::shouldRun() const
 {
     return hasFocus_ && running_;

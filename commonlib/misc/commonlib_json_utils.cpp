@@ -2,10 +2,28 @@
 #include <rapidjson/filereadstream.h>
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
+#include <commonlib_file_utils.h>
 #include <commonlib_json_utils.h>
 
 namespace mcdane {
 namespace commonlib {
+
+#ifdef __ANDROID__
+bool readJsonFromAssets(rapidjson::Document &doc,
+                        AAssetManager *assetManager,
+                        const std::string &fileName)
+{
+    std::string jsonStr;
+    if (!readTextFromAssets(jsonStr, assetManager, fileName))
+    {
+        return false;
+    }
+
+    doc.Parse(jsonStr.c_str());
+
+    return true;
+}
+#endif
 
 void readJson(rapidjson::Document& doc,
               const std::string& fileName)
@@ -148,4 +166,3 @@ rapidjson::Value jsonVal(bool b,
 
 } // end of namespace commonlib
 } // end of namespace mcdane
-

@@ -6,9 +6,12 @@
 #endif
 #include <commonlib_log.h>
 #include <commonlib_file_utils.h>
+#include <commonlib_json_utils.h>
+#include <botlib_app_config.h>
 #include <androidlib_robot_app.h>
 
 using namespace mcdane::commonlib;
+using namespace mcdane::botlib;
 
 namespace mcdane {
 namespace androidlib {
@@ -30,9 +33,11 @@ bool RobotApp::init(android_app* app)
         return false;
     }
 
-    std::string str = readTextFromAssets(app_->activity->assetManager, "res/libs/texture_lib.json");
-    LOG_INFO << "str_len=" << str.size() << LOG_END;
-    LOG_INFO << "str=" << str << LOG_END;
+    AppConfig::init("config/bot_config.json", assetManager());
+
+    const AppConfig &cfg = AppConfig::instance();
+
+    LOG_INFO << cfg.aiRobotTemplateLibFile() << LOG_END;
 
     return true;
 }

@@ -8,9 +8,9 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void marshalFileNames(std::vector<std::string>& newFileNames,
-                      const std::vector<std::string>& oldFileNames,
-                      const std::string& folder)
+void marshalFileNames(std::vector<std::string> &newFileNames,
+                      const std::vector<std::string> &oldFileNames,
+                      const std::string &folder)
 {
     newFileNames.resize(oldFileNames.size());
     for (std::size_t i = 0; i < newFileNames.size(); ++i)
@@ -21,8 +21,9 @@ void marshalFileNames(std::vector<std::string>& newFileNames,
 
 std::shared_ptr<AppConfig> AppConfig::k_instance;
 
-void AppConfig::init(const std::string& fileName,
-                     const std::string& appDir)
+#ifdef DESKTOP_APP
+void AppConfig::init(const std::string &fileName,
+                     const std::string &appDir)
 {
     if (k_instance)
     {
@@ -30,15 +31,41 @@ void AppConfig::init(const std::string& fileName,
         return;
     }
 
-    k_instance.reset(new AppConfig(fileName, appDir));
+    rapidjson::Document doc;
+    std::string docPath = appDir.empty() ?
+                                fileName :
+                                constructPath({appDir, fileName});
+
+    readJson(doc, docPath);
+
+    k_instance.reset(new AppConfig(doc, appDir));
 }
 
-AppConfig::AppConfig(const std::string& fileName,
-                     const std::string& appDir)
-{
-    rapidjson::Document doc;
-    readJson(doc, constructPath({appDir, fileName}));
+#endif
 
+#ifdef __ANDROID__
+void AppConfig::init(const std::string &fileName,
+                     AAssetManager *assetManager)
+{
+    if (k_instance)
+    {
+        LOG_WARN << "AppConfig instance already initialized" << LOG_END;
+        return;
+    }
+
+    rapidjson::Document doc;
+    if (!readJsonFromAssets(doc, assetManager, fileName))
+    {
+        THROW_EXCEPT(MyException, "Failed to read config from " + fileName);
+    }
+
+    k_instance.reset(new AppConfig(doc));
+}
+#endif
+
+AppConfig::AppConfig(const rapidjson::Document &doc,
+                     const std::string &appDir)
+{
     loadBasics(doc);
     loadDirectories(doc, appDir);
     loadShaderFiles(doc);
@@ -49,7 +76,7 @@ AppConfig::AppConfig(const std::string& fileName,
     LOG_INFO << "AppConfig initialized successfully" << LOG_END;
 }
 
-void AppConfig::loadBasics(const rapidjson::Document& doc)
+void AppConfig::loadBasics(const rapidjson::Document &doc)
 {
     std::vector<JsonParamPtr> params{
         jsonParam(width_, {"window", "width"}, true, gt(0u)),
@@ -61,9 +88,8 @@ void AppConfig::loadBasics(const rapidjson::Document& doc)
     parse(params, doc);
 }
 
-
-void AppConfig::loadDirectories(const rapidjson::Document& doc,
-                                const std::string& appDir)
+void AppConfig::loadDirectories(const rapidjson::Document &doc,
+                                const std::string &appDir)
 {
     std::vector<std::string> fontDir, picDir, glslDir, configDir, libDir, mapDir;
     std::vector<JsonParamPtr> params{
@@ -77,15 +103,27 @@ void AppConfig::loadDirectories(const rapidjson::Document& doc,
 
     parse(params, doc);
 
-    fontDir_ = constructPath(appDir, fontDir);
-    picDir_ = constructPath(appDir, picDir);
-    glslDir_ = constructPath(appDir, glslDir);
-    configDir_ = constructPath(appDir, configDir);
-    libDir_ = constructPath(appDir, libDir);
-    mapDir_ = constructPath(appDir, mapDir);
+    if (!appDir.empty())
+    {
+        fontDir_ = constructPath(appDir, fontDir);
+        picDir_ = constructPath(appDir, picDir);
+        glslDir_ = constructPath(appDir, glslDir);
+        configDir_ = constructPath(appDir, configDir);
+        libDir_ = constructPath(appDir, libDir);
+        mapDir_ = constructPath(appDir, mapDir);
+    }
+    else
+    {
+        fontDir_ = constructPath(fontDir);
+        picDir_ = constructPath(picDir);
+        glslDir_ = constructPath(glslDir);
+        configDir_ = constructPath(configDir);
+        libDir_ = constructPath(libDir);
+        mapDir_ = constructPath(mapDir);
+    }
 }
 
-void AppConfig::loadShaderFiles(const rapidjson::Document& doc)
+void AppConfig::loadShaderFiles(const rapidjson::Document &doc)
 {
     std::vector<std::string> simpleVertexShaderFiles1;
     std::vector<std::string> simpleFragShaderFiles1;
@@ -123,7 +161,7 @@ void AppConfig::loadShaderFiles(const rapidjson::Document& doc)
                      glslDir_);
 }
 
-void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
+void AppConfig::loadConfigFiles(const rapidjson::Document &doc)
 {
     std::vector<JsonParamPtr> params{
         jsonParam(buttonConfigFile_, {"configs", "buttonConfigFile"},
@@ -156,7 +194,7 @@ void AppConfig::loadConfigFiles(const rapidjson::Document& doc)
     hpIndicatorConfigFile_ = constructPath({configDir_, hpIndicatorConfigFile_});
 }
 
-void AppConfig::loadLibFiles(const rapidjson::Document& doc)
+void AppConfig::loadLibFiles(const rapidjson::Document &doc)
 {
     std::vector<JsonParamPtr> params{
         jsonParam(textureLibFile_, {"libraries", "textureLibFile"},
@@ -227,7 +265,7 @@ void AppConfig::loadLibFiles(const rapidjson::Document& doc)
     playerTemplateFile_ = constructPath({libDir_, playerTemplateFile_});
 }
 
-void AppConfig::loadGameSettings(const rapidjson::Document& doc)
+void AppConfig::loadGameSettings(const rapidjson::Document &doc)
 {
     std::vector<JsonParamPtr> params{
         jsonParam(mapPoolSizeFactor_, {"game", "mapPoolSizeFactor"},
@@ -241,4 +279,3 @@ void AppConfig::loadGameSettings(const rapidjson::Document& doc)
 
 } // end of namespace botlib
 } // end of namespace mcdane
-

@@ -1,14 +1,13 @@
-#ifdef __ANDROID__
 #include <memory>
 #include <algorithm>
-#include <game-activity/native_app_glue/android_native_app_glue.h>
-#endif
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_app.h>
 
 namespace mcdane {
 namespace commonlib {
+
+App * App::k_instance = nullptr;
 
 #ifdef DESKTOP_APP
 
@@ -67,6 +66,12 @@ App::App()
     : window_(nullptr)
     , running_(false)
 {
+    if (k_instance)
+    {
+        THROW_EXCEPT(MyException, "Only one instance of App is allowed");
+    }
+
+    k_instance = this;
 }
 
 App::~App()
@@ -75,6 +80,8 @@ App::~App()
     {
         glfwTerminate();
     }
+
+    k_instance = nullptr;
 }
 
 
@@ -130,6 +137,12 @@ App::App()
     , viewportSize_{0.0f, 0.0f}
     , running_(false)
 {
+    if (k_instance)
+    {
+        THROW_EXCEPT(MyException, "Only one instance of App is allowed");
+    }
+
+    k_instance = this;
 }
 
 App::~App()
@@ -147,6 +160,8 @@ App::~App()
         eglTerminate(display_);
         display_ = EGL_NO_DISPLAY;
     }
+
+    k_instance = nullptr;
 }
 
 bool App::init(android_app *app)

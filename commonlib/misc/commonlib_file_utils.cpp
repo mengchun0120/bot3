@@ -8,14 +8,24 @@ namespace mcdane {
 namespace commonlib {
 
 #ifdef __ANDROID__
-std::string readTextFromAssets(AAssetManager *assetManager, const std::string &fileName)
+bool readTextFromAssets(std::string &str,
+                        AAssetManager *assetManager,
+                        const std::string &fileName)
 {
     AAsset* asset = AAssetManager_open(assetManager, fileName.c_str(), AASSET_MODE_BUFFER);
+    if (!asset)
+    {
+        LOG_ERROR << "Failed to open assets " << fileName << LOG_END;
+        return false;
+    }
+
     off_t len = AAsset_getLength(asset);
-    LOG_INFO << "len=" << len << LOG_END;
     std::unique_ptr<char> buffer(new char[len]);
+
     AAsset_read(asset, buffer.get(), len);
-    return std::string(buffer.get(), len);
+    str.assign(buffer.get(), len);
+
+    return true;
 }
 #endif
 
@@ -75,13 +85,32 @@ std::string constructPath(const std::string& dir,
     oss << dir;
     for (auto it = path.cbegin(); it != path.cend(); ++it)
     {
+        if (!it->empty())
+        {
+            oss << separator << *it;
+        }
+    }
+
+    return oss.str();
+}
+
+std::string constructPath(const std::vector<std::string>& path)
+{
+    if (path.size() == 0) {
+        return "";
+    }
+
+    std::ostringstream oss;
+    std::string separator = getFileSeparator();
+    auto it = path.begin();
+
+    oss << *it;
+    for (++it; it != path.end(); ++it) {
         oss << separator << *it;
     }
 
     return oss.str();
 }
 
-
 } // end of namespace commonlib
 } // end of namespace mcdane
-
