@@ -6,6 +6,7 @@ list(APPEND
     test_commonlib_argument_parser.cpp
     test_commonlib_collide.cpp
     test_commonlib_exception.cpp
+    test_commonlib_file_utils.cpp
     test_commonlib_fixed_queue.cpp
     test_commonlib_json_param.cpp
     test_commonlib_linked_item.cpp

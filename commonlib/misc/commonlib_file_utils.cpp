@@ -12,7 +12,9 @@ bool readTextFromAssets(std::string &str,
                         AAssetManager *assetManager,
                         const std::string &fileName)
 {
-    AAsset* asset = AAssetManager_open(assetManager, fileName.c_str(), AASSET_MODE_BUFFER);
+    AAsset* asset = AAssetManager_open(assetManager,
+                                       fileName.c_str(),
+                                       AASSET_MODE_BUFFER);
     if (!asset)
     {
         LOG_ERROR << "Failed to open assets " << fileName << LOG_END;
@@ -60,41 +62,19 @@ std::string readTextFile(const std::string &fileName)
 
 std::string constructPath(std::initializer_list<std::string> pathParts)
 {
-    if (pathParts.size() == 0) {
-        return "";
-    }
-
-    std::ostringstream oss;
-    std::string separator = getFileSeparator();
-    auto it = pathParts.begin();
-
-    oss << *it;
-    for (++it; it != pathParts.end(); ++it) {
-        oss << separator << *it;
-    }
-
-    return oss.str();
+    return constructPath(std::vector<std::string>(pathParts));
 }
 
-std::string constructPath(const std::string& dir,
-                          const std::vector<std::string>& path)
+std::string constructPath(const std::string &dir,
+                          const std::vector<std::string> &path)
 {
-    std::ostringstream oss;
-    std::string separator = getFileSeparator();
-
-    oss << dir;
-    for (auto it = path.cbegin(); it != path.cend(); ++it)
-    {
-        if (!it->empty())
-        {
-            oss << separator << *it;
-        }
-    }
-
-    return oss.str();
+    std::vector<std::string> tmpPath;
+    tmpPath.push_back(dir);
+    tmpPath.insert(tmpPath.end(), path.begin(), path.end());
+    return constructPath(tmpPath);
 }
 
-std::string constructPath(const std::vector<std::string>& path)
+std::string constructPath(const std::vector<std::string> &path)
 {
     if (path.size() == 0) {
         return "";
@@ -102,11 +82,21 @@ std::string constructPath(const std::vector<std::string>& path)
 
     std::ostringstream oss;
     std::string separator = getFileSeparator();
-    auto it = path.begin();
+    bool empty = true;
 
-    oss << *it;
-    for (++it; it != path.end(); ++it) {
-        oss << separator << *it;
+    for (auto it = path.begin(); it != path.end(); ++it) {
+        if (it->empty())
+        {
+            continue;
+        }
+
+        if (!empty)
+        {
+            oss << separator;
+        }
+
+        oss << *it;
+        empty = false;
     }
 
     return oss.str();

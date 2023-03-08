@@ -30,14 +30,14 @@ std::string readTextFile(const std::string &fileName);
 
 std::string constructPath(std::initializer_list<std::string> pathParts);
 
-std::string constructPath(const std::string& dir,
-                          const std::vector<std::string>& path);
+std::string constructPath(const std::string &dir,
+                          const std::vector<std::string> &path);
 
-std::string constructPath(const std::vector<std::string>& path);
+std::string constructPath(const std::vector<std::string> &path);
 
 template <typename T>
-void readList(std::vector<T>& v,
-              const std::string& fileName)
+void readList(std::vector<T> &v,
+              const std::string &fileName)
 {
     std::ifstream in(fileName);
     std::list<T> tmp;

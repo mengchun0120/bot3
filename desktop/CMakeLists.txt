@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22.1)
 
 project(bot CXX)
 
-set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG -std=c++11")
+set(CPP_COMPILE_FLAG "-g -Wall -DENABLE_LOG -DDESKTOP_APP -std=c++11")
 
 set(BUILD_DIR ${CMAKE_SOURCE_DIR}/build)
 

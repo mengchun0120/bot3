@@ -7,6 +7,7 @@ namespace commonlib {
 void testArgument();
 void testArgumentParser();
 void testCollide();
+void testFileUtils();
 void testFixedQueue();
 void testJsonParam();
 void testLinkedList();

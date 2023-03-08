@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
     testArgument();
     testArgumentParser();
     testMyException();
+    testFileUtils();
     testFixedQueue();
     testJsonParam();
     testLog();
