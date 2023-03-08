@@ -1,9 +1,23 @@
 #include <sstream>
+#include <memory>
+#include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_file_utils.h>
 
 namespace mcdane {
 namespace commonlib {
+
+#ifdef __ANDROID__
+std::string readTextFromAssets(AAssetManager *assetManager, const std::string &fileName)
+{
+    AAsset* asset = AAssetManager_open(assetManager, fileName.c_str(), AASSET_MODE_BUFFER);
+    off_t len = AAsset_getLength(asset);
+    LOG_INFO << "len=" << len << LOG_END;
+    std::unique_ptr<char> buffer(new char[len]);
+    AAsset_read(asset, buffer.get(), len);
+    return std::string(buffer.get(), len);
+}
+#endif
 
 std::string getFileSeparator()
 {

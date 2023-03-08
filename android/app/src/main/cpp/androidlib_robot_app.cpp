@@ -1,8 +1,11 @@
 //
 // Created by mengc on 3/6/2023.
 //
-
+#ifdef __ANDROID__
+#include <game-activity/native_app_glue/android_native_app_glue.h>
+#endif
 #include <commonlib_log.h>
+#include <commonlib_file_utils.h>
 #include <androidlib_robot_app.h>
 
 using namespace mcdane::commonlib;
@@ -27,12 +30,15 @@ bool RobotApp::init(android_app* app)
         return false;
     }
 
+    std::string str = readTextFromAssets(app_->activity->assetManager, "res/libs/texture_lib.json");
+    LOG_INFO << "str_len=" << str.size() << LOG_END;
+    LOG_INFO << "str=" << str << LOG_END;
+
     return true;
 }
 
 void RobotApp::process()
 {
-    LOG_INFO << "process" << LOG_END;
 }
 
 } // end of namespace androidlib

@@ -7,11 +7,20 @@
 #include <list>
 #include <fstream>
 #include <algorithm>
+
+#ifdef __ANDROID__
+#include <android/asset_manager.h>
+#endif
+
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
 
 namespace mcdane {
 namespace commonlib {
+
+#ifdef __ANDROID__
+std::string readTextFromAssets(AAssetManager *assetManager, const std::string &fileName);
+#endif
 
 std::string getFileSeparator();
 

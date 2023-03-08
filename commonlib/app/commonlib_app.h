@@ -75,7 +75,7 @@ protected:
 
     void setupOpenGL();
 
-private:
+protected:
 #ifdef DESKTOP_APP
     GLFWwindow *window_;
 #endif
