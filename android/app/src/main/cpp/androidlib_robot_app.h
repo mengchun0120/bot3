@@ -17,6 +17,7 @@ public:
     void process() override;
 
 private:
+    void updateViewport();
 };
 
 } // end of namespace androidlib

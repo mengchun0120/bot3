@@ -33,17 +33,36 @@ bool RobotApp::init(android_app* app)
         return false;
     }
 
+    updateViewport();
+
     AppConfig::init("config/bot_config.json", assetManager());
-
-    const AppConfig &cfg = AppConfig::instance();
-
-    LOG_INFO << cfg.aiRobotTemplateLibFile() << LOG_END;
 
     return true;
 }
 
 void RobotApp::process()
 {
+    updateViewport();
+}
+
+void RobotApp::updateViewport()
+{
+    EGLint width;
+    eglQuerySurface(display_, surface_, EGL_WIDTH, &width);
+
+    EGLint height;
+    eglQuerySurface(display_, surface_, EGL_HEIGHT, &height);
+
+    float width1 = static_cast<float>(width);
+    float height1 = static_cast<float>(height);
+
+    if (viewportWidth() != width1 || viewportHeight() != height1)
+    {
+        viewportSize_.init({width1, height1});
+        glViewport(0, 0, width, height);
+
+        LOG_INFO << "Viewport updated " << viewportSize_ << LOG_END;
+    }
 }
 
 } // end of namespace androidlib

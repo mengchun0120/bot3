@@ -64,6 +64,7 @@ void initGLEW()
 
 App::App()
     : window_(nullptr)
+    , viewportSize_{0.0f, 0.0f}
     , running_(false)
 {
     if (k_instance)
