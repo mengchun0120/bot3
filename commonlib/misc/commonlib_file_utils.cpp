@@ -27,6 +27,8 @@ bool readTextFromAssets(std::string &str,
     AAsset_read(asset, buffer.get(), len);
     str.assign(buffer.get(), len);
 
+    AAsset_close(asset);
+
     return true;
 }
 #endif
