@@ -17,20 +17,9 @@ class AppConfig {
 public:
     inline static const AppConfig &instance();
 
-#ifdef DESKTOP_APP
-    static void init(const std::string &fileName,
-                     const std::string &appDir);
+    static void init(const std::string &path,
+                     const std::string &appDir="");
 
-    AppConfig(const std::string &fileName,
-              const std::string &appDir);
-#endif
-
-#ifdef __ANDROID__
-    static void init(const std::string &fileName,
-                     AAssetManager *assetManager);
-
-
-#endif
     AppConfig(const rapidjson::Document &doc,
               const std::string &appDir="");
 
@@ -182,7 +171,7 @@ private:
     unsigned int timeDeltaHistoryLen_;
 };
 
-const AppConfig &AppConfig::instance()
+const AppConfig & AppConfig::instance()
 {
     return *k_instance;
 }
@@ -197,7 +186,7 @@ unsigned int AppConfig::height() const
     return height_;
 }
 
-const std::string &AppConfig::title() const
+const std::string & AppConfig::title() const
 {
     return title_;
 }
@@ -207,47 +196,47 @@ unsigned int AppConfig::inputQueueCapacity() const
     return inputQueueCapacity_;
 }
 
-const std::string &AppConfig::fontDir() const
+const std::string & AppConfig::fontDir() const
 {
     return fontDir_;
 }
 
-const std::string &AppConfig::picDir() const
+const std::string & AppConfig::picDir() const
 {
     return picDir_;
 }
 
-const std::string &AppConfig::glslDir() const
+const std::string & AppConfig::glslDir() const
 {
     return glslDir_;
 }
 
-const std::string &AppConfig::configDir() const
+const std::string & AppConfig::configDir() const
 {
     return configDir_;
 }
 
-const std::string &AppConfig::libDir() const
+const std::string & AppConfig::libDir() const
 {
     return libDir_;
 }
 
-const std::string &AppConfig::mapDir() const
+const std::string & AppConfig::mapDir() const
 {
     return mapDir_;
 }
 
-const std::vector<std::string> &AppConfig::simpleVertexShaderFiles() const
+const std::vector<std::string> & AppConfig::simpleVertexShaderFiles() const
 {
     return simpleVertexShaderFiles_;
 }
 
-const std::vector<std::string> &AppConfig::simpleFragShaderFiles() const
+const std::vector<std::string> & AppConfig::simpleFragShaderFiles() const
 {
     return simpleFragShaderFiles_;
 }
 
-const std::vector<std::string> &AppConfig::particleVertexShaderFiles() const
+const std::vector<std::string> & AppConfig::particleVertexShaderFiles() const
 {
     return particleVertexShaderFiles_;
 }
@@ -257,132 +246,132 @@ const std::vector<std::string> &AppConfig::particleFragShaderFiles() const
     return particleFragShaderFiles_;
 }
 
-const std::string &AppConfig::buttonConfigFile() const
+const std::string & AppConfig::buttonConfigFile() const
 {
     return buttonConfigFile_;
 }
 
-const std::string &AppConfig::labelConfigFile() const
+const std::string & AppConfig::labelConfigFile() const
 {
     return labelConfigFile_;
 }
 
-const std::string &AppConfig::messageBoxConfigFile() const
+const std::string & AppConfig::messageBoxConfigFile() const
 {
     return messageBoxConfigFile_;
 }
 
-const std::string &AppConfig::startScreenConfigFile() const
+const std::string & AppConfig::startScreenConfigFile() const
 {
     return startScreenConfigFile_;
 }
 
-const std::string &AppConfig::gameScreenConfigFile() const
+const std::string & AppConfig::gameScreenConfigFile() const
 {
     return gameScreenConfigFile_;
 }
 
-const std::string &AppConfig::showMapScreenConfigFile() const
+const std::string & AppConfig::showMapScreenConfigFile() const
 {
     return showMapScreenConfigFile_;
 }
 
-const std::string &AppConfig::gameConfigFile() const
+const std::string & AppConfig::gameConfigFile() const
 {
     return gameConfigFile_;
 }
 
-const std::string &AppConfig::hpIndicatorConfigFile() const
+const std::string & AppConfig::hpIndicatorConfigFile() const
 {
     return hpIndicatorConfigFile_;
 }
 
-const std::string &AppConfig::textureLibFile() const
+const std::string & AppConfig::textureLibFile() const
 {
     return textureLibFile_;
 }
 
-const std::string &AppConfig::vertexArrayLibFile() const
+const std::string & AppConfig::vertexArrayLibFile() const
 {
     return vertexArrayLibFile_;
 }
 
-const std::string &AppConfig::vertexArrayDataDir() const
+const std::string & AppConfig::vertexArrayDataDir() const
 {
     return vertexArrayDataDir_;
 }
 
-const std::string &AppConfig::rectLibFile() const
+const std::string & AppConfig::rectLibFile() const
 {
     return rectLibFile_;
 }
 
-const std::string &AppConfig::componentTemplateLibFile() const
+const std::string & AppConfig::componentTemplateLibFile() const
 {
     return componentTemplateLibFile_;
 }
 
-const std::string &AppConfig::tileTemplateLibFile() const
+const std::string & AppConfig::tileTemplateLibFile() const
 {
     return tileTemplateLibFile_;
 }
 
-const std::string &AppConfig::missileTemplateLibFile() const
+const std::string & AppConfig::missileTemplateLibFile() const
 {
     return missileTemplateLibFile_;
 }
 
-const std::string &AppConfig::skillTemplateLibFile() const
+const std::string & AppConfig::skillTemplateLibFile() const
 {
     return skillTemplateLibFile_;
 }
 
-const std::string &AppConfig::skillDataDir() const
+const std::string & AppConfig::skillDataDir() const
 {
     return skillDataDir_;
 }
 
-const std::string &AppConfig::goodieTemplateLibFile() const
+const std::string & AppConfig::goodieTemplateLibFile() const
 {
     return goodieTemplateLibFile_;
 }
 
-const std::string &AppConfig::aiRobotTemplateLibFile() const
+const std::string & AppConfig::aiRobotTemplateLibFile() const
 {
     return aiRobotTemplateLibFile_;
 }
 
-const std::string &AppConfig::particleEffectTemplateLibFile() const
+const std::string & AppConfig::particleEffectTemplateLibFile() const
 {
     return particleEffectTemplateLibFile_;
 }
 
-const std::string &AppConfig::particleEffectDataDir() const
+const std::string & AppConfig::particleEffectDataDir() const
 {
     return particleEffectDataDir_;
 }
 
-const std::string &AppConfig::chaseShootAIParamLibFile() const
+const std::string & AppConfig::chaseShootAIParamLibFile() const
 {
     return chaseShootAIParamLibFile_;
 }
 
-const std::string &AppConfig::progressPieTemplateLibFile() const
+const std::string & AppConfig::progressPieTemplateLibFile() const
 {
     return progressPieTemplateLibFile_;
 }
 
-const std::string &AppConfig::progressBarTemplateLibFile() const
+const std::string & AppConfig::progressBarTemplateLibFile() const
 {
     return progressBarTemplateLibFile_;
 }
 
-const std::string &AppConfig::iconTemplateLibFile() const
+const std::string & AppConfig::iconTemplateLibFile() const
 {
     return iconTemplateLibFile_;
 }
 
-const std::string &AppConfig::playerTemplateFile() const
+const std::string & AppConfig::playerTemplateFile() const
 {
     return playerTemplateFile_;
 }

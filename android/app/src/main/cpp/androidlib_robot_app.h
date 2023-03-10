@@ -1,5 +1,5 @@
-#ifndef ROBOT_ANDROIDLIB_ROBOT_APP_H
-#define ROBOT_ANDROIDLIB_ROBOT_APP_H
+#ifndef INCLUDED_ANDROIDLIB_ROBOT_APP_H
+#define INCLUDED_ANDROIDLIB_ROBOT_APP_H
 
 #include <commonlib_app.h>
 
@@ -15,12 +15,9 @@ public:
     bool init(android_app* app);
 
     void process() override;
-
-private:
-    void updateViewport();
 };
 
 } // end of namespace androidlib
 } // end of namespace mcdane
 
-#endif //ROBOT_ANDROIDLIB_ROBOT_APP_H
+#endif

@@ -11,9 +11,9 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void initVertexArray(VertexArray& va,
-                     const rapidjson::Value& v,
-                     const std::string& dataDir)
+void initVertexArray(VertexArray &va,
+                     const rapidjson::Value &v,
+                     const std::string &dataDir)
 {
     std::vector<std::string> files;
     std::vector<JsonParamPtr> params{
@@ -49,7 +49,7 @@ GameLib::GameLib()
 {
 }
 
-void GameLib::load(const AppConfig& cfg)
+void GameLib::load(const AppConfig &cfg)
 {
     initTextureLib(cfg.textureLibFile(), cfg.picDir());
     initVertexArrayLib(cfg.vertexArrayLibFile(), cfg.vertexArrayDataDir());
@@ -79,12 +79,12 @@ void GameLib::load(const AppConfig& cfg)
     LOG_INFO << "GameLib loaded successfull" << LOG_END;
 }
 
-void GameLib::initTextureLib(const std::string& textureLibFile,
-                             const std::string& picDir)
+void GameLib::initTextureLib(const std::string &textureLibFile,
+                             const std::string &picDir)
 {
-    auto parser = [&](Texture& texture,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](Texture &texture,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         texture.init(v, picDir);
     };
@@ -94,12 +94,12 @@ void GameLib::initTextureLib(const std::string& textureLibFile,
     LOG_DEBUG << "textureLib loaded successfully" << LOG_END;
 }
 
-void GameLib::initVertexArrayLib(const std::string& vertexArrayLibFile,
-                                 const std::string& dataDir)
+void GameLib::initVertexArrayLib(const std::string &vertexArrayLibFile,
+                                 const std::string &dataDir)
 {
-    auto parser = [&](VertexArray& va,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](VertexArray &va,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         initVertexArray(va, v, dataDir);
     };
@@ -109,11 +109,11 @@ void GameLib::initVertexArrayLib(const std::string& vertexArrayLibFile,
     LOG_DEBUG << "vertexArrayLib loaded successfully" << LOG_END;
 }
 
-void GameLib::initRectLib(const std::string& rectLibFile)
+void GameLib::initRectLib(const std::string &rectLibFile)
 {
-    auto parser = [&](Rectangle& rect,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](Rectangle &rect,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         rect.init(v, true);
     };
@@ -123,11 +123,11 @@ void GameLib::initRectLib(const std::string& rectLibFile)
     LOG_DEBUG << "rectLib loaded successfully" << LOG_END;
 }
 
-void GameLib::initIconTemplateLib(const std::string& iconTemplateLibFile)
+void GameLib::initIconTemplateLib(const std::string &iconTemplateLibFile)
 {
-    auto parser = [&](IconTemplate& t,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](IconTemplate &t,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         t.init(v, textureLib_, rectLib_);
     };
@@ -138,11 +138,11 @@ void GameLib::initIconTemplateLib(const std::string& iconTemplateLibFile)
 }
 
 void GameLib::initComponentTemplateLib(
-                    const std::string& componentTemplateLibFile)
+                    const std::string &componentTemplateLibFile)
 {
-    auto parser = [&](ComponentTemplate& t,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](ComponentTemplate &t,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         t.init(v, iconTemplateLib_);
     };
@@ -152,11 +152,11 @@ void GameLib::initComponentTemplateLib(
     LOG_DEBUG << "componentTemplateLib loaded successfully" << LOG_END;
 }
 
-void GameLib::initTileTemplateLib(const std::string& tileTemplateLibFile)
+void GameLib::initTileTemplateLib(const std::string &tileTemplateLibFile)
 {
-    auto parser = [&](TileTemplate& t,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](TileTemplate &t,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         t.init(name, v, componentTemplateLib_);
     };
@@ -166,11 +166,11 @@ void GameLib::initTileTemplateLib(const std::string& tileTemplateLibFile)
     LOG_DEBUG << "tileTemplateLib loaded successfully" << LOG_END;
 }
 
-void GameLib::initGoodieTemplateLib(const std::string& goodieTemplateLibFile)
+void GameLib::initGoodieTemplateLib(const std::string &goodieTemplateLibFile)
 {
-    auto parser = [&](GoodieTemplate& t,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](GoodieTemplate &t,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         GoodieType type = toGoodieType(name);
         t.init(type, name, v, componentTemplateLib_);
@@ -182,12 +182,12 @@ void GameLib::initGoodieTemplateLib(const std::string& goodieTemplateLibFile)
 }
 
 void GameLib::initParticleEffectTemplateLib(
-    const std::string& particleEffectTemplateLibFile,
-    const std::string& dataDir)
+    const std::string &particleEffectTemplateLibFile,
+    const std::string &dataDir)
 {
-    auto parser = [&](ParticleEffectTemplate& t,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](ParticleEffectTemplate &t,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         t.init(name, v, textureLib_, dataDir);
     };
@@ -198,11 +198,11 @@ void GameLib::initParticleEffectTemplateLib(
 }
 
 void GameLib::initProgressPieTemplateLib(
-                            const std::string& progressPieTemplateLibFile)
+                            const std::string &progressPieTemplateLibFile)
 {
-    auto parser = [&](ProgressPieTemplate& t,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](ProgressPieTemplate &t,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         t.init(v, vertexArrayLib_, iconTemplateLib_);
     };
@@ -213,11 +213,11 @@ void GameLib::initProgressPieTemplateLib(
 }
 
 void GameLib::initProgressBarTemplateLib(
-                            const std::string& progressBarTemplateLibFile)
+                            const std::string &progressBarTemplateLibFile)
 {
-    auto parser = [&](ProgressBarTemplate& t,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](ProgressBarTemplate &t,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         t.init(v, vertexArrayLib_);
     };
@@ -227,11 +227,11 @@ void GameLib::initProgressBarTemplateLib(
     LOG_DEBUG << "progressBarTemplateLib loaded successfully" << LOG_END;
 }
 
-void GameLib::initMissileTemplateLib(const std::string& missileTemplateLibFile)
+void GameLib::initMissileTemplateLib(const std::string &missileTemplateLibFile)
 {
-    auto parser = [&](MissileTemplate& t,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](MissileTemplate &t,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         t.init(name, v, particleEffectTemplateLib_, componentTemplateLib_,
                missileTemplateLib_);
@@ -242,12 +242,12 @@ void GameLib::initMissileTemplateLib(const std::string& missileTemplateLibFile)
     LOG_DEBUG << "missileTemplateLib loaded successfully" << LOG_END;
 }
 
-void GameLib::initSkillTemplateLib(const std::string& skillTemplateLibFile,
-                                   const std::string& skillDataDir)
+void GameLib::initSkillTemplateLib(const std::string &skillTemplateLibFile,
+                                   const std::string &skillDataDir)
 {
-    auto parser = [&](std::unique_ptr<SkillTemplate>& ptr,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](std::unique_ptr<SkillTemplate> &ptr,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         SkillTemplate* t = createSkillTemplate(v,
                                                progressPieTemplateLib_,
@@ -260,11 +260,11 @@ void GameLib::initSkillTemplateLib(const std::string& skillTemplateLibFile,
     LOG_DEBUG << "skillTemplateLib loaded successfully" << LOG_END;
 }
 
-void GameLib::initAIRobotTemplateLib(const std::string& aiRobotTemplateLibFile)
+void GameLib::initAIRobotTemplateLib(const std::string &aiRobotTemplateLibFile)
 {
-    auto parser = [&](AIRobotTemplate& t,
-                      const std::string& name,
-                      const rapidjson::Value& v)
+    auto parser = [&](AIRobotTemplate &t,
+                      const std::string &name,
+                      const rapidjson::Value &v)
     {
         t.init(name, v, missileTemplateLib_, componentTemplateLib_, skillTemplateLib_);
     };
@@ -278,7 +278,7 @@ void GameLib::calculateMaxObjSpan()
 {
     maxObjSpan_ = playerTemplate_.span();
 
-    auto accessor = [this](const GameObjectTemplate& t)->bool
+    auto accessor = [this](const GameObjectTemplate &t)->bool
     {
         if (t.span() > maxObjSpan_)
         {
@@ -300,7 +300,7 @@ void GameLib::calculateMaxCollideBreath()
 {
     maxCollideBreath_ = playerTemplate_.collideBreath();
 
-    auto accessor = [this](const GameObjectTemplate& t)->bool
+    auto accessor = [this](const GameObjectTemplate &t)->bool
     {
         if (t.collideBreath() > maxCollideBreath_)
         {
@@ -321,7 +321,7 @@ void GameLib::calculateMaxProgressPieRadius()
 {
     maxProgressPieRadius_ = 0.0f;
 
-    auto accessor = [this](const ProgressPieTemplate& t)->bool
+    auto accessor = [this](const ProgressPieTemplate &t)->bool
     {
         if (t.radius() > maxProgressPieRadius_)
         {

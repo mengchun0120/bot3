@@ -1,6 +1,3 @@
-#ifdef __ANDROID__
-#include <game-activity/native_app_glue/android_native_app_glue.h>
-#endif
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
 #include <commonlib_file_utils.h>
@@ -30,9 +27,9 @@ bool isShaderCompileSuccessful(GLuint shader)
 }
 
 bool compileShader(GLuint shader,
-                   const std::string& fileName)
+                   const std::string& path)
 {
-    std::string src = readTextFile(fileName);
+    std::string src = readText(path);
 
     const GLchar* source = src.c_str();
     GLint len = src.length();

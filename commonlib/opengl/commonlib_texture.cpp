@@ -9,6 +9,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_file_utils.h>
 #include <commonlib_json_param.h>
+#include <commonlib_system.h>
 #include <commonlib_app.h>
 #include <commonlib_texture.h>
 
@@ -24,7 +25,7 @@ Texture::~Texture()
 }
 
 #ifdef DESKTOP_APP
-void Texture::init(const std::string &imageFile)
+void Texture::init(const std::string &path)
 {
     glGenTextures(1, &id_);
     if (id_ == 0)
@@ -42,7 +43,7 @@ void Texture::init(const std::string &imageFile)
 
     stbi_set_flip_vertically_on_load(true);
 
-    unsigned char* data = stbi_load(imageFile.c_str(),
+    unsigned char* data = stbi_load(path.c_str(),
                                     &width_,
                                     &height_,
                                     &numChannels,
@@ -63,39 +64,40 @@ void Texture::init(const std::string &imageFile)
     }
     else
     {
-        THROW_EXCEPT(OpenGLException, "Failed to load image from " + imageFile);
+        THROW_EXCEPT(OpenGLException, "Failed to load image from " + path);
     }
 
     stbi_image_free(data);
 }
 #elif __ANDROID__
-void Texture::init(const std::string &imageFile) 
+void Texture::init(const std::string &path)
 {
-    AAsset *asset = AAssetManager_open(App::instance()->assetManager(),
-                                    imageFile.c_str(),
-                                    AASSET_MODE_BUFFER);
+    AAsset *asset = AAssetManager_open(assetManager(),
+                                       path.c_str(),
+                                       AASSET_MODE_BUFFER);
 
     AImageDecoder *decoder = nullptr;
     int result = AImageDecoder_createFromAAsset(asset, &decoder);
     if (result != ANDROID_IMAGE_DECODER_SUCCESS)
     {
-        THROW_EXCEPT(InvalidArgumentException, "Failed to open pic " + imageFile);
+        THROW_EXCEPT(InvalidArgumentException, "Failed to open pic " + path);
     }
-    
+
     AImageDecoder_setAndroidBitmapFormat(decoder, ANDROID_BITMAP_FORMAT_RGBA_8888);
 
     const AImageDecoderHeaderInfo *header = AImageDecoder_getHeaderInfo(decoder);
 
-    int width = AImageDecoderHeaderInfo_getWidth(header);
-    int height = AImageDecoderHeaderInfo_getHeight(header);
+    width_ = AImageDecoderHeaderInfo_getWidth(header);
+    height_ = AImageDecoderHeaderInfo_getHeight(header);
     int stride = AImageDecoder_getMinimumStride(decoder);
 
-    // Get the bitmap data of the image
-    auto imageData = std::make_unique<std::vector<uint8_t>>(height * stride);
-    result = AImageDecoder_decodeImage(decoder,imageData->data(), stride, imageData->size());
+    auto imageData = std::make_unique<std::vector<uint8_t>>(height_ * stride);
+    result = AImageDecoder_decodeImage(decoder, imageData->data(),
+                                       stride, imageData->size());
+
     if (result != ANDROID_IMAGE_DECODER_SUCCESS)
     {
-        THROW_EXCEPT(InvalidArgumentException, "Failed to decode pic " + imageFile);
+        THROW_EXCEPT(InvalidArgumentException, "Failed to decode pic " + path);
     }
 
     glGenTextures(1, &id_);
@@ -106,7 +108,7 @@ void Texture::init(const std::string &imageFile)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width_, height_, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, imageData->data());
 
     glGenerateMipmap(GL_TEXTURE_2D);

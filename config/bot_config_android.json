@@ -1,0 +1,62 @@
+{
+    "window": {
+        "width": 1000,
+        "height": 800,
+        "title": "Bot"
+    },
+    "inputQueueCapacity": 6,
+    "directories": {
+        "fontDir": ["res", "fonts"],
+        "picDir": ["res", "pics"],
+        "glslDir": ["res", "glsl"],
+        "libDir": ["res", "libs"],
+        "configDir": ["config"],
+        "mapDir": ["res", "maps"]
+    },
+    "shaders": {
+        "simpleVertexShaderFiles": ["simple_vertex_shader_es.glsl"],
+        "simpleFragShaderFiles": [
+            "simple_frag_shader_es.glsl",
+            "simple_frag_shader_es_v2.glsl"
+        ],
+        "particleVertexShaderFiles": ["particle_vertex_shader_es.glsl"],
+        "particleFragShaderFiles": [
+            "particle_frag_shader_es.glsl",
+            "particle_frag_shader_es_v2.glsl"
+        ]
+    },
+    "configs": {
+        "buttonConfigFile": "button_config.json",
+        "labelConfigFile": "label_config.json",
+        "messageBoxConfigFile": "message_box_config.json",
+        "startScreenConfigFile": "start_screen_config.json",
+        "gameScreenConfigFile": "game_screen_config.json",
+        "showMapScreenConfigFile": "showmap_screen_config.json",
+        "gameConfigFile": "game_config.json",
+        "hpIndicatorConfigFile": "hp_indicator_config.json"
+    },
+    "libraries": {
+        "textureLibFile": "texture_lib.json",
+        "vertexArrayLibFile": "vertex_array_lib.json",
+        "vertexArrayDataDir": "vertex_array_data",
+        "rectLibFile": "rect_lib.json",
+        "componentTemplateLibFile": "component_template_lib.json",
+        "tileTemplateLibFile": "tile_template_lib.json",
+        "goodieTemplateLibFile": "goodie_template_lib.json",
+        "missileTemplateLibFile": "missile_template_lib.json",
+        "skillTemplateLibFile": "skill_template_lib.json",
+        "skillDataDir": "skill_data",
+        "aiRobotTemplateLibFile": "ai_robot_template_lib.json",
+        "particleEffectTemplateLibFile": "particle_effect_template_lib.json",
+        "particleEffectDataDir": "particle_effect_data",
+        "chaseShootAIParamLibFile": "chase_shoot_ai_param_lib.json",
+        "progressPieTemplateLibFile": "progress_pie_template_lib.json",
+        "progressBarTemplateLibFile": "progress_bar_template_lib.json",
+        "iconTemplateLibFile": "icon_template_lib.json",
+        "playerTemplateFile": "player_template.json"
+    },
+    "game": {
+        "mapPoolSizeFactor": 0.75,
+        "timeDeltaHistoryLen": 10
+    }
+}

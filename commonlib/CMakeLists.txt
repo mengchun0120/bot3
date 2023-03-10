@@ -6,4 +6,3 @@ include_directories(${COMMONLIB_INCLUDE_DIR})
 
 add_library(commonlib STATIC ${COMMONLIB_SOURCE_FILES})
 
-#set_property(TARGET commonlib PROPERTY CXX_STANDARD 11)

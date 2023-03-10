@@ -38,6 +38,7 @@ list(APPEND
     ${COMMONLIB_SRC_DIR}/misc/commonlib_parse.cpp
     ${COMMONLIB_SRC_DIR}/misc/commonlib_random.cpp
     ${COMMONLIB_SRC_DIR}/misc/commonlib_string_utils.cpp
+    ${COMMONLIB_SRC_DIR}/misc/commonlib_system.cpp
     ${COMMONLIB_SRC_DIR}/misc/commonlib_time_utils.cpp
     ${COMMONLIB_SRC_DIR}/misc/commonlib_validator.cpp
 )

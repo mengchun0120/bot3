@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
+#include <commonlib_system.h>
 #include <commonlib_app.h>
 
 namespace mcdane {
@@ -184,10 +185,12 @@ bool App::init(android_app *app)
     }
 
     if (EGL_FALSE == eglMakeCurrent(display_, surface_, surface_, context_)) {
-        LOG_ERROR << "eglMakeCurrent failed, EGL error " << eglGetError() << LOG_END;
+        LOG_ERROR << "eglMakeCurrent failed, EGL error "
+                  << eglGetError() << LOG_END;
         return false;
     }
 
+    updateViewport();
     setupOpenGL();
 
     running_ = true;
@@ -226,11 +229,32 @@ void App::handleCommand(int32_t cmd)
               << " config=" << config_ << LOG_END;
 }
 
+void App::updateViewport()
+{
+    EGLint width;
+    eglQuerySurface(display_, surface_, EGL_WIDTH, &width);
+
+    EGLint height;
+    eglQuerySurface(display_, surface_, EGL_HEIGHT, &height);
+
+    float width1 = static_cast<float>(width);
+    float height1 = static_cast<float>(height);
+
+    if (viewportWidth() != width1 || viewportHeight() != height1)
+    {
+        viewportSize_.init({width1, height1});
+        glViewport(0, 0, width, height);
+
+        LOG_INFO << "Viewport updated " << viewportSize_ << LOG_END;
+    }
+}
+
 bool App::initDisplay()
 {
     display_ = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     if (EGL_FALSE == eglInitialize(display_, nullptr, nullptr)) {
-        LOG_ERROR << "Failed to init display, error " << eglGetError() << LOG_END;
+        LOG_ERROR << "Failed to init display, error "
+                  << eglGetError() << LOG_END;
         return false;
     }
 
@@ -249,7 +273,8 @@ bool App::initSurface()
     surface_ = eglCreateWindowSurface(display_, config_, app_->window, nullptr);
     if (surface_ == EGL_NO_SURFACE)
     {
-        LOG_ERROR << "Failed to create EGL surface, EGL error " << eglGetError() << LOG_END;
+        LOG_ERROR << "Failed to create EGL surface, EGL error "
+                  << eglGetError() << LOG_END;
         return false;
     }
 
@@ -266,9 +291,10 @@ bool App::initContext()
         EGL_NONE
     };
 
-    context_ = eglCreateContext(display_, config_, nullptr,attribs);
+    context_ = eglCreateContext(display_, config_, nullptr, attribs);
     if (context_ == EGL_NO_CONTEXT) {
-        LOG_ERROR << "Failed to create EGL context, EGL error " << eglGetError() << LOG_END;
+        LOG_ERROR << "Failed to create EGL context, EGL error "
+                  << eglGetError() << LOG_END;
         return false;
     }
 

@@ -1,4 +1,6 @@
-#version 300
+#version 300 es
+
+precision mediump float;
 
 uniform sampler2D pointTexture;
 uniform vec4 color;
@@ -15,6 +17,6 @@ void main()
     else
     {
         vec4 tmpColor = vec4(color.rgb, alpha);
-        fragColor = texture2D(pointTexture, gl_PointCoord) * tmpColor;
+        fragColor = texture(pointTexture, gl_PointCoord) * tmpColor;
     }
 }

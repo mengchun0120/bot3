@@ -3,6 +3,7 @@
 #include <game-activity/GameActivity.cpp>
 #include <game-text-input/gametextinput.cpp>
 #include <commonlib_log.h>
+#include <commonlib_system.h>
 #include <androidlib_android_out.h>
 #include <androidlib_robot_app.h>
 
@@ -13,61 +14,62 @@ extern "C" {
 
 #include <game-activity/native_app_glue/android_native_app_glue.c>
 
-void handle_cmd(android_app *pApp, int32_t cmd) {
+void handle_cmd(android_app *app, int32_t cmd) {
     switch (cmd) {
         case APP_CMD_INIT_WINDOW:
         {
             LOG_INFO << "Init-window" << LOG_END;
-            RobotApp* app = new RobotApp();
-            pApp->userData = app;
-            app->init(pApp);
+            RobotApp *robotApp = new RobotApp();
+            app->userData = robotApp;
+            robotApp->init(app);
             break;
         }
         case APP_CMD_TERM_WINDOW:
         {
-            RobotApp* app = reinterpret_cast<RobotApp*>(pApp->userData);
-            pApp->userData = nullptr;
-            delete app;
+            RobotApp *robotApp = reinterpret_cast<RobotApp*>(app->userData);
+            app->userData = nullptr;
+            delete robotApp;
             break;
         }
         default:
         {
-            if (pApp->userData)
+            if (app->userData)
             {
-                RobotApp* app = reinterpret_cast<RobotApp*>(pApp->userData);
-                app->handleCommand(cmd);
+                RobotApp *robotApp = reinterpret_cast<RobotApp*>(app->userData);
+                robotApp->handleCommand(cmd);
             }
             break;
         }
     }
 }
 
-void android_main(struct android_app *pApp)
+void android_main(struct android_app *app)
 {
+    setAssetManager(app->activity->assetManager);
     Logger::initInstance(mcdane::androidlib::aout);
 
     LOG_DEBUG << "Welcome to Robot" << LOG_END;
 
-    pApp->onAppCmd = handle_cmd;
+    app->onAppCmd = handle_cmd;
 
     int events;
     android_poll_source *pSource;
     while(true) {
         if (ALooper_pollAll(0, nullptr, &events, (void **) &pSource) >= 0) {
             if (pSource) {
-                pSource->process(pApp, pSource);
+                pSource->process(app, pSource);
             }
         }
 
-        if (pApp->destroyRequested)
+        if (app->destroyRequested)
         {
             return;
         }
 
-        if (pApp->userData) {
-            RobotApp *app = reinterpret_cast<RobotApp*>(pApp->userData);
-            if (app->shouldRun()) {
-                app->process();
+        if (app->userData) {
+            RobotApp *robotApp = reinterpret_cast<RobotApp*>(app->userData);
+            if (robotApp->shouldRun()) {
+                robotApp->process();
             }
         }
     }

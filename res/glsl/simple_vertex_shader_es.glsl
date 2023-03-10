@@ -1,4 +1,4 @@
-#version 300
+#version 300 es
 
 uniform bool useObjRef;
 uniform vec2 objRef;

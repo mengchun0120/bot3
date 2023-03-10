@@ -1,5 +1,5 @@
-#ifndef ROBOT_ANDROIDLIB_ANDROID_OUT_H
-#define ROBOT_ANDROIDLIB_ANDROID_OUT_H
+#ifndef INCLUDED_ANDROIDLIB_ANDROID_OUT_H
+#define INCLUDED_ANDROIDLIB_ANDROID_OUT_H
 
 #include <android/log.h>
 #include <sstream>
@@ -30,4 +30,4 @@ private:
 } // end of namespace androidlib
 } // end of namespace mcdane
 
-#endif //ROBOT_ANDROIDLIB_ANDROID_OUT_H
+#endif

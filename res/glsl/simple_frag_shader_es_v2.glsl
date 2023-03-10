@@ -1,4 +1,6 @@
-#version 300
+#version 300 es
+
+precision mediump float;
 
 uniform bool useColor;
 uniform bool useTexColor;
@@ -20,11 +22,11 @@ void main()
     {
         if(useTexColor)
         {
-            tmpColor = texture2D(texture, texCoord) * texColor;
+            tmpColor = texture(texture, texCoord) * texColor;
         }
         else
         {
-            tmpColor = texture2D(texture, texCoord);
+            tmpColor = texture(texture, texCoord);
         }
     }
 

@@ -8,42 +8,16 @@
 namespace mcdane {
 namespace commonlib {
 
-#ifdef __ANDROID__
-bool readJsonFromAssets(rapidjson::Document &doc,
-                        AAssetManager *assetManager,
-                        const std::string &fileName)
-{
-    std::string jsonStr;
-    if (!readTextFromAssets(jsonStr, assetManager, fileName))
-    {
-        return false;
-    }
-
-    doc.Parse(jsonStr.c_str());
-
-    return true;
-}
-#endif
-
 void readJson(rapidjson::Document& doc,
-              const std::string& fileName)
+              const std::string& path)
 {
-    FILE *fp = fopen(fileName.c_str(), "rb");
-    if (!fp)
-    {
-        THROW_EXCEPT(FileException, "Failed to open " + fileName);
-    }
+    std::string str = readText(path);
 
-    char readBuffer[1000];
-
-    rapidjson::FileReadStream stream(fp, readBuffer, sizeof(readBuffer));
-    doc.ParseStream(stream);
-
-    fclose(fp);
+    doc.Parse(str.c_str());
 
     if (doc.HasParseError())
     {
-        THROW_EXCEPT(ParseException, "Failed to parse " + fileName);
+        THROW_EXCEPT(ParseException, "Failed to parse " + path);
     }
 }
 

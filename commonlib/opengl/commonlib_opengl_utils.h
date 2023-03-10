@@ -15,7 +15,7 @@ void validateTexPos(const Point2& texPos);
 bool isShaderCompileSuccessful(GLuint shader);
 
 bool compileShader(GLuint shader,
-                   const std::string& fileName);
+                   const std::string& path);
 
 std::string getShaderInfo(GLuint shader);
 

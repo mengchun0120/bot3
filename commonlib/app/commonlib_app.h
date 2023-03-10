@@ -36,7 +36,7 @@ public:
 
     inline android_app * app();
 
-    inline AAssetManager * assetManager();
+    void updateViewport();
 #endif
 
     virtual void process();
@@ -144,11 +144,6 @@ bool App::shouldRun() const
 android_app * App::app()
 {
     return app_;
-}
-
-AAssetManager * App::assetManager()
-{
-    return app_->activity->assetManager;
 }
 
 bool App::shouldRun() const

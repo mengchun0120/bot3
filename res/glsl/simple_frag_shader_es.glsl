@@ -1,4 +1,6 @@
-#version 300
+#version 300 es
+
+precision mediump float;
 
 uniform bool useColor;
 uniform bool useTexColor;

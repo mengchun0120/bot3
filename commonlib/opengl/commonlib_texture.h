@@ -14,7 +14,7 @@ public:
 
     ~Texture();
 
-    void init(const std::string &imageFile);
+    void init(const std::string &path);
 
     void init(const rapidjson::Value &v,
               const std::string &picDir);

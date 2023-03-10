@@ -18,21 +18,21 @@ class NamedMap {
 public:
     using NodeAccessor = std::function<bool(const T&)>;
     using NodeParser = std::function<void(T&,
-                                          const std::string& name,
+                                          const std::string &name,
                                           const rapidjson::Value&)>;
 
     NamedMap() = default;
 
     virtual ~NamedMap() = default;
 
-    void init(const std::string& fileName,
-              const NodeParser& parser);
+    void init(const std::string &path,
+              const NodeParser &parser);
 
-    const T* search(const std::string& name) const;
+    const T* search(const std::string &name) const;
 
     void traverse(NodeAccessor accessor) const;
 
-    void getAll(std::vector<const T*>& nodes) const;
+    void getAll(std::vector<const T*> &nodes) const;
 
     inline int size() const;
 
@@ -41,15 +41,15 @@ private:
 };
 
 template <typename T>
-void NamedMap<T>::init(const std::string& fileName,
-                       const NodeParser& parser)
+void NamedMap<T>::init(const std::string &path,
+                       const NodeParser &parser)
 {
     rapidjson::Document doc;
-    readJson(doc, fileName);
+    readJson(doc, path);
 
     if (!doc.IsObject())
     {
-        THROW_EXCEPT(ParseException, "Invalid json file: " + fileName);
+        THROW_EXCEPT(ParseException, "Invalid json file: " + path);
     }
 
     std::string name;
@@ -67,8 +67,9 @@ void NamedMap<T>::init(const std::string& fileName,
     }
 }
 
+
 template <typename T>
-const T* NamedMap<T>::search(const std::string& name) const
+const T* NamedMap<T>::search(const std::string &name) const
 {
     auto it = map_.find(name);
     if (it == map_.end())
@@ -92,7 +93,7 @@ void NamedMap<T>::traverse(NodeAccessor accessor) const
 }
 
 template <typename T>
-void NamedMap<T>::getAll(std::vector<const T*>& nodes) const
+void NamedMap<T>::getAll(std::vector<const T*> &nodes) const
 {
     if (size() == 0)
     {

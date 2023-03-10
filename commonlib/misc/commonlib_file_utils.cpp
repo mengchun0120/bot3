@@ -1,37 +1,13 @@
+#include <fstream>
 #include <sstream>
 #include <memory>
+#include <commonlib_system.h>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_file_utils.h>
 
 namespace mcdane {
 namespace commonlib {
-
-#ifdef __ANDROID__
-bool readTextFromAssets(std::string &str,
-                        AAssetManager *assetManager,
-                        const std::string &fileName)
-{
-    AAsset* asset = AAssetManager_open(assetManager,
-                                       fileName.c_str(),
-                                       AASSET_MODE_BUFFER);
-    if (!asset)
-    {
-        LOG_ERROR << "Failed to open assets " << fileName << LOG_END;
-        return false;
-    }
-
-    off_t len = AAsset_getLength(asset);
-    std::unique_ptr<char> buffer(new char[len]);
-
-    AAsset_read(asset, buffer.get(), len);
-    str.assign(buffer.get(), len);
-
-    AAsset_close(asset);
-
-    return true;
-}
-#endif
 
 std::string getFileSeparator()
 {
@@ -42,13 +18,14 @@ std::string getFileSeparator()
 #endif
 }
 
-std::string readTextFile(const std::string &fileName)
+#ifdef DESKTOP_APP
+std::string readText(const std::string &path)
 {
-    std::ifstream in(fileName);
+    std::ifstream in(path);
 
     if (!in)
     {
-        THROW_EXCEPT(FileException, "Failed to open file " + fileName);
+        THROW_EXCEPT(FileException, "Failed to open file " + path);
     }
 
     std::stringstream ss;
@@ -56,11 +33,36 @@ std::string readTextFile(const std::string &fileName)
 
     if (in.bad())
     {
-        THROW_EXCEPT(FileException, "Failed to read file " + fileName);
+        THROW_EXCEPT(FileException, "Failed to read file " + path);
     }
 
     return ss.str();
 }
+
+#elif __ANDROID__
+std::string readText(const std::string &path)
+{
+    AAsset* asset = AAssetManager_open(assetManager(),
+                                       path.c_str(),
+                                       AASSET_MODE_BUFFER);
+    if (!asset)
+    {
+        THROW_EXCEPT(FileException, "Failed to open assets " + path);
+    }
+
+    off_t len = AAsset_getLength(asset);
+    std::unique_ptr<char> buffer(new char[len]);
+    std::string ret;
+
+    AAsset_read(asset, buffer.get(), len);
+    ret.assign(buffer.get(), len);
+
+    AAsset_close(asset);
+
+    return ret;
+}
+#endif
+
 
 std::string constructPath(std::initializer_list<std::string> pathParts)
 {

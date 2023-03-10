@@ -21,8 +21,7 @@ void marshalFileNames(std::vector<std::string> &newFileNames,
 
 std::shared_ptr<AppConfig> AppConfig::k_instance;
 
-#ifdef DESKTOP_APP
-void AppConfig::init(const std::string &fileName,
+void AppConfig::init(const std::string &path,
                      const std::string &appDir)
 {
     if (k_instance)
@@ -32,36 +31,12 @@ void AppConfig::init(const std::string &fileName,
     }
 
     rapidjson::Document doc;
-    std::string docPath = appDir.empty() ?
-                                fileName :
-                                constructPath({appDir, fileName});
+    std::string docPath = constructPath({appDir, path});
 
     readJson(doc, docPath);
 
     k_instance.reset(new AppConfig(doc, appDir));
 }
-
-#endif
-
-#ifdef __ANDROID__
-void AppConfig::init(const std::string &fileName,
-                     AAssetManager *assetManager)
-{
-    if (k_instance)
-    {
-        LOG_WARN << "AppConfig instance already initialized" << LOG_END;
-        return;
-    }
-
-    rapidjson::Document doc;
-    if (!readJsonFromAssets(doc, assetManager, fileName))
-    {
-        THROW_EXCEPT(MyException, "Failed to read config from " + fileName);
-    }
-
-    k_instance.reset(new AppConfig(doc));
-}
-#endif
 
 AppConfig::AppConfig(const rapidjson::Document &doc,
                      const std::string &appDir)
@@ -79,10 +54,12 @@ AppConfig::AppConfig(const rapidjson::Document &doc,
 void AppConfig::loadBasics(const rapidjson::Document &doc)
 {
     std::vector<JsonParamPtr> params{
+#ifdef DESKTOP_APP
         jsonParam(width_, {"window", "width"}, true, gt(0u)),
         jsonParam(height_, {"window", "height"}, true, gt(0u)),
         jsonParam(title_, {"window", "title"}, true, k_nonEmptyStrV),
-        jsonParam(inputQueueCapacity_, {"inputQueueCapacity"}, true, gt(0u))
+#endif
+        jsonParam(inputQueueCapacity_, {"inputQueueCapacity"}, true, gt(0u)),
     };
 
     parse(params, doc);
@@ -103,24 +80,12 @@ void AppConfig::loadDirectories(const rapidjson::Document &doc,
 
     parse(params, doc);
 
-    if (!appDir.empty())
-    {
-        fontDir_ = constructPath(appDir, fontDir);
-        picDir_ = constructPath(appDir, picDir);
-        glslDir_ = constructPath(appDir, glslDir);
-        configDir_ = constructPath(appDir, configDir);
-        libDir_ = constructPath(appDir, libDir);
-        mapDir_ = constructPath(appDir, mapDir);
-    }
-    else
-    {
-        fontDir_ = constructPath(fontDir);
-        picDir_ = constructPath(picDir);
-        glslDir_ = constructPath(glslDir);
-        configDir_ = constructPath(configDir);
-        libDir_ = constructPath(libDir);
-        mapDir_ = constructPath(mapDir);
-    }
+    fontDir_ = constructPath(appDir, fontDir);
+    picDir_ = constructPath(appDir, picDir);
+    glslDir_ = constructPath(appDir, glslDir);
+    configDir_ = constructPath(appDir, configDir);
+    libDir_ = constructPath(appDir, libDir);
+    mapDir_ = constructPath(appDir, mapDir);
 }
 
 void AppConfig::loadShaderFiles(const rapidjson::Document &doc)
