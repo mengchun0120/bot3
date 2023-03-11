@@ -1,4 +1,4 @@
-#version 300
+#version 330
 
 uniform bool useColor;
 uniform bool useTexColor;

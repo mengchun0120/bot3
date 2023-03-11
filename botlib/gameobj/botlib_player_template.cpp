@@ -22,6 +22,7 @@ void PlayerTemplate::init(const std::string& playerTemplateFile,
     initInputSkillMap(doc, inputMap);
 }
 
+#ifdef DESKTOP_APP
 void PlayerTemplate::initInputSkillMap(const rapidjson::Value& v,
                                        const commonlib::InputMap& inputMap)
 {
@@ -53,6 +54,12 @@ void PlayerTemplate::initInputSkillMap(const rapidjson::Value& v,
         inputSkillMap_[input] = skill;
     }
 }
+#elif __ANDROID__
+void PlayerTemplate::initInputSkillMap(const rapidjson::Value& v,
+                                       const commonlib::InputMap& inputMap)
+{
+}
+#endif
 
 } // end of namespace botlib
 } // end of namespace mcdane

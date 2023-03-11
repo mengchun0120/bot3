@@ -15,9 +15,9 @@ int InputMap::get(const std::string& name) const
     return it != map_.end() ? it->second : -1;
 }
 
+#ifdef DESKTOP_APP
 void InputMap::init()
 {
-#ifdef DESKTOP_APP
     map_ = {
         {"right-mouse", GLFW_MOUSE_BUTTON_RIGHT},
         {"0",           GLFW_KEY_0},
@@ -57,8 +57,12 @@ void InputMap::init()
         {"Y",           GLFW_KEY_Y},
         {"Z",           GLFW_KEY_Z},
     };
-#endif
 }
+#elif __ANDROID__
+void InputMap::init()
+{
+}
+#endif
 
 } // end of namespace commonlib
 } // end of namespace mcdane

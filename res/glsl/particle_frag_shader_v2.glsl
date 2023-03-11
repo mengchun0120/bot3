@@ -1,4 +1,4 @@
-#version 300
+#version 330
 
 uniform sampler2D pointTexture;
 uniform vec4 color;
