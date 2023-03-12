@@ -1,17 +1,24 @@
-#ifndef INCLUDED_ITEST_TESTSHAPE_APP_H
-#define INCLUDED_ITEST_TESTSHAPE_APP_H
+#ifndef INCLUDED_BOTLIB_TESTSHAPE_APP_H
+#define INCLUDED_BOTLIB_TESTSHAPE_APP_H
 
 #include <commonlib_app.h>
+#include <commonlib_color.h>
 #include <commonlib_texture.h>
 #include <botlib_rectangle.h>
 
 namespace mcdane {
-namespace itest {
+namespace botlib {
 
 class TestShapeApp: public commonlib::App {
 public:
-    TestShapeApp(const std::string& configFile,
-                 const std::string& appDir);
+    TestShapeApp();
+
+#ifdef DESKTOP_APP
+    void init(const std::string& configFile,
+              const std::string& appDir);
+#elif __ANDROID__
+    void init(android_app *app);
+#endif
 
     ~TestShapeApp() override = default;
 
@@ -22,7 +29,7 @@ protected:
 
     void setupShapeColor();
 
-    void setupTexture(const std::string& appDir);
+    void setupTexture();
 
 private:
     botlib::Polygon triangle_;
@@ -36,7 +43,7 @@ private:
     commonlib::Point2 texPos_;
 };
 
-} // end of namespace itest
+} // end of namespace botlib
 } // end of namespace mcdane
 
 #endif

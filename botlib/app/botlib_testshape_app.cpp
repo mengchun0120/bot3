@@ -2,25 +2,43 @@
 #include <commonlib_file_utils.h>
 #include <botlib_app_config.h>
 #include <botlib_context.h>
-#include <itest_testshape_app.h>
+#include <botlib_testshape_app.h>
 
 using namespace mcdane::commonlib;
 using namespace mcdane::botlib;
 
 namespace mcdane {
-namespace itest {
+namespace botlib {
 
-TestShapeApp::TestShapeApp(const std::string& configFile,
-                           const std::string& appDir)
+TestShapeApp::TestShapeApp()
+    : App("testshape")
+{
+}
+
+#ifdef DESKTOP_APP
+void TestShapeApp::init(const std::string& configFile,
+                   const std::string& appDir)
 {
     AppConfig::init(configFile, appDir);
-
-    init(1000, 800, "Test Shape");
+    App::init(1000, 800, "Test Shape");
     Context::init(AppConfig::instance());
     setupShader();
     setupShapeColor();
-    setupTexture(appDir);
+    setupTexture();
 }
+#elif __ANDROID__
+void TestShapeApp::init(android_app *app)
+{
+    AppConfig::init("config/bot_config_android.json");
+    App::init(app);
+    Context::init(AppConfig::instance());
+    setupShader();
+    setupShapeColor();
+    setupTexture();
+
+    LOG_INFO << "TestShapeApp created" << LOG_END;
+}
+#endif
 
 void TestShapeApp::setupShader()
 {
@@ -51,10 +69,10 @@ void TestShapeApp::setupShapeColor()
     borderColor_.init({0, 0, 100, 255});
 }
 
-void TestShapeApp::setupTexture(const std::string& appDir)
+void TestShapeApp::setupTexture()
 {
-    std::string imageFile = constructPath(
-            {appDir, "desktop", "itest", "testshape", "baby.png"});
+    const AppConfig &cfg = AppConfig::instance();
+    std::string imageFile = constructPath({cfg.picDir(), "baby.png"});
     texture_.init(imageFile);
 
     float w = static_cast<float>(texture_.width()) / 4.0f;
@@ -65,6 +83,13 @@ void TestShapeApp::setupTexture(const std::string& appDir)
 
 void TestShapeApp::process()
 {
+#ifdef __ANDROID__
+    if (updateViewport())
+    {
+        setupShader();
+    }
+#endif
+
     Graphics& g = Context::graphics();
     SimpleShaderProgram& program = g.simpleShader();
     const TextSystem& textSys = g.textSys();
@@ -88,8 +113,10 @@ void TestShapeApp::process()
                  TextSize::TINY, &fillColor_);
 
     glFlush();
+
+    postProcess();
 }
 
-} // end of namespace itest
+} // end of namespace botlib
 } // end of namespace mcdane
 

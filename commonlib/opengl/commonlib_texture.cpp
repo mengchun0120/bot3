@@ -1,4 +1,5 @@
 #include <sstream>
+#include <algorithm>
 #ifdef DESKTOP_APP
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -70,22 +71,42 @@ void Texture::init(const std::string &path)
     stbi_image_free(data);
 }
 #elif __ANDROID__
+void flipImage(uint8_t *data, int height, int stride)
+{
+    uint8_t *row1 = data, *row2 = data + (height-1) * stride;
+    while(row1 < row2)
+    {
+        std::swap_ranges(row1, row1+stride, row2);
+        row1 += stride;
+        row2 -= stride;
+    }
+}
+
 void Texture::init(const std::string &path)
 {
     AAsset *asset = AAssetManager_open(assetManager(),
                                        path.c_str(),
                                        AASSET_MODE_BUFFER);
+    if (!asset)
+    {
+        THROW_EXCEPT(FileException, "Failed to open pic " + path);
+    }
 
     AImageDecoder *decoder = nullptr;
+
     int result = AImageDecoder_createFromAAsset(asset, &decoder);
     if (result != ANDROID_IMAGE_DECODER_SUCCESS)
     {
-        THROW_EXCEPT(InvalidArgumentException, "Failed to open pic " + path);
+        THROW_EXCEPT(OpenGLException, "Failed get decoder");
     }
 
     AImageDecoder_setAndroidBitmapFormat(decoder, ANDROID_BITMAP_FORMAT_RGBA_8888);
 
     const AImageDecoderHeaderInfo *header = AImageDecoder_getHeaderInfo(decoder);
+    if (!header)
+    {
+        THROW_EXCEPT(OpenGLException, "Failed to get header");
+    }
 
     width_ = AImageDecoderHeaderInfo_getWidth(header);
     height_ = AImageDecoderHeaderInfo_getHeight(header);
@@ -99,6 +120,8 @@ void Texture::init(const std::string &path)
     {
         THROW_EXCEPT(InvalidArgumentException, "Failed to decode pic " + path);
     }
+
+    flipImage(imageData->data(), height_, stride);
 
     glGenTextures(1, &id_);
     glBindTexture(GL_TEXTURE_2D, id_);

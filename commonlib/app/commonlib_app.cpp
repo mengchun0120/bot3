@@ -10,6 +10,21 @@ namespace commonlib {
 
 App * App::k_instance = nullptr;
 
+void App::initInstance(App *app)
+{
+    if (k_instance)
+    {
+        THROW_EXCEPT(MyException, "Only one instance of App is allowed");
+    }
+
+    k_instance = app;
+}
+
+void App::clearInstance()
+{
+    k_instance = nullptr;
+}
+
 #ifdef DESKTOP_APP
 
 void initGLFW()
@@ -63,17 +78,13 @@ void initGLEW()
     }
 }
 
-App::App()
+App::App(const std::string &name1)
     : window_(nullptr)
+    , name_(name1)
     , viewportSize_{0.0f, 0.0f}
     , running_(false)
 {
-    if (k_instance)
-    {
-        THROW_EXCEPT(MyException, "Only one instance of App is allowed");
-    }
-
-    k_instance = this;
+    initInstance(this);
 }
 
 App::~App()
@@ -83,7 +94,7 @@ App::~App()
         glfwTerminate();
     }
 
-    k_instance = nullptr;
+    clearInstance();
 }
 
 
@@ -104,17 +115,15 @@ void App::init(unsigned int width,
     viewportSize_[1] = static_cast<float>(h);
 
     setupOpenGL();
+
+    running_ = true;
 }
 
 void App::run()
 {
-    running_ = true;
     while (shouldRun())
     {
         process();
-
-        glfwSwapBuffers(window_);
-        glfwPollEvents();
     }
 }
 
@@ -126,25 +135,27 @@ void App::setupOpenGL()
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
+void App::postProcess()
+{
+    glfwSwapBuffers(window_);
+    glfwPollEvents();
+}
+
 #endif
 
 #ifdef __ANDROID__
 
-App::App()
+App::App(const std::string &name1)
     : app_(nullptr)
     , hasFocus_(false)
     , display_(EGL_NO_DISPLAY)
     , surface_(EGL_NO_SURFACE)
     , context_(EGL_NO_CONTEXT)
+    , name_(name1)
     , viewportSize_{0.0f, 0.0f}
     , running_(false)
 {
-    if (k_instance)
-    {
-        THROW_EXCEPT(MyException, "Only one instance of App is allowed");
-    }
-
-    k_instance = this;
+    initInstance(this);
 }
 
 App::~App()
@@ -163,39 +174,26 @@ App::~App()
         display_ = EGL_NO_DISPLAY;
     }
 
-    k_instance = nullptr;
+    clearInstance();
 }
 
-bool App::init(android_app *app)
+void App::init(android_app *app)
 {
     app_ = app;
 
-    if (!initDisplay())
-    {
-        return false;
-    }
-
-    if (!initSurface()) {
-        return false;
-    }
-
-    if (!initContext())
-    {
-        return false;
-    }
+    initDisplay();
+    initSurface();
+    initContext();
 
     if (EGL_FALSE == eglMakeCurrent(display_, surface_, surface_, context_)) {
-        LOG_ERROR << "eglMakeCurrent failed, EGL error "
-                  << eglGetError() << LOG_END;
-        return false;
+        THROW_EXCEPT(OpenGLException, "eglMakeCurrent failed, err "\
+                     + std::to_string(eglGetError()));
     }
 
     updateViewport();
     setupOpenGL();
 
     running_ = true;
-
-    return true;
 }
 
 void App::handleCommand(int32_t cmd)
@@ -229,7 +227,7 @@ void App::handleCommand(int32_t cmd)
               << " config=" << config_ << LOG_END;
 }
 
-void App::updateViewport()
+bool App::updateViewport()
 {
     EGLint width;
     eglQuerySurface(display_, surface_, EGL_WIDTH, &width);
@@ -246,44 +244,39 @@ void App::updateViewport()
         glViewport(0, 0, width, height);
 
         LOG_INFO << "Viewport updated " << viewportSize_ << LOG_END;
+
+        return true;
     }
+
+    return false;
 }
 
-bool App::initDisplay()
+void App::initDisplay()
 {
     display_ = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     if (EGL_FALSE == eglInitialize(display_, nullptr, nullptr)) {
-        LOG_ERROR << "Failed to init display, error "
-                  << eglGetError() << LOG_END;
-        return false;
+        THROW_EXCEPT(OpenGLException, "Failed to init display, err "\
+                     + std::to_string(eglGetError()));
     }
 
     LOG_INFO << "Display initialized successfully" << LOG_END;
-
-    return true;
 }
 
-bool App::initSurface()
+void App::initSurface()
 {
-    if (!chooseConfig())
-    {
-        return false;
-    }
+    chooseConfig();
 
     surface_ = eglCreateWindowSurface(display_, config_, app_->window, nullptr);
     if (surface_ == EGL_NO_SURFACE)
     {
-        LOG_ERROR << "Failed to create EGL surface, EGL error "
-                  << eglGetError() << LOG_END;
-        return false;
+        THROW_EXCEPT(OpenGLException, "Failed to create EGL surface, err "\
+                     + std::to_string(eglGetError()));
     }
 
     LOG_INFO << "Successfully initialized surface." << LOG_END;
-
-    return true;
 }
 
-bool App::initContext()
+void App::initContext()
 {
     EGLint attribs[] = {
         EGL_CONTEXT_CLIENT_VERSION,
@@ -293,17 +286,14 @@ bool App::initContext()
 
     context_ = eglCreateContext(display_, config_, nullptr, attribs);
     if (context_ == EGL_NO_CONTEXT) {
-        LOG_ERROR << "Failed to create EGL context, EGL error "
-                  << eglGetError() << LOG_END;
-        return false;
+        THROW_EXCEPT(OpenGLException, "Failed to create EGL context, err "\
+                     + std::to_string(eglGetError()));
     }
 
     LOG_INFO << "Initialized context successfully" << LOG_END;
-
-    return true;
 }
 
-bool App::chooseConfig()
+void App::chooseConfig()
 {
     constexpr EGLint attribs[] = {
             EGL_RENDERABLE_TYPE, EGL_OPENGL_ES3_BIT,
@@ -340,13 +330,10 @@ bool App::chooseConfig()
 
     if (cfg == last)
     {
-        LOG_ERROR << "Failed to find config" << LOG_END;
-        return false;
+        THROW_EXCEPT(OpenGLException, "Failed to find config");
     }
 
     config_ = *cfg;
-
-    return true;
 }
 
 void App::setupOpenGL()
@@ -355,6 +342,15 @@ void App::setupOpenGL()
     //glEnable(GL_PROGRAM_POINT_SIZE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+void App::postProcess()
+{
+    EGLBoolean ret = eglSwapBuffers(display_, surface_);
+    if (ret != EGL_TRUE)
+    {
+        THROW_EXCEPT(OpenGLException, "Failed to swap buffer");
+    }
 }
 
 void App::handleGainedFocus()

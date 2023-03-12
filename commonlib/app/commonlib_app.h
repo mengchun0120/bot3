@@ -13,9 +13,13 @@ namespace commonlib {
 
 class App {
 public:
+    static void initInstance(App *app);
+
+    static void clearInstance();
+
     inline static App *instance();
 
-    App();
+    App(const std::string &name1="");
 
     virtual ~App();
 
@@ -30,14 +34,16 @@ public:
 #endif
 
 #ifdef __ANDROID__
-    bool init(android_app *app);
+    void init(android_app *app);
 
     void handleCommand(int32_t cmd);
 
     inline android_app * app();
 
-    void updateViewport();
+    bool updateViewport();
 #endif
+
+    inline const std::string &name() const;
 
     virtual void process();
 
@@ -55,13 +61,13 @@ public:
 
 protected:
 #ifdef __ANDROID__
-    bool initDisplay();
+    void initDisplay();
 
-    bool initSurface();
+    void initSurface();
 
-    bool initContext();
+    void initContext();
 
-    bool chooseConfig();
+    void chooseConfig();
 
     virtual void handleGainedFocus();
 
@@ -77,6 +83,8 @@ protected:
 #endif
 
     void setupOpenGL();
+
+    void postProcess();
 
 protected:
     static App *k_instance;
@@ -94,6 +102,7 @@ protected:
     EGLConfig config_;
 #endif
 
+    std::string name_;
     commonlib::Point2 viewportSize_;
     bool running_;
 };
@@ -101,6 +110,11 @@ protected:
 App * App::instance()
 {
     return k_instance;
+}
+
+const std::string & App::name() const
+{
+    return name_;
 }
 
 float App::viewportWidth() const
