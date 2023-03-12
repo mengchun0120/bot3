@@ -24,8 +24,8 @@ public:
     virtual ~App();
 
 #ifdef DESKTOP_APP
-    void init(unsigned int width,
-              unsigned int height,
+    void init(unsigned int width1,
+              unsigned int height1,
               const std::string& title);
 
     inline GLFWwindow* window();
@@ -40,12 +40,15 @@ public:
 
     inline android_app * app();
 
-    bool updateViewport();
 #endif
 
     inline const std::string &name() const;
 
     virtual void process();
+
+    inline int width() const;
+
+    inline int height() const;
 
     inline float viewportWidth() const;
 
@@ -58,6 +61,8 @@ public:
     inline void setRunning(bool running);
 
     inline bool shouldRun() const;
+
+    bool updateViewport();
 
 protected:
 #ifdef __ANDROID__
@@ -86,6 +91,8 @@ protected:
 
     void postProcess();
 
+    void resetViewportSize();
+
 protected:
     static App *k_instance;
 
@@ -103,6 +110,8 @@ protected:
 #endif
 
     std::string name_;
+    int width_;
+    int height_;
     commonlib::Point2 viewportSize_;
     bool running_;
 };
@@ -115,6 +124,16 @@ App * App::instance()
 const std::string & App::name() const
 {
     return name_;
+}
+
+int App::width() const
+{
+    return width_;
+}
+
+int App::height() const
+{
+    return height_;
 }
 
 float App::viewportWidth() const

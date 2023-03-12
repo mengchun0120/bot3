@@ -17,7 +17,7 @@ TestShapeApp::TestShapeApp()
 
 #ifdef DESKTOP_APP
 void TestShapeApp::init(const std::string& configFile,
-                   const std::string& appDir)
+                        const std::string& appDir)
 {
     AppConfig::init(configFile, appDir);
     App::init(1000, 800, "Test Shape");
@@ -78,7 +78,7 @@ void TestShapeApp::setupTexture()
     float w = static_cast<float>(texture_.width()) / 4.0f;
 
     texRect_.load(100.0f, 100.0f, TexRectangle());
-    texPos_.init({w, 500.0});
+    texPos_.init({w, 300.0});
 }
 
 void TestShapeApp::process()
@@ -103,13 +103,13 @@ void TestShapeApp::process()
                  &borderColor_, 0, nullptr);
     texRect_.draw(program, &texPos_, nullptr, nullptr,
                   nullptr, texture_.id(), nullptr);
-    textSys.draw(program, "Hello world", Point2{200.0f, 700.0f},
+    textSys.draw(program, "Hello world", Point2{600.0f, 300.0f},
                  TextSize::BIG, &fillColor_);
-    textSys.draw(program, "Hello world", Point2{200.0f, 600.0f},
+    textSys.draw(program, "Hello world", Point2{600.0f, 250.0f},
                  TextSize::MEDIUM, &fillColor_);
-    textSys.draw(program, "Hello world", Point2{200.0f, 500.0f},
+    textSys.draw(program, "Hello world", Point2{600.0f, 200.0f},
                  TextSize::SMALL, &fillColor_);
-    textSys.draw(program, "Hello world", Point2{200.0f, 400.0f},
+    textSys.draw(program, "Hello world", Point2{600.0f, 150.0f},
                  TextSize::TINY, &fillColor_);
 
     glFlush();

@@ -81,6 +81,8 @@ void initGLEW()
 App::App(const std::string &name1)
     : window_(nullptr)
     , name_(name1)
+    , width_(0)
+    , height_(0)
     , viewportSize_{0.0f, 0.0f}
     , running_(false)
 {
@@ -98,22 +100,18 @@ App::~App()
 }
 
 
-void App::init(unsigned int width,
-               unsigned int height,
+void App::init(unsigned int width1,
+               unsigned int height1,
                const std::string& title)
 {
     initGLFW();
     setWindowHints();
-    window_ = createWindow(width, height, title);
+    window_ = createWindow(width1, height1, title);
     makeContextCurrent(window_);
     setupInputMode(window_);
     initGLEW();
 
-    int w, h;
-    glfwGetFramebufferSize(window_, &w, &h);
-    viewportSize_[0] = static_cast<float>(w);
-    viewportSize_[1] = static_cast<float>(h);
-
+    updateViewport();
     setupOpenGL();
 
     running_ = true;
@@ -125,6 +123,28 @@ void App::run()
     {
         process();
     }
+}
+
+bool App::updateViewport()
+{
+    int width1, height1;
+
+    glfwGetFramebufferSize(window_, &width1, &height1);
+
+    if (width_ != width1 || height_ != height1)
+    {
+        width_ = width1;
+        height_ = height1;
+
+        glViewport(0, 0, width_, height_);
+        resetViewportSize();
+
+        LOG_INFO << "Viewport updated " << viewportSize_ << LOG_END;
+
+        return true;
+    }
+
+    return false;
 }
 
 void App::setupOpenGL()
@@ -152,6 +172,8 @@ App::App(const std::string &name1)
     , surface_(EGL_NO_SURFACE)
     , context_(EGL_NO_CONTEXT)
     , name_(name1)
+    , width_(0)
+    , height_(0)
     , viewportSize_{0.0f, 0.0f}
     , running_(false)
 {
@@ -229,19 +251,19 @@ void App::handleCommand(int32_t cmd)
 
 bool App::updateViewport()
 {
-    EGLint width;
-    eglQuerySurface(display_, surface_, EGL_WIDTH, &width);
+    EGLint width1;
+    eglQuerySurface(display_, surface_, EGL_WIDTH, &width1);
 
-    EGLint height;
-    eglQuerySurface(display_, surface_, EGL_HEIGHT, &height);
+    EGLint height1;
+    eglQuerySurface(display_, surface_, EGL_HEIGHT, &height1);
 
-    float width1 = static_cast<float>(width);
-    float height1 = static_cast<float>(height);
-
-    if (viewportWidth() != width1 || viewportHeight() != height1)
+    if (width_ != width1 || height_ != height1)
     {
-        viewportSize_.init({width1, height1});
-        glViewport(0, 0, width, height);
+        width_ = width1;
+        height_ = height1;
+
+        glViewport(0, 0, width_, height_);
+        resetViewportSize();
 
         LOG_INFO << "Viewport updated " << viewportSize_ << LOG_END;
 
@@ -388,6 +410,13 @@ void App::handleLowMemory()
 }
 
 #endif
+
+void App::resetViewportSize()
+{
+    constexpr float fixedViewportWidth = 1080.0f;
+    viewportSize_[0] = fixedViewportWidth;
+    viewportSize_[1] = height_ * fixedViewportWidth / width_;
+}
 
 void App::process()
 {
