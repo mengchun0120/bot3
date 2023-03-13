@@ -155,6 +155,7 @@ void TestWidgetApp::setupInput()
     const AppConfig& cfg = AppConfig::instance();
     InputManager::initInstance(window(), viewportHeight(),
                                cfg.inputQueueCapacity());
+    InputManager::instance().enable();
 }
 
 #elif __ANDROID__

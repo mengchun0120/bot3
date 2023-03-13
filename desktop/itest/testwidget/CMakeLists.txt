@@ -8,7 +8,6 @@ include_directories(
 
 add_executable(
     testwidget
-    itest_testwidget_app.cpp
     testwidget_main.cpp
 )
 

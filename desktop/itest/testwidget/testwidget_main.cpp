@@ -3,10 +3,10 @@
 #include <cstdlib>
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
-#include <itest_testwidget_app.h>
+#include <botlib_testwidget_app.h>
 
 using namespace mcdane::commonlib;
-using namespace mcdane::itest;
+using namespace mcdane::botlib;
 
 struct Arguments {
     std::string configFile_;
@@ -63,7 +63,8 @@ int main(int argc, char* argv[])
 
     try
     {
-        TestWidgetApp app(args.configFile_, args.appDir_);
+        TestWidgetApp app;
+        app.init(args.configFile_, args.appDir_);
         app.run();
     }
     catch (const std::exception& e)
