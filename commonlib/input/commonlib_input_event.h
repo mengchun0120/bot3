@@ -4,7 +4,6 @@
 #include <string>
 #include <ostream>
 #include <commonlib_opengl.h>
-#include <commonlib_object.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -57,7 +56,7 @@ enum class EventType {
 
 std::string stringVal(EventType t);
 
-class InputEvent: public Object {
+class InputEvent {
 public:
     InputEvent() = default;
 
@@ -97,7 +96,22 @@ private:
     };
 };
 
-#endif // #ifdef DESTTOP_APP
+#elif __ANDROID__
+
+struct InputEvent {
+    enum Type {
+        POINTER_DOWN,
+        POINTER_UP,
+        POINTER_MOVE,
+    };
+
+    Type type_;
+    float x_;
+    float y_;
+    int index_;
+};
+
+#endif
 
 } // end of namespace commonlib
 } // end of namespace mcdane

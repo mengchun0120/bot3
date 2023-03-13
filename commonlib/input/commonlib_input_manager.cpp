@@ -6,6 +6,7 @@ namespace commonlib {
 
 std::shared_ptr<InputManager> InputManager::k_inputManager;
 
+#ifdef DESKTOP_APP
 bool validateInputManager(const std::string& func)
 {
     InputManager& mgr = InputManager::getInstance();
@@ -16,18 +17,15 @@ bool validateInputManager(const std::string& func)
         return false;
     }
 
-#ifdef DESKTOP_APP
     if (mgr.eventsFull())
     {
         LOG_WARN << "Input-event queue is full" << LOG_END;
         return false;
     }
-#endif
 
     return true;
 }
 
-#ifdef DESKTOP_APP
 void handleMouseButton(GLFWwindow* window,
                        int button,
                        int action,
@@ -108,7 +106,6 @@ InputManager::InputManager(GLFWwindow* window,
     viewportHeight_ = viewportHeight;
     events_.init(inputQueueCapacity);
 }
-#endif
 
 InputManager::~InputManager()
 {
@@ -123,11 +120,9 @@ void InputManager::enable()
     }
 
     clear();
-#ifdef DESKTOP_APP
     glfwSetCursorPosCallback(window_, handleMouseMove);
     glfwSetMouseButtonCallback(window_, handleMouseButton);
     glfwSetKeyCallback(window_, handleKey);
-#endif
     enabled_ = true;
 }
 
@@ -138,33 +133,15 @@ void InputManager::disable()
         return;
     }
 
-#ifdef DESKTOP_APP
     glfwSetCursorPosCallback(window_, nullptr);
     glfwSetMouseButtonCallback(window_, nullptr);
     glfwSetKeyCallback(window_, nullptr);
-#endif
     enabled_ = false;
 }
 
 void InputManager::clear()
 {
-#ifdef DESKTOP_APP
     events_.clear();
-#endif
-}
-
-#ifdef DESKTOP_APP
-void InputManager::processInput(InputProcessor& processor)
-{
-    while (!events_.empty())
-    {
-        InputEvent e;
-        events_.dequeue(e);
-        if (!processor(e))
-        {
-            break;
-        }
-    }
 }
 
 bool InputManager::addMouseButtonEvent(float x,
@@ -196,6 +173,81 @@ bool InputManager::addKeyEvent(int key,
     e.setKeyEvent(key, action, scancode, mods);
     return events_.enqueue(e);
 }
+
+#elif __ANDROID__
+
+void InputManager::initInstance(android_app *app,
+                                float width,
+                                float height,
+                                const Vector2 &viewportSize)
+{
+    if (k_inputManager)
+    {
+        LOG_WARN << "InputManger already initialized" << LOG_END;
+        return;
+    }
+
+    k_inputManager.reset(
+        new InputManager(app, width, height, viewportSize)
+    );
+}
+
+InputManager::InputManager(android_app *app,
+                             float width,
+                             float height,
+                             const Vector2 &viewportSize)
+    : app_(app)
+    , width_(width)
+    , height_(height)
+    , viewportSize_(viewportSize)
+{
+}
+
+InputManager::~InputManager()
+{
+}
+
+void InputManager::resetViewport(float width,
+                                 float height,
+                                 const Vector2 &viewportSize)
+{
+    width_ = width;
+    height_ = height;
+    viewportSize_ = viewportSize;
+}
+
+InputEvent InputManager::retrieveEvent(int i)
+{
+    InputEvent event;
+    GameActivityMotionEvent &motionEvent = app_->motionEvents[i];
+    int32_t action = motionEvent.action;
+
+    event.index_ = (action & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK)
+                   >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT;
+
+    GameActivityPointerAxes &pointer = motionEvent.pointers[event.index_];
+    event.x_ = GameActivityPointerAxes_getX(&pointer);
+    event.y_ = GameActivityPointerAxes_getY(&pointer);
+
+    switch(action & AINPUT_SOURCE_TOUCHSCREEN)
+    {
+        case AMOTION_EVENT_ACTION_DOWN:
+        case AMOTION_EVENT_ACTION_POINTER_DOWN:
+            event.type_ = InputEvent::POINTER_DOWN;
+            break;
+
+        case AMOTION_EVENT_ACTION_UP:
+        case AMOTION_EVENT_ACTION_POINTER_UP:
+            event.type_ = InputEvent::POINTER_UP;
+            break;
+
+        default:
+            event.type_ = InputEvent::POINTER_MOVE;
+    }
+
+    return event;
+}
+
 #endif
 
 } // end of namespace commonlib

@@ -102,7 +102,7 @@ App::~App()
 
 void App::init(unsigned int width1,
                unsigned int height1,
-               const std::string& title)
+               const std::string &title)
 {
     initGLFW();
     setWindowHints();
@@ -161,9 +161,13 @@ void App::postProcess()
     glfwPollEvents();
 }
 
-#endif
+void App::resetViewportSize()
+{
+    viewportSize_[0] = width_;
+    viewportSize_[1] = height_;
+}
 
-#ifdef __ANDROID__
+#elif __ANDROID__
 
 App::App(const std::string &name1)
     : app_(nullptr)
@@ -358,23 +362,6 @@ void App::chooseConfig()
     config_ = *cfg;
 }
 
-void App::setupOpenGL()
-{
-    glEnable(GL_BLEND);
-    //glEnable(GL_PROGRAM_POINT_SIZE);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-}
-
-void App::postProcess()
-{
-    EGLBoolean ret = eglSwapBuffers(display_, surface_);
-    if (ret != EGL_TRUE)
-    {
-        THROW_EXCEPT(OpenGLException, "Failed to swap buffer");
-    }
-}
-
 void App::handleGainedFocus()
 {
     LOG_DEBUG << "Handling APP_CMD_GAINED_FOCUS" << LOG_END;
@@ -409,7 +396,23 @@ void App::handleLowMemory()
     LOG_DEBUG << "Handling APP_CMD_LOST_FOCUS" << LOG_END;
 }
 
-#endif
+
+void App::setupOpenGL()
+{
+    glEnable(GL_BLEND);
+    //glEnable(GL_PROGRAM_POINT_SIZE);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+void App::postProcess()
+{
+    EGLBoolean ret = eglSwapBuffers(display_, surface_);
+    if (ret != EGL_TRUE)
+    {
+        THROW_EXCEPT(OpenGLException, "Failed to swap buffer");
+    }
+}
 
 void App::resetViewportSize()
 {
@@ -417,6 +420,8 @@ void App::resetViewportSize()
     viewportSize_[0] = fixedViewportWidth;
     viewportSize_[1] = height_ * fixedViewportWidth / width_;
 }
+
+#endif
 
 void App::process()
 {

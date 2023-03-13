@@ -2,11 +2,13 @@
 #define INCLUDED_COMMONLIB_APP_H
 
 #include <string>
-#include <commonlib_vector.h>
-#include <commonlib_opengl.h>
+
 #ifdef __ANDROID__
 #include <game-activity/native_app_glue/android_native_app_glue.h>
 #endif
+
+#include <commonlib_vector.h>
+#include <commonlib_opengl.h>
 
 namespace mcdane {
 namespace commonlib {
@@ -17,7 +19,7 @@ public:
 
     static void clearInstance();
 
-    inline static App *instance();
+    inline static App * instance();
 
     App(const std::string &name1="");
 
@@ -26,14 +28,14 @@ public:
 #ifdef DESKTOP_APP
     void init(unsigned int width1,
               unsigned int height1,
-              const std::string& title);
+              const std::string &title);
 
-    inline GLFWwindow* window();
+    inline GLFWwindow * window();
 
     void run();
-#endif
 
-#ifdef __ANDROID__
+#elif __ANDROID__
+
     void init(android_app *app);
 
     void handleCommand(int32_t cmd);
@@ -42,7 +44,7 @@ public:
 
 #endif
 
-    inline const std::string &name() const;
+    inline const std::string & name() const;
 
     virtual void process();
 
@@ -54,7 +56,7 @@ public:
 
     inline float viewportHeight() const;
 
-    inline const commonlib::Point2& viewportSize() const;
+    inline const commonlib::Point2 & viewportSize() const;
 
     inline bool running() const;
 
@@ -98,9 +100,8 @@ protected:
 
 #ifdef DESKTOP_APP
     GLFWwindow *window_;
-#endif
 
-#ifdef __ANDROID__
+#elif __ANDROID__
     android_app *app_;
     bool hasFocus_;
     EGLDisplay display_;
@@ -146,7 +147,7 @@ float App::viewportHeight() const
     return viewportSize_[1];
 }
 
-const commonlib::Point2& App::viewportSize() const
+const commonlib::Point2 & App::viewportSize() const
 {
     return viewportSize_;
 }
@@ -162,7 +163,8 @@ void App::setRunning(bool running)
 }
 
 #ifdef DESKTOP_APP
-GLFWwindow* App::window()
+
+GLFWwindow * App::window()
 {
     return window_;
 }
@@ -171,9 +173,9 @@ bool App::shouldRun() const
 {
     return 0 == glfwWindowShouldClose(window_) && running_;
 }
-#endif
 
-#ifdef __ANDROID__
+#elif __ANDROID__
+
 android_app * App::app()
 {
     return app_;
@@ -183,6 +185,7 @@ bool App::shouldRun() const
 {
     return hasFocus_ && running_;
 }
+
 #endif
 
 } // end of namespace commonlib
