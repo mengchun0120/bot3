@@ -111,10 +111,31 @@ struct InputEvent {
     int index_;
 };
 
+std::string toString(InputEvent::Type t);
+
 #endif
 
 } // end of namespace commonlib
 } // end of namespace mcdane
+
+namespace std {
+
+#ifdef DESKTOP_APP
+std::ostream & operator<<(std::ostream & os,
+                          const mcdane::commonlib::MouseButtonEvent &e);
+
+std::ostream & operator<<(std::ostream & os,
+                          const mcdane::commonlib::MouseMoveEvent &e);
+
+std::ostream & operator<<(std::ostream & os,
+                          const mcdane::commonlib::KeyEvent &e);
+
+#endif
+
+std::ostream & operator<<(std::ostream & os,
+                          const mcdane::commonlib::InputEvent &e);
+
+} // end of namespace std
 
 #endif // #ifndef INCLUDED_COMMONLIB_INPUT_EVENT_H
 

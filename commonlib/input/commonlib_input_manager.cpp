@@ -4,12 +4,12 @@
 namespace mcdane {
 namespace commonlib {
 
-std::shared_ptr<InputManager> InputManager::k_inputManager;
+std::shared_ptr<InputManager> InputManager::k_instance;
 
 #ifdef DESKTOP_APP
 bool validateInputManager(const std::string& func)
 {
-    InputManager& mgr = InputManager::getInstance();
+    InputManager& mgr = InputManager::instance();
 
     if (!mgr.enabled())
     {
@@ -39,7 +39,7 @@ void handleMouseButton(GLFWwindow* window,
     double x, y;
     glfwGetCursorPos(window, &x, &y);
 
-    InputManager::getInstance().addMouseButtonEvent(
+    InputManager::instance().addMouseButtonEvent(
         static_cast<float>(x), static_cast<float>(y), button, action, mods
     );
 }
@@ -53,7 +53,7 @@ void handleMouseMove(GLFWwindow *window,
         return;
     }
 
-    InputManager::getInstance().addMouseMoveEvent(
+    InputManager::instance().addMouseMoveEvent(
         static_cast<float>(x), static_cast<float>(y)
     );
 }
@@ -69,20 +69,20 @@ void handleKey(GLFWwindow* window,
         return;
     }
 
-    InputManager::getInstance().addKeyEvent(key, scancode, action, mods);
+    InputManager::instance().addKeyEvent(key, scancode, action, mods);
 }
 
 void InputManager::initInstance(GLFWwindow* window,
                                 float viewportHeight,
                                 unsigned int inputQueueCapacity)
 {
-    if (k_inputManager)
+    if (k_instance)
     {
         LOG_WARN << "InputManger already initialized" << LOG_END;
         return;
     }
 
-    k_inputManager.reset(
+    k_instance.reset(
         new InputManager(window, viewportHeight, inputQueueCapacity)
     );
 }
@@ -181,21 +181,21 @@ void InputManager::initInstance(android_app *app,
                                 float height,
                                 const Vector2 &viewportSize)
 {
-    if (k_inputManager)
+    if (k_instance)
     {
         LOG_WARN << "InputManger already initialized" << LOG_END;
         return;
     }
 
-    k_inputManager.reset(
+    k_instance.reset(
         new InputManager(app, width, height, viewportSize)
     );
 }
 
 InputManager::InputManager(android_app *app,
-                             float width,
-                             float height,
-                             const Vector2 &viewportSize)
+                           float width,
+                           float height,
+                           const Vector2 &viewportSize)
     : app_(app)
     , width_(width)
     , height_(height)

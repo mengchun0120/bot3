@@ -165,8 +165,93 @@ const KeyEvent& InputEvent::keyEvent() const
     return keyEvent_;
 }
 
+#elif __ANDROID__
+
+std::string toString(InputEvent::Type t)
+{
+    static std::string str[] = {
+        "PointerDown",
+        "PointerUp",
+        "PointerMove",
+    };
+
+    return str[static_cast<int>(t)];
+}
+
 #endif
 
 } // end of namespace commonlib
 } // end of namespace mcdane
+
+namespace std {
+
+using namespace mcdane::commonlib;
+
+#ifdef DESKTOP_APP
+std::ostream & operator<<(std::ostream & os,
+                          const MouseButtonEvent &e)
+{
+    os << "MouseButtonEvent(button=" << buttonStr(e.button_)
+       << ", action=" << actionStr(e.action_)
+       << ", x=" << e.x_
+       << ", y=" << e.y_
+       << ", mods=" << e.mods_
+       << ")";
+
+    return os;
+}
+
+std::ostream & operator<<(std::ostream & os,
+                          const MouseMoveEvent &e)
+{
+    os << "MouseMoveEvent(x=" << e.x_ << ", y=" << e.y_ << ")";
+    return os;
+}
+
+std::ostream & operator<<(std::ostream & os,
+                          const KeyEvent &e)
+{
+    os << "KeyEvent(action=" << actionStr(e.action_)
+       << ", key=" << e.key_
+       << ", scanCode=" << e.scancode_
+       << ", modes=" << e.mods_
+       << ")";
+
+    return os;
+}
+
+std::ostream & operator<<(std::ostream & os,
+                          const InputEvent &e)
+{
+    switch (e.type())
+    {
+        case EventType::MOUSE_BUTTON:
+            return os << e.mouseButtonEvent();
+        case EventType::MOUSE_MOVE:
+            return os << e.mouseMoveEvent();
+        case EventType::KEY:
+            return os << e.keyEvent();
+        default:
+            break;
+    }
+
+    return os;
+}
+
+#elif __ANDROID__
+
+std::ostream & operator<<(std::ostream & os,
+                          const InputEvent &e)
+{
+    os << toString(e.type_) << "(x=" << e.x_
+       << ", y=" << e.y_ << ", index=" << e.index_ << ")";
+
+    return os;
+}
+
+#endif
+
+
+} // end of namespace std
+
 

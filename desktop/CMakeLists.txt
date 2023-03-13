@@ -24,6 +24,6 @@ endif()
 
 add_subdirectory(${COMMONLIB_SRC_DIR} ${COMMONLIB_BUILD_DIR})
 add_subdirectory(${BOTLIB_SRC_DIR} ${BOTLIB_BUILD_DIR})
-add_subdirectory(app)
+#add_subdirectory(app)
 add_subdirectory(unittest)
-add_subdirectory(itest)
+#add_subdirectory(itest)

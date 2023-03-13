@@ -17,7 +17,7 @@ namespace commonlib {
 
 class InputManager {
 public:
-    inline static InputManager & getInstance();
+    inline static InputManager & instance();
 
 #ifdef DESKTOP_APP
     static void initInstance(GLFWwindow *window,
@@ -76,7 +76,7 @@ public:
     void processInput(P &processor);
 
 private:
-    static std::shared_ptr<InputManager> k_inputManager;
+    static std::shared_ptr<InputManager> k_instance;
 
 #ifdef DESKTOP_APP
     GLFWwindow *window_;
@@ -93,9 +93,9 @@ private:
 
 };
 
-InputManager & InputManager::getInstance()
+InputManager & InputManager::instance()
 {
-    return *k_inputManager;
+    return *k_instance;
 }
 
 #ifdef DESKTOP_APP

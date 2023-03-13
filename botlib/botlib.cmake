@@ -14,6 +14,7 @@ list(APPEND
     ${BOTLIB_SRC_DIR}/app/botlib_app_config.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_testmap_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_testshape_app.cpp
+    ${BOTLIB_SRC_DIR}/app/botlib_testwidget_app.cpp
 )
 
 list(APPEND

@@ -261,20 +261,20 @@ bool App::updateViewport()
     EGLint height1;
     eglQuerySurface(display_, surface_, EGL_HEIGHT, &height1);
 
-    if (width_ != width1 || height_ != height1)
+    if (width_ == width1 || height_ == height1)
     {
-        width_ = width1;
-        height_ = height1;
-
-        glViewport(0, 0, width_, height_);
-        resetViewportSize();
-
-        LOG_INFO << "Viewport updated " << viewportSize_ << LOG_END;
-
-        return true;
+        return false;
     }
 
-    return false;
+    width_ = width1;
+    height_ = height1;
+
+    glViewport(0, 0, width_, height_);
+    resetViewportSize();
+
+    LOG_INFO << "Viewport updated " << viewportSize_ << LOG_END;
+
+    return true;
 }
 
 void App::initDisplay()
