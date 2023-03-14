@@ -53,30 +53,41 @@ void WidgetGroup::setWidget(unsigned int idx,
 }
 
 #ifdef DESKTOP_APP
-void WidgetGroup::process(const commonlib::InputEvent& event)
+void WidgetGroup::process(const InputEvent &event)
 {
 
     switch (event.type())
     {
         case EventType::KEY:
-        {
             process(event.keyEvent());
             break;
-        }
         case EventType::MOUSE_MOVE:
-        {
             process(event.mouseMoveEvent());
             break;
-        }
         case EventType::MOUSE_BUTTON:
-        {
             process(event.mouseButtonEvent());
             break;
-        }
         default:
-        {
-            THROW_EXCEPT(InvalidArgumentException, "Invalid event type ");
-        }
+            LOG_WARN << "Invalid event type " << static_cast<int>(event.type())
+                     << LOG_END;
+            break;
+    }
+}
+#elif __ANDROID__
+void WidgetGroup::process(const InputEvent &event)
+{
+    switch (event.type_)
+    {
+        case InputEvent::POINTER_DOWN:
+            onPointerDown(event.x_, event.y_);
+            break;
+        case InputEvent::POINTER_MOVE:
+            onPointerOver(event.x_, event.y_);
+            break;
+        default:
+            LOG_WARN << "Invalid type " << static_cast<int>(event.type_)
+                     << LOG_END;
+            break;
     }
 }
 #endif
@@ -104,21 +115,42 @@ void WidgetGroup::shiftPos(float dx,
 }
 
 #ifdef DESKTOP_APP
-void WidgetGroup::process(const KeyEvent& event)
+void WidgetGroup::process(const KeyEvent &event)
 {
     if (focusWidgetIdx_ >= 0)
     {
-        widgets_[focusWidgetIdx_]->process(event);
+        widgets_[focusWidgetIdx_]->onKey(event);
     }
 }
 
-void WidgetGroup::process(const MouseMoveEvent& event)
+void WidgetGroup::process(const MouseMoveEvent &event)
 {
-    int idx = findWidget(event.x_, event.y_);
+    onPointerOver(event.x_, event.y_);
+}
+
+void WidgetGroup::process(const MouseButtonEvent &event)
+{
+    if (event.button_ != GLFW_MOUSE_BUTTON_LEFT)
+    {
+        return;
+    }
+
+    if (event.action_ == GLFW_PRESS)
+    {
+        onPointerDown(event.x_, event.y_);
+    }
+}
+#endif
+
+void WidgetGroup::onPointerOver(float x, float y)
+{
+    int idx = findWidget(x, y);
+
+    LOG_INFO << "PointerOver " << x << " " << y << " " << idx << LOG_END;
 
     if (idx != hoverWidgetIdx_ && hoverWidgetIdx_ != -1)
     {
-        widgets_[hoverWidgetIdx_]->onMouseOut();
+        widgets_[hoverWidgetIdx_]->onPointerOut();
     }
 
     if (idx == -1)
@@ -129,34 +161,30 @@ void WidgetGroup::process(const MouseMoveEvent& event)
 
     hoverWidgetIdx_ = idx;
 
-    widgets_[hoverWidgetIdx_]->process(event);
+    widgets_[hoverWidgetIdx_]->onPointerOver();
 }
 
-void WidgetGroup::process(const MouseButtonEvent& event)
+void WidgetGroup::onPointerDown(float x, float y)
 {
-    int idx = findWidget(event.x_, event.y_);
-    bool handle = event.button_ == GLFW_MOUSE_BUTTON_LEFT &&
-                  event.action_ == GLFW_PRESS;
+    int idx = findWidget(x, y);
 
-    if (handle)
+    LOG_INFO << "PointerDown " << x << " " << y << " " << idx << LOG_END;
+
+    if (idx != focusWidgetIdx_)
     {
-        if (idx != focusWidgetIdx_)
+        if (focusWidgetIdx_ != -1)
         {
-            if (focusWidgetIdx_ != -1)
-            {
-                widgets_[focusWidgetIdx_]->onLostFocus();
-            }
-
-            focusWidgetIdx_ = idx;
+            widgets_[focusWidgetIdx_]->onLostFocus();
         }
+
+        focusWidgetIdx_ = idx;
     }
 
     if (idx >= 0)
     {
-        widgets_[idx]->process(event);
+        widgets_[idx]->onPointerDown();
     }
 }
-#endif
 
 int WidgetGroup::findWidget(float x,
                             float y)

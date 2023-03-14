@@ -47,6 +47,8 @@ void Button::init(float x,
     state_ = STATE_NORMAL;
     Widget::init(x, y, width, height, visible, acceptInput, true);
     resetTextPos();
+
+    LOG_INFO << "Button " << text_ << " " << pos_ << LOG_END;
 }
 
 void Button::present() const
@@ -85,6 +87,8 @@ void Button::setPos(float x,
 {
     Widget::setPos(x, y);
     resetTextPos();
+
+    LOG_INFO << "Button " << text_ << " " << pos_ << LOG_END;
 }
 
 void Button::shiftPos(float dx,
@@ -96,28 +100,26 @@ void Button::shiftPos(float dx,
 }
 
 #ifdef DESKTOP_APP
-
-void Button::process(const KeyEvent &event)
+void Button::onKey(const commonlib::KeyEvent &e)
 {
     if (!acceptInput_)
     {
         return;
     }
 
-    switch (event.key_)
+    if (e.key_ == GLFW_KEY_ENTER && e.action_ == GLFW_PRESS && action_)
     {
-        case GLFW_KEY_ENTER:
-            if (action_ && event.action_ == GLFW_PRESS)
-            {
-                action_();
-            }
-            break;
-        default:
-            break;
+        action_();
     }
 }
+#endif
 
-void Button::process(const MouseMoveEvent &event)
+void Button::onPointerOut()
+{
+    state_ = STATE_NORMAL;
+}
+
+void Button::onPointerOver()
 {
     if (!acceptInput_)
     {
@@ -127,32 +129,20 @@ void Button::process(const MouseMoveEvent &event)
     state_ = STATE_HOVER;
 }
 
-void Button::process(const MouseButtonEvent &event)
+void Button::onPointerDown()
 {
     if (!acceptInput_)
     {
         return;
     }
 
-    if (event.button_ == GLFW_MOUSE_BUTTON_LEFT)
+    state_ = STATE_PRESSED;
+
+    if (action_)
     {
-        if (event.action_ == GLFW_PRESS)
-        {
-            state_ = STATE_PRESSED;
-        }
-        else if (event.action_ == GLFW_RELEASE && action_)
-        {
-            action_();
-        }
+        action_();
     }
 }
-
-void Button::onMouseOut()
-{
-    state_ = STATE_NORMAL;
-}
-
-#endif
 
 void Button::resetTextPos()
 {

@@ -31,6 +31,8 @@ protected:
 
     void setupTexture();
 
+    void onViewportChange(float width1, float height1) override;
+
 private:
     botlib::Polygon triangle_;
     botlib::Rectangle square_;

@@ -2,8 +2,8 @@
 #define INCLUDED_BOTLIB_WIDGET_H
 
 #include <commonlib_opengl.h>
-#include <commonlib_input_event.h>
 #include <commonlib_vector.h>
+#include <commonlib_input_event.h>
 #include <botlib_rectangle.h>
 #include <botlib_constants.h>
 
@@ -25,16 +25,18 @@ public:
               bool hasTexture=false);
 
 #ifdef DESKTOP_APP
-    virtual inline void process(const commonlib::KeyEvent& e);
-
-    virtual inline void process(const commonlib::MouseMoveEvent& e);
-
-    virtual inline void process(const commonlib::MouseButtonEvent& e);
+    virtual inline void onKey(const commonlib::KeyEvent &e);
+#endif
 
     virtual inline void onLostFocus();
 
-    virtual inline void onMouseOut();
-#endif
+    virtual inline void onPointerOut();
+
+    virtual inline void onPointerOver();
+
+    virtual inline void onPointerDown();
+
+//    virtual inline void onPointerUp();
 
     virtual void setPos(float x,
                         float y);
@@ -71,27 +73,31 @@ protected:
 };
 
 #ifdef DESKTOP_APP
-void Widget::process(const commonlib::KeyEvent& e)
+void Widget::onKey(const commonlib::KeyEvent &e)
 {
 }
-
-void Widget::process(const commonlib::MouseMoveEvent& e)
-{
-}
-
-void Widget::process(const commonlib::MouseButtonEvent& e)
-{
-}
+#endif
 
 void Widget::onLostFocus()
 {
 }
 
-void Widget::onMouseOut()
+void Widget::onPointerOut()
 {
 }
-#endif
 
+void Widget::onPointerOver()
+{
+}
+
+void Widget::onPointerDown()
+{
+}
+/*
+void Widget::onPointerUp()
+{
+}
+*/
 bool Widget::visible() const
 {
     return visible_;

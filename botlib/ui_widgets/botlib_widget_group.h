@@ -23,9 +23,7 @@ public:
     void setWidget(unsigned int idx,
                    Widget* widget);
 
-#ifdef DESKTOP_APP
-    void process(const commonlib::InputEvent& event);
-#endif
+    void process(const commonlib::InputEvent &event);
 
     void present();
 
@@ -38,12 +36,16 @@ public:
 
 protected:
 #ifdef DESKTOP_APP
-    void process(const commonlib::KeyEvent& event);
+    void process(const commonlib::KeyEvent &event);
 
-    void process(const commonlib::MouseMoveEvent& event);
+    void process(const commonlib::MouseMoveEvent &event);
 
-    void process(const commonlib::MouseButtonEvent& event);
+    void process(const commonlib::MouseButtonEvent &event);
 #endif
+
+    void onPointerOver(float x, float y);
+
+    void onPointerDown(float x, float y);
 
     int findWidget(float x,
                    float y);

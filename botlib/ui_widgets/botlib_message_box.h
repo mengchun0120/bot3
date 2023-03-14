@@ -43,9 +43,7 @@ public:
 
     void present();
 
-#ifdef DESKTOP_APP
     void process(const commonlib::InputEvent& e);
-#endif
 
     inline bool visible() const;
 

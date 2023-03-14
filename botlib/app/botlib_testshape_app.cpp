@@ -83,12 +83,7 @@ void TestShapeApp::setupTexture()
 
 void TestShapeApp::process()
 {
-#ifdef __ANDROID__
-    if (updateViewport())
-    {
-        setupShader();
-    }
-#endif
+    App::process();
 
     Graphics& g = Context::graphics();
     SimpleShaderProgram& program = g.simpleShader();
@@ -115,6 +110,12 @@ void TestShapeApp::process()
     glFlush();
 
     postProcess();
+}
+
+void TestShapeApp::onViewportChange(float width1, float height1)
+{
+    App::onViewportChange(width1, height1);
+    setupShader();
 }
 
 } // end of namespace botlib

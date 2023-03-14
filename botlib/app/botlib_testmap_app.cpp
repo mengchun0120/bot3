@@ -46,7 +46,7 @@ void TestMapApp::init(android_app *app)
 
 void TestMapApp::process()
 {
-    updateViewport();
+    App::process();
 
     glClear(GL_COLOR_BUFFER_BIT);
     map_.present();

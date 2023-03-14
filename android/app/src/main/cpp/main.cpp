@@ -8,6 +8,7 @@
 #include <commonlib_file_utils.h>
 #include <botlib_testshape_app.h>
 #include <botlib_testmap_app.h>
+#include <botlib_testwidget_app.h>
 #include <androidlib_android_out.h>
 #include <androidlib_robot_app.h>
 
@@ -50,6 +51,12 @@ void handleInitWindow(android_app *app)
     else if (appName == "testmap")
     {
         TestMapApp *a = new TestMapApp();
+        a->init(app);
+        app->userData = a;
+    }
+    else if (appName == "testwidget")
+    {
+        TestWidgetApp *a = new TestWidgetApp();
         a->init(app);
         app->userData = a;
     }

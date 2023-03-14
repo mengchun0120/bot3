@@ -60,7 +60,6 @@ void MessageBox::present()
     }
 }
 
-#ifdef DESKTOP_APP
 void MessageBox::process(const InputEvent& e)
 {
     buttonClicked_ = BUTTON_NONE;
@@ -69,7 +68,6 @@ void MessageBox::process(const InputEvent& e)
         widgets_.process(e);
     }
 }
-#endif
 
 void MessageBox::initBack()
 {

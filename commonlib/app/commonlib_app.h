@@ -64,8 +64,6 @@ public:
 
     inline bool shouldRun() const;
 
-    bool updateViewport();
-
 protected:
 #ifdef __ANDROID__
     void initDisplay();
@@ -89,11 +87,13 @@ protected:
     virtual void handleLowMemory();
 #endif
 
+    void getViewportSize(float &width1, float &height1);
+
+    virtual void onViewportChange(float width1, float height1);
+
     void setupOpenGL();
 
     void postProcess();
-
-    void resetViewportSize();
 
 protected:
     static App *k_instance;
@@ -111,8 +111,6 @@ protected:
 #endif
 
     std::string name_;
-    int width_;
-    int height_;
     commonlib::Point2 viewportSize_;
     bool running_;
 };

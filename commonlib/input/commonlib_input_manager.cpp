@@ -73,7 +73,6 @@ void handleKey(GLFWwindow* window,
 }
 
 void InputManager::initInstance(GLFWwindow* window,
-                                float viewportHeight,
                                 unsigned int inputQueueCapacity)
 {
     if (k_instance)
@@ -83,12 +82,11 @@ void InputManager::initInstance(GLFWwindow* window,
     }
 
     k_instance.reset(
-        new InputManager(window, viewportHeight, inputQueueCapacity)
+        new InputManager(window, inputQueueCapacity)
     );
 }
 
 InputManager::InputManager(GLFWwindow* window,
-                           float viewportHeight,
                            unsigned int inputQueueCapacity)
 {
     if (!window)
@@ -96,14 +94,8 @@ InputManager::InputManager(GLFWwindow* window,
         THROW_EXCEPT(InvalidArgumentException, "window is null");
     }
 
-    if (viewportHeight <= 0.0f)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "viewportHeight is invalid");
-    }
-
     window_ = window;
     enabled_ = false;
-    viewportHeight_ = viewportHeight;
     events_.init(inputQueueCapacity);
 }
 
@@ -151,7 +143,7 @@ bool InputManager::addMouseButtonEvent(float x,
                                        int mods)
 {
     InputEvent e;
-    e.setMouseButtonEvent(x, viewportHeight_-y,
+    e.setMouseButtonEvent(x, viewportSize_[1]-y,
                           button, action, mods);
     return events_.enqueue(e);
 }
@@ -160,7 +152,7 @@ bool InputManager::addMouseMoveEvent(float x,
                                      float y)
 {
     InputEvent e;
-    e.setMouseMoveEvent(x, viewportHeight_-y);
+    e.setMouseMoveEvent(x, viewportSize_[1]-y);
     return events_.enqueue(e);
 }
 
@@ -176,10 +168,7 @@ bool InputManager::addKeyEvent(int key,
 
 #elif __ANDROID__
 
-void InputManager::initInstance(android_app *app,
-                                float width,
-                                float height,
-                                const Vector2 &viewportSize)
+void InputManager::initInstance(android_app *app)
 {
     if (k_instance)
     {
@@ -188,32 +177,17 @@ void InputManager::initInstance(android_app *app,
     }
 
     k_instance.reset(
-        new InputManager(app, width, height, viewportSize)
+        new InputManager(app)
     );
 }
 
-InputManager::InputManager(android_app *app,
-                           float width,
-                           float height,
-                           const Vector2 &viewportSize)
+InputManager::InputManager(android_app *app)
     : app_(app)
-    , width_(width)
-    , height_(height)
-    , viewportSize_(viewportSize)
 {
 }
 
 InputManager::~InputManager()
 {
-}
-
-void InputManager::resetViewport(float width,
-                                 float height,
-                                 const Vector2 &viewportSize)
-{
-    width_ = width;
-    height_ = height;
-    viewportSize_ = viewportSize;
 }
 
 InputEvent InputManager::retrieveEvent(int i)
@@ -226,8 +200,9 @@ InputEvent InputManager::retrieveEvent(int i)
                    >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT;
 
     GameActivityPointerAxes &pointer = motionEvent.pointers[event.index_];
+
     event.x_ = GameActivityPointerAxes_getX(&pointer);
-    event.y_ = GameActivityPointerAxes_getY(&pointer);
+    event.y_ = height_ - GameActivityPointerAxes_getY(&pointer);
 
     switch(action & AINPUT_SOURCE_TOUCHSCREEN)
     {

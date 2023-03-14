@@ -81,8 +81,6 @@ void initGLEW()
 App::App(const std::string &name1)
     : window_(nullptr)
     , name_(name1)
-    , width_(0)
-    , height_(0)
     , viewportSize_{0.0f, 0.0f}
     , running_(false)
 {
@@ -111,9 +109,7 @@ void App::init(unsigned int width1,
     setupInputMode(window_);
     initGLEW();
 
-    updateViewport();
     setupOpenGL();
-
     running_ = true;
 }
 
@@ -125,26 +121,12 @@ void App::run()
     }
 }
 
-bool App::updateViewport()
+void App::getViewportSize(float &width1, float &height1)
 {
-    int width1, height1;
-
-    glfwGetFramebufferSize(window_, &width1, &height1);
-
-    if (width_ != width1 || height_ != height1)
-    {
-        width_ = width1;
-        height_ = height1;
-
-        glViewport(0, 0, width_, height_);
-        resetViewportSize();
-
-        LOG_INFO << "Viewport updated " << viewportSize_ << LOG_END;
-
-        return true;
-    }
-
-    return false;
+    int w, h;
+    glfwGetFramebufferSize(window_, &w, &h);
+    width1 = static_cast<float>(w);
+    height1 = static_cast<float>(h);
 }
 
 void App::setupOpenGL()
@@ -159,12 +141,6 @@ void App::postProcess()
 {
     glfwSwapBuffers(window_);
     glfwPollEvents();
-}
-
-void App::resetViewportSize()
-{
-    viewportSize_[0] = width_;
-    viewportSize_[1] = height_;
 }
 
 #elif __ANDROID__
@@ -216,9 +192,7 @@ void App::init(android_app *app)
                      + std::to_string(eglGetError()));
     }
 
-    updateViewport();
     setupOpenGL();
-
     running_ = true;
 }
 
@@ -251,30 +225,6 @@ void App::handleCommand(int32_t cmd)
     LOG_DEBUG << "Status: hasFocus=" << hasFocus_ << " display=" << display_
               << " surface=" << surface_ << " context=" << context_
               << " config=" << config_ << LOG_END;
-}
-
-bool App::updateViewport()
-{
-    EGLint width1;
-    eglQuerySurface(display_, surface_, EGL_WIDTH, &width1);
-
-    EGLint height1;
-    eglQuerySurface(display_, surface_, EGL_HEIGHT, &height1);
-
-    if (width_ == width1 || height_ == height1)
-    {
-        return false;
-    }
-
-    width_ = width1;
-    height_ = height1;
-
-    glViewport(0, 0, width_, height_);
-    resetViewportSize();
-
-    LOG_INFO << "Viewport updated " << viewportSize_ << LOG_END;
-
-    return true;
 }
 
 void App::initDisplay()
@@ -396,6 +346,15 @@ void App::handleLowMemory()
     LOG_DEBUG << "Handling APP_CMD_LOST_FOCUS" << LOG_END;
 }
 
+void App::getViewportSize(float &width1, float &height1)
+{
+    EGLint w, h;
+
+    eglQuerySurface(display_, surface_, EGL_WIDTH, &w);
+    eglQuerySurface(display_, surface_, EGL_HEIGHT, &h);
+    width1 = static_cast<float>(w);
+    height1 = static_cast<float>(h);
+}
 
 void App::setupOpenGL()
 {
@@ -414,17 +373,24 @@ void App::postProcess()
     }
 }
 
-void App::resetViewportSize()
-{
-    constexpr float fixedViewportWidth = 1080.0f;
-    viewportSize_[0] = fixedViewportWidth;
-    viewportSize_[1] = height_ * fixedViewportWidth / width_;
-}
-
 #endif
 
 void App::process()
 {
+    float width1, height1;
+
+    getViewportSize(width1, height1);
+    if (width1 != viewportSize_[0] || height1 != viewportSize_[1])
+    {
+        onViewportChange(width1, height1);
+    }
+}
+
+void App::onViewportChange(float &width1, float &height1)
+{
+    viewportSize_[0] = width1;
+    viewportSize_[1] = height1;
+    glViewport(0, 0, width1, height1);
 }
 
 } // end of namespace commonlib

@@ -21,11 +21,9 @@ public:
 
 #ifdef DESKTOP_APP
     static void initInstance(GLFWwindow *window,
-                             float viewportHeight,
                              unsigned int inputQueueCapacity);
 
     InputManager(GLFWwindow *window,
-                 float viewportHeight,
                  unsigned int inputQueueCapacity);
 
     inline bool eventsFull() const;
@@ -53,19 +51,9 @@ public:
     void disable();
 
 #elif __ANDROID__
-    static void initInstance(android_app *app,
-                             float width,
-                             float height,
-                             const Vector2 &viewportSize);
+    static void initInstance(android_app *app);
 
-    InputManager(android_app *app,
-                 float width,
-                 float height,
-                 const Vector2 &viewportSize);
-
-    void resetViewport(float width,
-                       float height,
-                       const Vector2 &viewportSize);
+    InputManager(android_app *app);
 
     InputEvent retrieveEvent(int i);
 #endif
@@ -75,6 +63,8 @@ public:
     template <typename P>
     void processInput(P &processor);
 
+    inline void setViewportSize(const Vector2 &viewportSize);
+
 private:
     static std::shared_ptr<InputManager> k_instance;
 
@@ -82,15 +72,11 @@ private:
     GLFWwindow *window_;
     FixedQueue<InputEvent> events_;
     bool enabled_;
-    float viewportHeight_;
-
 #elif __ANDROID__
     android_app *app_;
-    float width_;
-    float height_;
-    Vector2 viewportSize_;
 #endif
 
+    Vector2 viewportSize_;
 };
 
 InputManager & InputManager::instance()
@@ -141,6 +127,11 @@ void InputManager::processInput(P &processor)
 }
 
 #endif
+
+void InputManager::setViewportSize(const Vector2 &viewportSize)
+{
+    viewportSize_ = viewportSize;
+}
 
 } // end of namespace commonlib
 } // end of namespace mcdane

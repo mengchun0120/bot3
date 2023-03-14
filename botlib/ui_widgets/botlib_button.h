@@ -59,14 +59,14 @@ public:
                   float dy) override;
 
 #ifdef DESKTOP_APP
-    void process(const commonlib::KeyEvent& event) override;
-
-    void process(const commonlib::MouseMoveEvent& event) override;
-
-    void process(const commonlib::MouseButtonEvent& event) override;
-
-    void onMouseOut() override;
+    void onKey(const commonlib::KeyEvent &e);
 #endif
+
+    void onPointerOut() override;
+
+    void onPointerOver() override;
+
+    void onPointerDown() override;
 
 private:
     void resetTextPos();

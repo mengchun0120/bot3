@@ -135,6 +135,17 @@ void GameMap::removeObj(GameObject* obj)
     cells_[obj->row()][obj->col()][layer].remove(obj);
 }
 
+void GameMap::setViewportSize(float viewportWidth,
+                              float viewportHeight)
+{
+    viewportSize_.init({viewportWidth, viewportHeight});
+    viewportHalfSize_ = viewportSize_ / 2.0f;
+    minViewportOrigin_ = viewportHalfSize_;
+    maxViewportOrigin_.init({width() - viewportHalfSize_[0],
+                             height() - viewportHalfSize_[1]});
+
+}
+
 void GameMap::setViewportOrigin(const commonlib::Vector2& p)
 {
     setViewportOrigin(p[0], p[1]);
@@ -320,29 +331,6 @@ void GameMap::setBoundary(unsigned int rows, unsigned int cols)
     boundary_.init(0.0f, cols * k_cellBreath, 0.0f, rows * k_cellBreath);
 
     LOG_INFO << "Map width=" << width() << " height=" << height() << LOG_END;
-}
-
-void GameMap::setViewportSize(float viewportWidth,
-                              float viewportHeight)
-{
-    if (viewportWidth <= 0.0f)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid viewportWidth " + std::to_string(viewportWidth));
-    }
-
-    if (viewportHeight <= 0.0f)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid viewportHeight " + std::to_string(viewportHeight));
-    }
-
-    viewportSize_.init({viewportWidth, viewportHeight});
-    viewportHalfSize_ = viewportSize_ / 2.0f;
-    minViewportOrigin_ = viewportHalfSize_;
-    maxViewportOrigin_.init({width() - viewportHalfSize_[0],
-                             height() - viewportHalfSize_[1]});
-
 }
 
 void GameMap::resetViewableRegion()

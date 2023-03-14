@@ -26,31 +26,7 @@ void TestWidgetApp::init(const std::string& configFile,
     setupWidgets();
     setupInput();
 }
-
-bool TestWidgetApp::operator()(const commonlib::InputEvent& e)
-{
-    if (msgBox_.visible())
-    {
-        msgBox_.process(e);
-        if (msgBox_.buttonClicked() == MessageBox::BUTTON_OK)
-        {
-            std::cerr << "OK clicked" << std::endl;
-        }
-        else if(msgBox_.buttonClicked() == MessageBox::BUTTON_CANCEL)
-        {
-            std::cerr << "Cancel clicked" << std::endl;
-        }
-    }
-    else
-    {
-        widgets_.process(e);
-    }
-
-    return true;
-}
-
 #elif __ANDROID__
-
 void TestWidgetApp::init(android_app *app)
 {
     App::init(app);
@@ -60,27 +36,13 @@ void TestWidgetApp::init(android_app *app)
     setupWidgets();
     setupInput(app);
 }
-
-bool TestWidgetApp::operator()(const commonlib::InputEvent& e)
-{
-    LOG_INFO << e << LOG_END;
-    return true;
-}
-
 #endif
 
 void TestWidgetApp::process()
 {
-    InputManager &inputMgr = InputManager::instance();
+    App::process();
 
-#ifdef __ANDROID__
-    if (updateViewport())
-    {
-        inputMgr.resetViewport(width_, height_, viewportSize_);
-    }
-#endif
-
-    inputMgr.processInput(*this);
+    InputManager::instance().processInput(*this);
 
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -94,6 +56,31 @@ void TestWidgetApp::process()
 
     postProcess();
 }
+
+bool TestWidgetApp::operator()(const commonlib::InputEvent& e)
+{
+    LOG_INFO << "Process " << e << LOG_END;
+
+    if (msgBox_.visible())
+    {
+        msgBox_.process(e);
+        if (msgBox_.buttonClicked() == MessageBox::BUTTON_OK)
+        {
+            LOG_INFO << "OK clicked" << LOG_END;
+        }
+        else if(msgBox_.buttonClicked() == MessageBox::BUTTON_CANCEL)
+        {
+            LOG_INFO << "Cancel clicked" << LOG_END;
+        }
+    }
+    else
+    {
+        widgets_.process(e);
+    }
+
+    return true;
+}
+
 
 void TestWidgetApp::setupShader()
 {
@@ -110,9 +97,9 @@ void TestWidgetApp::setupShader()
 void TestWidgetApp::setupWidgets()
 {
     constexpr unsigned int BUTTON_COUNT = 3;
-    float buttonWidth = 200.0f, buttonHeight = 50.0f;
+    float buttonWidth = 300.0f, buttonHeight = 100.0f;
     float buttonX = viewportWidth() / 2.0f;
-    float buttonY = 100.0f;
+    float buttonY = 0.0f;
     float incrY = 200.0f;
     std::string buttonTexts[] = {
         "Start Game",
@@ -167,6 +154,11 @@ void TestWidgetApp::setupInput(android_app *app)
 
 #endif
 
+void TestWidgetApp::onViewportChange(float width1, float height1)
+{
+    App::onViewportChange(width1, heigh1);
+
+}
 
 void TestWidgetApp::onStartGameClicked()
 {

@@ -43,6 +43,8 @@ private:
 
 #endif
 
+    void onViewportChange(float width1, float height1) override;
+
     void onStartGameClicked();
 
     void onSettingClicked();
