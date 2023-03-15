@@ -43,7 +43,7 @@ private:
 
 #endif
 
-    void onViewportChange(float width1, float height1) override;
+    void onViewportChange(float width, float height) override;
 
     void onStartGameClicked();
 
@@ -54,7 +54,6 @@ private:
 private:
     botlib::WidgetGroup widgets_;
     botlib::MessageBox msgBox_;
-    commonlib::Color fillColor_;
 };
 
 } // end of namespace botlib

@@ -27,6 +27,8 @@ public:
 private:
     void setupMap(const std::string& mapFile);
 
+    void onViewportChange(float width, float height) override;
+
 private:
     botlib::GameMap map_;
     botlib::GameObjectFactory factory_;

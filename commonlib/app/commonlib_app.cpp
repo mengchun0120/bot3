@@ -110,6 +110,7 @@ void App::init(unsigned int width1,
     initGLEW();
 
     setupOpenGL();
+    initViewportSize();
     running_ = true;
 }
 
@@ -193,6 +194,7 @@ void App::init(android_app *app)
     }
 
     setupOpenGL();
+    initViewportSize();
     running_ = true;
 }
 
@@ -377,20 +379,33 @@ void App::postProcess()
 
 void App::process()
 {
-    float width1, height1;
+    float width, height;
 
-    getViewportSize(width1, height1);
-    if (width1 != viewportSize_[0] || height1 != viewportSize_[1])
+    getViewportSize(width, height);
+    if (width != viewportWidth() || height != viewportHeight())
     {
-        onViewportChange(width1, height1);
+        onViewportChange(width, height);
     }
 }
 
-void App::onViewportChange(float &width1, float &height1)
+void App::initViewportSize()
 {
-    viewportSize_[0] = width1;
-    viewportSize_[1] = height1;
-    glViewport(0, 0, width1, height1);
+    float width, height;
+
+    getViewportSize(width, height);
+    setViewportSize(width, height);
+}
+
+void App::setViewportSize(float width, float height)
+{
+    viewportSize_[0] = width;
+    viewportSize_[1] = height;
+    glViewport(0, 0, width, height);
+}
+
+void App::onViewportChange(float &width, float &height)
+{
+    setViewportSize(width, height);
 }
 
 } // end of namespace commonlib

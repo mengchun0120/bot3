@@ -87,9 +87,13 @@ protected:
     virtual void handleLowMemory();
 #endif
 
-    void getViewportSize(float &width1, float &height1);
+    void initViewportSize();
 
-    virtual void onViewportChange(float width1, float height1);
+    void getViewportSize(float &width, float &height);
+
+    void setViewportSize(float width, float height);
+
+    virtual void onViewportChange(float width, float height);
 
     void setupOpenGL();
 

@@ -100,7 +100,7 @@ public:
 
     inline const std::string& aiRobotCountStr() const;
 
-    void setViewportSize(float viewportWidth, float viewportHeight);
+    void resetViewport(float viewportWidth, float viewportHeight);
 
     void setViewportOrigin(float x, float y);
 
@@ -148,6 +148,10 @@ private:
                       GameObjDeleter objDeleter);
 
     void setBoundary(unsigned int rows, unsigned int cols);
+
+    void initViewport(float viewportWidth, float viewportHeight);
+
+    void setViewportSize(float viewportWidth, float viewportHeight);
 
     void resetViewableRegion();
 

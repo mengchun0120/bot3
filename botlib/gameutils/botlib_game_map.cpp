@@ -51,8 +51,7 @@ void GameMap::init(unsigned int rows,
     extraCell_ = static_cast<int>(ceil(maxObjSpan_ / k_cellBreath));
     initMapCells(rows, cols, objDeleter);
     setBoundary(rows, cols);
-    setViewportSize(viewportWidth, viewportHeight);
-    setViewportOrigin(minViewportOrigin_[0], minViewportOrigin_[1]);
+    initViewport(viewportWidth, viewportHeight);
     aiRobotCount_ = 0;
     updateAIRobotCountStr();
 }
@@ -135,15 +134,10 @@ void GameMap::removeObj(GameObject* obj)
     cells_[obj->row()][obj->col()][layer].remove(obj);
 }
 
-void GameMap::setViewportSize(float viewportWidth,
-                              float viewportHeight)
+void GameMap::resetViewport(float viewportWidth, float viewportHeight)
 {
-    viewportSize_.init({viewportWidth, viewportHeight});
-    viewportHalfSize_ = viewportSize_ / 2.0f;
-    minViewportOrigin_ = viewportHalfSize_;
-    maxViewportOrigin_.init({width() - viewportHalfSize_[0],
-                             height() - viewportHalfSize_[1]});
-
+    setViewportSize(viewportWidth, viewportHeight);
+    setViewportOrigin(viewportOrigin_);
 }
 
 void GameMap::setViewportOrigin(const commonlib::Vector2& p)
@@ -331,6 +325,22 @@ void GameMap::setBoundary(unsigned int rows, unsigned int cols)
     boundary_.init(0.0f, cols * k_cellBreath, 0.0f, rows * k_cellBreath);
 
     LOG_INFO << "Map width=" << width() << " height=" << height() << LOG_END;
+}
+
+void GameMap::initViewport(float viewportWidth, float viewportHeight)
+{
+    setViewportSize(viewportWidth, viewportHeight);
+    setViewportOrigin(minViewportOrigin_);
+}
+
+void GameMap::setViewportSize(float viewportWidth, float viewportHeight)
+{
+    viewportSize_[0] = viewportWidth;
+    viewportSize_[1] = viewportHeight;
+    viewportHalfSize_ = viewportSize_ / 2.0f;
+    minViewportOrigin_ = viewportHalfSize_;
+    maxViewportOrigin_[0] = width() - viewportHalfSize_[0];
+    maxViewportOrigin_[1] = height() - viewportHalfSize_[1];
 }
 
 void GameMap::resetViewableRegion()

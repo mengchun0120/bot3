@@ -90,8 +90,6 @@ void TestWidgetApp::setupShader()
     shader.use();
     shader.setViewportSize(viewportSize());
     shader.setViewportOrigin(viewportOrigin);
-
-    fillColor_.init({255, 125, 0, 255});
 }
 
 void TestWidgetApp::setupWidgets()
@@ -99,7 +97,7 @@ void TestWidgetApp::setupWidgets()
     constexpr unsigned int BUTTON_COUNT = 3;
     float buttonWidth = 300.0f, buttonHeight = 100.0f;
     float buttonX = viewportWidth() / 2.0f;
-    float buttonY = 0.0f;
+    float buttonY = 100.0f;
     float incrY = 200.0f;
     std::string buttonTexts[] = {
         "Start Game",
@@ -111,7 +109,6 @@ void TestWidgetApp::setupWidgets()
         std::bind(&TestWidgetApp::onSettingClicked, this),
         std::bind(&TestWidgetApp::onExitClicked, this)
     };
-
 
     widgets_.init(BUTTON_COUNT+3);
     for (unsigned int i = 0; i < BUTTON_COUNT; ++i)
@@ -136,28 +133,25 @@ void TestWidgetApp::setupWidgets()
 }
 
 #ifdef DESKTOP_APP
-
 void TestWidgetApp::setupInput()
 {
     const AppConfig& cfg = AppConfig::instance();
-    InputManager::initInstance(window(), viewportHeight(),
+    InputManager::initInstance(window(), viewportSize(),
                                cfg.inputQueueCapacity());
     InputManager::instance().enable();
 }
-
 #elif __ANDROID__
-
 void TestWidgetApp::setupInput(android_app *app)
 {
-    InputManager::initInstance(app, width_, height_, viewportSize_);
+    InputManager::initInstance(app, viewportSize());
 }
-
 #endif
 
-void TestWidgetApp::onViewportChange(float width1, float height1)
+void TestWidgetApp::onViewportChange(float width, float height)
 {
-    App::onViewportChange(width1, heigh1);
-
+    App::onViewportChange(width, height);
+    InputManager::instance().setViewportSize(viewportSize());
+    setupShader();
 }
 
 void TestWidgetApp::onStartGameClicked()

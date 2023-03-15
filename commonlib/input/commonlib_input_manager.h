@@ -21,9 +21,11 @@ public:
 
 #ifdef DESKTOP_APP
     static void initInstance(GLFWwindow *window,
+                             const Vector2 &viewportSize,
                              unsigned int inputQueueCapacity);
 
     InputManager(GLFWwindow *window,
+                 const Vector2 &viewportSize,
                  unsigned int inputQueueCapacity);
 
     inline bool eventsFull() const;
@@ -51,9 +53,11 @@ public:
     void disable();
 
 #elif __ANDROID__
-    static void initInstance(android_app *app);
+    static void initInstance(android_app *app,
+                             const Vector2 &viewportSize);
 
-    InputManager(android_app *app);
+    InputManager(android_app *app,
+                 const Vector2 &viewportSize);
 
     InputEvent retrieveEvent(int i);
 #endif

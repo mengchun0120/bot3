@@ -61,6 +61,12 @@ void TestMapApp::setupMap(const std::string& mapFile)
     loader.load(map_, mapFile);
 }
 
+void TestMapApp::onViewportChange(float width, float height)
+{
+    App::onViewportChange(width, height);
+    map_.resetViewport(width, height);
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

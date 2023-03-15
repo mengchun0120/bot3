@@ -73,6 +73,7 @@ void handleKey(GLFWwindow* window,
 }
 
 void InputManager::initInstance(GLFWwindow* window,
+                                const Vector2 &viewportSize,
                                 unsigned int inputQueueCapacity)
 {
     if (k_instance)
@@ -82,20 +83,17 @@ void InputManager::initInstance(GLFWwindow* window,
     }
 
     k_instance.reset(
-        new InputManager(window, inputQueueCapacity)
+        new InputManager(window, viewportSize, inputQueueCapacity)
     );
 }
 
 InputManager::InputManager(GLFWwindow* window,
+                           const Vector2 &viewportSize,
                            unsigned int inputQueueCapacity)
+    : window_(window)
+    , enabled_(false)
+    , viewportSize_(viewportSize)
 {
-    if (!window)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "window is null");
-    }
-
-    window_ = window;
-    enabled_ = false;
     events_.init(inputQueueCapacity);
 }
 
@@ -168,7 +166,8 @@ bool InputManager::addKeyEvent(int key,
 
 #elif __ANDROID__
 
-void InputManager::initInstance(android_app *app)
+void InputManager::initInstance(android_app *app,
+                                const Vector2 &viewportSize)
 {
     if (k_instance)
     {
@@ -177,12 +176,14 @@ void InputManager::initInstance(android_app *app)
     }
 
     k_instance.reset(
-        new InputManager(app)
+        new InputManager(app, viewportSize)
     );
 }
 
-InputManager::InputManager(android_app *app)
+InputManager::InputManager(android_app *app,
+                           const Vector2 &viewportSize)
     : app_(app)
+    , viewportSize_(viewportSize)
 {
 }
 
