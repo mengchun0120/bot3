@@ -153,8 +153,6 @@ App::App(const std::string &name1)
     , surface_(EGL_NO_SURFACE)
     , context_(EGL_NO_CONTEXT)
     , name_(name1)
-    , width_(0)
-    , height_(0)
     , viewportSize_{0.0f, 0.0f}
     , running_(false)
 {

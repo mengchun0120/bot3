@@ -87,8 +87,6 @@ void Button::setPos(float x,
 {
     Widget::setPos(x, y);
     resetTextPos();
-
-    LOG_INFO << "Button " << text_ << " " << pos_ << LOG_END;
 }
 
 void Button::shiftPos(float dx,
@@ -136,7 +134,7 @@ void Button::onPointerDown()
         return;
     }
 
-    state_ = STATE_PRESSED;
+    state_ = STATE_NORMAL;
 
     if (action_)
     {

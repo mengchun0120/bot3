@@ -11,7 +11,7 @@ namespace mcdane {
 namespace botlib {
 
 TestWidgetApp::TestWidgetApp()
-    : App()
+    : App("testwidget")
 {
 }
 
@@ -59,8 +59,6 @@ void TestWidgetApp::process()
 
 bool TestWidgetApp::operator()(const commonlib::InputEvent& e)
 {
-    LOG_INFO << "Process " << e << LOG_END;
-
     if (msgBox_.visible())
     {
         msgBox_.process(e);

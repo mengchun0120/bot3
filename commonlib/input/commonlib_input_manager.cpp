@@ -203,7 +203,7 @@ InputEvent InputManager::retrieveEvent(int i)
     GameActivityPointerAxes &pointer = motionEvent.pointers[event.index_];
 
     event.x_ = GameActivityPointerAxes_getX(&pointer);
-    event.y_ = height_ - GameActivityPointerAxes_getY(&pointer);
+    event.y_ = viewportSize_[1] - GameActivityPointerAxes_getY(&pointer);
 
     switch(action & AINPUT_SOURCE_TOUCHSCREEN)
     {

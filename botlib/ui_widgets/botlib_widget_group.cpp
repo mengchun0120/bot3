@@ -146,8 +146,6 @@ void WidgetGroup::onPointerOver(float x, float y)
 {
     int idx = findWidget(x, y);
 
-    LOG_INFO << "PointerOver " << x << " " << y << " " << idx << LOG_END;
-
     if (idx != hoverWidgetIdx_ && hoverWidgetIdx_ != -1)
     {
         widgets_[hoverWidgetIdx_]->onPointerOut();
@@ -167,8 +165,6 @@ void WidgetGroup::onPointerOver(float x, float y)
 void WidgetGroup::onPointerDown(float x, float y)
 {
     int idx = findWidget(x, y);
-
-    LOG_INFO << "PointerDown " << x << " " << y << " " << idx << LOG_END;
 
     if (idx != focusWidgetIdx_)
     {
