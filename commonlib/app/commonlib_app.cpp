@@ -403,7 +403,7 @@ void App::setViewportSize(float width, float height)
     glViewport(0, 0, width, height);
 }
 
-void App::onViewportChange(float &width, float &height)
+void App::onViewportChange(float width, float height)
 {
     setViewportSize(width, height);
 }

@@ -129,16 +129,6 @@ const std::string & App::name() const
     return name_;
 }
 
-int App::width() const
-{
-    return width_;
-}
-
-int App::height() const
-{
-    return height_;
-}
-
 float App::viewportWidth() const
 {
     return viewportSize_[0];

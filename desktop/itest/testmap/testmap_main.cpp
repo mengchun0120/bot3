@@ -3,10 +3,10 @@
 #include <cstdlib>
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
-#include <itest_testmap_app.h>
+#include <botlib_testmap_app.h>
 
 using namespace mcdane::commonlib;
-using namespace mcdane::itest;
+using namespace mcdane::botlib;
 
 struct Arguments {
     std::string configFile_;
@@ -77,7 +77,8 @@ int main(int argc, char* argv[])
 
     try
     {
-        TestMapApp app(args.configFile_, args.appDir_, args.mapFile_);
+        TestMapApp app;
+        app.init(args.configFile_, args.appDir_, args.mapFile_);
         app.run();
     }
     catch (const std::exception& e)

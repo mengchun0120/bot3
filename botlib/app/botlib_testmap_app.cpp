@@ -63,6 +63,8 @@ void TestMapApp::setupMap(const std::string& mapFile)
 
 void TestMapApp::onViewportChange(float width, float height)
 {
+    LOG_INFO << "Viewport change " << width << " " << height << LOG_END;
+
     App::onViewportChange(width, height);
     map_.resetViewport(width, height);
 }
