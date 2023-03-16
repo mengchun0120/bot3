@@ -35,6 +35,7 @@ const GameMap::Layer GameMap::k_objLayerMap[k_gameObjTypeCount] = {
     LAYER_EFFECT
 };
 
+const float GameMap::k_cellBreath = 40.0f;
 
 void GameMap::init(unsigned int rows,
                    unsigned int cols,

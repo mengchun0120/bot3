@@ -10,9 +10,16 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+GameObjectTemplate::GameObjectTemplate()
+    : span_(0.0f)
+    , collideBreath_(0.0f)
+    , invincible_(false)
+{
+}
+
 void GameObjectTemplate::init(GameObjectType t,
-                              const std::string& name,
-                              const rapidjson::Value& v)
+                              const std::string &name,
+                              const rapidjson::Value &v)
 {
     if (!isValidGameObjectType(t))
     {

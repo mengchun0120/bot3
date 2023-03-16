@@ -84,7 +84,7 @@ void GameMapGenerator::addObj(GameMap& map, GameObject* obj)
 
 Vector2 GameMapGenerator::getCellCenter(const CellCoord& coord)
 {
-    constexpr float MARGIN = GameMap::k_cellBreath / 2.0f;
+    const float MARGIN = GameMap::k_cellBreath / 2.0f;
 
     return Vector2{MARGIN + coord.col_ * GameMap::k_cellBreath,
                    MARGIN + coord.row_ * GameMap::k_cellBreath};

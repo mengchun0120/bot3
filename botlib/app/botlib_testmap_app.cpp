@@ -17,14 +17,14 @@ TestMapApp::TestMapApp()
 }
 
 #ifdef DESKTOP_APP
-void TestMapApp::init(const std::string& configFile,
-                      const std::string& appDir,
-                      const std::string& mapFile)
+void TestMapApp::init(const std::string &configFile,
+                      const std::string &appDir,
+                      const std::string &mapFile)
 {
     AppConfig::init(configFile, appDir);
     App::init(1000, 800, "test game map");
 
-    const AppConfig& cfg = AppConfig::instance();
+    const AppConfig &cfg = AppConfig::instance();
 
     Context::init(cfg);
     factory_.init(1000);
@@ -36,7 +36,7 @@ void TestMapApp::init(android_app *app)
     AppConfig::init("config/bot_config_android.json");
     App::init(app);
 
-    const AppConfig& cfg = AppConfig::instance();
+    const AppConfig &cfg = AppConfig::instance();
 
     Context::init(cfg);
     factory_.init(1000);
@@ -55,7 +55,7 @@ void TestMapApp::process()
     postProcess();
 }
 
-void TestMapApp::setupMap(const std::string& mapFile)
+void TestMapApp::setupMap(const std::string &mapFile)
 {
     GameMapLoader loader(viewportWidth(), viewportHeight(), factory_);
     loader.load(map_, mapFile);

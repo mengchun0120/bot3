@@ -20,7 +20,7 @@ namespace botlib {
 
 GameMapLoader::GameMapLoader(float viewportWidth,
                              float viewportHeight,
-                             GameObjectFactory& factory)
+                             GameObjectFactory &factory)
     : factory_(factory)
     , commonParams_{
         jsonParam(typeStr_, "type", true, k_nonEmptyStrV),
@@ -57,8 +57,8 @@ GameMapLoader::GameMapLoader(float viewportWidth,
     viewportHeight_ = viewportHeight;
 }
 
-void GameMapLoader::load(GameMap& map,
-                         const std::string& fileName)
+void GameMapLoader::load(GameMap &map,
+                         const std::string &fileName)
 {
     rapidjson::Document doc;
     readJson(doc, fileName);
@@ -67,8 +67,8 @@ void GameMapLoader::load(GameMap& map,
     loadObjects(map, doc);
 }
 
-void GameMapLoader::loadMapDimension(GameMap& map,
-                                     const rapidjson::Document& doc)
+void GameMapLoader::loadMapDimension(GameMap &map,
+                                     const rapidjson::Document &doc)
 {
     unsigned int rows, cols;
     std::vector<JsonParamPtr> params{
@@ -78,21 +78,21 @@ void GameMapLoader::loadMapDimension(GameMap& map,
 
     parse(params, doc);
 
-    const GameLib& lib = Context::gameLib();
+    const GameLib &lib = Context::gameLib();
 
     map.init(rows, cols, viewportWidth_, viewportHeight_,
              lib.maxObjSpan(), lib.maxCollideBreath(), factory_.deleter());
 }
 
-void GameMapLoader::loadObjects(GameMap& map,
-                                const rapidjson::Document& doc)
+void GameMapLoader::loadObjects(GameMap &map,
+                                const rapidjson::Document &doc)
 {
     if (!doc.HasMember("objects"))
     {
         THROW_EXCEPT(ParseException, "Missing objects");
     }
 
-    const rapidjson::Value& objects = doc["objects"];
+    const rapidjson::Value &objects = doc["objects"];
     if (!objects.IsArray())
     {
         THROW_EXCEPT(ParseException, "Invalid map format");
@@ -105,8 +105,8 @@ void GameMapLoader::loadObjects(GameMap& map,
     }
 }
 
-void GameMapLoader::parseAddObject(GameMap& map,
-                                   const rapidjson::Value& v)
+void GameMapLoader::parseAddObject(GameMap &map,
+                                   const rapidjson::Value &v)
 {
     parse(commonParams_, v);
 
@@ -140,12 +140,12 @@ void GameMapLoader::parseAddObject(GameMap& map,
     }
 }
 
-void GameMapLoader::addTile(GameMap& map,
-                            const rapidjson::Value& v)
+void GameMapLoader::addTile(GameMap &map,
+                            const rapidjson::Value &v)
 {
-    const GameLib& lib = Context::gameLib();
+    const GameLib &lib = Context::gameLib();
 
-    const TileTemplate* t = lib.findTileTemplate(templateStr_);
+    const TileTemplate *t = lib.findTileTemplate(templateStr_);
     if (!t)
     {
         THROW_EXCEPT(InvalidArgumentException,
@@ -161,16 +161,17 @@ void GameMapLoader::addTile(GameMap& map,
 
     parse(tileParams_, v);
 
-    Tile* tile = factory_.createTile(t, pos_, direction_);
+
+    Tile *tile = factory_.createTile(t, pos_, direction_);
     map.addObj(tile);
 }
 
-void GameMapLoader::addGoodie(GameMap& map,
-                              const rapidjson::Value& v)
+void GameMapLoader::addGoodie(GameMap &map,
+                              const rapidjson::Value &v)
 {
-    const GameLib& lib = Context::gameLib();
+    const GameLib &lib = Context::gameLib();
 
-    const GoodieTemplate* t = lib.findGoodieTemplate(templateStr_);
+    const GoodieTemplate *t = lib.findGoodieTemplate(templateStr_);
     if (!t)
     {
         THROW_EXCEPT(InvalidArgumentException,
@@ -186,16 +187,16 @@ void GameMapLoader::addGoodie(GameMap& map,
 
     parse(goodieParams_, v);
 
-    Goodie* goodie = factory_.createGoodie(t, pos_, direction_);
+    Goodie *goodie = factory_.createGoodie(t, pos_, direction_);
     map.addObj(goodie);
 }
 
-void GameMapLoader::addMissile(GameMap& map,
-                               const rapidjson::Value& v)
+void GameMapLoader::addMissile(GameMap &map,
+                               const rapidjson::Value &v)
 {
-    const GameLib& lib = Context::gameLib();
+    const GameLib &lib = Context::gameLib();
 
-    const MissileTemplate* t = lib.findMissileTemplate(templateStr_);
+    const MissileTemplate *t = lib.findMissileTemplate(templateStr_);
     if (!t)
     {
         THROW_EXCEPT(InvalidArgumentException,
@@ -213,17 +214,17 @@ void GameMapLoader::addMissile(GameMap& map,
 
     Side side = strToSide(sideStr_);
 
-    Missile* missile = factory_.createMissile(t, side, pos_, direction_);
+    Missile *missile = factory_.createMissile(t, side, pos_, direction_);
 
     map.addObj(missile);
 }
 
-void GameMapLoader::addAIRobot(GameMap& map,
-                               const rapidjson::Value& v)
+void GameMapLoader::addAIRobot(GameMap &map,
+                               const rapidjson::Value &v)
 {
-    const GameLib& lib = Context::gameLib();
+    const GameLib &lib = Context::gameLib();
 
-    const AIRobotTemplate* t = lib.findAIRobotTemplate(templateStr_);
+    const AIRobotTemplate *t = lib.findAIRobotTemplate(templateStr_);
     if (!t)
     {
         THROW_EXCEPT(InvalidArgumentException,
@@ -239,30 +240,30 @@ void GameMapLoader::addAIRobot(GameMap& map,
 
     parse(robotParams_, v);
 
-    AIRobot* robot = factory_.createAIRobot(t, pos_, direction_);
+    AIRobot *robot = factory_.createAIRobot(t, pos_, direction_);
     map.addObj(robot);
 }
 
-void GameMapLoader::addParticleEffect(GameMap& map,
-                                      const rapidjson::Value& v)
+void GameMapLoader::addParticleEffect(GameMap &map,
+                                      const rapidjson::Value &v)
 {
-    const GameLib& lib = Context::gameLib();
+    const GameLib &lib = Context::gameLib();
 
-    const ParticleEffectTemplate* t = lib.findParticleEffectTemplate(templateStr_);
+    const ParticleEffectTemplate *t = lib.findParticleEffectTemplate(templateStr_);
     if (!t)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Failed to find ParticleEffectTemplate " + templateStr_);
     }
 
-    ParticleEffect* effect = factory_.createParticleEffect(t, pos_);
+    ParticleEffect *effect = factory_.createParticleEffect(t, pos_);
     map.addObj(effect);
 }
 
-void GameMapLoader::addPlayer(GameMap& map,
-                              const rapidjson::Value& v)
+void GameMapLoader::addPlayer(GameMap &map,
+                              const rapidjson::Value &v)
 {
-    const PlayerTemplate& t = Context::gameLib().playerTemplate();
+    const PlayerTemplate &t = Context::gameLib().playerTemplate();
 
     if (!map.canBePlaced(pos_, t.collideBreath()))
     {
@@ -272,7 +273,7 @@ void GameMapLoader::addPlayer(GameMap& map,
 
     parse(robotParams_, v);
 
-    Player* player = factory_.createPlayer(&t, pos_, direction_);
+    Player *player = factory_.createPlayer(&t, pos_, direction_);
     map.addObj(player);
 }
 

@@ -15,9 +15,9 @@ public:
     ~TestMapApp() override = default;
 
 #ifdef DESKTOP_APP
-    void init(const std::string& configFile,
-              const std::string& appDir,
-              const std::string& mapFile);
+    void init(const std::string &configFile,
+              const std::string &appDir,
+              const std::string &mapFile);
 #elif __ANDROID__
     void init(android_app *app);
 #endif
@@ -25,7 +25,7 @@ public:
     void process() override;
 
 private:
-    void setupMap(const std::string& mapFile);
+    void setupMap(const std::string &mapFile);
 
     void onViewportChange(float width, float height) override;
 

@@ -15,6 +15,7 @@ unsigned int GameObject::k_curId = 0;
 
 GameObject::GameObject()
     : t_(nullptr)
+    , id_(0)
     , flags_(0)
     , row_(0)
     , col_(0)

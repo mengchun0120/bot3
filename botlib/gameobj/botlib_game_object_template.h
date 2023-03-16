@@ -9,7 +9,7 @@ namespace botlib {
 
 class GameObjectTemplate {
 public:
-    GameObjectTemplate() = default;
+    GameObjectTemplate();
 
     virtual ~GameObjectTemplate() = default;
 

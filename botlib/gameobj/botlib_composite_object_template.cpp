@@ -1,5 +1,6 @@
 #include <utility>
 #include <sstream>
+#include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_json_utils.h>
 #include <commonlib_json_param.h>

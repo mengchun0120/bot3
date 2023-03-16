@@ -26,9 +26,9 @@ private:
     using Cell = std::array<GameObjectList, k_layerCount>;
 
 public:
-    static constexpr unsigned int k_minRows = 30;
-    static constexpr unsigned int k_minCols = 30;
-    static constexpr float k_cellBreath = 40.0f;
+    static constexpr unsigned int k_minRows = 50;
+    static constexpr unsigned int k_minCols = 50;
+    static const float k_cellBreath;
 
     enum Layer {
         LAYER_TILE_GOODIE,
