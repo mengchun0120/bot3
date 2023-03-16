@@ -46,114 +46,56 @@ void ShowMapScreen::present()
 #ifdef DESKTOP_APP
 bool ShowMapScreen::processInput(const commonlib::InputEvent &e)
 {
-    switch (e.type())
+    if (e.type() == EventType::KEY)
     {
-        case EventType::KEY:
-            return processKey(e.keyEvent());
-        default:
-            break;
+        processKey(e.keyEvent());
     }
 
     return true;
 }
 
-bool ShowMapScreen::processKey(const commonlib::KeyEvent &e)
+void ShowMapScreen::processKey(const commonlib::KeyEvent &e)
 {
     if (e.action_ != GLFW_PRESS && e.action_ != GLFW_REPEAT)
     {
-        return true;
+        return;
     }
 
     switch(e.key_)
     {
         case GLFW_KEY_ESCAPE:
         {
-            return processEscKey();
+            backout();
+            break;
         }
         case GLFW_KEY_UP:
         {
-            return processUpKey();
+            move(0, 1);
+            break;
         }
         case GLFW_KEY_DOWN:
         {
-            return processDownKey();
+            move(0, -1);
+            break;
         }
         case GLFW_KEY_RIGHT:
         {
-            return processRightKey();
+            move(1, 0);
+            break;
         }
         case GLFW_KEY_LEFT:
         {
-            return processLeftKey();
+            move(-1, 0);
+            break;
         }
         default:
             break;
     }
-
-    return true;
 }
 
-bool ShowMapScreen::processEscKey()
+#elif __ANDROID__
+bool ShowMapScreen::processInput(const commonlib::InputEvent &e)
 {
-    if (nextScreenType_ == ScreenType::NONE)
-    {
-        if (actions_.exitAction_)
-        {
-            actions_.exitAction_();
-        }
-    }
-    else
-    {
-        if (actions_.switchAction_)
-        {
-            actions_.switchAction_(nextScreenType_);
-        }
-    }
-
-    return true;
-}
-
-bool ShowMapScreen::processUpKey()
-{
-    const ShowMapScreenConfig &cfg = Context::showMapScreenConfig();
-    Vector2 p = map_.viewportOrigin();
-
-    p[1] += cfg.deltaPerStroke();
-    map_.setViewportOrigin(p);
-
-    return true;
-}
-
-bool ShowMapScreen::processDownKey()
-{
-    const ShowMapScreenConfig &cfg = Context::showMapScreenConfig();
-    Vector2 p = map_.viewportOrigin();
-
-    p[1] -= cfg.deltaPerStroke();
-    map_.setViewportOrigin(p);
-
-    return true;
-}
-
-bool ShowMapScreen::processRightKey()
-{
-    const ShowMapScreenConfig &cfg = Context::showMapScreenConfig();
-    Vector2 p = map_.viewportOrigin();
-
-    p[0] += cfg.deltaPerStroke();
-    map_.setViewportOrigin(p);
-
-    return true;
-}
-
-bool ShowMapScreen::processLeftKey()
-{
-    const ShowMapScreenConfig &cfg = Context::showMapScreenConfig();
-    Vector2 p = map_.viewportOrigin();
-
-    p[0] -= cfg.deltaPerStroke();
-    map_.setViewportOrigin(p);
-
     return true;
 }
 #endif
@@ -170,6 +112,42 @@ void ShowMapScreen::loadMap(const commonlib::Vector2 &viewportSize)
 void ShowMapScreen::onViewportChange(float width, float height)
 {
     map_.resetViewport(width, height);
+}
+
+void ShowMapScreen::move(int horizontalDirection, int verticalDirection)
+{
+    const ShowMapScreenConfig &cfg = Context::showMapScreenConfig();
+    Vector2 p = map_.viewportOrigin();
+
+    if (horizontalDirection != 0)
+    {
+        p[0] += horizontalDirection * cfg.deltaPerStroke();
+    }
+
+    if (verticalDirection != 0)
+    {
+        p[1] += verticalDirection * cfg.deltaPerStroke();
+    }
+
+    map_.setViewportOrigin(p);
+}
+
+void ShowMapScreen::backout()
+{
+    if (nextScreenType_ == ScreenType::NONE)
+    {
+        if (actions_.exitAction_)
+        {
+            actions_.exitAction_();
+        }
+    }
+    else
+    {
+        if (actions_.switchAction_)
+        {
+            actions_.switchAction_(nextScreenType_);
+        }
+    }
 }
 
 } // end of namespace botlib

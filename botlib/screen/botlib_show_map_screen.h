@@ -30,23 +30,17 @@ public:
 
     void present() override;
 
-#ifdef DESKTOP_APP
     bool processInput(const commonlib::InputEvent &e) override;
 
-    bool processKey(const commonlib::KeyEvent &e);
-
-    bool processEscKey();
-
-    bool processUpKey();
-
-    bool processDownKey();
-
-    bool processRightKey();
-
-    bool processLeftKey();
+#ifdef DESKTOP_APP
+    void processKey(const commonlib::KeyEvent &e);
 #endif
 
     void onViewportChange(float width, float height) override;
+
+    void move(int horizontalDirection, int verticalDirection);
+
+    void backout();
 
 private:
     void loadMap(const commonlib::Vector2 &viewportSize);
