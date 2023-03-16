@@ -3,17 +3,15 @@
 #include <cstdlib>
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
-#include <botlib_testmap_app.h>
+#include <botlib_test_widget_app.h>
 
 using namespace mcdane::commonlib;
 using namespace mcdane::botlib;
 
 struct Arguments {
     std::string configFile_;
-    std::string logLevelStr_;
     std::string logFile_;
     std::string appDir_;
-    std::string mapFile_;
 };
 
 void parseArguments(Arguments& args, int argc, char* argv[])
@@ -22,21 +20,16 @@ void parseArguments(Arguments& args, int argc, char* argv[])
     parser.init({
         Argument::create(args.configFile_, "configFile", "c", "config",
                          "Config file", false, k_nonEmptyStrV),
-        Argument::create(args.logLevelStr_, "logLevel", "v", "logLevel",
-                         "Log level", true),
         Argument::create(args.logFile_, "logFile", "l", "log",
                          "Log file", false, k_nonEmptyStrV),
         Argument::create(args.appDir_, "appDir", "a", "appDir",
-                         "App directory", false, k_nonEmptyStrV),
-        Argument::create(args.mapFile_, "mapFile", "m", "mapFile",
-                         "Map file", false, k_nonEmptyStrV)
+                         "App directory", false, k_nonEmptyStrV)
     });
 
     parser.parse(argc, argv);
 }
 
-void initLog(const std::string& logLevelStr,
-             const std::string& logFile)
+void initLog(const std::string& logFile)
 {
     static std::ofstream os;
 
@@ -47,14 +40,7 @@ void initLog(const std::string& logLevelStr,
         THROW_EXCEPT(FileException, "Failed to open file " + logFile);
     }
 
-    Logger::LogLevel level = Logger::LEVEL_DEBUG;
-
-    if (!logLevelStr.empty())
-    {
-        level = Logger::strToLevel(logLevelStr);
-    }
-
-    Logger::initInstance(os, level);
+    Logger::initInstance(os, Logger::LEVEL_DEBUG);
 }
 
 int main(int argc, char* argv[])
@@ -64,7 +50,7 @@ int main(int argc, char* argv[])
     try
     {
         parseArguments(args, argc, argv);
-        initLog(args.logLevelStr_, args.logFile_);
+        initLog(args.logFile_);
     }
     catch (const std::exception& e)
     {
@@ -77,8 +63,8 @@ int main(int argc, char* argv[])
 
     try
     {
-        TestMapApp app;
-        app.init(args.configFile_, args.appDir_, args.mapFile_);
+        TestWidgetApp app;
+        app.init(args.configFile_, args.appDir_);
         app.run();
     }
     catch (const std::exception& e)

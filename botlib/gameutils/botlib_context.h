@@ -10,7 +10,7 @@
 #include <botlib_message_box_config.h>
 #include <botlib_start_screen_config.h>
 #include <botlib_game_screen_config.h>
-#include <botlib_showmap_screen_config.h>
+#include <botlib_show_map_screen_config.h>
 #include <botlib_game_config.h>
 #include <botlib_goodie_generator.h>
 

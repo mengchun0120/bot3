@@ -4,7 +4,7 @@
 #include <botlib_context.h>
 #include <botlib_hp_indicator.h>
 #include <botlib_game_map_loader.h>
-#include <botlib_testmap_app.h>
+#include <botlib_test_map_app.h>
 
 using namespace mcdane::commonlib;
 

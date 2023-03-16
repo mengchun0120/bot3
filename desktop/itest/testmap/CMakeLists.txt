@@ -6,7 +6,7 @@ include_directories(
     ${BOTLIB_INCLUDE_DIR}
 )
 
-add_executable(testmap testmap_main.cpp)
+add_executable(testmap test_map_main.cpp)
 
 if(UNIX)
     target_link_libraries(testmap botlib commonlib ${LIB})

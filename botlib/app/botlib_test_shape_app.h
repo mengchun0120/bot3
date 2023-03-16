@@ -1,5 +1,5 @@
-#ifndef INCLUDED_BOTLIB_TESTSHAPE_APP_H
-#define INCLUDED_BOTLIB_TESTSHAPE_APP_H
+#ifndef INCLUDED_BOTLIB_TEST_SHAPE_APP_H
+#define INCLUDED_BOTLIB_TEST_SHAPE_APP_H
 
 #include <commonlib_app.h>
 #include <commonlib_color.h>

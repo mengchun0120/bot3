@@ -1,5 +1,5 @@
-#ifndef INCLUDED_BOTLIB_TESTWIDGET_APP_H
-#define INCLUDED_BOTLIB_TESTWIDGET_APP_H
+#ifndef INCLUDED_BOTLIB_TEST_WIDGET_APP_H
+#define INCLUDED_BOTLIB_TEST_WIDGET_APP_H
 
 #include <commonlib_app.h>
 #include <commonlib_input_manager.h>

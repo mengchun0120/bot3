@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
-#include <botlib_testshape_app.h>
+#include <botlib_test_shape_app.h>
 
 using namespace mcdane::commonlib;
 using namespace mcdane::botlib;

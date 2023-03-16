@@ -3,7 +3,7 @@
 #include <commonlib_json_param.h>
 #include <commonlib_file_utils.h>
 #include <botlib_app_config.h>
-#include <botlib_showmap_screen_config.h>
+#include <botlib_show_map_screen_config.h>
 
 using namespace mcdane::commonlib;
 

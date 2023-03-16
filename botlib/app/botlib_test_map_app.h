@@ -1,5 +1,5 @@
-#ifndef INCLUDED_BOTLIB_TESTMAP_APP_H
-#define INCLUDED_BOTLIB_TESTMAP_APP_H
+#ifndef INCLUDED_BOTLIB_TEST_MAP_APP_H
+#define INCLUDED_BOTLIB_TEST_MAP_APP_H
 
 #include <commonlib_app.h>
 #include <botlib_game_object_factory.h>

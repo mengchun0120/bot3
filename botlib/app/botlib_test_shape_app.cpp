@@ -2,7 +2,7 @@
 #include <commonlib_file_utils.h>
 #include <botlib_app_config.h>
 #include <botlib_context.h>
-#include <botlib_testshape_app.h>
+#include <botlib_test_shape_app.h>
 
 using namespace mcdane::commonlib;
 using namespace mcdane::botlib;

@@ -3,7 +3,7 @@
 #include <botlib_context.h>
 #include <botlib_button.h>
 #include <botlib_label.h>
-#include <botlib_testwidget_app.h>
+#include <botlib_test_widget_app.h>
 
 using namespace mcdane::commonlib;
 

@@ -8,7 +8,7 @@ include_directories(
 
 add_executable(
     testwidget
-    testwidget_main.cpp
+    test_widget_main.cpp
 )
 
 if(UNIX)

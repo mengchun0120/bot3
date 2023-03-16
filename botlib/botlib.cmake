@@ -12,9 +12,9 @@ list(APPEND
     BOTLIB_APP_SRC
     ${BOTLIB_SRC_DIR}/app/botlib_app_actions.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_app_config.cpp
-    ${BOTLIB_SRC_DIR}/app/botlib_testmap_app.cpp
-    ${BOTLIB_SRC_DIR}/app/botlib_testshape_app.cpp
-    ${BOTLIB_SRC_DIR}/app/botlib_testwidget_app.cpp
+    ${BOTLIB_SRC_DIR}/app/botlib_test_map_app.cpp
+    ${BOTLIB_SRC_DIR}/app/botlib_test_shape_app.cpp
+    ${BOTLIB_SRC_DIR}/app/botlib_test_widget_app.cpp
 )
 
 list(APPEND
@@ -116,8 +116,8 @@ list(APPEND
     ${BOTLIB_SRC_DIR}/screen/botlib_screen.cpp
     ${BOTLIB_SRC_DIR}/screen/botlib_screen_manager.cpp
     ${BOTLIB_SRC_DIR}/screen/botlib_screen_type.cpp
-    ${BOTLIB_SRC_DIR}/screen/botlib_showmap_screen.cpp
-    ${BOTLIB_SRC_DIR}/screen/botlib_showmap_screen_config.cpp
+    ${BOTLIB_SRC_DIR}/screen/botlib_show_map_screen.cpp
+    ${BOTLIB_SRC_DIR}/screen/botlib_show_map_screen_config.cpp
     ${BOTLIB_SRC_DIR}/screen/botlib_start_screen.cpp
     ${BOTLIB_SRC_DIR}/screen/botlib_start_screen_config.cpp
 )

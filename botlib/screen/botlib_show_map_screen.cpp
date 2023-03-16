@@ -1,7 +1,7 @@
 #include <commonlib_exception.h>
 #include <botlib_context.h>
 #include <botlib_game_map_loader.h>
-#include <botlib_showmap_screen.h>
+#include <botlib_show_map_screen.h>
 
 using namespace mcdane::commonlib;
 

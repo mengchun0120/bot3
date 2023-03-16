@@ -58,13 +58,13 @@ public:
 
     void present();
 
-    void addObj(GameObject* obj);
+    void addObj(GameObject *obj);
 
-    void repositionObj(GameObject* obj);
+    void repositionObj(GameObject *obj);
 
-    void removeObj(GameObject* obj);
+    void removeObj(GameObject *obj);
 
-    void unlinkObj(GameObject* obj);
+    void unlinkObj(GameObject *obj);
 
     inline int rowCount() const;
 
@@ -78,67 +78,67 @@ public:
 
     inline float height() const;
 
-    inline const commonlib::Vector2& viewportOrigin() const;
+    inline const commonlib::Vector2 &viewportOrigin() const;
 
-    inline const commonlib::Vector2& viewportAnchor() const;
+    inline const commonlib::Vector2 &viewportAnchor() const;
 
-    inline const commonlib::Region<float>& boundary() const;
+    inline const commonlib::Region<float> &boundary() const;
 
-    inline const commonlib::Region<float>& viewableRegion() const;
+    inline const commonlib::Region<float> &viewableRegion() const;
 
-    inline const commonlib::Region<int>& presentArea() const;
+    inline const commonlib::Region<int> &presentArea() const;
 
     inline const commonlib::Region<int> wholeArea() const;
 
     inline int getCellIdx(float x) const;
 
-    inline const Player* player() const;
+    inline const Player *player() const;
 
-    inline Player* player();
+    inline Player *player();
 
     inline int aiRobotCount() const;
 
-    inline const std::string& aiRobotCountStr() const;
+    inline const std::string &aiRobotCountStr() const;
 
     void resetViewport(float viewportWidth, float viewportHeight);
 
     void setViewportOrigin(float x, float y);
 
-    void setViewportOrigin(const commonlib::Vector2& p);
+    void setViewportOrigin(const commonlib::Vector2 &p);
 
-    commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r,
+    commonlib::Region<int> getCollideArea(const commonlib::Region<float> &r,
                                           float deltaX,
                                           float deltaY) const;
 
-    commonlib::Region<int> getCollideArea(const commonlib::Region<float>& r) const;
+    commonlib::Region<int> getCollideArea(const commonlib::Region<float> &r) const;
 
-    commonlib::Region<int> getCoverArea(const commonlib::Region<float>& r) const;
+    commonlib::Region<int> getCoverArea(const commonlib::Region<float> &r) const;
 
     template <typename F>
-    void traverse(const commonlib::Region<int>& r,
-                  F& accessor,
+    void traverse(const commonlib::Region<int> &r,
+                  F &accessor,
                   int startLayer=0,
                   int layerCount=k_layerCount);
 
     template <typename F>
-    void traverse(const commonlib::Region<int>& r,
-                  F& accessor,
+    void traverse(const commonlib::Region<int> &r,
+                  F &accessor,
                   std::initializer_list<int> layers);
 
     template <typename F>
-    bool traverseLayer(const commonlib::Region<int>& r,
-                       F& accessor,
+    bool traverseLayer(const commonlib::Region<int> &r,
+                       F &accessor,
                        int layer);
 
-    inline bool canSee(const GameObject* obj) const;
+    inline bool canSee(const GameObject *obj) const;
 
-    bool checkCollision(commonlib::Vector2& delta,
-                        const GameObject* obj);
+    bool checkCollision(commonlib::Vector2 &delta,
+                        const GameObject *obj);
 
-    bool canBePlaced(const commonlib::Vector2& pos,
+    bool canBePlaced(const commonlib::Vector2 &pos,
                      float collideBreath);
 
-    void toJson(rapidjson::Document& doc);
+    void toJson(rapidjson::Document &doc);
 
 private:
     void initObjDeleter();
@@ -161,8 +161,8 @@ private:
 
     void presentParticleEffects();
 
-    bool checkNonpassthroughCollide(commonlib::Vector2& delta,
-                                    const GameObject* obj);
+    bool checkNonpassthroughCollide(commonlib::Vector2 &delta,
+                                    const GameObject *obj);
 
     std::string detail();
 
@@ -182,7 +182,7 @@ private:
     commonlib::Region<float> boundary_;
     commonlib::Region<float> viewableRegion_;
     commonlib::Region<int> presentArea_;
-    Player* player_;
+    Player *player_;
     int aiRobotCount_;
     std::string aiRobotCountStr_;
 };
@@ -227,27 +227,27 @@ float GameMap::height() const
     return boundary_.top();
 }
 
-const commonlib::Vector2& GameMap::viewportOrigin() const
+const commonlib::Vector2 &GameMap::viewportOrigin() const
 {
     return viewportOrigin_;
 }
 
-const commonlib::Vector2& GameMap::viewportAnchor() const
+const commonlib::Vector2 &GameMap::viewportAnchor() const
 {
     return viewportAnchor_;
 }
 
-const commonlib::Region<float>& GameMap::boundary() const
+const commonlib::Region<float> &GameMap::boundary() const
 {
     return boundary_;
 }
 
-const commonlib::Region<float>& GameMap::viewableRegion() const
+const commonlib::Region<float> &GameMap::viewableRegion() const
 {
     return viewableRegion_;
 }
 
-const commonlib::Region<int>& GameMap::presentArea() const
+const commonlib::Region<int> &GameMap::presentArea() const
 {
     return presentArea_;
 }
@@ -262,12 +262,12 @@ int GameMap::getCellIdx(float x) const
     return getAbsCellIdx(x) + extraCell_;
 }
 
-const Player* GameMap::player() const
+const Player *GameMap::player() const
 {
     return player_;
 }
 
-Player* GameMap::player()
+Player *GameMap::player()
 {
     return player_;
 }
@@ -277,19 +277,19 @@ int GameMap::aiRobotCount() const
     return aiRobotCount_;
 }
 
-const std::string& GameMap::aiRobotCountStr() const
+const std::string &GameMap::aiRobotCountStr() const
 {
     return aiRobotCountStr_;
 }
 
-bool GameMap::canSee(const GameObject* obj) const
+bool GameMap::canSee(const GameObject *obj) const
 {
     return presentArea_.contains(obj->col(), obj->row());
 }
 
 template <typename F>
-void GameMap::traverse(const commonlib::Region<int>& r,
-                       F& accessor,
+void GameMap::traverse(const commonlib::Region<int> &r,
+                       F &accessor,
                        int startLayer,
                        int layerCount)
 {
@@ -305,8 +305,8 @@ void GameMap::traverse(const commonlib::Region<int>& r,
 }
 
 template <typename F>
-void GameMap::traverse(const commonlib::Region<int>& r,
-                       F& accessor,
+void GameMap::traverse(const commonlib::Region<int> &r,
+                       F &accessor,
                        std::initializer_list<int> layers)
 {
     for (auto it = layers.begin(); it != layers.end(); ++it)
@@ -319,18 +319,18 @@ void GameMap::traverse(const commonlib::Region<int>& r,
 }
 
 template <typename F>
-bool GameMap::traverseLayer(const commonlib::Region<int>& r,
-                            F& accessor,
+bool GameMap::traverseLayer(const commonlib::Region<int> &r,
+                            F &accessor,
                             int layer)
 {
     for (int rowIdx = r.bottom(); rowIdx <= r.top(); ++rowIdx)
     {
-        auto& row = cells_[rowIdx];
+        auto &row = cells_[rowIdx];
         for (int colIdx = r.left(); colIdx <= r.right(); ++colIdx)
         {
-            GameObjectList& objs = row[colIdx][layer];
-            GameObject* next;
-            for (GameObject* obj = objs.first(); obj; obj = next)
+            GameObjectList &objs = row[colIdx][layer];
+            GameObject *next;
+            for (GameObject *obj = objs.first(); obj; obj = next)
             {
                 next = obj->next();
                 if (!accessor(obj))

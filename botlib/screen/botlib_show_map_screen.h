@@ -1,5 +1,5 @@
-#ifndef INCLUDED_BOTLIB_SHOWMAP_SCREEN_H
-#define INCLUDED_BOTLIB_SHOWMAP_SCREEN_H
+#ifndef INCLUDED_BOTLIB_SHOW_MAP_SCREEN_H
+#define INCLUDED_BOTLIB_SHOW_MAP_SCREEN_H
 
 #include <botlib_game_object_factory.h>
 #include <botlib_game_map.h>

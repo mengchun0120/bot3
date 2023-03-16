@@ -15,7 +15,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-bool presentObj(GameObject* obj)
+bool presentObj(GameObject *obj)
 {
     if (obj->state() == GameObjectState::DEAD)
     {
@@ -63,7 +63,7 @@ void GameMap::present()
     presentParticleEffects();
 }
 
-void GameMap::addObj(GameObject* obj)
+void GameMap::addObj(GameObject *obj)
 {
     if (!obj)
     {
@@ -79,7 +79,7 @@ void GameMap::addObj(GameObject* obj)
 
     if (obj->type() == GameObjectType::ROBOT)
     {
-        Robot* robot = static_cast<Robot*>(obj);
+        Robot *robot = static_cast<Robot*>(obj);
         if (robot->side() == Side::PLAYER)
         {
             player_ = static_cast<Player*>(obj);
@@ -93,7 +93,7 @@ void GameMap::addObj(GameObject* obj)
     }
 }
 
-void GameMap::repositionObj(GameObject* obj)
+void GameMap::repositionObj(GameObject *obj)
 {
     if (!obj)
     {
@@ -114,11 +114,11 @@ void GameMap::repositionObj(GameObject* obj)
     obj->setMapPos(rowIdx, colIdx);
 }
 
-void GameMap::removeObj(GameObject* obj)
+void GameMap::removeObj(GameObject *obj)
 {
     if (obj->type() == GameObjectType::ROBOT)
     {
-        Robot* robot = static_cast<Robot*>(obj);
+        Robot *robot = static_cast<Robot*>(obj);
         if (robot->side() == Side::PLAYER)
         {
             player_ = nullptr;
@@ -141,7 +141,7 @@ void GameMap::resetViewport(float viewportWidth, float viewportHeight)
     setViewportOrigin(viewportOrigin_);
 }
 
-void GameMap::setViewportOrigin(const commonlib::Vector2& p)
+void GameMap::setViewportOrigin(const commonlib::Vector2 &p)
 {
     setViewportOrigin(p[0], p[1]);
 }
@@ -155,7 +155,7 @@ void GameMap::setViewportOrigin(float x, float y)
     resetPresentArea();
 }
 
-Region<int> GameMap::getCollideArea(const Region<float>& r,
+Region<int> GameMap::getCollideArea(const Region<float> &r,
                                     float deltaX,
                                     float deltaY) const
 {
@@ -191,7 +191,7 @@ Region<int> GameMap::getCollideArea(const Region<float>& r,
     return Region<int>(left, right, bottom, top);
 }
 
-Region<int> GameMap::getCollideArea(const Region<float>& r) const
+Region<int> GameMap::getCollideArea(const Region<float> &r) const
 {
     float startX = r.left() - maxCollideBreath_;
     float endX = r.right() + maxCollideBreath_;
@@ -206,7 +206,7 @@ Region<int> GameMap::getCollideArea(const Region<float>& r) const
     return Region<int>(left, right, bottom, top);
 }
 
-Region<int> GameMap::getCoverArea(const Region<float>& r) const
+Region<int> GameMap::getCoverArea(const Region<float> &r) const
 {
     int left = clamp(getCellIdx(r.left()), 0, colCount()-1);
     int right = clamp(getCellIdx(r.right()), 0, colCount()-1);
@@ -216,8 +216,8 @@ Region<int> GameMap::getCoverArea(const Region<float>& r) const
     return Region<int>(left, right, bottom, top);
 }
 
-bool GameMap::checkCollision(Vector2& delta,
-                             const GameObject* obj)
+bool GameMap::checkCollision(Vector2 &delta,
+                             const GameObject *obj)
 {
     bool collideBoundary = checkRectCollideBoundary(delta,
                                                     obj->collideRegion(),
@@ -229,7 +229,7 @@ bool GameMap::checkCollision(Vector2& delta,
     return collideBoundary || collideObjs;
 }
 
-bool GameMap::canBePlaced(const commonlib::Vector2& pos,
+bool GameMap::canBePlaced(const commonlib::Vector2 &pos,
                           float collideBreath)
 {
     Region<float> region{pos[0]-collideBreath, pos[0]+collideBreath,
@@ -241,7 +241,7 @@ bool GameMap::canBePlaced(const commonlib::Vector2& pos,
     }
 
     bool collide = false;
-    auto checker = [&](GameObject* obj)->bool
+    auto checker = [&](GameObject *obj)->bool
     {
         if (obj->state() != GameObjectState::ALIVE ||
             !isNonPassthroughObjType(obj->type()))
@@ -263,11 +263,11 @@ bool GameMap::canBePlaced(const commonlib::Vector2& pos,
     return !collide;
 }
 
-void GameMap::toJson(rapidjson::Document& doc)
+void GameMap::toJson(rapidjson::Document &doc)
 {
     using namespace rapidjson;
 
-    auto& allocator = doc.GetAllocator();
+    auto &allocator = doc.GetAllocator();
 
     doc.SetObject();
     doc.AddMember("rows", absRowCount(), allocator);
@@ -275,7 +275,7 @@ void GameMap::toJson(rapidjson::Document& doc)
 
     Value objects(kArrayType);
 
-    auto jsonizer = [&](GameObject* obj)->bool
+    auto jsonizer = [&](GameObject *obj)->bool
     {
         Value v(kObjectType);
         obj->toJson(v, allocator);
@@ -364,7 +364,7 @@ void GameMap::resetPresentArea()
 
 void GameMap::presentObjs()
 {
-    SimpleShaderProgram& program = Context::graphics().simpleShader();
+    SimpleShaderProgram &program = Context::graphics().simpleShader();
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
@@ -373,19 +373,19 @@ void GameMap::presentObjs()
 
 void GameMap::presentParticleEffects()
 {
-    ParticleShaderProgram& program = Context::graphics().particleShader();
+    ParticleShaderProgram &program = Context::graphics().particleShader();
     program.use();
     program.setViewportSize(viewportSize_);
     program.setViewportOrigin(viewportOrigin_);
     traverse(presentArea_, presentObj, 3, 1);
 }
 
-bool GameMap::checkNonpassthroughCollide(commonlib::Vector2& delta,
-                                         const GameObject* obj)
+bool GameMap::checkNonpassthroughCollide(commonlib::Vector2 &delta,
+                                         const GameObject *obj)
 {
     Region<int> area = getCollideArea(obj->collideRegion(), delta[0], delta[1]);
     bool collide = false;
-    auto checker = [&](GameObject* o)->bool
+    auto checker = [&](GameObject *o)->bool
     {
         bool check = o != obj &&
                      o->state() == GameObjectState::ALIVE &&
@@ -420,14 +420,14 @@ std::string GameMap::detail()
         {
             for (int i = 0; i < 4; ++i)
             {
-                auto& q = cells_[r][c][i];
+                auto &q = cells_[r][c][i];
                 if (q.empty())
                 {
                     continue;
                 }
 
                 oss << r << ":" << c << ":" << i << " ";
-                for (GameObject* o = q.first(); o; o = o->next())
+                for (GameObject *o = q.first(); o; o = o->next())
                 {
                     oss << o->type() << ":" << o->id();
                 }

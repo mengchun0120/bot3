@@ -6,9 +6,9 @@
 #include <commonlib_exception.h>
 #include <commonlib_system.h>
 #include <commonlib_file_utils.h>
-#include <botlib_testshape_app.h>
-#include <botlib_testmap_app.h>
-#include <botlib_testwidget_app.h>
+#include <botlib_test_shape_app.h>
+#include <botlib_test_map_app.h>
+#include <botlib_test_widget_app.h>
 #include <androidlib_android_out.h>
 #include <androidlib_robot_app.h>
 
