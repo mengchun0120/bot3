@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.22.1)
 
 set(SHOWMAP_SRC
-    showmap_app.cpp
-    showmap_main.cpp
+    show_map_main.cpp
 )
 
 include_directories(

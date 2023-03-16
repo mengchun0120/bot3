@@ -112,9 +112,7 @@ void InputManager::processInput(P &processor)
         }
     }
 }
-
 #elif __ANDROID__
-
 template <typename P>
 void InputManager::processInput(P &processor)
 {
@@ -129,7 +127,6 @@ void InputManager::processInput(P &processor)
 
     android_app_clear_motion_events(app_);
 }
-
 #endif
 
 void InputManager::setViewportSize(const Vector2 &viewportSize)

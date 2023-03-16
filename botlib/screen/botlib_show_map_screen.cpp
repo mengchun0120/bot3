@@ -8,7 +8,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-ShowMapScreen::ShowMapScreen(const commonlib::Vector2& viewportSize,
+ShowMapScreen::ShowMapScreen(const commonlib::Vector2 &viewportSize,
                              AppActions actions,
                              ScreenType nextScreenType,
                              bool initMap)
@@ -16,7 +16,7 @@ ShowMapScreen::ShowMapScreen(const commonlib::Vector2& viewportSize,
     init(viewportSize, actions, nextScreenType);
 }
 
-void ShowMapScreen::init(const commonlib::Vector2& viewportSize,
+void ShowMapScreen::init(const commonlib::Vector2 &viewportSize,
                          AppActions actions,
                          ScreenType nextScreenType,
                          bool initMap)
@@ -44,7 +44,7 @@ void ShowMapScreen::present()
 }
 
 #ifdef DESKTOP_APP
-bool ShowMapScreen::processInput(const commonlib::InputEvent& e)
+bool ShowMapScreen::processInput(const commonlib::InputEvent &e)
 {
     switch (e.type())
     {
@@ -57,7 +57,7 @@ bool ShowMapScreen::processInput(const commonlib::InputEvent& e)
     return true;
 }
 
-bool ShowMapScreen::processKey(const commonlib::KeyEvent& e)
+bool ShowMapScreen::processKey(const commonlib::KeyEvent &e)
 {
     if (e.action_ != GLFW_PRESS && e.action_ != GLFW_REPEAT)
     {
@@ -115,7 +115,7 @@ bool ShowMapScreen::processEscKey()
 
 bool ShowMapScreen::processUpKey()
 {
-    const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
+    const ShowMapScreenConfig &cfg = Context::showMapScreenConfig();
     Vector2 p = map_.viewportOrigin();
 
     p[1] += cfg.deltaPerStroke();
@@ -126,7 +126,7 @@ bool ShowMapScreen::processUpKey()
 
 bool ShowMapScreen::processDownKey()
 {
-    const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
+    const ShowMapScreenConfig &cfg = Context::showMapScreenConfig();
     Vector2 p = map_.viewportOrigin();
 
     p[1] -= cfg.deltaPerStroke();
@@ -137,7 +137,7 @@ bool ShowMapScreen::processDownKey()
 
 bool ShowMapScreen::processRightKey()
 {
-    const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
+    const ShowMapScreenConfig &cfg = Context::showMapScreenConfig();
     Vector2 p = map_.viewportOrigin();
 
     p[0] += cfg.deltaPerStroke();
@@ -148,7 +148,7 @@ bool ShowMapScreen::processRightKey()
 
 bool ShowMapScreen::processLeftKey()
 {
-    const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
+    const ShowMapScreenConfig &cfg = Context::showMapScreenConfig();
     Vector2 p = map_.viewportOrigin();
 
     p[0] -= cfg.deltaPerStroke();
@@ -158,13 +158,18 @@ bool ShowMapScreen::processLeftKey()
 }
 #endif
 
-void ShowMapScreen::loadMap(const commonlib::Vector2& viewportSize)
+void ShowMapScreen::loadMap(const commonlib::Vector2 &viewportSize)
 {
-    const ShowMapScreenConfig& cfg = Context::showMapScreenConfig();
+    const ShowMapScreenConfig &cfg = Context::showMapScreenConfig();
 
     GameMapLoader loader(viewportSize[0], viewportSize[1], factory_);
 
     loader.load(map_, cfg.mapFile());
+}
+
+void ShowMapScreen::onViewportChange(float width, float height)
+{
+    map_.resetViewport(width, height);
 }
 
 } // end of namespace botlib

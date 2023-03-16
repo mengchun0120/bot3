@@ -5,5 +5,5 @@ include(${BOTLIB_SRC_DIR}/botlib.cmake)
 
 #add_subdirectory(bot)
 #add_subdirectory(genmap)
-#add_subdirectory(showmap)
+add_subdirectory(showmap)
 #add_subdirectory(rungame)

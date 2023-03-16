@@ -11,24 +11,27 @@ class Screen {
 public:
     Screen() = default;
 
-    Screen(const AppActions& actions);
+    Screen(const AppActions &actions);
 
     virtual ~Screen() = default;
 
-    void init(const AppActions& actions);
+    void init(const AppActions &actions);
 
     virtual void update(float delta) = 0;
 
     virtual void present() = 0;
 
-#ifdef DESKTOP_APP
     virtual bool processInput(const commonlib::InputEvent &e) = 0;
-#endif
+
+    virtual inline void onViewportChange(float width, float height);
 
 protected:
     AppActions actions_;
 };
 
+void Screen::onViewportChange(float width, float height)
+{
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

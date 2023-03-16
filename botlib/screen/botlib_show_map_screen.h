@@ -12,19 +12,16 @@ class ShowMapScreen: public Screen {
 public:
     ShowMapScreen() = default;
 
-    ShowMapScreen(const commonlib::Vector2& viewportSize,
+    ShowMapScreen(const commonlib::Vector2 &viewportSize,
                   AppActions actions,
                   ScreenType nextScreenType=ScreenType::NONE,
                   bool initMap=true);
 
     ~ShowMapScreen() override = default;
 
-    GameMap& map()
-    {
-        return map_;
-    }
+    inline GameMap &map();
 
-    void init(const commonlib::Vector2& viewportSize,
+    void init(const commonlib::Vector2 &viewportSize,
               AppActions actions,
               ScreenType nextScreenType=ScreenType::NONE,
               bool initMap=true);
@@ -34,9 +31,9 @@ public:
     void present() override;
 
 #ifdef DESKTOP_APP
-    bool processInput(const commonlib::InputEvent& e) override;
+    bool processInput(const commonlib::InputEvent &e) override;
 
-    bool processKey(const commonlib::KeyEvent& e);
+    bool processKey(const commonlib::KeyEvent &e);
 
     bool processEscKey();
 
@@ -49,14 +46,21 @@ public:
     bool processLeftKey();
 #endif
 
+    void onViewportChange(float width, float height) override;
+
 private:
-    void loadMap(const commonlib::Vector2& viewportSize);
+    void loadMap(const commonlib::Vector2 &viewportSize);
 
 private:
     GameObjectFactory factory_;
     GameMap map_;
     ScreenType nextScreenType_;
 };
+
+GameMap &ShowMapScreen::map()
+{
+    return map_;
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

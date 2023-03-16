@@ -3,10 +3,10 @@
 #include <cstdlib>
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
-#include <showmap_app.h>
+#include <botlib_show_map_app.h>
 
 using namespace mcdane::commonlib;
-using namespace mcdane::showmap;
+using namespace mcdane::botlib;
 
 struct Arguments {
     std::string appConfigFile_;
@@ -100,11 +100,13 @@ int main(int argc,
         exit(1);
     }
 
-    LOG_INFO << "Initialization complete " << args.appDir_ << " " << args.mapFile_ << LOG_END;
+    LOG_INFO << "Initialization complete " << args.appDir_
+             << " " << args.mapFile_ << LOG_END;
 
     try
     {
-        ShowMapApp app(args.appConfigFile_, args.appDir_, args.mapFile_);
+        ShowMapApp app;
+        app.init(args.appConfigFile_, args.appDir_, args.mapFile_);
         app.run();
     }
     catch (const std::exception& e)

@@ -1,40 +1,65 @@
 #include <botlib_app_config.h>
 #include <botlib_context.h>
-#include <showmap_app.h>
+#include <botlib_show_map_app.h>
 
 using namespace mcdane::commonlib;
-using namespace mcdane::botlib;
 
 namespace mcdane {
-namespace showmap {
+namespace botlib {
 
-ShowMapApp::ShowMapApp(const std::string& configFile,
-                       const std::string& appDir,
-                       const std::string& mapFile)
+ShowMapApp::ShowMapApp()
+    : App()
 {
-    AppConfig::init(configFile, appDir);
-    const AppConfig& cfg = AppConfig::instance();
-    init(cfg.width(), cfg.height(), cfg.title());
-    Context::init(cfg);
-    setupGame(mapFile);
 }
 
 ShowMapApp::~ShowMapApp()
 {
 }
 
+#ifdef DESKTOP_APP
+void ShowMapApp::init(const std::string &configFile,
+                      const std::string &appDir,
+                      const std::string &mapFile)
+{
+    AppConfig::init(configFile, appDir);
+    const AppConfig &cfg = AppConfig::instance();
+    App::init(cfg.width(), cfg.height(), cfg.title());
+    Context::init(cfg);
+    setupGame(mapFile);
+}
+#elif __ANDROID__
+void ShowMapApp::init(android_app *app)
+{
+    AppConfig::init("config/bot_config_android.json");
+    App::init(app);
+    const AppConfig &cfg = AppConfig::instance();
+    Context::init(cfg);
+    setupGame("map_05.json");
+}
+#endif
+
 void ShowMapApp::process()
 {
-    InputManager::getInstance().processInput(inputProcessor_);
+    App::process();
+
+    InputManager::instance().processInput(*this);
 
     if (running())
     {
         screen_.update(deltaSmoother_.curTimeDelta());
         screen_.present();
     }
+
+    postProcess();
 }
 
-void ShowMapApp::setupGame(const std::string& mapFile)
+bool ShowMapApp::operator()(const commonlib::InputEvent &e)
+{
+    screen_.processInput(e);
+    return true;
+}
+
+void ShowMapApp::setupGame(const std::string &mapFile)
 {
     setupDeltaSmoother();
     setupScreen(mapFile);
@@ -43,12 +68,12 @@ void ShowMapApp::setupGame(const std::string& mapFile)
 
 void ShowMapApp::setupDeltaSmoother()
 {
-    const AppConfig& cfg = AppConfig::instance();
+    const AppConfig &cfg = AppConfig::instance();
     deltaSmoother_.init(cfg.timeDeltaHistoryLen());
     deltaSmoother_.start();
 }
 
-void ShowMapApp::setupScreen(const std::string& mapFile)
+void ShowMapApp::setupScreen(const std::string &mapFile)
 {
     AppActions actions;
 
@@ -57,21 +82,26 @@ void ShowMapApp::setupScreen(const std::string& mapFile)
     screen_.init(viewportSize(), actions);
 }
 
+#ifdef DESKTOP_APP
 void ShowMapApp::setupInput()
 {
-    using namespace std::placeholders;
-
-    const AppConfig& cfg = AppConfig::instance();
-
-    InputManager::initInstance(window(),
-                               viewportHeight(),
+    const AppConfig &cfg = AppConfig::instance();
+    InputManager::initInstance(window(), viewportSize(),
                                cfg.inputQueueCapacity());
+    InputManager::instance().enable();
+}
+#elif __ANDROID__
+void ShowMapApp::setupInput()
+{
+    InputManager::initInstance(app_, viewportSize());
+}
+#endif
 
-    inputProcessor_ = std::bind(&ShowMapScreen::processInput,
-                                &screen_,
-                                _1);
-
-    InputManager::getInstance().enable();
+void ShowMapApp::onViewportChange(float width, float height)
+{
+    App::onViewportChange(width, height);
+    InputManager::instance().setViewportSize(viewportSize());
+    screen_.onViewportChange(width, height);
 }
 
 void ShowMapApp::exitApp()
@@ -79,6 +109,6 @@ void ShowMapApp::exitApp()
     setRunning(false);
 }
 
-} // end of namespace showmap
+} // end of namespace botlib
 } // end of namespace mcdane
 
