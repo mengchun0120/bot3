@@ -61,8 +61,7 @@ void Widget::shiftPos(float dx, float dy)
     pos_[1] += dy;
 }
 
-bool Widget::containPos(float x,
-                        float y) const
+bool Widget::containPos(float x, float y) const
 {
     if (!visible_)
     {

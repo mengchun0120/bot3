@@ -36,8 +36,6 @@ public:
 
     virtual inline void onPointerDown();
 
-//    virtual inline void onPointerUp();
-
     virtual void setPos(float x,
                         float y);
 
@@ -50,8 +48,7 @@ public:
 
     inline void setVisible(bool visible);
 
-    bool containPos(float x,
-                    float y) const;
+    virtual bool containPos(float x, float y) const;
 
     inline bool acceptInput() const;
 
@@ -93,11 +90,7 @@ void Widget::onPointerOver()
 void Widget::onPointerDown()
 {
 }
-/*
-void Widget::onPointerUp()
-{
-}
-*/
+
 bool Widget::visible() const
 {
     return visible_;
