@@ -45,7 +45,7 @@ void Button::init(float x,
     text_ = text;
     textSize_ = textSize;
     state_ = STATE_NORMAL;
-    Widget::init(x, y, width, height, visible, acceptInput, true);
+    RectangularWidget::init(x, y, width, height, visible, acceptInput, true);
     resetTextPos();
 
     LOG_INFO << "Button " << text_ << " " << pos_ << LOG_END;
@@ -82,17 +82,15 @@ void Button::setActionFunc(const ActionFunc &actionFunc)
     action_ = actionFunc;
 }
 
-void Button::setPos(float x,
-                    float y)
+void Button::setPos(float x, float y)
 {
-    Widget::setPos(x, y);
+    RectangularWidget::setPos(x, y);
     resetTextPos();
 }
 
-void Button::shiftPos(float dx,
-                      float dy)
+void Button::shiftPos(float dx, float dy)
 {
-    Widget::shiftPos(dx, dy);
+    RectangularWidget::shiftPos(dx, dy);
     textPos_[0] += dx;
     textPos_[1] += dy;
 }

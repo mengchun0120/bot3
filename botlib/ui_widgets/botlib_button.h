@@ -7,12 +7,12 @@
 #include <commonlib_texture.h>
 #include <botlib_text_size.h>
 #include <botlib_constants.h>
-#include <botlib_widget.h>
+#include <botlib_rectangular_widget.h>
 
 namespace mcdane {
 namespace botlib {
 
-class Button: public Widget {
+class Button: public RectangularWidget {
 public:
     using ActionFunc = std::function<void()>;
 
@@ -52,11 +52,9 @@ public:
 
     void setActionFunc(const ActionFunc &actionFunc);
 
-    void setPos(float x,
-                float y) override;
+    void setPos(float x, float y) override;
 
-    void shiftPos(float dx,
-                  float dy) override;
+    void shiftPos(float dx, float dy) override;
 
 #ifdef DESKTOP_APP
     void onKey(const commonlib::KeyEvent &e);

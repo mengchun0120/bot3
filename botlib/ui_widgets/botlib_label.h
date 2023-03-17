@@ -5,12 +5,12 @@
 #include <commonlib_color.h>
 #include <botlib_text_size.h>
 #include <botlib_align.h>
-#include <botlib_widget.h>
+#include <botlib_rectangular_widget.h>
 
 namespace mcdane {
 namespace botlib {
 
-class Label: public Widget {
+class Label: public RectangularWidget {
 public:
     Label() = default;
 
@@ -42,11 +42,9 @@ public:
               const commonlib::Color *borderColor = nullptr,
               bool visible = true);
 
-    void setPos(float x,
-                float y) override;
+    void setPos(float x, float y) override;
 
-    void shiftPos(float dx,
-                  float dy) override;
+    void shiftPos(float dx, float dy) override;
 
     void present() const override;
 

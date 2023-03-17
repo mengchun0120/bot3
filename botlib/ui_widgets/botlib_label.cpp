@@ -53,7 +53,7 @@ void Label::init(float x,
         THROW_EXCEPT(InvalidArgumentException, "Invalid valign");
     }
 
-    Widget::init(x, y, width, height, visible, false, false);
+    RectangularWidget::init(x, y, width, height, visible, false, false);
     text_ = text;
     textSize_ = textSize;
     halign_ = halign;
@@ -62,17 +62,15 @@ void Label::init(float x,
     initColors(textColor, backColor, borderColor);
 }
 
-void Label::setPos(float x,
-                   float y)
+void Label::setPos(float x, float y)
 {
-    Widget::setPos(x, y);
+    RectangularWidget::setPos(x, y);
     updateTextPos();
 }
 
-void Label::shiftPos(float dx,
-                     float dy)
+void Label::shiftPos(float dx, float dy)
 {
-    Widget::shiftPos(dx, dy);
+    RectangularWidget::shiftPos(dx, dy);
     textPos_[0] += dx;
     textPos_[1] += dy;
 }

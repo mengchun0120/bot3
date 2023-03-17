@@ -18,8 +18,6 @@ public:
 
     void init(float x,
               float y,
-              float width,
-              float height,
               bool visible=true,
               bool acceptInput=false,
               bool hasTexture=false);
@@ -36,11 +34,9 @@ public:
 
     virtual inline void onPointerDown();
 
-    virtual void setPos(float x,
-                        float y);
+    virtual void setPos(float x, float y);
 
-    virtual void shiftPos(float dx,
-                          float dy);
+    virtual void shiftPos(float dx, float dy);
 
     virtual void present() const = 0;
 
@@ -48,23 +44,16 @@ public:
 
     inline void setVisible(bool visible);
 
-    virtual bool containPos(float x, float y) const;
+    virtual bool containPos(float x, float y) const = 0;
 
     inline bool acceptInput() const;
 
     inline void setAcceptInput(bool accept);
 
-    inline float width() const;
-
-    inline float height() const;
-
     inline const commonlib::Vector2 &pos() const;
-
-    inline const Rectangle &rect() const;
 
 protected:
     commonlib::Vector2 pos_;
-    Rectangle rect_;
     bool visible_;
     bool acceptInput_;
 };
@@ -111,24 +100,9 @@ void Widget::setAcceptInput(bool accept)
     acceptInput_ = accept;
 }
 
-float Widget::width() const
-{
-    return rect_.width();
-}
-
-float Widget::height() const
-{
-    return rect_.height();
-}
-
 const commonlib::Vector2 &Widget::pos() const
 {
     return pos_;
-}
-
-const Rectangle &Widget::rect() const
-{
-    return rect_;
 }
 
 } // end of namespace botlib
