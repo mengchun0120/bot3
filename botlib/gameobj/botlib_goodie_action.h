@@ -10,9 +10,9 @@ namespace botlib {
 class Player;
 class GoodieTemplate;
 
-void activateGoodie(const GoodieTemplate* t, Player& player);
+void activateGoodie(const GoodieTemplate *t, Player &player);
 
-void deactivateGoodie(GoodieType type, Player& player);
+void deactivateGoodie(GoodieType type, Player &player);
 
 } // end of namespace botlib
 } // end of namespace mcdane

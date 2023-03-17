@@ -8,9 +8,9 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-Goodie::Goodie(const GoodieTemplate* t,
-               const commonlib::Vector2& pos,
-               const commonlib::Vector2& direction)
+Goodie::Goodie(const GoodieTemplate *t,
+               const commonlib::Vector2 &pos,
+               const commonlib::Vector2 &direction)
 {
     init(t, pos, direction);
 }
@@ -19,9 +19,9 @@ Goodie::~Goodie()
 {
 }
 
-void Goodie::init(const GoodieTemplate* t,
-                  const commonlib::Vector2& pos,
-                  const commonlib::Vector2& direction)
+void Goodie::init(const GoodieTemplate *t,
+                  const commonlib::Vector2 &pos,
+                  const commonlib::Vector2 &direction)
 {
     CompositeObject::init(t, pos, direction);
 }
@@ -31,7 +31,7 @@ void Goodie::present() const
     CompositeObject::present();
 }
 
-bool Goodie::canBeDumped(GameMap& map) const
+bool Goodie::canBeDumped(GameMap &map) const
 {
     return false;
 }

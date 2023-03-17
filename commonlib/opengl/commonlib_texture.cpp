@@ -44,7 +44,7 @@ void Texture::init(const std::string &path)
 
     stbi_set_flip_vertically_on_load(true);
 
-    unsigned char* data = stbi_load(path.c_str(),
+    unsigned char *data = stbi_load(path.c_str(),
                                     &width_,
                                     &height_,
                                     &numChannels,

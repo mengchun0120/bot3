@@ -16,13 +16,13 @@ public:
 
     ~Graphics() = default;
 
-    void init(const AppConfig& cfg);
+    void init(const AppConfig &cfg);
 
-    inline SimpleShaderProgram& simpleShader();
+    inline SimpleShaderProgram &simpleShader();
 
-    inline ParticleShaderProgram& particleShader();
+    inline ParticleShaderProgram &particleShader();
 
-    inline const TextSystem& textSys() const;
+    inline const TextSystem &textSys() const;
 
 private:
     SimpleShaderProgram simpleShader_;
@@ -30,17 +30,17 @@ private:
     TextSystem textSys_;
 };
 
-SimpleShaderProgram& Graphics::simpleShader()
+SimpleShaderProgram &Graphics::simpleShader()
 {
     return simpleShader_;
 }
 
-ParticleShaderProgram& Graphics::particleShader()
+ParticleShaderProgram &Graphics::particleShader()
 {
     return particleShader_;
 }
 
-const TextSystem& Graphics::textSys() const
+const TextSystem &Graphics::textSys() const
 {
     return textSys_;
 }

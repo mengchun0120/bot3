@@ -13,8 +13,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-MissileHitChecker::MissileHitChecker(UpdateContext& cxt,
-                                     Missile& missile,
+MissileHitChecker::MissileHitChecker(UpdateContext &cxt,
+                                     Missile &missile,
                                      bool inflictDamage)
     : cxt_(cxt)
     , missile_(missile)
@@ -24,7 +24,7 @@ MissileHitChecker::MissileHitChecker(UpdateContext& cxt,
 }
 
 
-bool MissileHitChecker::operator()(GameObject* obj)
+bool MissileHitChecker::operator()(GameObject *obj)
 {
     if (!check(obj))
     {
@@ -49,14 +49,14 @@ bool MissileHitChecker::operator()(GameObject* obj)
     return false;
 }
 
-void MissileHitChecker::doDamage(GameObject* obj)
+void MissileHitChecker::doDamage(GameObject *obj)
 {
-    GameMap& map = *(cxt_.map());
-    GameObjectDumper& dumper = cxt_.dumper();
+    GameMap &map = *(cxt_.map());
+    GameObjectDumper &dumper = cxt_.dumper();
 
     if (obj->type() == GameObjectType::ROBOT)
     {
-        Robot* robot = static_cast<Robot*>(obj);
+        Robot *robot = static_cast<Robot*>(obj);
         robot->doDamage(missile_.damage(), cxt_);
 
         if (robot->state() != GameObjectState::ALIVE && robot->side() == Side::AI)
@@ -71,7 +71,7 @@ void MissileHitChecker::doDamage(GameObject* obj)
     }
     else if (obj->type() == GameObjectType::TILE)
     {
-        Tile* tile = static_cast<Tile*>(obj);
+        Tile *tile = static_cast<Tile*>(obj);
         tile->doDamage(missile_.damage());
 
         if (tile->canBeDumped(map))
@@ -81,10 +81,10 @@ void MissileHitChecker::doDamage(GameObject* obj)
     }
 }
 
-void MissileHitChecker::generateGoodie(AIRobot* robot)
+void MissileHitChecker::generateGoodie(AIRobot *robot)
 {
-    GoodieGenerator& g = Context::goodieGenerator();
-    Goodie* goodie = g.generate(robot->getTemplate()->goodieProb(),
+    GoodieGenerator &g = Context::goodieGenerator();
+    Goodie *goodie = g.generate(robot->getTemplate()->goodieProb(),
                                 robot->pos());
     if (goodie)
     {

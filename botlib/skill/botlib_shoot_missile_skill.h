@@ -11,23 +11,23 @@ class ShootMissileSkill: public SkillWithCost {
 public:
     ShootMissileSkill() = default;
 
-    ShootMissileSkill(const ShootMissileSkillTemplate* t,
-                      Robot* robot,
+    ShootMissileSkill(const ShootMissileSkillTemplate *t,
+                      Robot *robot,
                       bool enabled1=false);
 
     ~ShootMissileSkill() override = default;
 
-    void init(const ShootMissileSkillTemplate* t,
-              Robot* robot,
+    void init(const ShootMissileSkillTemplate *t,
+              Robot *robot,
               bool enabled1=false);
 
-    inline const ShootMissileSkillTemplate* getTemplate() const;
+    inline const ShootMissileSkillTemplate *getTemplate() const;
 
 protected:
-    bool apply(UpdateContext& cxt) override;
+    bool apply(UpdateContext &cxt) override;
 };
 
-const ShootMissileSkillTemplate* ShootMissileSkill::getTemplate() const
+const ShootMissileSkillTemplate *ShootMissileSkill::getTemplate() const
 {
     return static_cast<const ShootMissileSkillTemplate*>(t_);
 }

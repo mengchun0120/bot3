@@ -7,9 +7,9 @@ namespace commonlib {
 std::shared_ptr<InputManager> InputManager::k_instance;
 
 #ifdef DESKTOP_APP
-bool validateInputManager(const std::string& func)
+bool validateInputManager(const std::string &func)
 {
-    InputManager& mgr = InputManager::instance();
+    InputManager &mgr = InputManager::instance();
 
     if (!mgr.enabled())
     {
@@ -26,7 +26,7 @@ bool validateInputManager(const std::string& func)
     return true;
 }
 
-void handleMouseButton(GLFWwindow* window,
+void handleMouseButton(GLFWwindow *window,
                        int button,
                        int action,
                        int mods)
@@ -58,7 +58,7 @@ void handleMouseMove(GLFWwindow *window,
     );
 }
 
-void handleKey(GLFWwindow* window,
+void handleKey(GLFWwindow *window,
                int key,
                int scancode,
                int action,
@@ -72,7 +72,7 @@ void handleKey(GLFWwindow* window,
     InputManager::instance().addKeyEvent(key, scancode, action, mods);
 }
 
-void InputManager::initInstance(GLFWwindow* window,
+void InputManager::initInstance(GLFWwindow *window,
                                 const Vector2 &viewportSize,
                                 unsigned int inputQueueCapacity)
 {
@@ -87,7 +87,7 @@ void InputManager::initInstance(GLFWwindow* window,
     );
 }
 
-InputManager::InputManager(GLFWwindow* window,
+InputManager::InputManager(GLFWwindow *window,
                            const Vector2 &viewportSize,
                            unsigned int inputQueueCapacity)
     : window_(window)

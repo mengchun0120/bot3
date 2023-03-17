@@ -3,8 +3,8 @@
 namespace mcdane {
 namespace commonlib {
 
-void parse(bool& b,
-           const rapidjson::Value& v)
+void parse(bool &b,
+           const rapidjson::Value &v)
 {
     if (!v.IsBool())
     {
@@ -14,8 +14,8 @@ void parse(bool& b,
     b = v.GetBool();
 }
 
-void parse(int& i,
-           const rapidjson::Value& v)
+void parse(int &i,
+           const rapidjson::Value &v)
 {
     if (!v.IsInt())
     {
@@ -25,8 +25,8 @@ void parse(int& i,
     i = v.GetInt();
 }
 
-void parse(unsigned int& u,
-           const rapidjson::Value& v)
+void parse(unsigned int &u,
+           const rapidjson::Value &v)
 {
     if (!v.IsUint())
     {
@@ -36,8 +36,8 @@ void parse(unsigned int& u,
     u = v.GetUint();
 }
 
-void parse(int64_t& i,
-           const rapidjson::Value& v)
+void parse(int64_t &i,
+           const rapidjson::Value &v)
 {
     if (!v.IsInt64())
     {
@@ -47,8 +47,8 @@ void parse(int64_t& i,
     i = v.GetInt64();
 }
 
-void parse(uint64_t& u,
-           const rapidjson::Value& v)
+void parse(uint64_t &u,
+           const rapidjson::Value &v)
 {
     if (!v.IsUint64())
     {
@@ -58,16 +58,16 @@ void parse(uint64_t& u,
     u = v.GetUint64();
 }
 
-void parse(float& f,
-           const rapidjson::Value& v)
+void parse(float &f,
+           const rapidjson::Value &v)
 {
     double d;
     parse(d, v);
     f = static_cast<float>(d);
 }
 
-void parse(double& d,
-           const rapidjson::Value& v)
+void parse(double &d,
+           const rapidjson::Value &v)
 {
     if (!v.IsDouble())
     {
@@ -77,8 +77,8 @@ void parse(double& d,
     d = v.GetDouble();
 }
 
-void parse(std::string& s,
-           const rapidjson::Value& v)
+void parse(std::string &s,
+           const rapidjson::Value &v)
 {
     if (!v.IsString())
     {
@@ -88,8 +88,8 @@ void parse(std::string& s,
     s = v.GetString();
 }
 
-void parse(Color& c,
-           const rapidjson::Value& v)
+void parse(Color &c,
+           const rapidjson::Value &v)
 {
     std::vector<unsigned int> parts;
     parse(parts, v);

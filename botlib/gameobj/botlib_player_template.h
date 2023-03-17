@@ -12,23 +12,23 @@ class PlayerTemplate: public RobotTemplate {
 public:
     PlayerTemplate() = default;
 
-    void init(const std::string& playerTemplateFile,
-              const MissileTemplateLib& missileTemplateLib,
-              const ComponentTemplateLib& componentTemplateLib,
-              const SkillTemplateLib& skillTemplateLib,
-              const commonlib::InputMap& inputMap);
+    void init(const std::string &playerTemplateFile,
+              const MissileTemplateLib &missileTemplateLib,
+              const ComponentTemplateLib &componentTemplateLib,
+              const SkillTemplateLib &skillTemplateLib,
+              const commonlib::InputMap &inputMap);
 
-    inline const std::unordered_map<int,SkillType>& inputSkillMap() const;
+    inline const std::unordered_map<int,SkillType> &inputSkillMap() const;
 
 private:
-    void initInputSkillMap(const rapidjson::Value& v,
-                           const commonlib::InputMap& inputMap);
+    void initInputSkillMap(const rapidjson::Value &v,
+                           const commonlib::InputMap &inputMap);
 
 protected:
     std::unordered_map<int,SkillType> inputSkillMap_;
 };
 
-const std::unordered_map<int,SkillType>& PlayerTemplate::inputSkillMap() const
+const std::unordered_map<int,SkillType> &PlayerTemplate::inputSkillMap() const
 {
     return inputSkillMap_;
 }

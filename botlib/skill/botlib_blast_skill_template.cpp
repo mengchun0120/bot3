@@ -14,16 +14,16 @@ BlastSkillTemplate::BlastSkillTemplate()
 {
 }
 
-BlastSkillTemplate::BlastSkillTemplate(const rapidjson::Value& v,
-                                       const ProgressPieTemplateLib& progressPieLib,
-                                       const std::string& skillDataDir)
+BlastSkillTemplate::BlastSkillTemplate(const rapidjson::Value &v,
+                                       const ProgressPieTemplateLib &progressPieLib,
+                                       const std::string &skillDataDir)
 {
     init(v, progressPieLib, skillDataDir);
 }
 
-void BlastSkillTemplate::init(const rapidjson::Value& v,
-                              const ProgressPieTemplateLib& progressPieLib,
-                              const std::string& skillDataDir)
+void BlastSkillTemplate::init(const rapidjson::Value &v,
+                              const ProgressPieTemplateLib &progressPieLib,
+                              const std::string &skillDataDir)
 {
     SkillWithCostTemplate::init(SkillType::BLAST, v, progressPieLib);
 
@@ -39,9 +39,9 @@ void BlastSkillTemplate::init(const rapidjson::Value& v,
 }
 
 void BlastSkillTemplate::readFirePosDirections(
-                                const std::string& firePosFile,
-                                const std::string& fireDirectionFile,
-                                const std::string& skillDataDir)
+                                const std::string &firePosFile,
+                                const std::string &fireDirectionFile,
+                                const std::string &skillDataDir)
 {
     readList(firePoints_, constructPath({skillDataDir, firePosFile}));
     readList(fireDirections_, constructPath({skillDataDir, fireDirectionFile}));

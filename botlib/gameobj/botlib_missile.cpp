@@ -21,10 +21,10 @@ Missile::Missile()
 {
 }
 
-Missile::Missile(const MissileTemplate* t,
+Missile::Missile(const MissileTemplate *t,
                  Side side,
-                 const commonlib::Vector2& pos1,
-                 const commonlib::Vector2& direction1,
+                 const commonlib::Vector2 &pos1,
+                 const commonlib::Vector2 &direction1,
                  float damageFactor,
                  bool guided1)
 {
@@ -35,10 +35,10 @@ Missile::~Missile()
 {
 }
 
-void Missile::init(const MissileTemplate* t,
+void Missile::init(const MissileTemplate *t,
                    Side side,
-                   const commonlib::Vector2& pos1,
-                   const commonlib::Vector2& direction1,
+                   const commonlib::Vector2 &pos1,
+                   const commonlib::Vector2 &direction1,
                    float damageFactor,
                    bool guided1)
 {
@@ -52,7 +52,7 @@ void Missile::init(const MissileTemplate* t,
     timeToTarget_ = 0.0f;
 }
 
-void Missile::update(UpdateContext& cxt)
+void Missile::update(UpdateContext &cxt)
 {
     livingTime_ += cxt.timeDelta();
 
@@ -68,15 +68,15 @@ void Missile::update(UpdateContext& cxt)
     GameObject::update(cxt);
 }
 
-void Missile::setDirection(const commonlib::Vector2& direction1)
+void Missile::setDirection(const commonlib::Vector2 &direction1)
 {
     CompositeObject::setDirection(direction1);
     resetSpeed();
 }
 
-void Missile::explode(UpdateContext& cxt)
+void Missile::explode(UpdateContext &cxt)
 {
-    GameMap& map = *(cxt.map());
+    GameMap &map = *(cxt.map());
     MissileHitChecker checker(cxt, *this, true);
     Region<int> area = map.getCollideArea(explodeRegion());
     map.traverse(area, checker, 0, 2);
@@ -90,12 +90,12 @@ void Missile::explode(UpdateContext& cxt)
     }
 }
 
-bool Missile::canBeDumped(GameMap& map) const
+bool Missile::canBeDumped(GameMap &map) const
 {
     return state_ != GameObjectState::DEAD && !map.canSee(this);
 }
 
-void Missile::updateAlive(UpdateContext& cxt)
+void Missile::updateAlive(UpdateContext &cxt)
 {
     if (guided())
     {
@@ -103,7 +103,7 @@ void Missile::updateAlive(UpdateContext& cxt)
     }
 
     Vector2 delta = speed_ * cxt.timeDelta();
-    GameMap& map = *(cxt.map());
+    GameMap &map = *(cxt.map());
 
     bool collideBoundary = checkRectCollideBoundary(delta, collideRegion(),
                                                     map.boundary(), delta);
@@ -128,7 +128,7 @@ void Missile::updateAlive(UpdateContext& cxt)
     }
 }
 
-void Missile::updateForTarget(UpdateContext& cxt)
+void Missile::updateForTarget(UpdateContext &cxt)
 {
     if (!targetSet_)
     {
@@ -145,9 +145,9 @@ void Missile::resetSpeed()
     speed_ = speedNorm() * direction_;
 }
 
-bool Missile::checkCollideObjs(UpdateContext& cxt)
+bool Missile::checkCollideObjs(UpdateContext &cxt)
 {
-    GameMap& map = *(cxt.map());
+    GameMap &map = *(cxt.map());
     MissileHitChecker checker(cxt, *this);
     Region<int> area = map.getCollideArea(collideRegion());
     map.traverse(area, checker, 0, 2);
@@ -161,15 +161,15 @@ Region<float> Missile::explodeRegion()
     return Region<float>({x()-breath, x()+breath, y()-breath, y()+breath});
 }
 
-void Missile::showExplodeEffect(UpdateContext& cxt)
+void Missile::showExplodeEffect(UpdateContext &cxt)
 {
-    ParticleEffect* effect = cxt.factory().createParticleEffect(
+    ParticleEffect *effect = cxt.factory().createParticleEffect(
                                     getTemplate()->explodeEffectTemplate(),
                                     pos_);
     cxt.map()->addObj(effect);
 }
 
-void Missile::setTarget(const commonlib::Vector2& target)
+void Missile::setTarget(const commonlib::Vector2 &target)
 {
     Vector2 p = target - pos();
     float absSpeedX, absSpeedY;
@@ -182,7 +182,7 @@ void Missile::setTarget(const commonlib::Vector2& target)
     targetSet_ = true;
 }
 
-void Missile::searchAndSetTarget(UpdateContext& cxt)
+void Missile::searchAndSetTarget(UpdateContext &cxt)
 {
     targetSet_ = false;
 
@@ -200,7 +200,7 @@ void Missile::searchAndSetTarget(UpdateContext& cxt)
     }
 }
 
-Region<int> Missile::searchRegion(GameMap* map)
+Region<int> Missile::searchRegion(GameMap *map)
 {
     float searchBreath = getTemplate()->searchBreath();
     Region<float> r(pos_[0] - searchBreath, pos_[0] + searchBreath,
@@ -208,15 +208,15 @@ Region<int> Missile::searchRegion(GameMap* map)
     return map->getCoverArea(r);
 }
 
-void Missile::shootSplitMissile(UpdateContext& cxt)
+void Missile::shootSplitMissile(UpdateContext &cxt)
 {
     int splitCount = getTemplate()->splitCount();
-    const MissileTemplate* t = getTemplate()->splitMissileTemplate();
-    const std::vector<Vector2>& directions = getTemplate()->splitMissileDirections();
+    const MissileTemplate *t = getTemplate()->splitMissileTemplate();
+    const std::vector<Vector2> &directions = getTemplate()->splitMissileDirections();
 
     for (int i = 0; i < splitCount; ++i)
     {
-        Missile* m = cxt.factory().createMissile(t, side_, pos_, directions[i]);
+        Missile *m = cxt.factory().createMissile(t, side_, pos_, directions[i]);
         cxt.map()->addObj(m);
     }
 }

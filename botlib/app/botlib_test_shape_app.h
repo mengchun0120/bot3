@@ -14,8 +14,8 @@ public:
     TestShapeApp();
 
 #ifdef DESKTOP_APP
-    void init(const std::string& configFile,
-              const std::string& appDir);
+    void init(const std::string &configFile,
+              const std::string &appDir);
 #elif __ANDROID__
     void init(android_app *app);
 #endif

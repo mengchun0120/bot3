@@ -12,8 +12,8 @@ class ProgressBar {
 public:
     ProgressBar() = default;
 
-    void init(const ProgressBarTemplate* t,
-              const commonlib::Vector2& pos);
+    void init(const ProgressBarTemplate *t,
+              const commonlib::Vector2 &pos);
 
     void present();
 

@@ -9,8 +9,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void SimpleShaderProgram::init(const std::vector<std::string>& vertexShaderFiles,
-                               const std::vector<std::string>& fragShaderFiles)
+void SimpleShaderProgram::init(const std::vector<std::string> &vertexShaderFiles,
+                               const std::vector<std::string> &fragShaderFiles)
 {
     load(vertexShaderFiles, fragShaderFiles);
     initLocations();
@@ -18,7 +18,7 @@ void SimpleShaderProgram::init(const std::vector<std::string>& vertexShaderFiles
     LOG_INFO << "SimpleShaderProgram initialized" << LOG_END;
 }
 
-void SimpleShaderProgram::setPositionTexPos(const VertexArray& va)
+void SimpleShaderProgram::setPositionTexPos(const VertexArray &va)
 {
     if (va.numBufferBlocks() == 0)
     {

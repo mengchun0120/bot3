@@ -20,7 +20,7 @@ Button::Button(float x,
                float y,
                float width,
                float height,
-               const std::string& text,
+               const std::string &text,
                TextSize textSize,
                bool visible,
                bool acceptInput)
@@ -32,7 +32,7 @@ void Button::init(float x,
                   float y,
                   float width,
                   float height,
-                  const std::string& text,
+                  const std::string &text,
                   TextSize textSize,
                   bool visible,
                   bool acceptInput)
@@ -58,10 +58,10 @@ void Button::present() const
         return;
     }
 
-    Graphics& g = Context::graphics();
-    SimpleShaderProgram& program = g.simpleShader();
-    const TextSystem& textSys = g.textSys();
-    const ButtonConfig& cfg = Context::buttonConfig();
+    Graphics &g = Context::graphics();
+    SimpleShaderProgram &program = g.simpleShader();
+    const TextSystem &textSys = g.textSys();
+    const ButtonConfig &cfg = Context::buttonConfig();
 
     program.setAlpha(1.0f);
 
@@ -144,7 +144,7 @@ void Button::onPointerDown()
 
 void Button::resetTextPos()
 {
-    const TextSystem& textSys = Context::graphics().textSys();
+    const TextSystem &textSys = Context::graphics().textSys();
     commonlib::Vector2 sz = textSys.getSize(text_, textSize_);
 
     textPos_[0] = pos_[0] - sz[0]/2.0f;

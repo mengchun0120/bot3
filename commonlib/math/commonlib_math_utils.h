@@ -20,7 +20,7 @@ inline bool fuzzyEqual(float a, float b, float threshold=k_verySmall)
 }
 
 template <typename T>
-T clamp(const T& t, const T& min, const T& max)
+T clamp(const T &t, const T& min, const T& max)
 {
     if (t < min)
     {
@@ -35,13 +35,13 @@ T clamp(const T& t, const T& min, const T& max)
 }
 
 template <typename T>
-bool between(const T& x, const T& bound1, const T& bound2)
+bool between(const T &x, const T& bound1, const T& bound2)
 {
     return (x >= bound1 && x <= bound2) || (x >= bound2 && x <= bound1);
 }
 
-void rotate(float& x,
-            float& y,
+void rotate(float &x,
+            float &y,
             float directionX,
             float directionY);
 

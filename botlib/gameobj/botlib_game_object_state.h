@@ -17,7 +17,7 @@ enum class GameObjectState {
 
 namespace std {
 
-ostream& operator<<(ostream& os,
+ostream &operator<<(ostream& os,
                     mcdane::botlib::GameObjectState state);
 
 } // end of namespace std

@@ -16,12 +16,12 @@ public:
 
     ~ButtonConfig() = default;
 
-    void init(const std::string& configFile,
-              const std::string& picDir);
+    void init(const std::string &configFile,
+              const std::string &picDir);
 
-    inline const commonlib::Color* textColor(Button::State s) const;
+    inline const commonlib::Color *textColor(Button::State s) const;
 
-    inline const commonlib::Texture& texture() const;
+    inline const commonlib::Texture &texture() const;
 
 private:
     void validateTextColor();
@@ -31,12 +31,12 @@ private:
     commonlib::Texture texture_;
 };
 
-const commonlib::Color* ButtonConfig::textColor(Button::State s) const
+const commonlib::Color *ButtonConfig::textColor(Button::State s) const
 {
     return &textColors_[s];
 }
 
-const commonlib::Texture& ButtonConfig::texture() const
+const commonlib::Texture &ButtonConfig::texture() const
 {
     return texture_;
 }

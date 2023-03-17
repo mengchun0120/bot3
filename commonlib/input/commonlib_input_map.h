@@ -11,7 +11,7 @@ class InputMap {
 public:
     InputMap();
 
-    int get(const std::string& name) const;
+    int get(const std::string &name) const;
 
 private:
     void init();

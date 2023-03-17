@@ -13,7 +13,7 @@ GameConfig::GameConfig()
 {
 }
 
-void GameConfig::init(const std::string& cfgFile)
+void GameConfig::init(const std::string &cfgFile)
 {
     rapidjson::Document doc;
     readJson(doc, cfgFile);

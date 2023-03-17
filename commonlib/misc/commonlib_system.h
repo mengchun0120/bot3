@@ -11,7 +11,7 @@ namespace commonlib {
 #ifdef __ANDROID__
 void setAssetManager(AAssetManager *mgr);
 
-AAssetManager* assetManager();
+AAssetManager *assetManager();
 #endif
 
 } // end of namespace commonlib

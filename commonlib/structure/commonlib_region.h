@@ -15,11 +15,11 @@ class Region {
 public:
     Region() = default;
 
-    Region(const Region& other) = default;
+    Region(const Region &other) = default;
 
     Region(std::initializer_list<T> i);
 
-    Region(const std::vector<T>& v);
+    Region(const std::vector<T> &v);
 
     Region(T left1,
            T right1,
@@ -33,11 +33,11 @@ public:
               T bottom1,
               T top1);
 
-    void init(const Region& other);
+    void init(const Region &other);
 
     void init(std::initializer_list<T> i);
 
-    void init(const std::vector<T>& v);
+    void init(const std::vector<T> &v);
 
     inline T left() const;
 
@@ -55,16 +55,16 @@ public:
 
     inline void setTop(T top1);
 
-    Region& operator=(const Region& other);
+    Region &operator=(const Region& other);
 
     void shift(T deltaX,
                T deltaY);
 
-    bool contains(const T& x,
-                  const T& y) const;
+    bool contains(const T &x,
+                  const T &y) const;
 
     template <typename F>
-    void iterate(F& func,
+    void iterate(F &func,
                  T deltaX,
                  T deltaY);
 
@@ -94,7 +94,7 @@ Region<T>::Region(std::initializer_list<T> i)
 }
 
 template <typename T>
-Region<T>::Region(const std::vector<T>& v)
+Region<T>::Region(const std::vector<T> &v)
 {
     init(v);
 }
@@ -112,7 +112,7 @@ void Region<T>::init(T left1,
 }
 
 template <typename T>
-void Region<T>::init(const Region& other)
+void Region<T>::init(const Region &other)
 {
     left_ = other.left_;
     right_ = other.right_;
@@ -144,7 +144,7 @@ void Region<T>::init(std::initializer_list<T> i)
 }
 
 template <typename T>
-void Region<T>::init(const std::vector<T>& v)
+void Region<T>::init(const std::vector<T> &v)
 {
     if (v.size() < 4)
     {
@@ -206,7 +206,7 @@ void Region<T>::setTop(T top1)
 }
 
 template <typename T>
-Region<T>& Region<T>::operator=(const Region& other)
+Region<T> &Region<T>::operator=(const Region& other)
 {
     left_ = other.left_;
     right_ = other.right_;
@@ -227,7 +227,7 @@ void Region<T>::shift(T deltaX,
 
 template <typename T>
 template <typename F>
-void Region<T>::iterate(F& func,
+void Region<T>::iterate(F &func,
                         T deltaX,
                         T deltaY)
 {
@@ -244,8 +244,8 @@ void Region<T>::iterate(F& func,
 }
 
 template <typename T>
-bool Region<T>::contains(const T& x,
-                         const T& y) const
+bool Region<T>::contains(const T &x,
+                         const T &y) const
 {
     return left_ <= x &&
            x <= right_ &&
@@ -254,7 +254,7 @@ bool Region<T>::contains(const T& x,
 }
 
 template <typename T>
-bool operator==(const Region<T>& r1, const Region<T>& r2)
+bool operator==(const Region<T> &r1, const Region<T>& r2)
 {
     return r1.left() == r2.left() &&
            r1.right() == r2.right() &&
@@ -263,7 +263,7 @@ bool operator==(const Region<T>& r1, const Region<T>& r2)
 }
 
 template <typename T>
-Region<T> shift(const Region<T>& r,
+Region<T> shift(const Region<T> &r,
                 T deltaX,
                 T deltaY)
 {
@@ -274,8 +274,8 @@ Region<T> shift(const Region<T>& r,
 }
 
 template <typename T>
-bool overlap(const Region<T>& r1,
-             const Region<T>& r2)
+bool overlap(const Region<T> &r1,
+             const Region<T> &r2)
 {
     return r1.left() <= r2.right() &&
            r1.right() >= r2.left() &&
@@ -283,9 +283,9 @@ bool overlap(const Region<T>& r1,
            r1.top() >= r2.bottom();
 }
 
-int diff(std::vector<commonlib::Region<int>>& result,
-         const commonlib::Region<int>& r1,
-         const commonlib::Region<int>& r2);
+int diff(std::vector<commonlib::Region<int>> &result,
+         const commonlib::Region<int> &r1,
+         const commonlib::Region<int> &r2);
 
 } // end of namespace commonlib
 } // end of namespace mcdane
@@ -293,8 +293,8 @@ int diff(std::vector<commonlib::Region<int>>& result,
 namespace std {
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os,
-                         const mcdane::commonlib::Region<T>& r)
+std::ostream &operator<<(std::ostream& os,
+                         const mcdane::commonlib::Region<T> &r)
 {
     return os << "Region(left=" << r.left()
               << ", right=" << r.right()

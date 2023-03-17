@@ -9,7 +9,7 @@ std::string k_robotActionStr[] = {
     "none"
 };
 
-const std::string& toString(RobotAction action)
+const std::string &toString(RobotAction action)
 {
     return k_robotActionStr[static_cast<int>(action)];
 }
@@ -19,7 +19,7 @@ const std::string& toString(RobotAction action)
 
 namespace std {
 
-ostream& operator<<(ostream& os,
+ostream &operator<<(ostream& os,
                     mcdane::botlib::RobotAction action)
 {
     return os << mcdane::botlib::toString(action);

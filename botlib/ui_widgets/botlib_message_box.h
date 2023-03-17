@@ -23,7 +23,7 @@ public:
                float y,
                float width,
                float height,
-               const std::string& msg,
+               const std::string &msg,
                int buttons);
 
     ~MessageBox() = default;
@@ -32,18 +32,18 @@ public:
               float y,
               float width,
               float height,
-              const std::string& msg,
+              const std::string &msg,
               int buttons);
 
     void setVisible(bool v);
 
-    void setText(const std::string& text);
+    void setText(const std::string &text);
 
     void setButtons(int buttons);
 
     void present();
 
-    void process(const commonlib::InputEvent& e);
+    void process(const commonlib::InputEvent &e);
 
     inline bool visible() const;
 
@@ -60,7 +60,7 @@ public:
 private:
     void initBack();
 
-    void initMessage(const std::string& msg);
+    void initMessage(const std::string &msg);
 
     void initButtons(int buttons);
 
@@ -78,9 +78,9 @@ private:
 
     void hideButton(unsigned int idx);
 
-    inline Button& getButton(unsigned int idx);
+    inline Button &getButton(unsigned int idx);
 
-    inline Label& getMsg();
+    inline Label &getMsg();
 
 private:
     enum {
@@ -128,12 +128,12 @@ float MessageBox::height() const
     return size_[1];
 }
 
-Button& MessageBox::getButton(unsigned int idx)
+Button &MessageBox::getButton(unsigned int idx)
 {
     return static_cast<Button&>(*(widgets_.getWidget(idx)));
 }
 
-Label& MessageBox::getMsg()
+Label &MessageBox::getMsg()
 {
     return static_cast<Label&>(*(widgets_.getWidget(IDX_MSG)));
 }

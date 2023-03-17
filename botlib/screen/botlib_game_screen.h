@@ -18,13 +18,13 @@ class GameScreen: public Screen {
 public:
     GameScreen() = default;
 
-    GameScreen(const commonlib::Vector2& viewportSize,
+    GameScreen(const commonlib::Vector2 &viewportSize,
                const AppActions actions,
                ScreenType nextScreenType=ScreenType::NONE);
 
     ~GameScreen() override = default;
 
-    void init(const commonlib::Vector2& viewportSize,
+    void init(const commonlib::Vector2 &viewportSize,
               const AppActions actions,
               ScreenType nextScreenType=ScreenType::NONE);
 
@@ -33,22 +33,22 @@ public:
     void present() override;
 
 #ifdef DESKTOP_APP
-    bool processInput(const commonlib::InputEvent& e) override;
+    bool processInput(const commonlib::InputEvent &e) override;
 
-    bool processInputEndGame(const commonlib::InputEvent& e);
+    bool processInputEndGame(const commonlib::InputEvent &e);
 
-    bool processInputGame(const commonlib::InputEvent& e);
+    bool processInputGame(const commonlib::InputEvent &e);
 
-    bool processMouseButton(const commonlib::MouseButtonEvent& e);
+    bool processMouseButton(const commonlib::MouseButtonEvent &e);
 
-    bool processMouseMove(const commonlib::MouseMoveEvent& e);
+    bool processMouseMove(const commonlib::MouseMoveEvent &e);
 
-    bool processKey(const commonlib::KeyEvent& e);
+    bool processKey(const commonlib::KeyEvent &e);
 #endif
 
 private:
-    void loadMap(const commonlib::Vector2& viewportSize,
-                 const std::string& mapFile);
+    void loadMap(const commonlib::Vector2 &viewportSize,
+                 const std::string &mapFile);
 
     void initProgressBar();
 

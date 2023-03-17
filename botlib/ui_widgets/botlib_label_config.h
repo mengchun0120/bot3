@@ -15,11 +15,11 @@ public:
 
     void init(const std::string configFile);
 
-    inline const commonlib::Color& defaultTextColor() const;
+    inline const commonlib::Color &defaultTextColor() const;
 
-    inline const commonlib::Color& defaultBackColor() const;
+    inline const commonlib::Color &defaultBackColor() const;
 
-    inline const commonlib::Color& defaultBorderColor() const;
+    inline const commonlib::Color &defaultBorderColor() const;
 
 private:
     commonlib::Color defaultTextColor_;
@@ -27,17 +27,17 @@ private:
     commonlib::Color defaultBorderColor_;
 };
 
-const commonlib::Color& LabelConfig::defaultTextColor() const
+const commonlib::Color &LabelConfig::defaultTextColor() const
 {
     return defaultTextColor_;
 }
 
-const commonlib::Color& LabelConfig::defaultBackColor() const
+const commonlib::Color &LabelConfig::defaultBackColor() const
 {
     return defaultBackColor_;
 }
 
-const commonlib::Color& LabelConfig::defaultBorderColor() const
+const commonlib::Color &LabelConfig::defaultBorderColor() const
 {
     return defaultBorderColor_;
 }

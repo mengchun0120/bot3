@@ -16,18 +16,18 @@ public:
     ~CompositeObjectTemplate() override;
 
     void init(GameObjectType t,
-              const std::string& name,
-              const rapidjson::Value& v,
-              const ComponentTemplateLib& componentTemplateLib);
+              const std::string &name,
+              const rapidjson::Value &v,
+              const ComponentTemplateLib &componentTemplateLib);
 
     inline int numComponents() const;
 
-    inline const Component& component(unsigned int i) const;
+    inline const Component &component(unsigned int i) const;
 
 private:
     void initComponents(
-                const rapidjson::Value& v,
-                const ComponentTemplateLib& componentTemplateLib);
+                const rapidjson::Value &v,
+                const ComponentTemplateLib &componentTemplateLib);
 
     void resetSpan();
 
@@ -40,7 +40,7 @@ int CompositeObjectTemplate::numComponents() const
     return static_cast<int>(components_.size());
 }
 
-const Component& CompositeObjectTemplate::component(unsigned int i) const
+const Component &CompositeObjectTemplate::component(unsigned int i) const
 {
     return *(components_[i]);
 }

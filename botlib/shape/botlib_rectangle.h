@@ -17,11 +17,11 @@ public:
 
     Rectangle(float width1,
               float height1,
-              const TexRectangle& texRect);
+              const TexRectangle &texRect);
 
     ~Rectangle() override = default;
 
-    void init(const rapidjson::Value& v,
+    void init(const rapidjson::Value &v,
               bool requireName=false);
 
     void load(float width1,
@@ -29,7 +29,7 @@ public:
 
     void load(float width,
               float height,
-              const TexRectangle& texRect);
+              const TexRectangle &texRect);
 
     float width() const
     {

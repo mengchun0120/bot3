@@ -5,7 +5,7 @@
 namespace mcdane {
 namespace botlib {
 
-void UpdateContext::init(GameMap* map1,
+void UpdateContext::init(GameMap *map1,
                          int itemPoolSize,
                          int missilePoolSize)
 {

@@ -13,7 +13,7 @@ SkillTemplate::SkillTemplate()
 }
 
 void SkillTemplate::init(SkillType type,
-                         const rapidjson::Value& v)
+                         const rapidjson::Value &v)
 {
     type_ = type;
 

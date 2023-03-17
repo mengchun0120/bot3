@@ -25,7 +25,7 @@ std::string constructPath(const std::string &dir,
 std::string constructPath(const std::vector<std::string> &path);
 
 template <typename T>
-void readList(std::vector<T> &v, std::istream& s)
+void readList(std::vector<T> &v, std::istream &s)
 {
     std::list<T> tmp;
 

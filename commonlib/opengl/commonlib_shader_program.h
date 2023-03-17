@@ -15,30 +15,30 @@ public:
     ShaderProgram(std::initializer_list<std::string> vertexShaderFiles,
                   std::initializer_list<std::string> fragShaderFiles);
 
-    ShaderProgram(const std::vector<std::string>& vertexShaderFiles,
-                  const std::vector<std::string>& fragShaderFiles);
+    ShaderProgram(const std::vector<std::string> &vertexShaderFiles,
+                  const std::vector<std::string> &fragShaderFiles);
 
-    ShaderProgram(const ShaderProgram& other) = delete;
+    ShaderProgram(const ShaderProgram &other) = delete;
 
     virtual ~ShaderProgram();
 
     void load(std::initializer_list<std::string> vertexShaderFiles,
               std::initializer_list<std::string> fragShaderFiles);
 
-    void load(const std::vector<std::string>& vertexShaderFiles,
-              const std::vector<std::string>& fragShaderFiles);
+    void load(const std::vector<std::string> &vertexShaderFiles,
+              const std::vector<std::string> &fragShaderFiles);
 
     inline bool valid() const noexcept;
 
     inline GLuint program() const;
 
-    ShaderProgram& operator=(const ShaderProgram& other) = delete;
+    ShaderProgram &operator=(const ShaderProgram& other) = delete;
 
     void use();
 
-    GLint getUniformLocation(const char* name);
+    GLint getUniformLocation(const char *name);
 
-    GLint getAttribLocation(const char* name);
+    GLint getAttribLocation(const char *name);
 
     const std::string getError() const;
 

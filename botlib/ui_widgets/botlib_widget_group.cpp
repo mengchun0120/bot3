@@ -36,7 +36,7 @@ std::shared_ptr<Widget> WidgetGroup::getWidget(unsigned int idx)
 }
 
 void WidgetGroup::setWidget(unsigned int idx,
-                            Widget* widget)
+                            Widget *widget)
 {
     if (idx >= widgets_.size())
     {

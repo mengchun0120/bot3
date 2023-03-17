@@ -11,13 +11,13 @@ class AIRobot;
 
 class AIFactory {
 public:
-    static AI* create(AIRobot* robot,
-                      const std::string& algorithm,
-                      const std::string& name);
+    static AI *create(AIRobot* robot,
+                      const std::string &algorithm,
+                      const std::string &name);
 
 private:
-    static AI* createChaseShootAI(AIRobot* robot,
-                                  const std::string& name);
+    static AI *createChaseShootAI(AIRobot* robot,
+                                  const std::string &name);
 };
 
 } // end of namespace botlib

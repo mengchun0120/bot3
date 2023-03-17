@@ -16,55 +16,55 @@ public:
 public:
     LinkedList();
 
-    LinkedList(const Deleter& deleter);
+    LinkedList(const Deleter &deleter);
 
     ~LinkedList();
 
-    void setDeleter(const Deleter& deleter);
+    void setDeleter(const Deleter &deleter);
 
-    inline T* first();
+    inline T *first();
 
-    inline const T* first() const;
+    inline const T *first() const;
 
-    inline T* last();
+    inline T *last();
 
-    inline const T* last() const;
+    inline const T *last() const;
 
     inline bool empty() const;
 
     inline unsigned int size() const;
 
-    void pushFront(T* t);
+    void pushFront(T *t);
 
-    void pushBack(T* t);
+    void pushBack(T *t);
 
-    void insertAfter(T* ref, T* t);
+    void insertAfter(T *ref, T* t);
 
-    void insertBefore(T* ref, T* t);
+    void insertBefore(T *ref, T* t);
 
-    T* unlinkFront();
+    T *unlinkFront();
 
-    T* unlinkBack();
+    T *unlinkBack();
 
-    void unlink(T* t);
+    void unlink(T *t);
 
     void removeFront();
 
     void removeBack();
 
-    void remove(T* t);
+    void remove(T *t);
 
     void clear();
 
-    T* get(int index);
+    T *get(int index);
 
 private:
-    void del(T* t);
+    void del(T *t);
 
 private:
     Deleter deleter_;
-    T* first_;
-    T* last_;
+    T *first_;
+    T *last_;
     unsigned int size_;
 };
 
@@ -77,7 +77,7 @@ LinkedList<T>::LinkedList()
 }
 
 template <typename T>
-LinkedList<T>::LinkedList(const Deleter& deleter)
+LinkedList<T>::LinkedList(const Deleter &deleter)
     : deleter_(deleter)
     , first_(nullptr)
     , last_(nullptr)
@@ -92,31 +92,31 @@ LinkedList<T>::~LinkedList()
 }
 
 template <typename T>
-void LinkedList<T>::setDeleter(const Deleter& deleter)
+void LinkedList<T>::setDeleter(const Deleter &deleter)
 {
     deleter_ = deleter;
 }
 
 template <typename T>
-T* LinkedList<T>::first()
+T *LinkedList<T>::first()
 {
     return first_;
 }
 
 template <typename T>
-const T* LinkedList<T>::first() const
+const T *LinkedList<T>::first() const
 {
     return first_;
 }
 
 template <typename T>
-T* LinkedList<T>::last()
+T *LinkedList<T>::last()
 {
     return last_;
 }
 
 template <typename T>
-const T* LinkedList<T>::last() const
+const T *LinkedList<T>::last() const
 {
     return last_;
 }
@@ -134,7 +134,7 @@ unsigned int LinkedList<T>::size() const
 }
 
 template <typename T>
-void LinkedList<T>::pushFront(T* t)
+void LinkedList<T>::pushFront(T *t)
 {
     if (!t)
     {
@@ -158,7 +158,7 @@ void LinkedList<T>::pushFront(T* t)
 }
 
 template <typename T>
-void LinkedList<T>::pushBack(T* t)
+void LinkedList<T>::pushBack(T *t)
 {
     if (!t)
     {
@@ -182,7 +182,7 @@ void LinkedList<T>::pushBack(T* t)
 }
 
 template <typename T>
-void LinkedList<T>::insertAfter(T* ref, T* t)
+void LinkedList<T>::insertAfter(T *ref, T* t)
 {
     if (ref)
     {
@@ -208,7 +208,7 @@ void LinkedList<T>::insertAfter(T* ref, T* t)
 }
 
 template <typename T>
-void LinkedList<T>::insertBefore(T* ref, T* t)
+void LinkedList<T>::insertBefore(T *ref, T* t)
 {
     if (ref)
     {
@@ -234,14 +234,14 @@ void LinkedList<T>::insertBefore(T* ref, T* t)
 }
 
 template <typename T>
-T* LinkedList<T>::unlinkFront()
+T *LinkedList<T>::unlinkFront()
 {
     if (empty())
     {
         return nullptr;
     }
 
-    T* tmp = first_;
+    T *tmp = first_;
 
     if (first_ != last_)
     {
@@ -261,14 +261,14 @@ T* LinkedList<T>::unlinkFront()
 }
 
 template <typename T>
-T* LinkedList<T>::unlinkBack()
+T *LinkedList<T>::unlinkBack()
 {
     if (empty())
     {
         return nullptr;
     }
 
-    T* tmp = last_;
+    T *tmp = last_;
 
     if (first_ != last_)
     {
@@ -288,7 +288,7 @@ T* LinkedList<T>::unlinkBack()
 }
 
 template <typename T>
-void LinkedList<T>::unlink(T* t)
+void LinkedList<T>::unlink(T *t)
 {
     if (empty())
     {
@@ -326,7 +326,7 @@ void LinkedList<T>::unlink(T* t)
 template <typename T>
 void LinkedList<T>::removeFront()
 {
-    T* t = unlinkFront();
+    T *t = unlinkFront();
     if (t)
     {
         del(t);
@@ -336,7 +336,7 @@ void LinkedList<T>::removeFront()
 template <typename T>
 void LinkedList<T>::removeBack()
 {
-    T* t = unlinkBack();
+    T *t = unlinkBack();
     if (t)
     {
         del(t);
@@ -344,7 +344,7 @@ void LinkedList<T>::removeBack()
 }
 
 template <typename T>
-void LinkedList<T>::remove(T* t)
+void LinkedList<T>::remove(T *t)
 {
     if (!t)
     {
@@ -358,8 +358,8 @@ void LinkedList<T>::remove(T* t)
 template <typename T>
 void LinkedList<T>::clear()
 {
-    T* next;
-    for (T* cur = first_; cur; cur = next)
+    T *next;
+    for (T *cur = first_; cur; cur = next)
     {
         next = static_cast<T*>(cur->next());
         del(cur);
@@ -371,7 +371,7 @@ void LinkedList<T>::clear()
 }
 
 template <typename T>
-void LinkedList<T>::del(T* t)
+void LinkedList<T>::del(T *t)
 {
     if (deleter_)
     {
@@ -384,9 +384,9 @@ void LinkedList<T>::del(T* t)
 }
 
 template <typename T>
-T* LinkedList<T>::get(int index)
+T *LinkedList<T>::get(int index)
 {
-    T* t = first_;
+    T *t = first_;
 
     for(int i = 0; i < index && t; ++i)
     {

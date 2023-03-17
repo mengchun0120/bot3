@@ -11,11 +11,11 @@ AIRobotTemplate::AIRobotTemplate()
 {
 }
 
-void AIRobotTemplate::init(const std::string& name,
-                           const rapidjson::Value& v,
-                           const MissileTemplateLib& missileTemplateLib,
-                           const ComponentTemplateLib& componentTemplateLib,
-                           const SkillTemplateLib& skillTemplateLib)
+void AIRobotTemplate::init(const std::string &name,
+                           const rapidjson::Value &v,
+                           const MissileTemplateLib &missileTemplateLib,
+                           const ComponentTemplateLib &componentTemplateLib,
+                           const SkillTemplateLib &skillTemplateLib)
 {
     std::vector<JsonParamPtr> params{
         jsonParam(goodieProb_, "goodieProb", false, ge(0.0f)),

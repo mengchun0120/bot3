@@ -11,19 +11,19 @@ class IslandMapGeneratorConfig;
 
 class IslandMapGenerator: public GameMapGenerator {
 public:
-    IslandMapGenerator(const GameLib& lib,
+    IslandMapGenerator(const GameLib &lib,
                        std::shared_ptr<IslandMapGeneratorConfig> cfg);
 
-    void generate(GameMap& map,
+    void generate(GameMap &map,
                   float viewportWidth,
                   float viewportHeight) override;
 
 private:
-    void addTiles(GameMap& map);
+    void addTiles(GameMap &map);
 
-    void addIsland(GameMap& map,
-                   const TileTemplate* t,
-                   const commonlib::Vector2& startPos,
+    void addIsland(GameMap &map,
+                   const TileTemplate *t,
+                   const commonlib::Vector2 &startPos,
                    int tileCountX,
                    int tileCountY);
 

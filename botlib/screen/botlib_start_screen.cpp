@@ -11,8 +11,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-StartScreen::StartScreen(const commonlib::Vector2& viewportSize,
-                         const AppActions& actions)
+StartScreen::StartScreen(const commonlib::Vector2 &viewportSize,
+                         const AppActions &actions)
     : Screen(actions)
 {
     if (viewportSize[0] <= 0.0f || viewportSize[1] <= 0.0f)
@@ -56,7 +56,7 @@ bool StartScreen::processInput(const InputEvent &e)
 }
 #endif
 
-void StartScreen::initWidgets(const commonlib::Vector2& viewportSize)
+void StartScreen::initWidgets(const commonlib::Vector2 &viewportSize)
 {
     std::vector<std::string> buttonTexts{
         "Start Game",
@@ -69,7 +69,7 @@ void StartScreen::initWidgets(const commonlib::Vector2& viewportSize)
         std::bind(&StartScreen::exitGame, this)
     };
     unsigned int numButtons = buttonTexts.size();
-    const StartScreenConfig& cfg = Context::startScreenConfig();
+    const StartScreenConfig &cfg = Context::startScreenConfig();
     float totalHeight = numButtons * cfg.buttonHeight() +
                         (numButtons - 1.0f) * cfg.buttonSpacing();
     float x = viewportSize[0] / 2.0f;
@@ -79,7 +79,7 @@ void StartScreen::initWidgets(const commonlib::Vector2& viewportSize)
     widgets_.init(numButtons);
     for (unsigned int i = 0; i < numButtons; ++i)
     {
-        Button* button = new Button(x,
+        Button *button = new Button(x,
                                     y,
                                     cfg.buttonWidth(),
                                     cfg.buttonHeight(),
@@ -91,9 +91,9 @@ void StartScreen::initWidgets(const commonlib::Vector2& viewportSize)
     }
 }
 
-void StartScreen::prepareShader(const commonlib::Vector2& viewportSize)
+void StartScreen::prepareShader(const commonlib::Vector2 &viewportSize)
 {
-    SimpleShaderProgram& shader = Context::graphics().simpleShader();
+    SimpleShaderProgram &shader = Context::graphics().simpleShader();
 
     shader.use();
     shader.setViewportOrigin(viewportSize / 2.0f);
@@ -115,17 +115,17 @@ void StartScreen::exitGame()
 }
 
 #ifdef DESKTOP_APP
-bool StartScreen::processMouseButtonEvent(const MouseButtonEvent& e)
+bool StartScreen::processMouseButtonEvent(const MouseButtonEvent &e)
 {
     return true;
 }
 
-bool StartScreen::processMouseMoveEvent(const MouseMoveEvent& e)
+bool StartScreen::processMouseMoveEvent(const MouseMoveEvent &e)
 {
     return true;
 }
 
-bool StartScreen::processKeyEvent(const KeyEvent& e)
+bool StartScreen::processKeyEvent(const KeyEvent &e)
 {
     if (GLFW_KEY_ESCAPE == e.key_)
     {

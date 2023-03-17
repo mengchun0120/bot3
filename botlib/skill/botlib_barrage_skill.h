@@ -11,27 +11,27 @@ class BarrageSkill: public SkillWithCost {
 public:
     BarrageSkill();
 
-    BarrageSkill(const BarrageSkillTemplate* t,
-                 Robot* robot,
+    BarrageSkill(const BarrageSkillTemplate *t,
+                 Robot *robot,
                  bool enabled1=false);
 
     ~BarrageSkill() override = default;
 
-    void init(const BarrageSkillTemplate* t,
-              Robot* robot,
+    void init(const BarrageSkillTemplate *t,
+              Robot *robot,
               bool enabled1=false);
 
-    inline const BarrageSkillTemplate* getTemplate() const;
+    inline const BarrageSkillTemplate *getTemplate() const;
 
 private:
-    bool apply(UpdateContext& cxt) override;
+    bool apply(UpdateContext &cxt) override;
 
 protected:
     int shootTimes_;
     float timeSinceLastShoot_;
 };
 
-const BarrageSkillTemplate* BarrageSkill::getTemplate() const
+const BarrageSkillTemplate *BarrageSkill::getTemplate() const
 {
     return static_cast<const BarrageSkillTemplate*>(t_);
 }

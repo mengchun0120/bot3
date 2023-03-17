@@ -14,7 +14,7 @@ static std::string k_goodieTypeStr[] = {
     "god_mode"
 };
 
-const std::string& toString(GoodieType type)
+const std::string &toString(GoodieType type)
 {
     if (!isValid(type))
     {
@@ -24,7 +24,7 @@ const std::string& toString(GoodieType type)
     return k_goodieTypeStr[static_cast<int>(type)];
 }
 
-GoodieType toGoodieType(const std::string& s)
+GoodieType toGoodieType(const std::string &s)
 {
     for (unsigned int i = 0; i < goodieTypeCount(); ++i)
     {
@@ -43,7 +43,7 @@ GoodieType toGoodieType(const std::string& s)
 
 namespace std {
 
-std::ostream& operator<<(std::ostream& os, mcdane::botlib::GoodieType type)
+std::ostream &operator<<(std::ostream& os, mcdane::botlib::GoodieType type)
 {
     return os << mcdane::botlib::toString(type);
 }

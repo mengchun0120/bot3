@@ -12,48 +12,48 @@ class SkillWithCost: public Skill {
 public:
     SkillWithCost();
 
-    SkillWithCost(const SkillTemplate* t,
-                  Robot* robot,
+    SkillWithCost(const SkillTemplate *t,
+                  Robot *robot,
                   bool enabled1=false);
 
     ~SkillWithCost() override;
 
-    void init(const SkillTemplate* t,
-              Robot* robot,
+    void init(const SkillTemplate *t,
+              Robot *robot,
               bool enabled1=false);
 
-    inline const SkillWithCostTemplate* getTemplate() const;
+    inline const SkillWithCostTemplate *getTemplate() const;
 
-    inline const ProgressPie* pie() const;
+    inline const ProgressPie *pie() const;
 
     inline int curIconIndex() const;
 
     inline bool available() const;
 
-    void update(UpdateContext& cxt) override;
+    void update(UpdateContext &cxt) override;
 
     void setCoolDownFactor(float f);
 
     void resetCoolDown();
 
 protected:
-    virtual bool apply(UpdateContext& cxt) = 0;
+    virtual bool apply(UpdateContext &cxt) = 0;
 
     void updatePie();
 
 protected:
     float coolDown_;
     float timeSinceLastCast_;
-    ProgressPie* pie_;
+    ProgressPie *pie_;
     int curIconIndex_;
 };
 
-const SkillWithCostTemplate* SkillWithCost::getTemplate() const
+const SkillWithCostTemplate *SkillWithCost::getTemplate() const
 {
     return static_cast<const SkillWithCostTemplate*>(t_);
 }
 
-const ProgressPie* SkillWithCost::pie() const
+const ProgressPie *SkillWithCost::pie() const
 {
     return pie_;
 }

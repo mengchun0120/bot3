@@ -29,11 +29,11 @@ public:
         return size_ == 0;
     }
 
-    bool peek(T& t);
+    bool peek(T &t);
 
-    bool enqueue(const T& t);
+    bool enqueue(const T &t);
 
-    bool dequeue(T& t);
+    bool dequeue(T &t);
 
     void clear();
 
@@ -48,7 +48,7 @@ public:
     }
 
 private:
-    T* queue_;
+    T *queue_;
     int capacity_;
     int size_;
     int first_;
@@ -100,7 +100,7 @@ void FixedQueue<T>::init(unsigned int capacity)
 }
 
 template <typename T>
-bool FixedQueue<T>::peek(T& t)
+bool FixedQueue<T>::peek(T &t)
 {
     if (empty())
     {
@@ -112,7 +112,7 @@ bool FixedQueue<T>::peek(T& t)
 }
 
 template <typename T>
-bool FixedQueue<T>::enqueue(const T& t)
+bool FixedQueue<T>::enqueue(const T &t)
 {
     if (full())
     {
@@ -136,7 +136,7 @@ bool FixedQueue<T>::enqueue(const T& t)
 }
 
 template <typename T>
-bool FixedQueue<T>::dequeue(T& t)
+bool FixedQueue<T>::dequeue(T &t)
 {
     if (empty())
     {

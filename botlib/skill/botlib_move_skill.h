@@ -12,24 +12,24 @@ class MoveSkill: public Skill {
 public:
     MoveSkill();
 
-    MoveSkill(const MoveSkillTemplate* t,
-              Robot* robot);
+    MoveSkill(const MoveSkillTemplate *t,
+              Robot *robot);
 
-    void init(const MoveSkillTemplate* t,
-              Robot* robot);
+    void init(const MoveSkillTemplate *t,
+              Robot *robot);
 
-    inline const MoveSkillTemplate* getTemplate() const;
+    inline const MoveSkillTemplate *getTemplate() const;
 
-    void update(UpdateContext& cxt) override;
+    void update(UpdateContext &cxt) override;
 
-    void setDest(const commonlib::Vector2& dest);
+    void setDest(const commonlib::Vector2 &dest);
 
 private:
-    void updateWithoutDest(UpdateContext& cxt);
+    void updateWithoutDest(UpdateContext &cxt);
 
-    void updateWithDest(UpdateContext& cxt);
+    void updateWithDest(UpdateContext &cxt);
 
-    void checkPassthroughCollide(UpdateContext& cxt);
+    void checkPassthroughCollide(UpdateContext &cxt);
 
 protected:
     bool destSet_;
@@ -37,7 +37,7 @@ protected:
     commonlib::Vector2 dest_;
 };
 
-const MoveSkillTemplate* MoveSkill::getTemplate() const
+const MoveSkillTemplate *MoveSkill::getTemplate() const
 {
     return static_cast<const MoveSkillTemplate*>(t_);
 }

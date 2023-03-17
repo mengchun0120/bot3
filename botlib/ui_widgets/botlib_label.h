@@ -22,9 +22,9 @@ public:
           TextSize textSize = TextSize::SMALL,
           HAlign halign = HAlign::LEFT,
           VAlign valign = VAlign::TOP,
-          const commonlib::Color* textColor = nullptr,
-          const commonlib::Color* backColor = nullptr,
-          const commonlib::Color* borderColor = nullptr,
+          const commonlib::Color *textColor = nullptr,
+          const commonlib::Color *backColor = nullptr,
+          const commonlib::Color *borderColor = nullptr,
           bool visible = true);
 
     ~Label() override = default;
@@ -37,9 +37,9 @@ public:
               TextSize textSize = TextSize::SMALL,
               HAlign halign = HAlign::LEFT,
               VAlign valign = VAlign::TOP,
-              const commonlib::Color* textColor = nullptr,
-              const commonlib::Color* backColor = nullptr,
-              const commonlib::Color* borderColor = nullptr,
+              const commonlib::Color *textColor = nullptr,
+              const commonlib::Color *backColor = nullptr,
+              const commonlib::Color *borderColor = nullptr,
               bool visible = true);
 
     void setPos(float x,
@@ -50,7 +50,7 @@ public:
 
     void present() const override;
 
-    void setText(const std::string& text);
+    void setText(const std::string &text);
 
     void setTextSize(TextSize textSize);
 
@@ -61,9 +61,9 @@ public:
 private:
     void updateTextPos();
 
-    void initColors(const commonlib::Color* textColor,
-                    const commonlib::Color* backColor,
-                    const commonlib::Color* borderColor);
+    void initColors(const commonlib::Color *textColor,
+                    const commonlib::Color *backColor,
+                    const commonlib::Color *borderColor);
 
     float calculateTextPosX();
 

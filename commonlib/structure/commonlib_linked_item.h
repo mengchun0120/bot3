@@ -16,28 +16,28 @@ public:
 
     ~LinkedItem() = default;
 
-    inline LinkedItem* next();
+    inline LinkedItem *next();
 
-    inline const LinkedItem* next() const;
+    inline const LinkedItem *next() const;
 
-    inline LinkedItem* prev();
+    inline LinkedItem *prev();
 
-    inline const LinkedItem* prev() const;
+    inline const LinkedItem *prev() const;
 
-    inline T& item();
+    inline T &item();
 
-    inline const T& item() const;
+    inline const T &item() const;
 
-    void setNext(LinkedItem* n);
+    void setNext(LinkedItem *n);
 
-    void setPrev(LinkedItem* p);
+    void setPrev(LinkedItem *p);
 
     template <typename... A>
     void setItem(A&&... args);
 
 private:
-    LinkedItem* next_;
-    LinkedItem* prev_;
+    LinkedItem *next_;
+    LinkedItem *prev_;
     T item_;;
 };
 
@@ -59,49 +59,49 @@ LinkedItem<T>::LinkedItem(A&&... args)
 }
 
 template <typename T>
-LinkedItem<T>* LinkedItem<T>::next()
+LinkedItem<T> *LinkedItem<T>::next()
 {
     return next_;
 }
 
 template <typename T>
-const LinkedItem<T>* LinkedItem<T>::next() const
+const LinkedItem<T> *LinkedItem<T>::next() const
 {
     return next_;
 }
 
 template <typename T>
-LinkedItem<T>* LinkedItem<T>::prev()
+LinkedItem<T> *LinkedItem<T>::prev()
 {
     return prev_;
 }
 
 template <typename T>
-const LinkedItem<T>* LinkedItem<T>::prev() const
+const LinkedItem<T> *LinkedItem<T>::prev() const
 {
     return prev_;
 }
 
 template <typename T>
-T& LinkedItem<T>::item()
+T &LinkedItem<T>::item()
 {
     return item_;
 }
 
 template <typename T>
-const T& LinkedItem<T>::item() const
+const T &LinkedItem<T>::item() const
 {
     return item_;
 }
 
 template <typename T>
-void LinkedItem<T>::setNext(LinkedItem<T>* n)
+void LinkedItem<T>::setNext(LinkedItem<T> *n)
 {
     next_ = n;
 }
 
 template <typename T>
-void LinkedItem<T>::setPrev(LinkedItem<T>* p)
+void LinkedItem<T>::setPrev(LinkedItem<T> *p)
 {
     prev_ = p;
 }

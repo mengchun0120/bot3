@@ -13,12 +13,12 @@ MoveSkillTemplate::MoveSkillTemplate()
 {
 }
 
-MoveSkillTemplate::MoveSkillTemplate(const rapidjson::Value& v)
+MoveSkillTemplate::MoveSkillTemplate(const rapidjson::Value &v)
 {
     init(v);
 }
 
-void MoveSkillTemplate::init(const rapidjson::Value& v)
+void MoveSkillTemplate::init(const rapidjson::Value &v)
 {
     SkillTemplate::init(SkillType::MOVE, v);
 

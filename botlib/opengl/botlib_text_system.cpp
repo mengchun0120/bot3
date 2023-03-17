@@ -15,7 +15,7 @@ namespace botlib {
 
 const float TextSystem::k_scaleFactors[] = {1.0f, 0.75f, 0.5f, 0.36f};
 
-std::string TextSystem::fontTextureFile(const std::string& fontDir,
+std::string TextSystem::fontTextureFile(const std::string &fontDir,
                                         int ch)
 {
     std::string file = "ascii_" + std::to_string(ch) + ".png";
@@ -41,7 +41,7 @@ TextSystem::~TextSystem()
     delete[] fontTextures_;
 }
 
-void TextSystem::load(const std::string& fontDir)
+void TextSystem::load(const std::string &fontDir)
 {
     loadFontTextures(fontDir);
     loadFontHeights();
@@ -50,11 +50,11 @@ void TextSystem::load(const std::string& fontDir)
     LOG_INFO << "TextSystem loaded successfully " << this << LOG_END;
 }
 
-void TextSystem::draw(SimpleShaderProgram& program,
-                      const std::string& s,
-                      const Point2& pos,
+void TextSystem::draw(SimpleShaderProgram &program,
+                      const std::string &s,
+                      const Point2 &pos,
                       TextSize size,
-                      const Color* color) const
+                      const Color *color) const
 {
     if (!isValidTextSize(size))
     {
@@ -73,21 +73,21 @@ void TextSystem::draw(SimpleShaderProgram& program,
 
     for (std::size_t i = 0; i < s.size(); ++i)
     {
-        const Rectangle& curRect = getRect(s[i], size);
-        const Texture& texture = getTexture(s[i]);
+        const Rectangle &curRect = getRect(s[i], size);
+        const Texture &texture = getTexture(s[i]);
 
         curRect.draw(program, &p, nullptr, nullptr, nullptr,
                      texture.id(), color);
 
         if (i < s.size() - 1)
         {
-            const Rectangle& nextRect = getRect(s[i+1], size);
+            const Rectangle &nextRect = getRect(s[i+1], size);
             p[0] += (curRect.width() + nextRect.width()) / 2.0f;
         }
     }
 }
 
-commonlib::Vector2 TextSystem::getSize(const std::string& s,
+commonlib::Vector2 TextSystem::getSize(const std::string &s,
                                        TextSize size) const
 {
     commonlib::Vector2 sz{0.0f, 0.0f};
@@ -103,7 +103,7 @@ commonlib::Vector2 TextSystem::getSize(const std::string& s,
     return sz;
 }
 
-float TextSystem::getWidth(const std::string& s,
+float TextSystem::getWidth(const std::string &s,
                            TextSize size) const
 {
     if (!isValidTextSize(size))
@@ -137,7 +137,7 @@ float TextSystem::getHeight(TextSize size) const
     return fontHeights_[static_cast<int>(size)];
 }
 
-void TextSystem::loadFontTextures(const std::string& fontDir)
+void TextSystem::loadFontTextures(const std::string &fontDir)
 {
     fontTextures_ = new Texture[CHAR_COUNT];
     for (int i = 0; i < CHAR_COUNT; ++i)
@@ -168,8 +168,8 @@ void TextSystem::loadFontRect()
     }
 }
 
-void TextSystem::loadFontRectForTextSize(Rectangle*& rects,
-                                         std::vector<int>& rectIdx,
+void TextSystem::loadFontRectForTextSize(Rectangle *&rects,
+                                         std::vector<int> &rectIdx,
                                          int textSize)
 {
     std::unordered_map<int,int> widthRectMap;
@@ -199,7 +199,7 @@ void TextSystem::loadFontRectForTextSize(Rectangle*& rects,
     }
 }
 
-int TextSystem::getRectWidthForTextSize(std::vector<int>& widths,
+int TextSystem::getRectWidthForTextSize(std::vector<int> &widths,
                                         int textSize)
 {
     float factor = k_scaleFactors[textSize];

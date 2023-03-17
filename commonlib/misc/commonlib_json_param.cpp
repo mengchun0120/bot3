@@ -3,15 +3,15 @@
 namespace mcdane {
 namespace commonlib {
 
-JsonParam::JsonParam(const std::vector<std::string>& path,
+JsonParam::JsonParam(const std::vector<std::string> &path,
                      bool required) noexcept
     : path_(path)
     , required_(required)
 {
 }
 
-void parse(std::vector<JsonParamPtr>& params,
-           const rapidjson::Value& v)
+void parse(std::vector<JsonParamPtr> &params,
+           const rapidjson::Value &v)
 {
     for (auto it = params.begin(); it != params.end(); ++it)
     {

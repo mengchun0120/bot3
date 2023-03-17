@@ -13,16 +13,16 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-Tile::Tile(const TileTemplate* t,
-           const commonlib::Vector2& pos1,
-           const commonlib::Vector2& direction1)
+Tile::Tile(const TileTemplate *t,
+           const commonlib::Vector2 &pos1,
+           const commonlib::Vector2 &direction1)
 {
     init(t, pos1, direction1);
 }
 
-void Tile::init(const TileTemplate* t,
-                const commonlib::Vector2& pos1,
-                const commonlib::Vector2& direction1)
+void Tile::init(const TileTemplate *t,
+                const commonlib::Vector2 &pos1,
+                const commonlib::Vector2 &direction1)
 {
     CompositeObject::init(t, pos1, direction1);
     setInvincible(t->invincible());
@@ -35,7 +35,7 @@ void Tile::present() const
     CompositeObject::present();
 }
 
-void Tile::update(UpdateContext& cxt)
+void Tile::update(UpdateContext &cxt)
 {
     if (state_ == GameObjectState::DYING)
     {
@@ -60,7 +60,7 @@ void Tile::doDamage(float damage)
         return;
     }
 
-    const TileTemplate* t = getTemplate();
+    const TileTemplate *t = getTemplate();
 
     hp_ = clamp(hp_-damage, 0.0f, t->hp());
     if (hp_ <= 0.0f)
@@ -69,13 +69,13 @@ void Tile::doDamage(float damage)
     }
 }
 
-bool Tile::canBeDumped(GameMap& map) const
+bool Tile::canBeDumped(GameMap &map) const
 {
     return state_ == GameObjectState::DYING && !map.canSee(this);
 }
 
-void Tile::toJson(rapidjson::Value& v,
-                  rapidjson::Document::AllocatorType& allocator)
+void Tile::toJson(rapidjson::Value &v,
+                  rapidjson::Document::AllocatorType &allocator)
 {
     CompositeObject::toJson(v, allocator);
     v.AddMember("type", jsonVal("tile", allocator), allocator);

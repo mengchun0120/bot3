@@ -18,10 +18,10 @@ namespace commonlib {
 
 class JsonParam {
 public:
-    JsonParam(const std::vector<std::string>& path,
+    JsonParam(const std::vector<std::string> &path,
               bool required=true) noexcept;
 
-    virtual void parse(const rapidjson::Value& doc) = 0;
+    virtual void parse(const rapidjson::Value &doc) = 0;
 
 protected:
     std::vector<std::string> path_;
@@ -33,23 +33,23 @@ using JsonParamPtr = std::shared_ptr<JsonParam>;
 template <typename T>
 class TypedJsonParam: public JsonParam {
 public:
-    TypedJsonParam(T& var,
-                   const std::vector<std::string>& path,
+    TypedJsonParam(T &var,
+                   const std::vector<std::string> &path,
                    bool required=true,
-                   const Validator<T>& v=Validator<T>()) noexcept;
+                   const Validator<T> &v=Validator<T>()) noexcept;
 
-    void parse(const rapidjson::Value& doc) override;
+    void parse(const rapidjson::Value &doc) override;
 
 protected:
-    T& var_;
+    T &var_;
     Validator<T> validator_;
 };
 
 template <typename T>
-TypedJsonParam<T>::TypedJsonParam(T& var,
-                                  const std::vector<std::string>& path,
+TypedJsonParam<T>::TypedJsonParam(T &var,
+                                  const std::vector<std::string> &path,
                                   bool required,
-                                  const Validator<T>& v) noexcept
+                                  const Validator<T> &v) noexcept
     : JsonParam(path, required)
     , var_(var)
     , validator_(v)
@@ -57,8 +57,8 @@ TypedJsonParam<T>::TypedJsonParam(T& var,
 }
 
 template <typename T>
-JsonParamPtr jsonParam(T& var,
-                       const std::vector<std::string>& path,
+JsonParamPtr jsonParam(T &var,
+                       const std::vector<std::string> &path,
                        bool required=true,
                        Validator<T> v=Validator<T>())
 {
@@ -66,7 +66,7 @@ JsonParamPtr jsonParam(T& var,
 }
 
 template <typename T>
-JsonParamPtr jsonParam(T& var,
+JsonParamPtr jsonParam(T &var,
                        std::initializer_list<std::string> path,
                        bool required=true,
                        Validator<T> v=Validator<T>())
@@ -75,8 +75,8 @@ JsonParamPtr jsonParam(T& var,
 }
 
 template <typename T>
-JsonParamPtr jsonParam(T& var,
-                       const std::string& name,
+JsonParamPtr jsonParam(T &var,
+                       const std::string &name,
                        bool required=true,
                        Validator<T> v=Validator<T>())
 {
@@ -84,9 +84,9 @@ JsonParamPtr jsonParam(T& var,
 }
 
 template <typename T>
-void TypedJsonParam<T>::parse(const rapidjson::Value& value)
+void TypedJsonParam<T>::parse(const rapidjson::Value &value)
 {
-    const rapidjson::Value* v = findJson(value, path_);
+    const rapidjson::Value *v = findJson(value, path_);
     if (!v)
     {
         if (required_)
@@ -108,8 +108,8 @@ void TypedJsonParam<T>::parse(const rapidjson::Value& value)
     }
 }
 
-void parse(std::vector<JsonParamPtr>& params,
-           const rapidjson::Value& v);
+void parse(std::vector<JsonParamPtr> &params,
+           const rapidjson::Value &v);
 
 } // end of namespace commonlib
 } // end of namespace mcdane

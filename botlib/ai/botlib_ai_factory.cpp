@@ -8,11 +8,11 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-AI* AIFactory::create(AIRobot* robot,
-                      const std::string& algorithm,
-                      const std::string& name)
+AI *AIFactory::create(AIRobot* robot,
+                      const std::string &algorithm,
+                      const std::string &name)
 {
-    AI* ai = nullptr;
+    AI *ai = nullptr;
 
     if (algorithm == "chase_shoot")
     {
@@ -27,18 +27,18 @@ AI* AIFactory::create(AIRobot* robot,
     return ai;
 }
 
-AI* AIFactory::createChaseShootAI(AIRobot* robot,
-                                  const std::string& name)
+AI *AIFactory::createChaseShootAI(AIRobot* robot,
+                                  const std::string &name)
 {
-    const AILib& lib = Context::gameLib().aiLib();
-    const ChaseShootAIParam* param = lib.findChaseShootAIParam(name);
+    const AILib &lib = Context::gameLib().aiLib();
+    const ChaseShootAIParam *param = lib.findChaseShootAIParam(name);
     if (!param)
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "Failed to find ChaseShootAIParam " + name);
     }
 
-    ChaseShootAI* ai = new ChaseShootAI();
+    ChaseShootAI *ai = new ChaseShootAI();
     ai->init(robot, param);
     return ai;
 }

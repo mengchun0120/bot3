@@ -47,7 +47,7 @@ void setWindowHints()
 
 GLFWwindow *createWindow(unsigned int width,
                          unsigned int height,
-                         const std::string& title)
+                         const std::string &title)
 {
     GLFWwindow *window = glfwCreateWindow(width, height, title.c_str(),
                                           nullptr, nullptr);

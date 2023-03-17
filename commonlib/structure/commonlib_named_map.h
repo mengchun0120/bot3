@@ -28,7 +28,7 @@ public:
     void init(const std::string &path,
               const NodeParser &parser);
 
-    const T* search(const std::string &name) const;
+    const T *search(const std::string &name) const;
 
     void traverse(NodeAccessor accessor) const;
 
@@ -69,7 +69,7 @@ void NamedMap<T>::init(const std::string &path,
 
 
 template <typename T>
-const T* NamedMap<T>::search(const std::string &name) const
+const T *NamedMap<T>::search(const std::string &name) const
 {
     auto it = map_.find(name);
     if (it == map_.end())

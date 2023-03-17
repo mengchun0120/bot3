@@ -17,8 +17,8 @@ Skill::Skill()
 {
 }
 
-Skill::Skill(const SkillTemplate* t,
-             Robot* robot,
+Skill::Skill(const SkillTemplate *t,
+             Robot *robot,
              bool enabled1)
 {
     init(t, robot, enabled1);
@@ -28,8 +28,8 @@ Skill::~Skill()
 {
 }
 
-void Skill::init(const SkillTemplate* t,
-                 Robot* robot,
+void Skill::init(const SkillTemplate *t,
+                 Robot *robot,
                  bool enabled1)
 {
     t_ = t;

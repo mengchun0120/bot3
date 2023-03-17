@@ -10,8 +10,8 @@ namespace botlib {
 
 class StartScreen: public Screen {
 public:
-    StartScreen(const commonlib::Vector2& viewportSize,
-                const AppActions& actions);
+    StartScreen(const commonlib::Vector2 &viewportSize,
+                const AppActions &actions);
 
     ~StartScreen() override;
 
@@ -24,9 +24,9 @@ public:
 #endif
 
 private:
-    void initWidgets(const commonlib::Vector2& viewportSize);
+    void initWidgets(const commonlib::Vector2 &viewportSize);
 
-    void prepareShader(const commonlib::Vector2& viewportSize);
+    void prepareShader(const commonlib::Vector2 &viewportSize);
 
     void startGame();
 
@@ -35,11 +35,11 @@ private:
     void exitGame();
 
 #ifdef DESKTOP_APP
-    bool processMouseButtonEvent(const commonlib::MouseButtonEvent& e);
+    bool processMouseButtonEvent(const commonlib::MouseButtonEvent &e);
 
-    bool processMouseMoveEvent(const commonlib::MouseMoveEvent& e);
+    bool processMouseMoveEvent(const commonlib::MouseMoveEvent &e);
 
-    bool processKeyEvent(const commonlib::KeyEvent& e);
+    bool processKeyEvent(const commonlib::KeyEvent &e);
 #endif
 
 private:

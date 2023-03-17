@@ -37,59 +37,59 @@ public:
 
     inline const TextureLib &textureLib() const;
 
-    inline const commonlib::Texture* findTexture(const std::string &name) const;
+    inline const commonlib::Texture *findTexture(const std::string &name) const;
 
     inline const VertexArrayLib &vertexArrayLib() const;
 
-    inline const commonlib::VertexArray* findVertexArray(const std::string &name) const;
+    inline const commonlib::VertexArray *findVertexArray(const std::string &name) const;
 
     inline const RectLib &rectLib() const;
 
-    inline const Rectangle* findRect(const std::string &name) const;
+    inline const Rectangle *findRect(const std::string &name) const;
 
     inline const ComponentTemplateLib &componentTemplateLib() const;
 
-    inline const ComponentTemplate* findComponentTemplate(
+    inline const ComponentTemplate *findComponentTemplate(
                                             const std::string &name) const;
 
     inline const TileTemplateLib &tileTemplateLib() const;
 
-    inline const TileTemplate* findTileTemplate(const std::string &name) const;
+    inline const TileTemplate *findTileTemplate(const std::string &name) const;
 
     inline const GoodieTemplateLib &goodieTemplateLib() const;
 
-    inline const GoodieTemplate* findGoodieTemplate(const std::string &name) const;
+    inline const GoodieTemplate *findGoodieTemplate(const std::string &name) const;
 
     inline const MissileTemplateLib &missileTemplateLib() const;
 
-    inline const MissileTemplate* findMissileTemplate(
+    inline const MissileTemplate *findMissileTemplate(
                                             const std::string &name) const;
 
     inline const SkillTemplateLib &skillTemplateLib() const;
 
     inline const AIRobotTemplateLib &aiRobotTemplateLib() const;
 
-    inline const AIRobotTemplate* findAIRobotTemplate(
+    inline const AIRobotTemplate *findAIRobotTemplate(
                                             const std::string &name) const;
 
     inline const ParticleEffectTemplateLib &particleEffectTemplateLib() const;
 
-    inline const ParticleEffectTemplate* findParticleEffectTemplate(
+    inline const ParticleEffectTemplate *findParticleEffectTemplate(
                                             const std::string &name) const;
 
     inline const ProgressPieTemplateLib &progressPieTemplateLib() const;
 
-    inline const ProgressPieTemplate* findProgressPieTemplate(
+    inline const ProgressPieTemplate *findProgressPieTemplate(
                                             const std::string &name) const;
 
     inline const ProgressBarTemplateLib &progressBarTemplateLib() const;
 
-    inline const ProgressBarTemplate* findProgressBarTemplate(
+    inline const ProgressBarTemplate *findProgressBarTemplate(
                                             const std::string &name) const;
 
     inline const IconTemplateLib &iconTemplateLib() const;
 
-    inline const IconTemplate* findIconTemplate(const std::string &name) const;
+    inline const IconTemplate *findIconTemplate(const std::string &name) const;
 
     inline const PlayerTemplate &playerTemplate() const;
 
@@ -171,7 +171,7 @@ const TextureLib &GameLib::textureLib() const
     return textureLib_;
 }
 
-const commonlib::Texture* GameLib::findTexture(const std::string &name) const
+const commonlib::Texture *GameLib::findTexture(const std::string &name) const
 {
     return textureLib_.search(name);
 }
@@ -181,7 +181,7 @@ const VertexArrayLib &GameLib::vertexArrayLib() const
     return vertexArrayLib_;
 }
 
-const commonlib::VertexArray* GameLib::findVertexArray(const std::string &name) const
+const commonlib::VertexArray *GameLib::findVertexArray(const std::string &name) const
 {
     return vertexArrayLib_.search(name);
 }
@@ -191,7 +191,7 @@ const RectLib &GameLib::rectLib() const
     return rectLib_;
 }
 
-const Rectangle* GameLib::findRect(const std::string &name) const
+const Rectangle *GameLib::findRect(const std::string &name) const
 {
     return rectLib_.search(name);
 }
@@ -201,7 +201,7 @@ const ComponentTemplateLib &GameLib::componentTemplateLib() const
     return componentTemplateLib_;
 }
 
-const ComponentTemplate* GameLib::findComponentTemplate(
+const ComponentTemplate *GameLib::findComponentTemplate(
                                         const std::string &name) const
 {
     return componentTemplateLib_.search(name);
@@ -212,7 +212,7 @@ const TileTemplateLib &GameLib::tileTemplateLib() const
     return tileTemplateLib_;
 }
 
-const TileTemplate* GameLib::findTileTemplate(const std::string &name) const
+const TileTemplate *GameLib::findTileTemplate(const std::string &name) const
 {
     return tileTemplateLib_.search(name);
 }
@@ -222,7 +222,7 @@ const GoodieTemplateLib &GameLib::goodieTemplateLib() const
     return goodieTemplateLib_;
 }
 
-const GoodieTemplate* GameLib::findGoodieTemplate(const std::string &name) const
+const GoodieTemplate *GameLib::findGoodieTemplate(const std::string &name) const
 {
     return goodieTemplateLib_.search(name);
 }
@@ -237,7 +237,7 @@ const SkillTemplateLib &GameLib::skillTemplateLib() const
     return skillTemplateLib_;
 }
 
-const MissileTemplate* GameLib::findMissileTemplate(
+const MissileTemplate *GameLib::findMissileTemplate(
                                        const std::string &name) const
 {
     return missileTemplateLib_.search(name);
@@ -248,7 +248,7 @@ const AIRobotTemplateLib &GameLib::aiRobotTemplateLib() const
     return aiRobotTemplateLib_;
 }
 
-const AIRobotTemplate* GameLib::findAIRobotTemplate(
+const AIRobotTemplate *GameLib::findAIRobotTemplate(
                                         const std::string &name) const
 {
     return aiRobotTemplateLib_.search(name);
@@ -259,7 +259,7 @@ const ParticleEffectTemplateLib &GameLib::particleEffectTemplateLib() const
     return particleEffectTemplateLib_;
 }
 
-const ParticleEffectTemplate* GameLib::findParticleEffectTemplate(
+const ParticleEffectTemplate *GameLib::findParticleEffectTemplate(
                                         const std::string &name) const
 {
     return particleEffectTemplateLib_.search(name);
@@ -270,7 +270,7 @@ const ProgressPieTemplateLib &GameLib::progressPieTemplateLib() const
     return progressPieTemplateLib_;
 }
 
-const ProgressPieTemplate* GameLib::findProgressPieTemplate(
+const ProgressPieTemplate *GameLib::findProgressPieTemplate(
                                             const std::string &name) const
 {
     return progressPieTemplateLib_.search(name);
@@ -281,7 +281,7 @@ const ProgressBarTemplateLib &GameLib::progressBarTemplateLib() const
     return progressBarTemplateLib_;
 }
 
-const ProgressBarTemplate* GameLib::findProgressBarTemplate(
+const ProgressBarTemplate *GameLib::findProgressBarTemplate(
                                             const std::string &name) const
 {
     return progressBarTemplateLib_.search(name);
@@ -292,7 +292,7 @@ const IconTemplateLib &GameLib::iconTemplateLib() const
     return iconTemplateLib_;
 }
 
-const IconTemplate* GameLib::findIconTemplate(const std::string &name) const
+const IconTemplate *GameLib::findIconTemplate(const std::string &name) const
 {
     return iconTemplateLib_.search(name);
 }

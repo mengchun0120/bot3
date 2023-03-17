@@ -11,14 +11,14 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-PassthroughCollideChecker::PassthroughCollideChecker(UpdateContext& cxt,
-                                                     Robot* robot)
+PassthroughCollideChecker::PassthroughCollideChecker(UpdateContext &cxt,
+                                                     Robot *robot)
     : cxt_(cxt)
     , robot_(robot)
 {
 }
 
-bool PassthroughCollideChecker::operator()(GameObject* obj)
+bool PassthroughCollideChecker::operator()(GameObject *obj)
 {
     switch (obj->type())
     {
@@ -35,7 +35,7 @@ bool PassthroughCollideChecker::operator()(GameObject* obj)
     return true;
 }
 
-void PassthroughCollideChecker::collideMissile(Missile* missile)
+void PassthroughCollideChecker::collideMissile(Missile *missile)
 {
     if (missile->state() != GameObjectState::ALIVE || missile->side() == robot_->side())
     {
@@ -50,14 +50,14 @@ void PassthroughCollideChecker::collideMissile(Missile* missile)
     }
 }
 
-void PassthroughCollideChecker::collideGoodie(Goodie* goodie)
+void PassthroughCollideChecker::collideGoodie(Goodie *goodie)
 {
     if (goodie->state() != GameObjectState::ALIVE || robot_->side() != Side::PLAYER)
     {
         return;
     }
 
-    Player* player = static_cast<Player*>(robot_);
+    Player *player = static_cast<Player*>(robot_);
 
     bool collide = checkRectCollideRect(player->collideRegion(),
                                         goodie->collideRegion());

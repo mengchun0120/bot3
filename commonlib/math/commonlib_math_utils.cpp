@@ -4,8 +4,8 @@
 namespace mcdane {
 namespace commonlib {
 
-void rotate(float& x,
-            float& y,
+void rotate(float &x,
+            float &y,
             float directionX,
             float directionY)
 {

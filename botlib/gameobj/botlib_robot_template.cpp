@@ -12,11 +12,11 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void RobotTemplate::init(const std::string& name,
-                         const rapidjson::Value& v,
-                         const MissileTemplateLib& missileTemplateLib,
-                         const ComponentTemplateLib& componentTemplateLib,
-                         const SkillTemplateLib& skillTemplateLib)
+void RobotTemplate::init(const std::string &name,
+                         const rapidjson::Value &v,
+                         const MissileTemplateLib &missileTemplateLib,
+                         const ComponentTemplateLib &componentTemplateLib,
+                         const SkillTemplateLib &skillTemplateLib)
 {
     std::string missileName;
     std::vector<std::string> skillNames;
@@ -46,8 +46,8 @@ void RobotTemplate::init(const std::string& name,
                                   v, componentTemplateLib);
 }
 
-void RobotTemplate::initSkills(const std::vector<std::string>& skillNames,
-                               const SkillTemplateLib& skillTemplateLib)
+void RobotTemplate::initSkills(const std::vector<std::string> &skillNames,
+                               const SkillTemplateLib &skillTemplateLib)
 {
     if (skillNames.empty())
     {

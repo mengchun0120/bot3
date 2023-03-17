@@ -12,14 +12,14 @@ enum class Side {
     PLAYER
 };
 
-Side strToSide(const std::string& s);
+Side strToSide(const std::string &s);
 
 } // end of namespace botlib
 } // end of namespace mcdane
 
 namespace std {
 
-ostream& operator<<(ostream& os,
+ostream &operator<<(ostream& os,
                     mcdane::botlib::Side side);
 
 } // end of namespace std

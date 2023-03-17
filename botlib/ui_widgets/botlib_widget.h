@@ -58,9 +58,9 @@ public:
 
     inline float height() const;
 
-    inline const commonlib::Vector2& pos() const;
+    inline const commonlib::Vector2 &pos() const;
 
-    inline const Rectangle& rect() const;
+    inline const Rectangle &rect() const;
 
 protected:
     commonlib::Vector2 pos_;
@@ -121,12 +121,12 @@ float Widget::height() const
     return rect_.height();
 }
 
-const commonlib::Vector2& Widget::pos() const
+const commonlib::Vector2 &Widget::pos() const
 {
     return pos_;
 }
 
-const Rectangle& Widget::rect() const
+const Rectangle &Widget::rect() const
 {
     return rect_;
 }

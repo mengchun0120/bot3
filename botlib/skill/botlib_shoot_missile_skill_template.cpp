@@ -16,14 +16,14 @@ ShootMissileSkillTemplate::ShootMissileSkillTemplate()
 }
 
 ShootMissileSkillTemplate::ShootMissileSkillTemplate(
-                                const rapidjson::Value& v,
-                                const ProgressPieTemplateLib& progressPieLib)
+                                const rapidjson::Value &v,
+                                const ProgressPieTemplateLib &progressPieLib)
 {
     init(v, progressPieLib);
 }
 
-void ShootMissileSkillTemplate::init(const rapidjson::Value& v,
-                                     const ProgressPieTemplateLib& progressPieLib)
+void ShootMissileSkillTemplate::init(const rapidjson::Value &v,
+                                     const ProgressPieTemplateLib &progressPieLib)
 {
     SkillWithCostTemplate::init(SkillType::SHOOT_MISSILE, v, progressPieLib);
 }

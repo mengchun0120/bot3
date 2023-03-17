@@ -10,7 +10,7 @@ class ChaseShootAIParam {
 public:
     ChaseShootAIParam() = default;
 
-    void init(const rapidjson::Value& v);
+    void init(const rapidjson::Value &v);
 
     inline float chaseDuration() const;
 

@@ -14,7 +14,7 @@ std::vector<std::string> k_textSizeStr{
     "tiny"
 };
 
-TextSize toTextSize(const std::string& s)
+TextSize toTextSize(const std::string &s)
 {
     unsigned int k;
     for (k = 0; k < k_textSizeStr.size(); ++k)
@@ -33,7 +33,7 @@ TextSize toTextSize(const std::string& s)
     return static_cast<TextSize>(k);
 }
 
-bool isValidTextSizeStr(const std::string& s)
+bool isValidTextSizeStr(const std::string &s)
 {
     unsigned int k;
     for (k = 0; k < k_textSizeStr.size(); ++k)

@@ -25,44 +25,44 @@ public:
 
     void init(int missilePoolSize);
 
-    Tile* createTile(const TileTemplate* t,
-                     const commonlib::Vector2& pos,
-                     const commonlib::Vector2& direction);
+    Tile *createTile(const TileTemplate* t,
+                     const commonlib::Vector2 &pos,
+                     const commonlib::Vector2 &direction);
 
-    Goodie* createGoodie(const GoodieTemplate* t,
-                         const commonlib::Vector2& pos,
-                         const commonlib::Vector2& direction);
+    Goodie *createGoodie(const GoodieTemplate* t,
+                         const commonlib::Vector2 &pos,
+                         const commonlib::Vector2 &direction);
 
-    Missile* createMissile(const MissileTemplate* t,
+    Missile *createMissile(const MissileTemplate* t,
                            Side side,
-                           const commonlib::Vector2& pos,
-                           const commonlib::Vector2& direction,
+                           const commonlib::Vector2 &pos,
+                           const commonlib::Vector2 &direction,
                            float damageFactor=1.0f);
 
-    ParticleEffect* createParticleEffect(const ParticleEffectTemplate* t,
-                                         const commonlib::Vector2& pos);
+    ParticleEffect *createParticleEffect(const ParticleEffectTemplate* t,
+                                         const commonlib::Vector2 &pos);
 
-    AIRobot* createAIRobot(const AIRobotTemplate* t,
-                           const commonlib::Vector2& pos,
-                           const commonlib::Vector2& direction);
+    AIRobot *createAIRobot(const AIRobotTemplate* t,
+                           const commonlib::Vector2 &pos,
+                           const commonlib::Vector2 &direction);
 
-    Player* createPlayer(const PlayerTemplate* t,
-                         const commonlib::Vector2& pos,
-                         const commonlib::Vector2& direction);
+    Player *createPlayer(const PlayerTemplate* t,
+                         const commonlib::Vector2 &pos,
+                         const commonlib::Vector2 &direction);
 
-    inline GameObjDeleter& deleter();
+    inline GameObjDeleter &deleter();
 
 private:
     void initDeleter();
 
-    void free(GameObject* obj);
+    void free(GameObject *obj);
 
 protected:
     GameObjDeleter deleter_;
     commonlib::ObjectPool<Missile> missilePool_;
 };
 
-GameObjDeleter& GameObjectFactory::deleter()
+GameObjDeleter &GameObjectFactory::deleter()
 {
     return deleter_;
 }

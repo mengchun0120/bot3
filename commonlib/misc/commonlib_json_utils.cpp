@@ -8,8 +8,8 @@
 namespace mcdane {
 namespace commonlib {
 
-void readJson(rapidjson::Document& doc,
-              const std::string& path)
+void readJson(rapidjson::Document &doc,
+              const std::string &path)
 {
     std::string str = readText(path);
 
@@ -21,10 +21,10 @@ void readJson(rapidjson::Document& doc,
     }
 }
 
-const rapidjson::Value* findJson(const rapidjson::Value& json,
-                                 const std::vector<std::string>& path)
+const rapidjson::Value *findJson(const rapidjson::Value &json,
+                                 const std::vector<std::string> &path)
 {
-    const rapidjson::Value* v = &json;
+    const rapidjson::Value *v = &json;
 
     for (std::size_t i = 0; i < path.size(); ++i)
     {
@@ -33,7 +33,7 @@ const rapidjson::Value* findJson(const rapidjson::Value& json,
             return nullptr;
         }
 
-        const char* name = path[i].c_str();
+        const char *name = path[i].c_str();
 
         if (!v->HasMember(name))
         {
@@ -46,20 +46,20 @@ const rapidjson::Value* findJson(const rapidjson::Value& json,
     return v;
 }
 
-rapidjson::Value jsonVal(const void* ptr,
-                        rapidjson::Document::AllocatorType& allocator)
+rapidjson::Value jsonVal(const void *ptr,
+                        rapidjson::Document::AllocatorType &allocator)
 {
     return jsonVal(stringVal(ptr), allocator);
 }
 
-rapidjson::Value jsonVal(const char* str,
-                         rapidjson::Document::AllocatorType& allocator)
+rapidjson::Value jsonVal(const char *str,
+                         rapidjson::Document::AllocatorType &allocator)
 {
     return jsonVal(std::string(str), allocator);
 }
 
-rapidjson::Value jsonVal(const std::string& s,
-                        rapidjson::Document::AllocatorType& allocator)
+rapidjson::Value jsonVal(const std::string &s,
+                        rapidjson::Document::AllocatorType &allocator)
 {
     rapidjson::Value v;
 
@@ -69,7 +69,7 @@ rapidjson::Value jsonVal(const std::string& s,
 }
 
 rapidjson::Value jsonVal(int i,
-                        rapidjson::Document::AllocatorType& allocator)
+                        rapidjson::Document::AllocatorType &allocator)
 {
     rapidjson::Value v;
 
@@ -79,7 +79,7 @@ rapidjson::Value jsonVal(int i,
 }
 
 rapidjson::Value jsonVal(unsigned int i,
-                        rapidjson::Document::AllocatorType& allocator)
+                        rapidjson::Document::AllocatorType &allocator)
 {
     rapidjson::Value v;
 
@@ -89,7 +89,7 @@ rapidjson::Value jsonVal(unsigned int i,
 }
 
 rapidjson::Value jsonVal(long i,
-                         rapidjson::Document::AllocatorType& allocator)
+                         rapidjson::Document::AllocatorType &allocator)
 {
     rapidjson::Value v;
 
@@ -99,7 +99,7 @@ rapidjson::Value jsonVal(long i,
 }
 
 rapidjson::Value jsonVal(unsigned long i,
-                         rapidjson::Document::AllocatorType& allocator)
+                         rapidjson::Document::AllocatorType &allocator)
 {
     rapidjson::Value v;
 
@@ -109,7 +109,7 @@ rapidjson::Value jsonVal(unsigned long i,
 }
 
 rapidjson::Value jsonVal(double d,
-                         rapidjson::Document::AllocatorType& allocator)
+                         rapidjson::Document::AllocatorType &allocator)
 {
     rapidjson::Value v;
 
@@ -119,7 +119,7 @@ rapidjson::Value jsonVal(double d,
 }
 
 rapidjson::Value jsonVal(float f,
-                         rapidjson::Document::AllocatorType& allocator)
+                         rapidjson::Document::AllocatorType &allocator)
 {
     rapidjson::Value v;
 
@@ -129,7 +129,7 @@ rapidjson::Value jsonVal(float f,
 }
 
 rapidjson::Value jsonVal(bool b,
-                         rapidjson::Document::AllocatorType& allocator)
+                         rapidjson::Document::AllocatorType &allocator)
 {
     rapidjson::Value v;
 

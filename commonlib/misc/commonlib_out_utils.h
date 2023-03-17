@@ -10,8 +10,8 @@
 namespace std {
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os,
-                         const std::vector<T>& v)
+std::ostream &operator<<(std::ostream& os,
+                         const std::vector<T> &v)
 {
     os << '[';
     if (v.size() > 0)
@@ -27,8 +27,8 @@ std::ostream& operator<<(std::ostream& os,
 }
 
 template <typename T, std::size_t N>
-std::ostream& operator<<(std::ostream& os,
-                         const std::array<T,N>& v)
+std::ostream &operator<<(std::ostream& os,
+                         const std::array<T,N> &v)
 {
     os << '[';
     if (N > 0)
@@ -44,8 +44,8 @@ std::ostream& operator<<(std::ostream& os,
 }
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os,
-                         const std::initializer_list<T>& v)
+std::ostream &operator<<(std::ostream& os,
+                         const std::initializer_list<T> &v)
 {
     os << '[';
     auto it = v.begin();
@@ -61,8 +61,8 @@ std::ostream& operator<<(std::ostream& os,
     return os;
 }
 
-std::ostream& operator<<(std::ostream& os,
-                         const rapidjson::Value& v);
+std::ostream &operator<<(std::ostream& os,
+                         const rapidjson::Value &v);
 
 } // end of namespace std
 

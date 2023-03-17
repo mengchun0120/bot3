@@ -19,16 +19,27 @@ Shape::Shape(std::initializer_list<Point2> positions)
 }
 
 Shape::Shape(std::initializer_list<Point2> positions,
-             const TexPosArray& texPosArray)
+             const TexPosArray &texPosArray)
 {
     load(positions, texPosArray);
 }
 
-Shape::Shape(const Point2* positions,
+Shape::Shape(const Point2 *positions,
              unsigned int numPositions,
-             const Point2* texPos)
+             const Point2 *texPos)
 {
     load(positions, numPositions, texPos);
+}
+
+Shape::Shape(const std::vector<commonlib::Point2> &positions)
+{
+    load(positions);
+}
+
+Shape::Shape(const std::vector<commonlib::Point2> &positions,
+             const std::vector<commonlib::Point2> &texPos)
+{
+    load(positions, texPos);
 }
 
 void Shape::load(std::initializer_list<Point2> positions)
@@ -48,7 +59,7 @@ void Shape::load(std::initializer_list<Point2> positions)
 }
 
 void Shape::load(std::initializer_list<Point2> positions,
-                 const TexPosArray& texPosArray)
+                 const TexPosArray &texPosArray)
 {
     unsigned int numPositions = count(positions.begin(), positions.end());
 
@@ -70,9 +81,9 @@ void Shape::load(std::initializer_list<Point2> positions,
     load(posPtr.get(), numPositions, texPosArray.texPos());
 }
 
-void Shape::load(const Point2* positions,
+void Shape::load(const Point2 *positions,
                  unsigned int numPositions,
-                 const Point2* texPos)
+                 const Point2 *texPos)
 {
     if (!positions)
     {
@@ -94,6 +105,17 @@ void Shape::load(const Point2* positions,
             BufferBlock{positions, numPositions, Constants::POS_SIZE, 0},
             BufferBlock{texPos, numPositions, Constants::TEXPOS_SIZE, 0}});
     }
+}
+
+void Shape::load(const std::vector<commonlib::Point2> &positions)
+{
+    load(positions.data(), positions.size(), nullptr);
+}
+
+void Shape::load(const std::vector<commonlib::Point2> &positions,
+                 const std::vector<commonlib::Point2> &texPos)
+{
+    load(positions.data(), positions.size(), texPos.data());
 }
 
 } // end of namespace botlib

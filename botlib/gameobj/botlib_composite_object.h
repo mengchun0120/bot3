@@ -13,43 +13,43 @@ public:
 
     ~CompositeObject() override = default;
 
-    void init(const CompositeObjectTemplate* t,
-              const commonlib::Vector2& pos1,
-              const commonlib::Vector2& direction1);
+    void init(const CompositeObjectTemplate *t,
+              const commonlib::Vector2 &pos1,
+              const commonlib::Vector2 &direction1);
 
-    inline const CompositeObjectTemplate* getTemplate() const;
+    inline const CompositeObjectTemplate *getTemplate() const;
 
     inline float directionX() const;
 
     inline float directionY() const;
 
-    inline const commonlib::Vector2& direction() const;
+    inline const commonlib::Vector2 &direction() const;
 
     inline unsigned int numComponents() const;
 
-    inline const Component& component(unsigned int idx) const;
+    inline const Component &component(unsigned int idx) const;
 
-    inline const std::vector<Component>& components() const;
+    inline const std::vector<Component> &components() const;
 
     inline float alpha() const;
 
     void present() const override;
 
-    void shiftPos(const commonlib::Vector2& delta) override;
+    void shiftPos(const commonlib::Vector2 &delta) override;
 
-    virtual void setDirection(const commonlib::Vector2& direction1);
+    virtual void setDirection(const commonlib::Vector2 &direction1);
 
     void setAlpha(float alpha1);
 
-    void toJson(rapidjson::Value& v,
-                rapidjson::Document::AllocatorType& allocator) override;
+    void toJson(rapidjson::Value &v,
+                rapidjson::Document::AllocatorType &allocator) override;
 
 private:
     void initComponents();
 
     void repositionComponents();
 
-    void shiftComponents(const commonlib::Vector2& delta);
+    void shiftComponents(const commonlib::Vector2 &delta);
 
 protected:
     commonlib::Vector2 direction_;
@@ -57,7 +57,7 @@ protected:
     float alpha_;
 };
 
-const CompositeObjectTemplate* CompositeObject::getTemplate() const
+const CompositeObjectTemplate *CompositeObject::getTemplate() const
 {
     return static_cast<const CompositeObjectTemplate*>(t_);
 }
@@ -72,7 +72,7 @@ float CompositeObject::directionY() const
     return direction_[1];
 }
 
-const commonlib::Vector2& CompositeObject::direction() const
+const commonlib::Vector2 &CompositeObject::direction() const
 {
     return direction_;
 }
@@ -82,7 +82,7 @@ unsigned int CompositeObject::numComponents() const
     return getTemplate()->numComponents();
 }
 
-const std::vector<Component>& CompositeObject::components() const
+const std::vector<Component> &CompositeObject::components() const
 {
     return components_;
 }
@@ -92,7 +92,7 @@ float CompositeObject::alpha() const
     return alpha_;
 }
 
-const Component& CompositeObject::component(unsigned int idx) const
+const Component &CompositeObject::component(unsigned int idx) const
 {
     return components_[idx];
 }

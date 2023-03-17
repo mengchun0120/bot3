@@ -16,12 +16,12 @@ static const std::vector<std::string> k_skillTypeStr{
     "barrage-blast",
 };
 
-const std::string& toString(SkillType type)
+const std::string &toString(SkillType type)
 {
     return k_skillTypeStr[static_cast<int>(type)];
 }
 
-SkillType toSkillType(const std::string& typeStr)
+SkillType toSkillType(const std::string &typeStr)
 {
     for (std::size_t i = 0; i < k_skillTypeStr.size(); ++i)
     {

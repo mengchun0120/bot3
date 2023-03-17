@@ -24,12 +24,12 @@ public:
 
     ~Robot() override;
 
-    void init(const RobotTemplate* t,
+    void init(const RobotTemplate *t,
               Side side,
-              const commonlib::Vector2& pos1,
-              const commonlib::Vector2& direction1);
+              const commonlib::Vector2 &pos1,
+              const commonlib::Vector2 &direction1);
 
-    inline const RobotTemplate* getTemplate() const;
+    inline const RobotTemplate *getTemplate() const;
 
     inline Side side() const;
 
@@ -41,7 +41,7 @@ public:
 
     inline float damageFactor() const;
 
-    inline const commonlib::Vector2& speed() const;
+    inline const commonlib::Vector2 &speed() const;
 
     inline float energy() const;
 
@@ -57,19 +57,19 @@ public:
 
     void present() const override;
 
-    void update(UpdateContext& cxt) override;
+    void update(UpdateContext &cxt) override;
 
-    void shiftPos(const commonlib::Vector2& delta) override;
+    void shiftPos(const commonlib::Vector2 &delta) override;
 
-    void setDirection(const commonlib::Vector2& direction1) override;
+    void setDirection(const commonlib::Vector2 &direction1) override;
 
     void addHP(float delta);
 
     void addEnergy(float delta);
 
-    void doDamage(float damage, UpdateContext& cxt);
+    void doDamage(float damage, UpdateContext &cxt);
 
-    bool canBeDumped(GameMap& map) const override;
+    bool canBeDumped(GameMap &map) const override;
 
     void setSpeedNorm(float speedNorm1);
 
@@ -79,28 +79,28 @@ public:
 
     void resetSpeed();
 
-    void removeMonitor(GameObject* obj);
+    void removeMonitor(GameObject *obj);
 
-    Skill* searchSkill(SkillType skillType);
+    Skill *searchSkill(SkillType skillType);
 
     bool isSkillEnabled(SkillType skillType);
 
     bool setSkillEnabled(SkillType skillType, bool enabled);
 
-    void shoot(UpdateContext& cxt);
+    void shoot(UpdateContext &cxt);
 
     inline int skillCount() const;
 
-    inline Skill* skill(int i);
+    inline Skill *skill(int i);
 
 protected:
     void initSkills();
 
-    void updateAlive(UpdateContext& cxt);
+    void updateAlive(UpdateContext &cxt);
 
-    void updateDying(UpdateContext& cxt);
+    void updateDying(UpdateContext &cxt);
 
-    void updateSkills(UpdateContext& cxt);
+    void updateSkills(UpdateContext &cxt);
 
     void resetArmorReduceRatio();
 
@@ -121,7 +121,7 @@ protected:
     SkillList skills_;
 };
 
-const RobotTemplate* Robot::getTemplate() const
+const RobotTemplate *Robot::getTemplate() const
 {
     return static_cast<const RobotTemplate*>(t_);
 }
@@ -146,7 +146,7 @@ float Robot::speedNorm() const
     return speedNorm_;
 }
 
-const commonlib::Vector2& Robot::speed() const
+const commonlib::Vector2 &Robot::speed() const
 {
     return speed_;
 }
@@ -186,7 +186,7 @@ int Robot::skillCount() const
     return static_cast<int>(skills_.size());
 }
 
-Skill* Robot::skill(int i)
+Skill *Robot::skill(int i)
 {
     return skills_[i];
 }

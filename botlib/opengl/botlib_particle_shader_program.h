@@ -16,14 +16,14 @@ public:
 
     ~ParticleShaderProgram() override = default;
 
-    void init(const std::vector<std::string>& vertexShaderFiles,
-              const std::vector<std::string>& fragShaderFiles);
+    void init(const std::vector<std::string> &vertexShaderFiles,
+              const std::vector<std::string> &fragShaderFiles);
 
-    inline void setViewportSize(const commonlib::Vector2& viewportSize);
+    inline void setViewportSize(const commonlib::Vector2 &viewportSize);
 
-    inline void setViewportOrigin(const commonlib::Vector2& viewportOrigin);
+    inline void setViewportOrigin(const commonlib::Vector2 &viewportOrigin);
 
-    inline void setRef(const commonlib::Vector2& ref);
+    inline void setRef(const commonlib::Vector2 &ref);
 
     inline void setCurTime(float curTime);
 
@@ -33,9 +33,9 @@ public:
 
     inline void setDuration(float duration);
 
-    inline void setColor(const commonlib::Color& color);
+    inline void setColor(const commonlib::Color &color);
 
-    void setStartPosDirectionSpeed(const commonlib::VertexArray& va);
+    void setStartPosDirectionSpeed(const commonlib::VertexArray &va);
 
     void setPointTexture(GLuint textureId);
 
@@ -58,20 +58,20 @@ private:
 };
 
 void ParticleShaderProgram::setViewportSize(
-                                    const commonlib::Vector2& viewportSize)
+                                    const commonlib::Vector2 &viewportSize)
 {
     glUniform2fv(viewportSizeLoc_, 1,
                  reinterpret_cast<const GLfloat*>(&viewportSize));
 }
 
 void ParticleShaderProgram::setViewportOrigin(
-                                    const commonlib::Vector2& viewportOrigin)
+                                    const commonlib::Vector2 &viewportOrigin)
 {
     glUniform2fv(viewportOriginLoc_, 1,
                  reinterpret_cast<const GLfloat*>(&viewportOrigin));
 }
 
-void ParticleShaderProgram::setRef(const commonlib::Vector2& ref)
+void ParticleShaderProgram::setRef(const commonlib::Vector2 &ref)
 {
     glUniform2fv(refLoc_, 1, reinterpret_cast<const GLfloat*>(&ref));
 }
@@ -96,7 +96,7 @@ void ParticleShaderProgram::setDuration(float duration)
     glUniform1f(durationLoc_, duration);
 }
 
-void ParticleShaderProgram::setColor(const commonlib::Color& color)
+void ParticleShaderProgram::setColor(const commonlib::Color &color)
 {
     glUniform4fv(colorLoc_, 1, reinterpret_cast<const GLfloat*>(&color));
 }

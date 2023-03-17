@@ -16,21 +16,21 @@ Component::Component()
 {
 }
 
-Component::Component(const rapidjson::Value& v,
-                     const ComponentTemplateLib& componentTemplateLib)
+Component::Component(const rapidjson::Value &v,
+                     const ComponentTemplateLib &componentTemplateLib)
 {
     init(v, componentTemplateLib);
 }
 
-Component::Component(const Component& other)
+Component::Component(const Component &other)
     : t_(other.t_)
     , pos_(other.pos_)
     , direction_(other.direction_)
 {
 }
 
-void Component::init(const rapidjson::Value& v,
-                     const ComponentTemplateLib& componentTemplateLib)
+void Component::init(const rapidjson::Value &v,
+                     const ComponentTemplateLib &componentTemplateLib)
 {
     std::string templateName;
     std::vector<JsonParamPtr> params{
@@ -53,7 +53,7 @@ void Component::init(const rapidjson::Value& v,
     }
 }
 
-Component& Component::operator=(const Component& other)
+Component &Component::operator=(const Component& other)
 {
     t_ = other.t_;
     pos_ = other.pos_;
@@ -61,7 +61,7 @@ Component& Component::operator=(const Component& other)
     return *this;
 }
 
-void Component::setTemplate(const ComponentTemplate* t)
+void Component::setTemplate(const ComponentTemplate *t)
 {
     if (!t)
     {
@@ -71,18 +71,18 @@ void Component::setTemplate(const ComponentTemplate* t)
     t_ = t;
 }
 
-void Component::setPos(const commonlib::Vector2& p)
+void Component::setPos(const commonlib::Vector2 &p)
 {
     shiftPos(p - pos_);
 }
 
-void Component::shiftPos(const commonlib::Vector2& delta)
+void Component::shiftPos(const commonlib::Vector2 &delta)
 {
     pos_ += delta;
     firePos_ += delta;
 }
 
-void Component::setDirection(const commonlib::Vector2& direction1)
+void Component::setDirection(const commonlib::Vector2 &direction1)
 {
     direction_ = direction1;
     resetFirePos();
@@ -90,7 +90,7 @@ void Component::setDirection(const commonlib::Vector2& direction1)
 
 void Component::present() const
 {
-    SimpleShaderProgram& program = Context::graphics().simpleShader();
+    SimpleShaderProgram &program = Context::graphics().simpleShader();
 
     t_->rect()->draw(program, &pos_, &direction_, nullptr, nullptr,
                      t_->texture()->id(), nullptr);

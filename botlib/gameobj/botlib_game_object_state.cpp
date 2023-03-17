@@ -11,7 +11,7 @@ namespace botlib {
 
 namespace std {
 
-ostream& operator<<(ostream& os,
+ostream &operator<<(ostream& os,
                     mcdane::botlib::GameObjectState state)
 {
     using namespace mcdane::botlib;

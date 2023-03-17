@@ -10,7 +10,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void ShowMapScreenConfig::init(const std::string& cfgFile)
+void ShowMapScreenConfig::init(const std::string &cfgFile)
 {
     rapidjson::Document doc;
     readJson(doc, cfgFile);
@@ -22,16 +22,16 @@ void ShowMapScreenConfig::init(const std::string& cfgFile)
 
     parse(params, doc);
 
-    const AppConfig& cfg = AppConfig::instance();
+    const AppConfig &cfg = AppConfig::instance();
 
     mapFile_ = constructPath({cfg.mapDir(), mapFile_});
 
     LOG_INFO << "ShowMapScreenConfig initialized successfully" << LOG_END;
 }
 
-void ShowMapScreenConfig::setMapFile(const std::string& fileName)
+void ShowMapScreenConfig::setMapFile(const std::string &fileName)
 {
-    const AppConfig& cfg = AppConfig::instance();
+    const AppConfig &cfg = AppConfig::instance();
 
     mapFile_ = constructPath({cfg.mapDir(), fileName});
 }

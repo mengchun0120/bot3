@@ -65,7 +65,7 @@ public:
         return type_;
     }
 
-    InputEvent& operator=(const InputEvent& e);
+    InputEvent &operator=(const InputEvent& e);
 
     void setMouseButtonEvent(float x,
                              float y,
@@ -81,11 +81,11 @@ public:
                      int scancode,
                      int mods);
 
-    const MouseButtonEvent& mouseButtonEvent() const;
+    const MouseButtonEvent &mouseButtonEvent() const;
 
-    const MouseMoveEvent& mouseMoveEvent() const;
+    const MouseMoveEvent &mouseMoveEvent() const;
 
-    const KeyEvent& keyEvent() const;
+    const KeyEvent &keyEvent() const;
 
 private:
     EventType type_;

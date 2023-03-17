@@ -23,8 +23,8 @@ ChaseShootAI::ChaseShootAI()
 {
 }
 
-void ChaseShootAI::init(AIRobot* robot,
-                        const ChaseShootAIParam* params)
+void ChaseShootAI::init(AIRobot *robot,
+                        const ChaseShootAIParam *params)
 {
     AI::init(robot);
     initSkills();
@@ -33,7 +33,7 @@ void ChaseShootAI::init(AIRobot* robot,
     timeSinceLastDirectionChange_ = 0.0f;
 }
 
-void ChaseShootAI::apply(GameMap& map,
+void ChaseShootAI::apply(GameMap &map,
                          float timeDelta)
 {
     timeSinceLastActionChange_ += timeDelta;
@@ -67,7 +67,7 @@ void ChaseShootAI::initSkills()
     }
 }
 
-void ChaseShootAI::tryChangeAction(const Player* player)
+void ChaseShootAI::tryChangeAction(const Player *player)
 {
     bool rollDice = false;
     float d = dist(robot_->pos(), player->pos());
@@ -157,13 +157,13 @@ void ChaseShootAI::resetAction(RobotAction action)
     }
 }
 
-void ChaseShootAI::resetDirection(const commonlib::Vector2& direction)
+void ChaseShootAI::resetDirection(const commonlib::Vector2 &direction)
 {
     robot_->setDirection(direction);
     timeSinceLastDirectionChange_ = 0.0f;
 }
 
-void ChaseShootAI::applyAction(GameMap& map,
+void ChaseShootAI::applyAction(GameMap &map,
                                float timeDelta)
 {
     switch(action_)
@@ -183,7 +183,7 @@ void ChaseShootAI::applyAction(GameMap& map,
     }
 }
 
-void ChaseShootAI::applyChaseAction(GameMap& map,
+void ChaseShootAI::applyChaseAction(GameMap &map,
                                     float timeDelta)
 {
     Vector2 delta = timeDelta * robot_->speed();
@@ -203,14 +203,14 @@ void ChaseShootAI::applyChaseAction(GameMap& map,
     }
 }
 
-void ChaseShootAI::applyShootAction(GameMap& map,
+void ChaseShootAI::applyShootAction(GameMap &map,
                                     float timeDelta)
 {
     Vector2 direction = normalize(map.player()->pos() - robot_->pos());
     resetDirection(direction);
 }
 
-bool ChaseShootAI::findChaseDirection(GameMap& map,
+bool ChaseShootAI::findChaseDirection(GameMap &map,
                                       float timeDelta)
 {
     Vector2 refDirection;
@@ -230,8 +230,8 @@ bool ChaseShootAI::findChaseDirection(GameMap& map,
     return true;
 }
 
-bool ChaseShootAI::tryFirstDirection(Vector2& direction,
-                                     GameMap& map,
+bool ChaseShootAI::tryFirstDirection(Vector2 &direction,
+                                     GameMap &map,
                                      float timeDelta)
 {
     direction = normalize(map.player()->pos() - robot_->pos());
@@ -247,9 +247,9 @@ bool ChaseShootAI::tryFirstDirection(Vector2& direction,
     return true;
 }
 
-int ChaseShootAI::findNewDirection(GameMap& map,
+int ChaseShootAI::findNewDirection(GameMap &map,
                                    float timeDelta,
-                                   const Vector2& refDirection)
+                                   const Vector2 &refDirection)
 {
     int tryDirections[NUM_DIRECTIONS];
     float distDelta = robot_->speedNorm() * timeDelta;
@@ -267,8 +267,8 @@ int ChaseShootAI::findNewDirection(GameMap& map,
     return -1;
 }
 
-void ChaseShootAI::sortDirections(int* result,
-                                 const Vector2& refDirection)
+void ChaseShootAI::sortDirections(int *result,
+                                 const Vector2 &refDirection)
 {
     int i, j;
 
@@ -276,8 +276,8 @@ void ChaseShootAI::sortDirections(int* result,
     {
         j = (i + 1) % NUM_DIRECTIONS;
 
-        auto& d2 = directions_[j];
-        auto& d1 = directions_[i];
+        auto &d2 = directions_[j];
+        auto &d1 = directions_[i];
         bool isBetween =
             between(refDirection[0], d1[0], d2[0]) &&
             between(refDirection[1], d1[1], d2[1]);
@@ -294,7 +294,7 @@ void ChaseShootAI::sortDirections(int* result,
     randomChoose(result + 2, i, j);
 }
 
-void ChaseShootAI::randomChoose(int* result,
+void ChaseShootAI::randomChoose(int *result,
                                 int i1,
                                 int i2)
 {

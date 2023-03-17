@@ -16,7 +16,7 @@ Color::Color(std::initializer_list<unsigned int> c)
     init(c);
 }
 
-Color::Color(const std::vector<unsigned int>& c)
+Color::Color(const std::vector<unsigned int> &c)
 {
     init(c);
 }
@@ -34,7 +34,7 @@ void Color::init(std::initializer_list<unsigned int> c)
     init(c.begin(), c.end());
 }
 
-void Color::init(const std::vector<unsigned int>& c)
+void Color::init(const std::vector<unsigned int> &c)
 {
     init(c.begin(), c.end());
 }

@@ -6,7 +6,7 @@
 namespace mcdane {
 namespace commonlib {
 
-void validateTexPos(const Point2& texPos)
+void validateTexPos(const Point2 &texPos)
 {
     if (texPos[0] < 0.0f || texPos[0] > 1.0f)
     {
@@ -27,11 +27,11 @@ bool isShaderCompileSuccessful(GLuint shader)
 }
 
 bool compileShader(GLuint shader,
-                   const std::string& path)
+                   const std::string &path)
 {
     std::string src = readText(path);
 
-    const GLchar* source = src.c_str();
+    const GLchar *source = src.c_str();
     GLint len = src.length();
 
     glShaderSource(shader, 1, static_cast<const GLchar * const*>(&source), &len);
@@ -73,7 +73,7 @@ std::string getShaderName(GLenum type)
 }
 
 GLuint createShader(GLenum type,
-                    const std::string& fileName)
+                    const std::string &fileName)
 {
     return createShader(type, {fileName});
 }
@@ -85,7 +85,7 @@ GLuint createShader(GLenum type,
 }
 
 GLuint createShader(GLenum type,
-                    const std::vector<std::string>& fileNames)
+                    const std::vector<std::string> &fileNames)
 {
     GLuint shader = glCreateShader(type);
     if (shader == 0)

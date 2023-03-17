@@ -8,11 +8,11 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void PlayerTemplate::init(const std::string& playerTemplateFile,
-                          const MissileTemplateLib& missileTemplateLib,
-                          const ComponentTemplateLib& componentTemplateLib,
-                          const SkillTemplateLib& skillTemplateLib,
-                          const commonlib::InputMap& inputMap)
+void PlayerTemplate::init(const std::string &playerTemplateFile,
+                          const MissileTemplateLib &missileTemplateLib,
+                          const ComponentTemplateLib &componentTemplateLib,
+                          const SkillTemplateLib &skillTemplateLib,
+                          const commonlib::InputMap &inputMap)
 {
     rapidjson::Document doc;
     readJson(doc, playerTemplateFile);
@@ -23,10 +23,10 @@ void PlayerTemplate::init(const std::string& playerTemplateFile,
 }
 
 #ifdef DESKTOP_APP
-void PlayerTemplate::initInputSkillMap(const rapidjson::Value& v,
-                                       const commonlib::InputMap& inputMap)
+void PlayerTemplate::initInputSkillMap(const rapidjson::Value &v,
+                                       const commonlib::InputMap &inputMap)
 {
-    const rapidjson::Value* m = findJson(v, {"inputSkillMap"});
+    const rapidjson::Value *m = findJson(v, {"inputSkillMap"});
     if (!m->IsObject())
     {
         THROW_EXCEPT(InvalidArgumentException, "inputSkillMap is invalid!");
@@ -55,8 +55,8 @@ void PlayerTemplate::initInputSkillMap(const rapidjson::Value& v,
     }
 }
 #elif __ANDROID__
-void PlayerTemplate::initInputSkillMap(const rapidjson::Value& v,
-                                       const commonlib::InputMap& inputMap)
+void PlayerTemplate::initInputSkillMap(const rapidjson::Value &v,
+                                       const commonlib::InputMap &inputMap)
 {
 }
 #endif

@@ -11,12 +11,12 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-ProgressPie::ProgressPie(const ProgressPieTemplate* t)
+ProgressPie::ProgressPie(const ProgressPieTemplate *t)
 {
     init(t);
 }
 
-void ProgressPie::init(const ProgressPieTemplate* t)
+void ProgressPie::init(const ProgressPieTemplate *t)
 {
     t_ = t;
     finishedVertices_ = 0;
@@ -24,7 +24,7 @@ void ProgressPie::init(const ProgressPieTemplate* t)
     initIcons();
 }
 
-void ProgressPie::present(const commonlib::Vector2& pos,
+void ProgressPie::present(const commonlib::Vector2 &pos,
                           int iconIndex) const
 {
     presentPie(pos);
@@ -57,9 +57,9 @@ void ProgressPie::initIcons()
     }
 }
 
-void ProgressPie::presentPie(const commonlib::Vector2& pos) const
+void ProgressPie::presentPie(const commonlib::Vector2 &pos) const
 {
-    SimpleShaderProgram& program = Context::graphics().simpleShader();
+    SimpleShaderProgram &program = Context::graphics().simpleShader();
 
     program.setUseObjRef(true);
     program.setObjRef(pos);

@@ -14,9 +14,9 @@ public:
     ~GoodieTemplate() override = default;
 
     void init(GoodieType goodieType1,
-              const std::string& name,
-              const rapidjson::Value& v,
-              const ComponentTemplateLib& componentTemplateLib);
+              const std::string &name,
+              const rapidjson::Value &v,
+              const ComponentTemplateLib &componentTemplateLib);
 
     inline GoodieType goodieType() const;
 

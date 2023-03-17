@@ -12,14 +12,14 @@ class TestWidgetApp: public commonlib::App {
 public:
     TestWidgetApp();
 
-    TestWidgetApp(const std::string& configFile,
-                  const std::string& appDir);
+    TestWidgetApp(const std::string &configFile,
+                  const std::string &appDir);
 
     ~TestWidgetApp() override = default;
 
 #ifdef DESKTOP_APP
-    void init(const std::string& configFile,
-              const std::string& appDir);
+    void init(const std::string &configFile,
+              const std::string &appDir);
 
 #elif __ANDROID__
     void init(android_app *app);
@@ -28,7 +28,7 @@ public:
 
     void process() override;
 
-    bool operator()(const commonlib::InputEvent& e);
+    bool operator()(const commonlib::InputEvent &e);
 
 private:
     void setupShader();

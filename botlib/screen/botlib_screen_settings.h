@@ -11,24 +11,24 @@ class ScreenSettings {
 public:
     ScreenSettings() = default;
 
-    void init(const std::string& startScreenCfgFile,
-              const std::string& mapFile);
+    void init(const std::string &startScreenCfgFile,
+              const std::string &mapFile);
 
-    inline const StartScreenConfig& startScreenConfig() const;
+    inline const StartScreenConfig &startScreenConfig() const;
 
-    inline const GameScreenConfig& gameScreenConfig() const;
+    inline const GameScreenConfig &gameScreenConfig() const;
 
 private:
     StartScreenConfig startScreenConfig_;
     GameScreenConfig gameScreenConfig_;
 };
 
-const StartScreenConfig& ScreenSettings::startScreenConfig() const
+const StartScreenConfig &ScreenSettings::startScreenConfig() const
 {
     return startScreenConfig_;
 }
 
-const GameScreenConfig& ScreenSettings::gameScreenConfig() const
+const GameScreenConfig &ScreenSettings::gameScreenConfig() const
 {
     return gameScreenConfig_;
 }

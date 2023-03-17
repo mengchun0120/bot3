@@ -15,48 +15,48 @@ public:
 
 public:
     template <typename T>
-    static Ptr create(T& arg,
-                      const std::string& name,
-                      const std::string& shortOpt="",
-                      const std::string& longOpt="",
-                      const std::string& description="",
+    static Ptr create(T &arg,
+                      const std::string &name,
+                      const std::string &shortOpt="",
+                      const std::string &longOpt="",
+                      const std::string &description="",
                       bool optional=false,
                       Validator<T> validator=Validator<T>());
 
-    static bool validateName(const std::string& name);
+    static bool validateName(const std::string &name);
 
-    static bool validateName(const char* name);
+    static bool validateName(const char *name);
 
-    static bool validateOpt(const std::string& opt);
+    static bool validateOpt(const std::string &opt);
 
-    static bool validateOpt(const char* opt);
+    static bool validateOpt(const char *opt);
 
-    Argument(const std::string& name,
-             const std::string& shortOpt="",
-             const std::string& longOpt="",
-             const std::string& description="",
+    Argument(const std::string &name,
+             const std::string &shortOpt="",
+             const std::string &longOpt="",
+             const std::string &description="",
              bool optional=false);
 
-    Argument(const Argument& other) noexcept = default;
+    Argument(const Argument &other) noexcept = default;
 
     Argument(Argument&& other) noexcept = default;
 
     virtual ~Argument()
     {}
 
-    Argument& operator=(const Argument& other) noexcept = default;
+    Argument &operator=(const Argument& other) noexcept = default;
 
-    Argument& operator=(Argument&& other) noexcept = default;
+    Argument &operator=(Argument&& other) noexcept = default;
 
-    inline const std::string& name() const noexcept;
+    inline const std::string &name() const noexcept;
 
     inline bool isPosArg() const noexcept;
 
-    inline const std::string& shortOpt() const noexcept;
+    inline const std::string &shortOpt() const noexcept;
 
-    inline const std::string& longOpt() const noexcept;
+    inline const std::string &longOpt() const noexcept;
 
-    inline const std::string& description() const noexcept;
+    inline const std::string &description() const noexcept;
 
     inline bool optional() const noexcept;
 
@@ -64,7 +64,7 @@ public:
 
     void setSpecified(bool v) noexcept;
 
-    virtual void eval(const std::string& s) = 0;
+    virtual void eval(const std::string &s) = 0;
 
 protected:
     std::string name_;
@@ -78,45 +78,45 @@ protected:
 template <typename T>
 class TypedArgument: public Argument {
 public:
-    TypedArgument(T& arg,
-                  const std::string& name,
-                  const std::string& shortOpt="",
-                  const std::string& longOpt="",
-                  const std::string& description="",
+    TypedArgument(T &arg,
+                  const std::string &name,
+                  const std::string &shortOpt="",
+                  const std::string &longOpt="",
+                  const std::string &description="",
                   bool optional=false,
                   Validator<T> validator=Validator<T>());
 
-    TypedArgument(const TypedArgument& other) noexcept = default;
+    TypedArgument(const TypedArgument &other) noexcept = default;
 
     TypedArgument(TypedArgument&& other) noexcept = default;
 
-    TypedArgument& operator=(const TypedArgument& other) noexcept = default;
+    TypedArgument &operator=(const TypedArgument& other) noexcept = default;
 
-    TypedArgument& operator=(TypedArgument&& other) noexcept = default;
+    TypedArgument &operator=(TypedArgument&& other) noexcept = default;
 
-    T& arg() noexcept
+    T &arg() noexcept
     {
         return arg_;
     }
 
-    const T& arg() const noexcept
+    const T &arg() const noexcept
     {
         return arg_;
     }
 
-    void eval(const std::string& s) override;
+    void eval(const std::string &s) override;
 
 private:
-    T& arg_;
+    T &arg_;
     Validator<T> validator_;
 };
 
 template <typename T>
-Argument::Ptr Argument::create(T& arg,
-                               const std::string& name,
-                               const std::string& shortOpt,
-                               const std::string& longOpt,
-                               const std::string& description,
+Argument::Ptr Argument::create(T &arg,
+                               const std::string &name,
+                               const std::string &shortOpt,
+                               const std::string &longOpt,
+                               const std::string &description,
                                bool optional,
                                Validator<T> validator)
 {
@@ -125,7 +125,7 @@ Argument::Ptr Argument::create(T& arg,
                                     optional, validator));
 }
 
-const std::string& Argument::name() const noexcept
+const std::string &Argument::name() const noexcept
 {
     return name_;
 }
@@ -135,17 +135,17 @@ bool Argument::isPosArg() const noexcept
     return shortOpt_.empty() && longOpt_.empty();
 }
 
-const std::string& Argument::shortOpt() const noexcept
+const std::string &Argument::shortOpt() const noexcept
 {
     return shortOpt_;
 }
 
-const std::string& Argument::longOpt() const noexcept
+const std::string &Argument::longOpt() const noexcept
 {
     return longOpt_;
 }
 
-const std::string& Argument::description() const noexcept
+const std::string &Argument::description() const noexcept
 {
     return description_;
 }
@@ -161,11 +161,11 @@ bool Argument::specified() const noexcept
 }
 
 template <typename T>
-TypedArgument<T>::TypedArgument(T& arg,
-                                const std::string& name,
-                                const std::string& shortOpt,
-                                const std::string& longOpt,
-                                const std::string& description,
+TypedArgument<T>::TypedArgument(T &arg,
+                                const std::string &name,
+                                const std::string &shortOpt,
+                                const std::string &longOpt,
+                                const std::string &description,
                                 bool optional,
                                 Validator<T> validator)
     : Argument(name, shortOpt, longOpt, description, optional)
@@ -174,7 +174,7 @@ TypedArgument<T>::TypedArgument(T& arg,
 {}
 
 template <typename T>
-void TypedArgument<T>::eval(const std::string& s)
+void TypedArgument<T>::eval(const std::string &s)
 {
     parse(arg_, s);
     if (!validator_.validate(arg_))

@@ -17,18 +17,18 @@ public:
 
     ~HPIndicatorConfig() = default;
 
-    void init(const TextSystem& textSys,
-              const std::string& fileName);
+    void init(const TextSystem &textSys,
+              const std::string &fileName);
 
     inline TextSize textSize() const;
 
-    inline const commonlib::Color& color() const;
+    inline const commonlib::Color &color() const;
 
     inline float halfHeight() const;
 
 private:
 
-    void initSize(const TextSystem& textSys);
+    void initSize(const TextSystem &textSys);
 
 private:
     TextSize textSize_;
@@ -41,7 +41,7 @@ TextSize HPIndicatorConfig::textSize() const
     return textSize_;
 }
 
-const commonlib::Color& HPIndicatorConfig::color() const
+const commonlib::Color &HPIndicatorConfig::color() const
 {
     return color_;
 }

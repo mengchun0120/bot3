@@ -11,7 +11,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-IslandMapGenerator::IslandMapGenerator(const GameLib& lib,
+IslandMapGenerator::IslandMapGenerator(const GameLib &lib,
                                        std::shared_ptr<IslandMapGeneratorConfig> cfg)
     : GameMapGenerator(lib)
     , cfg_(cfg)
@@ -22,7 +22,7 @@ IslandMapGenerator::IslandMapGenerator(const GameLib& lib,
     }
 }
 
-void IslandMapGenerator::generate(GameMap& map,
+void IslandMapGenerator::generate(GameMap &map,
                                   float viewportWidth,
                                   float viewportHeight)
 {
@@ -35,7 +35,7 @@ void IslandMapGenerator::generate(GameMap& map,
     LOG_INFO << "Robots finished" << LOG_END;
 }
 
-void IslandMapGenerator::addTiles(GameMap& map)
+void IslandMapGenerator::addTiles(GameMap &map)
 {
     float baseY = rand_.randomFloat(cfg_->minIslandDist(), cfg_->maxIslandDist());
     float maxBaseY = map.height() - cfg_->minIslandBreath() - cfg_->minIslandDist();
@@ -53,7 +53,7 @@ void IslandMapGenerator::addTiles(GameMap& map)
             float islandBreathY = randomIslandBreath(map.height(), baseY);
             float maxCollideBreath = std::min(islandBreathX, islandBreathY) / 2.0f;
 
-            const TileTemplate* t = randomTileTemplate(maxCollideBreath);
+            const TileTemplate *t = randomTileTemplate(maxCollideBreath);
             if (!t)
             {
                 LOG_WARN << "No matching TileTemplate found maxCollideBreath="
@@ -94,9 +94,9 @@ void IslandMapGenerator::addTiles(GameMap& map)
     }
 }
 
-void IslandMapGenerator::addIsland(GameMap& map,
-                                   const TileTemplate* t,
-                                   const Vector2& startPos,
+void IslandMapGenerator::addIsland(GameMap &map,
+                                   const TileTemplate *t,
+                                   const Vector2 &startPos,
                                    int tileCountX,
                                    int tileCountY)
 {
@@ -110,7 +110,7 @@ void IslandMapGenerator::addIsland(GameMap& map,
         pos[0] = startPos[0];
         for (int col = 0; col < tileCountX; ++col, pos[0] += delta)
         {
-            Tile* tile = new Tile();
+            Tile *tile = new Tile();
             tile->init(t, pos, direction);
             addObj(map, tile);
         }

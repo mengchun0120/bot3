@@ -14,30 +14,30 @@ class Player: public Robot {
 public:
     Player() = default;
 
-    Player(const PlayerTemplate* t,
-           const commonlib::Vector2& pos1,
-           const commonlib::Vector2& direction1);
+    Player(const PlayerTemplate *t,
+           const commonlib::Vector2 &pos1,
+           const commonlib::Vector2 &direction1);
 
     ~Player() override = default;
 
-    void init(const PlayerTemplate* t,
-              const commonlib::Vector2& pos1,
-              const commonlib::Vector2& direction1);
+    void init(const PlayerTemplate *t,
+              const commonlib::Vector2 &pos1,
+              const commonlib::Vector2 &direction1);
 
-    inline const PlayerTemplate* getTemplate() const;
+    inline const PlayerTemplate *getTemplate() const;
 
-    inline const GoodieEffectItem* firstGoodieEffect() const;
+    inline const GoodieEffectItem *firstGoodieEffect() const;
 
-    void update(UpdateContext& cxt) override;
+    void update(UpdateContext &cxt) override;
 
-    void addGoodieEffect(const GoodieTemplate* t);
+    void addGoodieEffect(const GoodieTemplate *t);
 
-    void toJson(rapidjson::Value& v,
-                rapidjson::Document::AllocatorType& allocator) override;
+    void toJson(rapidjson::Value &v,
+                rapidjson::Document::AllocatorType &allocator) override;
 
-    void setDest(const commonlib::Vector2& dest);
+    void setDest(const commonlib::Vector2 &dest);
 
-    Skill* findSkillForInput(int input);
+    Skill *findSkillForInput(int input);
 
 protected:
     void initGoodieEffects();
@@ -46,7 +46,7 @@ protected:
 
     void updateGoodieEffects(float timeDelta);
 
-    GoodieEffectItem* findGoodieEffect(GoodieType type);
+    GoodieEffectItem *findGoodieEffect(GoodieType type);
 
 protected:
     commonlib::ObjectPool<GoodieEffectItem> goodieEffectPool_;
@@ -56,12 +56,12 @@ protected:
     float timeToDest_;
 };
 
-const PlayerTemplate* Player::getTemplate() const
+const PlayerTemplate *Player::getTemplate() const
 {
     return static_cast<const PlayerTemplate*>(t_);
 }
 
-const GoodieEffectItem* Player::firstGoodieEffect() const
+const GoodieEffectItem *Player::firstGoodieEffect() const
 {
     return goodieEffects_.first();
 }

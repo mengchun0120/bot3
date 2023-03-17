@@ -19,17 +19,17 @@ public:
 
     ~GameObjectDumper() = default;
 
-    void init(GameObjItemPool* pool);
+    void init(GameObjItemPool *pool);
 
-    void add(GameObject* obj);
+    void add(GameObject *obj);
 
     inline bool empty() const;
 
-    void clear(GameMap& map);
+    void clear(GameMap &map);
 
 private:
     commonlib::LinkedList<GameObjectItem> objs_;
-    GameObjItemPool* pool_;
+    GameObjItemPool *pool_;
 };
 
 bool GameObjectDumper::empty() const

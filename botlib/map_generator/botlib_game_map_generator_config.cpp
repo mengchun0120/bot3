@@ -8,7 +8,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void GameMapGeneratorConfig::init(const rapidjson::Value& v)
+void GameMapGeneratorConfig::init(const rapidjson::Value &v)
 {
     constexpr int MIN_CELL_COUNT = 40;
     constexpr int MAX_CELL_COUNT = 128;

@@ -12,8 +12,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void GameScreenConfig::init(const GameLib& gameLib,
-                            const std::string& configFile)
+void GameScreenConfig::init(const GameLib &gameLib,
+                            const std::string &configFile)
 {
     rapidjson::Document doc;
     std::string aiRobotCountIconName;
@@ -60,7 +60,7 @@ void GameScreenConfig::init(const GameLib& gameLib,
 
     aiRobotCountTextSize_ = toTextSize(aiRobotCountTextSizeStr);
 
-    const AppConfig& cfg = AppConfig::instance();
+    const AppConfig &cfg = AppConfig::instance();
 
     mapFile_ = constructPath({cfg.mapDir(), mapFile_});
     initGoodiePieTemplates(gameLib, goodiePieNames);
@@ -68,15 +68,15 @@ void GameScreenConfig::init(const GameLib& gameLib,
     LOG_INFO << "GameScreenConfig initialized successfully" << LOG_END;
 }
 
-void GameScreenConfig::setMapFile(const std::string& fileName)
+void GameScreenConfig::setMapFile(const std::string &fileName)
 {
-    const AppConfig& cfg = AppConfig::instance();
+    const AppConfig &cfg = AppConfig::instance();
     mapFile_ = constructPath({cfg.mapDir(), fileName});
 }
 
 void GameScreenConfig::initGoodiePieTemplates(
-                    const GameLib& gameLib,
-                    const std::vector<std::string>& goodiePieNames)
+                    const GameLib &gameLib,
+                    const std::vector<std::string> &goodiePieNames)
 {
     if (goodiePieNames.size() != lastingGoodieTypeCount())
     {

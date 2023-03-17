@@ -22,8 +22,8 @@ ScreenManager::~ScreenManager()
 }
 
 void ScreenManager::init(ScreenType startScreenType,
-                         const commonlib::Vector2& viewportSize,
-                         const AppActions& actions)
+                         const commonlib::Vector2 &viewportSize,
+                         const AppActions &actions)
 {
     curScreenType_ = startScreenType;
     viewportSize_ = viewportSize;
@@ -86,9 +86,9 @@ void ScreenManager::postProcess()
     }
 }
 
-Screen* ScreenManager::createScreen(ScreenType screenType)
+Screen *ScreenManager::createScreen(ScreenType screenType)
 {
-    Screen* screen = nullptr;
+    Screen *screen = nullptr;
     switch(screenType)
     {
         case ScreenType::START:

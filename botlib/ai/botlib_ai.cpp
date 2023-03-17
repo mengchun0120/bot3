@@ -8,7 +8,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void AI::init(AIRobot* robot)
+void AI::init(AIRobot *robot)
 {
     robot_ = robot;
 }

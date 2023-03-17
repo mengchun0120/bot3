@@ -23,9 +23,9 @@ CompositeObjectTemplate::~CompositeObjectTemplate()
 
 void CompositeObjectTemplate::init(
     GameObjectType t,
-    const std::string& name,
-    const rapidjson::Value& v,
-    const ComponentTemplateLib& componentTemplateLib)
+    const std::string &name,
+    const rapidjson::Value &v,
+    const ComponentTemplateLib &componentTemplateLib)
 {
     initComponents(v, componentTemplateLib);
     GameObjectTemplate::init(t, name, v);
@@ -33,10 +33,10 @@ void CompositeObjectTemplate::init(
 }
 
 void CompositeObjectTemplate::initComponents(
-    const rapidjson::Value& v,
-    const ComponentTemplateLib& componentTemplateLib)
+    const rapidjson::Value &v,
+    const ComponentTemplateLib &componentTemplateLib)
 {
-    const rapidjson::Value* a = findJson(v, {"components"});
+    const rapidjson::Value *a = findJson(v, {"components"});
     if (!a)
     {
         THROW_EXCEPT(ParseException, "Failed to find components");
@@ -55,7 +55,7 @@ void CompositeObjectTemplate::initComponents(
     components_.resize(a->Capacity());
     for (unsigned int i = 0; i < a->Capacity(); ++i)
     {
-        Component* c = new Component((*a)[i], componentTemplateLib);
+        Component *c = new Component((*a)[i], componentTemplateLib);
         components_[i] = c;
     }
 }
@@ -64,7 +64,7 @@ void CompositeObjectTemplate::resetSpan()
 {
     for (std::size_t i = 0; i < components_.size(); ++i)
     {
-        const Component& c = component(i);
+        const Component &c = component(i);
         float s = c.pos().norm() + c.getTemplate()->span();
         if (s >= span_)
         {

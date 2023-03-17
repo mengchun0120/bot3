@@ -16,20 +16,20 @@ MoveSkill::MoveSkill()
 {
 }
 
-MoveSkill::MoveSkill(const MoveSkillTemplate* t,
-                     Robot* robot)
+MoveSkill::MoveSkill(const MoveSkillTemplate *t,
+                     Robot *robot)
 {
     init(t, robot);
 }
 
-void MoveSkill::init(const MoveSkillTemplate* t,
-                     Robot* robot)
+void MoveSkill::init(const MoveSkillTemplate *t,
+                     Robot *robot)
 {
     Skill::init(t, robot, false);
     destSet_ = false;
 }
 
-void MoveSkill::update(UpdateContext& cxt)
+void MoveSkill::update(UpdateContext &cxt)
 {
     if (!enabled())
     {
@@ -46,7 +46,7 @@ void MoveSkill::update(UpdateContext& cxt)
     }
 }
 
-void MoveSkill::setDest(const commonlib::Vector2& dest)
+void MoveSkill::setDest(const commonlib::Vector2 &dest)
 {
     Vector2 d = dest - robot_->pos();
     if (fuzzyEqualZero(d))
@@ -60,9 +60,9 @@ void MoveSkill::setDest(const commonlib::Vector2& dest)
     destSet_ = true;
 }
 
-void MoveSkill::updateWithoutDest(UpdateContext& cxt)
+void MoveSkill::updateWithoutDest(UpdateContext &cxt)
 {
-    GameMap& map = *(cxt.map());
+    GameMap &map = *(cxt.map());
     Vector2 delta = robot_->speed() * cxt.timeDelta();
 
     bool collide = map.checkCollision(delta, robot_);
@@ -77,7 +77,7 @@ void MoveSkill::updateWithoutDest(UpdateContext& cxt)
     checkPassthroughCollide(cxt);
 }
 
-void MoveSkill::updateWithDest(UpdateContext& cxt)
+void MoveSkill::updateWithDest(UpdateContext &cxt)
 {
     bool reachDest = false;
     float timeDelta = cxt.timeDelta();
@@ -86,7 +86,7 @@ void MoveSkill::updateWithDest(UpdateContext& cxt)
         reachDest = true;
     }
 
-    GameMap& map = *(cxt.map());
+    GameMap &map = *(cxt.map());
     Vector2 delta = robot_->speed() * timeDelta;
     bool collide = map.checkCollision(delta, robot_);
     robot_->shiftPos(delta);
@@ -106,9 +106,9 @@ void MoveSkill::updateWithDest(UpdateContext& cxt)
     checkPassthroughCollide(cxt);
 }
 
-void MoveSkill::checkPassthroughCollide(UpdateContext& cxt)
+void MoveSkill::checkPassthroughCollide(UpdateContext &cxt)
 {
-    GameMap& map = *(cxt.map());
+    GameMap &map = *(cxt.map());
     PassthroughCollideChecker checker(cxt, robot_);
     Region<int> r = map.getCollideArea(robot_->collideRegion());
     map.traverse(r, checker, {0, 2});

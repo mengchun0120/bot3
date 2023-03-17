@@ -11,8 +11,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void ProgressBar::init(const ProgressBarTemplate* t,
-                       const commonlib::Vector2& pos)
+void ProgressBar::init(const ProgressBarTemplate *t,
+                       const commonlib::Vector2 &pos)
 {
     if (!t)
     {
@@ -27,7 +27,7 @@ void ProgressBar::init(const ProgressBarTemplate* t,
 
 void ProgressBar::present()
 {
-    SimpleShaderProgram& program = Context::graphics().simpleShader();
+    SimpleShaderProgram &program = Context::graphics().simpleShader();
 
     program.setUseObjRef(true);
     program.setObjRef(pos_);

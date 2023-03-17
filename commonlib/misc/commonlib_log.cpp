@@ -20,7 +20,7 @@ std::string Logger::k_levelStr[LEVEL_COUNT] = {
 
 std::shared_ptr<Logger> Logger::k_logger;
 
-void Logger::initInstance(std::ostream& os,
+void Logger::initInstance(std::ostream &os,
                           LogLevel minLevel)
 {
 #ifdef ENABLE_LOG
@@ -31,7 +31,7 @@ void Logger::initInstance(std::ostream& os,
 #endif
 }
 
-Logger::LogLevel Logger::strToLevel(const std::string& levelStr)
+Logger::LogLevel Logger::strToLevel(const std::string &levelStr)
 {
     for (int i = 0; i < static_cast<int>(LEVEL_COUNT); ++i)
     {
@@ -44,7 +44,7 @@ Logger::LogLevel Logger::strToLevel(const std::string& levelStr)
     THROW_EXCEPT(InvalidArgumentException, "Invalid log level " + levelStr);
 }
 
-Logger::Logger(std::ostream& os,
+Logger::Logger(std::ostream &os,
                LogLevel minLevel)
     : os_(os)
     , enabled_(true)
@@ -62,7 +62,7 @@ void Logger::setEnabled(bool enabled)
     enabled_ = enabled;
 }
 
-Logger& Logger::logTime()
+Logger &Logger::logTime()
 {
 #ifdef ENABLE_LOG
     static char buffer[200];

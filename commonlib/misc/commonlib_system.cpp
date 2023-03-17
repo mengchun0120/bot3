@@ -11,7 +11,7 @@ void setAssetManager(AAssetManager *mgr)
     k_assetManager = mgr;
 }
 
-AAssetManager* assetManager()
+AAssetManager *assetManager()
 {
     return k_assetManager;
 }

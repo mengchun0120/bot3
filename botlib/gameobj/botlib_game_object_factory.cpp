@@ -22,46 +22,46 @@ void GameObjectFactory::init(int missilePoolSize)
     initDeleter();
 }
 
-Tile* GameObjectFactory::createTile(const TileTemplate* t,
-                                    const commonlib::Vector2& pos,
-                                    const commonlib::Vector2& direction)
+Tile *GameObjectFactory::createTile(const TileTemplate* t,
+                                    const commonlib::Vector2 &pos,
+                                    const commonlib::Vector2 &direction)
 {
     return new Tile(t, pos, direction);;
 }
 
-Goodie* GameObjectFactory::createGoodie(const GoodieTemplate* t,
-                                        const commonlib::Vector2& pos,
-                                        const commonlib::Vector2& direction)
+Goodie *GameObjectFactory::createGoodie(const GoodieTemplate* t,
+                                        const commonlib::Vector2 &pos,
+                                        const commonlib::Vector2 &direction)
 {
     return new Goodie(t, pos, direction);
 }
 
-Missile* GameObjectFactory::createMissile(const MissileTemplate* t,
+Missile *GameObjectFactory::createMissile(const MissileTemplate* t,
                                           Side side,
-                                          const commonlib::Vector2& pos,
-                                          const commonlib::Vector2& direction,
+                                          const commonlib::Vector2 &pos,
+                                          const commonlib::Vector2 &direction,
                                           float damageFactor)
 {
     return missilePool_.alloc(t, side, pos, direction, damageFactor);
 }
 
-ParticleEffect* GameObjectFactory::createParticleEffect(
-                                            const ParticleEffectTemplate* t,
-                                            const commonlib::Vector2& pos)
+ParticleEffect *GameObjectFactory::createParticleEffect(
+                                            const ParticleEffectTemplate *t,
+                                            const commonlib::Vector2 &pos)
 {
     return new ParticleEffect(t, pos);
 }
 
-AIRobot* GameObjectFactory::createAIRobot(const AIRobotTemplate* t,
-                                          const commonlib::Vector2& pos,
-                                          const commonlib::Vector2& direction)
+AIRobot *GameObjectFactory::createAIRobot(const AIRobotTemplate* t,
+                                          const commonlib::Vector2 &pos,
+                                          const commonlib::Vector2 &direction)
 {
     return new AIRobot(t, pos, direction);
 }
 
-Player* GameObjectFactory::createPlayer(const PlayerTemplate* t,
-                                        const commonlib::Vector2& pos,
-                                        const commonlib::Vector2& direction)
+Player *GameObjectFactory::createPlayer(const PlayerTemplate* t,
+                                        const commonlib::Vector2 &pos,
+                                        const commonlib::Vector2 &direction)
 {
     return new Player(t, pos, direction);
 }
@@ -72,7 +72,7 @@ void GameObjectFactory::initDeleter()
     deleter_ = std::bind(&GameObjectFactory::free, this, _1);
 }
 
-void GameObjectFactory::free(GameObject* obj)
+void GameObjectFactory::free(GameObject *obj)
 {
     if (obj->getTemplate()->type() != GameObjectType::MISSILE)
     {

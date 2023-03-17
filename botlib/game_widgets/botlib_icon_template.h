@@ -11,25 +11,25 @@ class IconTemplate {
 public:
     IconTemplate() = default;
 
-    void init(const rapidjson::Value& v,
-              const TextureLib& textureLib,
-              const RectLib& rectLib);
+    void init(const rapidjson::Value &v,
+              const TextureLib &textureLib,
+              const RectLib &rectLib);
 
-    inline const commonlib::Texture* texture() const;
+    inline const commonlib::Texture *texture() const;
 
-    inline const Rectangle* rect() const;
+    inline const Rectangle *rect() const;
 
 private:
-    const commonlib::Texture* texture_;
-    const Rectangle* rect_;
+    const commonlib::Texture *texture_;
+    const Rectangle *rect_;
 };
 
-const commonlib::Texture* IconTemplate::texture() const
+const commonlib::Texture *IconTemplate::texture() const
 {
     return texture_;
 }
 
-const Rectangle* IconTemplate::rect() const
+const Rectangle *IconTemplate::rect() const
 {
     return rect_;
 }

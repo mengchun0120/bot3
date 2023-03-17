@@ -15,22 +15,22 @@ public:
 
     ArgumentParser(std::initializer_list<Argument::Ptr> args);
 
-    void init(const std::initializer_list<Argument::Ptr>& args);
+    void init(const std::initializer_list<Argument::Ptr> &args);
 
-    void parse(int argc, const char* const argv[]);
+    void parse(int argc, const char *const argv[]);
 
-    bool argExists(const std::string& name) const
+    bool argExists(const std::string &name) const
     {
         return nameArgMap_.find(name) != nameArgMap_.end();
     }
 
-    bool shortOptExists(const std::string& shortOpt) const
+    bool shortOptExists(const std::string &shortOpt) const
     {
         return shortOptArgMap_.find(shortOpt) !=
                shortOptArgMap_.end();
     }
 
-    bool longOptExists(const std::string& longOpt) const
+    bool longOptExists(const std::string &longOpt) const
     {
         return longOptArgMap_.find(longOpt) !=
                longOptArgMap_.end();
@@ -40,7 +40,7 @@ private:
     void clearAll();
 
     void addArg(Argument::Ptr arg,
-                unsigned int& posArgIdx);
+                unsigned int &posArgIdx);
 
     void addArgToNameArgMap(Argument::Ptr arg);
 
@@ -51,21 +51,21 @@ private:
     void resetArgs();
 
     void evalArgs(int argc,
-                  const char* const argv[]);
+                  const char *const argv[]);
 
-    void evalLongOpt(const std::string& longOpt,
-                     int& argIdx,
+    void evalLongOpt(const std::string &longOpt,
+                     int &argIdx,
                      int argc,
-                     const char* const argv[]);
+                     const char *const argv[]);
 
-    void evalShortOpt(const std::string& shortOpt,
-                      int& argIdx,
+    void evalShortOpt(const std::string &shortOpt,
+                      int &argIdx,
                       int argc,
-                      const char* const argv[]);
+                      const char *const argv[]);
 
-    void evalPosOpt(unsigned int& posArgIdx,
-                    int& argIdx,
-                    const char* const argv[]);
+    void evalPosOpt(unsigned int &posArgIdx,
+                    int &argIdx,
+                    const char *const argv[]);
 
     void checkNonOptional();
 

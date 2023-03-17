@@ -21,7 +21,7 @@ public:
     std::shared_ptr<Widget> getWidget(unsigned int idx);
 
     void setWidget(unsigned int idx,
-                   Widget* widget);
+                   Widget *widget);
 
     void process(const commonlib::InputEvent &event);
 

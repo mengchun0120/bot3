@@ -23,7 +23,7 @@ struct Vector: public std::array<float, N> {
 
     Vector(std::initializer_list<float> l) noexcept;
 
-    Vector(const Vector& other) = default;
+    Vector(const Vector &other) = default;
 
     template <typename Iterator>
     void init(Iterator begin,
@@ -33,19 +33,19 @@ struct Vector: public std::array<float, N> {
 
     float norm() const noexcept;
 
-    Vector& normalize() noexcept;
+    Vector &normalize() noexcept;
 
-    Vector& negate() noexcept;
+    Vector &negate() noexcept;
 
-    Vector& operator+=(const Vector& v) noexcept;
+    Vector &operator+=(const Vector& v) noexcept;
 
-    Vector& operator-=(const Vector& v) noexcept;
+    Vector &operator-=(const Vector& v) noexcept;
 
-    Vector& operator*=(float f) noexcept;
+    Vector &operator*=(float f) noexcept;
 
-    Vector& operator/=(float f) noexcept;
+    Vector &operator/=(float f) noexcept;
 
-    rapidjson::Value toJson(rapidjson::Document::AllocatorType& allocator) const;
+    rapidjson::Value toJson(rapidjson::Document::AllocatorType &allocator) const;
 
     std::string toString() const;
 };
@@ -112,13 +112,13 @@ float Vector<N>::norm() const noexcept
 }
 
 template <std::size_t N>
-Vector<N>& Vector<N>::normalize() noexcept
+Vector<N> &Vector<N>::normalize() noexcept
 {
     return *this /= norm();
 }
 
 template <std::size_t N>
-Vector<N>& Vector<N>::negate() noexcept
+Vector<N> &Vector<N>::negate() noexcept
 {
     for (auto it = this->begin(); it != this->end(); ++it)
     {
@@ -128,7 +128,7 @@ Vector<N>& Vector<N>::negate() noexcept
 }
 
 template <std::size_t N>
-Vector<N>& Vector<N>::operator+=(const Vector<N>& v) noexcept
+Vector<N> &Vector<N>::operator+=(const Vector<N>& v) noexcept
 {
     auto it = this->begin();
     for (auto i = v.begin(); it != this->end(); ++it, ++i)
@@ -139,7 +139,7 @@ Vector<N>& Vector<N>::operator+=(const Vector<N>& v) noexcept
 }
 
 template <std::size_t N>
-Vector<N>& Vector<N>::operator-=(const Vector<N>& v) noexcept
+Vector<N> &Vector<N>::operator-=(const Vector<N>& v) noexcept
 {
     auto it = this->begin();
     for (auto i = v.begin(); it != this->end(); ++it, ++i)
@@ -150,7 +150,7 @@ Vector<N>& Vector<N>::operator-=(const Vector<N>& v) noexcept
 }
 
 template <std::size_t N>
-Vector<N>& Vector<N>::operator*=(float f) noexcept
+Vector<N> &Vector<N>::operator*=(float f) noexcept
 {
     for (auto it = this->begin(); it != this->end(); ++it)
     {
@@ -160,14 +160,14 @@ Vector<N>& Vector<N>::operator*=(float f) noexcept
 }
 
 template <std::size_t N>
-Vector<N>& Vector<N>::operator/=(float f) noexcept
+Vector<N> &Vector<N>::operator/=(float f) noexcept
 {
     return *this *= (1.0f / f);
 }
 
 template <std::size_t N>
 rapidjson::Value Vector<N>::toJson(
-                            rapidjson::Document::AllocatorType& allocator) const
+                            rapidjson::Document::AllocatorType &allocator) const
 {
     rapidjson::Value json;
 
@@ -200,8 +200,8 @@ std::string Vector<N>::toString() const
 }
 
 template <std::size_t N>
-Vector<N> operator+(const Vector<N>& lhs,
-                    const Vector<N>& rhs)
+Vector<N> operator+(const Vector<N> &lhs,
+                    const Vector<N> &rhs)
 {
     Vector<N> r;
     for (std::size_t i = 0; i < N; ++i)
@@ -212,8 +212,8 @@ Vector<N> operator+(const Vector<N>& lhs,
 }
 
 template <std::size_t N>
-Vector<N> operator-(const Vector<N>& lhs,
-                    const Vector<N>& rhs)
+Vector<N> operator-(const Vector<N> &lhs,
+                    const Vector<N> &rhs)
 {
     Vector<N> r;
     for (std::size_t i = 0; i < N; ++i)
@@ -225,7 +225,7 @@ Vector<N> operator-(const Vector<N>& lhs,
 
 
 template <std::size_t N>
-Vector<N> operator*(const Vector<N>& lhs,
+Vector<N> operator*(const Vector<N> &lhs,
                     float rhs)
 {
     Vector<N> r;
@@ -239,7 +239,7 @@ Vector<N> operator*(const Vector<N>& lhs,
 
 template <std::size_t N>
 Vector<N> operator*(float lhs,
-                    const Vector<N>& rhs)
+                    const Vector<N> &rhs)
 {
     Vector<N> r;
     for (std::size_t i = 0; i < N; ++i)
@@ -250,15 +250,15 @@ Vector<N> operator*(float lhs,
 }
 
 template <std::size_t N>
-Vector<N> operator/(const Vector<N>& lhs,
+Vector<N> operator/(const Vector<N> &lhs,
                     float rhs)
 {
     return lhs * (1.0f / rhs);
 }
 
 template <std::size_t N>
-float dot(const Vector<N>& lhs,
-          const Vector<N>& rhs)
+float dot(const Vector<N> &lhs,
+          const Vector<N> &rhs)
 {
     float r = 0;
     for (std::size_t i = 0; i < N; ++i)
@@ -269,8 +269,8 @@ float dot(const Vector<N>& lhs,
 }
 
 template <std::size_t N>
-bool fuzzyEqual(const Vector<N>& v1,
-                const Vector<N>& v2,
+bool fuzzyEqual(const Vector<N> &v1,
+                const Vector<N> &v2,
                 float threshold=1e-06f)
 {
     for (std::size_t i = 0; i < N; ++i)
@@ -285,7 +285,7 @@ bool fuzzyEqual(const Vector<N>& v1,
 }
 
 template <std::size_t N>
-bool fuzzyEqualZero(const Vector<N>& v1,
+bool fuzzyEqualZero(const Vector<N> &v1,
                     float threshold=1e-06f)
 {
     Vector<N> zero;
@@ -293,14 +293,14 @@ bool fuzzyEqualZero(const Vector<N>& v1,
 }
 
 template <std::size_t N>
-Vector<N> normalize(const Vector<N>& v)
+Vector<N> normalize(const Vector<N> &v)
 {
     return v / v.norm();
 }
 
 template <std::size_t N>
-float dist(const Vector<N>& v1,
-           const Vector<N>& v2)
+float dist(const Vector<N> &v1,
+           const Vector<N> &v2)
 {
     double sum = 0.0;
     for (std::size_t i = 0; i < N; ++i)
@@ -312,8 +312,8 @@ float dist(const Vector<N>& v1,
 }
 
 template <std::size_t N>
-Vector<N> product(const Vector<N>& v1,
-                  const Vector<N>& v2)
+Vector<N> product(const Vector<N> &v1,
+                  const Vector<N> &v2)
 {
     Vector<N> r;
     for (std::size_t i = 0; i < N; ++i)
@@ -324,8 +324,8 @@ Vector<N> product(const Vector<N>& v1,
 }
 
 template <std::size_t N>
-Vector<N> div(const Vector<N>& v1,
-              const Vector<N>& v2)
+Vector<N> div(const Vector<N> &v1,
+              const Vector<N> &v2)
 {
     Vector<N> r;
     for (std::size_t i = 0; i < N; ++i)
@@ -336,7 +336,7 @@ Vector<N> div(const Vector<N>& v1,
 }
 
 template <std::size_t N>
-Vector<N> abs(const Vector<N>& v)
+Vector<N> abs(const Vector<N> &v)
 {
     Vector<N> r;
     for (std::size_t i = 0; i < N; ++i)
@@ -346,10 +346,10 @@ Vector<N> abs(const Vector<N>& v)
     return r;
 }
 
-Vector3 cross(const Vector3& lhs,
-              const Vector3& rhs);
+Vector3 cross(const Vector3 &lhs,
+              const Vector3 &rhs);
 
-bool align(const Vector2& d1, const Vector2& d2);
+bool align(const Vector2 &d1, const Vector2& d2);
 
 } // end of namespace sharedlib
 } // end of namespace mcdane
@@ -357,15 +357,15 @@ bool align(const Vector2& d1, const Vector2& d2);
 namespace std {
 
 template <std::size_t N>
-std::ostream& operator<<(std::ostream& os,
-                         const mcdane::commonlib::Vector<N>& v)
+std::ostream &operator<<(std::ostream& os,
+                         const mcdane::commonlib::Vector<N> &v)
 {
     return os << v.toString();
 }
 
 template <std::size_t N>
-std::istream& operator>>(std::istream& in,
-                         mcdane::commonlib::Vector<N>& v)
+std::istream &operator>>(std::istream& in,
+                         mcdane::commonlib::Vector<N> &v)
 {
     for (std::size_t i = 0; in.good() && i < N; ++i)
     {

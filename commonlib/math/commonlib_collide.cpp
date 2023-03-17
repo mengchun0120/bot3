@@ -32,8 +32,8 @@ inline float distToBoundary(float start,
     return delta > 0.0f ? boundaryEnd - end : start - boundaryStart;
 }
 
-bool checkRectCollideBoundary(const Region<float>& rect,
-                              const Region<float>& boundary)
+bool checkRectCollideBoundary(const Region<float> &rect,
+                              const Region<float> &boundary)
 {
     return rect.left() < boundary.left() ||
            rect.right() > boundary.right() ||
@@ -41,10 +41,10 @@ bool checkRectCollideBoundary(const Region<float>& rect,
            rect.top() > boundary.top();
 }
 
-bool checkRectCollideBoundary(Vector2& adjustedDelta,
-                              const Region<float>& rect,
-                              const Region<float>& boundary,
-                              const Vector2& delta)
+bool checkRectCollideBoundary(Vector2 &adjustedDelta,
+                              const Region<float> &rect,
+                              const Region<float> &boundary,
+                              const Vector2 &delta)
 {
     bool collide = checkRectCollideBoundary(shift(rect, delta[0], delta[1]),
                                             boundary);
@@ -91,8 +91,8 @@ bool checkRectCollideBoundary(Vector2& adjustedDelta,
     return true;
 }
 
-bool checkRectCollideRect(const Region<float>& rect1,
-                          const Region<float>& rect2)
+bool checkRectCollideRect(const Region<float> &rect1,
+                          const Region<float> &rect2)
 {
     return checkLineOverlap(rect1.left(), rect1.right(),
                             rect2.left(), rect2.right()) &&
@@ -100,10 +100,10 @@ bool checkRectCollideRect(const Region<float>& rect1,
                             rect2.bottom(), rect2.top());
 }
 
-bool checkRectCollideRect(Vector2& adjustedDelta,
-                          const Region<float>& rect1,
-                          const Region<float>& rect2,
-                          const Vector2& delta)
+bool checkRectCollideRect(Vector2 &adjustedDelta,
+                          const Region<float> &rect1,
+                          const Region<float> &rect2,
+                          const Vector2 &delta)
 {
     bool collide = checkRectCollideRect(shift(rect1, delta[0], delta[1]),
                                         rect2);

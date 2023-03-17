@@ -42,7 +42,7 @@ std::string readText(const std::string &path)
 #elif __ANDROID__
 std::string readText(const std::string &path)
 {
-    AAsset* asset = AAssetManager_open(assetManager(),
+    AAsset *asset = AAssetManager_open(assetManager(),
                                        path.c_str(),
                                        AASSET_MODE_BUFFER);
     if (!asset)

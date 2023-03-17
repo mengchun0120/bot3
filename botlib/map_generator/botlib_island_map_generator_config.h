@@ -10,9 +10,9 @@ class IslandMapGeneratorConfig: public GameMapGeneratorConfig {
 public:
     IslandMapGeneratorConfig() = default;
 
-    IslandMapGeneratorConfig(const std::string& fileName);
+    IslandMapGeneratorConfig(const std::string &fileName);
 
-    void init(const std::string& fileName);
+    void init(const std::string &fileName);
 
     inline float minIslandBreath() const;
 

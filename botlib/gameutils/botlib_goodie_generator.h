@@ -13,7 +13,7 @@ class Goodie;
 
 class GoodieGenerator {
     struct Item {
-        const GoodieTemplate* t_;
+        const GoodieTemplate *t_;
         float weight_;
     };
 
@@ -24,17 +24,17 @@ public:
 
     ~GoodieGenerator() = default;
 
-    void init(const GoodieTemplateLib& lib);
+    void init(const GoodieTemplateLib &lib);
 
-    Goodie* generate(float prob,
-                     const commonlib::Vector2& pos);
+    Goodie *generate(float prob,
+                     const commonlib::Vector2 &pos);
 
 private:
-    void initBase(const GoodieTemplateLib& lib);
+    void initBase(const GoodieTemplateLib &lib);
 
     void initRandomGenerator();
 
-    const GoodieTemplate* getTemplate();
+    const GoodieTemplate *getTemplate();
 
 private:
     std::vector<Item> base_;

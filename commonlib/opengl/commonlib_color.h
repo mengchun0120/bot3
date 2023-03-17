@@ -24,7 +24,7 @@ struct Color: public Vector<4> {
 
     Color(std::initializer_list<unsigned int> c);
 
-    Color(const std::vector<unsigned int>& c);
+    Color(const std::vector<unsigned int> &c);
 
     template <typename Iterator>
     Color(Iterator begin,
@@ -37,7 +37,7 @@ struct Color: public Vector<4> {
 
     void init(std::initializer_list<unsigned int> c);
 
-    void init(const std::vector<unsigned int>& c);
+    void init(const std::vector<unsigned int> &c);
 
     template <typename Iterator>
     void init(Iterator begin,

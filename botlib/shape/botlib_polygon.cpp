@@ -14,58 +14,31 @@ Polygon::Polygon(std::initializer_list<commonlib::Point2> positions)
 }
 
 Polygon::Polygon(std::initializer_list<commonlib::Point2> positions,
-                 const TexPosArray& texPosArray)
+                 const TexPosArray &texPosArray)
 {
     load(positions, texPosArray);
 }
 
-Polygon::Polygon(const Point2* positions,
+Polygon::Polygon(const Point2 *positions,
                  unsigned int numPositions,
-                 const Point2* texPos)
+                 const Point2 *texPos)
 {
     load(positions, numPositions, texPos);
 }
 
-void Polygon::load(std::initializer_list<commonlib::Point2> positions)
-{
-    if (count(positions.begin(), positions.end()) < MIN_NUM_VERTICES)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "positions size is less than 4");
-    }
-
-    Shape::load(positions);
-}
-
-void Polygon::load(std::initializer_list<commonlib::Point2> positions,
-                   const TexPosArray& texPosArray)
-{
-    if (count(positions.begin(), positions.end()) < MIN_NUM_VERTICES)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "positions size is less than 4");
-    }
-
-    Shape::load(positions, texPosArray);
-}
-
-void Polygon::load(const Point2* positions,
-                   unsigned int numPositions,
-                   const Point2* texPos)
-{
-    if (numPositions < MIN_NUM_VERTICES)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "numPositions is less than 3");
-    }
-
-    Shape::load(positions, numPositions, texPos);
-}
-
-void Polygon::draw(SimpleShaderProgram& program,
-                   const Point2* objRef,
-                   const Point2* direction,
-                   const Color* fillColor,
-                   const Color* borderColor,
+void Polygon::draw(SimpleShaderProgram &program,
+                   const Point2 *objRef,
+                   const Point2 *direction,
+                   const Color *fillColor,
+                   const Color *borderColor,
                    const GLuint textureId,
-                   const Color* texColor) const
+                   const Color *texColor,
+                   int fillMode,
+                   GLint fillStart,
+                   GLsizei fillVertexCount,
+                   int borderMode,
+                   GLint borderStart,
+                   GLsizei borderVertexCount) const
 {
     if (objRef)
     {
@@ -95,13 +68,17 @@ void Polygon::draw(SimpleShaderProgram& program,
         if (fillColor)
         {
             program.setColor(*fillColor);
-            glDrawArrays(GL_TRIANGLE_FAN, 0, va_.numVertices(0));
+            GLsizei count = fillVertexCount == 0 ?
+                                va_.numVertices(0) : fillVertexCount;
+            glDrawArrays(fillMode, fillStart, count);
         }
 
         if (borderColor)
         {
             program.setColor(*borderColor);
-            glDrawArrays(GL_LINE_LOOP, 1, va_.numVertices(0)-2);
+            GLsizei count = borderVertexCount == 0?
+                                va_.numVertices(0)-2 : borderVertexCount;
+            glDrawArrays(borderMode, borderStart, count);
         }
     }
     else
@@ -118,7 +95,9 @@ void Polygon::draw(SimpleShaderProgram& program,
             program.setUseTexColor(false);
         }
 
-        glDrawArrays(GL_TRIANGLE_FAN, 0, va_.numVertices(0));
+        GLsizei count = fillVertexCount == 0 ?
+                            va_.numVertices(0) : fillVertexCount;
+        glDrawArrays(fillMode, fillStart, count);
     }
 }
 

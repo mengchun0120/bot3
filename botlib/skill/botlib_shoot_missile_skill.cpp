@@ -5,21 +5,21 @@
 namespace mcdane {
 namespace botlib {
 
-ShootMissileSkill::ShootMissileSkill(const ShootMissileSkillTemplate* t,
-                                     Robot* robot,
+ShootMissileSkill::ShootMissileSkill(const ShootMissileSkillTemplate *t,
+                                     Robot *robot,
                                      bool enabled1)
 {
     init(t, robot, enabled1);
 }
 
-void ShootMissileSkill::init(const ShootMissileSkillTemplate* t,
-                             Robot* robot,
+void ShootMissileSkill::init(const ShootMissileSkillTemplate *t,
+                             Robot *robot,
                              bool enabled1)
 {
     SkillWithCost::init(t, robot, enabled1);
 }
 
-bool ShootMissileSkill::apply(UpdateContext& cxt)
+bool ShootMissileSkill::apply(UpdateContext &cxt)
 {
     robot_->shoot(cxt);
     return true;

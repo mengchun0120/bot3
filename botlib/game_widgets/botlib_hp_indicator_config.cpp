@@ -9,8 +9,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void HPIndicatorConfig::init(const TextSystem& textSys,
-                             const std::string& fileName)
+void HPIndicatorConfig::init(const TextSystem &textSys,
+                             const std::string &fileName)
 {
     rapidjson::Document doc;
     readJson(doc, fileName);
@@ -29,7 +29,7 @@ void HPIndicatorConfig::init(const TextSystem& textSys,
     LOG_INFO << "HPIndicatorConfig initialized successfully" << LOG_END;
 }
 
-void HPIndicatorConfig::initSize(const TextSystem& textSys)
+void HPIndicatorConfig::initSize(const TextSystem &textSys)
 {
     halfHeight_ = textSys.getHeight(textSize_) / 2.0f;
 }

@@ -18,9 +18,9 @@ CompositeObject::CompositeObject()
 {
 }
 
-void CompositeObject::init(const CompositeObjectTemplate* t,
-                           const commonlib::Vector2& pos1,
-                           const commonlib::Vector2& direction1)
+void CompositeObject::init(const CompositeObjectTemplate *t,
+                           const commonlib::Vector2 &pos1,
+                           const commonlib::Vector2 &direction1)
 {
     GameObject::init(t, pos1);
     direction_ = direction1;
@@ -30,7 +30,7 @@ void CompositeObject::init(const CompositeObjectTemplate* t,
 
 void CompositeObject::present() const
 {
-    SimpleShaderProgram& program = Context::graphics().simpleShader();
+    SimpleShaderProgram &program = Context::graphics().simpleShader();
     program.setAlpha(alpha_);
 
     for (std::size_t i = 0; i < components_.size(); ++i)
@@ -39,13 +39,13 @@ void CompositeObject::present() const
     }
 }
 
-void CompositeObject::shiftPos(const Vector2& delta)
+void CompositeObject::shiftPos(const Vector2 &delta)
 {
     GameObject::shiftPos(delta);
     shiftComponents(delta);
 }
 
-void CompositeObject::setDirection(const Vector2& direction1)
+void CompositeObject::setDirection(const Vector2 &direction1)
 {
     direction_ = direction1;
     repositionComponents();
@@ -56,8 +56,8 @@ void CompositeObject::setAlpha(float alpha1)
     alpha_ = clamp(alpha1, 0.0f, 1.0f);
 }
 
-void CompositeObject::toJson(rapidjson::Value& v,
-                             rapidjson::Document::AllocatorType& allocator)
+void CompositeObject::toJson(rapidjson::Value &v,
+                             rapidjson::Document::AllocatorType &allocator)
 {
     GameObject::toJson(v, allocator);
     v.AddMember("direction", direction_.toJson(allocator), allocator);
@@ -65,7 +65,7 @@ void CompositeObject::toJson(rapidjson::Value& v,
 
 void CompositeObject::initComponents()
 {
-    const CompositeObjectTemplate* t = getTemplate();
+    const CompositeObjectTemplate *t = getTemplate();
 
     components_.resize(t->numComponents());
     for (std::size_t i = 0; i < components_.size(); ++i)
@@ -78,12 +78,12 @@ void CompositeObject::initComponents()
 
 void CompositeObject::repositionComponents()
 {
-    const CompositeObjectTemplate* t = getTemplate();
+    const CompositeObjectTemplate *t = getTemplate();
 
     for (std::size_t i = 0; i < components_.size(); ++i)
     {
-        const Component& c1 = t->component(i);
-        Component& c2 = components_[i];
+        const Component &c1 = t->component(i);
+        Component &c2 = components_[i];
 
         Vector2 p = c1.pos();
         rotate(p[0], p[1], direction_[0], direction_[1]);
@@ -95,7 +95,7 @@ void CompositeObject::repositionComponents()
     }
 }
 
-void CompositeObject::shiftComponents(const Vector2& delta)
+void CompositeObject::shiftComponents(const Vector2 &delta)
 {
     for (std::size_t i = 0; i < components_.size(); ++i)
     {

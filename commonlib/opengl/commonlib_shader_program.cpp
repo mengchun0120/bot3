@@ -20,8 +20,8 @@ ShaderProgram::ShaderProgram(std::initializer_list<std::string> vertexShaderFile
     load(vertexShaderFiles, fragShaderFiles);
 }
 
-ShaderProgram::ShaderProgram(const std::vector<std::string>& vertexShaderFiles,
-                             const std::vector<std::string>& fragShaderFiles)
+ShaderProgram::ShaderProgram(const std::vector<std::string> &vertexShaderFiles,
+                             const std::vector<std::string> &fragShaderFiles)
     : ShaderProgram()
 {
     load(vertexShaderFiles, fragShaderFiles);
@@ -42,8 +42,8 @@ void ShaderProgram::load(std::initializer_list<std::string> vertexShaderFiles,
     program_ = createProgram(vertexShader_, fragShader_);
 }
 
-void ShaderProgram::load(const std::vector<std::string>& vertexShaderFiles,
-                         const std::vector<std::string>& fragShaderFiles)
+void ShaderProgram::load(const std::vector<std::string> &vertexShaderFiles,
+                         const std::vector<std::string> &fragShaderFiles)
 {
     vertexShader_ = createShader(GL_VERTEX_SHADER, vertexShaderFiles);
     fragShader_ = createShader(GL_FRAGMENT_SHADER, fragShaderFiles);
@@ -55,7 +55,7 @@ void ShaderProgram::use()
     glUseProgram(program_);
 }
 
-GLint ShaderProgram::getUniformLocation(const char* name)
+GLint ShaderProgram::getUniformLocation(const char *name)
 {
     GLint loc = glGetUniformLocation(program_, name);
     if (loc < 0)
@@ -68,7 +68,7 @@ GLint ShaderProgram::getUniformLocation(const char* name)
     return loc;
 }
 
-GLint ShaderProgram::getAttribLocation(const char* name)
+GLint ShaderProgram::getAttribLocation(const char *name)
 {
     GLint loc = glGetAttribLocation(program_, name);
     if (loc < 0)

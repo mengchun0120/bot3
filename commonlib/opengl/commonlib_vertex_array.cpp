@@ -59,7 +59,7 @@ VertexArray::~VertexArray()
     destroyArrayObj(arrayObj_);
 }
 
-void VertexArray::load(const void* data,
+void VertexArray::load(const void *data,
                        unsigned int numVertices,
                        unsigned int vertexSize,
                        unsigned int stride)
@@ -93,8 +93,8 @@ void VertexArray::createBufferObj()
     }
 }
 
-void VertexArray::storeBufferBlock(BufferDescriptor& descriptor,
-                                   const BufferBlock& block,
+void VertexArray::storeBufferBlock(BufferDescriptor &descriptor,
+                                   const BufferBlock &block,
                                    unsigned int offset)
 {
     block.validate();

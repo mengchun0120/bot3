@@ -18,12 +18,12 @@ namespace botlib {
 
 namespace {
 
-int getMapCellRowIdx(GameMap& map, int y)
+int getMapCellRowIdx(GameMap &map, int y)
 {
     return clamp(GameMap::getAbsCellIdx(y), 0, map.absRowCount() - 1);
 }
 
-int getMapCellColIdx(GameMap& map, int x)
+int getMapCellColIdx(GameMap &map, int x)
 {
     return clamp(GameMap::getAbsCellIdx(x), 0, map.absColCount() - 1);
 }
@@ -36,7 +36,7 @@ void GameMapGenerator::CellCoord::init(int row, int col)
     col_ = col;
 }
 
-GameMapGenerator::GameMapGenerator(const GameLib& lib)
+GameMapGenerator::GameMapGenerator(const GameLib &lib)
     : lib_(lib)
 {
     initTileTemplates();
@@ -44,7 +44,7 @@ GameMapGenerator::GameMapGenerator(const GameLib& lib)
     initCellMarker();
 }
 
-void GameMapGenerator::initMap(GameMap& map,
+void GameMapGenerator::initMap(GameMap &map,
                                int rowCount,
                                int colCount,
                                float viewportWidth,
@@ -57,7 +57,7 @@ void GameMapGenerator::initMap(GameMap& map,
     initFreeCellMap(rowCount, colCount);
 }
 
-const TileTemplate* GameMapGenerator::randomTileTemplate(float maxCollideBreath)
+const TileTemplate *GameMapGenerator::randomTileTemplate(float maxCollideBreath)
 {
     int maxIndex = findTileTemplate(maxCollideBreath);
     if (maxIndex < 0)
@@ -70,19 +70,19 @@ const TileTemplate* GameMapGenerator::randomTileTemplate(float maxCollideBreath)
     return tileTemplates_[index];
 }
 
-const AIRobotTemplate* GameMapGenerator::randomAIRobotTemplate()
+const AIRobotTemplate *GameMapGenerator::randomAIRobotTemplate()
 {
     int index = rand_.randomInt(0, aiRobotTemplates_.size() - 1);
     return aiRobotTemplates_[index];
 }
 
-void GameMapGenerator::addObj(GameMap& map, GameObject* obj)
+void GameMapGenerator::addObj(GameMap &map, GameObject *obj)
 {
     markObjOccupied(map, obj);
     map.addObj(obj);
 }
 
-Vector2 GameMapGenerator::getCellCenter(const CellCoord& coord)
+Vector2 GameMapGenerator::getCellCenter(const CellCoord &coord)
 {
     const float MARGIN = GameMap::k_cellBreath / 2.0f;
 
@@ -90,9 +90,9 @@ Vector2 GameMapGenerator::getCellCenter(const CellCoord& coord)
                    MARGIN + coord.row_ * GameMap::k_cellBreath};
 }
 
-bool GameMapGenerator::findPlaceForObj(Vector2& pos,
-                                       GameMap& map,
-                                       const GameObjectTemplate* t)
+bool GameMapGenerator::findPlaceForObj(Vector2 &pos,
+                                       GameMap &map,
+                                       const GameObjectTemplate *t)
 {
     constexpr int MAX_TRIES = 20;
     int index = -1;
@@ -119,7 +119,7 @@ bool GameMapGenerator::findPlaceForObj(Vector2& pos,
     return true;
 }
 
-void GameMapGenerator::populateRobots(GameMap& map, int aiRobotCount)
+void GameMapGenerator::populateRobots(GameMap &map, int aiRobotCount)
 {
     addPlayer(map);
     for (int i = 0; i < aiRobotCount; ++i)
@@ -128,10 +128,10 @@ void GameMapGenerator::populateRobots(GameMap& map, int aiRobotCount)
     }
 }
 
-void GameMapGenerator::addPlayer(GameMap& map)
+void GameMapGenerator::addPlayer(GameMap &map)
 {
     Vector2 pos;
-    const PlayerTemplate* t = &(lib_.playerTemplate());
+    const PlayerTemplate *t = &(lib_.playerTemplate());
 
     if (!findPlaceForObj(pos, map, t))
     {
@@ -139,15 +139,15 @@ void GameMapGenerator::addPlayer(GameMap& map)
     }
 
     Vector2 direction = rand_.randomDirection();
-    Player* player = new Player();
+    Player *player = new Player();
     player->init(t, pos, direction);
     addObj(map, player);
 }
 
-void GameMapGenerator::addAIRobot(GameMap& map)
+void GameMapGenerator::addAIRobot(GameMap &map)
 {
     Vector2 pos;
-    const AIRobotTemplate* t = randomAIRobotTemplate();
+    const AIRobotTemplate *t = randomAIRobotTemplate();
 
     if (!findPlaceForObj(pos, map, t))
     {
@@ -156,7 +156,7 @@ void GameMapGenerator::addAIRobot(GameMap& map)
     }
 
     Vector2 direction = rand_.randomDirection();
-    AIRobot* robot = new AIRobot();
+    AIRobot *robot = new AIRobot();
     robot->init(t, pos, direction);
     addObj(map, robot);
 }
@@ -186,8 +186,8 @@ void GameMapGenerator::initTileTemplates()
         THROW_EXCEPT(InvalidArgumentException, "No TileTemplate");
     }
 
-    auto comparator = [](const TileTemplate*& t1,
-                         const TileTemplate*& t2) -> bool
+    auto comparator = [](const TileTemplate *&t1,
+                         const TileTemplate *&t2) -> bool
     {
         return t1->collideBreath() < t2->collideBreath();
     };
@@ -227,7 +227,7 @@ int GameMapGenerator::findTileTemplate(float maxCollideBreath)
     return i;
 }
 
-void GameMapGenerator::markObjOccupied(GameMap& map, GameObject* obj)
+void GameMapGenerator::markObjOccupied(GameMap &map, GameObject *obj)
 {
     Region<int> region{
         getMapCellColIdx(map, obj->collideLeft()),
@@ -240,7 +240,7 @@ void GameMapGenerator::markObjOccupied(GameMap& map, GameObject* obj)
 
 bool GameMapGenerator::markCellOccupied(int col, int row)
 {
-    int& curIndex = freeCellMap_[row][col];
+    int &curIndex = freeCellMap_[row][col];
 
     if (curIndex == -1)
     {
@@ -249,7 +249,7 @@ bool GameMapGenerator::markCellOccupied(int col, int row)
 
     if (curIndex != freeCellCount_ - 1)
     {
-        CellCoord& lastCoord = freeCellCoords_[freeCellCount_-1];
+        CellCoord &lastCoord = freeCellCoords_[freeCellCount_-1];
         freeCellCoords_[curIndex] = lastCoord;
         freeCellMap_[lastCoord.row_][lastCoord.col_] = curIndex;
     }

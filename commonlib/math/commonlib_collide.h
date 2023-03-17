@@ -20,21 +20,21 @@ float lineDist(float start1,
                float start2,
                float end2);
 
-bool checkRectCollideBoundary(const Region<float>& rect,
-                              const Region<float>& boundary);
+bool checkRectCollideBoundary(const Region<float> &rect,
+                              const Region<float> &boundary);
 
-bool checkRectCollideBoundary(Vector2& adjustedDelta,
-                              const Region<float>& rect,
-                              const Region<float>& boundary,
-                              const Vector2& delta);
+bool checkRectCollideBoundary(Vector2 &adjustedDelta,
+                              const Region<float> &rect,
+                              const Region<float> &boundary,
+                              const Vector2 &delta);
 
-bool checkRectCollideRect(const Region<float>& rect1,
-                          const Region<float>& rect2);
+bool checkRectCollideRect(const Region<float> &rect1,
+                          const Region<float> &rect2);
 
-bool checkRectCollideRect(Vector2& adjustedDelta,
-                          const Region<float>& rect1,
-                          const Region<float>& rect2,
-                          const Vector2& delta);
+bool checkRectCollideRect(Vector2 &adjustedDelta,
+                          const Region<float> &rect1,
+                          const Region<float> &rect2,
+                          const Vector2 &delta);
 
 } // end of namespace commonlib
 } // end of namespace mcdane

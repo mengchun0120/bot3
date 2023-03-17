@@ -14,26 +14,26 @@ class Goodie: public CompositeObject {
 public:
     Goodie() = default;
 
-    Goodie(const GoodieTemplate* t,
-           const commonlib::Vector2& pos,
-           const commonlib::Vector2& direction);
+    Goodie(const GoodieTemplate *t,
+           const commonlib::Vector2 &pos,
+           const commonlib::Vector2 &direction);
 
     ~Goodie() override;
 
-    void init(const GoodieTemplate* t,
-              const commonlib::Vector2& pos,
-              const commonlib::Vector2& direction);
+    void init(const GoodieTemplate *t,
+              const commonlib::Vector2 &pos,
+              const commonlib::Vector2 &direction);
 
-    inline const GoodieTemplate* getTemplate() const;
+    inline const GoodieTemplate *getTemplate() const;
 
     inline GoodieType goodieType() const;
 
     void present() const override;
 
-    bool canBeDumped(GameMap& map) const override;
+    bool canBeDumped(GameMap &map) const override;
 };
 
-const GoodieTemplate* Goodie::getTemplate() const
+const GoodieTemplate *Goodie::getTemplate() const
 {
     return static_cast<const GoodieTemplate*>(t_);
 }

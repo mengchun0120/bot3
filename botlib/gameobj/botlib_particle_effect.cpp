@@ -10,14 +10,14 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-ParticleEffect::ParticleEffect(const ParticleEffectTemplate* t,
-                               const commonlib::Vector2& pos)
+ParticleEffect::ParticleEffect(const ParticleEffectTemplate *t,
+                               const commonlib::Vector2 &pos)
 {
     init(t, pos);
 }
 
-void ParticleEffect::init(const ParticleEffectTemplate* t,
-                          const Vector2& pos)
+void ParticleEffect::init(const ParticleEffectTemplate *t,
+                          const Vector2 &pos)
 {
     GameObject::init(t, pos);
     startTime_ = Clock::now();
@@ -26,8 +26,8 @@ void ParticleEffect::init(const ParticleEffectTemplate* t,
 
 void ParticleEffect::present() const
 {
-    ParticleShaderProgram& shader = Context::graphics().particleShader();
-    const ParticleEffectTemplate* t = getTemplate();
+    ParticleShaderProgram &shader = Context::graphics().particleShader();
+    const ParticleEffectTemplate *t = getTemplate();
 
     shader.setRef(pos_);
     shader.setAcceleration(t->acceleration());
@@ -41,7 +41,7 @@ void ParticleEffect::present() const
     glDrawArrays(GL_POINTS, 0, t->numParticles());
 }
 
-void ParticleEffect::update(UpdateContext& cxt)
+void ParticleEffect::update(UpdateContext &cxt)
 {
     if (state_ == GameObjectState::ALIVE)
     {
@@ -55,7 +55,7 @@ void ParticleEffect::update(UpdateContext& cxt)
     GameObject::update(cxt);
 }
 
-bool ParticleEffect::canBeDumped(GameMap& map) const
+bool ParticleEffect::canBeDumped(GameMap &map) const
 {
     return state_ != GameObjectState::DEAD && !map.canSee(this);
 }

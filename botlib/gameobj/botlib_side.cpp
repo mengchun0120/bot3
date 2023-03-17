@@ -7,7 +7,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-Side strToSide(const std::string& s)
+Side strToSide(const std::string &s)
 {
     if (s == "ai")
     {
@@ -26,7 +26,7 @@ Side strToSide(const std::string& s)
 
 namespace std {
 
-ostream& operator<<(ostream& os,
+ostream &operator<<(ostream& os,
                     mcdane::botlib::Side side)
 {
     using namespace mcdane::botlib;

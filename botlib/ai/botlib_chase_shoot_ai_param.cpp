@@ -7,7 +7,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void ChaseShootAIParam::init(const rapidjson::Value& v)
+void ChaseShootAIParam::init(const rapidjson::Value &v)
 {
     std::vector<JsonParamPtr> params{
         jsonParam(chaseDuration_, "chaseDuration", true, gt(0.0f)),

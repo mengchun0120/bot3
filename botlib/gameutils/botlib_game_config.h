@@ -10,7 +10,7 @@ class GameConfig {
 public:
     GameConfig();
 
-    void init(const std::string& cfgFile);
+    void init(const std::string &cfgFile);
 
     inline bool showHPIndicator() const;
 

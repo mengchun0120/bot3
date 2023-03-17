@@ -14,14 +14,14 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-GameScreen::GameScreen(const commonlib::Vector2& viewportSize,
+GameScreen::GameScreen(const commonlib::Vector2 &viewportSize,
                        const AppActions actions,
                        ScreenType nextScreenType)
 {
     init(viewportSize, actions);
 }
 
-void GameScreen::init(const Vector2& viewportSize,
+void GameScreen::init(const Vector2 &viewportSize,
                       const AppActions actions,
                       ScreenType nextScreenType)
 {
@@ -33,7 +33,7 @@ void GameScreen::init(const Vector2& viewportSize,
 
     Screen::init(actions);
 
-    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
 
     nextScreenType_ = nextScreenType;
     cxt_.init(&map_, cfg.gameObjItemPoolSize(), cfg.missilePoolSize());
@@ -114,7 +114,7 @@ bool GameScreen::processInput(const InputEvent &e)
     return processInputEndGame(e);
 }
 
-bool GameScreen::processInputEndGame(const commonlib::InputEvent& e)
+bool GameScreen::processInputEndGame(const commonlib::InputEvent &e)
 {
     msgBox_.process(e);
 
@@ -141,7 +141,7 @@ bool GameScreen::processInputEndGame(const commonlib::InputEvent& e)
     return true;
 }
 
-bool GameScreen::processInputGame(const commonlib::InputEvent& e)
+bool GameScreen::processInputGame(const commonlib::InputEvent &e)
 {
     switch (e.type())
     {
@@ -160,7 +160,7 @@ bool GameScreen::processInputGame(const commonlib::InputEvent& e)
     return true;
 }
 
-bool GameScreen::processMouseButton(const MouseButtonEvent& e)
+bool GameScreen::processMouseButton(const MouseButtonEvent &e)
 {
     if (!isPlayerAvailable())
     {
@@ -181,7 +181,7 @@ bool GameScreen::processMouseButton(const MouseButtonEvent& e)
     return true;
 }
 
-bool GameScreen::processMouseMove(const MouseMoveEvent& e)
+bool GameScreen::processMouseMove(const MouseMoveEvent &e)
 {
     if (!isPlayerAvailable())
     {
@@ -207,7 +207,7 @@ bool GameScreen::processMouseMove(const MouseMoveEvent& e)
     return true;
 }
 
-bool GameScreen::processKey(const KeyEvent& e)
+bool GameScreen::processKey(const KeyEvent &e)
 {
     if (!isPlayerAvailable())
     {
@@ -223,8 +223,8 @@ bool GameScreen::processKey(const KeyEvent& e)
 }
 #endif
 
-void GameScreen::loadMap(const Vector2& viewportSize,
-                         const std::string& mapFile)
+void GameScreen::loadMap(const Vector2 &viewportSize,
+                         const std::string &mapFile)
 {
     GameMapLoader loader(viewportSize[0], viewportSize[1], cxt_.factory());
     loader.load(map_, mapFile);
@@ -232,10 +232,10 @@ void GameScreen::loadMap(const Vector2& viewportSize,
 
 void GameScreen::initProgressBar()
 {
-    const GameScreenConfig& cfg = Context::gameScreenConfig();
-    const GameLib& lib = Context::gameLib();
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+    const GameLib &lib = Context::gameLib();
 
-    const ProgressBarTemplate* armorBarTemplate =
+    const ProgressBarTemplate *armorBarTemplate =
                              lib.findProgressBarTemplate("armor_progress_bar");
     if (!armorBarTemplate)
     {
@@ -243,7 +243,7 @@ void GameScreen::initProgressBar()
                      "Failed to find armor_progress_bar");
     }
 
-    const ProgressBarTemplate* energyBarTemplate =
+    const ProgressBarTemplate *energyBarTemplate =
                              lib.findProgressBarTemplate("energy_progress_bar");
     if (!energyBarTemplate)
     {
@@ -251,8 +251,8 @@ void GameScreen::initProgressBar()
                      "Failed to find energy_progress_bar");
     }
 
-    const Vector2& armorBarMargin = cfg.armorProgressBarMargin();
-    const Vector2& energyBarMargin = cfg.energyProgressBarMargin();
+    const Vector2 &armorBarMargin = cfg.armorProgressBarMargin();
+    const Vector2 &energyBarMargin = cfg.energyProgressBarMargin();
     Vector2 armorBarPos{armorBarMargin[0], viewportSize_[1] - armorBarMargin[1]};
     Vector2 energyBarPos{energyBarMargin[0], viewportSize_[1] - energyBarMargin[1]};
 
@@ -262,7 +262,7 @@ void GameScreen::initProgressBar()
 
 void GameScreen::initMessageBox()
 {
-    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
 
     msgBox_.init(viewportSize_[0] / 2.0f, viewportSize_[1] / 2.0f,
                  cfg.msgBoxWidth(), cfg.msgBoxHeight(),
@@ -271,9 +271,9 @@ void GameScreen::initMessageBox()
 
 void GameScreen::initAIRobotCount()
 {
-    const GameScreenConfig& cfg = Context::gameScreenConfig();
-    const Vector2& iconMargin = cfg.aiRobotCountIconMargin();
-    const Vector2& textMargin = cfg.aiRobotCountTextMargin();
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+    const Vector2 &iconMargin = cfg.aiRobotCountIconMargin();
+    const Vector2 &textMargin = cfg.aiRobotCountTextMargin();
 
     aiRobotIconPos_.init({iconMargin[0], viewportSize_[1] - iconMargin[1]});
     aiRobotCountIcon_.init(cfg.aiRobotCountIconTemplate());
@@ -288,7 +288,7 @@ void GameScreen::initGoodiePies()
 
 void GameScreen::initGoodiePiePos()
 {
-    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
     int goodieCount = lastingGoodieTypeCount();
     float radius = cfg.goodiePieTemplate(0)->radius();
     float x, y, spacing;
@@ -316,7 +316,7 @@ void GameScreen::initSkillPiePos()
         return;
     }
 
-    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
     float radius = skillPieRadius();
     float x, y, spacing;
 
@@ -337,7 +337,7 @@ void GameScreen::initSkillPiePos()
 
 void GameScreen::createGoodiePies()
 {
-    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
     int goodieCount = lastingGoodieTypeCount();
 
     goodiePies_.resize(goodieCount);
@@ -349,14 +349,14 @@ void GameScreen::createGoodiePies()
 
 void GameScreen::updatePlayer()
 {
-    Player* player = map_.player();
+    Player *player = map_.player();
     player->update(cxt_);
     map_.setViewportOrigin(player->x(), player->y());
 }
 
 void GameScreen::enableSkillForInput(int input)
 {
-    Skill* skill = map_.player()->findSkillForInput(input);
+    Skill *skill = map_.player()->findSkillForInput(input);
     if (skill)
     {
         skill->setEnabled(true);
@@ -376,7 +376,7 @@ void GameScreen::clearUpdateFlags()
 
 void GameScreen::updateNonPlayerObjects()
 {
-    auto updater = [this](GameObject* obj)->bool
+    auto updater = [this](GameObject *obj)->bool
     {
         if (obj->updated() && obj->state() == GameObjectState::DEAD)
         {
@@ -398,9 +398,9 @@ void GameScreen::updateProgressBar()
 
 void GameScreen::presentOverlay()
 {
-    SimpleShaderProgram& program = Context::graphics().simpleShader();
-    const TextSystem& textSys = Context::graphics().textSys();
-    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    SimpleShaderProgram &program = Context::graphics().simpleShader();
+    const TextSystem &textSys = Context::graphics().textSys();
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
 
     program.use();
     program.setViewportOrigin(overlayViewportOrigin_);
@@ -429,13 +429,13 @@ void GameScreen::presentOverlay()
 
 void GameScreen::presentGoodiePies()
 {
-    const GoodieEffectItem* g;
+    const GoodieEffectItem *g;
     int i = 0;
     for (g = map_.player()->firstGoodieEffect(); g; g = g->next(), ++i)
     {
-        const GoodieEffect& effect = g->item();
+        const GoodieEffect &effect = g->item();
         int idx = lastingGoodieTypeIndex(effect.type());
-        ProgressPie& pie = goodiePies_[idx];
+        ProgressPie &pie = goodiePies_[idx];
 
         pie.setFinishedRatio(effect.finishedRatio());
         pie.present(goodiePiePos_[i], 0);
@@ -444,11 +444,11 @@ void GameScreen::presentGoodiePies()
 
 void GameScreen::presentSkillPies()
 {
-    Player* player = map_.player();
+    Player *player = map_.player();
     int posIdx = 0;
     int skillCount = player->skillCount();
-    Skill* skill;
-    SkillWithCost* skill1;
+    Skill *skill;
+    SkillWithCost *skill1;
 
     for (int i = 0; i < skillCount; ++i)
     {
@@ -464,21 +464,21 @@ void GameScreen::presentSkillPies()
 
 void GameScreen::showVictory()
 {
-    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
     msgBox_.setText(cfg.victoryMsg());
     msgBox_.setVisible(true);
 }
 
 void GameScreen::showFail()
 {
-    const GameScreenConfig& cfg = Context::gameScreenConfig();
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
     msgBox_.setText(cfg.failMsg());
     msgBox_.setVisible(true);
 }
 
 void GameScreen::clearObjectsFromMoveOutRegion(int moveOutRegionCount)
 {
-    auto remover = [this](GameObject* obj)->bool
+    auto remover = [this](GameObject *obj)->bool
     {
         if (obj->state() != GameObjectState::DEAD && obj->canBeDumped(map_))
         {
@@ -496,13 +496,13 @@ void GameScreen::clearObjectsFromMoveOutRegion(int moveOutRegionCount)
 
 int GameScreen::skillPieCount()
 {
-    Player* player = map_.player();
+    Player *player = map_.player();
     int skillCount = player->skillCount();
     int pieCount = 0;
 
     for (int i = 0; i < skillCount; ++i)
     {
-        Skill* skill = player->skill(i);
+        Skill *skill = player->skill(i);
         if (isSkillWithCost(skill->type()))
         {
             ++pieCount;
@@ -514,11 +514,11 @@ int GameScreen::skillPieCount()
 
 float GameScreen::skillPieRadius()
 {
-    Player* player = map_.player();
+    Player *player = map_.player();
     int count = player->skillCount();
-    const ProgressPieTemplate* pie = nullptr;
+    const ProgressPieTemplate *pie = nullptr;
     Skill *skill;
-    SkillWithCost* skill1;
+    SkillWithCost *skill1;
 
     for (int i = 0; i < count; ++i)
     {

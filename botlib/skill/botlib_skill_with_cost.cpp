@@ -18,8 +18,8 @@ SkillWithCost::SkillWithCost()
 {
 }
 
-SkillWithCost::SkillWithCost(const SkillTemplate* t,
-                             Robot* robot,
+SkillWithCost::SkillWithCost(const SkillTemplate *t,
+                             Robot *robot,
                              bool enabled1)
 {
     init(t, robot, enabled1);
@@ -33,13 +33,13 @@ SkillWithCost::~SkillWithCost()
     }
 }
 
-void SkillWithCost::init(const SkillTemplate* t,
-                         Robot* robot,
+void SkillWithCost::init(const SkillTemplate *t,
+                         Robot *robot,
                          bool enabled1)
 {
     Skill::init(t, robot, enabled1);
 
-    const SkillWithCostTemplate* t1 = getTemplate();
+    const SkillWithCostTemplate *t1 = getTemplate();
 
     coolDown_ = t1->coolDown();
     timeSinceLastCast_ = t1->coolDown();
@@ -50,7 +50,7 @@ void SkillWithCost::init(const SkillTemplate* t,
     }
 }
 
-void SkillWithCost::update(UpdateContext& cxt)
+void SkillWithCost::update(UpdateContext &cxt)
 {
     timeSinceLastCast_ += cxt.timeDelta();
     if (pie_)

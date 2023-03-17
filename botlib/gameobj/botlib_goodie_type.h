@@ -49,16 +49,16 @@ inline bool isLasting(GoodieType type)
            static_cast<int>(GoodieType::COUNT) > static_cast<int>(type);
 }
 
-const std::string& toString(GoodieType type);
+const std::string &toString(GoodieType type);
 
-GoodieType toGoodieType(const std::string& s);
+GoodieType toGoodieType(const std::string &s);
 
 } // end of namespace botlib
 } // end of namespace mcdane
 
 namespace std {
 
-std::ostream& operator<<(std::ostream& os, mcdane::botlib::GoodieType type);
+std::ostream &operator<<(std::ostream& os, mcdane::botlib::GoodieType type);
 
 } // end of namespace std
 

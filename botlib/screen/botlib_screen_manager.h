@@ -14,8 +14,8 @@ public:
     ~ScreenManager();
 
     void init(ScreenType startScreenType,
-              const commonlib::Vector2& viewportSize,
-              const AppActions& actions);
+              const commonlib::Vector2 &viewportSize,
+              const AppActions &actions);
 
     void update(float delta);
 
@@ -29,17 +29,17 @@ public:
 
     void postProcess();
 
-    Screen& getCurScreen()
+    Screen &getCurScreen()
     {
         return *curScreen_;
     }
 
 private:
-    Screen* createScreen(ScreenType screenType);
+    Screen *createScreen(ScreenType screenType);
 
 private:
-    Screen* prevScreen_;
-    Screen* curScreen_;
+    Screen *prevScreen_;
+    Screen *curScreen_;
     ScreenType curScreenType_;
     commonlib::Vector2 viewportSize_;
     AppActions actions_;

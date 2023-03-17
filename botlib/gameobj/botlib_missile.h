@@ -14,60 +14,60 @@ class Missile: public CompositeObject {
 public:
     Missile();
 
-    Missile(const MissileTemplate* t,
+    Missile(const MissileTemplate *t,
             Side side,
-            const commonlib::Vector2& pos1,
-            const commonlib::Vector2& direction1,
+            const commonlib::Vector2 &pos1,
+            const commonlib::Vector2 &direction1,
             float damageFactor=1.0f,
             bool guided1=false);
 
     ~Missile() override;
 
-    void init(const MissileTemplate* t,
+    void init(const MissileTemplate *t,
               Side side,
-              const commonlib::Vector2& pos1,
-              const commonlib::Vector2& direction1,
+              const commonlib::Vector2 &pos1,
+              const commonlib::Vector2 &direction1,
               float damageFactor=1.0f,
               bool guided1=false);
 
-    inline const MissileTemplate* getTemplate() const;
+    inline const MissileTemplate *getTemplate() const;
 
     inline Side side() const;
 
     inline float speedNorm() const;
 
-    inline const commonlib::Vector2& speed() const;
+    inline const commonlib::Vector2 &speed() const;
 
     inline float damage() const;
 
-    void update(UpdateContext& cxt) override;
+    void update(UpdateContext &cxt) override;
 
-    void setDirection(const commonlib::Vector2& direction1) override;
+    void setDirection(const commonlib::Vector2 &direction1) override;
 
-    void explode(UpdateContext& cxt);
+    void explode(UpdateContext &cxt);
 
-    bool canBeDumped(GameMap& map) const override;
+    bool canBeDumped(GameMap &map) const override;
 
 private:
-    void updateAlive(UpdateContext& cxt);
+    void updateAlive(UpdateContext &cxt);
 
-    void updateForTarget(UpdateContext& cxt);
+    void updateForTarget(UpdateContext &cxt);
 
     void resetSpeed();
 
-    bool checkCollideObjs(UpdateContext& cxt);
+    bool checkCollideObjs(UpdateContext &cxt);
 
     commonlib::Region<float> explodeRegion();
 
-    void showExplodeEffect(UpdateContext& cxt);
+    void showExplodeEffect(UpdateContext &cxt);
 
-    void setTarget(const commonlib::Vector2& target);
+    void setTarget(const commonlib::Vector2 &target);
 
-    void searchAndSetTarget(UpdateContext& cxt);
+    void searchAndSetTarget(UpdateContext &cxt);
 
-    commonlib::Region<int> searchRegion(GameMap* map);
+    commonlib::Region<int> searchRegion(GameMap *map);
 
-    void shootSplitMissile(UpdateContext& cxt);
+    void shootSplitMissile(UpdateContext &cxt);
 
 private:
     Side side_;
@@ -78,7 +78,7 @@ private:
     float timeToTarget_;
 };
 
-const MissileTemplate* Missile::getTemplate() const
+const MissileTemplate *Missile::getTemplate() const
 {
     return static_cast<const MissileTemplate*>(t_);
 }
@@ -93,7 +93,7 @@ float Missile::speedNorm() const
     return getTemplate()->speed();
 }
 
-const commonlib::Vector2& Missile::speed() const
+const commonlib::Vector2 &Missile::speed() const
 {
     return speed_;
 }

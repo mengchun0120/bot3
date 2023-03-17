@@ -15,20 +15,20 @@ public:
 
     ~SimpleShaderProgram() override = default;
 
-    void init(const std::vector<std::string>& vertexShaderFiles,
-              const std::vector<std::string>& fragShaderFiles);
+    void init(const std::vector<std::string> &vertexShaderFiles,
+              const std::vector<std::string> &fragShaderFiles);
 
     inline void setUseObjRef(bool enabled);
 
-    inline void setObjRef(const commonlib::Point2& objRef);
+    inline void setObjRef(const commonlib::Point2 &objRef);
 
-    inline void setViewportSize(const commonlib::Point2& viewportSize);
+    inline void setViewportSize(const commonlib::Point2 &viewportSize);
 
-    inline void setViewportOrigin(const commonlib::Point2& viewportOrigin);
+    inline void setViewportOrigin(const commonlib::Point2 &viewportOrigin);
 
-    void setPositionTexPos(const commonlib::VertexArray& va);;
+    void setPositionTexPos(const commonlib::VertexArray &va);;
 
-    inline void setColor(const commonlib::Color& color);
+    inline void setColor(const commonlib::Color &color);
 
     inline void setUseColor(bool use);
 
@@ -36,11 +36,11 @@ public:
 
     inline void setUseDirection(bool use);
 
-    inline void setDirection(const commonlib::Point2& direction);
+    inline void setDirection(const commonlib::Point2 &direction);
 
     inline void setUseTexColor(bool use);
 
-    inline void setTexColor(const  commonlib::Color& color);
+    inline void setTexColor(const  commonlib::Color &color);
 
     inline void setAlpha(float alpha);
 
@@ -69,26 +69,26 @@ void SimpleShaderProgram::setUseObjRef(bool enabled)
     glUniform1i(useObjRefLoc_, enabled ? 1 : 0);
 }
 
-void SimpleShaderProgram::setObjRef(const commonlib::Point2& objRef)
+void SimpleShaderProgram::setObjRef(const commonlib::Point2 &objRef)
 {
     glUniform2fv(objRefLoc_, 1, reinterpret_cast<const GLfloat *>(&objRef));
 }
 
 void SimpleShaderProgram::setViewportSize(
-                                        const commonlib::Point2& viewportSize)
+                                        const commonlib::Point2 &viewportSize)
 {
     glUniform2fv(viewportSizeLoc_, 1,
                  reinterpret_cast<const GLfloat *>(&viewportSize));
 }
 
 void SimpleShaderProgram::setViewportOrigin(
-                                        const commonlib::Point2& viewportOrigin)
+                                        const commonlib::Point2 &viewportOrigin)
 {
     glUniform2fv(viewportOriginLoc_, 1,
                  reinterpret_cast<const GLfloat *>(&viewportOrigin));
 }
 
-void SimpleShaderProgram::setColor(const commonlib::Color& color)
+void SimpleShaderProgram::setColor(const commonlib::Color &color)
 {
     glUniform4fv(colorLoc_, 1, reinterpret_cast<const GLfloat *>(&color));
 }
@@ -103,7 +103,7 @@ void SimpleShaderProgram::setUseDirection(bool use)
     glUniform1i(useDirectionLoc_, use ? 1 : 0);
 }
 
-void SimpleShaderProgram::setDirection(const commonlib::Point2& direction)
+void SimpleShaderProgram::setDirection(const commonlib::Point2 &direction)
 {
     glUniform2fv(directionLoc_, 1,
                  reinterpret_cast<const GLfloat *>(&direction));
@@ -114,7 +114,7 @@ void SimpleShaderProgram::setUseTexColor(bool use)
     glUniform1i(useTexColorLoc_, use ? 1 : 0);
 }
 
-void SimpleShaderProgram::setTexColor(const  commonlib::Color& color)
+void SimpleShaderProgram::setTexColor(const  commonlib::Color &color)
 {
     glUniform4fv(texColorLoc_, 1, reinterpret_cast<const GLfloat *>(&color));
 }

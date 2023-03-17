@@ -29,12 +29,12 @@ Rectangle::Rectangle(float width1,
 
 Rectangle::Rectangle(float width1,
                      float height1,
-                     const TexRectangle& texRect)
+                     const TexRectangle &texRect)
 {
     load(width1, height1, texRect);
 }
 
-void Rectangle::init(const rapidjson::Value& v,
+void Rectangle::init(const rapidjson::Value &v,
                      bool requireName)
 {
     float width1, height1;
@@ -80,7 +80,7 @@ void Rectangle::load(float width,
 
 void Rectangle::load(float width,
                      float height,
-                     const TexRectangle& texRect)
+                     const TexRectangle &texRect)
 {
     validateParamForRect(width, height);
 

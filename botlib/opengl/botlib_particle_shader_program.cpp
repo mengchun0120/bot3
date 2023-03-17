@@ -8,8 +8,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void ParticleShaderProgram::init(const std::vector<std::string>& vertexShaderFiles,
-                                 const std::vector<std::string>& fragShaderFiles)
+void ParticleShaderProgram::init(const std::vector<std::string> &vertexShaderFiles,
+                                 const std::vector<std::string> &fragShaderFiles)
 {
     load(vertexShaderFiles, fragShaderFiles);
     initLocations();
@@ -17,7 +17,7 @@ void ParticleShaderProgram::init(const std::vector<std::string>& vertexShaderFil
     LOG_INFO << "ParticleShaderProgram initialized" << LOG_END;
 }
 
-void ParticleShaderProgram::setStartPosDirectionSpeed(const VertexArray& va)
+void ParticleShaderProgram::setStartPosDirectionSpeed(const VertexArray &va)
 {
     if (va.numBufferBlocks() != 3)
     {

@@ -16,9 +16,9 @@ Label::Label(float x,
              TextSize textSize,
              HAlign halign,
              VAlign valign,
-             const Color* textColor,
-             const Color* backColor,
-             const Color* borderColor,
+             const Color *textColor,
+             const Color *backColor,
+             const Color *borderColor,
              bool visible)
 {
     init(x, y, width, height, text, textSize, halign, valign,
@@ -33,9 +33,9 @@ void Label::init(float x,
                  TextSize textSize,
                  HAlign halign,
                  VAlign valign,
-                 const Color* textColor,
-                 const Color* backColor,
-                 const Color* borderColor,
+                 const Color *textColor,
+                 const Color *backColor,
+                 const Color *borderColor,
                  bool visible)
 {
     if (!isValidTextSize(textSize))
@@ -79,9 +79,9 @@ void Label::shiftPos(float dx,
 
 void Label::present() const
 {
-    Graphics& g = Context::graphics();
-    SimpleShaderProgram& program = g.simpleShader();
-    const TextSystem& textSys = g.textSys();
+    Graphics &g = Context::graphics();
+    SimpleShaderProgram &program = g.simpleShader();
+    const TextSystem &textSys = g.textSys();
 
     program.setAlpha(1.0f);
 
@@ -92,7 +92,7 @@ void Label::present() const
     }
 }
 
-void Label::setText(const std::string& text)
+void Label::setText(const std::string &text)
 {
     text_ = text;
     textPos_[0] = calculateTextPosX();
@@ -152,11 +152,11 @@ void Label::updateTextPos()
     textPos_[1] = calculateTextPosY();
 }
 
-void Label::initColors(const Color* textColor,
-                       const Color* backColor,
-                       const Color* borderColor)
+void Label::initColors(const Color *textColor,
+                       const Color *backColor,
+                       const Color *borderColor)
 {
-    const LabelConfig& cfg = Context::labelConfig();
+    const LabelConfig &cfg = Context::labelConfig();
 
     textColor_ = textColor ? *textColor : cfg.defaultTextColor();
     backColor_ = backColor ? *backColor : cfg.defaultBackColor();
@@ -165,7 +165,7 @@ void Label::initColors(const Color* textColor,
 
 float Label::calculateTextPosX()
 {
-    const TextSystem& textSys = Context::graphics().textSys();
+    const TextSystem &textSys = Context::graphics().textSys();
     float x;
 
     switch(halign_)
@@ -194,7 +194,7 @@ float Label::calculateTextPosX()
 
 float Label::calculateTextPosY()
 {
-    const TextSystem& textSys = Context::graphics().textSys();
+    const TextSystem &textSys = Context::graphics().textSys();
     float y;
 
     switch(valign_)

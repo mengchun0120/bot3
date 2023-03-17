@@ -12,22 +12,22 @@ public:
     BlastSkill() = default;
 
     BlastSkill(const BlastSkillTemplate *t,
-               Robot* robot,
+               Robot *robot,
                bool enabled1=false);
 
     ~BlastSkill() override = default;
 
     void init(const BlastSkillTemplate *t,
-              Robot* robot,
+              Robot *robot,
               bool enabled1=false);
 
-    inline const BlastSkillTemplate* getTemplate() const;
+    inline const BlastSkillTemplate *getTemplate() const;
 
 protected:
-    bool apply(UpdateContext& cxt) override;
+    bool apply(UpdateContext &cxt) override;
 };
 
-const BlastSkillTemplate* BlastSkill::getTemplate() const
+const BlastSkillTemplate *BlastSkill::getTemplate() const
 {
     return static_cast<const BlastSkillTemplate*>(t_);
 }

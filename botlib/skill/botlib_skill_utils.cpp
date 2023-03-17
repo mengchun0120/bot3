@@ -20,9 +20,9 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-SkillTemplate* createSkillTemplate(const rapidjson::Value& v,
-                                   const ProgressPieTemplateLib& progressPieLib,
-                                   const std::string& skillDataDir)
+SkillTemplate *createSkillTemplate(const rapidjson::Value &v,
+                                   const ProgressPieTemplateLib &progressPieLib,
+                                   const std::string &skillDataDir)
 {
     std::string typeStr;
     std::vector<JsonParamPtr> params{
@@ -69,7 +69,7 @@ SkillTemplate* createSkillTemplate(const rapidjson::Value& v,
     return nullptr;
 }
 
-Skill* createSkill(const SkillTemplate* t, Robot* robot)
+Skill *createSkill(const SkillTemplate* t, Robot* robot)
 {
     switch(t->type())
     {

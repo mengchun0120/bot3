@@ -20,15 +20,15 @@ SkillWithCostTemplate::SkillWithCostTemplate()
 
 SkillWithCostTemplate::SkillWithCostTemplate(
                                  SkillType type,
-                                 const rapidjson::Value& v,
-                                 const ProgressPieTemplateLib& progressPieLib)
+                                 const rapidjson::Value &v,
+                                 const ProgressPieTemplateLib &progressPieLib)
 {
     init(type, v, progressPieLib);
 }
 
 void SkillWithCostTemplate::init(SkillType type,
-                                 const rapidjson::Value& v,
-                                 const ProgressPieTemplateLib& progressPieLib)
+                                 const rapidjson::Value &v,
+                                 const ProgressPieTemplateLib &progressPieLib)
 {
     SkillTemplate::init(type, v);
 
@@ -47,8 +47,8 @@ void SkillWithCostTemplate::init(SkillType type,
 }
 
 void SkillWithCostTemplate::initPie(
-                                const std::string& pieName,
-                                const ProgressPieTemplateLib& progressPieLib)
+                                const std::string &pieName,
+                                const ProgressPieTemplateLib &progressPieLib)
 {
     if (pieName.empty())
     {

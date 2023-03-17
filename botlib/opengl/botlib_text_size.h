@@ -33,7 +33,7 @@ inline bool isValidTextSize(TextSize sz)
 
 TextSize toTextSize(const std::string &s);
 
-bool isValidTextSizeStr(const std::string& s);
+bool isValidTextSizeStr(const std::string &s);
 
 } // end of namespace botlib
 } // end of namespace mcdane

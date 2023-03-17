@@ -8,7 +8,7 @@ namespace commonlib {
 
 namespace {
 
-unsigned int getNumPosArgs(const std::initializer_list<Argument::Ptr>& args)
+unsigned int getNumPosArgs(const std::initializer_list<Argument::Ptr> &args)
 {
     unsigned int count = 0;
     for (auto it = args.begin(); it != args.end(); ++it)
@@ -22,7 +22,7 @@ unsigned int getNumPosArgs(const std::initializer_list<Argument::Ptr>& args)
     return count;
 }
 
-bool checkLongOpt(std::string& longOpt, const char* arg)
+bool checkLongOpt(std::string &longOpt, const char *arg)
 {
     if (strlen(arg) < 3 || arg[0] != '-' || arg[1] != '-')
     {
@@ -39,7 +39,7 @@ bool checkLongOpt(std::string& longOpt, const char* arg)
     return true;
 }
 
-bool checkShortOpt(std::string& shortOpt, const char* arg)
+bool checkShortOpt(std::string &shortOpt, const char *arg)
 {
     if (strlen(arg) < 2 || arg[0] != '-')
     {
@@ -67,7 +67,7 @@ ArgumentParser::ArgumentParser(std::initializer_list<Argument::Ptr> args)
     init(args);
 }
 
-void ArgumentParser::init(const std::initializer_list<Argument::Ptr>& args)
+void ArgumentParser::init(const std::initializer_list<Argument::Ptr> &args)
 {
     clearAll();
 
@@ -93,7 +93,7 @@ void ArgumentParser::clearAll()
     longOptArgMap_.clear();
 }
 
-void ArgumentParser::addArg(Argument::Ptr arg, unsigned int& posArgIdx)
+void ArgumentParser::addArg(Argument::Ptr arg, unsigned int &posArgIdx)
 {
     addArgToNameArgMap(arg);
 
@@ -148,7 +148,7 @@ void ArgumentParser::addArgToLongOptArgMap(Argument::Ptr arg)
 }
 
 
-void ArgumentParser::parse(int argc, const char* const argv[])
+void ArgumentParser::parse(int argc, const char *const argv[])
 {
     if (argc <= 0)
     {
@@ -169,7 +169,7 @@ void ArgumentParser::resetArgs()
 }
 
 void ArgumentParser::evalArgs(int argc,
-                              const char* const argv[])
+                              const char *const argv[])
 {
     unsigned int posArgIdx = 0;
     int argIdx = 1;
@@ -193,10 +193,10 @@ void ArgumentParser::evalArgs(int argc,
     }
 }
 
-void ArgumentParser::evalLongOpt(const std::string& longOpt,
-                                 int& argIdx,
+void ArgumentParser::evalLongOpt(const std::string &longOpt,
+                                 int &argIdx,
                                  int argc,
-                                 const char* const argv[])
+                                 const char *const argv[])
 {
     auto it = longOptArgMap_.find(longOpt);
     if (it == longOptArgMap_.end())
@@ -205,7 +205,7 @@ void ArgumentParser::evalLongOpt(const std::string& longOpt,
                      "Unknown option --" + longOpt);
     }
 
-    Argument::Ptr& arg = it->second;
+    Argument::Ptr &arg = it->second;
 
     if (arg->specified())
     {
@@ -223,10 +223,10 @@ void ArgumentParser::evalLongOpt(const std::string& longOpt,
     argIdx += 2;
 }
 
-void ArgumentParser::evalShortOpt(const std::string& shortOpt,
-                                  int& argIdx,
+void ArgumentParser::evalShortOpt(const std::string &shortOpt,
+                                  int &argIdx,
                                   int argc,
-                                  const char* const argv[])
+                                  const char *const argv[])
 {
     auto it = shortOptArgMap_.find(shortOpt);
     if (it == shortOptArgMap_.end())
@@ -235,7 +235,7 @@ void ArgumentParser::evalShortOpt(const std::string& shortOpt,
                      "Unknown option -" + shortOpt);
     }
 
-    Argument::Ptr& arg = it->second;
+    Argument::Ptr &arg = it->second;
 
     if (arg->specified())
     {
@@ -253,9 +253,9 @@ void ArgumentParser::evalShortOpt(const std::string& shortOpt,
     argIdx += 2;
 }
 
-void ArgumentParser::evalPosOpt(unsigned int& posArgIdx,
-                                int& argIdx,
-                                const char* const argv[])
+void ArgumentParser::evalPosOpt(unsigned int &posArgIdx,
+                                int &argIdx,
+                                const char *const argv[])
 {
     if (posArgIdx >= posArgs_.size())
     {
@@ -272,7 +272,7 @@ void ArgumentParser::checkNonOptional()
 {
     for (auto it = nameArgMap_.begin(); it != nameArgMap_.end(); ++it)
     {
-        Argument::Ptr& arg = it->second;
+        Argument::Ptr &arg = it->second;
         if (!arg->optional() && !arg->specified())
         {
             THROW_EXCEPT(InvalidArgumentException,

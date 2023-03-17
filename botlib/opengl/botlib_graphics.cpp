@@ -5,7 +5,7 @@
 namespace mcdane {
 namespace botlib {
 
-void Graphics::init(const AppConfig& cfg)
+void Graphics::init(const AppConfig &cfg)
 {
     simpleShader_.init(cfg.simpleVertexShaderFiles(),
                        cfg.simpleFragShaderFiles());

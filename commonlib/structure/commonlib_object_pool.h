@@ -25,13 +25,13 @@ public:
     void init(unsigned int size, INITFUNC f);
 
     template <typename... Args>
-    T* alloc(Args&&... args);
+    T *alloc(Args&&... args);
 
-    void free(T* t);
+    void free(T *t);
 
     inline int freeCount() const;
 
-    inline Deleter<T>& deleter();
+    inline Deleter<T> &deleter();
 
 private:
     void initDeleter();
@@ -41,10 +41,10 @@ private:
     void initNext(unsigned int size);
 
 private:
-    T* pool_;
-    T* upper_;
+    T *pool_;
+    T *upper_;
     std::size_t size_;
-    int* next_;
+    int *next_;
     int firstFree_;
     int freeCount_;
     Deleter<T> deleter_;
@@ -103,9 +103,9 @@ void ObjectPool<T>::init(unsigned int size, INITFUNC f)
 
 template <typename T>
 template <typename... Args>
-T* ObjectPool<T>::alloc(Args&&... args)
+T *ObjectPool<T>::alloc(Args&&... args)
 {
-    T* t;
+    T *t;
 
     if (firstFree_ < 0)
     {
@@ -123,7 +123,7 @@ T* ObjectPool<T>::alloc(Args&&... args)
 }
 
 template <typename T>
-void ObjectPool<T>::free(T* t)
+void ObjectPool<T>::free(T *t)
 {
     if (t < pool_ || t > upper_)
     {
@@ -145,7 +145,7 @@ int ObjectPool<T>::freeCount() const
 }
 
 template <typename T>
-Deleter<T>& ObjectPool<T>::deleter()
+Deleter<T> &ObjectPool<T>::deleter()
 {
     return deleter_;
 }

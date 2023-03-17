@@ -26,38 +26,54 @@ public:
     Shape(std::initializer_list<commonlib::Point2> positions);
 
     Shape(std::initializer_list<commonlib::Point2> positions,
-          const TexPosArray& texPosArray);
+          const TexPosArray &texPosArray);
 
-    Shape(const commonlib::Point2* positions,
+    Shape(const commonlib::Point2 *positions,
           unsigned int numPositions,
-          const commonlib::Point2* texPos=nullptr);
+          const commonlib::Point2 *texPos=nullptr);
+
+    explicit Shape(const std::vector<commonlib::Point2> &positions);
+
+    Shape(const std::vector<commonlib::Point2> &positions,
+          const std::vector<commonlib::Point2> &texPos);
 
     virtual ~Shape() = default;
 
-    virtual void load(std::initializer_list<commonlib::Point2> positions);
+    void load(std::initializer_list<commonlib::Point2> positions);
 
-    virtual void load(std::initializer_list<commonlib::Point2> positions,
-                      const TexPosArray& texPosArray);
+    void load(std::initializer_list<commonlib::Point2> positions,
+              const TexPosArray &texPosArray);
 
-    virtual void load(const commonlib::Point2* positions,
-                      unsigned int numPositions,
-                      const commonlib::Point2* texPos=nullptr);
+    void load(const commonlib::Point2 *positions,
+              unsigned int numPositions,
+              const commonlib::Point2 *texPos=nullptr);
 
-    virtual void draw(SimpleShaderProgram& program,
-                      const commonlib::Point2* objRef,
-                      const commonlib::Point2* direction,
-                      const commonlib::Color* fillColor,
-                      const commonlib::Color* borderColor,
+    void load(const std::vector<commonlib::Point2> &positions);
+
+    void load(const std::vector<commonlib::Point2> &positions,
+              const std::vector<commonlib::Point2> &texPos);
+
+    virtual void draw(SimpleShaderProgram &program,
+                      const commonlib::Point2 *objRef,
+                      const commonlib::Point2 *direction,
+                      const commonlib::Color *fillColor,
+                      const commonlib::Color *borderColor,
                       const GLuint textureId,
-                      const commonlib::Color* texColor) const = 0;
+                      const commonlib::Color *texColor,
+                      int fillMode=GL_TRIANGLE_FAN,
+                      GLint fillStart=0,
+                      GLsizei fillVertexCount=0,
+                      int borderMode=GL_LINE_LOOP,
+                      GLint borderStart=1,
+                      GLsizei borderVertexCount=0) const = 0;
 
-    inline const commonlib::VertexArray& vertexArray() const;
+    inline const commonlib::VertexArray &vertexArray() const;
 
 protected:
     commonlib::VertexArray va_;
 };
 
-const commonlib::VertexArray& Shape::vertexArray() const
+const commonlib::VertexArray &Shape::vertexArray() const
 {
     return va_;
 }

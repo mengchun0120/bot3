@@ -16,15 +16,15 @@ BarrageSkillTemplate::BarrageSkillTemplate()
 }
 
 BarrageSkillTemplate::BarrageSkillTemplate(
-                            const rapidjson::Value& v,
-                            const ProgressPieTemplateLib& progressPieLib)
+                            const rapidjson::Value &v,
+                            const ProgressPieTemplateLib &progressPieLib)
 {
     init(v, progressPieLib);
 }
 
 void BarrageSkillTemplate::init(
-                            const rapidjson::Value& v,
-                            const ProgressPieTemplateLib& progressPieLib)
+                            const rapidjson::Value &v,
+                            const ProgressPieTemplateLib &progressPieLib)
 {
     SkillWithCostTemplate::init(SkillType::BARRAGE, v, progressPieLib);
 

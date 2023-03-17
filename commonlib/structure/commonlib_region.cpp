@@ -3,9 +3,9 @@
 namespace mcdane {
 namespace commonlib {
 
-int diff(std::vector<commonlib::Region<int>>& result,
-         const commonlib::Region<int>& r1,
-         const commonlib::Region<int>& r2)
+int diff(std::vector<commonlib::Region<int>> &result,
+         const commonlib::Region<int> &r1,
+         const commonlib::Region<int> &r2)
 {
     if (!overlap(r1, r2))
     {

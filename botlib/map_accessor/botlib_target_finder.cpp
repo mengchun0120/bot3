@@ -11,8 +11,8 @@ namespace botlib {
 
 TargetFinder::TargetFinder(Side side,
                            int numTargets,
-                           GameObjItemList& targets,
-                           GameObjItemPool& pool)
+                           GameObjItemList &targets,
+                           GameObjItemPool &pool)
     : side_(side)
     , numTargets_(numTargets)
     , targets_(targets)
@@ -20,26 +20,26 @@ TargetFinder::TargetFinder(Side side,
 {
 }
 
-bool TargetFinder::operator()(GameObject* obj)
+bool TargetFinder::operator()(GameObject *obj)
 {
     if (obj->type() != GameObjectType::ROBOT)
     {
         return true;
     }
 
-    Robot* robot = static_cast<Robot*>(obj);
+    Robot *robot = static_cast<Robot*>(obj);
     if (robot->state() != GameObjectState::ALIVE || robot->side() != side_)
     {
         return true;
     }
 
-    GameObjectItem* item = pool_.alloc(obj);
+    GameObjectItem *item = pool_.alloc(obj);
     targets_.pushBack(item);
 
     return true;
 }
 
-GameObjItemList& TargetFinder::getTargets()
+GameObjItemList &TargetFinder::getTargets()
 {
     int nonTargetCount = static_cast<int>(targets_.size()) - numTargets_;
 

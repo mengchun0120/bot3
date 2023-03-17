@@ -12,14 +12,14 @@ enum class RobotAction {
     NONE
 };
 
-const std::string& toString(RobotAction action);
+const std::string &toString(RobotAction action);
 
 } // end of namespace botlib
 } // end of namespace mcdane
 
 namespace std {
 
-ostream& operator<<(ostream& os,
+ostream &operator<<(ostream& os,
                     mcdane::botlib::RobotAction action);
 
 } // end of namespace std

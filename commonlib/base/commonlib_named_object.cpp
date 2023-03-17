@@ -6,7 +6,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace commonlib {
 
-void NamedObject::init(const rapidjson::Value& v,
+void NamedObject::init(const rapidjson::Value &v,
                        bool requireName)
 {
     std::vector<JsonParamPtr> params{
@@ -16,7 +16,7 @@ void NamedObject::init(const rapidjson::Value& v,
     parse(params, v);
 }
 
-void NamedObject::setName(const std::string& name1)
+void NamedObject::setName(const std::string &name1)
 {
     name_ = name1;
 }

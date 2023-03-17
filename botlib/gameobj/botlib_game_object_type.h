@@ -41,7 +41,7 @@ inline bool isPassthroughObjType(GameObjectType t)
 
 namespace std {
 
-ostream& operator<<(ostream& os, mcdane::botlib::GameObjectType t);
+ostream &operator<<(ostream& os, mcdane::botlib::GameObjectType t);
 
 } // end of namespace std
 

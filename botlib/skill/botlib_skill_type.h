@@ -16,9 +16,9 @@ enum class SkillType {
     BARRAGE_BLAST,
 };
 
-const std::string& toString(SkillType type);
+const std::string &toString(SkillType type);
 
-SkillType toSkillType(const std::string& typeStr);
+SkillType toSkillType(const std::string &typeStr);
 
 inline bool isSkillWithCost(SkillType type)
 {

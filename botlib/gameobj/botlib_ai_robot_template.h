@@ -12,17 +12,17 @@ public:
 
     ~AIRobotTemplate() = default;
 
-    void init(const std::string& name,
-              const rapidjson::Value& v,
-              const MissileTemplateLib& missileTemplateLib,
-              const ComponentTemplateLib& componentTemplateLib,
-              const SkillTemplateLib& skillTemplateLib);
+    void init(const std::string &name,
+              const rapidjson::Value &v,
+              const MissileTemplateLib &missileTemplateLib,
+              const ComponentTemplateLib &componentTemplateLib,
+              const SkillTemplateLib &skillTemplateLib);
 
     inline float goodieProb() const;
 
-    inline const std::string& aiAlgorithm() const;
+    inline const std::string &aiAlgorithm() const;
 
-    inline const std::string& aiName() const;
+    inline const std::string &aiName() const;
 
 private:
     float goodieProb_;
@@ -35,12 +35,12 @@ float AIRobotTemplate::goodieProb() const
     return goodieProb_;
 }
 
-const std::string& AIRobotTemplate::aiAlgorithm() const
+const std::string &AIRobotTemplate::aiAlgorithm() const
 {
     return aiAlgorithm_;
 }
 
-const std::string& AIRobotTemplate::aiName() const
+const std::string &AIRobotTemplate::aiName() const
 {
     return aiName_;
 }

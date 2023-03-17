@@ -28,37 +28,37 @@ public:
     };
 
 public:
-    GameMapGenerator(const GameLib& lib);
+    GameMapGenerator(const GameLib &lib);
 
     virtual ~GameMapGenerator() = default;
 
-    virtual void generate(GameMap& map,
+    virtual void generate(GameMap &map,
                           float viewportWidth,
                           float viewportHeight) = 0;
 protected:
-    void initMap(GameMap& map,
+    void initMap(GameMap &map,
                  int rowCount,
                  int colcount,
                  float viewportWidth,
                  float viewportHeight);
 
-    const TileTemplate* randomTileTemplate(float maxCollideBreath);
+    const TileTemplate *randomTileTemplate(float maxCollideBreath);
 
-    const AIRobotTemplate* randomAIRobotTemplate();
+    const AIRobotTemplate *randomAIRobotTemplate();
 
-    void addObj(GameMap& map, GameObject* obj);
+    void addObj(GameMap &map, GameObject *obj);
 
-    commonlib::Vector2 getCellCenter(const CellCoord& coord);
+    commonlib::Vector2 getCellCenter(const CellCoord &coord);
 
-    bool findPlaceForObj(commonlib::Vector2& pos,
-                         GameMap& map,
-                         const GameObjectTemplate* t);
+    bool findPlaceForObj(commonlib::Vector2 &pos,
+                         GameMap &map,
+                         const GameObjectTemplate *t);
 
-    void populateRobots(GameMap& map, int aiRobotCount);
+    void populateRobots(GameMap &map, int aiRobotCount);
 
-    void addPlayer(GameMap& map);
+    void addPlayer(GameMap &map);
 
-    void addAIRobot(GameMap& map);
+    void addAIRobot(GameMap &map);
 
 private:
     void initFreeCellMap(int rowCount, int colCount);
@@ -71,12 +71,12 @@ private:
 
     int findTileTemplate(float maxCollideBreath);
 
-    void markObjOccupied(GameMap& map, GameObject* obj);
+    void markObjOccupied(GameMap &map, GameObject *obj);
 
     bool markCellOccupied(int col, int row);
 
 protected:
-    const GameLib& lib_;
+    const GameLib &lib_;
     std::vector<const TileTemplate*> tileTemplates_;
     std::vector<const AIRobotTemplate*> aiRobotTemplates_;
     std::vector<std::vector<int>> freeCellMap_;

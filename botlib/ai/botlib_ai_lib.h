@@ -11,20 +11,20 @@ class AILib {
 public:
     AILib() = default;
 
-    void init(const std::string& chaseShootAIParamFile);
+    void init(const std::string &chaseShootAIParamFile);
 
-    inline const ChaseShootAIParam* findChaseShootAIParam(
-                                        const std::string& name) const;
+    inline const ChaseShootAIParam *findChaseShootAIParam(
+                                        const std::string &name) const;
 
 private:
-    void initChaseShootAIParamLib(const std::string& chaseShootAIParamFile);
+    void initChaseShootAIParamLib(const std::string &chaseShootAIParamFile);
 
 private:
     commonlib::NamedMap<ChaseShootAIParam> chaseShootAIParamLib_;
 };
 
-const ChaseShootAIParam* AILib::findChaseShootAIParam(
-                                        const std::string& name) const
+const ChaseShootAIParam *AILib::findChaseShootAIParam(
+                                        const std::string &name) const
 {
     return chaseShootAIParamLib_.search(name);
 }

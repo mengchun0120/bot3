@@ -24,8 +24,8 @@ GameObject::GameObject()
 {
 }
 
-void GameObject::init(const GameObjectTemplate* t,
-                      const Vector2& pos1)
+void GameObject::init(const GameObjectTemplate *t,
+                      const Vector2 &pos1)
 {
     if (!t)
     {
@@ -45,7 +45,7 @@ void GameObject::init(const GameObjectTemplate* t,
                         y()-collideBreath(), y()+collideBreath());
 }
 
-void GameObject::update(UpdateContext& cxt)
+void GameObject::update(UpdateContext &cxt)
 {
     setUpdated(true);
 
@@ -55,12 +55,12 @@ void GameObject::update(UpdateContext& cxt)
     }
 }
 
-void GameObject::setPos(const commonlib::Vector2& pos1)
+void GameObject::setPos(const commonlib::Vector2 &pos1)
 {
     shiftPos(pos1 - pos_);
 }
 
-void GameObject::shiftPos(const commonlib::Vector2& delta)
+void GameObject::shiftPos(const commonlib::Vector2 &delta)
 {
     pos_ += delta;
     collideRegion_.shift(delta[0], delta[1]);
@@ -110,8 +110,8 @@ void GameObject::setFlag(GameObjFlag f, bool b)
     }
 }
 
-void GameObject::toJson(rapidjson::Value& v,
-                        rapidjson::Document::AllocatorType& allocator)
+void GameObject::toJson(rapidjson::Value &v,
+                        rapidjson::Document::AllocatorType &allocator)
 {
     v.AddMember("template", jsonVal(t_->name(), allocator), allocator);
     v.AddMember("pos", pos_.toJson(allocator), allocator);

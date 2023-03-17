@@ -20,12 +20,12 @@ public:
 
     virtual ~GameObject() = default;
 
-    void init(const GameObjectTemplate* t,
-              const commonlib::Vector2& pos1);
+    void init(const GameObjectTemplate *t,
+              const commonlib::Vector2 &pos1);
 
     inline GameObjectType type() const;
 
-    inline const GameObjectTemplate* getTemplate() const;
+    inline const GameObjectTemplate *getTemplate() const;
 
     inline GameObjectState state() const;
 
@@ -49,7 +49,7 @@ public:
 
     inline float collideTop() const;
 
-    inline const commonlib::Region<float>& collideRegion() const;
+    inline const commonlib::Region<float> &collideRegion() const;
 
     inline int flags() const;
 
@@ -65,21 +65,21 @@ public:
 
     inline unsigned int col() const;
 
-    inline GameObject* prev();
+    inline GameObject *prev();
 
-    inline GameObject* next();
+    inline GameObject *next();
 
-    inline const GameObject* prev() const;
+    inline const GameObject *prev() const;
 
-    inline const GameObject* next() const;
+    inline const GameObject *next() const;
 
-    virtual void update(UpdateContext& cxt);
+    virtual void update(UpdateContext &cxt);
 
     virtual void present() const = 0;
 
-    virtual void setPos(const commonlib::Vector2& pos1);
+    virtual void setPos(const commonlib::Vector2 &pos1);
 
-    virtual void shiftPos(const commonlib::Vector2& delta);
+    virtual void shiftPos(const commonlib::Vector2 &delta);
 
     void setMapPos(unsigned int row1,
                    unsigned int col1);
@@ -96,19 +96,19 @@ public:
 
     void setFlag(GameObjFlag flag, bool b);
 
-    inline void setPrev(GameObject* o);
+    inline void setPrev(GameObject *o);
 
-    inline void setNext(GameObject* o);
+    inline void setNext(GameObject *o);
 
-    virtual bool canBeDumped(GameMap& map) const = 0;
+    virtual bool canBeDumped(GameMap &map) const = 0;
 
-    virtual void toJson(rapidjson::Value& v,
-                        rapidjson::Document::AllocatorType& allocator);
+    virtual void toJson(rapidjson::Value &v,
+                        rapidjson::Document::AllocatorType &allocator);
 
 protected:
     static unsigned int k_curId;
 
-    const GameObjectTemplate* t_;
+    const GameObjectTemplate *t_;
     GameObjectState state_;
     unsigned int id_;
     commonlib::Vector2 pos_;
@@ -116,8 +116,8 @@ protected:
     unsigned int row_;
     unsigned int col_;
     commonlib::Region<float> collideRegion_;
-    GameObject* prev_;
-    GameObject* next_;
+    GameObject *prev_;
+    GameObject *next_;
 };
 
 GameObjectType GameObject::type() const
@@ -125,7 +125,7 @@ GameObjectType GameObject::type() const
     return t_->type();
 }
 
-const GameObjectTemplate* GameObject::getTemplate() const
+const GameObjectTemplate *GameObject::getTemplate() const
 {
     return t_;
 }
@@ -185,7 +185,7 @@ float GameObject::collideTop() const
     return y() + collideBreath();
 }
 
-const commonlib::Region<float>& GameObject::collideRegion() const
+const commonlib::Region<float> &GameObject::collideRegion() const
 {
     return collideRegion_;
 }
@@ -225,32 +225,32 @@ unsigned int GameObject::col() const
     return col_;
 }
 
-GameObject* GameObject::prev()
+GameObject *GameObject::prev()
 {
     return prev_;
 }
 
-GameObject* GameObject::next()
+GameObject *GameObject::next()
 {
     return next_;
 }
 
-const GameObject* GameObject::prev() const
+const GameObject *GameObject::prev() const
 {
     return prev_;
 }
 
-const GameObject* GameObject::next() const
+const GameObject *GameObject::next() const
 {
     return next_;
 }
 
-void GameObject::setPrev(GameObject* o)
+void GameObject::setPrev(GameObject *o)
 {
     prev_ = o;
 }
 
-void GameObject::setNext(GameObject* o)
+void GameObject::setNext(GameObject *o)
 {
     next_ = o;
 }

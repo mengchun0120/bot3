@@ -11,9 +11,9 @@ class GameMapGenerator;
 
 class GameMapGeneratorFactory {
 public:
-    static GameMapGenerator* create(const std::string& algorithm,
-                                    const GameLib& lib,
-                                    const std::string& configFile);
+    static GameMapGenerator *create(const std::string &algorithm,
+                                    const GameLib &lib,
+                                    const std::string &configFile);
 };
 
 } // end of namespace botlib

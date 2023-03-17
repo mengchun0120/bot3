@@ -15,14 +15,14 @@ GoodieGenerator::GoodieGenerator()
 {
 }
 
-void GoodieGenerator::init(const GoodieTemplateLib& lib)
+void GoodieGenerator::init(const GoodieTemplateLib &lib)
 {
     initBase(lib);
     initRandomGenerator();
 }
 
-Goodie* GoodieGenerator::generate(float prob,
-                                  const Vector2& pos)
+Goodie *GoodieGenerator::generate(float prob,
+                                  const Vector2 &pos)
 {
     float dice = distribution_(generator_);
     if (dice > prob)
@@ -30,22 +30,22 @@ Goodie* GoodieGenerator::generate(float prob,
         return nullptr;
     }
 
-    const GoodieTemplate* t = getTemplate();
+    const GoodieTemplate *t = getTemplate();
     Vector2 direction{1.0f, 0.0f};
 
-    Goodie* goodie =  new Goodie();
+    Goodie *goodie =  new Goodie();
     goodie->init(t, pos, direction);
 
     return goodie;
 }
 
-void GoodieGenerator::initBase(const GoodieTemplateLib& lib)
+void GoodieGenerator::initBase(const GoodieTemplateLib &lib)
 {
     base_.resize(lib.size());
 
     int i = 0;
     float weight = 0.0f;
-    auto accessor = [&](const GoodieTemplate& t)->bool
+    auto accessor = [&](const GoodieTemplate &t)->bool
     {
         weight += t.weight();
         base_[i].t_ = &t;
@@ -62,11 +62,11 @@ void GoodieGenerator::initRandomGenerator()
     generator_.seed(time(nullptr));
 }
 
-const GoodieTemplate* GoodieGenerator::getTemplate()
+const GoodieTemplate *GoodieGenerator::getTemplate()
 {
     float w = distribution_(generator_) * base_.back().weight_;
 
-    for (Item& t: base_)
+    for (Item &t: base_)
     {
         if (w <= t.weight_)
         {

@@ -14,12 +14,12 @@ public:
     virtual ~GameObjectTemplate() = default;
 
     void init(GameObjectType t,
-              const std::string& name,
-              const rapidjson::Value& v);
+              const std::string &name,
+              const rapidjson::Value &v);
 
     inline GameObjectType type() const;
 
-    inline const std::string& name() const;
+    inline const std::string &name() const;
 
     inline float span() const;
 
@@ -40,7 +40,7 @@ GameObjectType GameObjectTemplate::type() const
     return type_;
 }
 
-const std::string& GameObjectTemplate::name() const
+const std::string &GameObjectTemplate::name() const
 {
     return name_;
 }

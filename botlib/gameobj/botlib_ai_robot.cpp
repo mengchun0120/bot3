@@ -15,9 +15,9 @@ AIRobot::AIRobot()
 {
 }
 
-AIRobot::AIRobot(const AIRobotTemplate* t,
-                 const commonlib::Vector2& pos1,
-                 const commonlib::Vector2& direction1)
+AIRobot::AIRobot(const AIRobotTemplate *t,
+                 const commonlib::Vector2 &pos1,
+                 const commonlib::Vector2 &direction1)
 {
     init(t, pos1, direction1);
 }
@@ -27,15 +27,15 @@ AIRobot::~AIRobot()
     delete ai_;
 }
 
-void AIRobot::init(const AIRobotTemplate* t,
-                   const Vector2& pos1,
-                   const Vector2& direction1)
+void AIRobot::init(const AIRobotTemplate *t,
+                   const Vector2 &pos1,
+                   const Vector2 &direction1)
 {
     Robot::init(t, Side::AI, pos1, direction1);
     ai_ = AIFactory::create(this, t->aiAlgorithm(), t->aiName());
 }
 
-void AIRobot::update(UpdateContext& cxt)
+void AIRobot::update(UpdateContext &cxt)
 {
     if (ai_ && state() == GameObjectState::ALIVE)
     {
@@ -45,8 +45,8 @@ void AIRobot::update(UpdateContext& cxt)
     Robot::update(cxt);
 }
 
-void AIRobot::toJson(rapidjson::Value& v,
-                     rapidjson::Document::AllocatorType& allocator)
+void AIRobot::toJson(rapidjson::Value &v,
+                     rapidjson::Document::AllocatorType &allocator)
 {
     Robot::toJson(v, allocator);
     v.AddMember("type", jsonVal("robot", allocator), allocator);

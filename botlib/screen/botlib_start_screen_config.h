@@ -12,7 +12,7 @@ public:
 
     ~StartScreenConfig() = default;
 
-    void init(const std::string& configFile);
+    void init(const std::string &configFile);
 
     inline float buttonWidth() const;
 

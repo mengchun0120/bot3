@@ -14,26 +14,26 @@ public:
     BarrageBlastSkillTemplate();
 
     BarrageBlastSkillTemplate(
-              const rapidjson::Value& v,
-              const ProgressPieTemplateLib& progressPieLib,
-              const std::string& skillDataDir);
+              const rapidjson::Value &v,
+              const ProgressPieTemplateLib &progressPieLib,
+              const std::string &skillDataDir);
 
-    void init(const rapidjson::Value& v,
-              const ProgressPieTemplateLib& progressPieLib,
-              const std::string& skillDataDir);
+    void init(const rapidjson::Value &v,
+              const ProgressPieTemplateLib &progressPieLib,
+              const std::string &skillDataDir);
 
-    inline const std::vector<commonlib::Vector2>& firePoints() const;
+    inline const std::vector<commonlib::Vector2> &firePoints() const;
 
-    inline const std::vector<commonlib::Vector2>& fireDirections() const;
+    inline const std::vector<commonlib::Vector2> &fireDirections() const;
 
     inline int maxShootTimes() const;
 
     inline float shootInterval() const;
 
 private:
-    void readFirePosDirections(const std::string& firePosFile,
-                               const std::string& fireDirectionFile,
-                               const std::string& skillDataDir);
+    void readFirePosDirections(const std::string &firePosFile,
+                               const std::string &fireDirectionFile,
+                               const std::string &skillDataDir);
 
 private:
     std::vector<commonlib::Vector2> firePoints_;

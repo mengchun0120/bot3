@@ -16,10 +16,10 @@ public:
 
     ~ParticleEffectTemplate() override = default;
 
-    void init(const std::string& name,
-              const rapidjson::Value& v,
-              const TextureLib& textureLib,
-              const std::string& dataDir);
+    void init(const std::string &name,
+              const rapidjson::Value &v,
+              const TextureLib &textureLib,
+              const std::string &dataDir);
 
     inline int numParticles() const;
 
@@ -29,33 +29,33 @@ public:
 
     inline float particleSize() const;
 
-    inline const commonlib::VertexArray& vertexArray() const;
+    inline const commonlib::VertexArray &vertexArray() const;
 
-    inline const commonlib::Texture* texture() const;
+    inline const commonlib::Texture *texture() const;
 
-    inline const commonlib::Color& color() const;
+    inline const commonlib::Color &color() const;
 
 protected:
-    void loadVertexData(std::vector<commonlib::Vector2>& startPos,
-                        std::vector<commonlib::Vector2>& direction,
-                        std::vector<float>& initSpeed,
-                        const std::string& startPosFile,
-                        const std::string& directionFile,
-                        const std::string& initSpeedFile,
-                        const std::string& libDir);
+    void loadVertexData(std::vector<commonlib::Vector2> &startPos,
+                        std::vector<commonlib::Vector2> &direction,
+                        std::vector<float> &initSpeed,
+                        const std::string &startPosFile,
+                        const std::string &directionFile,
+                        const std::string &initSpeedFile,
+                        const std::string &libDir);
 
 
 
-    void loadVertexArray(const std::vector<commonlib::Vector2>& startPos,
-                         const std::vector<commonlib::Vector2>& direction,
-                         const std::vector<float>& initSpeed);
+    void loadVertexArray(const std::vector<commonlib::Vector2> &startPos,
+                         const std::vector<commonlib::Vector2> &direction,
+                         const std::vector<float> &initSpeed);
 
-    void resetSpan(const std::vector<commonlib::Vector2>& startPos,
-                   const std::vector<commonlib::Vector2>& direction,
-                   const std::vector<float>& initSpeed);
+    void resetSpan(const std::vector<commonlib::Vector2> &startPos,
+                   const std::vector<commonlib::Vector2> &direction,
+                   const std::vector<float> &initSpeed);
 
-    float calculateSpan(const commonlib::Vector2& startPos,
-                        const commonlib::Vector2& direction,
+    float calculateSpan(const commonlib::Vector2 &startPos,
+                        const commonlib::Vector2 &direction,
                         float initSpeed);
 
 protected:
@@ -88,17 +88,17 @@ float ParticleEffectTemplate::particleSize() const
     return particleSize_;
 }
 
-const commonlib::VertexArray& ParticleEffectTemplate::vertexArray() const
+const commonlib::VertexArray &ParticleEffectTemplate::vertexArray() const
 {
     return vertexArray_;
 }
 
-const commonlib::Texture* ParticleEffectTemplate::texture() const
+const commonlib::Texture *ParticleEffectTemplate::texture() const
 {
     return texture_;
 }
 
-const commonlib::Color& ParticleEffectTemplate::color() const
+const commonlib::Color &ParticleEffectTemplate::color() const
 {
     return color_;
 }

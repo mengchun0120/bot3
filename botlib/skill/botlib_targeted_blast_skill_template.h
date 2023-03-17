@@ -10,11 +10,11 @@ class TargetedBlastSkillTemplate: public SkillWithCostTemplate {
 public:
     TargetedBlastSkillTemplate();
 
-    TargetedBlastSkillTemplate(const rapidjson::Value& v,
-                               const ProgressPieTemplateLib& progressPieLib);
+    TargetedBlastSkillTemplate(const rapidjson::Value &v,
+                               const ProgressPieTemplateLib &progressPieLib);
 
-    void init(const rapidjson::Value& v,
-              const ProgressPieTemplateLib& progressPieLib);
+    void init(const rapidjson::Value &v,
+              const ProgressPieTemplateLib &progressPieLib);
 
     inline int numTargets() const;
 

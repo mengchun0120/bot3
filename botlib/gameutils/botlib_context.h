@@ -21,32 +21,32 @@ class AppConfig;
 
 class Context {
 public:
-    static void init(const AppConfig& cfg);
+    static void init(const AppConfig &cfg);
 
-    inline static Graphics& graphics();
+    inline static Graphics &graphics();
 
-    inline static const GameLib& gameLib();
+    inline static const GameLib &gameLib();
 
-    inline static const HPIndicatorConfig& hpIndicatorConfig();
+    inline static const HPIndicatorConfig &hpIndicatorConfig();
 
-    inline static const ButtonConfig& buttonConfig();
+    inline static const ButtonConfig &buttonConfig();
 
-    inline static const LabelConfig& labelConfig();
+    inline static const LabelConfig &labelConfig();
 
-    inline static const MessageBoxConfig& msgBoxConfig();
+    inline static const MessageBoxConfig &msgBoxConfig();
 
-    inline static const StartScreenConfig& startScreenConfig();
+    inline static const StartScreenConfig &startScreenConfig();
 
-    inline static GameScreenConfig& gameScreenConfig();
+    inline static GameScreenConfig &gameScreenConfig();
 
-    inline static ShowMapScreenConfig& showMapScreenConfig();
+    inline static ShowMapScreenConfig &showMapScreenConfig();
 
-    inline static GameConfig& gameConfig();
+    inline static GameConfig &gameConfig();
 
-    inline static GoodieGenerator& goodieGenerator();
+    inline static GoodieGenerator &goodieGenerator();
 
 private:
-    Context(const AppConfig& cfg);
+    Context(const AppConfig &cfg);
 
 private:
     static std::shared_ptr<Context> k_instance;
@@ -63,57 +63,57 @@ private:
     GoodieGenerator goodieGenerator_;
 };
 
-Graphics& Context::graphics()
+Graphics &Context::graphics()
 {
     return k_instance->graphics_;
 }
 
-const GameLib& Context::gameLib()
+const GameLib &Context::gameLib()
 {
     return k_instance->gameLib_;
 }
 
-const HPIndicatorConfig& Context::hpIndicatorConfig()
+const HPIndicatorConfig &Context::hpIndicatorConfig()
 {
     return k_instance->hpIndicatorConfig_;
 }
 
-const ButtonConfig& Context::buttonConfig()
+const ButtonConfig &Context::buttonConfig()
 {
     return k_instance->buttonConfig_;
 }
 
-const LabelConfig& Context::labelConfig()
+const LabelConfig &Context::labelConfig()
 {
     return k_instance->labelConfig_;
 }
 
-const MessageBoxConfig& Context::msgBoxConfig()
+const MessageBoxConfig &Context::msgBoxConfig()
 {
     return k_instance->msgBoxConfig_;
 }
 
-const StartScreenConfig& Context::startScreenConfig()
+const StartScreenConfig &Context::startScreenConfig()
 {
     return k_instance->startScreenConfig_;
 }
 
-GameScreenConfig& Context::gameScreenConfig()
+GameScreenConfig &Context::gameScreenConfig()
 {
     return k_instance->gameScreenConfig_;
 }
 
-ShowMapScreenConfig& Context::showMapScreenConfig()
+ShowMapScreenConfig &Context::showMapScreenConfig()
 {
     return k_instance->showMapScreenConfig_;
 }
 
-GameConfig& Context::gameConfig()
+GameConfig &Context::gameConfig()
 {
     return k_instance->gameConfig_;
 }
 
-GoodieGenerator& Context::goodieGenerator()
+GoodieGenerator &Context::goodieGenerator()
 {
     return k_instance->goodieGenerator_;
 }

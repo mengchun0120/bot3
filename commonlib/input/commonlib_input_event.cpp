@@ -84,7 +84,7 @@ std::string stringVal(EventType t)
     }
 }
 
-InputEvent& InputEvent::operator=(const InputEvent& e)
+InputEvent &InputEvent::operator=(const InputEvent& e)
 {
     type_ = e.type_;
     switch (e.type_)
@@ -132,7 +132,7 @@ void InputEvent::setKeyEvent(int key,
     keyEvent_.set(key, action, scancode, mods);
 }
 
-const MouseButtonEvent& InputEvent::mouseButtonEvent() const
+const MouseButtonEvent &InputEvent::mouseButtonEvent() const
 {
     if (type_ != EventType::MOUSE_BUTTON)
     {
@@ -143,7 +143,7 @@ const MouseButtonEvent& InputEvent::mouseButtonEvent() const
     return mouseButtonEvent_;
 }
 
-const MouseMoveEvent& InputEvent::mouseMoveEvent() const
+const MouseMoveEvent &InputEvent::mouseMoveEvent() const
 {
     if (type_ != EventType::MOUSE_MOVE)
     {
@@ -154,7 +154,7 @@ const MouseMoveEvent& InputEvent::mouseMoveEvent() const
     return mouseMoveEvent_;
 }
 
-const KeyEvent& InputEvent::keyEvent() const
+const KeyEvent &InputEvent::keyEvent() const
 {
     if (type_ != EventType::KEY)
     {

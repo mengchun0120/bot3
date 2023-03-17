@@ -13,7 +13,7 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void HPIndicator::reset(const commonlib::Vector2& pos,
+void HPIndicator::reset(const commonlib::Vector2 &pos,
                         float hpPercent)
 {
     setHPPercent(hpPercent);
@@ -22,21 +22,21 @@ void HPIndicator::reset(const commonlib::Vector2& pos,
 
 void HPIndicator::present() const
 {
-    Graphics& g = Context::graphics();
+    Graphics &g = Context::graphics();
     HPIndicatorConfig hpCfg = Context::hpIndicatorConfig();
 
     g.textSys().draw(g.simpleShader(), hpPercentStr_, pos_,
                      hpCfg.textSize(), &(hpCfg.color()));
 }
 
-void HPIndicator::shiftPos(const commonlib::Vector2& delta)
+void HPIndicator::shiftPos(const commonlib::Vector2 &delta)
 {
     pos_ += delta;
 }
 
-void HPIndicator::setPos(const commonlib::Vector2& pos)
+void HPIndicator::setPos(const commonlib::Vector2 &pos)
 {
-    Graphics& g = Context::graphics();
+    Graphics &g = Context::graphics();
     HPIndicatorConfig hpCfg = Context::hpIndicatorConfig();
 
     pos_[1] = pos[1] - hpCfg.halfHeight();

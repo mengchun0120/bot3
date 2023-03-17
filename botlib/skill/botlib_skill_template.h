@@ -15,7 +15,7 @@ public:
     SkillTemplate();
 
     void init(SkillType type,
-              const rapidjson::Value& v);
+              const rapidjson::Value &v);
 
     inline SkillType type() const;
 

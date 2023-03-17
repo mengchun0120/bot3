@@ -13,34 +13,34 @@ class BlastSkillTemplate: public SkillWithCostTemplate {
 public:
     BlastSkillTemplate();
 
-    BlastSkillTemplate(const rapidjson::Value& v,
-                       const ProgressPieTemplateLib& progressPieLib,
-                       const std::string& skillDataDir);
+    BlastSkillTemplate(const rapidjson::Value &v,
+                       const ProgressPieTemplateLib &progressPieLib,
+                       const std::string &skillDataDir);
 
-    void init(const rapidjson::Value& v,
-              const ProgressPieTemplateLib& progressPieLib,
-              const std::string& skillDataDir);
+    void init(const rapidjson::Value &v,
+              const ProgressPieTemplateLib &progressPieLib,
+              const std::string &skillDataDir);
 
-    inline const std::vector<commonlib::Vector2>& firePoints() const;
+    inline const std::vector<commonlib::Vector2> &firePoints() const;
 
-    inline const std::vector<commonlib::Vector2>& fireDirections() const;
+    inline const std::vector<commonlib::Vector2> &fireDirections() const;
 
 private:
-    void readFirePosDirections(const std::string& firePosFile,
-                               const std::string& fireDirectionFile,
-                               const std::string& skillDataDir);
+    void readFirePosDirections(const std::string &firePosFile,
+                               const std::string &fireDirectionFile,
+                               const std::string &skillDataDir);
 
 protected:
     std::vector<commonlib::Vector2> firePoints_;
     std::vector<commonlib::Vector2> fireDirections_;
 };
 
-const std::vector<commonlib::Vector2>& BlastSkillTemplate::firePoints() const
+const std::vector<commonlib::Vector2> &BlastSkillTemplate::firePoints() const
 {
     return firePoints_;
 }
 
-const std::vector<commonlib::Vector2>& BlastSkillTemplate::fireDirections() const
+const std::vector<commonlib::Vector2> &BlastSkillTemplate::fireDirections() const
 {
     return fireDirections_;
 }

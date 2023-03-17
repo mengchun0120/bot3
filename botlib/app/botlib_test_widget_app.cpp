@@ -16,8 +16,8 @@ TestWidgetApp::TestWidgetApp()
 }
 
 #ifdef DESKTOP_APP
-void TestWidgetApp::init(const std::string& configFile,
-                         const std::string& appDir)
+void TestWidgetApp::init(const std::string &configFile,
+                         const std::string &appDir)
 {
     App::init(1000, 800, "test widgets");
     AppConfig::init(configFile, appDir);
@@ -57,7 +57,7 @@ void TestWidgetApp::process()
     postProcess();
 }
 
-bool TestWidgetApp::operator()(const commonlib::InputEvent& e)
+bool TestWidgetApp::operator()(const commonlib::InputEvent &e)
 {
     if (msgBox_.visible())
     {
@@ -83,7 +83,7 @@ bool TestWidgetApp::operator()(const commonlib::InputEvent& e)
 void TestWidgetApp::setupShader()
 {
     Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
-    SimpleShaderProgram& shader = Context::graphics().simpleShader();
+    SimpleShaderProgram &shader = Context::graphics().simpleShader();
 
     shader.use();
     shader.setViewportSize(viewportSize());
@@ -111,14 +111,14 @@ void TestWidgetApp::setupWidgets()
     widgets_.init(BUTTON_COUNT+3);
     for (unsigned int i = 0; i < BUTTON_COUNT; ++i)
     {
-        Button* button = new Button(buttonX, buttonY,
+        Button *button = new Button(buttonX, buttonY,
                                     buttonWidth, buttonHeight, buttonTexts[i]);
         button->setActionFunc(actions[i]);
         widgets_.setWidget(i, button);
         buttonY += incrY;
     }
 
-    Label* label = new Label(150.0f, 200.0f, 200.0f, 70.0f, "Label One");
+    Label *label = new Label(150.0f, 200.0f, 200.0f, 70.0f, "Label One");
     widgets_.setWidget(BUTTON_COUNT, label);
     label = new Label(150.0f, 400.0f, 200.0f, 70.0f, "Label Two",
                       TextSize::SMALL, HAlign::MIDDLE, VAlign::MIDDLE);
@@ -133,7 +133,7 @@ void TestWidgetApp::setupWidgets()
 #ifdef DESKTOP_APP
 void TestWidgetApp::setupInput()
 {
-    const AppConfig& cfg = AppConfig::instance();
+    const AppConfig &cfg = AppConfig::instance();
     InputManager::initInstance(window(), viewportSize(),
                                cfg.inputQueueCapacity());
     InputManager::instance().enable();

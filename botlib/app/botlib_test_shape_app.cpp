@@ -16,8 +16,8 @@ TestShapeApp::TestShapeApp()
 }
 
 #ifdef DESKTOP_APP
-void TestShapeApp::init(const std::string& configFile,
-                        const std::string& appDir)
+void TestShapeApp::init(const std::string &configFile,
+                        const std::string &appDir)
 {
     AppConfig::init(configFile, appDir);
     App::init(1000, 800, "Test Shape");
@@ -43,7 +43,7 @@ void TestShapeApp::init(android_app *app)
 void TestShapeApp::setupShader()
 {
     Point2 viewportOrigin{viewportWidth() / 2.0f, viewportHeight() / 2.0f};
-    SimpleShaderProgram& program = Context::graphics().simpleShader();
+    SimpleShaderProgram &program = Context::graphics().simpleShader();
 
     program.use();
     program.setViewportSize(viewportSize());
@@ -85,9 +85,9 @@ void TestShapeApp::process()
 {
     App::process();
 
-    Graphics& g = Context::graphics();
-    SimpleShaderProgram& program = g.simpleShader();
-    const TextSystem& textSys = g.textSys();
+    Graphics &g = Context::graphics();
+    SimpleShaderProgram &program = g.simpleShader();
+    const TextSystem &textSys = g.textSys();
 
     glClear(GL_COLOR_BUFFER_BIT);
 

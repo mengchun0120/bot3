@@ -10,8 +10,8 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void ProgressBarTemplate::init(const rapidjson::Value& v,
-                               const VertexArrayLib& vertexArrayLib)
+void ProgressBarTemplate::init(const rapidjson::Value &v,
+                               const VertexArrayLib &vertexArrayLib)
 {
     std::string vertexArrayName;
     std::string borderVertexArrayName;

@@ -15,15 +15,15 @@ public:
 
     ~HPIndicator() = default;
 
-    void reset(const commonlib::Vector2& pos,
+    void reset(const commonlib::Vector2 &pos,
                float hpPercent);
 
     void present() const;
 
-    void shiftPos(const commonlib::Vector2& delta);
+    void shiftPos(const commonlib::Vector2 &delta);
 
 private:
-    void setPos(const commonlib::Vector2& pos);
+    void setPos(const commonlib::Vector2 &pos);
 
     void setHPPercent(float hpPercent);
 private:

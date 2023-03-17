@@ -12,7 +12,7 @@ MessageBox::MessageBox(float x,
                        float y,
                        float width,
                        float height,
-                       const std::string& msg,
+                       const std::string &msg,
                        int buttons)
 {
     init(x, y, width, height, msg, buttons);
@@ -22,7 +22,7 @@ void MessageBox::init(float x,
                       float y,
                       float width,
                       float height,
-                      const std::string& msg,
+                      const std::string &msg,
                       int buttons)
 {
     pos_[0] = x;
@@ -42,7 +42,7 @@ void MessageBox::setVisible(bool v)
     visible_ = v;
 }
 
-void MessageBox::setText(const std::string& text)
+void MessageBox::setText(const std::string &text)
 {
     getMsg().setText(text);
 }
@@ -60,7 +60,7 @@ void MessageBox::present()
     }
 }
 
-void MessageBox::process(const InputEvent& e)
+void MessageBox::process(const InputEvent &e)
 {
     buttonClicked_ = BUTTON_NONE;
     if (visible_)
@@ -71,17 +71,17 @@ void MessageBox::process(const InputEvent& e)
 
 void MessageBox::initBack()
 {
-    Label* back = new Label(x(), y(), width(), height());
+    Label *back = new Label(x(), y(), width(), height());
     widgets_.setWidget(IDX_BACK, back);
 }
 
-void MessageBox::initMessage(const std::string& msg)
+void MessageBox::initMessage(const std::string &msg)
 {
-    const MessageBoxConfig& cfg = Context::msgBoxConfig();
+    const MessageBoxConfig &cfg = Context::msgBoxConfig();
 
     float msgY = y() + height()/2.0f - cfg.messageMarginY() - cfg.messageHeight()/2.0f;
     float msgWidth = width() - 2.0f * cfg.messageMarginX();
-    Label* box = new Label(x(), msgY, msgWidth, cfg.messageHeight(), msg,
+    Label *box = new Label(x(), msgY, msgWidth, cfg.messageHeight(), msg,
                            TextSize::SMALL, HAlign::MIDDLE, VAlign::MIDDLE,
                            nullptr, nullptr, &cfg.messageBorderColor());
     widgets_.setWidget(IDX_MSG, box);
@@ -89,15 +89,15 @@ void MessageBox::initMessage(const std::string& msg)
 
 void MessageBox::initButtons(int buttons)
 {
-    const MessageBoxConfig& cfg = Context::msgBoxConfig();
+    const MessageBoxConfig &cfg = Context::msgBoxConfig();
 
-    Button* okButton = new Button(0.0f, 0.0f, cfg.buttonWidth(), cfg.buttonHeight(),
+    Button *okButton = new Button(0.0f, 0.0f, cfg.buttonWidth(), cfg.buttonHeight(),
                                   "OK", TextSize::SMALL, false);
     Button::ActionFunc okAct = std::bind(&MessageBox::onOKClicked, this);
     okButton->setActionFunc(okAct);
     widgets_.setWidget(IDX_OK, okButton);
 
-    Button* cancelButton = new Button(0.0f, 0.0f, cfg.buttonWidth(), cfg.buttonHeight(),
+    Button *cancelButton = new Button(0.0f, 0.0f, cfg.buttonWidth(), cfg.buttonHeight(),
                                       "Cancel", TextSize::SMALL, false);
     Button::ActionFunc cancelAct = std::bind(&MessageBox::onCancelClicked,
                                              this);
@@ -137,7 +137,7 @@ void MessageBox::onCancelClicked()
 
 void MessageBox::configButtons(int buttons)
 {
-    const MessageBoxConfig& cfg = Context::msgBoxConfig();
+    const MessageBoxConfig &cfg = Context::msgBoxConfig();
 
     int buttonCount = getButtonCount(buttons);
     float buttonY = y() - height()/2.0f + cfg.buttonMarginY() + cfg.buttonHeight()/2.0f;
@@ -169,14 +169,14 @@ void MessageBox::showButton(unsigned int idx,
                             float x,
                             float y)
 {
-    Button& button = getButton(idx);
+    Button &button = getButton(idx);
     button.setPos(x, y);
     button.setVisible(true);
 }
 
 void MessageBox::hideButton(unsigned int idx)
 {
-    Button& button = getButton(idx);
+    Button &button = getButton(idx);
     button.setVisible(false);
 }
 

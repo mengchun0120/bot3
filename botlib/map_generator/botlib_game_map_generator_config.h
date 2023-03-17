@@ -12,7 +12,7 @@ public:
 
     virtual ~GameMapGeneratorConfig() = default;
 
-    void init(const rapidjson::Value& v);
+    void init(const rapidjson::Value &v);
 
     inline int rowCount() const;
 

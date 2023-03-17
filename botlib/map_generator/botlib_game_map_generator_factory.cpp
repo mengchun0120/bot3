@@ -9,12 +9,12 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-GameMapGenerator* GameMapGeneratorFactory::create(
-                                    const std::string& algorithm,
-                                    const GameLib& lib,
-                                    const std::string& configFile)
+GameMapGenerator *GameMapGeneratorFactory::create(
+                                    const std::string &algorithm,
+                                    const GameLib &lib,
+                                    const std::string &configFile)
 {
-    GameMapGenerator* generator = nullptr;
+    GameMapGenerator *generator = nullptr;
 
     if (algorithm == "island")
     {

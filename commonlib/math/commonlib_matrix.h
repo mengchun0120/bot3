@@ -10,23 +10,23 @@ template <std::size_t M, std::size_t N>
 struct Matrix: public std::array<Vector<N>, M> {
     Matrix() = default;
 
-    Matrix(const Matrix& other) = default;
+    Matrix(const Matrix &other) = default;
 
     Matrix(std::initializer_list<Vector<N>> l) noexcept;
 
-    Matrix& negate() noexcept;
+    Matrix &negate() noexcept;
 
-    Matrix& fill(float f) noexcept;
+    Matrix &fill(float f) noexcept;
 
     Matrix<N, M> transpose() const noexcept;
 
-    Matrix& operator+=(const Matrix &m) noexcept;
+    Matrix &operator+=(const Matrix &m) noexcept;
 
-    Matrix& operator-=(const Matrix &m) noexcept;
+    Matrix &operator-=(const Matrix &m) noexcept;
 
-    Matrix& operator*=(float f) noexcept;
+    Matrix &operator*=(float f) noexcept;
 
-    Matrix& operator/=(float f) noexcept;
+    Matrix &operator/=(float f) noexcept;
 };
 
 using Matrix2 = Matrix<2, 2>;
@@ -44,7 +44,7 @@ Matrix<M, N>::Matrix(std::initializer_list<Vector<N>> l) noexcept
 }
 
 template <std::size_t M, std::size_t N>
-Matrix<M, N>& Matrix<M, N>::negate() noexcept
+Matrix<M, N> &Matrix<M, N>::negate() noexcept
 {
     for (auto it = this->begin(); it != this->end(); ++it)
     {
@@ -54,7 +54,7 @@ Matrix<M, N>& Matrix<M, N>::negate() noexcept
 }
 
 template <std::size_t M, std::size_t N>
-Matrix<M, N>& Matrix<M, N>::fill(float f) noexcept
+Matrix<M, N> &Matrix<M, N>::fill(float f) noexcept
 {
     for (auto it = this->begin(); it != this->end(); ++it)
     {
@@ -78,7 +78,7 @@ Matrix<N, M> Matrix<M, N>::transpose() const noexcept
 }
 
 template <std::size_t M, std::size_t N>
-Matrix<M, N>& Matrix<M, N>::operator+=(const Matrix &m) noexcept
+Matrix<M, N> &Matrix<M, N>::operator+=(const Matrix &m) noexcept
 {
     auto it = this->begin();
     for (auto i = m.cbegin(); it != this->end() && i != m.cend(); ++it, ++i)
@@ -89,7 +89,7 @@ Matrix<M, N>& Matrix<M, N>::operator+=(const Matrix &m) noexcept
 }
 
 template <std::size_t M, std::size_t N>
-Matrix<M, N>& Matrix<M, N>::operator-=(const Matrix &m) noexcept
+Matrix<M, N> &Matrix<M, N>::operator-=(const Matrix &m) noexcept
 {
     auto it = this->begin();
     for (auto i = m.cbegin(); it != this->end() && i != m.cend(); ++it, ++i)
@@ -100,7 +100,7 @@ Matrix<M, N>& Matrix<M, N>::operator-=(const Matrix &m) noexcept
 }
 
 template <std::size_t M, std::size_t N>
-Matrix<M, N>& Matrix<M, N>::operator*=(float f) noexcept
+Matrix<M, N> &Matrix<M, N>::operator*=(float f) noexcept
 {
     for (auto it = this->begin(); it != this->end(); ++it)
     {
@@ -110,7 +110,7 @@ Matrix<M, N>& Matrix<M, N>::operator*=(float f) noexcept
 }
 
 template <std::size_t M, std::size_t N>
-Matrix<M, N>& Matrix<M, N>::operator/=(float f) noexcept
+Matrix<M, N> &Matrix<M, N>::operator/=(float f) noexcept
 {
     return (*this) *= (1.0f / f);
 }
@@ -129,8 +129,8 @@ Matrix<M, M> identityMatrix()
 
 
 template <std::size_t M, std::size_t N>
-bool fuzzyEqual(const Matrix<M, N>& m1,
-                const Matrix<M, N>& m2,
+bool fuzzyEqual(const Matrix<M, N> &m1,
+                const Matrix<M, N> &m2,
                 float threshold=1e-6f)
 {
     for (std::size_t i = 0; i < M; ++i)
@@ -145,8 +145,8 @@ bool fuzzyEqual(const Matrix<M, N>& m1,
 }
 
 template <std::size_t M, std::size_t N>
-Matrix<M, N> operator+(const Matrix<M, N>& lhs,
-                       const Matrix<M, N>& rhs)
+Matrix<M, N> operator+(const Matrix<M, N> &lhs,
+                       const Matrix<M, N> &rhs)
 {
     Matrix<M, N> m;
     for (std::size_t i = 0; i < M; ++i)
@@ -157,8 +157,8 @@ Matrix<M, N> operator+(const Matrix<M, N>& lhs,
 }
 
 template <std::size_t M, std::size_t N>
-Matrix<M, N> operator-(const Matrix<M, N>& lhs,
-                       const Matrix<M, N>& rhs)
+Matrix<M, N> operator-(const Matrix<M, N> &lhs,
+                       const Matrix<M, N> &rhs)
 {
     Matrix<M, N> m;
     for (std::size_t i = 0; i < M; ++i)
@@ -169,7 +169,7 @@ Matrix<M, N> operator-(const Matrix<M, N>& lhs,
 }
 
 template <std::size_t M, std::size_t N>
-Matrix<M, N> operator*(const Matrix<M, N>& lhs,
+Matrix<M, N> operator*(const Matrix<M, N> &lhs,
                        float rhs)
 {
     Matrix<M, N> m;
@@ -182,14 +182,14 @@ Matrix<M, N> operator*(const Matrix<M, N>& lhs,
 
 template <std::size_t M, std::size_t N>
 Matrix<M, N> operator*(float f,
-                       const Matrix<M, N>& rhs)
+                       const Matrix<M, N> &rhs)
 {
     return rhs * f;
 }
 
 template <std::size_t M, std::size_t N>
-Vector<M> operator*(const Matrix<M, N>& lhs,
-                    const Vector<N>& rhs)
+Vector<M> operator*(const Matrix<M, N> &lhs,
+                    const Vector<N> &rhs)
 {
     Vector<M> v;
     for (std::size_t i = 0; i < M; ++i)
@@ -205,8 +205,8 @@ Vector<M> operator*(const Matrix<M, N>& lhs,
 }
 
 template <std::size_t M, std::size_t N>
-Vector<N> operator*(const Vector<M>& lhs,
-                    const Matrix<M, N>& rhs)
+Vector<N> operator*(const Vector<M> &lhs,
+                    const Matrix<M, N> &rhs)
 {
     Vector<N> v;
     for (std::size_t i = 0; i < N; ++i)
@@ -222,8 +222,8 @@ Vector<N> operator*(const Vector<M>& lhs,
 }
 
 template <std::size_t M, std::size_t N, std::size_t P>
-Matrix<M, P> operator*(const Matrix<M, N>& lhs,
-                       const Matrix<N, P>& rhs)
+Matrix<M, P> operator*(const Matrix<M, N> &lhs,
+                       const Matrix<N, P> &rhs)
 {
     Matrix<M, P> m;
     for (std::size_t i = 0; i < M; ++i)
@@ -287,9 +287,9 @@ Matrix4 scale(float sx,
               float sy,
               float sz);
 
-Matrix4 lookAt(const Vector3& eye,
-               const Vector3& at,
-               const Vector3& up);
+Matrix4 lookAt(const Vector3 &eye,
+               const Vector3 &at,
+               const Vector3 &up);
 
 Matrix4 lookAt(float eyex,
                float eyey,
@@ -321,8 +321,8 @@ Matrix4 frustum(float left,
 namespace std {
 
 template <std::size_t M, std::size_t N>
-std::ostream& operator<<(std::ostream& out,
-                         const mcdane::commonlib::Matrix<M, N>& m)
+std::ostream &operator<<(std::ostream& out,
+                         const mcdane::commonlib::Matrix<M, N> &m)
 {
     out << '[';
     if (M > 0)
@@ -339,8 +339,8 @@ std::ostream& operator<<(std::ostream& out,
 }
 
 template <std::size_t M, std::size_t N>
-std::istream& operator>>(std::istream& in,
-                         mcdane::commonlib::Matrix<M, N>& m)
+std::istream &operator>>(std::istream& in,
+                         mcdane::commonlib::Matrix<M, N> &m)
 {
     for (std::size_t i = 0; in.good() && i < M; ++i)
     {

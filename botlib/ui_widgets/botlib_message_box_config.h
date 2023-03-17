@@ -13,7 +13,7 @@ public:
 
     ~MessageBoxConfig() = default;
 
-    void init(const std::string& configFile);
+    void init(const std::string &configFile);
 
     inline float messageMarginX() const;
 
@@ -29,7 +29,7 @@ public:
 
     inline float buttonHeight() const;
 
-    inline const commonlib::Color& messageBorderColor() const;
+    inline const commonlib::Color &messageBorderColor() const;
 
 private:
     float messageMarginX_;
@@ -77,7 +77,7 @@ float MessageBoxConfig::buttonHeight() const
     return buttonHeight_;
 }
 
-const commonlib::Color& MessageBoxConfig::messageBorderColor() const
+const commonlib::Color &MessageBoxConfig::messageBorderColor() const
 {
     return messageBorderColor_;
 }

@@ -10,12 +10,12 @@ namespace botlib {
 
 std::shared_ptr<Context> Context::k_instance;
 
-void Context::init(const AppConfig& cfg)
+void Context::init(const AppConfig &cfg)
 {
     k_instance.reset(new Context(cfg));
 }
 
-Context::Context(const AppConfig& cfg)
+Context::Context(const AppConfig &cfg)
 {
     graphics_.init(cfg);
     gameLib_.load(cfg);

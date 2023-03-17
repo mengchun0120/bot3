@@ -10,11 +10,11 @@ class BarrageSkillTemplate: public SkillWithCostTemplate {
 public:
     BarrageSkillTemplate();
 
-    BarrageSkillTemplate(const rapidjson::Value& v,
-                         const ProgressPieTemplateLib& progressPieLib);
+    BarrageSkillTemplate(const rapidjson::Value &v,
+                         const ProgressPieTemplateLib &progressPieLib);
 
-    void init(const rapidjson::Value& v,
-              const ProgressPieTemplateLib& progressPieLib);
+    void init(const rapidjson::Value &v,
+              const ProgressPieTemplateLib &progressPieLib);
 
     inline int maxShootTimes() const;
 

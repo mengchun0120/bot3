@@ -13,18 +13,18 @@ class TargetFinder {
 public:
     TargetFinder(Side side,
                  int numTargets,
-                 GameObjItemList& targets,
-                 GameObjItemPool& pool);
+                 GameObjItemList &targets,
+                 GameObjItemPool &pool);
 
-    bool operator()(GameObject* obj);
+    bool operator()(GameObject *obj);
 
-    GameObjItemList& getTargets();
+    GameObjItemList &getTargets();
 
 private:
     Side side_;
     int numTargets_;
-    GameObjItemList& targets_;
-    GameObjItemPool& pool_;
+    GameObjItemList &targets_;
+    GameObjItemPool &pool_;
 };
 
 } // end of namespace botlib

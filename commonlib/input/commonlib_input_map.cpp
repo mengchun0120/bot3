@@ -9,7 +9,7 @@ InputMap::InputMap()
     init();
 }
 
-int InputMap::get(const std::string& name) const
+int InputMap::get(const std::string &name) const
 {
     auto it = map_.find(name);
     return it != map_.end() ? it->second : -1;

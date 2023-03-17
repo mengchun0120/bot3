@@ -15,15 +15,15 @@ BarrageSkill::BarrageSkill()
 {
 }
 
-BarrageSkill::BarrageSkill(const BarrageSkillTemplate* t,
-                           Robot* robot,
+BarrageSkill::BarrageSkill(const BarrageSkillTemplate *t,
+                           Robot *robot,
                            bool enabled1)
 {
     init(t, robot, enabled1);
 }
 
-void BarrageSkill::init(const BarrageSkillTemplate* t,
-                        Robot* robot,
+void BarrageSkill::init(const BarrageSkillTemplate *t,
+                        Robot *robot,
                         bool enabled1)
 {
     SkillWithCost::init(t, robot, enabled1);
@@ -32,7 +32,7 @@ void BarrageSkill::init(const BarrageSkillTemplate* t,
     timeSinceLastShoot_ = getTemplate()->shootInterval();
 }
 
-bool BarrageSkill::apply(UpdateContext& cxt)
+bool BarrageSkill::apply(UpdateContext &cxt)
 {
     timeSinceLastShoot_ += cxt.timeDelta();
 

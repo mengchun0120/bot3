@@ -14,12 +14,12 @@ const std::string k_componentTypeStr[] = {
     "goodie"
 };
 
-const std::string& toString(ComponentType type)
+const std::string &toString(ComponentType type)
 {
     return k_componentTypeStr[static_cast<int>(type)];
 }
 
-ComponentType toComponentType(const std::string& typeStr)
+ComponentType toComponentType(const std::string &typeStr)
 {
     int i = 0;
     for (; i < COMPONENT_TYPE_COUNT; ++i)

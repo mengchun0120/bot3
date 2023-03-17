@@ -16,9 +16,9 @@ enum class ComponentType {
 
 constexpr int COMPONENT_TYPE_COUNT = 5;
 
-const std::string& toString(ComponentType type);
+const std::string &toString(ComponentType type);
 
-ComponentType toComponentType(const std::string& typeStr);
+ComponentType toComponentType(const std::string &typeStr);
 
 } // end of namespace botlib
 } // end of namespace mcdane

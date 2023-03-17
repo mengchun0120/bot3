@@ -10,11 +10,11 @@ class ShowMapScreenConfig {
 public:
     ShowMapScreenConfig() = default;
 
-    void init(const std::string& cfgFile);
+    void init(const std::string &cfgFile);
 
-    inline const std::string& mapFile() const;
+    inline const std::string &mapFile() const;
 
-    void setMapFile(const std::string& fileName);
+    void setMapFile(const std::string &fileName);
 
     inline float deltaPerStroke() const;
 
@@ -23,7 +23,7 @@ private:
     float deltaPerStroke_;
 };
 
-const std::string& ShowMapScreenConfig::mapFile() const
+const std::string &ShowMapScreenConfig::mapFile() const
 {
     return mapFile_;
 }

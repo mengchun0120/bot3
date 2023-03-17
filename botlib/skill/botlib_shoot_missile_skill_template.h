@@ -10,11 +10,11 @@ class ShootMissileSkillTemplate: public SkillWithCostTemplate {
 public:
     ShootMissileSkillTemplate();
 
-    ShootMissileSkillTemplate(const rapidjson::Value& v,
-                              const ProgressPieTemplateLib& progressPieLib);
+    ShootMissileSkillTemplate(const rapidjson::Value &v,
+                              const ProgressPieTemplateLib &progressPieLib);
 
-    void init(const rapidjson::Value& v,
-              const ProgressPieTemplateLib& progressPieLib);
+    void init(const rapidjson::Value &v,
+              const ProgressPieTemplateLib &progressPieLib);
 };
 
 } // end of namespace botlib

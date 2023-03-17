@@ -13,10 +13,10 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void ParticleEffectTemplate::init(const std::string& name,
-                                  const rapidjson::Value& v,
-                                  const TextureLib& textureLib,
-                                  const std::string& libDir)
+void ParticleEffectTemplate::init(const std::string &name,
+                                  const rapidjson::Value &v,
+                                  const TextureLib &textureLib,
+                                  const std::string &libDir)
 {
     std::string startPosFile, directionFile, initSpeedFile, textureName;
     std::vector<JsonParamPtr> params{
@@ -51,13 +51,13 @@ void ParticleEffectTemplate::init(const std::string& name,
 
 
 void ParticleEffectTemplate::loadVertexData(
-                                std::vector<commonlib::Vector2>& startPos,
-                                std::vector<commonlib::Vector2>& direction,
-                                std::vector<float>& initSpeed,
-                                const std::string& startPosFile,
-                                const std::string& directionFile,
-                                const std::string& initSpeedFile,
-                                const std::string& dataDir)
+                                std::vector<commonlib::Vector2> &startPos,
+                                std::vector<commonlib::Vector2> &direction,
+                                std::vector<float> &initSpeed,
+                                const std::string &startPosFile,
+                                const std::string &directionFile,
+                                const std::string &initSpeedFile,
+                                const std::string &dataDir)
 {
     readList(startPos, constructPath({dataDir, startPosFile}));
     readList(direction, constructPath({dataDir, directionFile}));
@@ -83,9 +83,9 @@ void ParticleEffectTemplate::loadVertexData(
     numParticles_ = startPos.size();
 }
 
-void ParticleEffectTemplate::loadVertexArray(const std::vector<Vector2>& startPos,
-                                             const std::vector<Vector2>& direction,
-                                             const std::vector<float>& initSpeed)
+void ParticleEffectTemplate::loadVertexArray(const std::vector<Vector2> &startPos,
+                                             const std::vector<Vector2> &direction,
+                                             const std::vector<float> &initSpeed)
 {
     vertexArray_.load({
         BufferBlock(startPos.data(), numParticles_, Constants::POS_SIZE, 0),
@@ -94,9 +94,9 @@ void ParticleEffectTemplate::loadVertexArray(const std::vector<Vector2>& startPo
     });
 }
 
-void ParticleEffectTemplate::resetSpan(const std::vector<Vector2>& startPos,
-                                       const std::vector<Vector2>& direction,
-                                       const std::vector<float>& initSpeed)
+void ParticleEffectTemplate::resetSpan(const std::vector<Vector2> &startPos,
+                                       const std::vector<Vector2> &direction,
+                                       const std::vector<float> &initSpeed)
 {
     span_ = 0.0f;
     for (int i = 0; i < numParticles_; ++i)
@@ -109,8 +109,8 @@ void ParticleEffectTemplate::resetSpan(const std::vector<Vector2>& startPos,
     }
 }
 
-float ParticleEffectTemplate::calculateSpan(const Vector2& startPos,
-                                            const Vector2& direction,
+float ParticleEffectTemplate::calculateSpan(const Vector2 &startPos,
+                                            const Vector2 &direction,
                                             float initSpeed)
 {
     Vector2 endPos = startPos + direction * (initSpeed * duration_ -

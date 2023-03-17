@@ -53,33 +53,33 @@ inline void parse(long double &d,
     d = std::stold(s);
 }
 
-void parse(bool& b,
-           const rapidjson::Value& v);
+void parse(bool &b,
+           const rapidjson::Value &v);
 
-void parse(int& i,
-           const rapidjson::Value& v);
+void parse(int &i,
+           const rapidjson::Value &v);
 
-void parse(unsigned int& u,
-           const rapidjson::Value& v);
+void parse(unsigned int &u,
+           const rapidjson::Value &v);
 
-void parse(int64_t& i,
-           const rapidjson::Value& v);
+void parse(int64_t &i,
+           const rapidjson::Value &v);
 
-void parse(uint64_t& u,
-           const rapidjson::Value& v);
+void parse(uint64_t &u,
+           const rapidjson::Value &v);
 
-void parse(float& f,
-           const rapidjson::Value& v);
+void parse(float &f,
+           const rapidjson::Value &v);
 
-void parse(double& d,
-           const rapidjson::Value& v);
+void parse(double &d,
+           const rapidjson::Value &v);
 
-void parse(std::string& s,
-           const rapidjson::Value& v);
+void parse(std::string &s,
+           const rapidjson::Value &v);
 
 template <typename T>
-void parse(std::vector<T>& a,
-           const rapidjson::Value& v)
+void parse(std::vector<T> &a,
+           const rapidjson::Value &v)
 {
     if (!v.IsArray())
     {
@@ -94,8 +94,8 @@ void parse(std::vector<T>& a,
 }
 
 template <typename T, std::size_t N>
-void parse(std::array<T,N>& a,
-           const rapidjson::Value& v)
+void parse(std::array<T,N> &a,
+           const rapidjson::Value &v)
 {
     if (!v.IsArray())
     {
@@ -109,8 +109,8 @@ void parse(std::array<T,N>& a,
     }
 }
 
-void parse(Color& c,
-           const rapidjson::Value& v);
+void parse(Color &c,
+           const rapidjson::Value &v);
 
 } // end of namespace commonlib
 } // end of namespace mcdane

@@ -18,12 +18,12 @@ class GameScreenConfig {
 public:
     GameScreenConfig() = default;
 
-    void init(const GameLib& gameLib,
-              const std::string& configFile);
+    void init(const GameLib &gameLib,
+              const std::string &configFile);
 
-    inline const std::string& mapFile() const;
+    inline const std::string &mapFile() const;
 
-    void setMapFile(const std::string& fileName);
+    void setMapFile(const std::string &fileName);
 
     inline int gameObjItemPoolSize() const;
 
@@ -35,29 +35,29 @@ public:
 
     inline float goodieRightMargin() const;
 
-    inline const commonlib::Vector2& armorProgressBarMargin() const;
+    inline const commonlib::Vector2 &armorProgressBarMargin() const;
 
-    inline const commonlib::Vector2& energyProgressBarMargin() const;
+    inline const commonlib::Vector2 &energyProgressBarMargin() const;
 
     inline float msgBoxWidth() const;
 
     inline float msgBoxHeight() const;
 
-    inline const std::string& victoryMsg() const;
+    inline const std::string &victoryMsg() const;
 
-    inline const std::string& failMsg() const;
+    inline const std::string &failMsg() const;
 
-    inline const commonlib::Vector2& aiRobotCountIconMargin() const;
+    inline const commonlib::Vector2 &aiRobotCountIconMargin() const;
 
-    inline const IconTemplate* aiRobotCountIconTemplate() const;
+    inline const IconTemplate *aiRobotCountIconTemplate() const;
 
-    inline const commonlib::Vector2& aiRobotCountTextMargin() const;
+    inline const commonlib::Vector2 &aiRobotCountTextMargin() const;
 
     inline TextSize aiRobotCountTextSize() const;
 
-    inline const commonlib::Color& aiRobotCountTextColor() const;
+    inline const commonlib::Color &aiRobotCountTextColor() const;
 
-    inline const ProgressPieTemplate* goodiePieTemplate(int idx) const;
+    inline const ProgressPieTemplate *goodiePieTemplate(int idx) const;
 
     inline float skillPieBottomMargin() const;
 
@@ -67,8 +67,8 @@ public:
 
 private:
     void initGoodiePieTemplates(
-                    const GameLib& gameLib,
-                    const std::vector<std::string>& goodiePieNames);
+                    const GameLib &gameLib,
+                    const std::vector<std::string> &goodiePieNames);
 
 private:
     std::string mapFile_;
@@ -84,7 +84,7 @@ private:
     std::string victoryMsg_;
     std::string failMsg_;
     commonlib::Vector2 aiRobotCountIconMargin_;
-    const IconTemplate* aiRobotCountIconTemplate_;
+    const IconTemplate *aiRobotCountIconTemplate_;
     commonlib::Vector2 aiRobotCountTextMargin_;
     TextSize aiRobotCountTextSize_;
     commonlib::Color aiRobotCountTextColor_;
@@ -94,7 +94,7 @@ private:
     float skillPieSpacing_;
 };
 
-const std::string& GameScreenConfig::mapFile() const
+const std::string &GameScreenConfig::mapFile() const
 {
     return mapFile_;
 }
@@ -124,12 +124,12 @@ float GameScreenConfig::goodieRightMargin() const
     return goodieRightMargin_;
 }
 
-const commonlib::Vector2& GameScreenConfig::armorProgressBarMargin() const
+const commonlib::Vector2 &GameScreenConfig::armorProgressBarMargin() const
 {
     return armorProgressBarMargin_;
 }
 
-const commonlib::Vector2& GameScreenConfig::energyProgressBarMargin() const
+const commonlib::Vector2 &GameScreenConfig::energyProgressBarMargin() const
 {
     return energyProgressBarMargin_;
 }
@@ -144,27 +144,27 @@ float GameScreenConfig::msgBoxHeight() const
     return msgBoxHeight_;
 }
 
-const std::string& GameScreenConfig::victoryMsg() const
+const std::string &GameScreenConfig::victoryMsg() const
 {
     return victoryMsg_;
 }
 
-const std::string& GameScreenConfig::failMsg() const
+const std::string &GameScreenConfig::failMsg() const
 {
     return failMsg_;
 }
 
-const commonlib::Vector2& GameScreenConfig::aiRobotCountIconMargin() const
+const commonlib::Vector2 &GameScreenConfig::aiRobotCountIconMargin() const
 {
     return aiRobotCountIconMargin_;
 }
 
-const IconTemplate* GameScreenConfig::aiRobotCountIconTemplate() const
+const IconTemplate *GameScreenConfig::aiRobotCountIconTemplate() const
 {
     return aiRobotCountIconTemplate_;
 }
 
-const commonlib::Vector2& GameScreenConfig::aiRobotCountTextMargin() const
+const commonlib::Vector2 &GameScreenConfig::aiRobotCountTextMargin() const
 {
     return aiRobotCountTextMargin_;
 }
@@ -174,12 +174,12 @@ TextSize GameScreenConfig::aiRobotCountTextSize() const
     return aiRobotCountTextSize_;
 }
 
-const commonlib::Color& GameScreenConfig::aiRobotCountTextColor() const
+const commonlib::Color &GameScreenConfig::aiRobotCountTextColor() const
 {
     return aiRobotCountTextColor_;
 }
 
-const ProgressPieTemplate* GameScreenConfig::goodiePieTemplate(int idx) const
+const ProgressPieTemplate *GameScreenConfig::goodiePieTemplate(int idx) const
 {
     return goodiePieTemplates_[idx];
 }

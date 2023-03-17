@@ -247,9 +247,9 @@ Matrix4 scale(float sx,
     return m;
 }
 
-Matrix4 lookAt(const Vector3& eye,
-               const Vector3& at,
-               const Vector3& up)
+Matrix4 lookAt(const Vector3 &eye,
+               const Vector3 &at,
+               const Vector3 &up)
 {
     Vector3 xaxis, yaxis, zaxis;
 

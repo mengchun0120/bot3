@@ -12,18 +12,18 @@ class Goodie;
 
 class PassthroughCollideChecker {
 public:
-    PassthroughCollideChecker(UpdateContext& cxt, Robot* robot);
+    PassthroughCollideChecker(UpdateContext &cxt, Robot *robot);
 
-    bool operator()(GameObject* obj);
-
-private:
-    void collideMissile(Missile* missile);
-
-    void collideGoodie(Goodie* goodie);
+    bool operator()(GameObject *obj);
 
 private:
-    UpdateContext& cxt_;
-    Robot* robot_;
+    void collideMissile(Missile *missile);
+
+    void collideGoodie(Goodie *goodie);
+
+private:
+    UpdateContext &cxt_;
+    Robot *robot_;
 };
 
 

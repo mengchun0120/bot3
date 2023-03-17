@@ -9,9 +9,9 @@ namespace mcdane {
 namespace botlib {
 
 void GoodieTemplate::init(GoodieType goodieType1,
-                          const std::string& name,
-                          const rapidjson::Value& v,
-                          const ComponentTemplateLib& componentTemplateLib)
+                          const std::string &name,
+                          const rapidjson::Value &v,
+                          const ComponentTemplateLib &componentTemplateLib)
 {
     CompositeObjectTemplate::init(GameObjectType::GOODIE, name,
                                   v, componentTemplateLib);

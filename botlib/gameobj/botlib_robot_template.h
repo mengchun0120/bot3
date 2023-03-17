@@ -15,11 +15,11 @@ public:
 
     ~RobotTemplate() override = default;
 
-    void init(const std::string& name,
-              const rapidjson::Value& v,
-              const MissileTemplateLib& missileTemplateLib,
-              const ComponentTemplateLib& componentTemplateLib,
-              const SkillTemplateLib& skillTemplateLib);
+    void init(const std::string &name,
+              const rapidjson::Value &v,
+              const MissileTemplateLib &missileTemplateLib,
+              const ComponentTemplateLib &componentTemplateLib,
+              const SkillTemplateLib &skillTemplateLib);
 
     inline float hp() const;
 
@@ -31,15 +31,15 @@ public:
 
     inline float rechargeRate() const;
 
-    inline const MissileTemplate* missileTemplate() const;
+    inline const MissileTemplate *missileTemplate() const;
 
     inline float dyingDuration() const;
 
     inline const std::vector<const SkillTemplate*> skills() const;
 
 private:
-    void initSkills(const std::vector<std::string>& skillNames,
-                    const SkillTemplateLib& skillTemplateLib);
+    void initSkills(const std::vector<std::string> &skillNames,
+                    const SkillTemplateLib &skillTemplateLib);
 
 protected:
     float hp_;
@@ -47,7 +47,7 @@ protected:
     float speed_;
     float energy_;
     float rechargeRate_;
-    const MissileTemplate* missileTemplate_;
+    const MissileTemplate *missileTemplate_;
     float dyingDuration_;
     std::vector<const SkillTemplate*> skills_;
 };
@@ -77,7 +77,7 @@ float RobotTemplate::rechargeRate() const
     return rechargeRate_;
 }
 
-const MissileTemplate* RobotTemplate::missileTemplate() const
+const MissileTemplate *RobotTemplate::missileTemplate() const
 {
     return missileTemplate_;
 }

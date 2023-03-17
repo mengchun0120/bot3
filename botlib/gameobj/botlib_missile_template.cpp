@@ -23,11 +23,11 @@ MissileTemplate::MissileTemplate()
 }
 
 void MissileTemplate::init(
-    const std::string& name,
-    const rapidjson::Value& v,
-    const ParticleEffectTemplateLib& particleEffectTemplateLib,
-    const ComponentTemplateLib& componentTemplateLib,
-    const MissileTemplateLib& missileTemplateLib)
+    const std::string &name,
+    const rapidjson::Value &v,
+    const ParticleEffectTemplateLib &particleEffectTemplateLib,
+    const ComponentTemplateLib &componentTemplateLib,
+    const MissileTemplateLib &missileTemplateLib)
 {
     std::string explodeEffectName, splitMissileName;
     std::vector<JsonParamPtr> params{

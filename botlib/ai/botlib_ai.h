@@ -13,13 +13,13 @@ public:
 
     virtual ~AI() = default;
 
-    void init(AIRobot* robot);
+    void init(AIRobot *robot);
 
-    virtual void apply(GameMap& map,
+    virtual void apply(GameMap &map,
                        float timeDelta) = 0;
 
 protected:
-    AIRobot* robot_;
+    AIRobot *robot_;
 };
 
 } // end of namespace botlib

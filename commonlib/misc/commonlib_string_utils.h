@@ -8,7 +8,7 @@ namespace mcdane {
 namespace commonlib {
 
 template <typename T>
-std::string stringVal(const T& v)
+std::string stringVal(const T &v)
 {
     std::ostringstream oss;
     oss << v;

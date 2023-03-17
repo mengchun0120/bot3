@@ -10,17 +10,17 @@ namespace commonlib {
 class MyException: public std::exception {
 public:
     MyException(int line,
-                const std::string& file,
-                const std::string& msg) noexcept;
+                const std::string &file,
+                const std::string &msg) noexcept;
 
-    const char* what() const noexcept override;
+    const char *what() const noexcept override;
 
     int line() const noexcept
     {
         return line_;
     }
 
-    const std::string& file() const noexcept
+    const std::string &file() const noexcept
     {
         return file_;
     }
@@ -34,8 +34,8 @@ private:
 class InvalidArgumentException: public MyException {
 public:
     InvalidArgumentException(int line,
-                             const std::string& file,
-                             const std::string& msg) noexcept
+                             const std::string &file,
+                             const std::string &msg) noexcept
         : MyException(line, file, msg)
     {}
 };
@@ -43,8 +43,8 @@ public:
 class ParseException: public MyException {
 public:
     ParseException(int line,
-                   const std::string& file,
-                   const std::string& msg) noexcept
+                   const std::string &file,
+                   const std::string &msg) noexcept
         : MyException(line, file, msg)
     {}
 };
@@ -52,8 +52,8 @@ public:
 class FileException: public MyException {
 public:
     FileException(int line,
-                  const std::string& file,
-                  const std::string& msg) noexcept
+                  const std::string &file,
+                  const std::string &msg) noexcept
         : MyException(line, file, msg)
     {}
 };
@@ -61,8 +61,8 @@ public:
 class OpenGLException: public MyException {
 public:
     OpenGLException(int line,
-                    const std::string& file,
-                    const std::string& msg) noexcept
+                    const std::string &file,
+                    const std::string &msg) noexcept
         : MyException(line, file, msg)
     {}
 };
@@ -70,8 +70,8 @@ public:
 class MemoryException: public MyException {
 public:
     MemoryException(int line,
-                    const std::string& file,
-                    const std::string& msg) noexcept
+                    const std::string &file,
+                    const std::string &msg) noexcept
         : MyException(line, file, msg)
     {}
 };

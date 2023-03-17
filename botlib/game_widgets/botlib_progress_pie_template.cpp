@@ -15,9 +15,9 @@ ProgressPieTemplate::ProgressPieTemplate()
 {
 }
 
-void ProgressPieTemplate::init(const rapidjson::Value& v,
-                               const VertexArrayLib& vertexArrayLib,
-                               const IconTemplateLib& iconLib)
+void ProgressPieTemplate::init(const rapidjson::Value &v,
+                               const VertexArrayLib &vertexArrayLib,
+                               const IconTemplateLib &iconLib)
 {
     std::string vertexArrayName;
     std::vector<std::string> iconNames;
@@ -36,8 +36,8 @@ void ProgressPieTemplate::init(const rapidjson::Value& v,
     initIcons(iconNames, iconLib);
 }
 
-void ProgressPieTemplate::initVertexArray(const std::string& vertexArrayName,
-                                          const VertexArrayLib& vertexArrayLib)
+void ProgressPieTemplate::initVertexArray(const std::string &vertexArrayName,
+                                          const VertexArrayLib &vertexArrayLib)
 {
     va_ = vertexArrayLib.search(vertexArrayName);
     if (!va_)
@@ -55,8 +55,8 @@ void ProgressPieTemplate::initVertexArray(const std::string& vertexArrayName,
     numTriangles_ = va_->numVertices(0) / 3;
 }
 
-void ProgressPieTemplate::initIcons(const std::vector<std::string>& iconNames,
-                                    const IconTemplateLib& iconLib)
+void ProgressPieTemplate::initIcons(const std::vector<std::string> &iconNames,
+                                    const IconTemplateLib &iconLib)
 {
     if (iconNames.empty())
     {

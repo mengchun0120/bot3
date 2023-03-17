@@ -12,29 +12,29 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-Player::Player(const PlayerTemplate* t,
-               const commonlib::Vector2& pos1,
-               const commonlib::Vector2& direction1)
+Player::Player(const PlayerTemplate *t,
+               const commonlib::Vector2 &pos1,
+               const commonlib::Vector2 &direction1)
 {
     init(t, pos1, direction1);
 }
 
-void Player::init(const PlayerTemplate* t,
-                  const Vector2& pos1,
-                  const Vector2& direction1)
+void Player::init(const PlayerTemplate *t,
+                  const Vector2 &pos1,
+                  const Vector2 &direction1)
 {
     Robot::init(t, Side::PLAYER, pos1, direction1);
     initGoodieEffects();
     initSkillMap();
 }
 
-void Player::update(UpdateContext& cxt)
+void Player::update(UpdateContext &cxt)
 {
     updateGoodieEffects(cxt.timeDelta());
     Robot::update(cxt);
 }
 
-void Player::addGoodieEffect(const GoodieTemplate* t)
+void Player::addGoodieEffect(const GoodieTemplate *t)
 {
     if (!isLasting(t->goodieType()))
     {
@@ -42,7 +42,7 @@ void Player::addGoodieEffect(const GoodieTemplate* t)
         return;
     }
 
-    GoodieEffectItem* g = findGoodieEffect(t->goodieType());
+    GoodieEffectItem *g = findGoodieEffect(t->goodieType());
     if (g)
     {
         g->item().reset();
@@ -54,21 +54,21 @@ void Player::addGoodieEffect(const GoodieTemplate* t)
     goodieEffects_.pushBack(g);
 }
 
-void Player::toJson(rapidjson::Value& v,
-                    rapidjson::Document::AllocatorType& allocator)
+void Player::toJson(rapidjson::Value &v,
+                    rapidjson::Document::AllocatorType &allocator)
 {
     Robot::toJson(v, allocator);
     v.AddMember("type", jsonVal("player", allocator), allocator);
 }
 
-void Player::setDest(const commonlib::Vector2& dest)
+void Player::setDest(const commonlib::Vector2 &dest)
 {
-    MoveSkill* s = static_cast<MoveSkill*>(searchSkill(SkillType::MOVE));
+    MoveSkill *s = static_cast<MoveSkill*>(searchSkill(SkillType::MOVE));
     s->setDest(dest);
     s->setEnabled(true);
 }
 
-Skill* Player::findSkillForInput(int input)
+Skill *Player::findSkillForInput(int input)
 {
     auto it = skillMap_.find(input);
     return it != skillMap_.end() ? it->second : nullptr;
@@ -82,10 +82,10 @@ void Player::initGoodieEffects()
 
 void Player::initSkillMap()
 {
-    auto& m = getTemplate()->inputSkillMap();
+    auto &m = getTemplate()->inputSkillMap();
     for (auto it = m.begin(); it != m.end(); ++it)
     {
-        Skill* skill = searchSkill(it->second);
+        Skill *skill = searchSkill(it->second);
         if (!skill)
         {
             LOG_WARN << "Skill " << toString(it->second)
@@ -99,11 +99,11 @@ void Player::initSkillMap()
 
 void Player::updateGoodieEffects(float timeDelta)
 {
-    GoodieEffectItem* g, * next;
+    GoodieEffectItem *g, * next;
 
     for (g = goodieEffects_.first(); g; g = next)
     {
-        GoodieEffect& effect = g->item();
+        GoodieEffect &effect = g->item();
 
         next = g->next();
 
@@ -117,9 +117,9 @@ void Player::updateGoodieEffects(float timeDelta)
     }
 }
 
-GoodieEffectItem* Player::findGoodieEffect(GoodieType type)
+GoodieEffectItem *Player::findGoodieEffect(GoodieType type)
 {
-    GoodieEffectItem* g;
+    GoodieEffectItem *g;
     for (g = goodieEffects_.first(); g; g = g->next())
     {
         if (g->item().type() == type)

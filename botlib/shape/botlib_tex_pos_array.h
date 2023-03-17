@@ -17,12 +17,16 @@ public:
 
     TexPosArray(std::initializer_list<commonlib::Point2> texPos);
 
+    TexPosArray(const std::vector<commonlib::Point2> &texPos);
+
     template <typename Iterator>
     TexPosArray(Iterator begin, Iterator end);
 
     virtual ~TexPosArray() = default;
 
     void load(std::initializer_list<commonlib::Point2> texPos);
+
+    void load(const std::vector<commonlib::Point2> &texPos);
 
     template <typename Iterator>
     void load(Iterator begin, Iterator end);
@@ -32,7 +36,7 @@ public:
         return texPos_.size();
     }
 
-    const commonlib::Point2* texPos() const
+    const commonlib::Point2 *texPos() const
     {
         return texPos_.data();
     }

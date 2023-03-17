@@ -10,7 +10,7 @@ namespace commonlib {
 
 class Logger {
     template <typename T>
-    friend Logger& operator<<(Logger& logger, const T& t);
+    friend Logger &operator<<(Logger& logger, const T& t);
 
 public:
     enum LogLevel {
@@ -24,9 +24,9 @@ public:
     static std::string k_levelStr[LEVEL_COUNT];
     static std::shared_ptr<Logger> k_logger;
 
-    static LogLevel strToLevel(const std::string& levelStr);
+    static LogLevel strToLevel(const std::string &levelStr);
 
-    static void initInstance(std::ostream& os,
+    static void initInstance(std::ostream &os,
                              LogLevel minLevel=LEVEL_DEBUG);
 
     ~Logger() = default;
@@ -45,22 +45,22 @@ public:
 
     void setEnabled(bool enabled);
 
-    Logger& logTime();
+    Logger &logTime();
 
     void flush();
 
 private:
-    Logger(std::ostream& os,
+    Logger(std::ostream &os,
            LogLevel minLevel);
 
 private:
-    std::ostream& os_;
+    std::ostream &os_;
     bool enabled_;
     LogLevel minLevel_;
 };
 
 template <typename T>
-Logger& operator<<(Logger& logger, const T& t)
+Logger &operator<<(Logger& logger, const T& t)
 {
 #ifdef ENABLE_LOG
     logger.os_ << t;

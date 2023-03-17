@@ -19,14 +19,14 @@ TargetedBlastSkillTemplate::TargetedBlastSkillTemplate()
 }
 
 TargetedBlastSkillTemplate::TargetedBlastSkillTemplate(
-                                   const rapidjson::Value& v,
-                                   const ProgressPieTemplateLib& progressPieLib)
+                                   const rapidjson::Value &v,
+                                   const ProgressPieTemplateLib &progressPieLib)
 {
     init(v, progressPieLib);
 }
 
-void TargetedBlastSkillTemplate::init(const rapidjson::Value& v,
-                                      const ProgressPieTemplateLib& progressPieLib)
+void TargetedBlastSkillTemplate::init(const rapidjson::Value &v,
+                                      const ProgressPieTemplateLib &progressPieLib)
 {
     SkillWithCostTemplate::init(SkillType::TARGETED_BLAST, v, progressPieLib);
 

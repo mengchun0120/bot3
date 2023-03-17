@@ -29,10 +29,10 @@ Robot::~Robot()
     }
 }
 
-void Robot::init(const RobotTemplate* t,
+void Robot::init(const RobotTemplate *t,
                  Side side,
-                 const Vector2& pos1,
-                 const Vector2& direction1)
+                 const Vector2 &pos1,
+                 const Vector2 &direction1)
 {
     CompositeObject::init(t, pos1, direction1);
     side_ = side;
@@ -58,7 +58,7 @@ void Robot::present() const
     }
 }
 
-void Robot::update(UpdateContext& cxt)
+void Robot::update(UpdateContext &cxt)
 {
     if (state_ == GameObjectState::ALIVE)
     {
@@ -72,13 +72,13 @@ void Robot::update(UpdateContext& cxt)
     GameObject::update(cxt);
 }
 
-void Robot::shiftPos(const Vector2& delta)
+void Robot::shiftPos(const Vector2 &delta)
 {
     CompositeObject::shiftPos(delta);
     hpIndicator_.shiftPos(delta);
 }
 
-void Robot::setDirection(const Vector2& direction1)
+void Robot::setDirection(const Vector2 &direction1)
 {
     CompositeObject::setDirection(direction1);
     resetSpeed();
@@ -100,7 +100,7 @@ void Robot::addEnergy(float delta)
     energy_ = clamp(energy_+delta, 0.0f, getTemplate()->energy());
 }
 
-void Robot::doDamage(float damage, UpdateContext& cxt)
+void Robot::doDamage(float damage, UpdateContext &cxt)
 {
     if (state_ != GameObjectState::ALIVE || damage <= 0.0f || invincible())
     {
@@ -124,7 +124,7 @@ void Robot::doDamage(float damage, UpdateContext& cxt)
     }
 }
 
-bool Robot::canBeDumped(GameMap& map) const
+bool Robot::canBeDumped(GameMap &map) const
 {
     return state_ == GameObjectState::DYING && !map.canSee(this);
 }
@@ -164,11 +164,11 @@ void Robot::resetSpeed()
     speed_ = speedNorm_ * direction_;
 }
 
-Skill* Robot::searchSkill(SkillType skillType)
+Skill *Robot::searchSkill(SkillType skillType)
 {
     for (auto it = skills_.begin(); it != skills_.end(); ++it)
     {
-        Skill* skill = *it;
+        Skill *skill = *it;
         if (skill->getTemplate()->type() == skillType)
         {
             return skill;
@@ -180,13 +180,13 @@ Skill* Robot::searchSkill(SkillType skillType)
 
 bool Robot::isSkillEnabled(SkillType skillType)
 {
-    Skill* skill = searchSkill(skillType);
+    Skill *skill = searchSkill(skillType);
     return skill->enabled();
 }
 
 bool Robot::setSkillEnabled(SkillType skillType, bool enabled)
 {
-    Skill* skill = searchSkill(skillType);
+    Skill *skill = searchSkill(skillType);
     if (skill)
     {
         skill->setEnabled(enabled);
@@ -196,10 +196,10 @@ bool Robot::setSkillEnabled(SkillType skillType, bool enabled)
     return false;
 }
 
-void Robot::shoot(UpdateContext& cxt)
+void Robot::shoot(UpdateContext &cxt)
 {
-    GameMap& map = *(cxt.map());
-    const MissileTemplate* missileTemplate = getTemplate()->missileTemplate();
+    GameMap &map = *(cxt.map());
+    const MissileTemplate *missileTemplate = getTemplate()->missileTemplate();
 
     for (auto it = components_.begin(); it != components_.end(); ++it)
     {
@@ -208,7 +208,7 @@ void Robot::shoot(UpdateContext& cxt)
             continue;
         }
 
-        Missile* missile =
+        Missile *missile =
             cxt.factory().createMissile(missileTemplate, side_,
                                         it->firePos(), it->direction(),
                                         damageFactor_);
@@ -218,7 +218,7 @@ void Robot::shoot(UpdateContext& cxt)
 
 void Robot::initSkills()
 {
-    auto& skillTemplates = getTemplate()->skills();
+    auto &skillTemplates = getTemplate()->skills();
 
     skills_.resize(skillTemplates.size());
     for (std::size_t i = 0; i < skills_.size(); ++i)
@@ -227,13 +227,13 @@ void Robot::initSkills()
     }
 }
 
-void Robot::updateAlive(UpdateContext& cxt)
+void Robot::updateAlive(UpdateContext &cxt)
 {
     updateEnergy(cxt.timeDelta());
     updateSkills(cxt);
 }
 
-void Robot::updateDying(UpdateContext& cxt)
+void Robot::updateDying(UpdateContext &cxt)
 {
     dyingTime_ += cxt.timeDelta();
     if (dyingTime_ >= getTemplate()->dyingDuration())
@@ -246,7 +246,7 @@ void Robot::updateDying(UpdateContext& cxt)
     }
 }
 
-void Robot::updateSkills(UpdateContext& cxt)
+void Robot::updateSkills(UpdateContext &cxt)
 {
     for (std::size_t i = 0; i < skills_.size(); ++i)
     {

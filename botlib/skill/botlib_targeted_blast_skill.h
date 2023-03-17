@@ -12,32 +12,32 @@ class TargetedBlastSkill: public SkillWithCost {
 public:
     TargetedBlastSkill() = default;
 
-    TargetedBlastSkill(const TargetedBlastSkillTemplate* t,
-                       Robot* robot,
+    TargetedBlastSkill(const TargetedBlastSkillTemplate *t,
+                       Robot *robot,
                        bool enabled1=false);
 
     ~TargetedBlastSkill() override = default;
 
-    void init(const TargetedBlastSkillTemplate* t,
-              Robot* robot,
+    void init(const TargetedBlastSkillTemplate *t,
+              Robot *robot,
               bool enabled1=false);
 
-    inline const TargetedBlastSkillTemplate* getTemplate() const;
+    inline const TargetedBlastSkillTemplate *getTemplate() const;
 
 protected:
-    bool apply(UpdateContext& cxt) override;
+    bool apply(UpdateContext &cxt) override;
 
 private:
-    commonlib::Region<int> searchRegion(GameMap* map);
+    commonlib::Region<int> searchRegion(GameMap *map);
 
-    void findTargets(GameObjItemList& targets,
-                     UpdateContext& cxt);
+    void findTargets(GameObjItemList &targets,
+                     UpdateContext &cxt);
 
-    void shootTargets(GameObjItemList& targets,
-                      UpdateContext& cxt);
+    void shootTargets(GameObjItemList &targets,
+                      UpdateContext &cxt);
 };
 
-const TargetedBlastSkillTemplate* TargetedBlastSkill::getTemplate() const
+const TargetedBlastSkillTemplate *TargetedBlastSkill::getTemplate() const
 {
     return static_cast<const TargetedBlastSkillTemplate*>(t_);
 }

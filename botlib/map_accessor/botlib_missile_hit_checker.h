@@ -11,26 +11,26 @@ class AIRobot;
 
 class MissileHitChecker {
 public:
-    MissileHitChecker(UpdateContext& cxt,
-                      Missile& missile,
+    MissileHitChecker(UpdateContext &cxt,
+                      Missile &missile,
                       bool inflictDamage=false);
 
     inline bool collide() const;
 
-    bool operator()(GameObject* obj);
+    bool operator()(GameObject *obj);
 
 private:
-    inline bool check(GameObject* obj) const;
+    inline bool check(GameObject *obj) const;
 
-    inline bool isEnemyRobot(GameObject* obj) const;
+    inline bool isEnemyRobot(GameObject *obj) const;
 
-    void doDamage(GameObject* obj);
+    void doDamage(GameObject *obj);
 
-    void generateGoodie(AIRobot* robot);
+    void generateGoodie(AIRobot *robot);
 
 private:
-    UpdateContext& cxt_;
-    Missile& missile_;
+    UpdateContext &cxt_;
+    Missile &missile_;
     bool inflictDamage_;
     bool collide_;
 };
@@ -40,7 +40,7 @@ bool MissileHitChecker::collide() const
     return collide_;
 }
 
-bool MissileHitChecker::check(GameObject* obj) const
+bool MissileHitChecker::check(GameObject *obj) const
 {
     return obj != static_cast<GameObject*>(&missile_) &&
            obj->state() == GameObjectState::ALIVE &&
@@ -48,7 +48,7 @@ bool MissileHitChecker::check(GameObject* obj) const
              isEnemyRobot(obj));
 }
 
-bool MissileHitChecker::isEnemyRobot(GameObject* obj) const
+bool MissileHitChecker::isEnemyRobot(GameObject *obj) const
 {
     return obj->type() == GameObjectType::ROBOT &&
            static_cast<Robot*>(obj)->side() != missile_.side();

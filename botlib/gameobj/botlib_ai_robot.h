@@ -13,28 +13,28 @@ class AIRobot: public Robot {
 public:
     AIRobot();
 
-    AIRobot(const AIRobotTemplate* t,
-            const commonlib::Vector2& pos1,
-            const commonlib::Vector2& direction1);
+    AIRobot(const AIRobotTemplate *t,
+            const commonlib::Vector2 &pos1,
+            const commonlib::Vector2 &direction1);
 
     ~AIRobot() override;
 
-    void init(const AIRobotTemplate* t,
-              const commonlib::Vector2& pos1,
-              const commonlib::Vector2& direction1);
+    void init(const AIRobotTemplate *t,
+              const commonlib::Vector2 &pos1,
+              const commonlib::Vector2 &direction1);
 
-    inline const AIRobotTemplate* getTemplate() const;
+    inline const AIRobotTemplate *getTemplate() const;
 
-    void update(UpdateContext& cxt) override;
+    void update(UpdateContext &cxt) override;
 
-    void toJson(rapidjson::Value& v,
-                rapidjson::Document::AllocatorType& allocator) override;
+    void toJson(rapidjson::Value &v,
+                rapidjson::Document::AllocatorType &allocator) override;
 
 private:
-    AI* ai_;
+    AI *ai_;
 };
 
-const AIRobotTemplate* AIRobot::getTemplate() const
+const AIRobotTemplate *AIRobot::getTemplate() const
 {
     return static_cast<const AIRobotTemplate*>(t_);
 }

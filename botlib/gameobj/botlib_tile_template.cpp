@@ -8,9 +8,9 @@ namespace mcdane {
 namespace botlib {
 
 void TileTemplate::init(
-    const std::string& name,
-    const rapidjson::Value& v,
-    const ComponentTemplateLib& componentTemplateLib)
+    const std::string &name,
+    const rapidjson::Value &v,
+    const ComponentTemplateLib &componentTemplateLib)
 {
     std::vector<JsonParamPtr> params{
         jsonParam(hp_, "hp", true, gt(0.0f)),

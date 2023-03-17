@@ -14,11 +14,11 @@ public:
 
     ~MissileTemplate() override = default;
 
-    void init(const std::string& name,
-              const rapidjson::Value& v,
-              const ParticleEffectTemplateLib& particleEffectTemplateLib,
-              const ComponentTemplateLib& componentTemplateLib,
-              const MissileTemplateLib& missileTemplateLib);
+    void init(const std::string &name,
+              const rapidjson::Value &v,
+              const ParticleEffectTemplateLib &particleEffectTemplateLib,
+              const ComponentTemplateLib &componentTemplateLib,
+              const MissileTemplateLib &missileTemplateLib);
 
     inline float damage() const;
 
@@ -30,13 +30,13 @@ public:
 
     inline float duration() const;
 
-    inline const ParticleEffectTemplate* explodeEffectTemplate() const;
+    inline const ParticleEffectTemplate *explodeEffectTemplate() const;
 
     inline float searchBreath() const;
 
     inline int splitCount() const;
 
-    inline const MissileTemplate* splitMissileTemplate() const;
+    inline const MissileTemplate *splitMissileTemplate() const;
 
     inline const std::vector<commonlib::Vector2> splitMissileDirections() const;
 
@@ -46,10 +46,10 @@ private:
     float explodeBreath_;
     float energyCost_;
     float duration_;
-    const ParticleEffectTemplate* explodeEffectTemplate_;
+    const ParticleEffectTemplate *explodeEffectTemplate_;
     float searchBreath_;
     int splitCount_;
-    const MissileTemplate* splitMissileTemplate_;
+    const MissileTemplate *splitMissileTemplate_;
     std::vector<commonlib::Vector2> splitMissileDirections_;
 };
 
@@ -78,7 +78,7 @@ float MissileTemplate::duration() const
     return duration_;
 }
 
-const ParticleEffectTemplate* MissileTemplate::explodeEffectTemplate() const
+const ParticleEffectTemplate *MissileTemplate::explodeEffectTemplate() const
 {
     return explodeEffectTemplate_;
 }
@@ -93,7 +93,7 @@ int MissileTemplate::splitCount() const
     return splitCount_;
 }
 
-const MissileTemplate* MissileTemplate::splitMissileTemplate() const
+const MissileTemplate *MissileTemplate::splitMissileTemplate() const
 {
     return splitMissileTemplate_;
 }

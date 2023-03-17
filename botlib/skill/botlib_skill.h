@@ -15,17 +15,17 @@ class Skill {
 public:
     Skill();
 
-    Skill(const SkillTemplate* t,
-          Robot* robot,
+    Skill(const SkillTemplate *t,
+          Robot *robot,
           bool enabled1=false);
 
     virtual ~Skill();
 
-    void init(const SkillTemplate* t,
-              Robot* robot,
+    void init(const SkillTemplate *t,
+              Robot *robot,
               bool enabled1=false);
 
-    inline const SkillTemplate* getTemplate() const;
+    inline const SkillTemplate *getTemplate() const;
 
     inline SkillType type() const;
 
@@ -43,15 +43,15 @@ public:
 
     inline void setFlag(DynamicSkillFlag f, bool b);
 
-    virtual void update(UpdateContext& cxt) = 0;
+    virtual void update(UpdateContext &cxt) = 0;
 
 protected:
-    const SkillTemplate* t_;
+    const SkillTemplate *t_;
     int flags_;
-    Robot* robot_;
+    Robot *robot_;
 };
 
-const SkillTemplate* Skill::getTemplate() const
+const SkillTemplate *Skill::getTemplate() const
 {
     return t_;
 }

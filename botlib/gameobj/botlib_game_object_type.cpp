@@ -9,7 +9,7 @@ namespace botlib {
 
 namespace std {
 
-ostream& operator<<(ostream& os, mcdane::botlib::GameObjectType t)
+ostream &operator<<(ostream& os, mcdane::botlib::GameObjectType t)
 {
     using namespace mcdane::botlib;
     using namespace mcdane::commonlib;

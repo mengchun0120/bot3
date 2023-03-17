@@ -10,9 +10,9 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-void IconTemplate::init(const rapidjson::Value& v,
-                        const TextureLib& textureLib,
-                        const RectLib& rectLib)
+void IconTemplate::init(const rapidjson::Value &v,
+                        const TextureLib &textureLib,
+                        const RectLib &rectLib)
 {
     std::string textureName, rectName;
     std::vector<JsonParamPtr> params{

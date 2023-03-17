@@ -4,8 +4,8 @@
 
 namespace std {
 
-std::ostream& operator<<(std::ostream& os,
-                         const rapidjson::Value& v)
+std::ostream &operator<<(std::ostream& os,
+                         const rapidjson::Value &v)
 {
     using namespace rapidjson;
 
