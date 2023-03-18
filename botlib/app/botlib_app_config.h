@@ -59,6 +59,8 @@ public:
 
     inline const std::string &messageBoxConfigFile() const;
 
+    inline const std::string &mapNavigatorConfigFile() const;
+
     inline const std::string &startScreenConfigFile() const;
 
     inline const std::string &gameScreenConfigFile() const;
@@ -144,6 +146,7 @@ private:
     std::string buttonConfigFile_;
     std::string labelConfigFile_;
     std::string messageBoxConfigFile_;
+    std::string mapNavigatorConfigFile_;
     std::string startScreenConfigFile_;
     std::string gameScreenConfigFile_;
     std::string showMapScreenConfigFile_;
@@ -259,6 +262,11 @@ const std::string & AppConfig::labelConfigFile() const
 const std::string & AppConfig::messageBoxConfigFile() const
 {
     return messageBoxConfigFile_;
+}
+
+const std::string & AppConfig::mapNavigatorConfigFile() const
+{
+    return mapNavigatorConfigFile_;
 }
 
 const std::string & AppConfig::startScreenConfigFile() const

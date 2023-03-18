@@ -135,6 +135,8 @@ void AppConfig::loadConfigFiles(const rapidjson::Document &doc)
                   true, k_nonEmptyStrV),
         jsonParam(messageBoxConfigFile_, {"configs", "messageBoxConfigFile"},
                   true, k_nonEmptyStrV),
+        jsonParam(mapNavigatorConfigFile_, {"configs", "mapNavigatorConfigFile"},
+                  true, k_nonEmptyStrV),
         jsonParam(startScreenConfigFile_, {"configs", "startScreenConfigFile"},
                   true, k_nonEmptyStrV),
         jsonParam(gameScreenConfigFile_, {"configs", "gameScreenConfigFile"},
@@ -152,6 +154,7 @@ void AppConfig::loadConfigFiles(const rapidjson::Document &doc)
     buttonConfigFile_ = constructPath({configDir_, buttonConfigFile_});
     labelConfigFile_ = constructPath({configDir_, labelConfigFile_});
     messageBoxConfigFile_ = constructPath({configDir_, messageBoxConfigFile_});
+    mapNavigatorConfigFile_ = constructPath({configDir_, mapNavigatorConfigFile_});
     startScreenConfigFile_ = constructPath({configDir_, startScreenConfigFile_});
     gameScreenConfigFile_ = constructPath({configDir_, gameScreenConfigFile_});
     showMapScreenConfigFile_ = constructPath({configDir_, showMapScreenConfigFile_});

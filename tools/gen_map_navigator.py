@@ -1,6 +1,7 @@
 import click
 import cairo
 import math
+import json
 import numpy as np
 
 def draw_triangle(ctx, triangle):
@@ -60,10 +61,7 @@ def draw_lines(ctx, radius, center):
         if i < 1:
             line = np.dot(line, rotation)
 
-@click.command()
-@click.argument("file-name", type=str, required=True)
-@click.argument("radius", type=int, required=True)
-def gen_map_navigator(file_name, radius):
+def gen_map_navigator_png(radius):
     width = 2 * radius
     height = 2 * radius
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
@@ -75,7 +73,59 @@ def gen_map_navigator(file_name, radius):
     draw_arrows(ctx, radius, center)
     draw_lines(ctx, radius, center)
 
-    surface.write_to_png(file_name)
+    surface.write_to_png("map_navigator.png")
+
+def gen_vertex_array(radius):
+    x = radius * math.sqrt(2.0) / 2.0
+    y = x
+    triangle = np.array([
+        [0.0, 0.0],
+        [x, y],
+        [x, -y],
+    ])
+    results = [triangle]
+    rotation = rotate_matrix(math.pi/2.0)
+    for i in range(3):
+        triangle = np.dot(triangle, rotation)
+        results.append(triangle)
+    return results
+
+def gen_tex_pos_array():
+    center = np.array([0.5,0.5])
+    triangle = np.array([
+        [0.0, 0.0],
+        [0.5, 0.5],
+        [0.5, -0.5],
+    ])
+    results = [triangle+center]
+    rotation = rotate_matrix(math.pi/2.0)
+    for i in range(3):
+        triangle = np.dot(triangle, rotation)
+        results.append(triangle+center)
+    return results
+
+def gen_map_navigator_json(vertex_array, tex_pos_array, radius):
+    va = []
+    result = {
+        "texture": "map_navigator",
+        "radius": float(radius),
+        "vertexArray": va,
+    }
+    for i in range(4):
+        va.append([
+            vertex_array[i].tolist(),
+            tex_pos_array[i].tolist()
+        ])
+    with open("map_navigator_config.json", "w") as f:
+        json.dump(result, f, indent=4)
+
+@click.command()
+@click.argument("radius", type=int, required=True)
+def main(radius):
+    gen_map_navigator_png(radius)
+    vertex_array = gen_vertex_array(radius)
+    tex_pos_array = gen_tex_pos_array()
+    gen_map_navigator_json(vertex_array, tex_pos_array, radius)
 
 if __name__ == "__main__":
-    gen_map_navigator()
+    main()

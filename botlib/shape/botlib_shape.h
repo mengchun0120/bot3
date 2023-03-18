@@ -2,17 +2,17 @@
 #define INCLUDED_BOTLIB_SHAPE_H
 
 #include <initializer_list>
+#include <rapidjson/document.h>
 #include <commonlib_vector.h>
 #include <commonlib_vertex_array.h>
 #include <commonlib_opengl.h>
 
 namespace mcdane {
-
 namespace commonlib {
 
 class Color;
 
-} // end of namespace commonlib
+}
 
 namespace botlib {
 
@@ -79,6 +79,12 @@ const commonlib::VertexArray &Shape::vertexArray() const
 }
 
 } // end of namespace botlib
+
+namespace commonlib {
+
+void parse(botlib::Shape &shape, const rapidjson::Value &v);
+
+}
 } // end of namespace mcdane
 
 #endif

@@ -3,6 +3,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_algorithm.h>
 #include <commonlib_color.h>
+#include <commonlib_parse.h>
 #include <botlib_constants.h>
 #include <botlib_simple_shader_program.h>
 #include <botlib_tex_pos_array.h>
@@ -119,5 +120,30 @@ void Shape::load(const std::vector<commonlib::Point2> &positions,
 }
 
 } // end of namespace botlib
+
+namespace commonlib {
+
+void parse(botlib::Shape &shape, const rapidjson::Value &v)
+{
+    std::vector<std::vector<Point2>> vertexArrays;
+    parse(vertexArrays, v);
+
+    if (vertexArrays.size() == 0)
+    {
+        THROW_EXCEPT(ParseException, "vertexArray empty");
+    }
+
+    if (vertexArrays.size() == 1)
+    {
+        shape.load(vertexArrays[0]);
+    }
+    else
+    {
+        shape.load(vertexArrays[0], vertexArrays[1]);
+    }
+}
+
+}
+
 } // end of namespace mcdane
 
