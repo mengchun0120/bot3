@@ -1,3 +1,4 @@
 #testshape
-testmap
+#testmap
 #testwidget
+showmap

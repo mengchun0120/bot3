@@ -2,6 +2,7 @@
 #define INCLUDED_BOTLIB_SHOW_MAP_SCREEN_CONFIG_H
 
 #include <string>
+#include <commonlib_vector.h>
 
 namespace mcdane {
 namespace botlib {
@@ -18,9 +19,12 @@ public:
 
     inline float deltaPerStroke() const;
 
+    inline const commonlib::Vector2 &navigatorPos() const;
+
 private:
     std::string mapFile_;
     float deltaPerStroke_;
+    commonlib::Vector2 navigatorPos_;
 };
 
 const std::string &ShowMapScreenConfig::mapFile() const
@@ -31,6 +35,11 @@ const std::string &ShowMapScreenConfig::mapFile() const
 float ShowMapScreenConfig::deltaPerStroke() const
 {
     return deltaPerStroke_;
+}
+
+const commonlib::Vector2 &ShowMapScreenConfig::navigatorPos() const
+{
+    return navigatorPos_;
 }
 
 } // end of namespace botlib

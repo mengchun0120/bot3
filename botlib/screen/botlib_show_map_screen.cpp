@@ -30,6 +30,12 @@ void ShowMapScreen::init(const commonlib::Vector2 &viewportSize,
     {
         loadMap(viewportSize);
     }
+
+    viewportSize_ = viewportSize;
+#ifdef __ANDROID__
+    initNavigator();
+    overlayViewportOrigin_ = viewportSize / 2.0f;
+#endif
 }
 
 void ShowMapScreen::update(float timeDelta)
@@ -40,6 +46,9 @@ void ShowMapScreen::present()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     map_.present();
+#ifdef __ANDROID__
+    presentOverlay();
+#endif
     glFlush();
 }
 
@@ -96,7 +105,66 @@ void ShowMapScreen::processKey(const commonlib::KeyEvent &e)
 #elif __ANDROID__
 bool ShowMapScreen::processInput(const commonlib::InputEvent &e)
 {
+    switch(e.type_)
+    {
+        case InputEvent::POINTER_DOWN:
+            handlePointerDown(e.x_, e.y_);
+            break;
+        case InputEvent::POINTER_MOVE:
+            handlePointerMove(e.x_, e.y_);
+            break;
+        default:
+            break;
+    }
     return true;
+}
+
+void ShowMapScreen::initNavigator()
+{
+    const ShowMapScreenConfig &cfg = Context::showMapScreenConfig();
+    std::vector<MapNavigator::Action> actions{
+        [&](){ move(1,0); },
+        [&](){ move(0,1); },
+        [&](){ move(-1,0); },
+        [&](){ move(0, -1); },
+    };
+
+    navigator_.init(cfg.navigatorPos()[0], cfg.navigatorPos()[1], actions);
+}
+
+void ShowMapScreen::handlePointerDown(float x, float y)
+{
+    if (navigator_.containPos(x, y))
+    {
+        navigator_.onPointerDown(x, y);
+    }
+    else
+    {
+        navigator_.onPointerOut();
+    }
+}
+
+void ShowMapScreen::handlePointerMove(float x, float y)
+{
+    if (!navigator_.containPos(x, y))
+    {
+        navigator_.onPointerOver(x, y);
+    }
+    else
+    {
+        navigator_.onPointerOut();
+    }
+
+}
+
+void ShowMapScreen::presentOverlay()
+{
+    SimpleShaderProgram &program = Context::graphics().simpleShader();
+
+    program.use();
+    program.setViewportOrigin(overlayViewportOrigin_);
+    program.setViewportSize(viewportSize_);
+    navigator_.present();
 }
 #endif
 
@@ -111,6 +179,8 @@ void ShowMapScreen::loadMap(const commonlib::Vector2 &viewportSize)
 
 void ShowMapScreen::onViewportChange(float width, float height)
 {
+    viewportSize_[0] = width;
+    viewportSize_[1] = height;
     map_.resetViewport(width, height);
 }
 

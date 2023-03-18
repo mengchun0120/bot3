@@ -9,8 +9,8 @@
 #include <botlib_test_shape_app.h>
 #include <botlib_test_map_app.h>
 #include <botlib_test_widget_app.h>
+#include <botlib_show_map_app.h>
 #include <androidlib_android_out.h>
-#include <androidlib_robot_app.h>
 
 using namespace mcdane::commonlib;
 using namespace mcdane::botlib;
@@ -57,6 +57,12 @@ void handleInitWindow(android_app *app)
     else if (appName == "testwidget")
     {
         TestWidgetApp *a = new TestWidgetApp();
+        a->init(app);
+        app->userData = a;
+    }
+    else if (appName == "showmap")
+    {
+        ShowMapApp *a = new ShowMapApp();
         a->init(app);
         app->userData = a;
     }

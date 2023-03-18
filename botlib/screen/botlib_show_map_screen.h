@@ -3,6 +3,9 @@
 
 #include <botlib_game_object_factory.h>
 #include <botlib_game_map.h>
+#ifdef __ANDROID__
+#include <botlib_map_navigator.h>
+#endif
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -45,10 +48,25 @@ public:
 private:
     void loadMap(const commonlib::Vector2 &viewportSize);
 
+#ifdef __ANDROID__
+    void initNavigator();
+
+    void handlePointerDown(float x, float y);
+
+    void handlePointerMove(float x, float y);
+
+    void presentOverlay();
+#endif
+
 private:
     GameObjectFactory factory_;
     GameMap map_;
     ScreenType nextScreenType_;
+    commonlib::Vector2 viewportSize_;
+#ifdef __ANDROID__
+    MapNavigator navigator_;
+    commonlib::Vector2 overlayViewportOrigin_;
+#endif
 };
 
 GameMap &ShowMapScreen::map()

@@ -21,13 +21,18 @@ public:
 
     virtual void present() = 0;
 
-    virtual bool processInput(const commonlib::InputEvent &e) = 0;
+    virtual inline bool processInput(const commonlib::InputEvent &e);
 
     virtual inline void onViewportChange(float width, float height);
 
 protected:
     AppActions actions_;
 };
+
+bool Screen::processInput(const commonlib::InputEvent &e)
+{
+    return true;
+}
 
 void Screen::onViewportChange(float width, float height)
 {

@@ -17,7 +17,8 @@ void ShowMapScreenConfig::init(const std::string &cfgFile)
 
     std::vector<JsonParamPtr> params{
         jsonParam(mapFile_, "mapFile", false, k_nonEmptyStrV),
-        jsonParam(deltaPerStroke_, "deltaPerStroke", true, gt(0.0f))
+        jsonParam(deltaPerStroke_, "deltaPerStroke", true, gt(0.0f)),
+        jsonParam(navigatorPos_, "navigatorPos", true),
     };
 
     parse(params, doc);

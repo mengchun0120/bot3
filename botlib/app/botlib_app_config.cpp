@@ -1,4 +1,5 @@
 #include <commonlib_log.h>
+#include <commonlib_out_utils.h>
 #include <commonlib_json_param.h>
 #include <commonlib_file_utils.h>
 #include <botlib_app_config.h>
@@ -34,6 +35,8 @@ void AppConfig::init(const std::string &path,
     std::string docPath = constructPath({appDir, path});
 
     readJson(doc, docPath);
+
+    LOG_INFO << "AppConfig " << doc << LOG_END;
 
     k_instance.reset(new AppConfig(doc, appDir));
 }

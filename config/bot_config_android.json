@@ -29,6 +29,7 @@
         "buttonConfigFile": "button_config.json",
         "labelConfigFile": "label_config.json",
         "messageBoxConfigFile": "message_box_config.json",
+        "mapNavigatorConfigFile": "map_navigator_config.json",
         "startScreenConfigFile": "start_screen_config.json",
         "gameScreenConfigFile": "game_screen_config.json",
         "showMapScreenConfigFile": "showmap_screen_config.json",

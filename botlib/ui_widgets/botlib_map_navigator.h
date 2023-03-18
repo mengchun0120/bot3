@@ -23,7 +23,7 @@ public:
 
     void present() const override;
 
-    bool containPos(float x, float y);
+    bool containPos(float x, float y) const override;
 
     void onLostFocus() override;
 

@@ -5,6 +5,7 @@
 #include <vector>
 #include <array>
 #include <cstdint>
+#include <ostream>
 #include <rapidjson/document.h>
 
 namespace mcdane {

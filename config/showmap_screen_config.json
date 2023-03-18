@@ -1,4 +1,5 @@
 {
     "mapFile": "map_04.json",
-    "deltaPerStroke": 20.0
+    "deltaPerStroke": 20.0,
+    "navigatorPos": [60.0, 60.0]
 }

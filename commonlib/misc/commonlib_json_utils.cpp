@@ -1,5 +1,8 @@
 #include <cstdio>
+#include <rapidjson/document.h>
 #include <rapidjson/filereadstream.h>
+#include <rapidjson/ostreamwrapper.h>
+#include <rapidjson/writer.h>
 #include <commonlib_exception.h>
 #include <commonlib_string_utils.h>
 #include <commonlib_file_utils.h>
@@ -140,3 +143,4 @@ rapidjson::Value jsonVal(bool b,
 
 } // end of namespace commonlib
 } // end of namespace mcdane
+
