@@ -159,7 +159,7 @@ void WidgetGroup::onPointerOver(float x, float y)
 
     hoverWidgetIdx_ = idx;
 
-    widgets_[hoverWidgetIdx_]->onPointerOver();
+    widgets_[hoverWidgetIdx_]->onPointerOver(x, y);
 }
 
 void WidgetGroup::onPointerDown(float x, float y)
@@ -178,7 +178,7 @@ void WidgetGroup::onPointerDown(float x, float y)
 
     if (idx >= 0)
     {
-        widgets_[idx]->onPointerDown();
+        widgets_[idx]->onPointerDown(x, y);
     }
 }
 

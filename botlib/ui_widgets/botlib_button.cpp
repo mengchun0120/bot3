@@ -115,7 +115,7 @@ void Button::onPointerOut()
     state_ = STATE_NORMAL;
 }
 
-void Button::onPointerOver()
+void Button::onPointerOver(float x, float y)
 {
     if (!acceptInput_)
     {
@@ -125,7 +125,7 @@ void Button::onPointerOver()
     state_ = STATE_HOVER;
 }
 
-void Button::onPointerDown()
+void Button::onPointerDown(float x, float y)
 {
     if (!acceptInput_)
     {

@@ -30,9 +30,9 @@ public:
 
     virtual inline void onPointerOut();
 
-    virtual inline void onPointerOver();
+    virtual inline void onPointerOver(float x, float y);
 
-    virtual inline void onPointerDown();
+    virtual inline void onPointerDown(float x, float y);
 
     virtual void setPos(float x, float y);
 
@@ -72,11 +72,11 @@ void Widget::onPointerOut()
 {
 }
 
-void Widget::onPointerOver()
+void Widget::onPointerOver(float x, float y)
 {
 }
 
-void Widget::onPointerDown()
+void Widget::onPointerDown(float x, float y)
 {
 }
 

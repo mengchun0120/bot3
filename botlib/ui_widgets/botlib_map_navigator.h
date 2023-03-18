@@ -6,12 +6,6 @@
 #include <botlib_widget.h>
 
 namespace mcdane {
-namespace commonlib {
-
-class Texture;
-
-} // end of namespace commonlib
-
 namespace botlib {
 
 class MapNavigator: public Widget {
@@ -25,8 +19,6 @@ public:
 
     void init(float x,
               float y,
-              float radius,
-              const commonlib::Texture *texture,
               const std::vector<Action> &actions);
 
     void present() const override;
@@ -37,14 +29,16 @@ public:
 
     void onPointerOut() override;
 
-    void onPointerOver() override;
+    void onPointerOver(float x, float y) override;
 
-    void onPointerDown() override;
+    void onPointerDown(float x, float y) override;
 
 private:
-    float radius_;
-    const commonlib::Texture *texture_;
+    int controlIdx(float x, float y);
+
+private:
     std::vector<Action> actions_;
+    int curControlIdx_;
 };
 
 } // end of namespace botlib

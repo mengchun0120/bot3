@@ -62,9 +62,9 @@ public:
 
     void onPointerOut() override;
 
-    void onPointerOver() override;
+    void onPointerOver(float x, float y) override;
 
-    void onPointerDown() override;
+    void onPointerDown(float x, float y) override;
 
 private:
     void resetTextPos();
