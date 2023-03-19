@@ -123,9 +123,9 @@ void ShowMapScreen::initNavigator()
 {
     const ShowMapScreenConfig &cfg = Context::showMapScreenConfig();
     std::vector<MapNavigator::Action> actions{
-        [&](){ move(1,0); },
-        [&](){ move(0,1); },
-        [&](){ move(-1,0); },
+        [&](){ move(1, 0); },
+        [&](){ move(0, 1); },
+        [&](){ move(-1, 0); },
         [&](){ move(0, -1); },
     };
 
@@ -181,6 +181,7 @@ void ShowMapScreen::onViewportChange(float width, float height)
 {
     viewportSize_[0] = width;
     viewportSize_[1] = height;
+    overlayViewportOrigin_ = viewportSize_ / 2.0f;
     map_.resetViewport(width, height);
 }
 

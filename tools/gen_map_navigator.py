@@ -20,13 +20,13 @@ def rotate_matrix(angle):
     ]
 
 def draw_base(ctx, radius, center):
-    ctx.set_source_rgb(0, 0.8, 0)
+    ctx.set_source_rgb(0.8, 0.8, 0.8)
     ctx.arc(center[0], center[1], radius, 0, 2*math.pi)
     ctx.fill()
 
 
 def draw_arrows(ctx, radius, center):
-    ctx.set_source_rgb(0.6, 1.0, 0.6)
+    ctx.set_source_rgb(1.0, 1.0, 0.0)
 
     arrow_bottom = 2.0 * radius / 3.0
     arrow_top = arrow_bottom + radius/4.0
@@ -107,9 +107,10 @@ def gen_tex_pos_array():
 def gen_map_navigator_json(vertex_array, tex_pos_array, radius):
     va = []
     result = {
-        "texture": "map_navigator",
+        "texture": "map_navigator.png",
         "radius": float(radius),
         "vertexArray": va,
+        "alpha": 0.6
     }
     for i in range(4):
         va.append([

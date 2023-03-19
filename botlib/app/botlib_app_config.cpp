@@ -36,8 +36,6 @@ void AppConfig::init(const std::string &path,
 
     readJson(doc, docPath);
 
-    LOG_INFO << "AppConfig " << doc << LOG_END;
-
     k_instance.reset(new AppConfig(doc, appDir));
 }
 

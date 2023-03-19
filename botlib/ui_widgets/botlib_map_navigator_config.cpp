@@ -23,9 +23,9 @@ void MapNavigatorConfig::init(const std::string &fileName)
     std::string textureFile;
     std::vector<JsonParamPtr> params{
         jsonParam(textureFile, "texture", true, k_nonEmptyStrV),
-        jsonParam(activateColor_, "activateColor", true),
         jsonParam(radius_, "radius", true, gt(0.0f)),
         jsonParam(controls_, "vertexArray", true),
+        jsonParam(alpha_, "alpha", true, gt(0.0f)),
     };
 
     parse(params, doc);

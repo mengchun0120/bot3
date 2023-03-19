@@ -23,6 +23,7 @@ Context::Context(const AppConfig &cfg)
     buttonConfig_.init(cfg.buttonConfigFile(), cfg.picDir());
     labelConfig_.init(cfg.labelConfigFile());
     msgBoxConfig_.init(cfg.messageBoxConfigFile());
+    mapNavigatorConfig_.init(cfg.mapNavigatorConfigFile());
     startScreenConfig_.init(cfg.startScreenConfigFile());
     gameScreenConfig_.init(gameLib_, cfg.gameScreenConfigFile());
     showMapScreenConfig_.init(cfg.showMapScreenConfigFile());

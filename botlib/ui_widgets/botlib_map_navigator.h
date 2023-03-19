@@ -38,7 +38,7 @@ private:
 
 private:
     std::vector<Action> actions_;
-    int curControlIdx_;
+    float radiusSquare_;
 };
 
 } // end of namespace botlib
