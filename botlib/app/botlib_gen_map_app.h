@@ -11,13 +11,23 @@ namespace botlib {
 
 class GenMapApp: public commonlib::App {
 public:
-    GenMapApp(const std::string &appConfigFile,
+    GenMapApp();
+
+    ~GenMapApp() override = default;
+
+#ifdef DESKTOP_APP
+    void init(std::string &appConfigFile,
               const std::string &appDir,
               const std::string &algorithm,
               const std::string &algorithmConfigFile,
               const std::string &mapFile);
-
-    ~GenMapApp() override = default;
+#elif __ANDROID_-
+    void init(android_app *app,
+              std::string &appConfigFile,
+              const std::string &algorithm,
+              const std::string &algorithmConfigFile,
+              const std::string &mapFile);
+#endif
 
     void process() override;
 

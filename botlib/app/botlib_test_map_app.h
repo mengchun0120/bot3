@@ -19,7 +19,9 @@ public:
               const std::string &appDir,
               const std::string &mapFile);
 #elif __ANDROID__
-    void init(android_app *app);
+    void init(android_app *app,
+              const std::string &configFile,
+              const std::string &mapFile);
 #endif
 
     void process() override;

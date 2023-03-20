@@ -16,7 +16,13 @@ using namespace mcdane::botlib;
 namespace mcdane {
 namespace genmap {
 
-GenMapApp::GenMapApp(const std::string &appConfigFile,
+GenMapApp::GenMapApp()
+    : App()
+{
+}
+
+#ifdef DESKTOP_APP
+void GenMapApp::init(const std::string &appConfigFile,
                      const std::string &appDir,
                      const std::string &algorithm,
                      const std::string &algorithmConfigFile,
@@ -30,6 +36,22 @@ GenMapApp::GenMapApp(const std::string &appConfigFile,
     setupGame();
     generateMap(algorithm, algorithmConfigFile, mapFile, appDir);
 }
+#elif __ANDROID__
+void GenMapApp::init(android_app *app,
+                     const std::string &appConfigFile,
+                     const std::string &algorithm,
+                     const std::string &algorithmConfigFile,
+                     const std::string &mapFile)
+{
+    AppConfig::init(appConfigFile);
+    const AppConfig &cfg = AppConfig::instance();
+    init(app);
+    Context::init(cfg);
+    setupOpenGL();
+    setupGame();
+    generateMap(algorithm, algorithmConfigFile, mapFile, appDir);
+}
+#endif
 
 void GenMapApp::process()
 {

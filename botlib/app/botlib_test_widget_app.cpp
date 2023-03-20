@@ -27,10 +27,11 @@ void TestWidgetApp::init(const std::string &configFile,
     setupInput();
 }
 #elif __ANDROID__
-void TestWidgetApp::init(android_app *app)
+void TestWidgetApp::init(android_app *app,
+                         const std::string &configFile)
 {
     App::init(app);
-    AppConfig::init("config/bot_config_android.json");
+    AppConfig::init(configFile);
     Context::init(AppConfig::instance());
     setupShader();
     setupWidgets();

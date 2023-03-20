@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <vector>
 #include <sstream>
+#include <unordered_map>
 #include <game-activity/GameActivity.cpp>
 #include <game-text-input/gametextinput.cpp>
 #include <commonlib_log.h>
@@ -21,7 +22,7 @@ extern "C" {
 
 #include <game-activity/native_app_glue/android_native_app_glue.c>
 
-void getStartApp(std::vector<std::string> &params)
+void getParams(std::vector<std::string> &params)
 {
     std::istringstream is1(readText("config/startapp.txt"));
     std::string line;
@@ -35,11 +36,68 @@ void getStartApp(std::vector<std::string> &params)
     }
 }
 
+void runTestShape(android_app *app, const std::vector<std::string> &params)
+{
+    if (params.size() < 2)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
+    }
+
+    TestShapeApp *a = new TestShapeApp();
+    a->init(app, params[1]);
+    app->userData = a;
+}
+
+void runTestMap(android_app *app, const std::vector<std::string> &params)
+{
+    if (params.size() < 3)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
+    }
+
+    TestMapApp *a = new TestMapApp();
+    a->init(app, params[1], params[2]);
+    app->userData = a;
+}
+
+void runTestWidget(android_app *app, const std::vector<std::string> &params)
+{
+    if (params.size() < 2)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
+    }
+
+    TestWidgetApp *a = new TestWidgetApp();
+    a->init(app, params[1]);
+    app->userData = a;
+}
+
+void runShowMap(android_app *app, const std::vector<std::string> &params)
+{
+    if (params.size() < 3)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
+    }
+
+    ShowMapApp *a = new ShowMapApp();
+    a->init(app, params[1], params[2]);
+    app->userData = a;
+}
+
 void handleInitWindow(android_app *app)
 {
-    std::vector<std::string> params;
-    getStartApp(params);
+    using namespace std;
 
+    typedef void (*AppFunc)(android_app *, const vector<std::string> &);
+    unordered_map<string, AppFunc> funcMap{
+        {"testshape", runTestShape},
+        {"testmap", runTestMap},
+        {"testwidget", runTestWidget},
+        {"showmap", runShowMap},
+    };
+    vector<string> params;
+
+    getParams(params);
     if (params.empty())
     {
         LOG_ERROR << "No app specified" << LOG_END;
@@ -48,35 +106,10 @@ void handleInitWindow(android_app *app)
 
     LOG_INFO << "Starting: " << params[0] << LOG_END;
 
-    if (params[0] == "testshape")
+    auto it = funcMap.find(params[0]);
+    if (it != funcMap.end())
     {
-        TestShapeApp *a = new TestShapeApp();
-        a->init(app);
-        app->userData = a;
-    }
-    else if (params[0] == "testmap")
-    {
-        TestMapApp *a = new TestMapApp();
-        a->init(app);
-        app->userData = a;
-    }
-    else if (params[0] == "testwidget")
-    {
-        TestWidgetApp *a = new TestWidgetApp();
-        a->init(app);
-        app->userData = a;
-    }
-    else if (params[0] == "showmap")
-    {
-        if (params.size() < 2)
-        {
-            LOG_ERROR << "Invalid params" << LOG_END;
-            return;
-        }
-
-        ShowMapApp *a = new ShowMapApp();
-        a->init(app, params[1]);
-        app->userData = a;
+        (it->second)(app, params);
     }
     else
     {

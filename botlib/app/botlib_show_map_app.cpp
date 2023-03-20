@@ -29,9 +29,10 @@ void ShowMapApp::init(const std::string &configFile,
 }
 #elif __ANDROID__
 void ShowMapApp::init(android_app *app,
+                      const std::string &configFile,
                       const std::string &mapFile)
 {
-    AppConfig::init("config/bot_config_android.json");
+    AppConfig::init(configFile);
     App::init(app);
     const AppConfig &cfg = AppConfig::instance();
     Context::init(cfg);

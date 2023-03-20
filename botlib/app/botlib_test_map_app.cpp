@@ -31,16 +31,18 @@ void TestMapApp::init(const std::string &configFile,
     setupMap(constructPath({cfg.mapDir(), mapFile}));
 }
 #elif __ANDROID__
-void TestMapApp::init(android_app *app)
+void TestMapApp::init(android_app *app,
+                      const std::string &configFile,
+                      const std::string &mapFile)
 {
-    AppConfig::init("config/bot_config_android.json");
+    AppConfig::init(configFile);
     App::init(app);
 
     const AppConfig &cfg = AppConfig::instance();
 
     Context::init(cfg);
     factory_.init(1000);
-    setupMap(constructPath({cfg.mapDir(), "map_05.json"}));
+    setupMap(constructPath({cfg.mapDir(), mapFile}));
 }
 #endif
 

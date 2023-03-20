@@ -27,9 +27,10 @@ void TestShapeApp::init(const std::string &configFile,
     setupTexture();
 }
 #elif __ANDROID__
-void TestShapeApp::init(android_app *app)
+void TestShapeApp::init(android_app *app,
+                        const std::string &configFile)
 {
-    AppConfig::init("config/bot_config_android.json");
+    AppConfig::init(configFile);
     App::init(app);
     Context::init(AppConfig::instance());
     setupShader();

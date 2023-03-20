@@ -22,7 +22,8 @@ public:
               const std::string &appDir);
 
 #elif __ANDROID__
-    void init(android_app *app);
+    void init(android_app *app,
+              const std::string &configFile);
 
 #endif
 
