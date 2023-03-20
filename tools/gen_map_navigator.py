@@ -109,8 +109,10 @@ def gen_map_navigator_json(vertex_array, tex_pos_array, radius):
     result = {
         "texture": "map_navigator.png",
         "radius": float(radius),
+        "alpha": 0.6,
+        "activateColor": [255, 255, 0, 255],
+        "activateDuration": 100.0,
         "vertexArray": va,
-        "alpha": 0.6
     }
     for i in range(4):
         va.append([

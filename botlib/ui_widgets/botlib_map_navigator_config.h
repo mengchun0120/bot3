@@ -24,6 +24,10 @@ public:
 
     inline float alpha() const;
 
+    inline const commonlib::Color &activateColor() const;
+
+    inline float activateDuration() const;
+
 private:
     void initTexture(const std::string &textureFile);
 
@@ -32,6 +36,8 @@ private:
     float radius_;
     std::vector<Polygon> controls_;
     float alpha_;
+    commonlib::Color activateColor_;
+    float activateDuration_;
 };
 
 const commonlib::Texture &MapNavigatorConfig::texture() const
@@ -52,6 +58,16 @@ const Polygon &MapNavigatorConfig::control(int idx) const
 float MapNavigatorConfig::alpha() const
 {
     return alpha_;
+}
+
+const commonlib::Color &MapNavigatorConfig::activateColor() const
+{
+    return activateColor_;
+}
+
+float MapNavigatorConfig::activateDuration() const
+{
+    return activateDuration_;
 }
 
 } // end of namespace botlib

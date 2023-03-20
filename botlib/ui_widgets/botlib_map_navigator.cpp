@@ -8,6 +8,9 @@ namespace botlib {
 
 MapNavigator::MapNavigator()
     : actions_(4)
+    , radiusSquare_(0.0f)
+    , curControlIdx_(-1)
+    , timeSinceLastPress_(0.0f)
 {
 }
 
@@ -19,6 +22,8 @@ void MapNavigator::init(float x,
     Widget::init(x, y, true, true, true);
     actions_ = actions;
     radiusSquare_ = cfg.radius() * cfg.radius();
+    curControlIdx_ = -1;
+    timeSinceLastPress_ = 0.0f;
 }
 
 void MapNavigator::present() const
@@ -31,8 +36,24 @@ void MapNavigator::present() const
     {
         cfg.control(i).draw(program, &pos_,
                             nullptr, nullptr, nullptr,
-                            cfg.texture().id(), nullptr,
+                            cfg.texture().id(),
+                            i == curControlIdx_ ? &cfg.activateColor() : nullptr,
                             GL_TRIANGLES, 0, 3);
+    }
+}
+
+void MapNavigator::update(float timeDelta)
+{
+    if (curControlIdx_ == -1)
+    {
+        return;
+    }
+
+    const MapNavigatorConfig &cfg = Context::mapNavigatorConfig();
+    timeSinceLastPress_ += timeDelta;
+    if (timeSinceLastPress_ >= cfg.activateDuration())
+    {
+        curControlIdx_ = -1;
     }
 }
 
@@ -45,10 +66,12 @@ bool MapNavigator::containPos(float x, float y) const
 
 void MapNavigator::onLostFocus()
 {
+    curControlIdx_ = -1;
 }
 
 void MapNavigator::onPointerOut()
 {
+    curControlIdx_ = -1;
 }
 
 void MapNavigator::onPointerOver(float x, float y)
@@ -57,7 +80,10 @@ void MapNavigator::onPointerOver(float x, float y)
 
 void MapNavigator::onPointerDown(float x, float y)
 {
-    actions_[controlIdx(x, y)]();
+    curControlIdx_ = controlIdx(x, y);
+    timeSinceLastPress_ = 0.0f;
+
+    actions_[curControlIdx_]();
 }
 
 int MapNavigator::controlIdx(float x, float y)

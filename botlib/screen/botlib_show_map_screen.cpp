@@ -40,6 +40,9 @@ void ShowMapScreen::init(const commonlib::Vector2 &viewportSize,
 
 void ShowMapScreen::update(float timeDelta)
 {
+#ifdef __ANDROID__
+    navigator_.update(timeDelta);
+#endif
 }
 
 void ShowMapScreen::present()

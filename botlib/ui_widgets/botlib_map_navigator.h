@@ -23,6 +23,8 @@ public:
 
     void present() const override;
 
+    void update(float timeDelta);
+
     bool containPos(float x, float y) const override;
 
     void onLostFocus() override;
@@ -39,6 +41,8 @@ private:
 private:
     std::vector<Action> actions_;
     float radiusSquare_;
+    int curControlIdx_;
+    float timeSinceLastPress_;
 };
 
 } // end of namespace botlib

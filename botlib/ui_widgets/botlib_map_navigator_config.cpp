@@ -26,6 +26,8 @@ void MapNavigatorConfig::init(const std::string &fileName)
         jsonParam(radius_, "radius", true, gt(0.0f)),
         jsonParam(controls_, "vertexArray", true),
         jsonParam(alpha_, "alpha", true, gt(0.0f)),
+        jsonParam(activateColor_, "activateColor", true),
+        jsonParam(activateDuration_, "activateDuration", true, gt(0.0f)),
     };
 
     parse(params, doc);

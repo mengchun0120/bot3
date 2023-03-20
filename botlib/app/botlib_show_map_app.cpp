@@ -44,6 +44,7 @@ void ShowMapApp::process()
     App::process();
 
     InputManager::instance().processInput(*this);
+    deltaSmoother_.update();
 
     if (running())
     {
