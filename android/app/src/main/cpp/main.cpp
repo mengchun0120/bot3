@@ -1,5 +1,6 @@
 #include <jni.h>
-
+#include <vector>
+#include <sstream>
 #include <game-activity/GameActivity.cpp>
 #include <game-text-input/gametextinput.cpp>
 #include <commonlib_log.h>
@@ -20,55 +21,66 @@ extern "C" {
 
 #include <game-activity/native_app_glue/android_native_app_glue.c>
 
-std::string getStartApp()
+void getStartApp(std::vector<std::string> &params)
 {
-    std::vector<std::string> appList;
-
-    readList(appList, "config/startapp.txt");
-    for (auto it = appList.begin(); it != appList.end(); ++it)
+    std::istringstream is1(readText("config/startapp.txt"));
+    std::string line;
+    while (std::getline(is1, line))
     {
-        if (!it->empty() && (*it)[0] != '#')
+        if (!line.empty() && line[0] != '#')
         {
-            return *it;
+            std::istringstream is2(line);
+            readList(params, is2);
         }
     }
-
-    return "";
 }
 
 void handleInitWindow(android_app *app)
 {
-    std::string appName = getStartApp();
+    std::vector<std::string> params;
+    getStartApp(params);
 
-    LOG_INFO << "Starting: " << appName << LOG_END;
+    if (params.empty())
+    {
+        LOG_ERROR << "No app specified" << LOG_END;
+        return;
+    }
 
-    if (appName == "testshape")
+    LOG_INFO << "Starting: " << params[0] << LOG_END;
+
+    if (params[0] == "testshape")
     {
         TestShapeApp *a = new TestShapeApp();
         a->init(app);
         app->userData = a;
     }
-    else if (appName == "testmap")
+    else if (params[0] == "testmap")
     {
         TestMapApp *a = new TestMapApp();
         a->init(app);
         app->userData = a;
     }
-    else if (appName == "testwidget")
+    else if (params[0] == "testwidget")
     {
         TestWidgetApp *a = new TestWidgetApp();
         a->init(app);
         app->userData = a;
     }
-    else if (appName == "showmap")
+    else if (params[0] == "showmap")
     {
+        if (params.size() < 2)
+        {
+            LOG_ERROR << "Invalid params" << LOG_END;
+            return;
+        }
+
         ShowMapApp *a = new ShowMapApp();
-        a->init(app);
+        a->init(app, params[1]);
         app->userData = a;
     }
     else
     {
-        THROW_EXCEPT(ParseException, "Unknown app " + appName);
+        THROW_EXCEPT(ParseException, "Unknown app " + params[0]);
     }
 }
 

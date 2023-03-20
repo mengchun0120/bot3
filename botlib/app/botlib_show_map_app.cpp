@@ -28,13 +28,14 @@ void ShowMapApp::init(const std::string &configFile,
     setupGame(mapFile);
 }
 #elif __ANDROID__
-void ShowMapApp::init(android_app *app)
+void ShowMapApp::init(android_app *app,
+                      const std::string &mapFile)
 {
     AppConfig::init("config/bot_config_android.json");
     App::init(app);
     const AppConfig &cfg = AppConfig::instance();
     Context::init(cfg);
-    setupGame("map_05.json");
+    setupGame(mapFile);
 }
 #endif
 

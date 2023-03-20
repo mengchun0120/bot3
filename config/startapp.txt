@@ -1,4 +1,4 @@
 #testshape
 #testmap
 #testwidget
-showmap
+showmap map_06.json

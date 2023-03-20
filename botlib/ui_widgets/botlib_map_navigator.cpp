@@ -38,7 +38,6 @@ void MapNavigator::present() const
 
 bool MapNavigator::containPos(float x, float y) const
 {
-    const MapNavigatorConfig &cfg = Context::mapNavigatorConfig();
     float distX = x - pos_[0];
     float distY = y - pos_[1];
     return distX * distX + distY * distY <= radiusSquare_;

@@ -181,8 +181,10 @@ void ShowMapScreen::onViewportChange(float width, float height)
 {
     viewportSize_[0] = width;
     viewportSize_[1] = height;
-    overlayViewportOrigin_ = viewportSize_ / 2.0f;
     map_.resetViewport(width, height);
+#ifdef __ANDROID__
+    overlayViewportOrigin_ = viewportSize_ / 2.0f;
+#endif
 }
 
 void ShowMapScreen::move(int horizontalDirection, int verticalDirection)
