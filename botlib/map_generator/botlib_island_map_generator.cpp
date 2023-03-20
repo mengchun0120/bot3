@@ -67,13 +67,6 @@ void IslandMapGenerator::addTiles(GameMap &map)
             Vector2 startPos{baseX + t->collideBreath(),
                              baseY + t->collideBreath()};
 
-            LOG_INFO << "baseX=" << baseX
-                     << " baseY=" << baseY
-                     << " t=" << t->name()
-                     << " startPos=" << startPos
-                     << " tileCountX=" << tileCountX
-                     << " tileCountY=" << tileCountY << LOG_END;
-
             addIsland(map, t, startPos, tileCountX, tileCountY);
 
             float islandHeight = tileCountY * tileBreath;

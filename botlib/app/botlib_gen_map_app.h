@@ -16,26 +16,27 @@ public:
     ~GenMapApp() override = default;
 
 #ifdef DESKTOP_APP
-    void init(std::string &appConfigFile,
+    void init(const std::string &appConfigFile,
               const std::string &appDir,
               const std::string &algorithm,
               const std::string &algorithmConfigFile,
               const std::string &mapFile);
-#elif __ANDROID_-
+#elif __ANDROID__
     void init(android_app *app,
-              std::string &appConfigFile,
+              const std::string &appConfigFile,
               const std::string &algorithm,
-              const std::string &algorithmConfigFile,
-              const std::string &mapFile);
+              const std::string &algorithmConfigFile);
 #endif
 
     void process() override;
 
+    bool operator()(const commonlib::InputEvent &e);
+
 private:
     void generateMap(const std::string &algorithm,
                      const std::string &algorithmConfigFile,
-                     const std::string &mapFile,
-                     const std::string &appDir);
+                     const std::string &appDir="",
+                     const std::string &mapFile="");
 
     void writeMap(const std::string &mapFile);
 
@@ -47,11 +48,12 @@ private:
 
     void setupInput();
 
+    void onViewportChange(float width, float height) override;
+
     void exitApp();
 
 private:
     TimeDeltaSmoother deltaSmoother_;
-    commonlib::InputProcessor inputProcessor_;
     ShowMapScreen screen_;
 };
 

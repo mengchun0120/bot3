@@ -12,6 +12,7 @@
 #include <botlib_test_map_app.h>
 #include <botlib_test_widget_app.h>
 #include <botlib_show_map_app.h>
+#include <botlib_gen_map_app.h>
 #include <androidlib_android_out.h>
 
 using namespace mcdane::commonlib;
@@ -84,6 +85,18 @@ void runShowMap(android_app *app, const std::vector<std::string> &params)
     app->userData = a;
 }
 
+void runGenMap(android_app *app, const std::vector<std::string> &params)
+{
+    if (params.size() < 4)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
+    }
+
+    GenMapApp *a = new GenMapApp();
+    a->init(app, params[1], params[2], params[3]);
+    app->userData = a;
+}
+
 void handleInitWindow(android_app *app)
 {
     using namespace std;
@@ -94,6 +107,7 @@ void handleInitWindow(android_app *app)
         {"testmap", runTestMap},
         {"testwidget", runTestWidget},
         {"showmap", runShowMap},
+        {"genmap", runGenMap},
     };
     vector<string> params;
 

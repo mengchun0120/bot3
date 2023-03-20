@@ -3,10 +3,10 @@
 #include <cstdlib>
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
-#include <genmap_app.h>
+#include <botlib_gen_map_app.h>
 
 using namespace mcdane::commonlib;
-using namespace mcdane::genmap;
+using namespace mcdane::botlib;
 
 struct Arguments {
     std::string appConfigFile_;
@@ -119,9 +119,10 @@ int main(int argc,
 
     try
     {
-        GenMapApp app(args.appConfigFile_, args.appDir_, args.algorithm_,
-                      args.algorithmConfigFile_, args.mapFile_);
+        GenMapApp app;
 
+        app.init(args.appConfigFile_, args.appDir_, args.algorithm_,
+                 args.algorithmConfigFile_, args.mapFile_);
         app.run();
     }
     catch (const std::exception& e)

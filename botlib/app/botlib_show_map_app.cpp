@@ -58,8 +58,13 @@ void ShowMapApp::process()
 
 bool ShowMapApp::operator()(const commonlib::InputEvent &e)
 {
+    if (!running())
+    {
+        return false;
+    }
+
     screen_.processInput(e);
-    return true;
+    return running();
 }
 
 void ShowMapApp::setupGame(const std::string &mapFile)

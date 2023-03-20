@@ -8,16 +8,15 @@
 #include <botlib_context.h>
 #include <botlib_game_map_generator.h>
 #include <botlib_game_map_generator_factory.h>
-#include <genmap_app.h>
+#include <botlib_gen_map_app.h>
 
 using namespace mcdane::commonlib;
-using namespace mcdane::botlib;
 
 namespace mcdane {
-namespace genmap {
+namespace botlib {
 
 GenMapApp::GenMapApp()
-    : App()
+    : App("genmap")
 {
 }
 
@@ -30,44 +29,57 @@ void GenMapApp::init(const std::string &appConfigFile,
 {
     AppConfig::init(appConfigFile, appDir);
     const AppConfig &cfg = AppConfig::instance();
-    init(cfg.width(), cfg.height(), cfg.title());
+    App::init(cfg.width(), cfg.height(), cfg.title());
     Context::init(cfg);
-    setupOpenGL();
     setupGame();
-    generateMap(algorithm, algorithmConfigFile, mapFile, appDir);
+    generateMap(algorithm, algorithmConfigFile, appDir, mapFile);
 }
 #elif __ANDROID__
 void GenMapApp::init(android_app *app,
                      const std::string &appConfigFile,
                      const std::string &algorithm,
-                     const std::string &algorithmConfigFile,
-                     const std::string &mapFile)
+                     const std::string &algorithmConfigFile)
 {
     AppConfig::init(appConfigFile);
     const AppConfig &cfg = AppConfig::instance();
-    init(app);
+    App::init(app);
     Context::init(cfg);
-    setupOpenGL();
     setupGame();
-    generateMap(algorithm, algorithmConfigFile, mapFile, appDir);
+    generateMap(algorithm, algorithmConfigFile);
 }
 #endif
 
 void GenMapApp::process()
 {
-    InputManager::getInstance().processInput(inputProcessor_);
+    App::process();
+
+    InputManager::instance().processInput(*this);
+    deltaSmoother_.update();
 
     if (running())
     {
         screen_.update(deltaSmoother_.curTimeDelta());
         screen_.present();
     }
+
+    postProcess();
+}
+
+bool GenMapApp::operator()(const commonlib::InputEvent &e)
+{
+    if (!running())
+    {
+        return false;
+    }
+
+    screen_.processInput(e);
+    return running();
 }
 
 void GenMapApp::generateMap(const std::string &algorithm,
                             const std::string &algorithmConfigFile,
-                            const std::string &mapFile,
-                            const std::string &appDir)
+                            const std::string &appDir,
+                            const std::string &mapFile)
 {
     std::string cfgFile = constructPath({appDir, algorithmConfigFile});
 
@@ -80,7 +92,10 @@ void GenMapApp::generateMap(const std::string &algorithm,
                                                     cfgFile));
 
     generator->generate(screen_.map(), viewportWidth(), viewportHeight());
-    writeMap(mapFile);
+    if (!mapFile.empty())
+    {
+        writeMap(mapFile);
+    }
 }
 
 void GenMapApp::writeMap(const std::string &mapFile)
@@ -124,21 +139,28 @@ void GenMapApp::setupScreen()
     screen_.init(viewportSize(), actions, ScreenType::NONE, false);
 }
 
+#ifdef DESKTOP_APP
 void GenMapApp::setupInput()
 {
-    using namespace std::placeholders;
-
     const AppConfig &cfg = AppConfig::instance();
 
     InputManager::initInstance(window(),
-                               viewportHeight(),
+                               viewportSize(),
                                cfg.inputQueueCapacity());
+    InputManager::instance().enable();
+}
+#elif __ANDROID__
+void GenMapApp::setupInput()
+{
+    InputManager::initInstance(app_, viewportSize());
+}
+#endif
 
-    inputProcessor_ = std::bind(&ShowMapScreen::processInput,
-                                &screen_,
-                                _1);
-
-    InputManager::getInstance().enable();
+void GenMapApp::onViewportChange(float width, float height)
+{
+    App::onViewportChange(width, height);
+    InputManager::instance().setViewportSize(viewportSize());
+    screen_.onViewportChange(width, height);
 }
 
 void GenMapApp::exitApp()
@@ -146,5 +168,5 @@ void GenMapApp::exitApp()
     setRunning(false);
 }
 
-} // end of namespace genmap
+} // end of namespace botlib
 } // end of namespace mcdane

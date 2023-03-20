@@ -1,4 +1,5 @@
 #testshape config/bot_config_android.json
 #testmap config/bot_config_android.json map_05.json
-testwidget config/bot_config_android.json
+#testwidget config/bot_config_android.json
 #showmap config/bot_config_android.json map_06.json
+genmap config/bot_config_android.json island config/island_gen_map_config.json

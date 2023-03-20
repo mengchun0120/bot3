@@ -2,8 +2,7 @@ cmake_minimum_required(VERSION 3.22.1)
 
 list(APPEND
     GENMAP_SRC
-    genmap_app.cpp
-    genmap_main.cpp
+    gen_map_main.cpp
 )
 
 include_directories(
