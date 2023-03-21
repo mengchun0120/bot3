@@ -72,7 +72,6 @@ bool TestParticleApp::operator()(const InputEvent &e)
 {
     if (e.type_ == InputEvent::POINTER_DOWN)
     {
-        LOG_INFO << "pointer-donw" << LOG_END;
         addParticleEffects();
     }
 

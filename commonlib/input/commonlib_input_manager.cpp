@@ -205,22 +205,19 @@ InputEvent InputManager::retrieveEvent(int i)
     event.x_ = GameActivityPointerAxes_getX(&pointer);
     event.y_ = viewportSize_[1] - GameActivityPointerAxes_getY(&pointer);
 
-    switch(action & AINPUT_SOURCE_TOUCHSCREEN)
+    switch(action & AMOTION_EVENT_ACTION_MASK)
     {
         case AMOTION_EVENT_ACTION_DOWN:
         case AMOTION_EVENT_ACTION_POINTER_DOWN:
-            LOG_INFO << "inputmgr pointer-down" << LOG_END;
             event.type_ = InputEvent::POINTER_DOWN;
             break;
 
         case AMOTION_EVENT_ACTION_UP:
         case AMOTION_EVENT_ACTION_POINTER_UP:
-            LOG_INFO << "inputmgr pointer-up" << LOG_END;
             event.type_ = InputEvent::POINTER_UP;
             break;
 
         default:
-            LOG_INFO << "inputmgr pointer-move" << LOG_END;
             event.type_ = InputEvent::POINTER_MOVE;
     }
 
