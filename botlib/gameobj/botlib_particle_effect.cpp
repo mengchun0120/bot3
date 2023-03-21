@@ -20,7 +20,6 @@ void ParticleEffect::init(const ParticleEffectTemplate *t,
                           const Vector2 &pos)
 {
     GameObject::init(t, pos);
-    startTime_ = Clock::now();
     elapsedTime_ = 0.0f;
 }
 

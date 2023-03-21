@@ -43,8 +43,8 @@ private:
     void exitApp();
 
 private:
-    botlib::TimeDeltaSmoother deltaSmoother_;
-    botlib::ShowMapScreen screen_;
+    TimeDeltaSmoother deltaSmoother_;
+    ShowMapScreen screen_;
 };
 
 } // end of namespace botlib

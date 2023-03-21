@@ -11,8 +11,4 @@ add_executable(
     test_widget_main.cpp
 )
 
-if(UNIX)
-    target_link_libraries(testwidget botlib commonlib ${LIB})
-elseif(MINGW)
-    target_link_libraries(testwidget botlib commonlib ${LIB})
-endif()
+target_link_libraries(testwidget botlib commonlib ${LIB})

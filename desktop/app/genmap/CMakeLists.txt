@@ -13,9 +13,4 @@ include_directories(
 
 add_executable(genmap ${GENMAP_SRC})
 
-if(UNIX)
-    target_link_libraries(genmap botlib commonlib ${LIB})
-elseif(MINGW)
-    target_link_libraries(genmap botlib commonlib ${LIB})
-endif()
-
+target_link_libraries(genmap botlib commonlib ${LIB})

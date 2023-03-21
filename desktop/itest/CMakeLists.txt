@@ -4,6 +4,7 @@ include(${COMMONLIB_SRC_DIR}/commonlib.cmake)
 include(${BOTLIB_SRC_DIR}/botlib.cmake)
 
 add_subdirectory(testmap)
+add_subdirectory(testparticle)
 add_subdirectory(testshape)
 add_subdirectory(testwidget)
 

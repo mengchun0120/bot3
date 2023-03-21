@@ -8,8 +8,4 @@ include_directories(
 
 add_executable(testmap test_map_main.cpp)
 
-if(UNIX)
-    target_link_libraries(testmap botlib commonlib ${LIB})
-elseif(MINGW)
-    target_link_libraries(testmap botlib commonlib ${LIB})
-endif()
+target_link_libraries(testmap botlib commonlib ${LIB})

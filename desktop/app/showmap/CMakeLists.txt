@@ -12,9 +12,4 @@ include_directories(
 
 add_executable(showmap ${SHOWMAP_SRC})
 
-if(UNIX)
-    target_link_libraries(showmap botlib commonlib ${LIB})
-elseif(MINGW)
-    target_link_libraries(showmap botlib commonlib ${LIB})
-endif()
-
+target_link_libraries(showmap botlib commonlib ${LIB})

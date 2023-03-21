@@ -6,6 +6,9 @@ include_directories(
     ${BOTLIB_INCLUDE_DIR}
 )
 
-add_executable(testshape test_shape_main.cpp)
+add_executable(
+    testparticle
+    test_particle_main.cpp
+)
 
-target_link_libraries(testshape botlib commonlib ${LIB})
+target_link_libraries(testparticle botlib commonlib ${LIB})

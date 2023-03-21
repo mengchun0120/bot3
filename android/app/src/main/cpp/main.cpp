@@ -11,6 +11,7 @@
 #include <botlib_test_shape_app.h>
 #include <botlib_test_map_app.h>
 #include <botlib_test_widget_app.h>
+#include <botlib_test_particle_app.h>
 #include <botlib_show_map_app.h>
 #include <botlib_gen_map_app.h>
 #include <androidlib_android_out.h>
@@ -73,6 +74,19 @@ void runTestWidget(android_app *app, const std::vector<std::string> &params)
     app->userData = a;
 }
 
+void runTestParticle(android_app *app, const std::vector<std::string> &params)
+{
+    if (params.size() < 2)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
+    }
+
+    TestParticleApp *a = new TestParticleApp();
+    a->init(app, params[1]);
+    app->userData = a;
+
+}
+
 void runShowMap(android_app *app, const std::vector<std::string> &params)
 {
     if (params.size() < 3)
@@ -106,6 +120,7 @@ void handleInitWindow(android_app *app)
         {"testshape", runTestShape},
         {"testmap", runTestMap},
         {"testwidget", runTestWidget},
+        {"testparticle", runTestParticle},
         {"showmap", runShowMap},
         {"genmap", runGenMap},
     };

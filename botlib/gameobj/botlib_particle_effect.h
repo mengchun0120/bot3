@@ -29,7 +29,6 @@ public:
     bool canBeDumped(GameMap &map) const override;
 
 private:
-    commonlib::TimePoint startTime_;
     float elapsedTime_;
 };
 

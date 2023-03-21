@@ -14,6 +14,7 @@ list(APPEND
     ${BOTLIB_SRC_DIR}/app/botlib_app_config.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_gen_map_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_test_map_app.cpp
+    ${BOTLIB_SRC_DIR}/app/botlib_test_particle_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_test_shape_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_test_widget_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_show_map_app.cpp
