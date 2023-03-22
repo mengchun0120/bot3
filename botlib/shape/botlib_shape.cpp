@@ -16,34 +16,34 @@ namespace botlib {
 
 Shape::Shape(std::initializer_list<Point2> positions)
 {
-    load(positions);
+    init(positions);
 }
 
 Shape::Shape(std::initializer_list<Point2> positions,
              const TexPosArray &texPosArray)
 {
-    load(positions, texPosArray);
+    init(positions, texPosArray);
 }
 
 Shape::Shape(const Point2 *positions,
              unsigned int numPositions,
              const Point2 *texPos)
 {
-    load(positions, numPositions, texPos);
+    init(positions, numPositions, texPos);
 }
 
 Shape::Shape(const std::vector<commonlib::Point2> &positions)
 {
-    load(positions);
+    init(positions);
 }
 
 Shape::Shape(const std::vector<commonlib::Point2> &positions,
              const std::vector<commonlib::Point2> &texPos)
 {
-    load(positions, texPos);
+    init(positions, texPos);
 }
 
-void Shape::load(std::initializer_list<Point2> positions)
+void Shape::init(std::initializer_list<Point2> positions)
 {
     unsigned int numPositions = count(positions.begin(), positions.end());
 
@@ -56,10 +56,10 @@ void Shape::load(std::initializer_list<Point2> positions)
 
     std::copy(positions.begin(), positions.end(), posPtr.get());
 
-    load(posPtr.get(), numPositions);
+    init(posPtr.get(), numPositions);
 }
 
-void Shape::load(std::initializer_list<Point2> positions,
+void Shape::init(std::initializer_list<Point2> positions,
                  const TexPosArray &texPosArray)
 {
     unsigned int numPositions = count(positions.begin(), positions.end());
@@ -79,10 +79,10 @@ void Shape::load(std::initializer_list<Point2> positions,
 
     std::copy(positions.begin(), positions.end(), posPtr.get());
 
-    load(posPtr.get(), numPositions, texPosArray.texPos());
+    init(posPtr.get(), numPositions, texPosArray.texPos());
 }
 
-void Shape::load(const Point2 *positions,
+void Shape::init(const Point2 *positions,
                  unsigned int numPositions,
                  const Point2 *texPos)
 {
@@ -98,25 +98,25 @@ void Shape::load(const Point2 *positions,
 
     if (!texPos)
     {
-        va_.load({BufferBlock{positions, numPositions, Constants::POS_SIZE, 0}});
+        va_.init({BufferBlock{positions, numPositions, Constants::POS_SIZE, 0}});
     }
     else
     {
-        va_.load({
+        va_.init({
             BufferBlock{positions, numPositions, Constants::POS_SIZE, 0},
             BufferBlock{texPos, numPositions, Constants::TEXPOS_SIZE, 0}});
     }
 }
 
-void Shape::load(const std::vector<commonlib::Point2> &positions)
+void Shape::init(const std::vector<commonlib::Point2> &positions)
 {
-    load(positions.data(), positions.size(), nullptr);
+    init(positions.data(), positions.size(), nullptr);
 }
 
-void Shape::load(const std::vector<commonlib::Point2> &positions,
+void Shape::init(const std::vector<commonlib::Point2> &positions,
                  const std::vector<commonlib::Point2> &texPos)
 {
-    load(positions.data(), positions.size(), texPos.data());
+    init(positions.data(), positions.size(), texPos.data());
 }
 
 } // end of namespace botlib
@@ -135,11 +135,11 @@ void parse(botlib::Shape &shape, const rapidjson::Value &v)
 
     if (vertexArrays.size() == 1)
     {
-        shape.load(vertexArrays[0]);
+        shape.init(vertexArrays[0]);
     }
     else
     {
-        shape.load(vertexArrays[0], vertexArrays[1]);
+        shape.init(vertexArrays[0], vertexArrays[1]);
     }
 }
 

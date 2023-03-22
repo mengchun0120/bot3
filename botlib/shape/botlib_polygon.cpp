@@ -10,20 +10,20 @@ namespace botlib {
 
 Polygon::Polygon(std::initializer_list<commonlib::Point2> positions)
 {
-    load(positions);
+    init(positions);
 }
 
 Polygon::Polygon(std::initializer_list<commonlib::Point2> positions,
                  const TexPosArray &texPosArray)
 {
-    load(positions, texPosArray);
+    init(positions, texPosArray);
 }
 
 Polygon::Polygon(const Point2 *positions,
                  unsigned int numPositions,
                  const Point2 *texPos)
 {
-    load(positions, numPositions, texPos);
+    init(positions, numPositions, texPos);
 }
 
 void Polygon::draw(SimpleShaderProgram &program,

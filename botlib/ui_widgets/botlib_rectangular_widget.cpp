@@ -18,11 +18,11 @@ void RectangularWidget::init(float x,
 
     if (hasTexture)
     {
-        rect_.load(width, height, TexRectangle());
+        rect_.init(width, height, TexRectangle());
     }
     else
     {
-        rect_.load(width, height);
+        rect_.init(width, height);
     }
 
     initRegion();

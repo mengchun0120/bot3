@@ -20,7 +20,7 @@ public:
 
     ~TextSystem();
 
-    void load(const std::string &fontDir);
+    void init(const std::string &fontDir);
 
     void draw(SimpleShaderProgram &program,
               const std::string &s,
@@ -40,13 +40,13 @@ private:
     static std::string fontTextureFile(const std::string &fontDir,
                                        int ch);
 
-    void loadFontTextures(const std::string &fontDir);
+    void initFontTextures(const std::string &fontDir);
 
-    void loadFontHeights();
+    void initFontHeights();
 
-    void loadFontRect();
+    void initFontRect();
 
-    void loadFontRectForTextSize(Rectangle *&rects,
+    void initFontRectForTextSize(Rectangle *&rects,
                                  std::vector<int> &rectIdx,
                                  int textSize);
 

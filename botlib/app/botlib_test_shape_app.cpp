@@ -53,7 +53,7 @@ void TestShapeApp::setupShader()
 
 void TestShapeApp::setupShapeColor()
 {
-    triangle_.load({
+    triangle_.init({
         Point2{0.0f, 0.0f},
         Point2{0.0f, 100.0f},
         Point2{-100.0f, -50.0f},
@@ -61,7 +61,7 @@ void TestShapeApp::setupShapeColor()
         Point2{0.0f, 100.0f}
     });
 
-    square_.load(100.0f, 100.0f);
+    square_.init(100.0f, 100.0f);
 
     trianglePos_.init({200.0f, 200.0f});
     squarePos_.init({600.0f, 400.0f});
@@ -78,7 +78,7 @@ void TestShapeApp::setupTexture()
 
     float w = static_cast<float>(texture_.width()) / 4.0f;
 
-    texRect_.load(100.0f, 100.0f, TexRectangle());
+    texRect_.init(100.0f, 100.0f, TexRectangle());
     texPos_.init({w, 300.0});
 }
 

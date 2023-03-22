@@ -41,13 +41,13 @@ TextSystem::~TextSystem()
     delete[] fontTextures_;
 }
 
-void TextSystem::load(const std::string &fontDir)
+void TextSystem::init(const std::string &fontDir)
 {
-    loadFontTextures(fontDir);
-    loadFontHeights();
-    loadFontRect();
+    initFontTextures(fontDir);
+    initFontHeights();
+    initFontRect();
 
-    LOG_INFO << "TextSystem loaded successfully " << this << LOG_END;
+    LOG_INFO << "TextSystem inited successfully " << this << LOG_END;
 }
 
 void TextSystem::draw(SimpleShaderProgram &program,
@@ -137,7 +137,7 @@ float TextSystem::getHeight(TextSize size) const
     return fontHeights_[static_cast<int>(size)];
 }
 
-void TextSystem::loadFontTextures(const std::string &fontDir)
+void TextSystem::initFontTextures(const std::string &fontDir)
 {
     fontTextures_ = new Texture[CHAR_COUNT];
     for (int i = 0; i < CHAR_COUNT; ++i)
@@ -147,7 +147,7 @@ void TextSystem::loadFontTextures(const std::string &fontDir)
     }
 }
 
-void TextSystem::loadFontHeights()
+void TextSystem::initFontHeights()
 {
     fontHeights_.resize(textSizeCount());
     for (int s = firstTextSize(); s < textSizeCount(); ++s)
@@ -157,18 +157,18 @@ void TextSystem::loadFontHeights()
     }
 }
 
-void TextSystem::loadFontRect()
+void TextSystem::initFontRect()
 {
     fontRects_ = new Rectangle*[textSizeCount()];
     fontRectIdx_.resize(textSizeCount());
 
     for (int s = firstTextSize(); s < textSizeCount(); ++s)
     {
-        loadFontRectForTextSize(fontRects_[s], fontRectIdx_[s], s);
+        initFontRectForTextSize(fontRects_[s], fontRectIdx_[s], s);
     }
 }
 
-void TextSystem::loadFontRectForTextSize(Rectangle *&rects,
+void TextSystem::initFontRectForTextSize(Rectangle *&rects,
                                          std::vector<int> &rectIdx,
                                          int textSize)
 {
@@ -189,7 +189,7 @@ void TextSystem::loadFontRectForTextSize(Rectangle *&rects,
         {
             widthRectMap[w] = idx;
             rectIdx[i] = idx;
-            rects[idx].load(static_cast<float>(w), height, TexRectangle());
+            rects[idx].init(static_cast<float>(w), height, TexRectangle());
             ++idx;
         }
         else

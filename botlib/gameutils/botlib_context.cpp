@@ -18,12 +18,13 @@ void Context::init(const AppConfig &cfg)
 Context::Context(const AppConfig &cfg)
 {
     graphics_.init(cfg);
-    gameLib_.load(cfg);
+    gameLib_.init(cfg);
     hpIndicatorConfig_.init(graphics_.textSys(), cfg.hpIndicatorConfigFile());
     buttonConfig_.init(cfg.buttonConfigFile(), cfg.picDir());
     labelConfig_.init(cfg.labelConfigFile());
     msgBoxConfig_.init(cfg.messageBoxConfigFile());
     mapNavigatorConfig_.init(cfg.mapNavigatorConfigFile());
+    //gameNavigatorConfig_.init(cfg.gameNavigatorConfigFile());
     startScreenConfig_.init(cfg.startScreenConfigFile());
     gameScreenConfig_.init(gameLib_, cfg.gameScreenConfigFile());
     showMapScreenConfig_.init(cfg.showMapScreenConfigFile());

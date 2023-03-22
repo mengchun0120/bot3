@@ -9,6 +9,7 @@
 #include <botlib_label_config.h>
 #include <botlib_message_box_config.h>
 #include <botlib_map_navigator_config.h>
+#include <botlib_game_navigator_config.h>
 #include <botlib_start_screen_config.h>
 #include <botlib_game_screen_config.h>
 #include <botlib_show_map_screen_config.h>
@@ -38,6 +39,8 @@ public:
 
     inline static const MapNavigatorConfig &mapNavigatorConfig();
 
+    inline static const GameNavigatorConfig &gameNavigatorConfig();
+
     inline static const StartScreenConfig &startScreenConfig();
 
     inline static GameScreenConfig &gameScreenConfig();
@@ -60,6 +63,7 @@ private:
     LabelConfig labelConfig_;
     MessageBoxConfig msgBoxConfig_;
     MapNavigatorConfig mapNavigatorConfig_;
+    GameNavigatorConfig gameNavigatorConfig_;
     StartScreenConfig startScreenConfig_;
     GameScreenConfig gameScreenConfig_;
     ShowMapScreenConfig showMapScreenConfig_;
@@ -100,6 +104,11 @@ const MessageBoxConfig &Context::msgBoxConfig()
 const MapNavigatorConfig &Context::mapNavigatorConfig()
 {
     return k_instance->mapNavigatorConfig_;
+}
+
+const GameNavigatorConfig &Context::gameNavigatorConfig()
+{
+    return k_instance->gameNavigatorConfig_;
 }
 
 const StartScreenConfig &Context::startScreenConfig()

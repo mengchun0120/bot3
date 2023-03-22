@@ -41,7 +41,7 @@ void initVertexArray(VertexArray &va,
         blocks[i].stride_ = 0;
     }
 
-    va.load(blocks.begin(), blocks.end());
+    va.init(blocks.begin(), blocks.end());
 }
 
 GameLib::GameLib()
@@ -49,7 +49,7 @@ GameLib::GameLib()
 {
 }
 
-void GameLib::load(const AppConfig &cfg)
+void GameLib::init(const AppConfig &cfg)
 {
     initTextureLib(cfg.textureLibFile(), cfg.picDir());
     initVertexArrayLib(cfg.vertexArrayLibFile(), cfg.vertexArrayDataDir());

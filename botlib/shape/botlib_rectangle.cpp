@@ -24,14 +24,14 @@ void validateParamForRect(float width1,
 Rectangle::Rectangle(float width1,
                      float height1)
 {
-    load(width1, height1);
+    init(width1, height1);
 }
 
 Rectangle::Rectangle(float width1,
                      float height1,
                      const TexRectangle &texRect)
 {
-    load(width1, height1, texRect);
+    init(width1, height1, texRect);
 }
 
 void Rectangle::init(const rapidjson::Value &v,
@@ -49,15 +49,15 @@ void Rectangle::init(const rapidjson::Value &v,
 
     if (hasTexture)
     {
-        load(width1, height1, TexRectangle());
+        init(width1, height1, TexRectangle());
     }
     else
     {
-        load(width1, height1);
+        init(width1, height1);
     }
 }
 
-void Rectangle::load(float width,
+void Rectangle::init(float width,
                      float height)
 {
     validateParamForRect(width, height);
@@ -68,7 +68,7 @@ void Rectangle::load(float width,
     float w = width/2.0f;
     float h = height/2.0f;
 
-    Polygon::load({
+    Shape::init({
         Point2{0.0f, 0.0f},
         Point2{w, h},
         Point2{-w, h},
@@ -78,7 +78,7 @@ void Rectangle::load(float width,
     });
 }
 
-void Rectangle::load(float width,
+void Rectangle::init(float width,
                      float height,
                      const TexRectangle &texRect)
 {
@@ -99,7 +99,7 @@ void Rectangle::load(float width,
         Point2{w, h}
     });
 
-    Polygon::load(positions.data(), positions.size(), texRect.texPos());
+    Shape::init(positions.data(), positions.size(), texRect.texPos());
 }
 
 } // end of namespace botlib

@@ -87,7 +87,7 @@ void ParticleEffectTemplate::loadVertexArray(const std::vector<Vector2> &startPo
                                              const std::vector<Vector2> &direction,
                                              const std::vector<float> &initSpeed)
 {
-    vertexArray_.load({
+    vertexArray_.init({
         BufferBlock(startPos.data(), numParticles_, Constants::POS_SIZE, 0),
         BufferBlock(direction.data(), numParticles_, Constants::DIRECTION_SIZE, 0),
         BufferBlock(initSpeed.data(), numParticles_, sizeof(float), 0)

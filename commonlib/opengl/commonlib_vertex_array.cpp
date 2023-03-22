@@ -45,7 +45,7 @@ VertexArray::VertexArray(const void *data,
                          unsigned int stride)
     : VertexArray()
 {
-    load(data, numVertices, vertexSize, stride);
+    init(data, numVertices, vertexSize, stride);
 }
 
 VertexArray::VertexArray(std::initializer_list<BufferBlock> blocks)
@@ -59,17 +59,17 @@ VertexArray::~VertexArray()
     destroyArrayObj(arrayObj_);
 }
 
-void VertexArray::load(const void *data,
+void VertexArray::init(const void *data,
                        unsigned int numVertices,
                        unsigned int vertexSize,
                        unsigned int stride)
 {
-    load({ BufferBlock{data, numVertices, vertexSize, stride} });
+    init({ BufferBlock{data, numVertices, vertexSize, stride} });
 }
 
-void VertexArray::load(std::initializer_list<BufferBlock> blocks)
+void VertexArray::init(std::initializer_list<BufferBlock> blocks)
 {
-    load(blocks.begin(), blocks.end());
+    init(blocks.begin(), blocks.end());
 }
 
 void VertexArray::createArrayObj()

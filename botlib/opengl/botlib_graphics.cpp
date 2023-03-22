@@ -11,7 +11,7 @@ void Graphics::init(const AppConfig &cfg)
                        cfg.simpleFragShaderFiles());
     particleShader_.init(cfg.particleVertexShaderFiles(),
                          cfg.particleFragShaderFiles());
-    textSys_.load(cfg.fontDir());
+    textSys_.init(cfg.fontDir());
 
     LOG_INFO << "Graphics created successfully" << LOG_END;
 }

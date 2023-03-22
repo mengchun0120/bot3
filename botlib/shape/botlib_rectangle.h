@@ -24,10 +24,10 @@ public:
     void init(const rapidjson::Value &v,
               bool requireName=false);
 
-    void load(float width1,
+    void init(float width1,
               float height1);
 
-    void load(float width,
+    void init(float width,
               float height,
               const TexRectangle &texRect);
 

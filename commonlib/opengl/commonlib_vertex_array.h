@@ -39,15 +39,15 @@ public:
 
     virtual ~VertexArray();
 
-    void load(const void *data,
+    void init(const void *data,
               unsigned int numVertices,
               unsigned int vertexSize,
               unsigned int stride=0);
 
-    void load(std::initializer_list<BufferBlock> blocks);
+    void init(std::initializer_list<BufferBlock> blocks);
 
     template <typename Iterator>
-    void load(Iterator begin,
+    void init(Iterator begin,
               Iterator end);
 
     bool valid() const noexcept
@@ -117,7 +117,7 @@ template <typename Iterator>
 VertexArray::VertexArray(Iterator begin, Iterator end)
     : VertexArray()
 {
-    load(begin, end);
+    init(begin, end);
 }
 
 template <typename Iterator>
@@ -146,7 +146,7 @@ unsigned int VertexArray::getTotalSize(Iterator begin,
 
 
 template <typename Iterator>
-void VertexArray::load(Iterator begin, Iterator end)
+void VertexArray::init(Iterator begin, Iterator end)
 {
     createArrayObj();
     createBufferObj();

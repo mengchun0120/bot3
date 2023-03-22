@@ -39,18 +39,18 @@ public:
 
     virtual ~Shape() = default;
 
-    void load(std::initializer_list<commonlib::Point2> positions);
+    void init(std::initializer_list<commonlib::Point2> positions);
 
-    void load(std::initializer_list<commonlib::Point2> positions,
+    void init(std::initializer_list<commonlib::Point2> positions,
               const TexPosArray &texPosArray);
 
-    void load(const commonlib::Point2 *positions,
+    void init(const commonlib::Point2 *positions,
               unsigned int numPositions,
               const commonlib::Point2 *texPos=nullptr);
 
-    void load(const std::vector<commonlib::Point2> &positions);
+    void init(const std::vector<commonlib::Point2> &positions);
 
-    void load(const std::vector<commonlib::Point2> &positions,
+    void init(const std::vector<commonlib::Point2> &positions,
               const std::vector<commonlib::Point2> &texPos);
 
     virtual void draw(SimpleShaderProgram &program,

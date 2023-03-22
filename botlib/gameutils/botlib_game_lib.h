@@ -31,7 +31,7 @@ public:
 
     ~GameLib() = default;
 
-    void load(const AppConfig &cfg);
+    void init(const AppConfig &cfg);
 
     inline const commonlib::InputMap &inputMap() const;
 
