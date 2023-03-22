@@ -18,7 +18,7 @@ void GameNavigatorConfig::init(const std::string &fileName)
     std::string baseTextureFile, arrowTextureFile;
     float baseWidth, baseHeight, arrowWidth, arrowHeight;
     std::vector<JsonParamPtr> params{
-        jsonParam(radius_, "radius", true, gt(0.0f)),
+        jsonParam(baseRadius_, "baseRadius", true, gt(0.0f)),
         jsonParam(stopRadius_, "stopRadius", true, gt(0.0f)),
         jsonParam(arrowRadius_, "arrowRadius", true, gt(0.0f)),
         jsonParam(alpha_, "alpha", true, ge(0.0f) && le(1.0f)),
@@ -34,6 +34,8 @@ void GameNavigatorConfig::init(const std::string &fileName)
 
     initTexture(baseTextureFile, arrowTextureFile);
     initRect(baseWidth, baseHeight, arrowWidth, arrowHeight);
+
+    LOG_INFO << "GameNavigatorConfig initialized" << LOG_END;
 }
 
 void GameNavigatorConfig::initTexture(const std::string &baseTextureFile,

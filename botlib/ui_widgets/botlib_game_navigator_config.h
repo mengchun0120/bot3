@@ -15,7 +15,7 @@ public:
 
     void init(const std::string &fileName);
 
-    inline float radius() const;
+    inline float baseRadius() const;
 
     inline float stopRadius() const;
 
@@ -39,7 +39,7 @@ private:
                   float arrowWidth, float arrowHeight);
 
 private:
-    float radius_;
+    float baseRadius_;
     float stopRadius_;
     float arrowRadius_;
     float alpha_;
@@ -49,9 +49,9 @@ private:
     Rectangle arrowRect_;
 };
 
-float GameNavigatorConfig::radius() const
+float GameNavigatorConfig::baseRadius() const
 {
-    return radius_;
+    return baseRadius_;
 }
 
 float GameNavigatorConfig::stopRadius() const
