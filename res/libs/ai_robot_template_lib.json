@@ -1,6 +1,6 @@
 {
     "red_robot": {
-        "collideBreath": 25.0,
+        "collideBreath": 37.5,
         "invincible": false,
         "hp": 40.0,
         "armor": 0.0,
@@ -12,13 +12,25 @@
         "components": [
             {
                 "template": "red_base",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             },
             {
                 "template": "red_gun",
-                "pos": [38.28427, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    57.426405,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "dyingDuration": 1000.0,
@@ -33,7 +45,7 @@
         ]
     },
     "blue_robot": {
-        "collideBreath": 25.0,
+        "collideBreath": 37.5,
         "invincible": false,
         "hp": 40.0,
         "armor": 0.0,
@@ -45,13 +57,25 @@
         "components": [
             {
                 "template": "blue_base",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             },
             {
                 "template": "blue_gun",
-                "pos": [38.28427, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    57.426405,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "dyingDuration": 1000.0,
@@ -66,7 +90,7 @@
         ]
     },
     "orange_robot": {
-        "collideBreath": 25.0,
+        "collideBreath": 37.5,
         "invincible": false,
         "hp": 40.0,
         "armor": 0.0,
@@ -78,13 +102,25 @@
         "components": [
             {
                 "template": "orange_base",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             },
             {
                 "template": "orange_gun",
-                "pos": [38.28427, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    57.426405,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "dyingDuration": 1000.0,

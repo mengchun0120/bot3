@@ -1,52 +1,52 @@
 {
     "tile": {
-        "width": 40.0,
-        "height": 40.0,
-        "hasTexture": true
-    },
-    "base": {
         "width": 60.0,
         "height": 60.0,
         "hasTexture": true
     },
+    "base": {
+        "width": 90.0,
+        "height": 90.0,
+        "hasTexture": true
+    },
     "gun": {
-        "width": 20.0,
-        "height": 20.0,
+        "width": 30.0,
+        "height": 30.0,
         "hasTexture": true
     },
     "missile": {
-        "width": 16.0,
-        "height": 16.0,
+        "width": 24.0,
+        "height": 24.0,
         "hasTexture": true
     },
     "big_missile": {
-        "width": 26.0,
-        "height": 26.0,
+        "width": 39.0,
+        "height": 39.0,
         "hasTexture": true
     },
     "guided_missile": {
-        "width": 19.0,
-        "height": 16.0,
+        "width": 28.5,
+        "height": 24.0,
         "hasTexture": true
     },
     "small_missile": {
-        "width": 12.0,
-        "height": 12.0,
+        "width": 18.0,
+        "height": 18.0,
         "hasTexture": true
     },
     "goodie": {
-        "width": 40.0,
-        "height": 40.0,
+        "width": 60.0,
+        "height": 60.0,
         "hasTexture": true
     },
     "ai_robot_icon": {
-        "width": 40.0,
-        "height": 48.0,
+        "width": 60.0,
+        "height": 72.0,
         "hasTexture": true
     },
     "skill": {
-        "width": 40.0,
-        "height": 40.0,
+        "width": 60.0,
+        "height": 60.0,
         "hasTexture": true
     }
 }

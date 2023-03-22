@@ -1,6 +1,6 @@
 {
     "name": "player",
-    "collideBreath": 25.0,
+    "collideBreath": 37.5,
     "invincible": false,
     "hp": 120.0,
     "armor": 100.0,
@@ -12,23 +12,47 @@
     "components": [
         {
             "template": "green_base",
-            "pos": [0.0, 0.0],
-            "direction": [1.0, 0.0]
+            "pos": [
+                0.0,
+                0.0
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ]
         },
         {
             "template": "green_gun",
-            "pos": [38.28427, 0.0],
-            "direction": [1.0, 0.0]
+            "pos": [
+                57.426405,
+                0.0
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ]
         },
         {
             "template": "green_gun",
-            "pos": [33.15515, 19.142135],
-            "direction": [0.8660254, 0.5]
+            "pos": [
+                49.732725,
+                28.7132025
+            ],
+            "direction": [
+                0.8660254,
+                0.5
+            ]
         },
         {
             "template": "green_gun",
-            "pos": [33.15515, -19.142135],
-            "direction": [0.8660254, -0.5]
+            "pos": [
+                49.732725,
+                -28.7132025
+            ],
+            "direction": [
+                0.8660254,
+                -0.5
+            ]
         }
     ],
     "dyingDuration": 1000.0,

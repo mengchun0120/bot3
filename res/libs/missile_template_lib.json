@@ -1,80 +1,110 @@
 {
     "green_missile": {
-        "collideBreath": 8.0,
+        "collideBreath": 12.0,
         "damage": 40.0,
         "speed": 0.5,
-        "explodeBreath": 18.0,
+        "explodeBreath": 27.0,
         "energyCost": 5.0,
         "duration": 20000.0,
         "components": [
             {
                 "template": "green_missile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "explodeEffect": "green_explosion"
     },
     "red_missile": {
-        "collideBreath": 8.0,
+        "collideBreath": 12.0,
         "damage": 10.0,
         "speed": 0.1,
-        "explodeBreath": 18.0,
+        "explodeBreath": 27.0,
         "energyCost": 5.0,
         "duration": 5000.0,
         "components": [
             {
                 "template": "red_missile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "explodeEffect": "red_explosion"
     },
     "blue_missile": {
-        "collideBreath": 8.0,
+        "collideBreath": 12.0,
         "damage": 20.0,
         "speed": 0.15,
-        "explodeBreath": 18.0,
+        "explodeBreath": 27.0,
         "energyCost": 5.0,
         "duration": 5000.0,
         "components": [
             {
                 "template": "blue_missile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "explodeEffect": "blue_explosion"
     },
     "orange_missile": {
-        "collideBreath": 8.0,
+        "collideBreath": 12.0,
         "damage": 30.0,
         "speed": 0.2,
-        "explodeBreath": 18.0,
+        "explodeBreath": 27.0,
         "energyCost": 5.0,
         "duration": 5000.0,
         "components": [
             {
                 "template": "orange_missile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "explodeEffect": "orange_explosion"
     },
     "green_small_missile": {
-        "collideBreath": 6.0,
+        "collideBreath": 9.0,
         "damage": 20.0,
         "speed": 0.4,
-        "explodeBreath": 15.0,
+        "explodeBreath": 22.5,
         "energyCost": 0.0,
         "duration": 2000.0,
         "components": [
             {
                 "template": "green_small_missile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "explodeEffect": "green_small_explosion",
@@ -82,17 +112,23 @@
         "searchBreath": 0.0
     },
     "green_guided_missile": {
-        "collideBreath": 8.0,
+        "collideBreath": 12.0,
         "damage": 40.0,
         "speed": 0.7,
-        "explodeBreath": 20.0,
+        "explodeBreath": 30.0,
         "energyCost": 10.0,
         "duration": 10000.0,
         "components": [
             {
                 "template": "green_guided_missile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "explodeEffect": "green_big_explosion",
@@ -100,17 +136,23 @@
         "searchBreath": 200.0
     },
     "green_split_missile": {
-        "collideBreath": 8.0,
+        "collideBreath": 12.0,
         "damage": 30.0,
         "speed": 0.7,
-        "explodeBreath": 20.0,
+        "explodeBreath": 30.0,
         "energyCost": 10.0,
         "duration": 10000.0,
         "components": [
             {
                 "template": "green_split_missile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "explodeEffect": "green_big_explosion",
@@ -119,28 +161,58 @@
         "splitCount": 8,
         "splitMissile": "green_small_missile",
         "splitMissileDirections": [
-            [1.0, 0.0],
-            [0.0, 1.0],
-            [-1.0, 0.0],
-            [0.0, -1.0],
-            [0.70710678, 0.70710678],
-            [-0.70710678, 0.70710678],
-            [-0.70710678, -0.70710678],
-            [0.70710678, -0.70710678]
+            [
+                1.0,
+                0.0
+            ],
+            [
+                0.0,
+                1.0
+            ],
+            [
+                -1.0,
+                0.0
+            ],
+            [
+                0.0,
+                -1.0
+            ],
+            [
+                0.70710678,
+                0.70710678
+            ],
+            [
+                -0.70710678,
+                0.70710678
+            ],
+            [
+                -0.70710678,
+                -0.70710678
+            ],
+            [
+                0.70710678,
+                -0.70710678
+            ]
         ]
     },
     "green_blast_missile": {
-        "collideBreath": 8.0,
+        "collideBreath": 12.0,
         "damage": 40.0,
         "speed": 0.7,
-        "explodeBreath": 40.0,
+        "explodeBreath": 60.0,
         "energyCost": 0.0,
         "duration": 10000.0,
         "components": [
             {
                 "template": "green_blast_missile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "explodeEffect": "green_big_explosion",
@@ -148,17 +220,23 @@
         "searchBreath": 0.0
     },
     "green_star_missile": {
-        "collideBreath": 8.0,
+        "collideBreath": 12.0,
         "damage": 40.0,
         "speed": 0.7,
-        "explodeBreath": 40.0,
+        "explodeBreath": 60.0,
         "energyCost": 0.0,
         "duration": 10000.0,
         "components": [
             {
                 "template": "green_star_missile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "explodeEffect": "green_big_explosion",

@@ -109,7 +109,7 @@ void ShowMapApp::onViewportChange(float width, float height)
 {
     App::onViewportChange(width, height);
     InputManager::instance().setViewportSize(viewportSize());
-    screen_.onViewportChange(width, height);
+    screen_.onViewportChange(viewportWidth(), viewportHeight());
 }
 
 void ShowMapApp::exitApp()

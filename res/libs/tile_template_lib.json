@@ -1,65 +1,95 @@
 {
     "steel_tile": {
-        "collideBreath": 15.0,
+        "collideBreath": 22.5,
         "invincible": true,
         "hp": 100.0,
         "components": [
             {
                 "template": "steel_tile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "dyingDuration": 1000.0
     },
     "ice_tile": {
-        "collideBreath": 15.0,
+        "collideBreath": 22.5,
         "invincible": false,
         "hp": 20.0,
         "components": [
             {
                 "template": "ice_tile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "dyingDuration": 1000.0
     },
     "clay_tile": {
-        "collideBreath": 15.0,
+        "collideBreath": 22.5,
         "invincible": false,
         "hp": 30.0,
         "components": [
             {
                 "template": "clay_tile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "dyingDuration": 1000.0
     },
     "fireland_tile": {
-        "collideBreath": 15.0,
+        "collideBreath": 22.5,
         "invincible": false,
         "hp": 40.0,
         "components": [
             {
                 "template": "fireland_tile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "dyingDuration": 1000.0
     },
     "bush_tile": {
-        "collideBreath": 15.0,
+        "collideBreath": 22.5,
         "invincible": false,
         "hp": 50.0,
         "components": [
             {
                 "template": "bush_tile",
-                "pos": [0.0, 0.0],
-                "direction": [1.0, 0.0]
+                "pos": [
+                    0.0,
+                    0.0
+                ],
+                "direction": [
+                    1.0,
+                    0.0
+                ]
             }
         ],
         "dyingDuration": 1000.0
