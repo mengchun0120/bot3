@@ -36,7 +36,7 @@ public:
     void onPointerDown(float x, float y) override;
 
 private:
-    void pressBase(float x, float y);
+    void pressBase(float dx, float dy);
 
     void pressStop();
 

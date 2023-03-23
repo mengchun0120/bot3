@@ -42,7 +42,9 @@ void GameNavigator::present() const
 
 bool GameNavigator::containPos(float x, float y) const
 {
-    return x*x + y*y <= baseRadiusSquare_;
+    float dx = x - pos_[0];
+    float dy = y - pos_[1];
+    return dx*dx + dy*dy <= baseRadiusSquare_;
 }
 
 void GameNavigator::onLostFocus()
@@ -59,9 +61,12 @@ void GameNavigator::onPointerOver(float x, float y)
 
 void GameNavigator::onPointerDown(float x, float y)
 {
-    if (x*x + y*y > stopRadiusSquare_)
+    float dx = x - pos_[0];
+    float dy = y - pos_[1];
+
+    if (dx*dx + dy*dy > stopRadiusSquare_)
     {
-        pressBase(x, y);
+        pressBase(dx, dy);
     }
     else
     {
@@ -69,13 +74,13 @@ void GameNavigator::onPointerDown(float x, float y)
     }
 }
 
-void GameNavigator::pressBase(float x, float y)
+void GameNavigator::pressBase(float dx, float dy)
 {
     const GameNavigatorConfig &cfg = Context::gameNavigatorConfig();
 
     directionValid_ = true;
-    curDirection_[0] = x;
-    curDirection_[1] = y;
+    curDirection_[0] = dx;
+    curDirection_[1] = dy;
     curDirection_.normalize();
 
     arrowPos_ = pos_ + curDirection_ * cfg.arrowRadius();

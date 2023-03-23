@@ -1,3 +1,4 @@
+#include <iostream>
 #include <commonlib_log.h>
 #include <commonlib_input_manager.h>
 #include <botlib_app_config.h>
@@ -94,11 +95,19 @@ void TestGameNavigatorApp::setupWidgets()
 {
     auto moveAction = [&](const Vector2 &direction)
     {
+#ifdef DESKTOP_APP
+        std::cout << "Move " << direction << std::endl;
+#elif __ANDROID__
         LOG_INFO << "Move " << direction << LOG_END;
+#endif
     };
     auto stopAction = [&]()
     {
+#ifdef DESKTOP_APP
+        std::cout << "Stop" << std::endl;
+#elif __ANDROID__
         LOG_INFO << "Stop" << LOG_END;
+#endif
     };
 
     navigator_.init(250.0f, 250.0f, moveAction, stopAction);

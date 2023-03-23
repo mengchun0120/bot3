@@ -8,11 +8,11 @@ def gen_game_navigator(radius):
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(2*radius), int(2*radius))
     ctx = cairo.Context(surface)
 
-    ctx.set_source_rgb(0.0, 1.0, 0.0)
+    ctx.set_source_rgb(0.5, 1.0, 0.5)
     ctx.arc(radius, radius, radius, 0, 2*math.pi)
     ctx.fill()
 
-    ctx.set_source_rgb(1.0, 0.0, 0.0)
+    ctx.set_source_rgb(1.0, 0.5, 0.5)
     ctx.arc(radius, radius, radius/3.0, 0, 2*math.pi)
     ctx.fill()
 
