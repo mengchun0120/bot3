@@ -20,8 +20,8 @@ public:
 
     void init(float x,
               float y,
-              MoveAction &moveAction,
-              StopAction &stopAction);
+              MoveAction moveAction,
+              StopAction stopAction);
 
     void present() const override;
 

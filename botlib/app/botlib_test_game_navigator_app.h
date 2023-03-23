@@ -1,29 +1,24 @@
-#ifndef INCLUDED_BOTLIB_TEST_WIDGET_APP_H
-#define INCLUDED_BOTLIB_TEST_WIDGET_APP_H
+#ifndef INCLUDED_BOTLIB_TEST_GAME_NAVIGATOR_APP_H
+#define INCLUDED_BOTLIB_TEST_GAME_NAVIGATOR_APP_H
 
 #include <commonlib_app.h>
-#include <botlib_message_box.h>
+#include <botlib_game_navigator.h>
 
 namespace mcdane {
 namespace botlib {
 
-class TestWidgetApp: public commonlib::App {
+class TestGameNavigatorApp: public commonlib::App {
 public:
-    TestWidgetApp();
+    TestGameNavigatorApp() = default;
 
-    TestWidgetApp(const std::string &configFile,
-                  const std::string &appDir);
-
-    ~TestWidgetApp() override = default;
+    ~TestGameNavigatorApp() override = default;
 
 #ifdef DESKTOP_APP
     void init(const std::string &configFile,
               const std::string &appDir);
-
 #elif __ANDROID__
     void init(android_app *app,
               const std::string &configFile);
-
 #endif
 
     void process() override;
@@ -39,19 +34,13 @@ private:
 
     void onViewportChange(float width, float height) override;
 
-    void onStartGameClicked();
-
-    void onSettingClicked();
-
-    void onExitClicked();
+    void onPointer(float x, float y);
 
 private:
-    botlib::WidgetGroup widgets_;
-    botlib::MessageBox msgBox_;
+    GameNavigator navigator_;
 };
 
 } // end of namespace botlib
 } // end of namespace mcdane
 
 #endif
-

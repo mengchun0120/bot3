@@ -1,4 +1,5 @@
 #include <iostream>
+#include <commonlib_input_manager.h>
 #include <botlib_app_config.h>
 #include <botlib_context.h>
 #include <botlib_button.h>
@@ -35,7 +36,7 @@ void TestWidgetApp::init(android_app *app,
     Context::init(AppConfig::instance());
     setupShader();
     setupWidgets();
-    setupInput(app);
+    setupInput();
 }
 #endif
 
@@ -79,7 +80,6 @@ bool TestWidgetApp::operator()(const commonlib::InputEvent &e)
 
     return true;
 }
-
 
 void TestWidgetApp::setupShader()
 {
@@ -140,9 +140,9 @@ void TestWidgetApp::setupInput()
     InputManager::instance().enable();
 }
 #elif __ANDROID__
-void TestWidgetApp::setupInput(android_app *app)
+void TestWidgetApp::setupInput()
 {
-    InputManager::initInstance(app, viewportSize());
+    InputManager::initInstance(app_, viewportSize());
 }
 #endif
 

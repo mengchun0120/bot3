@@ -10,8 +10,8 @@ namespace botlib {
 
 void GameNavigator::init(float x,
                          float y,
-                         MoveAction &moveAction,
-                         StopAction &stopAction)
+                         MoveAction moveAction,
+                         StopAction stopAction)
 {
     const GameNavigatorConfig &cfg = Context::gameNavigatorConfig();
     Widget::init(x, y, true, true, true);

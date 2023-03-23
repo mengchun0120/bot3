@@ -7,4 +7,4 @@ add_subdirectory(testmap)
 add_subdirectory(testparticle)
 add_subdirectory(testshape)
 add_subdirectory(testwidget)
-
+add_subdirectory(test_game_navigator)
