@@ -13,43 +13,22 @@ WidgetGroup::WidgetGroup()
     , visible_(true)
 {}
 
+WidgetGroup::~WidgetGroup()
+{
+    for (auto widget: widgets_)
+    {
+        delete widget;
+    }
+}
+
 void WidgetGroup::init(unsigned int widgetCount)
 {
-    if (widgetCount == 0)
-    {
-        LOG_WARN << "widgetCount = 0" << LOG_END;
-        return;
-    }
-
-    widgets_.resize(widgetCount);
+    widgets_.resize(widgetCount, nullptr);
 }
 
-std::shared_ptr<Widget> WidgetGroup::getWidget(unsigned int idx)
+void WidgetGroup::setWidget(unsigned int idx, Widget *widget)
 {
-    if (idx >= widgets_.size())
-    {
-         THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid idx" + std::to_string(idx));
-    }
-
-    return widgets_[idx];
-}
-
-void WidgetGroup::setWidget(unsigned int idx,
-                            Widget *widget)
-{
-    if (idx >= widgets_.size())
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid idx" + std::to_string(idx));
-    }
-
-    if (!widget)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "widget is null");
-    }
-
-    widgets_[idx].reset(widget);
+    widgets_[idx] = widget;
 }
 
 #ifdef DESKTOP_APP
@@ -84,6 +63,9 @@ void WidgetGroup::process(const InputEvent &event)
         case InputEvent::POINTER_MOVE:
             onPointerOver(event.x_, event.y_);
             break;
+        case InputEvent::POINTER_UP:
+            onPointerUp(event.x_, event.y_);
+            break;
         default:
             LOG_WARN << "Invalid type " << static_cast<int>(event.type_)
                      << LOG_END;
@@ -99,16 +81,15 @@ void WidgetGroup::present()
         return;
     }
 
-    for (auto &widget : widgets_)
+    for (auto widget : widgets_)
     {
         widget->present();
     }
 }
 
-void WidgetGroup::shiftPos(float dx,
-                           float dy)
+void WidgetGroup::shiftPos(float dx, float dy)
 {
-    for (auto &widget : widgets_)
+    for (auto widget : widgets_)
     {
         widget->shiftPos(dx, dy);
     }
@@ -138,6 +119,10 @@ void WidgetGroup::process(const MouseButtonEvent &event)
     if (event.action_ == GLFW_PRESS)
     {
         onPointerDown(event.x_, event.y_);
+    }
+    else if (event.action_ == GLFW_RELEASE)
+    {
+        onPointerUp(event.x_, event.y_);
     }
 }
 #endif
@@ -182,12 +167,18 @@ void WidgetGroup::onPointerDown(float x, float y)
     }
 }
 
-int WidgetGroup::findWidget(float x,
-                            float y)
+void WidgetGroup::onPointerUp(float x, float y)
 {
-    int i, count = static_cast<int>(widgetCount());
+    int idx = findWidget(x, y);
+    if (idx >= 0)
+    {
+        widgets_[idx]->onPointerUp(x, y);
+    }
+}
 
-    for (i = 0; i < count; ++i)
+int WidgetGroup::findWidget(float x, float y)
+{
+    for (unsigned int i = 0; i < widgets_.size(); ++i)
     {
         bool found = widgets_[i]->visible() &&
                      widgets_[i]->acceptInput() &&

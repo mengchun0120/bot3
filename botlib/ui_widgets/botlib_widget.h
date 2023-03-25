@@ -34,6 +34,8 @@ public:
 
     virtual inline void onPointerDown(float x, float y);
 
+    virtual inline void onPointerUp(float x, float y);
+
     virtual void setPos(float x, float y);
 
     virtual void shiftPos(float dx, float dy);
@@ -77,6 +79,10 @@ void Widget::onPointerOver(float x, float y)
 }
 
 void Widget::onPointerDown(float x, float y)
+{
+}
+
+void Widget::onPointerUp(float x, float y)
 {
 }
 

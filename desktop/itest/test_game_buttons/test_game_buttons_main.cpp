@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
-#include <botlib_test_game_navigator_app.h>
+#include <botlib_test_game_buttons_app.h>
 
 using namespace mcdane::commonlib;
 using namespace mcdane::botlib;
@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
 
     try
     {
-        TestGameNavigatorApp app;
+        TestGameButtonsApp app;
         app.init(args.configFile_, args.appDir_);
         app.run();
     }

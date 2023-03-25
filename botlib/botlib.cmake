@@ -13,7 +13,7 @@ list(APPEND
     ${BOTLIB_SRC_DIR}/app/botlib_app_actions.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_app_config.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_gen_map_app.cpp
-    ${BOTLIB_SRC_DIR}/app/botlib_test_game_navigator_app.cpp
+    ${BOTLIB_SRC_DIR}/app/botlib_test_game_buttons_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_test_map_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_test_particle_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_test_shape_app.cpp
@@ -173,6 +173,7 @@ list(APPEND
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_message_box.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_message_box_config.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_rectangular_widget.cpp
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_skill_button.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_widget.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_widget_group.cpp
 )

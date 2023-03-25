@@ -130,12 +130,12 @@ float MessageBox::height() const
 
 Button &MessageBox::getButton(unsigned int idx)
 {
-    return static_cast<Button&>(*(widgets_.getWidget(idx)));
+    return *(widgets_.widget<Button>(idx));
 }
 
 Label &MessageBox::getMsg()
 {
-    return static_cast<Label&>(*(widgets_.getWidget(IDX_MSG)));
+    return *(widgets_.widget<Label>(IDX_MSG));
 }
 
 } // end of namespace botlib

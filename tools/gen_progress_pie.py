@@ -1,3 +1,4 @@
+import os
 import click
 import math
 
@@ -100,12 +101,15 @@ def gen_data(start_angle, clockwise, radius, num_edges, has_texture):
     return positions, texture_coords
 
 def write_data(prefix, positions, texture_coords):
-    with open(f"{prefix}_pos.txt", "w") as f:
+    data_dir = os.path.join("res", "libs", "vertex_array_data")
+    pos_data_path = os.path.join(data_dir, f"{prefix}_pos.txt")
+    with open(pos_data_path, "w") as f:
         for pos in positions:
             f.write(f"{pos[0]} {pos[1]}\n")
 
     if len(texture_coords) > 0:
-        with open(f"{prefix}_tex.txt", "w") as f:
+        tex_data_path = os.path.join(data_dir, f"{prefix}_tex.txt")
+        with open(tex_data_path, "w") as f:
             for coord in texture_coords:
                 f.write(f"{coord[0]} {coord[1]}\n")
 

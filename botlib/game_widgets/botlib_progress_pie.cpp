@@ -19,18 +19,22 @@ ProgressPie::ProgressPie(const ProgressPieTemplate *t)
 void ProgressPie::init(const ProgressPieTemplate *t)
 {
     t_ = t;
-    finishedVertices_ = 0;
-    leftVertices_ = t_->va()->numVertices(0);
+    finishedVertices_ = t_->va()->numVertices(0);
+    leftVertices_ = 0;
     initIcons();
 }
 
-void ProgressPie::present(const commonlib::Vector2 &pos,
-                          int iconIndex) const
+void ProgressPie::present(const commonlib::Vector2 &pos) const
 {
     presentPie(pos);
-    if (iconIndex >= 0)
+    if (icons_.size() > 1)
     {
-        icons_[iconIndex].present(pos);
+        int idx = finished() ? 0 : 1;
+        icons_[idx].present(pos);
+    }
+    else if(icons_.size() > 0)
+    {
+        icons_[0].present(pos);
     }
 }
 

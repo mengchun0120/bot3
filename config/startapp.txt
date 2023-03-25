@@ -2,6 +2,6 @@
 #testmap config/bot_config_android.json map_05.json
 #testwidget config/bot_config_android.json
 #testparticle config/bot_config_android.json
-test_game_navigator config/bot_config_android.json
+test_game_buttons config/bot_config_android.json
 #showmap config/bot_config_android.json map_05.json
 #genmap config/bot_config_android.json island config/island_gen_map_config.json

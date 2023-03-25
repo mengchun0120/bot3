@@ -21,10 +21,13 @@ public:
 
     void init(const ProgressPieTemplate *t);
 
-    void present(const commonlib::Vector2 &pos,
-                 int iconIndex=-1) const;
+    inline const ProgressPieTemplate *getTemplate() const;
+
+    void present(const commonlib::Vector2 &pos) const;
 
     void setFinishedRatio(float ratio);
+
+    inline bool finished() const;
 
 private:
     void initIcons();
@@ -37,6 +40,16 @@ private:
     int leftVertices_;
     std::vector<Icon> icons_;
 };
+
+const ProgressPieTemplate *ProgressPie::getTemplate() const
+{
+    return t_;
+}
+
+bool ProgressPie::finished() const
+{
+    return leftVertices_ == 0;
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

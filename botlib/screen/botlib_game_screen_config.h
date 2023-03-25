@@ -59,11 +59,15 @@ public:
 
     inline const ProgressPieTemplate *goodiePieTemplate(int idx) const;
 
-    inline float skillPieBottomMargin() const;
+    inline float navigatorBottomSpacing() const;
 
-    inline float skillPieRightMargin() const;
+    inline float navigatorLeftSpacing() const;
 
-    inline float skillPieSpacing() const;
+    inline float skillButtonBottomSpacing() const;
+
+    inline float skillButtonRightSpacing() const;
+
+    inline float skillButtonSpacing() const;
 
 private:
     void initGoodiePieTemplates(
@@ -89,9 +93,11 @@ private:
     TextSize aiRobotCountTextSize_;
     commonlib::Color aiRobotCountTextColor_;
     std::vector<const ProgressPieTemplate*> goodiePieTemplates_;
-    float skillPieBottomMargin_;
-    float skillPieRightMargin_;
-    float skillPieSpacing_;
+    float navigatorBottomSpacing_;
+    float navigatorLeftSpacing_;
+    float skillButtonBottomSpacing_;
+    float skillButtonRightSpacing_;
+    float skillButtonSpacing_;
 };
 
 const std::string &GameScreenConfig::mapFile() const
@@ -184,19 +190,29 @@ const ProgressPieTemplate *GameScreenConfig::goodiePieTemplate(int idx) const
     return goodiePieTemplates_[idx];
 }
 
-float GameScreenConfig::skillPieBottomMargin() const
+float GameScreenConfig::navigatorBottomSpacing() const
 {
-    return skillPieBottomMargin_;
+    return navigatorBottomSpacing_;
 }
 
-float GameScreenConfig::skillPieRightMargin() const
+float GameScreenConfig::navigatorLeftSpacing() const
 {
-    return skillPieRightMargin_;
+    return navigatorLeftSpacing_;
 }
 
-float GameScreenConfig::skillPieSpacing() const
+float GameScreenConfig::skillButtonBottomSpacing() const
 {
-    return skillPieSpacing_;
+    return skillButtonBottomSpacing_;
+}
+
+float GameScreenConfig::skillButtonRightSpacing() const
+{
+    return skillButtonRightSpacing_;
+}
+
+float GameScreenConfig::skillButtonSpacing() const
+{
+    return skillButtonSpacing_;
 }
 
 } // end of namespace botlib

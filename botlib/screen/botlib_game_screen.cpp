@@ -317,21 +317,17 @@ void GameScreen::initSkillPiePos()
     }
 
     const GameScreenConfig &cfg = Context::gameScreenConfig();
-    float radius = skillPieRadius();
-    float x, y, spacing;
+    float x, y;
 
-    y = cfg.skillPieBottomMargin() + radius;
-
-    x = viewportSize_[0] - cfg.skillPieRightMargin() -
-        (pieCount - 1) * cfg.skillPieSpacing() - (2*pieCount - 1) * radius;
-
-    spacing = 2 * radius + cfg.skillPieSpacing();
+    y = cfg.skillButtonBottomSpacing();
+    x = viewportSize_[0] - cfg.skillButtonRightSpacing() -
+        (pieCount - 1) * cfg.skillButtonSpacing();
 
     skillPiePos_.resize(pieCount);
     for (int i = 0; i < pieCount; ++i)
     {
         skillPiePos_[i].init({x, y});
-        x += spacing;
+        x += cfg.skillButtonSpacing();
     }
 }
 
@@ -438,7 +434,7 @@ void GameScreen::presentGoodiePies()
         ProgressPie &pie = goodiePies_[idx];
 
         pie.setFinishedRatio(effect.finishedRatio());
-        pie.present(goodiePiePos_[i], 0);
+        pie.present(goodiePiePos_[i]);
     }
 }
 
@@ -456,7 +452,7 @@ void GameScreen::presentSkillPies()
         if (isSkillWithCost(skill->type()))
         {
             skill1 = static_cast<SkillWithCost*>(skill);
-            skill1->pie()->present(skillPiePos_[posIdx], skill1->curIconIndex());
+            skill1->pie()->present(skillPiePos_[posIdx]);
             ++posIdx;
         }
     }
