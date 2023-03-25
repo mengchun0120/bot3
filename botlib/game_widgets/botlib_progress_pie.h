@@ -23,7 +23,8 @@ public:
 
     inline const ProgressPieTemplate *getTemplate() const;
 
-    void present(const commonlib::Vector2 &pos) const;
+    void present(const commonlib::Vector2 &pos,
+                 int iconIdx=0) const;
 
     void setFinishedRatio(float ratio);
 

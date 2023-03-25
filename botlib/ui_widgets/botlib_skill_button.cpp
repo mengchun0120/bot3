@@ -18,11 +18,12 @@ void SkillButton::init(float x,
     cooling_ = false;
     duration_ = 0.0f;
     radiusSquare_ = t->radius() * t->radius();
+    enabled_ = true;
 }
 
 void SkillButton::present() const
 {
-    pie_.present(pos_);
+    pie_.present(pos_, enabled_ ? 0 : 1);
 }
 
 void SkillButton::update(float timeDelta)
@@ -64,9 +65,18 @@ void SkillButton::onPointerDown(float x, float y)
 {
     if (enabled())
     {
-        action_();
+        action_(*this);
         cooling_ = true;
         duration_ = 0.0f;
+    }
+}
+
+void SkillButton::setEnabled(bool b)
+{
+    enabled_ = b;
+    if (enabled_)
+    {
+        reset();
     }
 }
 

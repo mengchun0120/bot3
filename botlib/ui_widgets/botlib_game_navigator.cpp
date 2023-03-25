@@ -10,16 +10,16 @@ namespace botlib {
 
 void GameNavigator::init(float x,
                          float y,
-                         MoveAction moveAction,
-                         StopAction stopAction)
+                         SteerFunc steerFunc,
+                         ToggleFunc toggleFunc)
 {
     const GameNavigatorConfig &cfg = Context::gameNavigatorConfig();
     Widget::init(x, y, true, true, true);
     directionValid_ = false;
-    moveAction_ = moveAction;
-    stopAction_ = stopAction;
+    steerFunc_ = steerFunc;
+    toggleFunc_ = toggleFunc;
     baseRadiusSquare_ = cfg.baseRadius() * cfg.baseRadius();
-    stopRadiusSquare_ = cfg.stopRadius() * cfg.stopRadius();
+    toggleRadiusSquare_ = cfg.toggleRadius() * cfg.toggleRadius();
 }
 
 void GameNavigator::present() const
@@ -57,6 +57,13 @@ void GameNavigator::onPointerOut()
 
 void GameNavigator::onPointerOver(float x, float y)
 {
+    float dx = x - pos_[0];
+    float dy = y - pos_[1];
+
+    if (dx*dx + dy*dy > toggleRadiusSquare_)
+    {
+        pressBase(dx, dy);
+    }
 }
 
 void GameNavigator::onPointerDown(float x, float y)
@@ -64,13 +71,13 @@ void GameNavigator::onPointerDown(float x, float y)
     float dx = x - pos_[0];
     float dy = y - pos_[1];
 
-    if (dx*dx + dy*dy > stopRadiusSquare_)
+    if (dx*dx + dy*dy > toggleRadiusSquare_)
     {
         pressBase(dx, dy);
     }
     else
     {
-        pressStop();
+        pressToggle();
     }
 }
 
@@ -85,13 +92,12 @@ void GameNavigator::pressBase(float dx, float dy)
 
     arrowPos_ = pos_ + curDirection_ * cfg.arrowRadius();
 
-    moveAction_(curDirection_);
+    steerFunc_(curDirection_);
 }
 
-void GameNavigator::pressStop()
+void GameNavigator::pressToggle()
 {
-    directionValid_ = false;
-    stopAction_();
+    toggleFunc_();
 }
 
 } // end of namespace botlib

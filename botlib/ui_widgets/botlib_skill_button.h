@@ -10,7 +10,7 @@ namespace botlib {
 
 class SkillButton: public Widget {
 public:
-    using Action = std::function<void()>;
+    using Action = std::function<void(SkillButton &)>;
 
 public:
     SkillButton() = default;
@@ -37,7 +37,11 @@ public:
 
     void onPointerDown(float x, float y) override;
 
+    inline bool finished() const;
+
     inline bool enabled() const;
+
+    void setEnabled(bool b);
 
     void reset();
 
@@ -48,11 +52,17 @@ private:
     bool cooling_;
     float duration_;
     float radiusSquare_;
+    bool enabled_;
 };
+
+bool SkillButton::finished() const
+{
+    return pie_.finished();
+}
 
 bool SkillButton::enabled() const
 {
-    return pie_.finished();
+    return enabled_;
 }
 
 } // end of namespace botlib

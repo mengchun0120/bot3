@@ -17,7 +17,7 @@ public:
 
     inline float baseRadius() const;
 
-    inline float stopRadius() const;
+    inline float toggleRadius() const;
 
     inline float arrowRadius() const;
 
@@ -40,7 +40,7 @@ private:
 
 private:
     float baseRadius_;
-    float stopRadius_;
+    float toggleRadius_;
     float arrowRadius_;
     float alpha_;
     commonlib::Texture baseTexture_;
@@ -54,9 +54,9 @@ float GameNavigatorConfig::baseRadius() const
     return baseRadius_;
 }
 
-float GameNavigatorConfig::stopRadius() const
+float GameNavigatorConfig::toggleRadius() const
 {
-    return stopRadius_;
+    return toggleRadius_;
 }
 
 float GameNavigatorConfig::arrowRadius() const

@@ -10,8 +10,8 @@ namespace botlib {
 
 class GameNavigator: public Widget {
 public:
-    using MoveAction = std::function<void(const commonlib::Vector2 &)>;
-    using StopAction = std::function<void()>;
+    using SteerFunc = std::function<void(const commonlib::Vector2 &)>;
+    using ToggleFunc = std::function<void()>;
 
 public:
     GameNavigator() = default;
@@ -20,8 +20,8 @@ public:
 
     void init(float x,
               float y,
-              MoveAction moveAction,
-              StopAction stopAction);
+              SteerFunc steerFunc,
+              ToggleFunc toggleFunc);
 
     void present() const override;
 
@@ -38,15 +38,15 @@ public:
 private:
     void pressBase(float dx, float dy);
 
-    void pressStop();
+    void pressToggle();
 
 private:
     bool directionValid_;
     commonlib::Vector2 curDirection_;
     commonlib::Vector2 arrowPos_;
-    MoveAction moveAction_;
-    StopAction stopAction_;
-    float baseRadiusSquare_, stopRadiusSquare_;
+    SteerFunc steerFunc_;
+    ToggleFunc toggleFunc_;
+    float baseRadiusSquare_, toggleRadiusSquare_;
 };
 
 } // end of namespace botlib

@@ -24,17 +24,13 @@ void ProgressPie::init(const ProgressPieTemplate *t)
     initIcons();
 }
 
-void ProgressPie::present(const commonlib::Vector2 &pos) const
+void ProgressPie::present(const commonlib::Vector2 &pos,
+                          int iconIdx) const
 {
     presentPie(pos);
-    if (icons_.size() > 1)
+    if (icons_.size() > 0)
     {
-        int idx = finished() ? 0 : 1;
-        icons_[idx].present(pos);
-    }
-    else if(icons_.size() > 0)
-    {
-        icons_[0].present(pos);
+        icons_[iconIdx].present(pos);
     }
 }
 

@@ -78,6 +78,10 @@ void TestGameButtonsApp::update(float timeDelta)
     {
         SkillButton *button = widgets_.widget<SkillButton>(i+1);
         button->update(timeDelta);
+        if (button->finished())
+        {
+            button->setEnabled(true);
+        }
     }
 }
 
@@ -133,18 +137,18 @@ void TestGameButtonsApp::setupGameNavigator()
 {
     const GameScreenConfig &cfg = Context::gameScreenConfig();
 
-    auto moveAction = [&](const Vector2 &direction)
+    auto steerFunc = [&](const Vector2 &direction)
     {
-        LOG << "Move " << direction << END;
+        LOG << "Steer " << direction << END;
     };
-    auto stopAction = [&]()
+    auto toggleFunc = [&]()
     {
-        LOG << "Stop" << END;
+        LOG << "Toggle" << END;
     };
 
     GameNavigator *navigator = new GameNavigator();
     navigator->init(cfg.navigatorLeftSpacing(), cfg.navigatorBottomSpacing(),
-                   moveAction, stopAction);
+                    steerFunc, toggleFunc);
     widgets_.setWidget(0, navigator);
 }
 
@@ -187,7 +191,8 @@ void TestGameButtonsApp::addSkillButton(
                      "Faild to find ProgreePie " + pieTemplate);
     }
 
-    auto action = [=]() {
+    auto action = [=](SkillButton &button) {
+        button.setEnabled(false);
         LOG << actionMsg << END;
     };
 

@@ -1,6 +1,6 @@
 {
     "baseRadius": 200.0,
-    "stopRadius": 66.66666666666667,
+    "toggleRadius": 66.66666666666667,
     "arrowRadius": 200.0,
     "alpha": 0.6,
     "baseTexture": "game_navigator.png",

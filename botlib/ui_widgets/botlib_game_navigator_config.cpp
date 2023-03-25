@@ -19,7 +19,7 @@ void GameNavigatorConfig::init(const std::string &fileName)
     float baseWidth, baseHeight, arrowWidth, arrowHeight;
     std::vector<JsonParamPtr> params{
         jsonParam(baseRadius_, "baseRadius", true, gt(0.0f)),
-        jsonParam(stopRadius_, "stopRadius", true, gt(0.0f)),
+        jsonParam(toggleRadius_, "toggleRadius", true, gt(0.0f)),
         jsonParam(arrowRadius_, "arrowRadius", true, gt(0.0f)),
         jsonParam(alpha_, "alpha", true, ge(0.0f) && le(1.0f)),
         jsonParam(baseTextureFile, "baseTexture", true, k_nonEmptyStrV),
