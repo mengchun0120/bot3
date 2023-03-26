@@ -13,13 +13,15 @@ public:
 
     ShootMissileSkill(const ShootMissileSkillTemplate *t,
                       Robot *robot,
-                      bool enabled1=false);
+                      bool enabled1=false,
+                      const commonlib::Vector2 *buttonPos=nullptr);
 
     ~ShootMissileSkill() override = default;
 
     void init(const ShootMissileSkillTemplate *t,
               Robot *robot,
-              bool enabled1=false);
+              bool enabled1=false,
+              const commonlib::Vector2 *buttonPos=nullptr);
 
     inline const ShootMissileSkillTemplate *getTemplate() const;
 

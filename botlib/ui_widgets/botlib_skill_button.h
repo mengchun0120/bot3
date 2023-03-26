@@ -20,12 +20,9 @@ public:
     void init(float x,
               float y,
               const ProgressPieTemplate *t,
-              float coolDown,
               Action action);
 
     void present() const override;
-
-    void update(float timeDelta);
 
     bool containPos(float x, float y) const override;
 
@@ -37,28 +34,18 @@ public:
 
     void onPointerDown(float x, float y) override;
 
-    inline bool finished() const;
-
     inline bool enabled() const;
 
     void setEnabled(bool b);
 
-    void reset();
+    void setRatio(float ratio);
 
 private:
     ProgressPie pie_;
     Action action_;
-    float coolDown_;
-    bool cooling_;
-    float duration_;
     float radiusSquare_;
     bool enabled_;
 };
-
-bool SkillButton::finished() const
-{
-    return pie_.finished();
-}
 
 bool SkillButton::enabled() const
 {

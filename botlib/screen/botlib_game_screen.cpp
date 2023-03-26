@@ -452,7 +452,7 @@ void GameScreen::presentSkillPies()
         if (isSkillWithCost(skill->type()))
         {
             skill1 = static_cast<SkillWithCost*>(skill);
-            skill1->pie()->present(skillPiePos_[posIdx]);
+            skill1->button()->present();
             ++posIdx;
         }
     }

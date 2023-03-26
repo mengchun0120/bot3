@@ -1,5 +1,5 @@
-#include <algorithm>
 #include <commonlib_log.h>
+#include <commonlib_exception.h>
 #include <botlib_update_context.h>
 #include <botlib_progress_pie.h>
 #include <botlib_skill_template.h>
@@ -11,51 +11,51 @@ namespace mcdane {
 namespace botlib {
 
 SkillWithCost::SkillWithCost()
-    : coolDown_(0.0f)
+    : button_(nullptr)
+    , coolDown_(0.0f)
     , timeSinceLastCast_(0.0f)
-    , pie_(nullptr)
-    , curIconIndex_(0)
 {
 }
 
 SkillWithCost::SkillWithCost(const SkillTemplate *t,
                              Robot *robot,
-                             bool enabled1)
+                             bool enabled1,
+                             const Vector2 *buttonPos)
 {
-    init(t, robot, enabled1);
+    init(t, robot, enabled1, buttonPos);
 }
 
 SkillWithCost::~SkillWithCost()
 {
-    if (!pie_)
+    if (!button_)
     {
-        delete pie_;
+        delete button_;
     }
 }
 
 void SkillWithCost::init(const SkillTemplate *t,
                          Robot *robot,
-                         bool enabled1)
+                         bool enabled1,
+                         const Vector2 *buttonPos)
 {
     Skill::init(t, robot, enabled1);
 
-    const SkillWithCostTemplate *t1 = getTemplate();
+    coolDown_ = getTemplate()->coolDown();
+    timeSinceLastCast_ = coolDown_;
 
-    coolDown_ = t1->coolDown();
-    timeSinceLastCast_ = t1->coolDown();
-    if (t1->pieTemplate())
+    if (getTemplate()->pieTemplate())
     {
-        pie_ = new ProgressPie(t1->pieTemplate());
-        curIconIndex_ = 0;
+        initButton(buttonPos);
     }
 }
 
 void SkillWithCost::update(UpdateContext &cxt)
 {
     timeSinceLastCast_ += cxt.timeDelta();
-    if (pie_)
+
+    if (button_)
     {
-        updatePie();
+        updateButton();
     }
 
     if (!inProcess() && (!enabled() || !available()))
@@ -70,8 +70,9 @@ void SkillWithCost::update(UpdateContext &cxt)
 
     if (apply(cxt))
     {
-        robot_->addEnergy(getTemplate()->energyCost());
+        robot_->addEnergy(-getTemplate()->energyCost());
         timeSinceLastCast_ = 0.0f;
+        updateButton();
     }
 
     if (!inProcess() && !getTemplate()->keepAlive())
@@ -82,23 +83,42 @@ void SkillWithCost::update(UpdateContext &cxt)
 
 void SkillWithCost::setCoolDownFactor(float f)
 {
-    coolDown_ *= f;
+    coolDown_ = getTemplate()->coolDown() * f;
+
+    if (button_)
+    {
+        updateButton();
+    }
 }
 
 void SkillWithCost::resetCoolDown()
 {
-    coolDown_ = getTemplate()->coolDown();
+    setCoolDownFactor(1.0f);
 }
 
-void SkillWithCost::updatePie()
+void SkillWithCost::initButton(const Vector2 *buttonPos)
 {
-    if (coolDown_ > 0.0f)
+    if (!buttonPos)
     {
-        float finishedRatio = std::min(timeSinceLastCast_ / coolDown_, 1.0f);
-        pie_->setFinishedRatio(finishedRatio);
+        THROW_EXCEPT(InvalidArgumentException, "buttonPos is null");
     }
 
-    curIconIndex_ = available() ? 0 : 1;
+    const SkillWithCostTemplate *t = getTemplate();
+    auto action = [&](SkillButton &button)
+    {
+        setEnabled(true);
+    };
+
+    button_ = new SkillButton();
+    button_->init((*buttonPos)[0], (*buttonPos)[1], t->pieTemplate(), action);
+}
+
+void SkillWithCost::updateButton()
+{
+    float ratio = coolDown_ > 0.0f ? timeSinceLastCast_ / coolDown_ : 1.0f;
+
+    button_->setRatio(ratio);
+    button_->setEnabled(available());
 }
 
 } // end of namespace botlib

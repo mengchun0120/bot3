@@ -38,6 +38,8 @@ private:
 
     void setupShader();
 
+    void setupCoolDownDurations();
+
     void setupWidgets();
 
     void setupDeltaSmoother();
@@ -52,7 +54,6 @@ private:
                         float x,
                         float y,
                         const std::string &pieTemplate,
-                        float coolDown,
                         const std::string &actionMsg);
 
     void calculateButtonPositions();
@@ -65,6 +66,8 @@ private:
     TimeDeltaSmoother deltaSmoother_;
     WidgetGroup widgets_;
     std::vector<commonlib::Vector2> buttonPositions_;
+    std::vector<float> coolDowns_;
+    std::vector<float> durations_;
 };
 
 } // end of namespace botlib

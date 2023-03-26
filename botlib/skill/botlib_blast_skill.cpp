@@ -11,16 +11,18 @@ namespace botlib {
 
 BlastSkill::BlastSkill(const BlastSkillTemplate *t,
                        Robot *robot,
-                       bool enabled1)
+                       bool enabled1,
+                       const Vector2 *buttonPos)
 {
-    init(t, robot, enabled1);
+    init(t, robot, enabled1, buttonPos);
 }
 
 void BlastSkill::init(const BlastSkillTemplate *t,
                       Robot *robot,
-                      bool enabled1)
+                      bool enabled1,
+                      const Vector2 *buttonPos)
 {
-    SkillWithCost::init(t, robot, enabled1);
+    SkillWithCost::init(t, robot, enabled1, buttonPos);
 }
 
 bool BlastSkill::apply(UpdateContext &cxt)
@@ -28,15 +30,14 @@ bool BlastSkill::apply(UpdateContext &cxt)
     GameMap &map = *(cxt.map());
     auto &firePoints = getTemplate()->firePoints();
     auto &fireDirections = getTemplate()->fireDirections();
-    const MissileTemplate *missileTemplate = robot_->getTemplate()->missileTemplate();
+    const MissileTemplate *t = robot_->getTemplate()->missileTemplate();
     int sz = static_cast<int>(firePoints.size());
 
     for (int i = 0; i < sz; ++i)
     {
         Vector2 pos = robot_->pos() + firePoints[i];
-        Missile *missile =
-            cxt.factory().createMissile(missileTemplate, robot_->side(),
-                                        pos, fireDirections[i]);
+        Missile *missile = cxt.factory().createMissile(t, robot_->side(),
+                                                       pos, fireDirections[i]);
         map.addObj(missile);
     }
 

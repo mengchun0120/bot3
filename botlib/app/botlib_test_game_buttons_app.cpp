@@ -66,9 +66,10 @@ bool TestGameButtonsApp::operator()(const InputEvent &e)
 void TestGameButtonsApp::setup()
 {
     Context::init(AppConfig::instance());
-    setupDeltaSmoother();
     setupShader();
+    setupCoolDownDurations();
     setupWidgets();
+    setupDeltaSmoother();
     setupInput();
 }
 
@@ -77,8 +78,11 @@ void TestGameButtonsApp::update(float timeDelta)
     for (int i = 0; i < k_numSkillButtons; ++i)
     {
         SkillButton *button = widgets_.widget<SkillButton>(i+1);
-        button->update(timeDelta);
-        if (button->finished())
+
+        durations_[i] += timeDelta;
+        button->setRatio(durations_[i] / coolDowns_[i]);
+
+        if (durations_[i] >= coolDowns_[i])
         {
             button->setEnabled(true);
         }
@@ -102,6 +106,12 @@ void TestGameButtonsApp::setupShader()
     shader.use();
     shader.setViewportSize(viewportSize());
     shader.setViewportOrigin(viewportOrigin);
+}
+
+void TestGameButtonsApp::setupCoolDownDurations()
+{
+    coolDowns_.assign({1000.0f, 5000.0f, 10000.0f});
+    durations_.assign(coolDowns_.begin(), coolDowns_.end());
 }
 
 void TestGameButtonsApp::setupWidgets()
@@ -171,7 +181,7 @@ void TestGameButtonsApp::setupSkillButtons()
     for (int i = 0; i < k_numSkillButtons; ++i)
     {
         addSkillButton(i+1, buttonPositions_[i][0], buttonPositions_[i][1],
-                       pieTemplates[i], coolDowns[i], actionMsgs[i]);
+                       pieTemplates[i], actionMsgs[i]);
     }
 }
 
@@ -180,7 +190,6 @@ void TestGameButtonsApp::addSkillButton(
         float x,
         float y,
         const std::string &pieTemplate,
-        float coolDown,
         const std::string &actionMsg)
 {
     const GameLib &lib = Context::gameLib();
@@ -191,13 +200,16 @@ void TestGameButtonsApp::addSkillButton(
                      "Faild to find ProgreePie " + pieTemplate);
     }
 
-    auto action = [=](SkillButton &button) {
+    auto action = [this, idx, actionMsg](SkillButton &button)
+    {
         button.setEnabled(false);
+        durations_[idx-1] = 0.0f;
+
         LOG << actionMsg << END;
     };
 
     SkillButton *button = new SkillButton();
-    button->init(x, y, t, coolDown, action);
+    button->init(x, y, t, action);
     widgets_.setWidget(idx, button);
 }
 

@@ -17,16 +17,18 @@ BarrageSkill::BarrageSkill()
 
 BarrageSkill::BarrageSkill(const BarrageSkillTemplate *t,
                            Robot *robot,
-                           bool enabled1)
+                           bool enabled1,
+                           const Vector2 *buttonPos)
 {
     init(t, robot, enabled1);
 }
 
 void BarrageSkill::init(const BarrageSkillTemplate *t,
                         Robot *robot,
-                        bool enabled1)
+                        bool enabled1,
+                        const Vector2 *buttonPos)
 {
-    SkillWithCost::init(t, robot, enabled1);
+    SkillWithCost::init(t, robot, enabled1, buttonPos);
 
     shootTimes_ = 0;
     timeSinceLastShoot_ = getTemplate()->shootInterval();

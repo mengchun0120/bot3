@@ -13,16 +13,18 @@ namespace botlib {
 
 TargetedBlastSkill::TargetedBlastSkill(const TargetedBlastSkillTemplate *t,
                                        Robot *robot,
-                                       bool enabled1)
+                                       bool enabled1,
+                                       const Vector2 *buttonPos)
 {
-    init(t, robot, enabled1);
+    init(t, robot, enabled1, buttonPos);
 }
 
 void TargetedBlastSkill::init(const TargetedBlastSkillTemplate *t,
                               Robot *robot,
-                              bool enabled1)
+                              bool enabled1,
+                              const Vector2 *buttonPos)
 {
-    SkillWithCost::init(t, robot, enabled1);
+    SkillWithCost::init(t, robot, enabled1, buttonPos);
 }
 
 bool TargetedBlastSkill::apply(UpdateContext &cxt)
@@ -63,7 +65,7 @@ void TargetedBlastSkill::findTargets(GameObjItemList &targets,
 void TargetedBlastSkill::shootTargets(GameObjItemList &targets,
                                       UpdateContext &cxt)
 {
-    const MissileTemplate *missileTemplate = robot_->getTemplate()->missileTemplate();
+    const MissileTemplate *t = robot_->getTemplate()->missileTemplate();
     float radius = getTemplate()->startRadius();
     GameMap &map = *(cxt.map());
 
@@ -71,9 +73,8 @@ void TargetedBlastSkill::shootTargets(GameObjItemList &targets,
     {
         Vector2 direction = normalize(i->item()->pos() - robot_->pos());
         Vector2 pos = direction * radius + robot_->pos();
-        Missile *missile =
-            cxt.factory().createMissile(missileTemplate, robot_->side(),
-                                        pos, direction);
+        Missile *missile = cxt.factory().createMissile(t, robot_->side(),
+                                                       pos, direction);
         map.addObj(missile);
     }
 }

@@ -13,13 +13,15 @@ public:
 
     BlastSkill(const BlastSkillTemplate *t,
                Robot *robot,
-               bool enabled1=false);
+               bool enabled1=false,
+               const commonlib::Vector2 *buttonPos=nullptr);
 
     ~BlastSkill() override = default;
 
     void init(const BlastSkillTemplate *t,
               Robot *robot,
-              bool enabled1=false);
+              bool enabled1=false,
+              const commonlib::Vector2 *buttonPos=nullptr);
 
     inline const BlastSkillTemplate *getTemplate() const;
 

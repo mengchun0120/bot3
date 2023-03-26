@@ -2,6 +2,7 @@
 #define INCLUDED_BOTLIB_SKILL_WITH_COST_H
 
 #include <botlib_robot.h>
+#include <botlib_skill_button.h>
 #include <botlib_skill_with_cost_template.h>
 #include <botlib_skill.h>
 
@@ -14,21 +15,21 @@ public:
 
     SkillWithCost(const SkillTemplate *t,
                   Robot *robot,
-                  bool enabled1=false);
+                  bool enabled1=false,
+                  const commonlib::Vector2 *buttonPos=nullptr);
 
     ~SkillWithCost() override;
 
     void init(const SkillTemplate *t,
               Robot *robot,
-              bool enabled1=false);
+              bool enabled1=false,
+              const commonlib::Vector2 *buttonPos=nullptr);
 
     inline const SkillWithCostTemplate *getTemplate() const;
 
-    inline const ProgressPie *pie() const;
-
-    inline int curIconIndex() const;
-
     inline bool available() const;
+
+    inline const SkillButton *button() const;
 
     void update(UpdateContext &cxt) override;
 
@@ -37,15 +38,16 @@ public:
     void resetCoolDown();
 
 protected:
+    void initButton(const commonlib::Vector2 *buttonPos);
+
     virtual bool apply(UpdateContext &cxt) = 0;
 
-    void updatePie();
+    void updateButton();
 
 protected:
+    SkillButton *button_;
     float coolDown_;
     float timeSinceLastCast_;
-    ProgressPie *pie_;
-    int curIconIndex_;
 };
 
 const SkillWithCostTemplate *SkillWithCost::getTemplate() const
@@ -53,20 +55,15 @@ const SkillWithCostTemplate *SkillWithCost::getTemplate() const
     return static_cast<const SkillWithCostTemplate*>(t_);
 }
 
-const ProgressPie *SkillWithCost::pie() const
-{
-    return pie_;
-}
-
-int SkillWithCost::curIconIndex() const
-{
-    return curIconIndex_;
-}
-
 bool SkillWithCost::available() const
 {
     return robot_->energy() >= getTemplate()->energyCost() &&
            timeSinceLastCast_ >= coolDown_;
+}
+
+const SkillButton *SkillWithCost::button() const
+{
+    return button_;
 }
 
 } // end of namespace botlib
