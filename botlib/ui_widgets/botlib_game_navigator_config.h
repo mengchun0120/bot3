@@ -25,18 +25,22 @@ public:
 
     inline const commonlib::Texture &baseTexture() const;
 
+    inline const commonlib::Texture &toggleButton(int idx) const;
+
     inline const commonlib::Texture &arrowTexture() const;
 
     inline const Rectangle &baseRect() const;
+
+    inline const Rectangle &toggleRect() const;
 
     inline const Rectangle &arrowRect() const;
 
 private:
     void initTexture(const std::string &baseTextureFile,
+                     const std::vector<std::string> &toggleButtonFiles,
                      const std::string &arrowTextureFile);
 
-    void initRect(float baseWidth, float baseHeight,
-                  float arrowWidth, float arrowHeight);
+    void initRect(float arrowWidth, float arrowHeight);
 
 private:
     float baseRadius_;
@@ -44,8 +48,10 @@ private:
     float arrowRadius_;
     float alpha_;
     commonlib::Texture baseTexture_;
+    std::vector<commonlib::Texture> toggleButtons_;
     commonlib::Texture arrowTexture_;
     Rectangle baseRect_;
+    Rectangle toggleRect_;
     Rectangle arrowRect_;
 };
 
@@ -74,6 +80,11 @@ const commonlib::Texture &GameNavigatorConfig::baseTexture() const
     return baseTexture_;
 }
 
+const commonlib::Texture &GameNavigatorConfig::toggleButton(int idx) const
+{
+    return toggleButtons_[idx];
+}
+
 const commonlib::Texture &GameNavigatorConfig::arrowTexture() const
 {
     return arrowTexture_;
@@ -82,6 +93,11 @@ const commonlib::Texture &GameNavigatorConfig::arrowTexture() const
 const Rectangle &GameNavigatorConfig::baseRect() const
 {
     return baseRect_;
+}
+
+const Rectangle &GameNavigatorConfig::toggleRect() const
+{
+    return toggleRect_;
 }
 
 const Rectangle &GameNavigatorConfig::arrowRect() const

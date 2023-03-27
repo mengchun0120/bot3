@@ -18,6 +18,7 @@ void GameNavigator::init(float x,
     directionValid_ = false;
     steerFunc_ = steerFunc;
     toggleFunc_ = toggleFunc;
+    greenOrRed_ = true;
     baseRadiusSquare_ = cfg.baseRadius() * cfg.baseRadius();
     toggleRadiusSquare_ = cfg.toggleRadius() * cfg.toggleRadius();
 }
@@ -31,6 +32,9 @@ void GameNavigator::present() const
 
     cfg.baseRect().draw(program, &pos_, nullptr, nullptr, nullptr,
                         cfg.baseTexture().id(), nullptr);
+
+    cfg.toggleRect().draw(program, &pos_, nullptr, nullptr, nullptr,
+                          cfg.toggleButton(greenOrRed_ ? 0 : 1).id(), nullptr);
 
     if (directionValid_)
     {
@@ -97,7 +101,8 @@ void GameNavigator::pressBase(float dx, float dy)
 
 void GameNavigator::pressToggle()
 {
-    toggleFunc_();
+    greenOrRed_ = !greenOrRed_;
+    toggleFunc_(greenOrRed_);
 }
 
 } // end of namespace botlib

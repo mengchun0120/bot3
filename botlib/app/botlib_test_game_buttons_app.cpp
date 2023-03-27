@@ -151,9 +151,9 @@ void TestGameButtonsApp::setupGameNavigator()
     {
         LOG << "Steer " << direction << END;
     };
-    auto toggleFunc = [&]()
+    auto toggleFunc = [&](bool greenOrRed)
     {
-        LOG << "Toggle" << END;
+        LOG << "Toggle " << (greenOrRed ? "green" : "red") << END;
     };
 
     GameNavigator *navigator = new GameNavigator();

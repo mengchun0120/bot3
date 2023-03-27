@@ -11,7 +11,7 @@ namespace botlib {
 class GameNavigator: public Widget {
 public:
     using SteerFunc = std::function<void(const commonlib::Vector2 &)>;
-    using ToggleFunc = std::function<void()>;
+    using ToggleFunc = std::function<void(bool)>;
 
 public:
     GameNavigator() = default;
@@ -46,6 +46,7 @@ private:
     commonlib::Vector2 arrowPos_;
     SteerFunc steerFunc_;
     ToggleFunc toggleFunc_;
+    bool greenOrRed_;
     float baseRadiusSquare_, toggleRadiusSquare_;
 };
 
