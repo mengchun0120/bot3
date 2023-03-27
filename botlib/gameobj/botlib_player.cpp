@@ -1,8 +1,10 @@
 #include <commonlib_log.h>
 #include <commonlib_math_utils.h>
+#include <botlib_context.h>
 #include <botlib_update_context.h>
 #include <botlib_game_map.h>
 #include <botlib_move_skill.h>
+#include <botlib_skill_with_cost.h>
 #include <botlib_goodie_template.h>
 #include <botlib_goodie_action.h>
 #include <botlib_player.h>
@@ -13,19 +15,25 @@ namespace mcdane {
 namespace botlib {
 
 Player::Player(const PlayerTemplate *t,
-               const commonlib::Vector2 &pos1,
-               const commonlib::Vector2 &direction1)
+               const Vector2 &pos1,
+               const Vector2 &direction1,
+               const Vector2 *viewportSize)
 {
-    init(t, pos1, direction1);
+    init(t, pos1, direction1, viewportSize);
 }
 
 void Player::init(const PlayerTemplate *t,
                   const Vector2 &pos1,
-                  const Vector2 &direction1)
+                  const Vector2 &direction1,
+                  const Vector2 *viewportSize)
 {
     Robot::init(t, Side::PLAYER, pos1, direction1);
     initGoodieEffects();
     initSkillMap();
+    if (viewportSize)
+    {
+        resetSkillButtonPos(*viewportSize);
+    }
 }
 
 void Player::update(UpdateContext &cxt)
@@ -72,6 +80,24 @@ Skill *Player::findSkillForInput(int input)
 {
     auto it = skillMap_.find(input);
     return it != skillMap_.end() ? it->second : nullptr;
+}
+
+void Player::resetSkillButtonPos(const commonlib::Vector2 &viewportSize)
+{
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+    float y = cfg.skillButtonBottomSpacing();
+    float x = viewportSize[0] - cfg.skillButtonRightSpacing();
+
+    for (unsigned int i = skills_.size() - 1; i >= 0; --i)
+    {
+        if (!isSkillWithCost(skills_[i]->type()))
+        {
+            continue;
+        }
+
+        static_cast<SkillWithCost *>(skills_[i])->button()->setPos(x, y);
+        x -= cfg.skillButtonSpacing();
+    }
 }
 
 void Player::initGoodieEffects()

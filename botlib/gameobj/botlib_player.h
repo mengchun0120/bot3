@@ -16,13 +16,15 @@ public:
 
     Player(const PlayerTemplate *t,
            const commonlib::Vector2 &pos1,
-           const commonlib::Vector2 &direction1);
+           const commonlib::Vector2 &direction1,
+           const commonlib::Vector2 *viewportSize=nullptr);
 
     ~Player() override = default;
 
     void init(const PlayerTemplate *t,
               const commonlib::Vector2 &pos1,
-              const commonlib::Vector2 &direction1);
+              const commonlib::Vector2 &direction1,
+              const commonlib::Vector2 *viewportSize=nullptr);
 
     inline const PlayerTemplate *getTemplate() const;
 
@@ -38,6 +40,8 @@ public:
     void setDest(const commonlib::Vector2 &dest);
 
     Skill *findSkillForInput(int input);
+
+    void resetSkillButtonPos(const commonlib::Vector2 &viewportSize);
 
 protected:
     void initGoodieEffects();

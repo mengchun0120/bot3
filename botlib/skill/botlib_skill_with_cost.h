@@ -29,7 +29,7 @@ public:
 
     inline bool available() const;
 
-    inline const SkillButton *button() const;
+    inline SkillButton *button();
 
     void update(UpdateContext &cxt) override;
 
@@ -61,7 +61,7 @@ bool SkillWithCost::available() const
            timeSinceLastCast_ >= coolDown_;
 }
 
-const SkillButton *SkillWithCost::button() const
+SkillButton *SkillWithCost::button()
 {
     return button_;
 }

@@ -98,11 +98,6 @@ void SkillWithCost::resetCoolDown()
 
 void SkillWithCost::initButton(const Vector2 *buttonPos)
 {
-    if (!buttonPos)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "buttonPos is null");
-    }
-
     const SkillWithCostTemplate *t = getTemplate();
     auto action = [&](SkillButton &button)
     {
@@ -110,7 +105,16 @@ void SkillWithCost::initButton(const Vector2 *buttonPos)
     };
 
     button_ = new SkillButton();
-    button_->init((*buttonPos)[0], (*buttonPos)[1], t->pieTemplate(), action);
+
+    if (buttonPos)
+    {
+        button_->init((*buttonPos)[0], (*buttonPos)[1],
+                      t->pieTemplate(), action);
+    }
+    else
+    {
+        button_->init(0.0f, 0.0f, t->pieTemplate(), action);
+    }
 }
 
 void SkillWithCost::updateButton()
