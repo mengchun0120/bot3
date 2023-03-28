@@ -44,8 +44,11 @@ void GameScreen::init(const Vector2 &viewportSize,
     initMessageBox();
     initAIRobotCount();
     initGoodiePies();
-    initSkillPiePos();
     moveOutRegions_.resize(4);
+#ifdef __ANDROID__
+    initGameNavigator();
+#endif
+    initSkillButtons();
 }
 
 void GameScreen::update(float timeDelta)
@@ -103,7 +106,6 @@ void GameScreen::present()
     glFlush();
 }
 
-#ifdef DESKTOP_APP
 bool GameScreen::processInput(const InputEvent &e)
 {
     if (!msgBox_.visible())
@@ -141,6 +143,8 @@ bool GameScreen::processInputEndGame(const commonlib::InputEvent &e)
     return true;
 }
 
+
+#ifdef DESKTOP_APP
 bool GameScreen::processInputGame(const commonlib::InputEvent &e)
 {
     switch (e.type())
@@ -221,7 +225,80 @@ bool GameScreen::processKey(const KeyEvent &e)
 
     return true;
 }
+
+void GameScreen::enableSkillForInput(int input)
+{
+    Skill *skill = map_.player()->findSkillForInput(input);
+    if (skill)
+    {
+        skill->setEnabled(true);
+    }
+}
+
+#elif __ANDROID__
+void GameScreen::initGameNavigator()
+{
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+
+    auto steerFunc = [&](const Vector2 &direction)
+    {
+        onSteer(direction);
+    };
+    auto toggleFunc = [&](bool greenOrRed)
+    {
+        onToggle(greenOrRed);
+    };
+
+    navigator_.init(cfg.navigatorLeftSpacing(), cfg.navigatorBottomSpacing(),
+                    steerFunc, toggleFunc);
+}
+
+bool GameScreen::processInputGame(const commonlib::InputEvent &e)
+{
+    if (!map->player())
+    {
+        return;
+    }
+
+    if (navigator_.containPos(e.x_, e.y_))
+    {
+        if (e.type_ == InputEvent::POINTER_DOWN)
+        {
+            navigator_.onPointerDown(e.x_, e.y_);
+        }
+        else if (e.type_ == InputEvent::POINTER_MOVE)
+        {
+            navigator_.onPointerOver(e.x_, e.y_);
+        }
+    }
+    else if (e.type_ == InputEvent::POINTER_DOWN)
+    {
+        map_.player()->onPointer(e.x_, e.y_);
+    }
+
+    return true;
+}
+
+void GameScreen::onSteer(const Vector2 &direction)
+{
+}
+
+void GameScreen::onToggle(bool greenOrRed)
+{
+}
 #endif
+
+void GameScreen::onViewportChange(float width, float height)
+{
+    viewportSize_[0] = width;
+    viewportSize_[1] = height;
+    overlayViewportOrigin_ = viewportSize_ / 2.0f;
+    map_.resetViewport(width, height);
+    if (map_.player())
+    {
+        map_.player()->resetSkillButtonPos(viewportSize_);
+    }
+}
 
 void GameScreen::loadMap(const Vector2 &viewportSize,
                          const std::string &mapFile)
@@ -308,27 +385,9 @@ void GameScreen::initGoodiePiePos()
     }
 }
 
-void GameScreen::initSkillPiePos()
+void GameScreen::initSkillButtons()
 {
-    int pieCount = skillPieCount();
-    if (pieCount <= 0)
-    {
-        return;
-    }
-
-    const GameScreenConfig &cfg = Context::gameScreenConfig();
-    float x, y;
-
-    y = cfg.skillButtonBottomSpacing();
-    x = viewportSize_[0] - cfg.skillButtonRightSpacing() -
-        (pieCount - 1) * cfg.skillButtonSpacing();
-
-    skillPiePos_.resize(pieCount);
-    for (int i = 0; i < pieCount; ++i)
-    {
-        skillPiePos_[i].init({x, y});
-        x += cfg.skillButtonSpacing();
-    }
+    map_.player()->resetSkillButtonPos(viewportSize_);
 }
 
 void GameScreen::createGoodiePies()
@@ -348,15 +407,6 @@ void GameScreen::updatePlayer()
     Player *player = map_.player();
     player->update(cxt_);
     map_.setViewportOrigin(player->x(), player->y());
-}
-
-void GameScreen::enableSkillForInput(int input)
-{
-    Skill *skill = map_.player()->findSkillForInput(input);
-    if (skill)
-    {
-        skill->setEnabled(true);
-    }
 }
 
 void GameScreen::clearUpdateFlags()

@@ -95,10 +95,34 @@ void Player::resetSkillButtonPos(const commonlib::Vector2 &viewportSize)
             continue;
         }
 
-        static_cast<SkillWithCost *>(skills_[i])->button()->setPos(x, y);
+        SkillWithCost *skill = static_cast<SkillWithCost *>(skills_[i]);
+        skill->button()->setPos(x, y);
+
         x -= cfg.skillButtonSpacing();
     }
 }
+
+#ifdef __ANDROID__
+bool Player::onPointer(float x, float y)
+{
+    for (auto skill : skills_)
+    {
+        if (!isSkillWithCost(skill->type()))
+        {
+            continue;
+        }
+
+        SkillButton *button = static_cast<SkillWithCost *>(skills_[i])->button();
+        if (button->containPos(x, y))
+        {
+            button->onPointerDown(x, y);
+            return true;
+        }
+    }
+
+    return false;
+}
+#endif
 
 void Player::initGoodieEffects()
 {

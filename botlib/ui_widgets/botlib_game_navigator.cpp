@@ -51,14 +51,6 @@ bool GameNavigator::containPos(float x, float y) const
     return dx*dx + dy*dy <= baseRadiusSquare_;
 }
 
-void GameNavigator::onLostFocus()
-{
-}
-
-void GameNavigator::onPointerOut()
-{
-}
-
 void GameNavigator::onPointerOver(float x, float y)
 {
     float dx = x - pos_[0];

@@ -26,12 +26,6 @@ public:
 
     bool containPos(float x, float y) const override;
 
-    void onLostFocus() override;
-
-    void onPointerOut() override;
-
-    void onPointerOver(float x, float y) override;
-
     void onPointerDown(float x, float y) override;
 
     inline bool enabled() const;

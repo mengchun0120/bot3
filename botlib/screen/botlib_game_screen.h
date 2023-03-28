@@ -7,6 +7,7 @@
 #include <botlib_progress_bar.h>
 #include <botlib_progress_pie.h>
 #include <botlib_message_box.h>
+#include <botlib_game_navigator.h>
 #include <botlib_icon.h>
 #include <botlib_update_context.h>
 #include <botlib_screen.h>
@@ -32,19 +33,9 @@ public:
 
     void present() override;
 
-#ifdef DESKTOP_APP
     bool processInput(const commonlib::InputEvent &e) override;
 
-    bool processInputEndGame(const commonlib::InputEvent &e);
-
-    bool processInputGame(const commonlib::InputEvent &e);
-
-    bool processMouseButton(const commonlib::MouseButtonEvent &e);
-
-    bool processMouseMove(const commonlib::MouseMoveEvent &e);
-
-    bool processKey(const commonlib::KeyEvent &e);
-#endif
+    void onViewportChange(float width, float height) override;
 
 private:
     void loadMap(const commonlib::Vector2 &viewportSize,
@@ -60,13 +51,32 @@ private:
 
     void initGoodiePiePos();
 
-    void initSkillPiePos();
+    void initSkillButtons();
 
     void createGoodiePies();
 
-    void updatePlayer();
+    bool processInputEndGame(const commonlib::InputEvent &e);
+
+    bool processInputGame(const commonlib::InputEvent &e);
+
+#ifdef DESKTOP_APP
+    bool processMouseButton(const commonlib::MouseButtonEvent &e);
+
+    bool processMouseMove(const commonlib::MouseMoveEvent &e);
+
+    bool processKey(const commonlib::KeyEvent &e);
 
     void enableSkillForInput(int input);
+
+#elif __ANDROID__
+    void initGameNavigator();
+
+    void onSteer(const Vector2 &direction);
+
+    void onToggle(bool greenOrRed);
+#endif
+
+    void updatePlayer();
 
     void clearUpdateFlags();
 
@@ -108,7 +118,7 @@ private:
     std::vector<commonlib::Region<int>> moveOutRegions_;
     std::vector<commonlib::Vector2> goodiePiePos_;
     std::vector<ProgressPie> goodiePies_;
-    std::vector<commonlib::Vector2> skillPiePos_;
+    GameNavigator navigator_;
 };
 
 bool GameScreen::isPlayerAvailable()

@@ -43,6 +43,10 @@ public:
 
     void resetSkillButtonPos(const commonlib::Vector2 &viewportSize);
 
+#ifdef __ANDROID__
+    bool onPointer(float x, float y);
+#endif
+
 protected:
     void initGoodieEffects();
 

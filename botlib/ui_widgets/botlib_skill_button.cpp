@@ -29,18 +29,6 @@ bool SkillButton::containPos(float x, float y) const
     return dx*dx + dy*dy <= radiusSquare_;
 }
 
-void SkillButton::onLostFocus()
-{
-}
-
-void SkillButton::onPointerOut()
-{
-}
-
-void SkillButton::onPointerOver(float x, float y)
-{
-}
-
 void SkillButton::onPointerDown(float x, float y)
 {
     if (enabled_)
