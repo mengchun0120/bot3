@@ -93,8 +93,8 @@ void GameNavigator::pressBase(float dx, float dy)
 
 void GameNavigator::pressToggle()
 {
-    greenOrRed_ = !greenOrRed_;
     toggleFunc_(greenOrRed_);
+    greenOrRed_ = !greenOrRed_;
 }
 
 } // end of namespace botlib

@@ -37,20 +37,20 @@ public:
     void toJson(rapidjson::Value &v,
                 rapidjson::Document::AllocatorType &allocator) override;
 
+#ifdef DESKTOP_APP
     void setDest(const commonlib::Vector2 &dest);
 
     Skill *findSkillForInput(int input);
+#endif
 
     void resetSkillButtonPos(const commonlib::Vector2 &viewportSize);
-
-#ifdef __ANDROID__
-    bool onPointer(float x, float y);
-#endif
 
 protected:
     void initGoodieEffects();
 
+#ifdef DESKTOP_APP
     void initSkillMap();
+#endif
 
     void updateGoodieEffects(float timeDelta);
 
@@ -59,9 +59,9 @@ protected:
 protected:
     commonlib::ObjectPool<GoodieEffectItem> goodieEffectPool_;
     commonlib::LinkedList<GoodieEffectItem> goodieEffects_;
+#ifdef DESKTOP_APP
     std::unordered_map<int,Skill*> skillMap_;
-    commonlib::Vector2 dest_;
-    float timeToDest_;
+#endif
 };
 
 const PlayerTemplate *Player::getTemplate() const

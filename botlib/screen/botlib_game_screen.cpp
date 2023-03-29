@@ -255,7 +255,7 @@ void GameScreen::initGameNavigator()
 
 bool GameScreen::processInputGame(const commonlib::InputEvent &e)
 {
-    if (!map->player())
+    if (!map_.player())
     {
         return;
     }
@@ -273,7 +273,7 @@ bool GameScreen::processInputGame(const commonlib::InputEvent &e)
     }
     else if (e.type_ == InputEvent::POINTER_DOWN)
     {
-        map_.player()->onPointer(e.x_, e.y_);
+        onSkillButtonPressed(e.x_, e.y_);
     }
 
     return true;
@@ -281,10 +281,35 @@ bool GameScreen::processInputGame(const commonlib::InputEvent &e)
 
 void GameScreen::onSteer(const Vector2 &direction)
 {
+    map_.player()->setDirection(direction);
 }
 
 void GameScreen::onToggle(bool greenOrRed)
 {
+    map_.player()->setSkillEnabled(SkillType::MOVE, greenOrRed);
+}
+
+void GameScreen::onSkillButtonPressed(float x, float y)
+{
+    int skillCount = player->skillCount();
+    Skill *skill;
+    SkillButton *button;
+
+    for (int i = 0; i < skillCount; ++i)
+    {
+        skill = map_.player()->skill(i);
+        if (!isSkillWithCost(skill->type()))
+        {
+            continue;
+        }
+
+        button = static_cast<SkillWithCost*>(skill)->button();
+        if (button->containPos(x, y))
+        {
+            button->onPointerDown(x y);
+            return;
+        }
+    }
 }
 #endif
 
@@ -455,7 +480,8 @@ void GameScreen::presentOverlay()
     if (map_.player())
     {
         presentGoodiePies();
-        presentSkillPies();
+        navigator_.present();
+        presentSkillButtons();
     }
 
     program.setAlpha(1.0f);
@@ -488,10 +514,9 @@ void GameScreen::presentGoodiePies()
     }
 }
 
-void GameScreen::presentSkillPies()
+void GameScreen::presentSkillButtons()
 {
     Player *player = map_.player();
-    int posIdx = 0;
     int skillCount = player->skillCount();
     Skill *skill;
     SkillWithCost *skill1;
@@ -503,7 +528,6 @@ void GameScreen::presentSkillPies()
         {
             skill1 = static_cast<SkillWithCost*>(skill);
             skill1->button()->present();
-            ++posIdx;
         }
     }
 }

@@ -74,6 +74,8 @@ private:
     void onSteer(const Vector2 &direction);
 
     void onToggle(bool greenOrRed);
+
+    void onSkillButtonPressed(float x, float y);
 #endif
 
     void updatePlayer();
@@ -90,7 +92,7 @@ private:
 
     void presentGoodiePies();
 
-    void presentSkillPies();
+    void presentSkillButtons();
 
     void showVictory();
 

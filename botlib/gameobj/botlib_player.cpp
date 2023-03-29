@@ -29,7 +29,9 @@ void Player::init(const PlayerTemplate *t,
 {
     Robot::init(t, Side::PLAYER, pos1, direction1);
     initGoodieEffects();
+#ifdef DESKTOP_APP
     initSkillMap();
+#endif
     if (viewportSize)
     {
         resetSkillButtonPos(*viewportSize);
@@ -69,6 +71,7 @@ void Player::toJson(rapidjson::Value &v,
     v.AddMember("type", jsonVal("player", allocator), allocator);
 }
 
+#ifdef DESKTOP_APP
 void Player::setDest(const commonlib::Vector2 &dest)
 {
     MoveSkill *s = static_cast<MoveSkill*>(searchSkill(SkillType::MOVE));
@@ -81,6 +84,7 @@ Skill *Player::findSkillForInput(int input)
     auto it = skillMap_.find(input);
     return it != skillMap_.end() ? it->second : nullptr;
 }
+#endif
 
 void Player::resetSkillButtonPos(const commonlib::Vector2 &viewportSize)
 {
@@ -102,34 +106,13 @@ void Player::resetSkillButtonPos(const commonlib::Vector2 &viewportSize)
     }
 }
 
-#ifdef __ANDROID__
-bool Player::onPointer(float x, float y)
-{
-    for (auto skill : skills_)
-    {
-        if (!isSkillWithCost(skill->type()))
-        {
-            continue;
-        }
-
-        SkillButton *button = static_cast<SkillWithCost *>(skills_[i])->button();
-        if (button->containPos(x, y))
-        {
-            button->onPointerDown(x, y);
-            return true;
-        }
-    }
-
-    return false;
-}
-#endif
-
 void Player::initGoodieEffects()
 {
     goodieEffectPool_.init(lastingGoodieTypeCount());
     goodieEffects_.setDeleter(goodieEffectPool_.deleter());
 }
 
+#ifdef DESKTOP_APP
 void Player::initSkillMap()
 {
     auto &m = getTemplate()->inputSkillMap();
@@ -146,6 +129,7 @@ void Player::initSkillMap()
         skillMap_[it->first] = skill;
     }
 }
+#endif
 
 void Player::updateGoodieEffects(float timeDelta)
 {
