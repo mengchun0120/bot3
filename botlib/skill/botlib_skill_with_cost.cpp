@@ -72,7 +72,10 @@ void SkillWithCost::update(UpdateContext &cxt)
     {
         robot_->addEnergy(-getTemplate()->energyCost());
         timeSinceLastCast_ = 0.0f;
-        updateButton();
+        if (button_)
+        {
+            updateButton();
+        }
     }
 
     if (!inProcess() && !getTemplate()->keepAlive())

@@ -3,10 +3,10 @@
 #include <cstdlib>
 #include <commonlib_argument_parser.h>
 #include <commonlib_log.h>
-#include <rungame_app.h>
+#include <botlib_run_game_app.h>
 
 using namespace mcdane::commonlib;
-using namespace mcdane::rungame;
+using namespace mcdane::botlib;
 
 struct Arguments {
     std::string configFile_;
@@ -77,7 +77,8 @@ int main(int argc, char* argv[])
 
     try
     {
-        RunGameApp app(args.configFile_, args.appDir_, args.mapFile_);
+        RunGameApp app;
+        app.init(args.configFile_, args.appDir_, args.mapFile_);
         app.run();
     }
     catch (const std::exception& e)

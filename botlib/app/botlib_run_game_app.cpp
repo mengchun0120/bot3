@@ -1,27 +1,43 @@
 #include <commonlib_log.h>
+#include <commonlib_input_manager.h>
 #include <botlib_app_config.h>
 #include <botlib_context.h>
-#include <rungame_app.h>
+#include <botlib_run_game_app.h>
 
 using namespace mcdane::commonlib;
 
 namespace mcdane {
 namespace botlib {
 
-RunGameApp::RunGameApp(const std::string& configFile,
-                       const std::string& appDir,
-                       const std::string& mapFile)
+#ifdef DESKTOP_APP
+void RunGameApp::init(const std::string &configFile,
+                      const std::string &appDir,
+                      const std::string &mapFile)
 {
     AppConfig::init(configFile, appDir);
-    const AppConfig& cfg = AppConfig::instance();
-    init(cfg.width(), cfg.height(), cfg.title());
-    Context::init(AppConfig::instance());
+    const AppConfig &cfg = AppConfig::instance();
+    App::init(cfg.width(), cfg.height(), cfg.title());
+    Context::init(cfg);
     setupGame(mapFile);
 }
+#elif __ANDROID__
+void RunGameApp::init(android_app *app,
+                      const std::string &configFile,
+                      const std::string &mapFile)
+{
+    AppConfig::init(configFile);
+    App::init(app);
+    const AppConfig &cfg = AppConfig::instance();
+    Context::init(cfg);
+    setupGame(mapFile);
+}
+#endif
 
 void RunGameApp::process()
 {
-    InputManager::getInstance().processInput(inputProcessor_);
+    App::process();
+
+    InputManager::instance().processInput(*this);
     deltaSmoother_.update();
 
     if (running())
@@ -29,6 +45,19 @@ void RunGameApp::process()
         screen_.update(deltaSmoother_.curTimeDelta());
         screen_.present();
     }
+
+    postProcess();
+}
+
+bool RunGameApp::operator()(const commonlib::InputEvent &e)
+{
+    if (!running())
+    {
+        return false;
+    }
+
+    screen_.processInput(e);
+    return running();
 }
 
 void RunGameApp::setupGame(const std::string& mapFile)
@@ -55,21 +84,26 @@ void RunGameApp::setupScreen(const std::string& mapFile)
     screen_.init(viewportSize(), actions);
 }
 
+#ifdef DESKTOP_APP
 void RunGameApp::setupInput()
 {
-    using namespace std::placeholders;
-
-    const AppConfig& cfg = AppConfig::instance();
-
-    InputManager::initInstance(window(),
-                               viewportHeight(),
+    const AppConfig &cfg = AppConfig::instance();
+    InputManager::initInstance(window(), viewportSize(),
                                cfg.inputQueueCapacity());
+    InputManager::instance().enable();
+}
+#elif __ANDROID__
+void RunGameApp::setupInput()
+{
+    InputManager::initInstance(app_, viewportSize());
+}
+#endif
 
-    inputProcessor_ = std::bind(&GameScreen::processInput,
-                                &screen_,
-                                _1);
-
-    InputManager::getInstance().enable();
+void RunGameApp::onViewportChange(float width, float height)
+{
+    App::onViewportChange(width, height);
+    InputManager::instance().setViewportSize(viewportSize());
+    screen_.onViewportChange(viewportWidth(), viewportHeight());
 }
 
 void RunGameApp::exitApp()

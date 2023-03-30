@@ -1,6 +1,9 @@
 {
-    "progress_pie": {
-        "data_files": ["progress_pie_pos.txt"]
+    "skill_progress_pie": {
+        "data_files": ["skill_progress_pie_pos.txt"]
+    },
+    "goodie_progress_pie": {
+        "data_files": ["goodie_progress_pie_pos.txt"]
     },
     "progress_bar": {
         "data_files": ["progress_bar_pos.txt"]

@@ -480,7 +480,9 @@ void GameScreen::presentOverlay()
     if (map_.player())
     {
         presentGoodiePies();
+#ifdef __ANDROID__
         navigator_.present();
+#endif
         presentSkillButtons();
     }
 

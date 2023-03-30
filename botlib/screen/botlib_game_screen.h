@@ -120,7 +120,9 @@ private:
     std::vector<commonlib::Region<int>> moveOutRegions_;
     std::vector<commonlib::Vector2> goodiePiePos_;
     std::vector<ProgressPie> goodiePies_;
+#ifdef __ANDROID__
     GameNavigator navigator_;
+#endif
 };
 
 bool GameScreen::isPlayerAvailable()

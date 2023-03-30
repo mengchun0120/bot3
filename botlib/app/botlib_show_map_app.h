@@ -13,6 +13,8 @@ class ShowMapApp: public commonlib::App {
 public:
     ShowMapApp();
 
+    ~ShowMapApp() override;
+
 #ifdef DESKTOP_APP
     void init(const std::string &configFile,
               const std::string &appDir,
@@ -22,8 +24,6 @@ public:
               const std::string &configFile,
               const std::string &mapFile);
 #endif
-
-    ~ShowMapApp() override;
 
     void process() override;
 

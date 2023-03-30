@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.22.1)
 
 set(RUNGAME_SRC
-    rungame_app.cpp
     rungame_main.cpp
 )
 
@@ -11,10 +10,6 @@ include_directories(
     ${BOTLIB_INCLUDE_DIR}
 )
 
-add_executable(rungame ${RUNGAME_SRC})
+add_executable(rungame rungame_main.cpp)
 
-if(UNIX)
-    target_link_libraries(rungame botlib commonlib ${LIB})
-elseif(MINGW)
-    target_link_libraries(rungame botlib commonlib ${LIB})
-endif()
+target_link_libraries(rungame botlib commonlib ${LIB})
