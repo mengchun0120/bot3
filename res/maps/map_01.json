@@ -1,31 +1,3834 @@
 {
     "rows": 50,
-    "cols": 50,
+    "cols": 100,
     "objects": [
         {
-            "type": "player",
-            "template": "player",
-            "pos": [200.0, 600.0],
-            "direction": [1.0, 0.0]
+            "template": "steel_tile",
+            "pos": [
+                222.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
         },
         {
-            "type": "tile",
-            "template": "clay_tile",
-            "pos": [200.0, 200.0],
-            "direction": [1.0, 0.0]
+            "template": "steel_tile",
+            "pos": [
+                267.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
         },
         {
-            "type": "tile",
+            "template": "steel_tile",
+            "pos": [
+                312.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                557.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                602.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                647.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                892.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                937.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
             "template": "ice_tile",
-            "pos": [200.0, 160.0],
-            "direction": [1.0, 0.0]
+            "pos": [
+                1182.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
         },
         {
-            "type": "robot",
-            "template": "red_robot",
-            "pos": [80.0, 80.0],
-            "direction": [0.707106781, 0.707106781],
-            "shootingEnabled": true
+            "template": "ice_tile",
+            "pos": [
+                1227.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1472.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                1717.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1962.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2007.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2252.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2297.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                2542.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                2587.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2832.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2877.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                3122.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                3167.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3412.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3457.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3502.5,
+                222.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                222.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                267.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                312.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                557.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                602.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                647.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1182.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1227.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1472.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                1717.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1962.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2007.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2252.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2297.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                2542.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                2587.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2832.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2877.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                3122.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                3167.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3412.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3457.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3502.5,
+                267.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1182.5,
+                312.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1227.5,
+                312.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1472.5,
+                312.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1962.5,
+                312.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2007.5,
+                312.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2832.5,
+                312.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2877.5,
+                312.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                3122.5,
+                312.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                3167.5,
+                312.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                222.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                267.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                312.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                557.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                602.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                847.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                892.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                937.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1182.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1227.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                1472.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                1517.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1762.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2007.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2052.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2297.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2342.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2387.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2632.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2677.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2722.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2967.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                3012.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3257.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3302.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                3547.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                3592.5,
+                557.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                222.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                267.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                312.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                557.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                602.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1182.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1227.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                1472.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                1517.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1762.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2007.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2052.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2297.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2342.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2387.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2632.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2677.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2722.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2967.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                3012.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3257.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3302.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                3547.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                3592.5,
+                602.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2007.5,
+                647.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2052.5,
+                647.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2632.5,
+                647.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2677.5,
+                647.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2722.5,
+                647.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                222.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                267.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                512.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                557.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                602.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                847.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1092.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1137.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1382.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1427.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1472.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                1717.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                1762.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                1807.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                2052.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                2097.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                2142.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                2387.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2632.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2677.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2722.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2967.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3012.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3057.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3302.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3347.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3592.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3637.5,
+                892.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                222.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                267.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                512.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                557.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                602.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                847.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1092.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1137.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1382.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1427.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1472.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                1717.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                1762.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                1807.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                2052.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                2097.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                2142.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                2387.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2632.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2677.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2722.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2967.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3012.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3057.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3302.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3347.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3592.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3637.5,
+                937.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                222.5,
+                982.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                267.5,
+                982.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                1717.5,
+                982.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                1762.5,
+                982.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                1807.5,
+                982.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                2387.5,
+                982.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3592.5,
+                982.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3637.5,
+                982.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                222.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                267.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                312.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                557.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                602.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                847.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                892.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1137.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1182.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1427.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1472.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1717.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1762.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1807.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2052.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2097.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2142.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2387.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2432.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2477.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2722.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2967.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3012.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3257.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3302.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3347.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3592.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3637.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3682.5,
+                1227.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                222.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                267.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                312.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                557.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                602.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                847.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                892.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1137.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1182.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1427.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1472.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1717.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1762.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1807.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2052.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2097.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2142.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2387.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2432.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2477.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2722.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2967.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3012.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3257.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3302.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                3347.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3592.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3637.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                3682.5,
+                1272.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                847.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                892.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1137.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1182.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1427.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1472.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1717.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1762.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1807.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2052.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2097.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                2142.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2387.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2432.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                2477.5,
+                1317.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                222.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                267.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                312.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                557.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                602.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                847.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                892.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                937.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1182.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1227.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1472.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1717.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1762.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2007.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2052.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                2297.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                2342.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2587.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2632.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2877.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2922.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2967.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                3212.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                3257.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3502.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3547.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3592.5,
+                1562.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                222.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                267.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                312.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                557.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                602.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                847.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                892.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                937.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1182.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1227.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                1472.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1717.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "clay_tile",
+            "pos": [
+                1762.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2587.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2632.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2877.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2922.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2967.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                3212.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "steel_tile",
+            "pos": [
+                3257.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3502.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3547.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3592.5,
+                1607.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                222.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                267.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                312.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                557.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "ice_tile",
+            "pos": [
+                602.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                847.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                892.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                937.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1182.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "bush_tile",
+            "pos": [
+                1227.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2877.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2922.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                2967.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3502.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3547.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "fireland_tile",
+            "pos": [
+                3592.5,
+                1652.5
+            ],
+            "direction": [
+                1.0,
+                0.0
+            ],
+            "type": "tile"
+        },
+        {
+            "template": "blue_robot",
+            "pos": [
+                2500.0,
+                100.0
+            ],
+            "direction": [
+                -0.9416847825050354,
+                0.3364962637424469
+            ],
+            "type": "robot"
+        },
+        {
+            "template": "blue_robot",
+            "pos": [
+                1260.0,
+                700.0
+            ],
+            "direction": [
+                -0.530552864074707,
+                -0.8476518392562866
+            ],
+            "type": "robot"
+        },
+        {
+            "template": "player",
+            "pos": [
+                2220.0,
+                1300.0
+            ],
+            "direction": [
+                -0.34555622935295107,
+                -0.9383980631828308
+            ],
+            "type": "player"
         }
     ]
 }

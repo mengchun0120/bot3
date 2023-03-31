@@ -61,6 +61,11 @@ void ProgressBar::setRatio(float ratio)
     leftVertices_ = t_->va()->numVertices(0) - finishedVertices_;
 }
 
+void ProgressBar::setPos(const Vector2 &pos)
+{
+    pos_ = pos;
+}
+
 } // end of namespace botlib
 } // end of namespace mcdane
 

@@ -57,6 +57,8 @@ public:
 
     inline float height() const;
 
+    void setPos(float x, float y);
+
 private:
     void initBack();
 

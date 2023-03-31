@@ -48,7 +48,9 @@ void GameScreen::init(const Vector2 &viewportSize,
 #ifdef __ANDROID__
     initGameNavigator();
 #endif
-    initSkillButtons();
+    resetSkillButtonPos();
+
+    LOG_INFO << "GameScreen initialized" << LOG_END;
 }
 
 void GameScreen::update(float timeDelta)
@@ -257,7 +259,7 @@ bool GameScreen::processInputGame(const commonlib::InputEvent &e)
 {
     if (!map_.player())
     {
-        return;
+        return true;
     }
 
     if (navigator_.containPos(e.x_, e.y_))
@@ -291,7 +293,7 @@ void GameScreen::onToggle(bool greenOrRed)
 
 void GameScreen::onSkillButtonPressed(float x, float y)
 {
-    int skillCount = player->skillCount();
+    int skillCount = map_.player()->skillCount();
     Skill *skill;
     SkillButton *button;
 
@@ -306,7 +308,7 @@ void GameScreen::onSkillButtonPressed(float x, float y)
         button = static_cast<SkillWithCost*>(skill)->button();
         if (button->containPos(x, y))
         {
-            button->onPointerDown(x y);
+            button->onPointerDown(x, y);
             return;
         }
     }
@@ -315,14 +317,15 @@ void GameScreen::onSkillButtonPressed(float x, float y)
 
 void GameScreen::onViewportChange(float width, float height)
 {
+    LOG_INFO << "onViewportChange " << width << " " << height << LOG_END;
+
     viewportSize_[0] = width;
     viewportSize_[1] = height;
     overlayViewportOrigin_ = viewportSize_ / 2.0f;
     map_.resetViewport(width, height);
-    if (map_.player())
-    {
-        map_.player()->resetSkillButtonPos(viewportSize_);
-    }
+    resetOverlayPos();
+
+    LOG_INFO << "onViewportChange finished" << LOG_END;
 }
 
 void GameScreen::loadMap(const Vector2 &viewportSize,
@@ -371,48 +374,17 @@ void GameScreen::initMessageBox()
                  "", MessageBox::BUTTON_OK);
 }
 
-void GameScreen::initAIRobotCount()
-{
-    const GameScreenConfig &cfg = Context::gameScreenConfig();
-    const Vector2 &iconMargin = cfg.aiRobotCountIconMargin();
-    const Vector2 &textMargin = cfg.aiRobotCountTextMargin();
-
-    aiRobotIconPos_.init({iconMargin[0], viewportSize_[1] - iconMargin[1]});
-    aiRobotCountIcon_.init(cfg.aiRobotCountIconTemplate());
-    aiRobotCountPos_.init({textMargin[0], viewportSize_[1] - textMargin[1]});
-}
-
 void GameScreen::initGoodiePies()
 {
-    initGoodiePiePos();
+    resetGoodiePiePos();
     createGoodiePies();
 }
 
-void GameScreen::initGoodiePiePos()
+void GameScreen::initAIRobotCount()
 {
     const GameScreenConfig &cfg = Context::gameScreenConfig();
-    int goodieCount = lastingGoodieTypeCount();
-    float radius = cfg.goodiePieTemplate(0)->radius();
-    float x, y, spacing;
-
-    y = viewportSize_[1] - cfg.goodieTopMargin() - radius;
-
-    x = viewportSize_[0] - cfg.goodieRightMargin() -
-        (goodieCount - 1) * cfg.goodieSpacing() - (2*goodieCount - 1) * radius;
-
-    spacing = 2 * radius + cfg.goodieSpacing();
-
-    goodiePiePos_.resize(goodieCount);
-    for (int i = 0; i < goodieCount; ++i)
-    {
-        goodiePiePos_[i].init({x, y});
-        x += spacing;
-    }
-}
-
-void GameScreen::initSkillButtons()
-{
-    map_.player()->resetSkillButtonPos(viewportSize_);
+    aiRobotCountIcon_.init(cfg.aiRobotCountIconTemplate());
+    resetAIRobotCountPos();
 }
 
 void GameScreen::createGoodiePies()
@@ -566,44 +538,76 @@ void GameScreen::clearObjectsFromMoveOutRegion(int moveOutRegionCount)
     }
 }
 
-int GameScreen::skillPieCount()
+void GameScreen::resetOverlayPos()
 {
-    Player *player = map_.player();
-    int skillCount = player->skillCount();
-    int pieCount = 0;
+    LOG_INFO << "resetOverlay 1" << LOG_END;
 
-    for (int i = 0; i < skillCount; ++i)
-    {
-        Skill *skill = player->skill(i);
-        if (isSkillWithCost(skill->type()))
-        {
-            ++pieCount;
-        }
-    }
+    resetMessageBoxPos();
+    resetProgressBarPos();
+    resetGoodiePiePos();
+    resetAIRobotCountPos();
+    resetSkillButtonPos();
 
-    return pieCount;
+    LOG_INFO << "resetOverlay 2" << LOG_END;
 }
 
-float GameScreen::skillPieRadius()
+void GameScreen::resetMessageBoxPos()
 {
-    Player *player = map_.player();
-    int count = player->skillCount();
-    const ProgressPieTemplate *pie = nullptr;
-    Skill *skill;
-    SkillWithCost *skill1;
+    msgBox_.setPos(viewportSize_[0]/2.0f, viewportSize_[1]/2.0f);
+}
 
-    for (int i = 0; i < count; ++i)
+void GameScreen::resetProgressBarPos()
+{
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+    const Vector2 &armorBarMargin = cfg.armorProgressBarMargin();
+    const Vector2 &energyBarMargin = cfg.energyProgressBarMargin();
+    Vector2 armorBarPos{armorBarMargin[0], viewportSize_[1] - armorBarMargin[1]};
+    Vector2 energyBarPos{energyBarMargin[0], viewportSize_[1] - energyBarMargin[1]};
+
+    armorProgressBar_.setPos(armorBarPos);
+    energyProgressBar_.setPos(energyBarPos);
+}
+
+void GameScreen::resetGoodiePiePos()
+{
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+    int goodieCount = lastingGoodieTypeCount();
+    float radius = cfg.goodiePieTemplate(0)->radius();
+    float x, y, spacing;
+
+    y = viewportSize_[1] - cfg.goodieTopMargin() - radius;
+
+    x = viewportSize_[0] - cfg.goodieRightMargin() -
+        (goodieCount - 1) * cfg.goodieSpacing() - (2*goodieCount - 1) * radius;
+
+    spacing = 2 * radius + cfg.goodieSpacing();
+
+    goodiePiePos_.resize(goodieCount);
+    for (int i = 0; i < goodieCount; ++i)
     {
-        skill = player->skill(i);
-        if (isSkillWithCost(skill->type()))
-        {
-            skill1 = static_cast<SkillWithCost*>(skill);
-            pie = skill1->getTemplate()->pieTemplate();
-            break;
-        }
+        goodiePiePos_[i].init({x, y});
+        x += spacing;
     }
+}
 
-    return pie->radius();
+void GameScreen::resetAIRobotCountPos()
+{
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+    const Vector2 &iconMargin = cfg.aiRobotCountIconMargin();
+    const Vector2 &textMargin = cfg.aiRobotCountTextMargin();
+
+    aiRobotIconPos_[0] = iconMargin[0];
+    aiRobotIconPos_[1] = viewportSize_[1] - iconMargin[1];
+    aiRobotCountPos_[0] = textMargin[0];
+    aiRobotCountPos_[1] = viewportSize_[1] - textMargin[1];
+}
+
+void GameScreen::resetSkillButtonPos()
+{
+    if (map_.player())
+    {
+        map_.player()->resetSkillButtonPos(viewportSize_);
+    }
 }
 
 } // end of namespace botlib

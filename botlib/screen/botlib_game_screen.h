@@ -45,13 +45,9 @@ private:
 
     void initMessageBox();
 
-    void initAIRobotCount();
-
     void initGoodiePies();
 
-    void initGoodiePiePos();
-
-    void initSkillButtons();
+    void initAIRobotCount();
 
     void createGoodiePies();
 
@@ -71,7 +67,7 @@ private:
 #elif __ANDROID__
     void initGameNavigator();
 
-    void onSteer(const Vector2 &direction);
+    void onSteer(const commonlib::Vector2 &direction);
 
     void onToggle(bool greenOrRed);
 
@@ -100,9 +96,17 @@ private:
 
     void clearObjectsFromMoveOutRegion(int moveOutRegionCount);
 
-    int skillPieCount();
+    void resetOverlayPos();
 
-    float skillPieRadius();
+    void resetMessageBoxPos();
+
+    void resetProgressBarPos();
+
+    void resetGoodiePiePos();
+
+    void resetAIRobotCountPos();
+
+    void resetSkillButtonPos();
 
 private:
     ScreenType nextScreenType_;

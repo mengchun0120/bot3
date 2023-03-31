@@ -19,6 +19,8 @@ public:
 
     void setRatio(float ratio);
 
+    void setPos(const commonlib::Vector2 &pos);
+
 private:
     const ProgressBarTemplate *t_;
     commonlib::Vector2 pos_;

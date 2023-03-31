@@ -1,7 +1,7 @@
 {
     "rowCount": 50,
     "colCount": 100,
-    "aiRobotCount": 30,
+    "aiRobotCount": 2,
     "minIslandBreath": 80.0,
     "maxIslandBreath": 160.0,
     "minIslandDist": 200.0,

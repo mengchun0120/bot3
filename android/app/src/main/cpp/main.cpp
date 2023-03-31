@@ -15,6 +15,7 @@
 #include <botlib_test_game_buttons_app.h>
 #include <botlib_show_map_app.h>
 #include <botlib_gen_map_app.h>
+#include <botlib_run_game_app.h>
 #include <androidlib_android_out.h>
 
 using namespace mcdane::commonlib;
@@ -125,6 +126,18 @@ void runGenMap(android_app *app, const std::vector<std::string> &params)
     app->userData = a;
 }
 
+void runGame(android_app *app, const std::vector<std::string> &params)
+{
+    if (params.size() < 3)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
+    }
+
+    RunGameApp *a = new RunGameApp();
+    a->init(app, params[1], params[2]);
+    app->userData = a;
+}
+
 void handleInitWindow(android_app *app)
 {
     using namespace std;
@@ -138,6 +151,7 @@ void handleInitWindow(android_app *app)
         {"test_game_buttons", runTestGameButtons},
         {"showmap", runShowMap},
         {"genmap", runGenMap},
+        {"rungame", runGame},
     };
     vector<string> params;
 

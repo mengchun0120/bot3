@@ -69,6 +69,13 @@ void MessageBox::process(const InputEvent &e)
     }
 }
 
+void MessageBox::setPos(float x, float y)
+{
+    float dx = x - pos_[0];
+    float dy = y - pos_[1];
+    widgets_.shiftPos(dx, dy);
+}
+
 void MessageBox::initBack()
 {
     Label *back = new Label(x(), y(), width(), height());
