@@ -37,7 +37,7 @@ void AIRobot::init(const AIRobotTemplate *t,
 
 void AIRobot::update(UpdateContext &cxt)
 {
-    if (ai_ && state() == GameObjectState::ALIVE)
+    if (!cxt.exerciseMode() && ai_ && state() == GameObjectState::ALIVE)
     {
         ai_->apply(*(cxt.map()), cxt.timeDelta());
     }

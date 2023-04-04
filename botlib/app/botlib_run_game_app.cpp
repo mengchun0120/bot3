@@ -12,24 +12,26 @@ namespace botlib {
 #ifdef DESKTOP_APP
 void RunGameApp::init(const std::string &configFile,
                       const std::string &appDir,
-                      const std::string &mapFile)
+                      const std::string &mapFile,
+                      bool exerciseMode)
 {
     AppConfig::init(configFile, appDir);
     const AppConfig &cfg = AppConfig::instance();
     App::init(cfg.width(), cfg.height(), cfg.title());
     Context::init(cfg);
-    setupGame(mapFile);
+    setupGame(mapFile, exerciseMode);
 }
 #elif __ANDROID__
 void RunGameApp::init(android_app *app,
                       const std::string &configFile,
-                      const std::string &mapFile)
+                      const std::string &mapFile,
+                      bool exerciseMode)
 {
     AppConfig::init(configFile);
     App::init(app);
     const AppConfig &cfg = AppConfig::instance();
     Context::init(cfg);
-    setupGame(mapFile);
+    setupGame(mapFile, exerciseMode);
 }
 #endif
 
@@ -60,10 +62,11 @@ bool RunGameApp::operator()(const commonlib::InputEvent &e)
     return running();
 }
 
-void RunGameApp::setupGame(const std::string& mapFile)
+void RunGameApp::setupGame(const std::string& mapFile,
+                           bool exerciseMode)
 {
     setupDeltaSmoother();
-    setupScreen(mapFile);
+    setupScreen(mapFile, exerciseMode);
     setupInput();
 }
 
@@ -75,13 +78,14 @@ void RunGameApp::setupDeltaSmoother()
     deltaSmoother_.start();
 }
 
-void RunGameApp::setupScreen(const std::string& mapFile)
+void RunGameApp::setupScreen(const std::string& mapFile,
+                             bool exerciseMode)
 {
     AppActions actions;
 
     actions.exitAction_ = std::bind(&RunGameApp::exitApp, this);
     Context::gameScreenConfig().setMapFile(mapFile);
-    screen_.init(viewportSize(), actions);
+    screen_.init(viewportSize(), actions, ScreenType::NONE, exerciseMode);
 }
 
 #ifdef DESKTOP_APP

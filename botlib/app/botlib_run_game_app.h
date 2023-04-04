@@ -17,11 +17,13 @@ public:
 #ifdef DESKTOP_APP
     void init(const std::string &configFile,
               const std::string &appDir,
-              const std::string &mapFile);
+              const std::string &mapFile,
+              bool exerciseMode=false);
 #elif __ANDROID__
     void init(android_app *app,
               const std::string &configFile,
-              const std::string &mapFile);
+              const std::string &mapFile,
+              bool exerciseMode=false);
 #endif
 
     void process() override;
@@ -29,11 +31,13 @@ public:
     bool operator()(const commonlib::InputEvent &e);
 
 private:
-    void setupGame(const std::string& mapFile);
+    void setupGame(const std::string& mapFile,
+                   bool exerciseMode);
 
     void setupDeltaSmoother();
 
-    void setupScreen(const std::string& mapFile);
+    void setupScreen(const std::string& mapFile,
+                     bool exerciseMode);
 
     void setupInput();
 

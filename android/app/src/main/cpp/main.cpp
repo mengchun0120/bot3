@@ -8,6 +8,7 @@
 #include <commonlib_exception.h>
 #include <commonlib_system.h>
 #include <commonlib_file_utils.h>
+#include <commonlib_parse.h>
 #include <botlib_test_shape_app.h>
 #include <botlib_test_map_app.h>
 #include <botlib_test_widget_app.h>
@@ -128,13 +129,15 @@ void runGenMap(android_app *app, const std::vector<std::string> &params)
 
 void runGame(android_app *app, const std::vector<std::string> &params)
 {
-    if (params.size() < 3)
+    if (params.size() < 4)
     {
         THROW_EXCEPT(InvalidArgumentException, "Invalid params");
     }
 
     RunGameApp *a = new RunGameApp();
-    a->init(app, params[1], params[2]);
+    bool exerciseMode;
+    parse(exerciseMode, params[3]);
+    a->init(app, params[1], params[2], exerciseMode);
     app->userData = a;
 }
 

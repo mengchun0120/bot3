@@ -14,6 +14,7 @@ struct Arguments {
     std::string logFile_;
     std::string appDir_;
     std::string mapFile_;
+    bool exerciseMode_;
 };
 
 void parseArguments(Arguments& args, int argc, char* argv[])
@@ -29,7 +30,9 @@ void parseArguments(Arguments& args, int argc, char* argv[])
         Argument::create(args.appDir_, "appDir", "a", "appDir",
                          "App directory", false, k_nonEmptyStrV),
         Argument::create(args.mapFile_, "mapFile", "m", "mapFile",
-                         "Map File", true, k_nonEmptyStrV)
+                         "Map File", true, k_nonEmptyStrV),
+        Argument::create(args.exerciseMode_, "exerciseMode", "e", "exerciseMode",
+                         "Exercise mode", true),
     });
 
     parser.parse(argc, argv);
@@ -78,7 +81,7 @@ int main(int argc, char* argv[])
     try
     {
         RunGameApp app;
-        app.init(args.configFile_, args.appDir_, args.mapFile_);
+        app.init(args.configFile_, args.appDir_, args.mapFile_, args.exerciseMode_);
         app.run();
     }
     catch (const std::exception& e)

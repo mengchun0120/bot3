@@ -7,12 +7,14 @@ namespace botlib {
 
 void UpdateContext::init(GameMap *map1,
                          int itemPoolSize,
-                         int missilePoolSize)
+                         int missilePoolSize,
+                         bool exerciseMode1)
 {
     map_ = map1;
     itemPool_.init(itemPoolSize);
     factory_.init(missilePoolSize);
     dumper_.init(&itemPool_);
+    exerciseMode_ = exerciseMode1;
 }
 
 void UpdateContext::setTimeDelta(float timeDelta1)

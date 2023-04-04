@@ -1,4 +1,4 @@
-if [ $# != 1 ]; then
+if [ $# != 2 ]; then
     echo "Usage: $0 mapFile"
     exit 1
 fi
@@ -7,4 +7,5 @@ fi
                             --logFile rungame.log \
                             --logLevel DEBUG \
                             --appDir .. \
-                            --mapFile $1
+                            --mapFile $1 \
+                            --exerciseMode $2

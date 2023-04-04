@@ -88,15 +88,19 @@ void ScreenManager::postProcess()
 
 Screen *ScreenManager::createScreen(ScreenType screenType)
 {
-    Screen *screen = nullptr;
     switch(screenType)
     {
         case ScreenType::START:
-            screen = new StartScreen(viewportSize_, actions_);
-            break;
+        {
+            StartScreen *screen = new StartScreen(viewportSize_, actions_);
+            return screen;
+        }
         case ScreenType::GAME:
-            screen = new GameScreen(viewportSize_, actions_);
-            break;
+        {
+            GameScreen *screen = new GameScreen();
+            screen->init(viewportSize_, actions_);
+            return screen;
+        }
         case ScreenType::SHOW_MAP:
             break;
         default:
@@ -104,7 +108,7 @@ Screen *ScreenManager::createScreen(ScreenType screenType)
             break;
     }
 
-    return screen;
+    return nullptr;
 
 }
 

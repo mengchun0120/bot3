@@ -1,6 +1,6 @@
 {
     "damage_amplifier_progress_pie": {
-        "radius": 30.0,
+        "radius": 40.0,
         "vertexArray": "goodie_progress_pie",
         "backgroundColor": [215, 238, 216, 255],
         "frontColor": [117, 203, 138, 255],
@@ -10,7 +10,7 @@
         ]
     },
     "attack_accelerator_progress_pie": {
-        "radius": 30.0,
+        "radius": 40.0,
         "vertexArray": "goodie_progress_pie",
         "backgroundColor": [255, 233, 220, 255],
         "frontColor": [255, 203, 138, 255],
@@ -20,7 +20,7 @@
         ]
     },
     "speed_accelerator_progress_pie": {
-        "radius": 30.0,
+        "radius": 40.0,
         "vertexArray": "goodie_progress_pie",
         "backgroundColor": [255, 255, 255, 255],
         "frontColor": [255, 209, 185, 255],
@@ -30,7 +30,7 @@
         ]
     },
     "god_mode_progress_pie": {
-        "radius": 30.0,
+        "radius": 40.0,
         "vertexArray": "goodie_progress_pie",
         "backgroundColor": [173, 221, 255, 255],
         "frontColor": [123, 172, 255, 255],

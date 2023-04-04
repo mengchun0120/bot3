@@ -14,16 +14,10 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-GameScreen::GameScreen(const commonlib::Vector2 &viewportSize,
-                       const AppActions actions,
-                       ScreenType nextScreenType)
-{
-    init(viewportSize, actions);
-}
-
 void GameScreen::init(const Vector2 &viewportSize,
                       const AppActions actions,
-                      ScreenType nextScreenType)
+                      ScreenType nextScreenType,
+                      bool exerciseMode)
 {
     if (viewportSize[0] <= 0.0f || viewportSize[1] <= 0.0f)
     {
@@ -35,8 +29,10 @@ void GameScreen::init(const Vector2 &viewportSize,
 
     const GameScreenConfig &cfg = Context::gameScreenConfig();
 
+    exerciseMode_ = exerciseMode;
     nextScreenType_ = nextScreenType;
-    cxt_.init(&map_, cfg.gameObjItemPoolSize(), cfg.missilePoolSize());
+    cxt_.init(&map_, cfg.gameObjItemPoolSize(), cfg.missilePoolSize(),
+              exerciseMode);
     loadMap(viewportSize, cfg.mapFile());
     viewportSize_ = viewportSize;
     overlayViewportOrigin_ = viewportSize / 2.0f;
@@ -540,15 +536,11 @@ void GameScreen::clearObjectsFromMoveOutRegion(int moveOutRegionCount)
 
 void GameScreen::resetOverlayPos()
 {
-    LOG_INFO << "resetOverlay 1" << LOG_END;
-
     resetMessageBoxPos();
     resetProgressBarPos();
     resetGoodiePiePos();
     resetAIRobotCountPos();
     resetSkillButtonPos();
-
-    LOG_INFO << "resetOverlay 2" << LOG_END;
 }
 
 void GameScreen::resetMessageBoxPos()

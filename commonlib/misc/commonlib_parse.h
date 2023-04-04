@@ -17,6 +17,12 @@ inline void parse(std::string &str,
     str = s;
 }
 
+inline void parse(bool &b,
+                  const std::string &s)
+{
+    b = (s == "1");
+}
+
 inline void parse(int &i,
                   const std::string &s)
 {

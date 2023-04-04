@@ -18,7 +18,8 @@ public:
 
     void init(GameMap *map1,
               int itemPoolSize,
-              int missilePoolSize);
+              int missilePoolSize,
+              bool exerciseMode1=false);
 
     inline GameMap *map();
 
@@ -27,6 +28,8 @@ public:
     inline GameObjectFactory &factory();
 
     inline GameObjectDumper &dumper();
+
+    inline bool exerciseMode() const;
 
     inline float timeDelta();
 
@@ -37,6 +40,7 @@ private:
     GameObjItemPool itemPool_;
     GameObjectFactory factory_;
     GameObjectDumper dumper_;
+    bool exerciseMode_;
     float timeDelta_;
 };
 
@@ -58,6 +62,11 @@ GameObjectFactory &UpdateContext::factory()
 GameObjectDumper &UpdateContext::dumper()
 {
     return dumper_;
+}
+
+bool UpdateContext::exerciseMode() const
+{
+    return exerciseMode_;
 }
 
 float UpdateContext::timeDelta()

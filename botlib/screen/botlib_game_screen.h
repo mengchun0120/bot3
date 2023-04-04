@@ -19,15 +19,12 @@ class GameScreen: public Screen {
 public:
     GameScreen() = default;
 
-    GameScreen(const commonlib::Vector2 &viewportSize,
-               const AppActions actions,
-               ScreenType nextScreenType=ScreenType::NONE);
-
     ~GameScreen() override = default;
 
     void init(const commonlib::Vector2 &viewportSize,
               const AppActions actions,
-              ScreenType nextScreenType=ScreenType::NONE);
+              ScreenType nextScreenType=ScreenType::NONE,
+              bool exerciseMode=false);
 
     void update(float timeDelta) override;
 
@@ -109,6 +106,7 @@ private:
     void resetSkillButtonPos();
 
 private:
+    bool exerciseMode_;
     ScreenType nextScreenType_;
     UpdateContext cxt_;
     GameMap map_;

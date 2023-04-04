@@ -65,12 +65,7 @@ void MoveSkill::updateWithoutDest(UpdateContext &cxt)
     GameMap &map = *(cxt.map());
     Vector2 delta = robot_->speed() * cxt.timeDelta();
 
-    bool collide = map.checkCollision(delta, robot_);
-    if (collide)
-    {
-        setEnabled(false);
-    }
-
+    map.checkCollision(delta, robot_);
     robot_->shiftPos(delta);
     map.repositionObj(robot_);
 
