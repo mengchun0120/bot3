@@ -37,9 +37,9 @@ public:
     void toJson(rapidjson::Value &v,
                 rapidjson::Document::AllocatorType &allocator) override;
 
-#ifdef DESKTOP_APP
     void setDest(const commonlib::Vector2 &dest);
 
+#ifdef DESKTOP_APP
     Skill *findSkillForInput(int input);
 #endif
 

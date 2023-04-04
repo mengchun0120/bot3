@@ -7,7 +7,6 @@
 #include <botlib_progress_bar.h>
 #include <botlib_progress_pie.h>
 #include <botlib_message_box.h>
-#include <botlib_game_navigator.h>
 #include <botlib_icon.h>
 #include <botlib_update_context.h>
 #include <botlib_screen.h>
@@ -62,14 +61,10 @@ private:
     void enableSkillForInput(int input);
 
 #elif __ANDROID__
-    void initGameNavigator();
-
-    void onSteer(const commonlib::Vector2 &direction);
-
-    void onToggle(bool greenOrRed);
-
     void onSkillButtonPressed(float x, float y);
 #endif
+
+    void onPointerDown(float x, float y);
 
     void updatePlayer();
 
@@ -122,9 +117,6 @@ private:
     std::vector<commonlib::Region<int>> moveOutRegions_;
     std::vector<commonlib::Vector2> goodiePiePos_;
     std::vector<ProgressPie> goodiePies_;
-#ifdef __ANDROID__
-    GameNavigator navigator_;
-#endif
 };
 
 bool GameScreen::isPlayerAvailable()

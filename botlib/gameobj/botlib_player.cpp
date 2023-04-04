@@ -71,7 +71,6 @@ void Player::toJson(rapidjson::Value &v,
     v.AddMember("type", jsonVal("player", allocator), allocator);
 }
 
-#ifdef DESKTOP_APP
 void Player::setDest(const commonlib::Vector2 &dest)
 {
     MoveSkill *s = static_cast<MoveSkill*>(searchSkill(SkillType::MOVE));
@@ -79,6 +78,7 @@ void Player::setDest(const commonlib::Vector2 &dest)
     s->setEnabled(true);
 }
 
+#ifdef DESKTOP_APP
 Skill *Player::findSkillForInput(int input)
 {
     auto it = skillMap_.find(input);

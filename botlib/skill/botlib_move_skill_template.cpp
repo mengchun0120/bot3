@@ -28,10 +28,6 @@ void MoveSkillTemplate::init(const rapidjson::Value &v)
     };
 
     parse(params, v);
-
-#ifdef __ANDROID__
-    hasDest_ = false;
-#endif
 }
 
 } // end of namespace botlib

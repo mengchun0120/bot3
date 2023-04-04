@@ -41,9 +41,6 @@ void GameScreen::init(const Vector2 &viewportSize,
     initAIRobotCount();
     initGoodiePies();
     moveOutRegions_.resize(4);
-#ifdef __ANDROID__
-    initGameNavigator();
-#endif
     resetSkillButtonPos();
 
     LOG_INFO << "GameScreen initialized" << LOG_END;
@@ -171,9 +168,7 @@ bool GameScreen::processMouseButton(const MouseButtonEvent &e)
 
     if (e.button_ == GLFW_MOUSE_BUTTON_LEFT && e.action_ == GLFW_PRESS)
     {
-        Vector2 p{e.x_, e.y_};
-        p += map_.viewportAnchor();
-        map_.player()->setDest(p);
+        onPointerDown(e.x_, e.y_);
     }
     else if (e.button_ == GLFW_MOUSE_BUTTON_RIGHT && e.action_ == GLFW_PRESS)
     {
@@ -234,23 +229,6 @@ void GameScreen::enableSkillForInput(int input)
 }
 
 #elif __ANDROID__
-void GameScreen::initGameNavigator()
-{
-    const GameScreenConfig &cfg = Context::gameScreenConfig();
-
-    auto steerFunc = [&](const Vector2 &direction)
-    {
-        onSteer(direction);
-    };
-    auto toggleFunc = [&](bool greenOrRed)
-    {
-        onToggle(greenOrRed);
-    };
-
-    navigator_.init(cfg.navigatorLeftSpacing(), cfg.navigatorBottomSpacing(),
-                    steerFunc, toggleFunc);
-}
-
 bool GameScreen::processInputGame(const commonlib::InputEvent &e)
 {
     if (!map_.player())
@@ -258,33 +236,12 @@ bool GameScreen::processInputGame(const commonlib::InputEvent &e)
         return true;
     }
 
-    if (navigator_.containPos(e.x_, e.y_))
+    if (e.type_ == InputEvent::POINTER_DOWN || e.type_ == InputEvent::POINTER_MOVE)
     {
-        if (e.type_ == InputEvent::POINTER_DOWN)
-        {
-            navigator_.onPointerDown(e.x_, e.y_);
-        }
-        else if (e.type_ == InputEvent::POINTER_MOVE)
-        {
-            navigator_.onPointerOver(e.x_, e.y_);
-        }
-    }
-    else if (e.type_ == InputEvent::POINTER_DOWN)
-    {
-        onSkillButtonPressed(e.x_, e.y_);
+        onPointerDown(e.x_, e.y_);
     }
 
     return true;
-}
-
-void GameScreen::onSteer(const Vector2 &direction)
-{
-    map_.player()->setDirection(direction);
-}
-
-void GameScreen::onToggle(bool greenOrRed)
-{
-    map_.player()->setSkillEnabled(SkillType::MOVE, greenOrRed);
 }
 
 void GameScreen::onSkillButtonPressed(float x, float y)
@@ -310,6 +267,13 @@ void GameScreen::onSkillButtonPressed(float x, float y)
     }
 }
 #endif
+
+void GameScreen::onPointerDown(float x, float y)
+{
+    Vector2 p{x, y};
+    p += map_.viewportAnchor();
+    map_.player()->setDest(p);
+}
 
 void GameScreen::onViewportChange(float width, float height)
 {
@@ -448,9 +412,6 @@ void GameScreen::presentOverlay()
     if (map_.player())
     {
         presentGoodiePies();
-#ifdef __ANDROID__
-        navigator_.present();
-#endif
         presentSkillButtons();
     }
 
