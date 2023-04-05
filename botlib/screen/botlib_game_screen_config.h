@@ -65,7 +65,7 @@ public:
 
     inline float skillButtonBottomSpacing() const;
 
-    inline float skillButtonRightSpacing() const;
+    inline float skillButtonLeftSpacing() const;
 
     inline float skillButtonSpacing() const;
 
@@ -96,7 +96,7 @@ private:
     float navigatorBottomSpacing_;
     float navigatorLeftSpacing_;
     float skillButtonBottomSpacing_;
-    float skillButtonRightSpacing_;
+    float skillButtonLeftSpacing_;
     float skillButtonSpacing_;
 };
 
@@ -205,9 +205,9 @@ float GameScreenConfig::skillButtonBottomSpacing() const
     return skillButtonBottomSpacing_;
 }
 
-float GameScreenConfig::skillButtonRightSpacing() const
+float GameScreenConfig::skillButtonLeftSpacing() const
 {
-    return skillButtonRightSpacing_;
+    return skillButtonLeftSpacing_;
 }
 
 float GameScreenConfig::skillButtonSpacing() const

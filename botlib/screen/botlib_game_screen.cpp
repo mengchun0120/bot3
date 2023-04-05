@@ -238,13 +238,16 @@ bool GameScreen::processInputGame(const commonlib::InputEvent &e)
 
     if (e.type_ == InputEvent::POINTER_DOWN || e.type_ == InputEvent::POINTER_MOVE)
     {
-        onPointerDown(e.x_, e.y_);
+        if (!onSkillButtonPressed(e.x_, e.y_))
+        {
+            onPointerDown(e.x_, e.y_);
+        }
     }
 
     return true;
 }
 
-void GameScreen::onSkillButtonPressed(float x, float y)
+bool GameScreen::onSkillButtonPressed(float x, float y)
 {
     int skillCount = map_.player()->skillCount();
     Skill *skill;
@@ -262,9 +265,11 @@ void GameScreen::onSkillButtonPressed(float x, float y)
         if (button->containPos(x, y))
         {
             button->onPointerDown(x, y);
-            return;
+            return true;
         }
     }
+
+    return false;
 }
 #endif
 

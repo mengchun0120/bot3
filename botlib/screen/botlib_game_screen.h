@@ -61,7 +61,7 @@ private:
     void enableSkillForInput(int input);
 
 #elif __ANDROID__
-    void onSkillButtonPressed(float x, float y);
+    bool onSkillButtonPressed(float x, float y);
 #endif
 
     void onPointerDown(float x, float y);

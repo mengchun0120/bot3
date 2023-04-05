@@ -90,7 +90,7 @@ void Player::resetSkillButtonPos(const commonlib::Vector2 &viewportSize)
 {
     const GameScreenConfig &cfg = Context::gameScreenConfig();
     float y = cfg.skillButtonBottomSpacing();
-    float x = viewportSize[0] - cfg.skillButtonRightSpacing();
+    float x = cfg.skillButtonLeftSpacing();
 
     for (int i = skills_.size() - 1; i >= 0; --i)
     {
@@ -102,7 +102,7 @@ void Player::resetSkillButtonPos(const commonlib::Vector2 &viewportSize)
         SkillWithCost *skill = static_cast<SkillWithCost *>(skills_[i]);
         skill->button()->setPos(x, y);
 
-        x -= cfg.skillButtonSpacing();
+        x += cfg.skillButtonSpacing();
     }
 }
 

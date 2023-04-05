@@ -77,7 +77,7 @@ void TestGameButtonsApp::update(float timeDelta)
 {
     for (int i = 0; i < k_numSkillButtons; ++i)
     {
-        SkillButton *button = widgets_.widget<SkillButton>(i+1);
+        SkillButton *button = widgets_.widget<SkillButton>(i);
 
         durations_[i] += timeDelta;
         button->setRatio(durations_[i] / coolDowns_[i]);
@@ -116,8 +116,7 @@ void TestGameButtonsApp::setupCoolDownDurations()
 
 void TestGameButtonsApp::setupWidgets()
 {
-    widgets_.init(k_numSkillButtons + 1);
-    setupGameNavigator();
+    widgets_.init(k_numSkillButtons);
     setupSkillButtons();
 }
 
@@ -143,25 +142,6 @@ void TestGameButtonsApp::setupInput()
 }
 #endif
 
-void TestGameButtonsApp::setupGameNavigator()
-{
-    const GameScreenConfig &cfg = Context::gameScreenConfig();
-
-    auto steerFunc = [&](const Vector2 &direction)
-    {
-        LOG << "Steer " << direction << END;
-    };
-    auto toggleFunc = [&](bool greenOrRed)
-    {
-        LOG << "Toggle " << (greenOrRed ? "green" : "red") << END;
-    };
-
-    GameNavigator *navigator = new GameNavigator();
-    navigator->init(cfg.navigatorLeftSpacing(), cfg.navigatorBottomSpacing(),
-                    steerFunc, toggleFunc);
-    widgets_.setWidget(0, navigator);
-}
-
 void TestGameButtonsApp::setupSkillButtons()
 {
     std::vector<std::string> pieTemplates{
@@ -180,7 +160,7 @@ void TestGameButtonsApp::setupSkillButtons()
     calculateButtonPositions();
     for (int i = 0; i < k_numSkillButtons; ++i)
     {
-        addSkillButton(i+1, buttonPositions_[i][0], buttonPositions_[i][1],
+        addSkillButton(i, buttonPositions_[i][0], buttonPositions_[i][1],
                        pieTemplates[i], actionMsgs[i]);
     }
 }
@@ -203,7 +183,7 @@ void TestGameButtonsApp::addSkillButton(
     auto action = [this, idx, actionMsg](SkillButton &button)
     {
         button.setEnabled(false);
-        durations_[idx-1] = 0.0f;
+        durations_[idx] = 0.0f;
 
         LOG << actionMsg << END;
     };
@@ -217,8 +197,7 @@ void TestGameButtonsApp::calculateButtonPositions()
 {
     const GameScreenConfig &cfg = Context::gameScreenConfig();
     float y = cfg.skillButtonBottomSpacing();
-    float x = viewportWidth() - cfg.skillButtonRightSpacing() -
-              (k_numSkillButtons - 1) * cfg.skillButtonSpacing();
+    float x = cfg.skillButtonLeftSpacing();
 
     for (int i = 0; i < k_numSkillButtons; ++i)
     {
@@ -241,7 +220,7 @@ void TestGameButtonsApp::repositionSkillButtons()
     calculateButtonPositions();
     for (int i = 0; i < k_numSkillButtons; ++i)
     {
-        SkillButton *button = widgets_.widget<SkillButton>(i+1);
+        SkillButton *button = widgets_.widget<SkillButton>(i);
         button->setPos(buttonPositions_[i][0], buttonPositions_[i][1]);
     }
 }

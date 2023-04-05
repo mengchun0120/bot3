@@ -29,6 +29,6 @@
     "navigatorBottomSpacing": 250.0,
     "navigatorLeftSpacing": 250.0,
     "skillButtonBottomSpacing": 150.0,
-    "skillButtonRightSpacing": 150.0,
-    "skillButtonSpacing": 250.0
+    "skillButtonLeftSpacing": 150.0,
+    "skillButtonSpacing": 120.0
 }

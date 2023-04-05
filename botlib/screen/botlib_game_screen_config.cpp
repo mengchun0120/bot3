@@ -49,7 +49,7 @@ void GameScreenConfig::init(const GameLib &gameLib,
                   true, gt(0.0f)),
         jsonParam(skillButtonBottomSpacing_, "skillButtonBottomSpacing",
                   true, gt(0.0f)),
-        jsonParam(skillButtonRightSpacing_, "skillButtonRightSpacing",
+        jsonParam(skillButtonLeftSpacing_, "skillButtonLeftSpacing",
                   true, gt(0.0f)),
         jsonParam(skillButtonSpacing_, "skillButtonSpacing", true, gt(0.0f)),
     };
