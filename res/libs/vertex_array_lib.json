@@ -10,5 +10,11 @@
     },
     "progress_bar_border": {
         "data_files": ["progress_bar_border_pos.txt"]
+    },
+    "direction_line": {
+        "data_files": ["direction_line.txt"]
+    },
+    "direction_circle": {
+        "data_files": ["direction_circle.txt"]
     }
 }

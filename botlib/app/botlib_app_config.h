@@ -63,6 +63,8 @@ public:
 
     inline const std::string &gameNavigatorConfigFile() const;
 
+    inline const std::string &directionPieConfigFile() const;
+
     inline const std::string &startScreenConfigFile() const;
 
     inline const std::string &gameScreenConfigFile() const;
@@ -150,6 +152,7 @@ private:
     std::string messageBoxConfigFile_;
     std::string mapNavigatorConfigFile_;
     std::string gameNavigatorConfigFile_;
+    std::string directionPieConfigFile_;
     std::string startScreenConfigFile_;
     std::string gameScreenConfigFile_;
     std::string showMapScreenConfigFile_;
@@ -270,6 +273,11 @@ const std::string &AppConfig::messageBoxConfigFile() const
 const std::string &AppConfig::mapNavigatorConfigFile() const
 {
     return mapNavigatorConfigFile_;
+}
+
+const std::string &AppConfig::directionPieConfigFile() const
+{
+    return directionPieConfigFile_;
 }
 
 const std::string &AppConfig::gameNavigatorConfigFile() const

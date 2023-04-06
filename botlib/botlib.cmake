@@ -165,6 +165,7 @@ list(APPEND
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_align.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_button.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_button_config.cpp
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_direction_pie_config.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_game_navigator.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_game_navigator_config.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_label.cpp
