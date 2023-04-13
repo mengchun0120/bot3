@@ -7,7 +7,8 @@ def gen_dashed_line(solid_length, dash_spacing, total_length):
         end_x = start_x + solid_length
         if end_x >= total_length:
             end_x = total_length
-        points.append((start_x, end_x))
+        points.append((start_x, 0.0))
+        points.append((end_x, 0.0))
         start_x = end_x + dash_spacing
 
     return points

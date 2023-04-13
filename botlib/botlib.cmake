@@ -15,6 +15,7 @@ list(APPEND
     ${BOTLIB_SRC_DIR}/app/botlib_gen_map_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_run_game_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_show_map_app.cpp
+    ${BOTLIB_SRC_DIR}/app/botlib_test_direction_pie_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_test_game_buttons_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_test_map_app.cpp
     ${BOTLIB_SRC_DIR}/app/botlib_test_particle_app.cpp
@@ -165,6 +166,7 @@ list(APPEND
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_align.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_button.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_button_config.cpp
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_direction_pie.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_direction_pie_config.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_game_navigator.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_game_navigator_config.cpp
