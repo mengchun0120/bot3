@@ -11,7 +11,6 @@ namespace botlib {
 class GameNavigator: public Widget {
 public:
     using SteerFunc = std::function<void(const commonlib::Vector2 &)>;
-    using ToggleFunc = std::function<void(bool)>;
 
 public:
     GameNavigator() = default;
@@ -20,8 +19,15 @@ public:
 
     void init(float x,
               float y,
-              SteerFunc steerFunc,
-              ToggleFunc toggleFunc);
+              SteerFunc steerFunc);
+
+    inline bool directionValid() const;
+
+    inline const commonlib::Vector2 &curDirection() const;
+
+    void disableDirection();
+
+    void setDirection(const commonlib::Vector2 &direction);
 
     void present() const override;
 
@@ -32,19 +38,27 @@ public:
     void onPointerDown(float x, float y) override;
 
 private:
-    void pressBase(float dx, float dy);
+    void onPointer(float x, float y);
 
-    void pressToggle();
+    void resetArrowPos();
 
 private:
     bool directionValid_;
     commonlib::Vector2 curDirection_;
     commonlib::Vector2 arrowPos_;
     SteerFunc steerFunc_;
-    ToggleFunc toggleFunc_;
-    bool greenOrRed_;
-    float baseRadiusSquare_, toggleRadiusSquare_;
+    float radiusSquare_;
 };
+
+bool GameNavigator::directionValid() const
+{
+    return directionValid_;
+}
+
+const commonlib::Vector2 &GameNavigator::curDirection() const
+{
+    return curDirection_;
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

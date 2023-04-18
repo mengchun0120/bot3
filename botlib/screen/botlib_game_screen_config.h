@@ -61,7 +61,7 @@ public:
 
     inline float navigatorBottomSpacing() const;
 
-    inline float navigatorLeftSpacing() const;
+    inline float navigatorRightSpacing() const;
 
     inline float skillButtonBottomSpacing() const;
 
@@ -94,7 +94,7 @@ private:
     commonlib::Color aiRobotCountTextColor_;
     std::vector<const ProgressPieTemplate*> goodiePieTemplates_;
     float navigatorBottomSpacing_;
-    float navigatorLeftSpacing_;
+    float navigatorRightSpacing_;
     float skillButtonBottomSpacing_;
     float skillButtonLeftSpacing_;
     float skillButtonSpacing_;
@@ -195,9 +195,9 @@ float GameScreenConfig::navigatorBottomSpacing() const
     return navigatorBottomSpacing_;
 }
 
-float GameScreenConfig::navigatorLeftSpacing() const
+float GameScreenConfig::navigatorRightSpacing() const
 {
-    return navigatorLeftSpacing_;
+    return navigatorRightSpacing_;
 }
 
 float GameScreenConfig::skillButtonBottomSpacing() const

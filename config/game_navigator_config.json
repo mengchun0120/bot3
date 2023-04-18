@@ -1,13 +1,8 @@
 {
-    "baseRadius": 200.0,
-    "toggleRadius": 66.66666666666667,
+    "radius": 200.0,
     "arrowRadius": 200.0,
     "alpha": 0.6,
     "baseTexture": "base_navigator.png",
-    "toggleButtons": [
-        "green_toggle_button.png",
-        "red_toggle_button.png"
-    ],
     "arrowTexture": "game_nav_arrow.png",
     "arrowWidth": 40.0,
     "arrowHeight": 80.0

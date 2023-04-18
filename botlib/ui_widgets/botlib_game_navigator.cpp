@@ -10,17 +10,25 @@ namespace botlib {
 
 void GameNavigator::init(float x,
                          float y,
-                         SteerFunc steerFunc,
-                         ToggleFunc toggleFunc)
+                         SteerFunc steerFunc)
 {
     const GameNavigatorConfig &cfg = Context::gameNavigatorConfig();
     Widget::init(x, y, true, true, true);
     directionValid_ = false;
     steerFunc_ = steerFunc;
-    toggleFunc_ = toggleFunc;
-    greenOrRed_ = true;
-    baseRadiusSquare_ = cfg.baseRadius() * cfg.baseRadius();
-    toggleRadiusSquare_ = cfg.toggleRadius() * cfg.toggleRadius();
+    radiusSquare_ = cfg.radius() * cfg.radius();
+}
+
+void GameNavigator::disableDirection()
+{
+    directionValid_ = false;
+}
+
+void GameNavigator::setDirection(const commonlib::Vector2 &direction)
+{
+    directionValid_ = true;
+    curDirection_ = direction;
+    resetArrowPos();
 }
 
 void GameNavigator::present() const
@@ -32,9 +40,6 @@ void GameNavigator::present() const
 
     cfg.baseRect().draw(program, &pos_, nullptr, nullptr, nullptr,
                         cfg.baseTexture().id(), nullptr);
-
-    cfg.toggleRect().draw(program, &pos_, nullptr, nullptr, nullptr,
-                          cfg.toggleButton(greenOrRed_ ? 0 : 1).id(), nullptr);
 
     if (directionValid_)
     {
@@ -48,53 +53,37 @@ bool GameNavigator::containPos(float x, float y) const
 {
     float dx = x - pos_[0];
     float dy = y - pos_[1];
-    return dx*dx + dy*dy <= baseRadiusSquare_;
+    return dx*dx + dy*dy <= radiusSquare_;
 }
 
 void GameNavigator::onPointerOver(float x, float y)
 {
-    float dx = x - pos_[0];
-    float dy = y - pos_[1];
-
-    if (dx*dx + dy*dy > toggleRadiusSquare_)
-    {
-        pressBase(dx, dy);
-    }
+    onPointer(x, y);
 }
 
 void GameNavigator::onPointerDown(float x, float y)
 {
-    float dx = x - pos_[0];
-    float dy = y - pos_[1];
-
-    if (dx*dx + dy*dy > toggleRadiusSquare_)
-    {
-        pressBase(dx, dy);
-    }
-    else
-    {
-        pressToggle();
-    }
+    onPointer(x, y);
 }
 
-void GameNavigator::pressBase(float dx, float dy)
+void GameNavigator::onPointer(float x, float y)
 {
-    const GameNavigatorConfig &cfg = Context::gameNavigatorConfig();
+    float dx = x - pos_[0];
+    float dy = y - pos_[1];
 
     directionValid_ = true;
     curDirection_[0] = dx;
     curDirection_[1] = dy;
     curDirection_.normalize();
 
-    arrowPos_ = pos_ + curDirection_ * cfg.arrowRadius();
-
+    resetArrowPos();
     steerFunc_(curDirection_);
 }
 
-void GameNavigator::pressToggle()
+void GameNavigator::resetArrowPos()
 {
-    toggleFunc_(greenOrRed_);
-    greenOrRed_ = !greenOrRed_;
+    const GameNavigatorConfig &cfg = Context::gameNavigatorConfig();
+    arrowPos_ = pos_ + curDirection_ * cfg.arrowRadius();
 }
 
 } // end of namespace botlib

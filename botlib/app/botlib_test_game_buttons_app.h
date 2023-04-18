@@ -46,8 +46,6 @@ private:
 
     void setupInput();
 
-    void setupGameNavigator();
-
     void setupSkillButtons();
 
     void addSkillButton(int idx,
