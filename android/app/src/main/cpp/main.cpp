@@ -15,6 +15,7 @@
 #include <botlib_test_particle_app.h>
 #include <botlib_test_game_buttons_app.h>
 #include <botlib_test_direction_pie_app.h>
+#include <botlib_test_game_navigator_app.h>
 #include <botlib_show_map_app.h>
 #include <botlib_gen_map_app.h>
 #include <botlib_run_game_app.h>
@@ -114,7 +115,18 @@ void runTestDirectionPie(android_app *app, const std::vector<std::string> &param
     TestDirectionPieApp *a = new TestDirectionPieApp();
     a->init(app, params[1]);
     app->userData = a;
+}
 
+void runTestGameNavigator(android_app *app, const std::vector<std::string> &params)
+{
+    if (params.size() < 2)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
+    }
+
+    TestGameNavigatorApp *a = new TestGameNavigatorApp();
+    a->init(app, params[1]);
+    app->userData = a;
 }
 
 void runShowMap(android_app *app, const std::vector<std::string> &params)
@@ -167,6 +179,7 @@ void handleInitWindow(android_app *app)
         {"testparticle", runTestParticle},
         {"test_game_buttons", runTestGameButtons},
         {"test_direction_pie", runTestDirectionPie},
+        {"test_game_navigator", runTestGameNavigator},
         {"showmap", runShowMap},
         {"genmap", runGenMap},
         {"rungame", runGame},

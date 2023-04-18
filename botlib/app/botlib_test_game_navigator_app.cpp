@@ -34,9 +34,16 @@ bool TestGameNavigatorApp::operator()(const InputEvent &e)
     if (e.type() == EventType::MOUSE_BUTTON)
     {
         const MouseButtonEvent &evt = e.mouseButtonEvent();
-        if (evt.button_ == GLFW_MOUSE_BUTTON_LEFT && evt.action_ == GLFW_PRESS)
+        if (evt.button_ == GLFW_MOUSE_BUTTON_LEFT)
         {
-            onPointerDown(evt.x_, evt.y_);
+            if (evt.action_ == GLFW_PRESS)
+            {
+                onPointerDown(evt.x_, evt.y_);
+            }
+            else
+            {
+                onPointerUp(evt.x_, evt.y_);
+            }
         }
     }
     else if (e.type() == EventType::MOUSE_MOVE)
@@ -77,11 +84,15 @@ bool TestGameNavigatorApp::operator()(const InputEvent &e)
     {
         onPointerOver(e.x_, e.y_);
     }
+    else if (e.type_ == InputEvent::POINTER_UP)
+    {
+        onPointerUp(e.x_, e.y_);
+    }
 
     return true;
 }
 
-void TestGameButtonsApp::setupInput()
+void TestGameNavigatorApp::setupInput()
 {
     InputManager::initInstance(app_, viewportSize());
 }
@@ -186,6 +197,11 @@ void TestGameNavigatorApp::onPointerOver(float x, float y)
     {
         navigator_.disableDirection();
     }
+}
+
+void TestGameNavigatorApp::onPointerUp(float x, float y)
+{
+    navigator_.onPointerUp(x, y);
 }
 
 } // end of namespace botlib

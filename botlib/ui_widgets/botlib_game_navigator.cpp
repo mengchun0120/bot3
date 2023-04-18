@@ -66,6 +66,11 @@ void GameNavigator::onPointerDown(float x, float y)
     onPointer(x, y);
 }
 
+void GameNavigator::onPointerUp(float x, float y)
+{
+    disableDirection();
+}
+
 void GameNavigator::onPointer(float x, float y)
 {
     float dx = x - pos_[0];

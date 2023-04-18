@@ -37,6 +37,8 @@ public:
 
     void onPointerDown(float x, float y) override;
 
+    void onPointerUp(float x, float y) override;
+
 private:
     void onPointer(float x, float y);
 

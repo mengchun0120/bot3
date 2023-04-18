@@ -48,6 +48,8 @@ private:
 
     void onPointerOver(float x, float y);
 
+    void onPointerUp(float x, float y);
+
 private:
     GameNavigator navigator_;
 };
