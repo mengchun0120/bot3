@@ -1,4 +1,6 @@
 #include <commonlib_log.h>
+#include <commonlib_exception.h>
+#include <commonlib_argument_parser.h>
 #include <botlib_test_shape_app.h>
 #include <botlib_test_map_app.h>
 #include <botlib_test_widget_app.h>
@@ -45,42 +47,169 @@ AppLauncher::~AppLauncher()
 #ifdef DESKTOP_APP
 void AppLauncher::init(int argc, char *argv[])
 {
+    if (argc < 3)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
+    }
+
+    initArguments(argc, argv);
+    initApp();
 }
 
 void AppLauncher::run()
 {
+    app_->run();
+}
+
+void AppLauncher::initArguments(int argc, char *argv[])
+{
+    ArgumentParser parser;
+    parser.init({
+        Argument::create(args_.appName_,
+                         "appName",
+                         "n",
+                         "appName",
+                         "App name",
+                         false,
+                         k_nonEmptyStrV),
+        Argument::create(args_.appConfigFile_,
+                         "appConfig",
+                         "c",
+                         "appConfig",
+                         "Config file for app",
+                         false,
+                         k_nonEmptyStrV),
+        Argument::create(args_.logFile_,
+                         "logFile",
+                         "l",
+                         "logFile",
+                         "Log file",
+                         false,
+                         k_nonEmptyStrV),
+        Argument::create(args_.logLevelStr_,
+                         "logLevel",
+                         "v",
+                         "logLevel",
+                         "Log level",
+                         true,
+                         k_nonEmptyStrV),
+        Argument::create(args_.mapFile_,
+                         "mapFile",
+                         "m",
+                         "mapFile",
+                         "File to store generated map",
+                         true,
+                         k_nonEmptyStrV),
+        Argument::create(args_.appDir_,
+                         "appDir",
+                         "a",
+                         "appDir",
+                         "App directory",
+                         false,
+                         k_nonEmptyStrV),
+        Argument::create(args_.algorithm_,
+                         "algorithm",
+                         "g",
+                         "algorithm",
+                         "Algorithm to generate map",
+                         true,
+                         k_nonEmptyStrV),
+        Argument::create(args_.algorithmConfigFile_,
+                         "algorithmConfigFile",
+                         "G",
+                         "algorithmConfig",
+                         "Config file for generating map",
+                         true,
+                         k_nonEmptyStrV),
+        Argument::create(args_.exerciseMode_,
+                         "exerciseMode",
+                         "e",
+                         "exerciseMode",
+                         "Whether to run app in exersise mode",
+                         true),
+    });
+
+    parser.parse(argc, argv);
+}
+
+void AppLauncher::initLog()
+{
+    logStream_.open(args_.logFile_);
+
+    if (!logStream_.good())
+    {
+        THROW_EXCEPT(FileException, "Failed to open file " + args_.logFile_);
+    }
+
+    Logger::LogLevel level = Logger::LEVEL_DEBUG;
+
+    if (!args_.logLevelStr_.empty())
+    {
+        level = Logger::strToLevel(args_.logLevelStr_);
+    }
+
+    Logger::initInstance(logStream_, level);
 }
 
 void AppLauncher::initTestShapeApp()
 {
+    TestShapeApp *a = new TestShapeApp();
+    a->init(args_.appConfigFile_, args_.appDir_);
+    app_ = a;
 }
 
 void AppLauncher::initTestMapApp()
 {
+    if (args_.mapFile_.empty())
+    {
+        THROW_EXCEPT(InvalidArgumentException, "mapFile cannot be empty");
+    }
+
+    TestMapApp *a = new TestMapApp();
+    a->init(args_.appConfigFile_, args_.appDir_, args_.mapFile_);
+    app_ = a;
 }
 
 void AppLauncher::initTestWidgetApp()
 {
+    TestWidgetApp *a = new TestWidgetApp();
+    a->init(args_.appConfigFile_, args_.appDir_);
+    app_ = a;
 }
 
 void AppLauncher::initTestParticleApp()
 {
+    TestWidgetApp *a = new TestWidgetApp();
+    a->init(args_.appConfigFile_, args_.appDir_);
+    app_ = a;
 }
 
 void AppLauncher::initTestGameButtonsApp()
 {
+    TestGameButtonsApp *a = new TestGameButtonsApp();
+    a->init(args_.appConfigFile_, args_.appDir_);
+    app_ = a;
 }
 
 void AppLauncher::initTestDirectionPieApp()
 {
+    TestDirectionPieApp *a = new TestDirectionPieApp();
+    a->init(args_.appConfigFile_, args_.appDir_);
+    app_ = a;
 }
 
 void AppLauncher::initTestGameNavigatorApp()
 {
+    TestGameNavigatorApp *a = new TestGameNavigatorApp();
+    a->init(args_.appConfigFile_, args_.appDir_);
+    app_ = a;
 }
 
 void AppLauncher::initShowMapApp()
 {
+    ShowMapApp *a = new ShowMapApp();
+    a->init(args_.appConfigFile_, args_.appDir_, args_.mapFile_);
+    app_ = a;
 }
 
 void AppLauncher::initGenMapApp()
@@ -102,6 +231,10 @@ void AppLauncher::handleCmd(int cmd)
 }
 
 void AppLauncher::process()
+{
+}
+
+void AppLauncher::initParams(const std::string &startFile)
 {
 }
 
@@ -146,6 +279,17 @@ void AppLauncher::initRunGameApp()
 }
 
 #endif
+
+void AppLauncher::initApp()
+{
+    auto it = k_initMap.find(appName_);
+    if (it == k_initMap.end())
+    {
+        THROW_EXCEPT(InvalidArgumentException, "Unrecognized appName " + appName_);
+    }
+
+    (this->*(it->second))();
+}
 
 } // end of namespace botlib
 } // end of namespace mcdane

@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_APP_LAUNCHER_H
 #define INCLUDED_BOTLIB_APP_LAUNCHER_H
 
+#include <fstream>
 #include <unordered_map>
 
 #ifdef __ANDROID__
@@ -15,6 +16,30 @@ namespace botlib {
 class AppLauncher {
     typedef void (AppLauncher::*InitFunc)();
 
+#ifdef DESKTOP_APP
+struct Arguments {
+    std::string appName_;
+    std::string appConfigFile_;
+    std::string logLevelStr_;
+    std::string logFile_;
+    std::string mapFile_;
+    std::string appDir_;
+    std::string algorithm_;
+    std::string algorithmConfigFile_;
+    bool exerciseMode_;
+};
+
+#elif __ANDROID__
+struct Arguments {
+    std::string appName_;
+    std::string appConfigFile_;
+    std::string logLevelStr_;
+    std::string mapFile_;
+    bool exerciseMode_;
+};
+
+#endif
+
 public:
     AppLauncher();
 
@@ -27,7 +52,7 @@ public:
 
 #elif __ANDROID__
     void init(android_app *env,
-              const std::string& startFile);
+              const std::string &startFile);
 
     void handleCmd(int cmd);
 
@@ -36,6 +61,16 @@ public:
 #endif
 
 private:
+#ifdef DESKTOP_APP
+    void initArguments(int argc, char *argv[]);
+#elif __ANDROID__
+    void initArguments(const std::string &startFile);
+#endif
+
+    void initLog();
+
+    void initApp();
+
     void initTestShapeApp();
 
     void initTestMapApp();
@@ -59,13 +94,14 @@ private:
 private:
     static std::unordered_map<std::string, InitFunc> k_initMap;
 
-#ifdef __ANDROID__
+#ifdef DESKTOP_APP
+    std::std::ofstream logStream_;
+#elif __ANDROID__
     android_app *env_;
 #endif
 
     commonlib::App *app_;
-    std::string appName_;
-    std::vector<std::string> params_;
+    Arguments args_;
 };
 
 } // end of namespace botlib
