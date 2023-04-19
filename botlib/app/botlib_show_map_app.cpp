@@ -1,3 +1,5 @@
+#include <commonlib_log.h>
+#include <commonlib_exception.h>
 #include <botlib_app_config.h>
 #include <botlib_context.h>
 #include <botlib_show_map_app.h>
@@ -83,6 +85,11 @@ void ShowMapApp::setupDeltaSmoother()
 
 void ShowMapApp::setupScreen(const std::string &mapFile)
 {
+    if (mapFile.empty())
+    {
+        THROW_EXCEPT(InvalidArgumentException, "mapFile is empty");
+    }
+
     AppActions actions;
 
     actions.exitAction_ = std::bind(&ShowMapApp::exitApp, this);

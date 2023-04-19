@@ -95,7 +95,7 @@ private:
     static std::unordered_map<std::string, InitFunc> k_initMap;
 
 #ifdef DESKTOP_APP
-    std::std::ofstream logStream_;
+    std::ofstream logStream_;
 #elif __ANDROID__
     android_app *env_;
 #endif

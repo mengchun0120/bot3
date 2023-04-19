@@ -1,3 +1,5 @@
+#include <iostream>
+#include <cstdlib>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_argument_parser.h>
@@ -47,18 +49,43 @@ AppLauncher::~AppLauncher()
 #ifdef DESKTOP_APP
 void AppLauncher::init(int argc, char *argv[])
 {
-    if (argc < 3)
+    try
     {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
+        initArguments(argc, argv);
+        initLog();
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Exception happened while initializing log: " << e.what()
+                  << std::endl;
+        exit(1);
     }
 
-    initArguments(argc, argv);
-    initApp();
+
+    try
+    {
+        initApp();
+    }
+    catch (const std::exception &e)
+    {
+        LOG_ERROR << "Exception happended when initializing app: " << e.what()
+                   << LOG_END;
+        exit(1);
+    }
 }
 
 void AppLauncher::run()
 {
-    app_->run();
+    try
+    {
+        app_->run();
+    }
+    catch (const std::exception &e)
+    {
+        LOG_ERROR << "Exception happened when running app: " << e.what()
+                  << LOG_END;
+        exit(1);
+    }
 }
 
 void AppLauncher::initArguments(int argc, char *argv[])
@@ -179,7 +206,7 @@ void AppLauncher::initTestWidgetApp()
 
 void AppLauncher::initTestParticleApp()
 {
-    TestWidgetApp *a = new TestWidgetApp();
+    TestParticleApp *a = new TestParticleApp();
     a->init(args_.appConfigFile_, args_.appDir_);
     app_ = a;
 }
@@ -214,10 +241,18 @@ void AppLauncher::initShowMapApp()
 
 void AppLauncher::initGenMapApp()
 {
+    GenMapApp *a = new GenMapApp();
+    a->init(args_.appConfigFile_, args_.appDir_, args_.algorithm_,
+            args_.algorithmConfigFile_, args_.mapFile_);
+    app_ = a;
 }
 
 void AppLauncher::initRunGameApp()
 {
+    RunGameApp *a = new RunGameApp();
+    a->init(args_.appConfigFile_, args_.appDir_, args_.mapFile_,
+            args_.exerciseMode_);
+    app_ = a;
 }
 
 #elif __ANDROID__
@@ -282,10 +317,11 @@ void AppLauncher::initRunGameApp()
 
 void AppLauncher::initApp()
 {
-    auto it = k_initMap.find(appName_);
+    auto it = k_initMap.find(args_.appName_);
     if (it == k_initMap.end())
     {
-        THROW_EXCEPT(InvalidArgumentException, "Unrecognized appName " + appName_);
+        THROW_EXCEPT(InvalidArgumentException,
+                     "Unrecognized appName " + args_.appName_);
     }
 
     (this->*(it->second))();

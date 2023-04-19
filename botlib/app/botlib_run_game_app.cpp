@@ -1,4 +1,5 @@
 #include <commonlib_log.h>
+#include <commonlib_exception.h>
 #include <commonlib_input_manager.h>
 #include <botlib_app_config.h>
 #include <botlib_context.h>
@@ -81,6 +82,11 @@ void RunGameApp::setupDeltaSmoother()
 void RunGameApp::setupScreen(const std::string& mapFile,
                              bool exerciseMode)
 {
+    if (mapFile.empty())
+    {
+        THROW_EXCEPT(InvalidArgumentException, "mapFile is empty");
+    }
+
     AppActions actions;
 
     actions.exitAction_ = std::bind(&RunGameApp::exitApp, this);
