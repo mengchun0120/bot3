@@ -2,7 +2,9 @@
 #include <cstdlib>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
-#include <commonlib_argument_parser.h>
+#include <commonlib_system.h>
+#include <commonlib_file_utils.h>
+#include <commonlib_out_utils.h>
 #include <botlib_test_shape_app.h>
 #include <botlib_test_map_app.h>
 #include <botlib_test_widget_app.h>
@@ -13,6 +15,9 @@
 #include <botlib_show_map_app.h>
 #include <botlib_gen_map_app.h>
 #include <botlib_run_game_app.h>
+#ifdef __ANDROID__
+#include <androidlib_android_out.h>
+#endif
 #include <botlib_app_launcher.h>
 
 using namespace mcdane::commonlib;
@@ -91,71 +96,7 @@ void AppLauncher::run()
 void AppLauncher::initArguments(int argc, char *argv[])
 {
     ArgumentParser parser;
-    parser.init({
-        Argument::create(args_.appName_,
-                         "appName",
-                         "",
-                         "",
-                         "App name",
-                         false,
-                         k_nonEmptyStrV),
-        Argument::create(args_.appConfigFile_,
-                         "appConfig",
-                         "c",
-                         "appConfig",
-                         "Config file for app",
-                         false,
-                         k_nonEmptyStrV),
-        Argument::create(args_.logFile_,
-                         "logFile",
-                         "l",
-                         "logFile",
-                         "Log file",
-                         false,
-                         k_nonEmptyStrV),
-        Argument::create(args_.logLevelStr_,
-                         "logLevel",
-                         "v",
-                         "logLevel",
-                         "Log level",
-                         true,
-                         k_nonEmptyStrV),
-        Argument::create(args_.mapFile_,
-                         "mapFile",
-                         "m",
-                         "mapFile",
-                         "File to store generated map",
-                         true,
-                         k_nonEmptyStrV),
-        Argument::create(args_.appDir_,
-                         "appDir",
-                         "a",
-                         "appDir",
-                         "App directory",
-                         false,
-                         k_nonEmptyStrV),
-        Argument::create(args_.algorithm_,
-                         "algorithm",
-                         "g",
-                         "algorithm",
-                         "Algorithm to generate map",
-                         true,
-                         k_nonEmptyStrV),
-        Argument::create(args_.algorithmConfigFile_,
-                         "algorithmConfigFile",
-                         "G",
-                         "algorithmConfig",
-                         "Config file for generating map",
-                         true,
-                         k_nonEmptyStrV),
-        Argument::create(args_.exerciseMode_,
-                         "exerciseMode",
-                         "e",
-                         "exerciseMode",
-                         "Whether to run app in exersise mode",
-                         true),
-    });
-
+    initArgumentParser(parser);
     parser.parse(argc, argv);
 }
 
@@ -259,58 +200,129 @@ void AppLauncher::initRunGameApp()
 void AppLauncher::init(android_app *env,
                        const std::string& startFile)
 {
+    LOG_INFO << "Initializing AppLauncher" << LOG_END;
+
+    setAssetManager(env->activity->assetManager);
+
+    initLog();
+    initArguments(startFile);
+
+    env_ = env;
+    initApp();
+
+    LOG_INFO << "App initialized" << LOG_END;
 }
 
 void AppLauncher::handleCmd(int cmd)
 {
+    app_->handleCommand(cmd);
 }
 
 void AppLauncher::process()
 {
+    app_->process();
 }
 
-void AppLauncher::initParams(const std::string &startFile)
+void AppLauncher::initLog()
 {
+    Logger::initInstance(mcdane::androidlib::aout);
+}
+
+void AppLauncher::initArguments(const std::string &startFile)
+{
+    std::vector<std::string> args;
+    readArguments(args, startFile);
+
+    ArgumentParser parser;
+    initArgumentParser(parser);
+    parser.parse(args);
+}
+
+void AppLauncher::readArguments(std::vector<std::string> &args,
+                                const std::string &startFile)
+{
+    std::istringstream is1(readText(startFile));
+
+    std::string line;
+    while (std::getline(is1, line))
+    {
+        if (!line.empty() && line[0] != '#')
+        {
+            std::istringstream is2(line);
+            readList(args, is2);
+            return;
+        }
+    }
 }
 
 void AppLauncher::initTestShapeApp()
 {
+    TestShapeApp *a = new TestShapeApp();
+    a->init(env_, args_.appConfigFile_);
+    app_ = a;
 }
 
 void AppLauncher::initTestMapApp()
 {
+    TestMapApp *a = new TestMapApp();
+    a->init(env_, args_.appConfigFile_, args_.mapFile_);
+    app_ = a;
 }
 
 void AppLauncher::initTestWidgetApp()
 {
+    TestWidgetApp *a = new TestWidgetApp();
+    a->init(env_, args_.appConfigFile_);
+    app_ = a;
 }
 
 void AppLauncher::initTestParticleApp()
 {
+    TestParticleApp *a = new TestParticleApp();
+    a->init(env_, args_.appConfigFile_);
+    app_ = a;
 }
 
 void AppLauncher::initTestGameButtonsApp()
 {
+    TestGameButtonsApp *a = new TestGameButtonsApp();
+    a->init(env_, args_.appConfigFile_);
+    app_ = a;
 }
 
 void AppLauncher::initTestDirectionPieApp()
 {
+    TestDirectionPieApp *a = new TestDirectionPieApp();
+    a->init(env_, args_.appConfigFile_);
+    app_ = a;
 }
 
 void AppLauncher::initTestGameNavigatorApp()
 {
+    TestGameNavigatorApp *a = new TestGameNavigatorApp();
+    a->init(env_, args_.appConfigFile_);
+    app_ = a;
 }
 
 void AppLauncher::initShowMapApp()
 {
+    ShowMapApp *a = new ShowMapApp();
+    a->init(env_, args_.appConfigFile_, args_.mapFile_);
+    app_ = a;
 }
 
 void AppLauncher::initGenMapApp()
 {
+    GenMapApp *a = new GenMapApp();
+    a->init(env_, args_.appConfigFile_, args_.algorithm_, args_.algorithmConfigFile_);
+    app_ = a;
 }
 
 void AppLauncher::initRunGameApp()
 {
+    RunGameApp *a = new RunGameApp();
+    a->init(env_, args_.appConfigFile_, args_.mapFile_, args_.exerciseMode_);
+    app_ = a;
 }
 
 #endif
@@ -325,6 +337,77 @@ void AppLauncher::initApp()
     }
 
     (this->*(it->second))();
+}
+
+void AppLauncher::initArgumentParser(ArgumentParser &parser)
+{
+    parser.init({
+        Argument::create(args_.appName_,
+                         "appName",
+                         "",
+                         "",
+                         "App name",
+                         false,
+                         k_nonEmptyStrV),
+        Argument::create(args_.appConfigFile_,
+                         "appConfig",
+                         "c",
+                         "appConfig",
+                         "Config file for app",
+                         false,
+                         k_nonEmptyStrV),
+        Argument::create(args_.logLevelStr_,
+                         "logLevel",
+                         "v",
+                         "logLevel",
+                         "Log level",
+                         true,
+                         k_nonEmptyStrV),
+        Argument::create(args_.mapFile_,
+                         "mapFile",
+                         "m",
+                         "mapFile",
+                         "File to store generated map",
+                         true,
+                         k_nonEmptyStrV),
+        Argument::create(args_.algorithm_,
+                         "algorithm",
+                         "g",
+                         "algorithm",
+                         "Algorithm to generate map",
+                         true,
+                         k_nonEmptyStrV),
+        Argument::create(args_.algorithmConfigFile_,
+                         "algorithmConfigFile",
+                         "G",
+                         "algorithmConfig",
+                         "Config file for generating map",
+                         true,
+                         k_nonEmptyStrV),
+        Argument::create(args_.exerciseMode_,
+                         "exerciseMode",
+                         "e",
+                         "exerciseMode",
+                         "Whether to run app in exersise mode",
+                         true),
+#ifdef DESKTOP_APP
+        Argument::create(args_.logFile_,
+                         "logFile",
+                         "l",
+                         "logFile",
+                         "Log file",
+                         false,
+                         k_nonEmptyStrV),
+        Argument::create(args_.appDir_,
+                         "appDir",
+                         "a",
+                         "appDir",
+                         "App directory",
+                         false,
+                         k_nonEmptyStrV),
+#endif
+    });
+
 }
 
 } // end of namespace botlib

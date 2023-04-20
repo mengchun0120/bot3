@@ -101,11 +101,8 @@ void TestGameNavigatorApp::setupInput()
 void TestGameNavigatorApp::process()
 {
     App::process();
-
     InputManager::instance().processInput(*this);
-
     present();
-
     postProcess();
 }
 

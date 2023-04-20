@@ -8,6 +8,7 @@
 #include <game-activity/native_app_glue/android_native_app_glue.h>
 #endif
 
+#include <commonlib_argument_parser.h>
 #include <commonlib_app.h>
 
 namespace mcdane {
@@ -35,6 +36,8 @@ struct Arguments {
     std::string appConfigFile_;
     std::string logLevelStr_;
     std::string mapFile_;
+    std::string algorithm_;
+    std::string algorithmConfigFile_;
     bool exerciseMode_;
 };
 
@@ -65,11 +68,16 @@ private:
     void initArguments(int argc, char *argv[]);
 #elif __ANDROID__
     void initArguments(const std::string &startFile);
+
+    void readArguments(std::vector<std::string> &args,
+                       const std::string &startFile);
 #endif
 
     void initLog();
 
     void initApp();
+
+    void initArgumentParser(commonlib::ArgumentParser &parser);
 
     void initTestShapeApp();
 

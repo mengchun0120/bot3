@@ -1,5 +1,6 @@
 #include <cstring>
 #include <unordered_set>
+#include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_argument_parser.h>
 

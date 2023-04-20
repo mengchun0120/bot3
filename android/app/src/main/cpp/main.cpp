@@ -5,212 +5,29 @@
 #include <game-activity/GameActivity.cpp>
 #include <game-text-input/gametextinput.cpp>
 #include <commonlib_log.h>
-#include <commonlib_exception.h>
-#include <commonlib_system.h>
-#include <commonlib_file_utils.h>
-#include <commonlib_parse.h>
-#include <botlib_test_shape_app.h>
-#include <botlib_test_map_app.h>
-#include <botlib_test_widget_app.h>
-#include <botlib_test_particle_app.h>
-#include <botlib_test_game_buttons_app.h>
-#include <botlib_test_direction_pie_app.h>
-#include <botlib_test_game_navigator_app.h>
-#include <botlib_show_map_app.h>
-#include <botlib_gen_map_app.h>
-#include <botlib_run_game_app.h>
 #include <androidlib_android_out.h>
+#include <botlib_app_launcher.h>
 
-using namespace mcdane::commonlib;
 using namespace mcdane::botlib;
+using namespace mcdane::commonlib;
 using namespace mcdane::androidlib;
 
 extern "C" {
 
 #include <game-activity/native_app_glue/android_native_app_glue.c>
 
-void getParams(std::vector<std::string> &params)
-{
-    std::istringstream is1(readText("config/startapp.txt"));
-    std::string line;
-    while (std::getline(is1, line))
-    {
-        if (!line.empty() && line[0] != '#')
-        {
-            std::istringstream is2(line);
-            readList(params, is2);
-        }
-    }
-}
-
-void runTestShape(android_app *app, const std::vector<std::string> &params)
-{
-    if (params.size() < 2)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
-    }
-
-    TestShapeApp *a = new TestShapeApp();
-    a->init(app, params[1]);
-    app->userData = a;
-}
-
-void runTestMap(android_app *app, const std::vector<std::string> &params)
-{
-    if (params.size() < 3)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
-    }
-
-    TestMapApp *a = new TestMapApp();
-    a->init(app, params[1], params[2]);
-    app->userData = a;
-}
-
-void runTestWidget(android_app *app, const std::vector<std::string> &params)
-{
-    if (params.size() < 2)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
-    }
-
-    TestWidgetApp *a = new TestWidgetApp();
-    a->init(app, params[1]);
-    app->userData = a;
-}
-
-void runTestParticle(android_app *app, const std::vector<std::string> &params)
-{
-    if (params.size() < 2)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
-    }
-
-    TestParticleApp *a = new TestParticleApp();
-    a->init(app, params[1]);
-    app->userData = a;
-
-}
-
-void runTestGameButtons(android_app *app, const std::vector<std::string> &params)
-{
-    if (params.size() < 2)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
-    }
-
-    TestGameButtonsApp *a = new TestGameButtonsApp();
-    a->init(app, params[1]);
-    app->userData = a;
-
-}
-
-void runTestDirectionPie(android_app *app, const std::vector<std::string> &params)
-{
-    if (params.size() < 2)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
-    }
-
-    TestDirectionPieApp *a = new TestDirectionPieApp();
-    a->init(app, params[1]);
-    app->userData = a;
-}
-
-void runTestGameNavigator(android_app *app, const std::vector<std::string> &params)
-{
-    if (params.size() < 2)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
-    }
-
-    TestGameNavigatorApp *a = new TestGameNavigatorApp();
-    a->init(app, params[1]);
-    app->userData = a;
-}
-
-void runShowMap(android_app *app, const std::vector<std::string> &params)
-{
-    if (params.size() < 3)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
-    }
-
-    ShowMapApp *a = new ShowMapApp();
-    a->init(app, params[1], params[2]);
-    app->userData = a;
-}
-
-void runGenMap(android_app *app, const std::vector<std::string> &params)
-{
-    if (params.size() < 4)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
-    }
-
-    GenMapApp *a = new GenMapApp();
-    a->init(app, params[1], params[2], params[3]);
-    app->userData = a;
-}
-
-void runGame(android_app *app, const std::vector<std::string> &params)
-{
-    if (params.size() < 4)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid params");
-    }
-
-    RunGameApp *a = new RunGameApp();
-    bool exerciseMode;
-    parse(exerciseMode, params[3]);
-    a->init(app, params[1], params[2], exerciseMode);
-    app->userData = a;
-}
-
 void handleInitWindow(android_app *app)
 {
-    using namespace std;
-
-    typedef void (*AppFunc)(android_app *, const vector<std::string> &);
-    unordered_map<string, AppFunc> funcMap{
-        {"testshape", runTestShape},
-        {"testmap", runTestMap},
-        {"testwidget", runTestWidget},
-        {"testparticle", runTestParticle},
-        {"test_game_buttons", runTestGameButtons},
-        {"test_direction_pie", runTestDirectionPie},
-        {"test_game_navigator", runTestGameNavigator},
-        {"showmap", runShowMap},
-        {"genmap", runGenMap},
-        {"rungame", runGame},
-    };
-    vector<string> params;
-
-    getParams(params);
-    if (params.empty())
-    {
-        LOG_ERROR << "No app specified" << LOG_END;
-        return;
-    }
-
-    LOG_INFO << "Starting: " << params[0] << LOG_END;
-
-    auto it = funcMap.find(params[0]);
-    if (it != funcMap.end())
-    {
-        (it->second)(app, params);
-    }
-    else
-    {
-        THROW_EXCEPT(ParseException, "Unknown app " + params[0]);
-    }
+    AppLauncher *launcher = new AppLauncher();
+    launcher->init(app, "config/startapp.txt");
+    app->userData = launcher;
 }
 
 void handleTermWindow(android_app *app)
 {
-    App *a = reinterpret_cast<App*>(app->userData);
+    AppLauncher *a = reinterpret_cast<AppLauncher*>(app->userData);
 
-    LOG_INFO << "Terminating " << a->name() << LOG_END;
+    LOG_INFO << "Terminating " << LOG_END;
 
     app->userData = nullptr;
     delete a;
@@ -220,8 +37,8 @@ void handleDefaultCmd(android_app *app, int32_t cmd)
 {
     if (app->userData)
     {
-        App *a = reinterpret_cast<App*>(app->userData);
-        a->handleCommand(cmd);
+        AppLauncher *launcher = reinterpret_cast<AppLauncher*>(app->userData);
+        launcher->handleCmd(cmd);
     }
 }
 
@@ -248,12 +65,9 @@ void handle_cmd(android_app *app, int32_t cmd)
 
 void android_main(struct android_app *app)
 {
-    setAssetManager(app->activity->assetManager);
-    Logger::initInstance(mcdane::androidlib::aout);
-
-    LOG_DEBUG << "Welcome to Robot" << LOG_END;
-
     app->onAppCmd = handle_cmd;
+
+    aout << "Starting Robot" << std::endl;
 
     int events;
     android_poll_source *pSource;
@@ -270,10 +84,8 @@ void android_main(struct android_app *app)
         }
 
         if (app->userData) {
-            App *a = reinterpret_cast<App*>(app->userData);
-            if (a->shouldRun()) {
-                a->process();
-            }
+            AppLauncher *launcher = reinterpret_cast<AppLauncher*>(app->userData);
+            launcher->process();
         }
     }
 }
