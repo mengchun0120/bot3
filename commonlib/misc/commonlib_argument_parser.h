@@ -19,6 +19,8 @@ public:
 
     void parse(int argc, const char *const argv[]);
 
+    void parse(const std::vector<std::string> &args);
+
     bool argExists(const std::string &name) const
     {
         return nameArgMap_.find(name) != nameArgMap_.end();
@@ -50,24 +52,29 @@ private:
 
     void resetArgs();
 
-    void evalArgs(int argc,
-                  const char *const argv[]);
+    void evalArgs(const std::vector<std::string> &args);
 
     void evalLongOpt(const std::string &longOpt,
                      int &argIdx,
-                     int argc,
-                     const char *const argv[]);
+                     const std::vector<std::string> &args);
 
     void evalShortOpt(const std::string &shortOpt,
                       int &argIdx,
-                      int argc,
-                      const char *const argv[]);
+                      const std::vector<std::string> &args);
 
     void evalPosOpt(unsigned int &posArgIdx,
                     int &argIdx,
-                    const char *const argv[]);
+                    const std::vector<std::string> &args);
 
     void checkNonOptional();
+
+    unsigned int getNumPosArgs(const std::initializer_list<Argument::Ptr> &args);
+
+    bool checkLongOpt(std::string &longOpt,
+                      const std::string &arg);
+
+    bool checkShortOpt(std::string &shortOpt,
+                       const std::string &arg);
 
 private:
     std::unordered_map<std::string, Argument::Ptr> nameArgMap_;

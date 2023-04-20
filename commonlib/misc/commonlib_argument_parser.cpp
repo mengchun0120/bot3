@@ -6,58 +6,6 @@
 namespace mcdane {
 namespace commonlib {
 
-namespace {
-
-unsigned int getNumPosArgs(const std::initializer_list<Argument::Ptr> &args)
-{
-    unsigned int count = 0;
-    for (auto it = args.begin(); it != args.end(); ++it)
-    {
-        if ((*it)->isPosArg())
-        {
-            ++count;
-        }
-    }
-
-    return count;
-}
-
-bool checkLongOpt(std::string &longOpt, const char *arg)
-{
-    if (strlen(arg) < 3 || arg[0] != '-' || arg[1] != '-')
-    {
-        return false;
-    }
-
-    if (!Argument::validateOpt(arg + 2))
-    {
-        return false;
-    }
-
-    longOpt = arg + 2;
-
-    return true;
-}
-
-bool checkShortOpt(std::string &shortOpt, const char *arg)
-{
-    if (strlen(arg) < 2 || arg[0] != '-')
-    {
-        return false;
-    }
-
-    if (!Argument::validateOpt(arg + 1))
-    {
-        return false;
-    }
-
-    shortOpt = arg + 1;
-
-    return true;
-}
-
-} // end of unnamed namespace
-
 ArgumentParser::ArgumentParser()
 {
 }
@@ -83,6 +31,29 @@ void ArgumentParser::init(const std::initializer_list<Argument::Ptr> &args)
     {
         addArg(*it, posArgIdx);
     }
+}
+
+void ArgumentParser::parse(int argc, const char *const argv[])
+{
+    if (argc <= 0)
+    {
+        THROW_EXCEPT(InvalidArgumentException, "argc must be greater than 1");
+    }
+
+    std::vector<std::string> args(argc);
+    for (int i = 0; i < argc; ++i)
+    {
+        args[i] = argv[i];
+    }
+
+    parse(args);
+}
+
+void ArgumentParser::parse(const std::vector<std::string> &args)
+{
+    resetArgs();
+    evalArgs(args);
+    checkNonOptional();
 }
 
 void ArgumentParser::clearAll()
@@ -147,19 +118,6 @@ void ArgumentParser::addArgToLongOptArgMap(Argument::Ptr arg)
     longOptArgMap_.insert({arg->longOpt(), arg});
 }
 
-
-void ArgumentParser::parse(int argc, const char *const argv[])
-{
-    if (argc <= 0)
-    {
-        THROW_EXCEPT(InvalidArgumentException, "argc must be greater than 1");
-    }
-
-    resetArgs();
-    evalArgs(argc, argv);
-    checkNonOptional();
-}
-
 void ArgumentParser::resetArgs()
 {
     for (auto it = nameArgMap_.begin(); it != nameArgMap_.end(); ++it)
@@ -168,35 +126,33 @@ void ArgumentParser::resetArgs()
     }
 }
 
-void ArgumentParser::evalArgs(int argc,
-                              const char *const argv[])
+void ArgumentParser::evalArgs(const std::vector<std::string> &args)
 {
     unsigned int posArgIdx = 0;
-    int argIdx = 1;
+    int argIdx = 0;
 
-    while (argIdx < argc)
+    while (argIdx < static_cast<int>(args.size()))
     {
         std::string longOpt, shortOpt;
 
-        if (checkLongOpt(longOpt, argv[argIdx]))
+        if (checkLongOpt(longOpt, args[argIdx]))
         {
-            evalLongOpt(longOpt, argIdx, argc, argv);
+            evalLongOpt(longOpt, argIdx, args);
         }
-        else if (checkShortOpt(shortOpt, argv[argIdx]))
+        else if (checkShortOpt(shortOpt, args[argIdx]))
         {
-            evalShortOpt(shortOpt, argIdx, argc, argv);
+            evalShortOpt(shortOpt, argIdx, args);
         }
         else
         {
-            evalPosOpt(posArgIdx, argIdx, argv);
+            evalPosOpt(posArgIdx, argIdx, args);
         }
     }
 }
 
 void ArgumentParser::evalLongOpt(const std::string &longOpt,
                                  int &argIdx,
-                                 int argc,
-                                 const char *const argv[])
+                                 const std::vector<std::string> &args)
 {
     auto it = longOptArgMap_.find(longOpt);
     if (it == longOptArgMap_.end())
@@ -213,20 +169,19 @@ void ArgumentParser::evalLongOpt(const std::string &longOpt,
                      "Parameter " + arg->name() + " was already specified");
     }
 
-    if (argIdx + 1 >= argc)
+    if (argIdx + 1 >= static_cast<int>(args.size()))
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "No value specified for parameter " + arg->name());
     }
 
-    arg->eval(argv[argIdx+1]);
+    arg->eval(args[argIdx+1]);
     argIdx += 2;
 }
 
 void ArgumentParser::evalShortOpt(const std::string &shortOpt,
                                   int &argIdx,
-                                  int argc,
-                                  const char *const argv[])
+                                  const std::vector<std::string> &args)
 {
     auto it = shortOptArgMap_.find(shortOpt);
     if (it == shortOptArgMap_.end())
@@ -243,27 +198,27 @@ void ArgumentParser::evalShortOpt(const std::string &shortOpt,
                      "Parameter " + arg->name() + " was already specified");
     }
 
-    if (argIdx + 1 >= argc)
+    if (argIdx + 1 >= static_cast<int>(args.size()))
     {
         THROW_EXCEPT(InvalidArgumentException,
                      "No value specified for parameter " + arg->name());
     }
 
-    arg->eval(argv[argIdx+1]);
+    arg->eval(args[argIdx+1]);
     argIdx += 2;
 }
 
 void ArgumentParser::evalPosOpt(unsigned int &posArgIdx,
                                 int &argIdx,
-                                const char *const argv[])
+                                const std::vector<std::string> &args)
 {
     if (posArgIdx >= posArgs_.size())
     {
         THROW_EXCEPT(InvalidArgumentException,
-                     std::string("Unknown option ") + argv[argIdx]);
+                     "Unknown option " + args[argIdx]);
     }
 
-    posArgs_[posArgIdx]->eval(argv[argIdx]);
+    posArgs_[posArgIdx]->eval(args[argIdx]);
     posArgIdx++;
     argIdx++;
 }
@@ -281,6 +236,58 @@ void ArgumentParser::checkNonOptional()
     }
 }
 
+unsigned int ArgumentParser::getNumPosArgs(
+                        const std::initializer_list<Argument::Ptr> &args)
+{
+    unsigned int count = 0;
+    for (auto it = args.begin(); it != args.end(); ++it)
+    {
+        if ((*it)->isPosArg())
+        {
+            ++count;
+        }
+    }
+
+    return count;
+}
+
+bool ArgumentParser::checkLongOpt(std::string &longOpt,
+                                  const std::string &arg)
+{
+    if (arg.size() < 3 || arg[0] != '-' || arg[1] != '-')
+    {
+        return false;
+    }
+
+    std::string opt = arg.substr(2);
+    if (!Argument::validateOpt(opt))
+    {
+        return false;
+    }
+
+    longOpt = opt;
+
+    return true;
+}
+
+bool ArgumentParser::checkShortOpt(std::string &shortOpt,
+                                   const std::string &arg)
+{
+    if (arg.size() < 2 || arg[0] != '-')
+    {
+        return false;
+    }
+
+    std::string opt = arg.substr(1);
+    if (!Argument::validateOpt(opt))
+    {
+        return false;
+    }
+
+    shortOpt = opt;
+
+    return true;
+}
+
 } // end of namespace commonlib
 } // end of namespace mcdane
-

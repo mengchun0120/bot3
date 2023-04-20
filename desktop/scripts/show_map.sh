@@ -3,7 +3,7 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-./build/app/bot --appName show_map \
+./build/app/bot show_map \
                 --appConfig config/bot_config.json \
                 --logFile show_map.log \
                 --logLevel DEBUG \

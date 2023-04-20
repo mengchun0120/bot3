@@ -4,7 +4,7 @@ if [ $# != 1 ]; then
 fi
 
 map_file=$1
-./build/app/bot --appName gen_map \
+./build/app/bot gen_map \
                 --appConfig config/bot_config.json \
                 --logFile gen_map.log \
                 --logLevel DEBUG \

@@ -94,8 +94,8 @@ void AppLauncher::initArguments(int argc, char *argv[])
     parser.init({
         Argument::create(args_.appName_,
                          "appName",
-                         "n",
-                         "appName",
+                         "",
+                         "",
                          "App name",
                          false,
                          k_nonEmptyStrV),

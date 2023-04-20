@@ -12,7 +12,7 @@ else
     exercise_mode=0
 fi
 
-./build/app/bot --appName run_game \
+./build/app/bot run_game \
                 --appConfig config/bot_config.json \
                 --logFile run_game.log \
                 --logLevel DEBUG \

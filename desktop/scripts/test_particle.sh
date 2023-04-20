@@ -1,4 +1,4 @@
-./build/app/bot --appName test_particle \
+./build/app/bot test_particle \
                 --appConfig config/bot_config.json \
                 --logFile test_particle.log \
                 --logLevel DEBUG \

@@ -4,7 +4,7 @@ if [ $# -ne 1 ]; then
 fi
 
 map_file=$1
-./build/app/bot --appName test_map \
+./build/app/bot test_map \
                 --appConfig config/bot_config.json \
                 --logFile test_shape.log \
                 --logLevel DEBUG \
