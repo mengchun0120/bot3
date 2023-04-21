@@ -11,52 +11,35 @@ namespace mcdane {
 namespace botlib {
 
 SkillWithCost::SkillWithCost()
-    : button_(nullptr)
-    , coolDown_(0.0f)
+    : coolDown_(0.0f)
     , timeSinceLastCast_(0.0f)
 {
 }
 
 SkillWithCost::SkillWithCost(const SkillTemplate *t,
                              Robot *robot,
-                             bool enabled1,
-                             const Vector2 *buttonPos)
+                             bool enabled1)
 {
-    init(t, robot, enabled1, buttonPos);
+    init(t, robot, enabled1);
 }
 
 SkillWithCost::~SkillWithCost()
 {
-    if (!button_)
-    {
-        delete button_;
-    }
 }
 
 void SkillWithCost::init(const SkillTemplate *t,
                          Robot *robot,
-                         bool enabled1,
-                         const Vector2 *buttonPos)
+                         bool enabled1)
 {
     Skill::init(t, robot, enabled1);
 
     coolDown_ = getTemplate()->coolDown();
     timeSinceLastCast_ = coolDown_;
-
-    if (getTemplate()->pieTemplate())
-    {
-        initButton(buttonPos);
-    }
 }
 
 void SkillWithCost::update(UpdateContext &cxt)
 {
     timeSinceLastCast_ += cxt.timeDelta();
-
-    if (button_)
-    {
-        updateButton();
-    }
 
     if (!inProcess() && (!enabled() || !available()))
     {
@@ -72,10 +55,6 @@ void SkillWithCost::update(UpdateContext &cxt)
     {
         robot_->addEnergy(-getTemplate()->energyCost());
         timeSinceLastCast_ = 0.0f;
-        if (button_)
-        {
-            updateButton();
-        }
     }
 
     if (!inProcess() && !getTemplate()->keepAlive())
@@ -87,45 +66,11 @@ void SkillWithCost::update(UpdateContext &cxt)
 void SkillWithCost::setCoolDownFactor(float f)
 {
     coolDown_ = getTemplate()->coolDown() * f;
-
-    if (button_)
-    {
-        updateButton();
-    }
 }
 
 void SkillWithCost::resetCoolDown()
 {
     setCoolDownFactor(1.0f);
-}
-
-void SkillWithCost::initButton(const Vector2 *buttonPos)
-{
-    const SkillWithCostTemplate *t = getTemplate();
-    auto action = [&](SkillButton &button)
-    {
-        setEnabled(true);
-    };
-
-    button_ = new SkillButton();
-
-    if (buttonPos)
-    {
-        button_->init((*buttonPos)[0], (*buttonPos)[1],
-                      t->pieTemplate(), action);
-    }
-    else
-    {
-        button_->init(0.0f, 0.0f, t->pieTemplate(), action);
-    }
-}
-
-void SkillWithCost::updateButton()
-{
-    float ratio = coolDown_ > 0.0f ? timeSinceLastCast_ / coolDown_ : 1.0f;
-
-    button_->setRatio(ratio);
-    button_->setEnabled(available());
 }
 
 } // end of namespace botlib

@@ -260,13 +260,7 @@ bool GameScreen::onSkillButtonPressed(float x, float y)
         {
             continue;
         }
-
-        button = static_cast<SkillWithCost*>(skill)->button();
-        if (button->containPos(x, y))
-        {
-            button->onPointerDown(x, y);
-            return true;
-        }
+        //TODO
     }
 
     return false;
@@ -373,6 +367,7 @@ void GameScreen::updatePlayer()
 
 void GameScreen::clearUpdateFlags()
 {
+    //TODO
     auto clearUpdateFlag = [](GameObject *obj)->bool
     {
         obj->setUpdated(false);
@@ -384,6 +379,7 @@ void GameScreen::clearUpdateFlags()
 
 void GameScreen::updateNonPlayerObjects()
 {
+    //TODO
     auto updater = [this](GameObject *obj)->bool
     {
         if (obj->updated() && obj->state() == GameObjectState::DEAD)
@@ -463,7 +459,7 @@ void GameScreen::presentSkillButtons()
         if (isSkillWithCost(skill->type()))
         {
             skill1 = static_cast<SkillWithCost*>(skill);
-            skill1->button()->present();
+            //TODO skill1->button()->present();
         }
     }
 }
@@ -564,7 +560,7 @@ void GameScreen::resetSkillButtonPos()
 {
     if (map_.player())
     {
-        map_.player()->resetSkillButtonPos(viewportSize_);
+        //TODO map_.player()->resetSkillButtonPos(viewportSize_);
     }
 }
 

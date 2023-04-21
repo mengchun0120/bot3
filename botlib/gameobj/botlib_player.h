@@ -16,15 +16,13 @@ public:
 
     Player(const PlayerTemplate *t,
            const commonlib::Vector2 &pos1,
-           const commonlib::Vector2 &direction1,
-           const commonlib::Vector2 *viewportSize=nullptr);
+           const commonlib::Vector2 &direction1);
 
     ~Player() override = default;
 
     void init(const PlayerTemplate *t,
               const commonlib::Vector2 &pos1,
-              const commonlib::Vector2 &direction1,
-              const commonlib::Vector2 *viewportSize=nullptr);
+              const commonlib::Vector2 &direction1);
 
     inline const PlayerTemplate *getTemplate() const;
 
@@ -42,8 +40,6 @@ public:
 #ifdef DESKTOP_APP
     Skill *findSkillForInput(int input);
 #endif
-
-    void resetSkillButtonPos(const commonlib::Vector2 &viewportSize);
 
 protected:
     void initGoodieEffects();

@@ -156,7 +156,7 @@ void TestGameNavigatorApp::onViewportChange(float width, float height)
 void TestGameNavigatorApp::calculateNavigatorPos(Vector2 &p)
 {
     const GameScreenConfig &cfg = Context::gameScreenConfig();
-    p[0] = viewportWidth() - cfg.navigatorRightSpacing();
+    p[0] = cfg.navigatorLeftSpacing();
     p[1] = cfg.navigatorBottomSpacing();
 }
 

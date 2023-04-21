@@ -13,15 +13,13 @@ public:
 
     BarrageSkill(const BarrageSkillTemplate *t,
                  Robot *robot,
-                 bool enabled1=false,
-                 const commonlib::Vector2 *buttonPos=nullptr);
+                 bool enabled1=false);
 
     ~BarrageSkill() override = default;
 
     void init(const BarrageSkillTemplate *t,
               Robot *robot,
-              bool enabled1=false,
-              const commonlib::Vector2 *buttonPos=nullptr);
+              bool enabled1=false);
 
     inline const BarrageSkillTemplate *getTemplate() const;
 

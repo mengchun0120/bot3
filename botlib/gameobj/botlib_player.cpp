@@ -16,26 +16,20 @@ namespace botlib {
 
 Player::Player(const PlayerTemplate *t,
                const Vector2 &pos1,
-               const Vector2 &direction1,
-               const Vector2 *viewportSize)
+               const Vector2 &direction1)
 {
-    init(t, pos1, direction1, viewportSize);
+    init(t, pos1, direction1);
 }
 
 void Player::init(const PlayerTemplate *t,
                   const Vector2 &pos1,
-                  const Vector2 &direction1,
-                  const Vector2 *viewportSize)
+                  const Vector2 &direction1)
 {
     Robot::init(t, Side::PLAYER, pos1, direction1);
     initGoodieEffects();
 #ifdef DESKTOP_APP
     initSkillMap();
 #endif
-    if (viewportSize)
-    {
-        resetSkillButtonPos(*viewportSize);
-    }
 }
 
 void Player::update(UpdateContext &cxt)
@@ -85,26 +79,6 @@ Skill *Player::findSkillForInput(int input)
     return it != skillMap_.end() ? it->second : nullptr;
 }
 #endif
-
-void Player::resetSkillButtonPos(const commonlib::Vector2 &viewportSize)
-{
-    const GameScreenConfig &cfg = Context::gameScreenConfig();
-    float y = cfg.skillButtonBottomSpacing();
-    float x = cfg.skillButtonLeftSpacing();
-
-    for (int i = skills_.size() - 1; i >= 0; --i)
-    {
-        if (!isSkillWithCost(skills_[i]->type()))
-        {
-            continue;
-        }
-
-        SkillWithCost *skill = static_cast<SkillWithCost *>(skills_[i]);
-        skill->button()->setPos(x, y);
-
-        x += cfg.skillButtonSpacing();
-    }
-}
 
 void Player::initGoodieEffects()
 {

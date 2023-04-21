@@ -13,18 +13,16 @@ namespace botlib {
 
 TargetedBlastSkill::TargetedBlastSkill(const TargetedBlastSkillTemplate *t,
                                        Robot *robot,
-                                       bool enabled1,
-                                       const Vector2 *buttonPos)
+                                       bool enabled1)
 {
-    init(t, robot, enabled1, buttonPos);
+    init(t, robot, enabled1);
 }
 
 void TargetedBlastSkill::init(const TargetedBlastSkillTemplate *t,
                               Robot *robot,
-                              bool enabled1,
-                              const Vector2 *buttonPos)
+                              bool enabled1)
 {
-    SkillWithCost::init(t, robot, enabled1, buttonPos);
+    SkillWithCost::init(t, robot, enabled1);
 }
 
 bool TargetedBlastSkill::apply(UpdateContext &cxt)

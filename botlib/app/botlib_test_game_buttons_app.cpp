@@ -196,13 +196,13 @@ void TestGameButtonsApp::calculateButtonPositions()
 {
     const GameScreenConfig &cfg = Context::gameScreenConfig();
     float y = cfg.skillButtonBottomSpacing();
-    float x = cfg.skillButtonLeftSpacing();
+    float x = viewportWidth() - cfg.skillButtonRightSpacing();
 
-    for (int i = 0; i < k_numSkillButtons; ++i)
+    for (int i = k_numSkillButtons - 1; i >= 0; --i)
     {
         buttonPositions_[i][0] = x;
         buttonPositions_[i][1] = y;
-        x += cfg.skillButtonSpacing();
+        x -= cfg.skillButtonSpacing();
     }
 }
 

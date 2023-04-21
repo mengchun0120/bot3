@@ -2,7 +2,6 @@
 #define INCLUDED_BOTLIB_SKILL_WITH_COST_H
 
 #include <botlib_robot.h>
-#include <botlib_skill_button.h>
 #include <botlib_skill_with_cost_template.h>
 #include <botlib_skill.h>
 
@@ -15,21 +14,19 @@ public:
 
     SkillWithCost(const SkillTemplate *t,
                   Robot *robot,
-                  bool enabled1=false,
-                  const commonlib::Vector2 *buttonPos=nullptr);
+                  bool enabled1=false);
 
     ~SkillWithCost() override;
 
     void init(const SkillTemplate *t,
               Robot *robot,
-              bool enabled1=false,
-              const commonlib::Vector2 *buttonPos=nullptr);
+              bool enabled1=false);
 
     inline const SkillWithCostTemplate *getTemplate() const;
 
     inline bool available() const;
 
-    inline SkillButton *button();
+    inline float ratio() const;
 
     void update(UpdateContext &cxt) override;
 
@@ -38,14 +35,9 @@ public:
     void resetCoolDown();
 
 protected:
-    void initButton(const commonlib::Vector2 *buttonPos);
-
     virtual bool apply(UpdateContext &cxt) = 0;
 
-    void updateButton();
-
 protected:
-    SkillButton *button_;
     float coolDown_;
     float timeSinceLastCast_;
 };
@@ -61,9 +53,9 @@ bool SkillWithCost::available() const
            timeSinceLastCast_ >= coolDown_;
 }
 
-SkillButton *SkillWithCost::button()
+float SkillWithCost::ratio() const
 {
-    return button_;
+    return coolDown_ > 0.0f ? timeSinceLastCast_ / coolDown_ : 1.0f;
 }
 
 } // end of namespace botlib

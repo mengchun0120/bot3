@@ -9,18 +9,16 @@ namespace botlib {
 
 ShootMissileSkill::ShootMissileSkill(const ShootMissileSkillTemplate *t,
                                      Robot *robot,
-                                     bool enabled1,
-                                     const Vector2 *buttonPos)
+                                     bool enabled1)
 {
     init(t, robot, enabled1);
 }
 
 void ShootMissileSkill::init(const ShootMissileSkillTemplate *t,
                              Robot *robot,
-                             bool enabled1,
-                             const Vector2 *buttonPos)
+                             bool enabled1)
 {
-    SkillWithCost::init(t, robot, enabled1, buttonPos);
+    SkillWithCost::init(t, robot, enabled1);
 }
 
 bool ShootMissileSkill::apply(UpdateContext &cxt)
