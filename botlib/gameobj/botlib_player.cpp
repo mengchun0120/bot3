@@ -15,18 +15,21 @@ namespace mcdane {
 namespace botlib {
 
 Player::Player(const PlayerTemplate *t,
-               const Vector2 &pos1,
-               const Vector2 &direction1)
+               const commonlib::Vector2 &pos1,
+               const commonlib::Vector2 &direction1,
+               GoodieFunc func)
 {
-    init(t, pos1, direction1);
+    init(t, pos1, direction1, func);
 }
 
 void Player::init(const PlayerTemplate *t,
                   const Vector2 &pos1,
-                  const Vector2 &direction1)
+                  const Vector2 &direction1,
+                  GoodieFunc goodieFunc)
 {
     Robot::init(t, Side::PLAYER, pos1, direction1);
     initGoodieEffects();
+    goodieFunc_ = goodieFunc;
 #ifdef DESKTOP_APP
     initSkillMap();
 #endif
@@ -56,6 +59,11 @@ void Player::addGoodieEffect(const GoodieTemplate *t)
     activateGoodie(t, *this);
     g = goodieEffectPool_.alloc(t->goodieType(), t->duration());
     goodieEffects_.pushBack(g);
+
+    if (goodieFunc_)
+    {
+        goodieFunc_();
+    }
 }
 
 void Player::toJson(rapidjson::Value &v,
@@ -70,6 +78,11 @@ void Player::setDest(const commonlib::Vector2 &dest)
     MoveSkill *s = static_cast<MoveSkill*>(searchSkill(SkillType::MOVE));
     s->setDest(dest);
     s->setEnabled(true);
+}
+
+void Player::setGoodieFunc(GoodieFunc func)
+{
+    goodieFunc_ = func;
 }
 
 #ifdef DESKTOP_APP
@@ -108,6 +121,7 @@ void Player::initSkillMap()
 void Player::updateGoodieEffects(float timeDelta)
 {
     GoodieEffectItem *g, * next;
+    bool updated = false;
 
     for (g = goodieEffects_.first(); g; g = next)
     {
@@ -121,7 +135,13 @@ void Player::updateGoodieEffects(float timeDelta)
             LOG_INFO << "Goodie expired " << effect.type() << LOG_END;
             deactivateGoodie(effect.type(), *this);
             goodieEffects_.remove(g);
+            updated = true;
         }
+    }
+
+    if (updated && goodieFunc_)
+    {
+        goodieFunc_();
     }
 }
 

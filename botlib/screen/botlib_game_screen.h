@@ -37,6 +37,8 @@ private:
     void loadMap(const commonlib::Vector2 &viewportSize,
                  const std::string &mapFile);
 
+    void initPlayerGoodieFunc();
+
     void initProgressBar();
 
     void initMessageBox();
@@ -46,6 +48,8 @@ private:
     void initAIRobotCount();
 
     void createGoodiePies();
+
+    inline ProgressPie &getGoodiePie(const GoodieEffect &e);
 
     bool processInputEndGame(const commonlib::InputEvent &e);
 
@@ -66,6 +70,10 @@ private:
 
     void onPointerDown(float x, float y);
 
+    void preUpdate(float timeDelta);
+
+    void updateObjs();
+
     void updatePlayer();
 
     void clearUpdateFlags();
@@ -73,6 +81,20 @@ private:
     void updateNonPlayerObjects();
 
     void updateProgressBar();
+
+    void updateGoodiePieRatio();
+
+    void updateGoodiePiePos();
+
+    void clearObjs();
+
+    void clearObjectsFromMoveOutRegion(int moveOutRegionCount);
+
+    void showMsg();
+
+    void showVictory();
+
+    void showFail();
 
     inline bool isPlayerAvailable();
 
@@ -82,17 +104,13 @@ private:
 
     void presentSkillButtons();
 
-    void showVictory();
-
-    void showFail();
-
-    void clearObjectsFromMoveOutRegion(int moveOutRegionCount);
-
     void resetOverlayPos();
 
     void resetMessageBoxPos();
 
     void resetProgressBarPos();
+
+    void calculateGoodiePiePos();
 
     void resetGoodiePiePos();
 
@@ -114,10 +132,16 @@ private:
     Icon aiRobotCountIcon_;
     commonlib::Vector2 aiRobotCountPos_;
     std::string aiRobotCountStr_;
+    commonlib::Region<int> prevArea_;
     std::vector<commonlib::Region<int>> moveOutRegions_;
     std::vector<commonlib::Vector2> goodiePiePos_;
     std::vector<ProgressPie> goodiePies_;
 };
+
+ProgressPie &GameScreen::getGoodiePie(const GoodieEffect &e)
+{
+    return goodiePies_[lastingGoodieTypeIndex(e.type())];
+}
 
 bool GameScreen::isPlayerAvailable()
 {

@@ -11,7 +11,7 @@ void SkillButton::init(float x,
                        Action action)
 {
     Widget::init(x, y, true, true, true);
-    pie_.init(t);
+    pie_.init(t, &pos_);
     action_ = action;
     radiusSquare_ = t->radius() * t->radius();
     enabled_ = true;
@@ -19,7 +19,7 @@ void SkillButton::init(float x,
 
 void SkillButton::present() const
 {
-    pie_.present(pos_, enabled_ ? 0 : 1);
+    pie_.present(enabled_ ? 0 : 1);
 }
 
 bool SkillButton::containPos(float x, float y) const

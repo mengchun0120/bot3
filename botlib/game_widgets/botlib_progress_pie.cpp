@@ -11,26 +11,36 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
-ProgressPie::ProgressPie(const ProgressPieTemplate *t)
-{
-    init(t);
-}
-
-void ProgressPie::init(const ProgressPieTemplate *t)
+void ProgressPie::init(const ProgressPieTemplate *t,
+                       const Vector2 *p)
 {
     t_ = t;
     finishedVertices_ = t_->va()->numVertices(0);
     leftVertices_ = 0;
-    initIcons();
+
+    if (p)
+    {
+        pos_ = *p;
+    }
+
+    initIcons(p);
 }
 
-void ProgressPie::present(const commonlib::Vector2 &pos,
-                          int iconIdx) const
+void ProgressPie::present(int iconIdx) const
 {
-    presentPie(pos);
+    presentPie();
     if (icons_.size() > 0)
     {
-        icons_[iconIdx].present(pos);
+        icons_[iconIdx].present();
+    }
+}
+
+void ProgressPie::setPos(const commonlib::Vector2 &p)
+{
+    pos_ = p;
+    for (auto &icon : icons_)
+    {
+        icon.setPos(p);
     }
 }
 
@@ -41,7 +51,7 @@ void ProgressPie::setFinishedRatio(float ratio)
     leftVertices_ = t_->va()->numVertices(0) - finishedVertices_;
 }
 
-void ProgressPie::initIcons()
+void ProgressPie::initIcons(const Vector2 *p)
 {
     if (t_->numIcons() <= 0)
     {
@@ -53,16 +63,16 @@ void ProgressPie::initIcons()
     icons_.resize(iconCount);
     for (int i = 0; i < iconCount; ++i)
     {
-        icons_[i].init(t_->iconTemplate(i));
+        icons_[i].init(t_->iconTemplate(i), p);
     }
 }
 
-void ProgressPie::presentPie(const commonlib::Vector2 &pos) const
+void ProgressPie::presentPie() const
 {
     SimpleShaderProgram &program = Context::graphics().simpleShader();
 
     program.setUseObjRef(true);
-    program.setObjRef(pos);
+    program.setObjRef(pos_);
     program.setPositionTexPos(*(t_->va()));
     program.setUseColor(true);
     program.setUseDirection(false);

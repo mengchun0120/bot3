@@ -12,12 +12,16 @@ class Icon {
 public:
     Icon() = default;
 
-    void init(const IconTemplate *t);
+    void init(const IconTemplate *t,
+              const commonlib::Vector2 *p=nullptr);
 
-    void present(const commonlib::Vector2 &pos) const;
+    void present() const;
+
+    void setPos(const commonlib::Vector2 &p);
 
 private:
     const IconTemplate *t_;
+    commonlib::Vector2 pos_;
 };
 
 } // end of namespace botlib

@@ -53,42 +53,10 @@ void GameScreen::update(float timeDelta)
         return;
     }
 
-    cxt_.setTimeDelta(timeDelta);
-
-    Region<int> prevArea = map_.presentArea();
-
-    if (map_.player())
-    {
-        updatePlayer();
-    }
-
-    clearUpdateFlags();
-    updateNonPlayerObjects();
-
-    if (map_.player())
-    {
-        updateProgressBar();
-    }
-
-    int moveOutRegionCount = diff(moveOutRegions_, prevArea, map_.presentArea());
-    if (moveOutRegionCount > 0)
-    {
-        clearObjectsFromMoveOutRegion(moveOutRegionCount);
-    }
-
-    if (!cxt_.dumper().empty())
-    {
-        cxt_.dumper().clear(map_);
-    }
-
-    if (map_.player() == nullptr)
-    {
-        showFail();
-    }
-    else if(map_.aiRobotCount() == 0)
-    {
-        showVictory();
-    }
+    preUpdate(timeDelta);
+    updateObjs();
+    clearObjs();
+    showMsg();
 }
 
 void GameScreen::present()
@@ -292,6 +260,13 @@ void GameScreen::loadMap(const Vector2 &viewportSize,
 {
     GameMapLoader loader(viewportSize[0], viewportSize[1], cxt_.factory());
     loader.load(map_, mapFile);
+    initPlayerGoodieFunc();
+}
+
+void GameScreen::initPlayerGoodieFunc()
+{
+    Player::GoodieFunc func = std::bind(&GameScreen::updateGoodiePiePos, this);
+    map_.player()->setGoodieFunc(func);
 }
 
 void GameScreen::initProgressBar()
@@ -335,15 +310,15 @@ void GameScreen::initMessageBox()
 
 void GameScreen::initGoodiePies()
 {
-    resetGoodiePiePos();
+    calculateGoodiePiePos();
     createGoodiePies();
 }
 
 void GameScreen::initAIRobotCount()
 {
     const GameScreenConfig &cfg = Context::gameScreenConfig();
-    aiRobotCountIcon_.init(cfg.aiRobotCountIconTemplate());
     resetAIRobotCountPos();
+    aiRobotCountIcon_.init(cfg.aiRobotCountIconTemplate(), &aiRobotIconPos_);
 }
 
 void GameScreen::createGoodiePies()
@@ -355,6 +330,33 @@ void GameScreen::createGoodiePies()
     for (int i = 0; i < goodieCount; ++i)
     {
         goodiePies_[i].init(cfg.goodiePieTemplate(i));
+    }
+}
+
+void GameScreen::preUpdate(float timeDelta)
+{
+    cxt_.setTimeDelta(timeDelta);
+    prevArea_ = map_.presentArea();
+}
+
+void GameScreen::updateObjs()
+{
+    Player *player = map_.player();
+    if (player)
+    {
+        updatePlayer();
+    }
+
+    clearUpdateFlags();
+    updateNonPlayerObjects();
+
+    if (player)
+    {
+        updateProgressBar();
+        if (player->hasGoodie())
+        {
+            updateGoodiePieRatio();
+        }
     }
 }
 
@@ -400,6 +402,86 @@ void GameScreen::updateProgressBar()
     energyProgressBar_.setRatio(map_.player()->energyRatio());
 }
 
+void GameScreen::updateGoodiePieRatio()
+{
+    const GoodieEffectItem *g;
+    for (g = map_.player()->firstGoodieEffect(); g; g = g->next())
+    {
+        const GoodieEffect &e = g->item();
+        ProgressPie &pie = getGoodiePie(e);
+        pie.setFinishedRatio(e.finishedRatio());
+    }
+}
+
+void GameScreen::updateGoodiePiePos()
+{
+    const GoodieEffectItem *g;
+    int i = 0;
+    for (g = map_.player()->firstGoodieEffect(); g; g = g->next(), ++i)
+    {
+        ProgressPie &pie = getGoodiePie(g->item());
+        pie.setPos(goodiePiePos_[i]);
+    }
+}
+
+void GameScreen::clearObjs()
+{
+    int moveOutRegionCount = diff(moveOutRegions_, prevArea_, map_.presentArea());
+    if (moveOutRegionCount > 0)
+    {
+        clearObjectsFromMoveOutRegion(moveOutRegionCount);
+    }
+
+    if (!cxt_.dumper().empty())
+    {
+        cxt_.dumper().clear(map_);
+    }
+}
+
+void GameScreen::clearObjectsFromMoveOutRegion(int moveOutRegionCount)
+{
+    auto remover = [this](GameObject *obj)->bool
+    {
+        if (obj->state() != GameObjectState::DEAD && obj->canBeDumped(map_))
+        {
+            cxt_.dumper().add(obj);
+        }
+
+        return true;
+    };
+
+    for (int i = 0; i < moveOutRegionCount; ++i)
+    {
+        map_.traverse(moveOutRegions_[i], remover);
+    }
+}
+
+void GameScreen::showMsg()
+{
+    if (map_.player() == nullptr)
+    {
+        showFail();
+    }
+    else if(map_.aiRobotCount() == 0)
+    {
+        showVictory();
+    }
+}
+
+void GameScreen::showVictory()
+{
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+    msgBox_.setText(cfg.victoryMsg());
+    msgBox_.setVisible(true);
+}
+
+void GameScreen::showFail()
+{
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+    msgBox_.setText(cfg.failMsg());
+    msgBox_.setVisible(true);
+}
+
 void GameScreen::presentOverlay()
 {
     SimpleShaderProgram &program = Context::graphics().simpleShader();
@@ -421,7 +503,7 @@ void GameScreen::presentOverlay()
     armorProgressBar_.present();
     energyProgressBar_.present();
 
-    aiRobotCountIcon_.present(aiRobotIconPos_);
+    aiRobotCountIcon_.present();
     textSys.draw(program, map_.aiRobotCountStr(), aiRobotCountPos_,
                  cfg.aiRobotCountTextSize(), &cfg.aiRobotCountTextColor());
 
@@ -434,15 +516,10 @@ void GameScreen::presentOverlay()
 void GameScreen::presentGoodiePies()
 {
     const GoodieEffectItem *g;
-    int i = 0;
-    for (g = map_.player()->firstGoodieEffect(); g; g = g->next(), ++i)
+    for (g = map_.player()->firstGoodieEffect(); g; g = g->next())
     {
-        const GoodieEffect &effect = g->item();
-        int idx = lastingGoodieTypeIndex(effect.type());
-        ProgressPie &pie = goodiePies_[idx];
-
-        pie.setFinishedRatio(effect.finishedRatio());
-        pie.present(goodiePiePos_[i]);
+        ProgressPie &pie = getGoodiePie(g->item());
+        pie.present();
     }
 }
 
@@ -461,38 +538,6 @@ void GameScreen::presentSkillButtons()
             skill1 = static_cast<SkillWithCost*>(skill);
             //TODO skill1->button()->present();
         }
-    }
-}
-
-void GameScreen::showVictory()
-{
-    const GameScreenConfig &cfg = Context::gameScreenConfig();
-    msgBox_.setText(cfg.victoryMsg());
-    msgBox_.setVisible(true);
-}
-
-void GameScreen::showFail()
-{
-    const GameScreenConfig &cfg = Context::gameScreenConfig();
-    msgBox_.setText(cfg.failMsg());
-    msgBox_.setVisible(true);
-}
-
-void GameScreen::clearObjectsFromMoveOutRegion(int moveOutRegionCount)
-{
-    auto remover = [this](GameObject *obj)->bool
-    {
-        if (obj->state() != GameObjectState::DEAD && obj->canBeDumped(map_))
-        {
-            cxt_.dumper().add(obj);
-        }
-
-        return true;
-    };
-
-    for (int i = 0; i < moveOutRegionCount; ++i)
-    {
-        map_.traverse(moveOutRegions_[i], remover);
     }
 }
 
@@ -522,7 +567,7 @@ void GameScreen::resetProgressBarPos()
     energyProgressBar_.setPos(energyBarPos);
 }
 
-void GameScreen::resetGoodiePiePos()
+void GameScreen::calculateGoodiePiePos()
 {
     const GameScreenConfig &cfg = Context::gameScreenConfig();
     int goodieCount = lastingGoodieTypeCount();
@@ -542,6 +587,12 @@ void GameScreen::resetGoodiePiePos()
         goodiePiePos_[i].init({x, y});
         x += spacing;
     }
+}
+
+void GameScreen::resetGoodiePiePos()
+{
+    calculateGoodiePiePos();
+    updateGoodiePiePos();
 }
 
 void GameScreen::resetAIRobotCountPos()
