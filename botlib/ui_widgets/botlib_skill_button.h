@@ -8,6 +8,8 @@
 namespace mcdane {
 namespace botlib {
 
+class SkillWithCost;
+
 class SkillButton: public Widget {
 public:
     using Action = std::function<void(SkillButton &)>;
@@ -20,9 +22,12 @@ public:
     void init(float x,
               float y,
               const ProgressPieTemplate *t,
-              Action action);
+              Action action=nullptr,
+              SkillWithCost *skill=nullptr);
 
     void present() const override;
+
+    void update();
 
     bool containPos(float x, float y) const override;
 
@@ -35,6 +40,7 @@ public:
     void setRatio(float ratio);
 
 private:
+    SkillWithCost *skill_;
     ProgressPie pie_;
     Action action_;
     float radiusSquare_;

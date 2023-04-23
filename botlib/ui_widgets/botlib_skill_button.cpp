@@ -1,5 +1,6 @@
 #include <commonlib_log.h>
 #include <botlib_progress_pie_template.h>
+#include <botlib_skill_with_cost.h>
 #include <botlib_skill_button.h>
 
 namespace mcdane {
@@ -8,9 +9,11 @@ namespace botlib {
 void SkillButton::init(float x,
                        float y,
                        const ProgressPieTemplate *t,
-                       Action action)
+                       Action action,
+                       SkillWithCost *skill)
 {
     Widget::init(x, y, true, true, true);
+    skill_ = skill;
     pie_.init(t, &pos_);
     action_ = action;
     radiusSquare_ = t->radius() * t->radius();
@@ -20,6 +23,15 @@ void SkillButton::init(float x,
 void SkillButton::present() const
 {
     pie_.present(enabled_ ? 0 : 1);
+}
+
+void SkillButton::update()
+{
+    if (skill_)
+    {
+        pie_.setFinishedRatio(skill_->ratio());
+        enabled_ = skill_->available();
+    }
 }
 
 bool SkillButton::containPos(float x, float y) const

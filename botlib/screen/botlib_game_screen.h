@@ -1,11 +1,14 @@
 #ifndef INCLUDED_BOTLIB_GAME_SCREEN_H
 #define INCLUDED_BOTLIB_GAME_SCREEN_H
 
+#include <list>
 #include <botlib_game_map.h>
 #include <botlib_game_object_dumper.h>
 #include <botlib_player.h>
+#include <botlib_skill_with_cost.h>
 #include <botlib_progress_bar.h>
 #include <botlib_progress_pie.h>
+#include <botlib_skill_button.h>
 #include <botlib_message_box.h>
 #include <botlib_icon.h>
 #include <botlib_update_context.h>
@@ -45,11 +48,19 @@ private:
 
     void initGoodiePies();
 
-    void initAIRobotCount();
+    void calculateGoodiePiePos();
 
     void createGoodiePies();
 
     inline ProgressPie &getGoodiePie(const GoodieEffect &e);
+
+    void initAIRobotCount();
+
+    void initSkillButtons();
+
+    bool addSkillButton(Skill *skill,
+                        float x,
+                        float y);
 
     bool processInputEndGame(const commonlib::InputEvent &e);
 
@@ -86,6 +97,8 @@ private:
 
     void updateGoodiePiePos();
 
+    void updateSkillButtons();
+
     void clearObjs();
 
     void clearObjectsFromMoveOutRegion(int moveOutRegionCount);
@@ -109,8 +122,6 @@ private:
     void resetMessageBoxPos();
 
     void resetProgressBarPos();
-
-    void calculateGoodiePiePos();
 
     void resetGoodiePiePos();
 
@@ -136,6 +147,7 @@ private:
     std::vector<commonlib::Region<int>> moveOutRegions_;
     std::vector<commonlib::Vector2> goodiePiePos_;
     std::vector<ProgressPie> goodiePies_;
+    std::list<SkillButton> skillButtons_;
 };
 
 ProgressPie &GameScreen::getGoodiePie(const GoodieEffect &e)

@@ -1,6 +1,7 @@
 #ifndef INCLUDED_BOTLIB_SKILL_WITH_COST_H
 #define INCLUDED_BOTLIB_SKILL_WITH_COST_H
 
+#include <functional>
 #include <botlib_robot.h>
 #include <botlib_skill_with_cost_template.h>
 #include <botlib_skill.h>

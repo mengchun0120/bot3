@@ -23,7 +23,7 @@ public:
 
     void setWidget(unsigned int idx, Widget *widget);
 
-    void process(const commonlib::InputEvent &event);
+    bool process(const commonlib::InputEvent &event);
 
     void present();
 
@@ -35,18 +35,18 @@ public:
 
 protected:
 #ifdef DESKTOP_APP
-    void process(const commonlib::KeyEvent &event);
+    bool process(const commonlib::KeyEvent &event);
 
-    void process(const commonlib::MouseMoveEvent &event);
+    bool process(const commonlib::MouseMoveEvent &event);
 
-    void process(const commonlib::MouseButtonEvent &event);
+    bool process(const commonlib::MouseButtonEvent &event);
 #endif
 
-    void onPointerOver(float x, float y);
+    bool onPointerOver(float x, float y);
 
-    void onPointerDown(float x, float y);
+    bool onPointerDown(float x, float y);
 
-    void onPointerUp(float x, float y);
+    bool onPointerUp(float x, float y);
 
     int findWidget(float x, float y);
 

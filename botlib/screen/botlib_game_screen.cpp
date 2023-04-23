@@ -40,6 +40,7 @@ void GameScreen::init(const Vector2 &viewportSize,
     initMessageBox();
     initAIRobotCount();
     initGoodiePies();
+    initSkillButtons();
     moveOutRegions_.resize(4);
     resetSkillButtonPos();
 
@@ -314,11 +315,26 @@ void GameScreen::initGoodiePies()
     createGoodiePies();
 }
 
-void GameScreen::initAIRobotCount()
+void GameScreen::calculateGoodiePiePos()
 {
     const GameScreenConfig &cfg = Context::gameScreenConfig();
-    resetAIRobotCountPos();
-    aiRobotCountIcon_.init(cfg.aiRobotCountIconTemplate(), &aiRobotIconPos_);
+    int goodieCount = lastingGoodieTypeCount();
+    float radius = cfg.goodiePieTemplate(0)->radius();
+    float x, y, spacing;
+
+    y = viewportSize_[1] - cfg.goodieTopMargin() - radius;
+
+    x = viewportSize_[0] - cfg.goodieRightMargin() -
+        (goodieCount - 1) * cfg.goodieSpacing() - (2*goodieCount - 1) * radius;
+
+    spacing = 2 * radius + cfg.goodieSpacing();
+
+    goodiePiePos_.resize(goodieCount);
+    for (int i = 0; i < goodieCount; ++i)
+    {
+        goodiePiePos_[i].init({x, y});
+        x += spacing;
+    }
 }
 
 void GameScreen::createGoodiePies()
@@ -331,6 +347,59 @@ void GameScreen::createGoodiePies()
     {
         goodiePies_[i].init(cfg.goodiePieTemplate(i));
     }
+}
+
+void GameScreen::initAIRobotCount()
+{
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+    resetAIRobotCountPos();
+    aiRobotCountIcon_.init(cfg.aiRobotCountIconTemplate(), &aiRobotIconPos_);
+}
+
+void GameScreen::initSkillButtons()
+{
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+    float y = cfg.skillButtonBottomSpacing();
+    float x = viewportSize_[0] - cfg.skillButtonRightSpacing();
+    int skillCount = map_.player()->skillCount();
+
+    for (int i = skillCount - 1; i >= 0; --i)
+    {
+        if (addSkillButton(map_.player()->skill(i), x, y))
+        {
+            x -= cfg.skillButtonSpacing();
+        }
+    }
+}
+
+bool GameScreen::addSkillButton(Skill *skill,
+                                float x,
+                                float y)
+{
+    if (!isSkillWithCost(skill->type()))
+    {
+        return false;
+    }
+
+    SkillWithCost *skill1 = static_cast<SkillWithCost *>(skill);
+    const SkillWithCostTemplate *t = skill1->getTemplate();
+    if (!t->pieTemplate())
+    {
+        return false;
+    }
+
+    auto action = [this, skill1](SkillButton &button)
+    {
+        if (map_.player())
+        {
+            skill1->setEnabled(true);
+        }
+    };
+
+    skillButtons_.emplace_back();
+    skillButtons_.back().init(x, y, t->pieTemplate(), action, skill1);
+
+    return true;
 }
 
 void GameScreen::preUpdate(float timeDelta)
@@ -353,6 +422,7 @@ void GameScreen::updateObjs()
     if (player)
     {
         updateProgressBar();
+        updateSkillButtons();
         if (player->hasGoodie())
         {
             updateGoodiePieRatio();
@@ -421,6 +491,14 @@ void GameScreen::updateGoodiePiePos()
     {
         ProgressPie &pie = getGoodiePie(g->item());
         pie.setPos(goodiePiePos_[i]);
+    }
+}
+
+void GameScreen::updateSkillButtons()
+{
+    for (auto &button : skillButtons_)
+    {
+        button.update();
     }
 }
 
@@ -525,19 +603,9 @@ void GameScreen::presentGoodiePies()
 
 void GameScreen::presentSkillButtons()
 {
-    Player *player = map_.player();
-    int skillCount = player->skillCount();
-    Skill *skill;
-    SkillWithCost *skill1;
-
-    for (int i = 0; i < skillCount; ++i)
+    for (auto &button : skillButtons_)
     {
-        skill = player->skill(i);
-        if (isSkillWithCost(skill->type()))
-        {
-            skill1 = static_cast<SkillWithCost*>(skill);
-            //TODO skill1->button()->present();
-        }
+        button.present();
     }
 }
 
@@ -567,28 +635,6 @@ void GameScreen::resetProgressBarPos()
     energyProgressBar_.setPos(energyBarPos);
 }
 
-void GameScreen::calculateGoodiePiePos()
-{
-    const GameScreenConfig &cfg = Context::gameScreenConfig();
-    int goodieCount = lastingGoodieTypeCount();
-    float radius = cfg.goodiePieTemplate(0)->radius();
-    float x, y, spacing;
-
-    y = viewportSize_[1] - cfg.goodieTopMargin() - radius;
-
-    x = viewportSize_[0] - cfg.goodieRightMargin() -
-        (goodieCount - 1) * cfg.goodieSpacing() - (2*goodieCount - 1) * radius;
-
-    spacing = 2 * radius + cfg.goodieSpacing();
-
-    goodiePiePos_.resize(goodieCount);
-    for (int i = 0; i < goodieCount; ++i)
-    {
-        goodiePiePos_[i].init({x, y});
-        x += spacing;
-    }
-}
-
 void GameScreen::resetGoodiePiePos()
 {
     calculateGoodiePiePos();
@@ -609,9 +655,20 @@ void GameScreen::resetAIRobotCountPos()
 
 void GameScreen::resetSkillButtonPos()
 {
-    if (map_.player())
+    if (!map_.player())
     {
-        //TODO map_.player()->resetSkillButtonPos(viewportSize_);
+        return;
+    }
+
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+    float y = cfg.skillButtonBottomSpacing();
+    float x = viewportSize_[0] - cfg.skillButtonRightSpacing() -
+              (skillButtons_.size() - 1) * cfg.skillButtonSpacing();
+
+    for (auto &button : skillButtons_)
+    {
+        button.setPos(x, y);
+        x += cfg.skillButtonSpacing();
     }
 }
 

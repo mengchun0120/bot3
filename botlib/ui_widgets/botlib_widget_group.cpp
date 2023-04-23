@@ -32,45 +32,43 @@ void WidgetGroup::setWidget(unsigned int idx, Widget *widget)
 }
 
 #ifdef DESKTOP_APP
-void WidgetGroup::process(const InputEvent &event)
+bool WidgetGroup::process(const InputEvent &event)
 {
 
     switch (event.type())
     {
         case EventType::KEY:
-            process(event.keyEvent());
-            break;
+            return process(event.keyEvent());
         case EventType::MOUSE_MOVE:
-            process(event.mouseMoveEvent());
-            break;
+            return process(event.mouseMoveEvent());
         case EventType::MOUSE_BUTTON:
-            process(event.mouseButtonEvent());
-            break;
+            return process(event.mouseButtonEvent());
         default:
             LOG_WARN << "Invalid event type " << static_cast<int>(event.type())
                      << LOG_END;
             break;
     }
+
+    return false;
 }
 #elif __ANDROID__
-void WidgetGroup::process(const InputEvent &event)
+bool WidgetGroup::process(const InputEvent &event)
 {
     switch (event.type_)
     {
         case InputEvent::POINTER_DOWN:
-            onPointerDown(event.x_, event.y_);
-            break;
+            return onPointerDown(event.x_, event.y_);
         case InputEvent::POINTER_MOVE:
-            onPointerOver(event.x_, event.y_);
-            break;
+            return onPointerOver(event.x_, event.y_);
         case InputEvent::POINTER_UP:
-            onPointerUp(event.x_, event.y_);
-            break;
+            return onPointerUp(event.x_, event.y_);
         default:
             LOG_WARN << "Invalid type " << static_cast<int>(event.type_)
                      << LOG_END;
             break;
     }
+
+    return false;
 }
 #endif
 
@@ -96,58 +94,65 @@ void WidgetGroup::shiftPos(float dx, float dy)
 }
 
 #ifdef DESKTOP_APP
-void WidgetGroup::process(const KeyEvent &event)
+bool WidgetGroup::process(const KeyEvent &event)
 {
-    if (focusWidgetIdx_ >= 0)
+    if (focusWidgetIdx_ < 0)
     {
-        widgets_[focusWidgetIdx_]->onKey(event);
+        return false;
     }
+
+    widgets_[focusWidgetIdx_]->onKey(event);
+    return true;
 }
 
-void WidgetGroup::process(const MouseMoveEvent &event)
+bool WidgetGroup::process(const MouseMoveEvent &event)
 {
-    onPointerOver(event.x_, event.y_);
+    return onPointerOver(event.x_, event.y_);
 }
 
-void WidgetGroup::process(const MouseButtonEvent &event)
+bool WidgetGroup::process(const MouseButtonEvent &event)
 {
     if (event.button_ != GLFW_MOUSE_BUTTON_LEFT)
     {
-        return;
+        return false;
     }
 
     if (event.action_ == GLFW_PRESS)
     {
-        onPointerDown(event.x_, event.y_);
+        return onPointerDown(event.x_, event.y_);
     }
     else if (event.action_ == GLFW_RELEASE)
     {
-        onPointerUp(event.x_, event.y_);
+        return onPointerUp(event.x_, event.y_);
     }
+
+    return true;
 }
 #endif
 
-void WidgetGroup::onPointerOver(float x, float y)
+bool WidgetGroup::onPointerOver(float x, float y)
 {
     int idx = findWidget(x, y);
 
     if (idx != hoverWidgetIdx_ && hoverWidgetIdx_ != -1)
     {
         widgets_[hoverWidgetIdx_]->onPointerOut();
+        return true;
     }
 
     if (idx == -1)
     {
         hoverWidgetIdx_ = -1;
-        return;
+        return false;
     }
 
     hoverWidgetIdx_ = idx;
-
     widgets_[hoverWidgetIdx_]->onPointerOver(x, y);
+
+    return true;
 }
 
-void WidgetGroup::onPointerDown(float x, float y)
+bool WidgetGroup::onPointerDown(float x, float y)
 {
     int idx = findWidget(x, y);
 
@@ -161,19 +166,27 @@ void WidgetGroup::onPointerDown(float x, float y)
         focusWidgetIdx_ = idx;
     }
 
-    if (idx >= 0)
+    if (idx < 0)
     {
-        widgets_[idx]->onPointerDown(x, y);
+        return false;
     }
+
+    widgets_[idx]->onPointerDown(x, y);
+
+    return true;
 }
 
-void WidgetGroup::onPointerUp(float x, float y)
+bool WidgetGroup::onPointerUp(float x, float y)
 {
     int idx = findWidget(x, y);
-    if (idx >= 0)
+    if (idx < 0)
     {
-        widgets_[idx]->onPointerUp(x, y);
+        return false;
     }
+
+    widgets_[idx]->onPointerUp(x, y);
+
+    return true;
 }
 
 int WidgetGroup::findWidget(float x, float y)
