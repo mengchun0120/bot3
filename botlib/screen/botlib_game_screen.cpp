@@ -36,6 +36,7 @@ void GameScreen::init(const Vector2 &viewportSize,
     loadMap(viewportSize, cfg.mapFile());
     viewportSize_ = viewportSize;
     overlayViewportOrigin_ = viewportSize / 2.0f;
+    initMapAccessors();
     initProgressBar();
     initMessageBox();
     initAIRobotCount();
@@ -264,6 +265,12 @@ void GameScreen::loadMap(const Vector2 &viewportSize,
     initPlayerGoodieFunc();
 }
 
+void GameScreen::initMapAccessors()
+{
+    flagResetter_.init(GameObjFlag::UPDATED);
+    objUpdater_.init(&cxt_);
+}
+
 void GameScreen::initPlayerGoodieFunc()
 {
     Player::GoodieFunc func = std::bind(&GameScreen::updateGoodiePiePos, this);
@@ -439,31 +446,12 @@ void GameScreen::updatePlayer()
 
 void GameScreen::clearUpdateFlags()
 {
-    //TODO
-    auto clearUpdateFlag = [](GameObject *obj)->bool
-    {
-        obj->setUpdated(false);
-        return true;
-    };
-
-    map_.traverse(map_.presentArea(), clearUpdateFlag);
+    map_.traverse(map_.presentArea(), flagResetter_);
 }
 
 void GameScreen::updateNonPlayerObjects()
 {
-    //TODO
-    auto updater = [this](GameObject *obj)->bool
-    {
-        if (obj->updated() && obj->state() == GameObjectState::DEAD)
-        {
-            return true;
-        }
-
-        obj->update(cxt_);
-        return true;
-    };
-
-    map_.traverse(map_.presentArea(), updater);
+    map_.traverse(map_.presentArea(), objUpdater_);
 }
 
 void GameScreen::updateProgressBar()

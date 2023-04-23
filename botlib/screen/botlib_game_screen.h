@@ -12,6 +12,8 @@
 #include <botlib_message_box.h>
 #include <botlib_icon.h>
 #include <botlib_update_context.h>
+#include <botlib_game_obj_flag_resetter.h>
+#include <botlib_game_obj_updater.h>
 #include <botlib_screen.h>
 
 namespace mcdane {
@@ -39,6 +41,8 @@ public:
 private:
     void loadMap(const commonlib::Vector2 &viewportSize,
                  const std::string &mapFile);
+
+    void initMapAccessors();
 
     void initPlayerGoodieFunc();
 
@@ -136,6 +140,8 @@ private:
     GameMap map_;
     commonlib::Vector2 viewportSize_;
     commonlib::Vector2 overlayViewportOrigin_;
+    GameObjFlagResetter flagResetter_;
+    GameObjUpdater objUpdater_;
     ProgressBar armorProgressBar_;
     ProgressBar energyProgressBar_;
     MessageBox msgBox_;
