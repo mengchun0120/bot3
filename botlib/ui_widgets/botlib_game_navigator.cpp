@@ -33,6 +33,11 @@ void GameNavigator::setDirection(const commonlib::Vector2 &direction)
 
 void GameNavigator::present() const
 {
+    if (!visible_)
+    {
+        return;
+    }
+
     const GameNavigatorConfig &cfg = Context::gameNavigatorConfig();
     SimpleShaderProgram &program = Context::graphics().simpleShader();
 

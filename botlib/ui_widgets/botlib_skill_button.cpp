@@ -22,6 +22,11 @@ void SkillButton::init(float x,
 
 void SkillButton::present() const
 {
+    if (!visible_)
+    {
+        return;
+    }
+
     pie_.present(enabled_ ? 0 : 1);
 }
 
