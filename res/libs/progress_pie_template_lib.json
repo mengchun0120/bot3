@@ -40,7 +40,7 @@
         ]
     },
     "shoot_missile_skill_progress_pie": {
-        "radius": 50.0,
+        "radius": 80.0,
         "vertexArray": "skill_progress_pie",
         "backgroundColor": [200, 230, 210, 255],
         "frontColor": [110, 200, 130, 255],
@@ -51,7 +51,7 @@
         ]
     },
     "blast_skill_progress_pie": {
-        "radius": 50.0,
+        "radius": 80.0,
         "vertexArray": "skill_progress_pie",
         "backgroundColor": [200, 230, 210, 255],
         "frontColor": [110, 200, 130, 255],
@@ -62,7 +62,7 @@
         ]
     },
     "targeted_blast_skill_progress_pie": {
-        "radius": 50.0,
+        "radius": 80.0,
         "vertexArray": "skill_progress_pie",
         "backgroundColor": [200, 230, 210, 255],
         "frontColor": [110, 200, 130, 255],
@@ -73,7 +73,7 @@
         ]
     },
     "barrage_skill_progress_pie": {
-        "radius": 50.0,
+        "radius": 80.0,
         "vertexArray": "skill_progress_pie",
         "backgroundColor": [200, 230, 210, 255],
         "frontColor": [110, 200, 130, 255],
@@ -84,7 +84,7 @@
         ]
     },
     "barrage_blast_skill_progress_pie": {
-        "radius": 50.0,
+        "radius": 80.0,
         "vertexArray": "skill_progress_pie",
         "backgroundColor": [200, 230, 210, 255],
         "frontColor": [110, 200, 130, 255],
