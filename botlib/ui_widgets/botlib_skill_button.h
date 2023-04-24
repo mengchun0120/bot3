@@ -35,6 +35,10 @@ public:
 
     inline bool enabled() const;
 
+    void setPos(float x, float y) override;
+
+    void shiftPos(float dx, float dy) override;
+
     void setEnabled(bool b);
 
     void setRatio(float ratio);

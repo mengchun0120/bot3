@@ -49,6 +49,18 @@ void SkillButton::onPointerDown(float x, float y)
     }
 }
 
+void SkillButton::setPos(float x, float y)
+{
+    Widget::setPos(x, y);
+    pie_.setPos(pos_);
+}
+
+void SkillButton::shiftPos(float dx, float dy)
+{
+    Widget::shiftPos(dx, dy);
+    pie_.setPos(pos_);
+}
+
 void SkillButton::setEnabled(bool b)
 {
     enabled_ = b;

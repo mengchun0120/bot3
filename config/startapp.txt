@@ -2,9 +2,9 @@
 #testmap -c config/bot_config_android.json -m map_05.json
 #testwidget -c config/bot_config_android.json
 #testparticle -c config/bot_config_android.json
-#test_game_buttons -c config/bot_config_android.json
+test_game_buttons -c config/bot_config_android.json
 #test_direction_pie -c config/bot_config_android.json
-test_game_navigator -c config/bot_config_android.json
+#test_game_navigator -c config/bot_config_android.json
 #showmap -c config/bot_config_android.json -m map_05.json
 #genmap -c config/bot_config_android.json -g island -G config/island_gen_map_config.json
 #rungame -c config/bot_config_android.json -m map_01.json -e 1
