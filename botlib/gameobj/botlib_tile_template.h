@@ -20,9 +20,12 @@ public:
 
     inline float dyingDuration() const;
 
+    inline float touchSpan() const;
+
 protected:
     float hp_;
     float dyingDuration_;
+    float touchSpan_;
 };
 
 float TileTemplate::hp() const
@@ -33,6 +36,11 @@ float TileTemplate::hp() const
 float TileTemplate::dyingDuration() const
 {
     return dyingDuration_;
+}
+
+float TileTemplate::touchSpan() const
+{
+    return touchSpan_;
 }
 
 } // end of namespace botlib

@@ -16,7 +16,6 @@ class NamedMap {
     using Map = std::unordered_map<std::string, T>;
 
 public:
-    using NodeAccessor = std::function<bool(const T&)>;
     using NodeParser = std::function<void(T&,
                                           const std::string &name,
                                           const rapidjson::Value&)>;
@@ -30,7 +29,8 @@ public:
 
     const T *search(const std::string &name) const;
 
-    void traverse(NodeAccessor accessor) const;
+    template <typename ACCESSOR>
+    void traverse(ACCESSOR accessor) const;
 
     void getAll(std::vector<const T*> &nodes) const;
 
@@ -81,7 +81,8 @@ const T *NamedMap<T>::search(const std::string &name) const
 }
 
 template <typename T>
-void NamedMap<T>::traverse(NodeAccessor accessor) const
+template <typename ACCESSOR>
+void NamedMap<T>::traverse(ACCESSOR accessor) const
 {
     for (auto it = map_.cbegin(); it != map_.cend(); ++it)
     {

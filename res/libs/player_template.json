@@ -56,6 +56,7 @@
         }
     ],
     "dyingDuration": 1000.0,
+    "touchSpan": 45.0,
     "skills": [
         "player_move_skill",
         "player_shoot_missile_skill",

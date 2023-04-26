@@ -14,7 +14,8 @@ void TileTemplate::init(
 {
     std::vector<JsonParamPtr> params{
         jsonParam(hp_, "hp", true, gt(0.0f)),
-        jsonParam(dyingDuration_, "dyingDuration", true, gt(0.0f))
+        jsonParam(dyingDuration_, "dyingDuration", true, gt(0.0f)),
+        jsonParam(touchSpan_, "touchSpan", true, gt(0.0f)),
     };
 
     parse(params, v);

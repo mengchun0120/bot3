@@ -101,6 +101,8 @@ public:
 
     inline float maxProgressPieRadius() const;
 
+    inline float maxTouchSpan() const;
+
 private:
     void initTextureLib(const std::string &textureLibFile,
                         const std::string &picDir);
@@ -139,6 +141,8 @@ private:
 
     void calculateMaxProgressPieRadius();
 
+    void calculateMaxTouchSpan();
+
 private:
     commonlib::InputMap inputMap_;
     TextureLib textureLib_;
@@ -159,6 +163,7 @@ private:
     float maxObjSpan_;
     float maxCollideBreath_;
     float maxProgressPieRadius_;
+    float maxTouchSpan_;
 };
 
 const commonlib::InputMap &GameLib::inputMap() const
@@ -320,6 +325,11 @@ float GameLib::maxCollideBreath() const
 float GameLib::maxProgressPieRadius() const
 {
     return maxProgressPieRadius_;
+}
+
+float GameLib::maxTouchSpan() const
+{
+    return maxTouchSpan_;
 }
 
 } // end of namespace botlib

@@ -75,6 +75,7 @@ void GameLib::init(const AppConfig &cfg)
     calculateMaxObjSpan();
     calculateMaxCollideBreath();
     calculateMaxProgressPieRadius();
+    calculateMaxTouchSpan();
 
     LOG_INFO << "GameLib loaded successfull" << LOG_END;
 }
@@ -334,6 +335,35 @@ void GameLib::calculateMaxProgressPieRadius()
     progressPieTemplateLib_.traverse(accessor);
 
     LOG_INFO << "maxProgressPieRadius=" << maxProgressPieRadius_ << LOG_END;
+}
+
+template <typename T>
+struct MaxTouchSpanFinder {
+    MaxTouchSpanFinder(float &m)
+        : max_(m)
+    {}
+
+    bool operator()(const T& t)
+    {
+        if (t.touchSpan() > max_)
+        {
+            max_ = t.touchSpan();
+        }
+    }
+
+    float &max_;
+};
+
+void GameLib::calculateMaxTouchSpan()
+{
+    maxTouchSpan_ = 0.0f;
+
+    tileTemplateLib_.traverse(
+        MaxTouchSpanFinder<TileTemplate>(maxTouchSpan_) );
+    aiRobotTemplateLib_.traverse(
+        MaxTouchSpanFinder<AIRobotTemplate>(maxTouchSpan_) );
+
+    LOG_INFO << "maxTouchSpan=" << maxTouchSpan_ << LOG_END;
 }
 
 } // end of namespace botlib

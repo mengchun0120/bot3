@@ -34,6 +34,7 @@
             }
         ],
         "dyingDuration": 1000.0,
+        "touchSpan": 45.0,
         "goodieProb": 1.0,
         "ai": {
             "algorithm": "chase_shoot",
@@ -79,6 +80,7 @@
             }
         ],
         "dyingDuration": 1000.0,
+        "touchSpan": 45.0,
         "goodieProb": 1.0,
         "ai": {
             "algorithm": "chase_shoot",
@@ -124,6 +126,7 @@
             }
         ],
         "dyingDuration": 1000.0,
+        "touchSpan": 45.0,
         "goodieProb": 1.0,
         "ai": {
             "algorithm": "chase_shoot",

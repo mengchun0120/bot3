@@ -35,6 +35,8 @@ public:
 
     inline float dyingDuration() const;
 
+    inline float touchSpan() const;
+
     inline const std::vector<const SkillTemplate*> skills() const;
 
 private:
@@ -49,6 +51,7 @@ protected:
     float rechargeRate_;
     const MissileTemplate *missileTemplate_;
     float dyingDuration_;
+    float touchSpan_;
     std::vector<const SkillTemplate*> skills_;
 };
 
@@ -85,6 +88,11 @@ const MissileTemplate *RobotTemplate::missileTemplate() const
 float RobotTemplate::dyingDuration() const
 {
     return dyingDuration_;
+}
+
+float RobotTemplate::touchSpan() const
+{
+    return touchSpan_;
 }
 
 const std::vector<const SkillTemplate*> RobotTemplate::skills() const
