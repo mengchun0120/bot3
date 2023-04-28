@@ -27,12 +27,15 @@ public:
 
     inline bool invincible() const;
 
+    inline float mapSpan() const;
+
 protected:
     GameObjectType type_;
     std::string name_;
     float span_;
     float collideBreath_;
     bool invincible_;
+    float mapSpan_;
 };
 
 GameObjectType GameObjectTemplate::type() const
@@ -58,6 +61,11 @@ float GameObjectTemplate::collideBreath() const
 bool GameObjectTemplate::invincible() const
 {
     return invincible_;
+}
+
+float GameObjectTemplate::mapSpan() const
+{
+    return mapSpan_;
 }
 
 } // end of namespace botlib

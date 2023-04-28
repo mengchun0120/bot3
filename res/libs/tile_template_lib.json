@@ -17,7 +17,8 @@
             }
         ],
         "dyingDuration": 1000.0,
-        "touchSpan": 30.0
+        "touchSpan": 30.0,
+        "mapSpan": 60.0
     },
     "ice_tile": {
         "collideBreath": 22.5,
@@ -37,7 +38,8 @@
             }
         ],
         "dyingDuration": 1000.0,
-        "touchSpan": 30.0
+        "touchSpan": 30.0,
+        "mapSpan": 60.0
     },
     "clay_tile": {
         "collideBreath": 22.5,
@@ -57,7 +59,8 @@
             }
         ],
         "dyingDuration": 1000.0,
-        "touchSpan": 30.0
+        "touchSpan": 30.0,
+        "mapSpan": 60.0
     },
     "fireland_tile": {
         "collideBreath": 22.5,
@@ -77,7 +80,8 @@
             }
         ],
         "dyingDuration": 1000.0,
-        "touchSpan": 30.0
+        "touchSpan": 30.0,
+        "mapSpan": 60.0
     },
     "bush_tile": {
         "collideBreath": 22.5,
@@ -97,6 +101,7 @@
             }
         ],
         "dyingDuration": 1000.0,
-        "touchSpan": 30.0
+        "touchSpan": 30.0,
+        "mapSpan": 60.0
     }
 }

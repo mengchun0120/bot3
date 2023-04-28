@@ -349,6 +349,8 @@ struct MaxTouchSpanFinder {
         {
             max_ = t.touchSpan();
         }
+
+        return true;
     }
 
     float &max_;

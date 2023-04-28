@@ -61,21 +61,21 @@ void IslandMapGenerator::addTiles(GameMap &map)
                 break;
             }
 
-            float tileBreath = t->collideBreath() * 2.0f;
-            int tileCountX = static_cast<int>(floor(islandBreathX / tileBreath));
-            int tileCountY = static_cast<int>(floor(islandBreathY / tileBreath));
+            float span = t->mapSpan();
+            int tileCountX = static_cast<int>(floor(islandBreathX / span));
+            int tileCountY = static_cast<int>(floor(islandBreathY / span));
             Vector2 startPos{baseX + t->collideBreath(),
                              baseY + t->collideBreath()};
 
             addIsland(map, t, startPos, tileCountX, tileCountY);
 
-            float islandHeight = tileCountY * tileBreath;
+            float islandHeight = tileCountY * span;
             if (islandHeight > maxIslandHeight)
             {
                 maxIslandHeight = islandHeight;
             }
 
-            float islandWidth = tileCountX * tileBreath;
+            float islandWidth = tileCountX * span;
             float distX = rand_.randomFloat(cfg_->minIslandDist(),
                                             cfg_->maxIslandDist());
             baseX += islandWidth + distX;
@@ -93,7 +93,7 @@ void IslandMapGenerator::addIsland(GameMap &map,
                                    int tileCountX,
                                    int tileCountY)
 {
-    float delta = 2.0f * t->collideBreath();
+    float delta = t->mapSpan();
     Vector2 pos;
     Vector2 direction{1.0f, 0.0f};
 

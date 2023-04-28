@@ -14,6 +14,7 @@ GameObjectTemplate::GameObjectTemplate()
     : span_(0.0f)
     , collideBreath_(0.0f)
     , invincible_(false)
+    , mapSpan_(0.0f)
 {
 }
 
@@ -32,7 +33,8 @@ void GameObjectTemplate::init(GameObjectType t,
 
     std::vector<JsonParamPtr> params{
         jsonParam(collideBreath_, "collideBreath", true, ge(0.0f)),
-        jsonParam(invincible_, "invincible", false)
+        jsonParam(invincible_, "invincible", false),
+        jsonParam(mapSpan_, "mapSpan", false, ge(0.0f)),
     };
 
     parse(params, v);
