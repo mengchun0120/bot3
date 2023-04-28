@@ -41,14 +41,13 @@ void GameMap::init(unsigned int rows,
                    unsigned int cols,
                    float viewportWidth,
                    float viewportHeight,
-                   float maxObjSpan,
-                   float maxCollideBreath,
                    GameObjDeleter objDeleter)
 {
-    using namespace std::placeholders;
+    const GameLib &lib = Context::gameLib();
 
-    maxObjSpan_ = maxObjSpan;
-    maxCollideBreath_ = maxCollideBreath;
+    maxObjSpan_ = lib.maxObjSpan();
+    maxCollideBreath_ = lib.maxCollideBreath();
+    maxTouchSpan_ = lib.maxTouchSpan();
     extraCell_ = static_cast<int>(ceil(maxObjSpan_ / k_cellBreath));
     initMapCells(rows, cols, objDeleter);
     setBoundary(rows, cols);
@@ -212,6 +211,21 @@ Region<int> GameMap::getCoverArea(const Region<float> &r) const
     int right = clamp(getCellIdx(r.right()), 0, colCount()-1);
     int bottom = clamp(getCellIdx(r.bottom()), 0, rowCount()-1);
     int top = clamp(getCellIdx(r.top()), 0, rowCount()-1);
+
+    return Region<int>(left, right, bottom, top);
+}
+
+Region<int> GameMap::getTouchArea(const Vector2 &p) const
+{
+    float startX = p[0] - maxTouchSpan_;
+    float endX = p[0] + maxTouchSpan_;
+    float startY = p[1] - maxTouchSpan_;
+    float endY = p[1] + maxTouchSpan_;
+
+    int left = clamp(getCellIdx(startX), 0, colCount()-1);
+    int right = clamp(getCellIdx(endX), 0, colCount()-1);
+    int bottom = clamp(getCellIdx(startY), 0, rowCount()-1);
+    int top = clamp(getCellIdx(endY), 0, rowCount()-1);
 
     return Region<int>(left, right, bottom, top);
 }

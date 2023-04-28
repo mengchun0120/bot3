@@ -93,6 +93,8 @@ public:
 
     inline Skill *skill(int i);
 
+    inline Skill *defaultSkill();
+
 protected:
     void initSkills();
 
@@ -119,6 +121,7 @@ protected:
     float damageFactor_;
     float armorReduceRatio_;
     SkillList skills_;
+    Skill *defaultSkill_;
 };
 
 const RobotTemplate *Robot::getTemplate() const
@@ -189,6 +192,11 @@ int Robot::skillCount() const
 Skill *Robot::skill(int i)
 {
     return skills_[i];
+}
+
+Skill *Robot::defaultSkill()
+{
+    return defaultSkill_;
 }
 
 } // end of namespace botlib

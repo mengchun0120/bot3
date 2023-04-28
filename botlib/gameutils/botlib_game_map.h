@@ -52,8 +52,6 @@ public:
               unsigned int cols,
               float viewportWidth,
               float viewportHeight,
-              float maxObjSpan,
-              float maxCollideBreath,
               GameObjDeleter objDeleter = nullptr);
 
     void present();
@@ -114,6 +112,8 @@ public:
 
     commonlib::Region<int> getCoverArea(const commonlib::Region<float> &r) const;
 
+    commonlib::Region<int> getTouchArea(const commonlib::Vector2 &p) const;
+
     template <typename F>
     void traverse(const commonlib::Region<int> &r,
                   F &accessor,
@@ -171,6 +171,7 @@ private:
 private:
     float maxObjSpan_;
     float maxCollideBreath_;
+    float maxTouchSpan_;
     int extraCell_;
     std::vector<std::vector<Cell>> cells_;
     commonlib::Vector2 viewportSize_;

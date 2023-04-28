@@ -42,9 +42,6 @@ void GameScreen::init(const Vector2 &viewportSize,
     initAIRobotCount();
     initGoodiePies();
     initSkillButtons();
-#ifdef __ANDROID__
-    initGameNavigator();
-#endif
     resetSkillButtonPos();
     moveOutRegions_.resize(4);
 
@@ -211,20 +208,13 @@ bool GameScreen::processInputGame(const commonlib::InputEvent &e)
 
     if (e.type_ == InputEvent::POINTER_DOWN || e.type_ == InputEvent::POINTER_MOVE)
     {
-        if (!onButtons(e.x_, e.y_))
+        if (!onSkillButtonPressed(e.x_, e.y_))
         {
             onPointerDown(e.x_, e.y_);
         }
     }
 
     return true;
-}
-
-bool GameScreen::onButtons(float x, float y)
-{
-    bool skillButtonPressed = onSkillButtonPressed(x, y);
-    bool navigatorPressed = onGameNavigatorPressed(x, y);
-    return skillButtonPressed || navigatorPressed;
 }
 
 bool GameScreen::onSkillButtonPressed(float x, float y)
@@ -239,18 +229,6 @@ bool GameScreen::onSkillButtonPressed(float x, float y)
     }
 
     return false;
-}
-
-bool GameScreen::onGameNavigatorPressed(float x, float y)
-{
-    if (!navigator_.directionValid() || !navigator_.containPos(x, y))
-    {
-        return false;
-    }
-
-    navigator_.onPointerDown(x, y);
-
-    return true;
 }
 
 #endif
@@ -397,22 +375,6 @@ void GameScreen::initSkillButtons()
     }
 }
 
-#ifdef __ANDROID__
-void GameScreen::initGameNavigator()
-{
-    const GameScreenConfig &cfg = Context::gameScreenConfig();
-    auto steerFunc = [&](const Vector2 &direction)
-    {
-        map_.player()->setDirection(direction);
-    };
-
-    navigator_.init(cfg.navigatorLeftSpacing(),
-                    cfg.navigatorBottomSpacing(),
-                    steerFunc);
-    navigator_.setDirection(map_.player()->direction());
-}
-#endif
-
 bool GameScreen::addSkillButton(Skill *skill,
                                 float x,
                                 float y)
@@ -491,10 +453,6 @@ void GameScreen::updateOverlay()
     {
         updateGoodiePieRatio();
     }
-
-#ifdef __ANDROID__
-    updateGameNavigator();
-#endif
 }
 
 void GameScreen::updateProgressBar()

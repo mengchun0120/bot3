@@ -18,7 +18,7 @@ void RobotTemplate::init(const std::string &name,
                          const ComponentTemplateLib &componentTemplateLib,
                          const SkillTemplateLib &skillTemplateLib)
 {
-    std::string missileName;
+    std::string missileName, defaultSkillName;
     std::vector<std::string> skillNames;
     std::vector<JsonParamPtr> params{
         jsonParam(hp_, "hp", true, ge(0.0f)),
@@ -30,6 +30,7 @@ void RobotTemplate::init(const std::string &name,
         jsonParam(dyingDuration_, "dyingDuration", true, gt(0.0f)),
         jsonParam(touchSpan_, "touchSpan", true, gt(0.0f)),
         jsonParam(skillNames, "skills", true),
+        jsonParam(defaultSkillName, "defaultSkill", false, k_nonEmptyStrV),
     };
 
     parse(params, v);
@@ -41,13 +42,14 @@ void RobotTemplate::init(const std::string &name,
                      "Failed to find MissileTemplate " + missileName);
     }
 
-    initSkills(skillNames, skillTemplateLib);
+    initSkills(skillNames, defaultSkillName, skillTemplateLib);
 
     CompositeObjectTemplate::init(GameObjectType::ROBOT, name,
                                   v, componentTemplateLib);
 }
 
 void RobotTemplate::initSkills(const std::vector<std::string> &skillNames,
+                               const std::string &defaultSkillName,
                                const SkillTemplateLib &skillTemplateLib)
 {
     if (skillNames.empty())
@@ -55,6 +57,7 @@ void RobotTemplate::initSkills(const std::vector<std::string> &skillNames,
         THROW_EXCEPT(InvalidArgumentException, "Skills is empty");
     }
 
+    defaultSkill_ = nullptr;
     skills_.resize(skillNames.size());
     for (std::size_t i = 0; i < skills_.size(); ++i)
     {
@@ -65,6 +68,11 @@ void RobotTemplate::initSkills(const std::vector<std::string> &skillNames,
         }
 
         skills_[i] = t->get();
+
+        if (defaultSkillName == skillNames[i])
+        {
+            defaultSkill_ = skills_[i];
+        }
     }
 }
 

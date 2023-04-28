@@ -63,10 +63,6 @@ private:
 
     void initSkillButtons();
 
-#ifdef __ANDROID__
-    void initGameNavigator();
-#endif
-
     bool addSkillButton(Skill *skill,
                         float x,
                         float y);
@@ -85,11 +81,7 @@ private:
     void enableSkillForInput(int input);
 
 #elif __ANDROID__
-    bool onButtons(float x, float y);
-
     bool onSkillButtonPressed(float x, float y);
-
-    bool onGameNavigatorPressed(float x, float y);
 #endif
 
     void onPointerDown(float x, float y);
@@ -113,10 +105,6 @@ private:
     void updateGoodiePiePos();
 
     void updateSkillButtons();
-
-#ifdef __ANDROID__
-    void updateGameNavigator();
-#endif
 
     void clearObjs();
 
@@ -169,7 +157,6 @@ private:
     std::vector<commonlib::Vector2> goodiePiePos_;
     std::vector<ProgressPie> goodiePies_;
     std::list<SkillButton> skillButtons_;
-    GameNavigator navigator_;
 };
 
 ProgressPie &GameScreen::getGoodiePie(const GoodieEffect &e)

@@ -39,8 +39,11 @@ public:
 
     inline const std::vector<const SkillTemplate*> skills() const;
 
+    inline const SkillTemplate *defaultSkill() const;
+
 private:
     void initSkills(const std::vector<std::string> &skillNames,
+                    const std::string &defaultSkillName,
                     const SkillTemplateLib &skillTemplateLib);
 
 protected:
@@ -53,6 +56,7 @@ protected:
     float dyingDuration_;
     float touchSpan_;
     std::vector<const SkillTemplate*> skills_;
+    const SkillTemplate *defaultSkill_;
 };
 
 float RobotTemplate::hp() const
@@ -98,6 +102,11 @@ float RobotTemplate::touchSpan() const
 const std::vector<const SkillTemplate*> RobotTemplate::skills() const
 {
     return skills_;
+}
+
+const SkillTemplate *RobotTemplate::defaultSkill() const
+{
+    return defaultSkill_;
 }
 
 } // end of namespace botlib

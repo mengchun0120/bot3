@@ -78,10 +78,7 @@ void GameMapLoader::loadMapDimension(GameMap &map,
 
     parse(params, doc);
 
-    const GameLib &lib = Context::gameLib();
-
-    map.init(rows, cols, viewportWidth_, viewportHeight_,
-             lib.maxObjSpan(), lib.maxCollideBreath(), factory_.deleter());
+    map.init(rows, cols, viewportWidth_, viewportHeight_, factory_.deleter());
 }
 
 void GameMapLoader::loadObjects(GameMap &map,

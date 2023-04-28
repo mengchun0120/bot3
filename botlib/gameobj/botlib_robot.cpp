@@ -220,10 +220,15 @@ void Robot::initSkills()
 {
     auto &skillTemplates = getTemplate()->skills();
 
+    defaultSkill_ = nullptr;
     skills_.resize(skillTemplates.size());
     for (std::size_t i = 0; i < skills_.size(); ++i)
     {
         skills_[i] = createSkill(skillTemplates[i], this);
+        if (skillTemplates[i] == getTemplate()->defaultSkill())
+        {
+            defaultSkill_ = skills_[i];
+        }
     }
 }
 
