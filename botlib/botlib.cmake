@@ -85,6 +85,7 @@ list(APPEND
 
 list(APPEND
     BOTLIB_MAP_ACCESSOR_SRC
+    ${BOTLIB_SRC_DIR}/map_accessor/botlib_game_obj_chooser.cpp
     ${BOTLIB_SRC_DIR}/map_accessor/botlib_game_obj_flag_resetter.cpp
     ${BOTLIB_SRC_DIR}/map_accessor/botlib_game_obj_updater.cpp
     ${BOTLIB_SRC_DIR}/map_accessor/botlib_missile_hit_checker.cpp

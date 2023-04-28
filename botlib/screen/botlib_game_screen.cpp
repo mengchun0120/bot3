@@ -208,7 +208,7 @@ bool GameScreen::processInputGame(const commonlib::InputEvent &e)
 
     if (e.type_ == InputEvent::POINTER_DOWN || e.type_ == InputEvent::POINTER_MOVE)
     {
-        if (!onSkillButtonPressed(e.x_, e.y_))
+        if (!onSkillButtonPressed(e.x_, e.y_) && !onObjPressed(e._x, e.y_))
         {
             onPointerDown(e.x_, e.y_);
         }
@@ -231,6 +231,33 @@ bool GameScreen::onSkillButtonPressed(float x, float y)
     return false;
 }
 
+bool GameScreen::onObjPressed(float x, float y)
+{
+    Vector2 p{x, y};
+    p += map_.viewportAnchor();
+
+    Region<int> area = map_.getTouchArea(p);
+    objChooser_.init(p);
+    area.traverse(area, objChooser, GameMap::LAYER_TILE_GOODIE, 2);
+
+    if (objChooser_.obj())
+    {
+        onObjSelected(objChooser.obj());
+        return true;
+    }
+
+    return false;
+}
+
+void GameScreen::onObjSelected(GameObject *o)
+{
+    Player *player = map_.player();
+    Vector2 d = normalize(o->pos() - player->pos());
+
+    player->setDirection(player);
+    player->setSkillEnabled(SkillType::MOVE, false);
+    player->defaultSkill()->setEnabled(true);
+}
 #endif
 
 void GameScreen::onPointerDown(float x, float y)

@@ -13,6 +13,7 @@
 #include <botlib_message_box.h>
 #include <botlib_icon.h>
 #include <botlib_update_context.h>
+#include <botlib_game_obj_chooser.h>
 #include <botlib_game_obj_flag_resetter.h>
 #include <botlib_game_obj_updater.h>
 #include <botlib_screen.h>
@@ -82,6 +83,10 @@ private:
 
 #elif __ANDROID__
     bool onSkillButtonPressed(float x, float y);
+
+    bool onObjPressed(float x, float y);
+
+    void onObjSelected(GameObject *o);
 #endif
 
     void onPointerDown(float x, float y);
@@ -145,6 +150,7 @@ private:
     commonlib::Vector2 overlayViewportOrigin_;
     GameObjFlagResetter flagResetter_;
     GameObjUpdater objUpdater_;
+    GameObjChooser objChooser_;
     ProgressBar armorProgressBar_;
     ProgressBar energyProgressBar_;
     MessageBox msgBox_;

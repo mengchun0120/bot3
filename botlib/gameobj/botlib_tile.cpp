@@ -1,4 +1,5 @@
 #include <sstream>
+#include <cmath>
 #include <commonlib_log.h>
 #include <commonlib_exception.h>
 #include <commonlib_math_utils.h>
@@ -79,6 +80,13 @@ void Tile::toJson(rapidjson::Value &v,
 {
     CompositeObject::toJson(v, allocator);
     v.AddMember("type", jsonVal("tile", allocator), allocator);
+}
+
+bool Tile::touched(const commonlib::Vector2 &p) const
+{
+    float span = getTemplate()->touchSpan();
+    return fabs(p[0] - pos_[0]) <= span &&
+           fabs(p[1] - pos_[1]) <= span;
 }
 
 } // end of namespace botlib

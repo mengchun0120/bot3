@@ -108,11 +108,8 @@ void TestParticleApp::setupTemplates()
 
 void TestParticleApp::setupMap()
 {
-    const GameLib &lib = Context::gameLib();
-
     map_.init(60, 60, viewportWidth(), viewportHeight(),
-             lib.maxObjSpan(), lib.maxCollideBreath(), cxt_.factory().deleter());
-
+              cxt_.factory().deleter());
     addParticleEffects();
 }
 

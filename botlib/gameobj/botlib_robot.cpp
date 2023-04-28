@@ -1,3 +1,4 @@
+#include <cmath>
 #include <commonlib_log.h>
 #include <commonlib_collide.h>
 #include <commonlib_string_utils.h>
@@ -214,6 +215,13 @@ void Robot::shoot(UpdateContext &cxt)
                                         damageFactor_);
         map.addObj(missile);
     }
+}
+
+bool Robot::touched(const commonlib::Vector2 &p) const
+{
+    float span = getTemplate()->touchSpan();
+    return fabs(p[0] - pos_[0]) <= span &&
+           fabs(p[1] - pos_[1]) <= span;
 }
 
 void Robot::initSkills()

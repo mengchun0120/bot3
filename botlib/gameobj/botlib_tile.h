@@ -38,6 +38,8 @@ public:
     void toJson(rapidjson::Value &v,
                 rapidjson::Document::AllocatorType &allocator) override;
 
+    bool touched(const commonlib::Vector2 &p) const;
+
 private:
     float hp_;
     float dyingTime_;

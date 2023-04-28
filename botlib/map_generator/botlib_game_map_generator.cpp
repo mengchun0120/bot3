@@ -50,10 +50,7 @@ void GameMapGenerator::initMap(GameMap &map,
                                float viewportWidth,
                                float viewportHeight)
 {
-    map.init(rowCount, colCount,
-             viewportWidth, viewportHeight,
-             lib_.maxObjSpan(), lib_.maxCollideBreath());
-
+    map.init(rowCount, colCount, viewportWidth, viewportHeight);
     initFreeCellMap(rowCount, colCount);
 }
 
