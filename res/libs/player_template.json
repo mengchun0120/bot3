@@ -67,5 +67,7 @@
         "right-mouse": "shoot-missile",
         "W": "barrage-blast",
         "T": "barrage"
-    }
+    },
+    "defaultSkill": "player_shoot_missile_skill"
+
 }

@@ -208,7 +208,7 @@ bool GameScreen::processInputGame(const commonlib::InputEvent &e)
 
     if (e.type_ == InputEvent::POINTER_DOWN || e.type_ == InputEvent::POINTER_MOVE)
     {
-        if (!onSkillButtonPressed(e.x_, e.y_) && !onObjPressed(e._x, e.y_))
+        if (!onSkillButtonPressed(e.x_, e.y_) && !onObjPressed(e.x_, e.y_))
         {
             onPointerDown(e.x_, e.y_);
         }
@@ -238,11 +238,11 @@ bool GameScreen::onObjPressed(float x, float y)
 
     Region<int> area = map_.getTouchArea(p);
     objChooser_.init(p);
-    area.traverse(area, objChooser, GameMap::LAYER_TILE_GOODIE, 2);
+    map_.traverse(area, objChooser_, GameMap::LAYER_TILE_GOODIE, 2);
 
     if (objChooser_.obj())
     {
-        onObjSelected(objChooser.obj());
+        onObjSelected(objChooser_.obj());
         return true;
     }
 
@@ -254,8 +254,9 @@ void GameScreen::onObjSelected(GameObject *o)
     Player *player = map_.player();
     Vector2 d = normalize(o->pos() - player->pos());
 
-    player->setDirection(player);
+    player->setDirection(d);
     player->setSkillEnabled(SkillType::MOVE, false);
+    LOG_INFO << "Default skill " << player->defaultSkill() << LOG_END;
     player->defaultSkill()->setEnabled(true);
 }
 #endif
@@ -518,20 +519,6 @@ void GameScreen::updateSkillButtons()
     }
 }
 
-#ifdef __ANDROID__
-void GameScreen::updateGameNavigator()
-{
-    if (map_.player()->isSkillEnabled(SkillType::MOVE))
-    {
-        navigator_.disableDirection();
-    }
-    else
-    {
-        navigator_.setDirection(map_.player()->direction());
-    }
-}
-#endif
-
 void GameScreen::clearObjs()
 {
     int moveOutRegionCount = diff(moveOutRegions_, prevArea_, map_.presentArea());
@@ -604,9 +591,6 @@ void GameScreen::presentOverlay()
     {
         presentGoodiePies();
         presentSkillButtons();
-#ifdef __ANDROID__
-        navigator_.present();
-#endif
     }
 
     program.setAlpha(1.0f);
