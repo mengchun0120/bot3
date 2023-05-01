@@ -304,31 +304,16 @@ void GameScreen::initPlayerGoodieFunc()
 void GameScreen::initProgressBar()
 {
     const GameScreenConfig &cfg = Context::gameScreenConfig();
-    const GameLib &lib = Context::gameLib();
-
-    const ProgressBarTemplate *armorBarTemplate =
-                             lib.findProgressBarTemplate("armor_progress_bar");
-    if (!armorBarTemplate)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Failed to find armor_progress_bar");
-    }
-
-    const ProgressBarTemplate *energyBarTemplate =
-                             lib.findProgressBarTemplate("energy_progress_bar");
-    if (!energyBarTemplate)
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Failed to find energy_progress_bar");
-    }
-
     const Vector2 &armorBarMargin = cfg.armorProgressBarMargin();
     const Vector2 &energyBarMargin = cfg.energyProgressBarMargin();
+    const Vector2 &hpBarMargin = cfg.hpProgressBarMargin();
     Vector2 armorBarPos{armorBarMargin[0], viewportSize_[1] - armorBarMargin[1]};
     Vector2 energyBarPos{energyBarMargin[0], viewportSize_[1] - energyBarMargin[1]};
+    Vector2 hpBarPos{hpBarMargin[0], viewportSize_[1] - hpBarMargin[1]};
 
-    armorProgressBar_.init(armorBarTemplate, armorBarPos);
-    energyProgressBar_.init(energyBarTemplate, energyBarPos);
+    armorProgressBar_.init(cfg.armorProgressBar(), armorBarPos);
+    energyProgressBar_.init(cfg.energyProgressBar(), energyBarPos);
+    hpProgressBar_.init(cfg.hpProgressBar(), hpBarPos);
 }
 
 void GameScreen::initMessageBox()
@@ -487,6 +472,7 @@ void GameScreen::updateProgressBar()
 {
     armorProgressBar_.setRatio(map_.player()->armorRatio());
     energyProgressBar_.setRatio(map_.player()->energyRatio());
+    hpProgressBar_.setRatio(map_.player()->hpRatio());
 }
 
 void GameScreen::updateGoodiePieRatio()
@@ -580,8 +566,6 @@ void GameScreen::showFail()
 void GameScreen::presentOverlay()
 {
     SimpleShaderProgram &program = Context::graphics().simpleShader();
-    const TextSystem &textSys = Context::graphics().textSys();
-    const GameScreenConfig &cfg = Context::gameScreenConfig();
 
     program.use();
     program.setViewportOrigin(overlayViewportOrigin_);
@@ -595,12 +579,12 @@ void GameScreen::presentOverlay()
 
     program.setAlpha(1.0f);
 
-    armorProgressBar_.present();
-    energyProgressBar_.present();
+    if (map_.player())
+    {
+        presentProgressBars();
+    }
 
-    aiRobotCountIcon_.present();
-    textSys.draw(program, map_.aiRobotCountStr(), aiRobotCountPos_,
-                 cfg.aiRobotCountTextSize(), &cfg.aiRobotCountTextColor());
+    presentAIRobotCount();
 
     if (msgBox_.visible())
     {
@@ -626,6 +610,24 @@ void GameScreen::presentSkillButtons()
     }
 }
 
+void GameScreen::presentProgressBars()
+{
+    armorProgressBar_.present();
+    energyProgressBar_.present();
+    hpProgressBar_.present();
+}
+
+void GameScreen::presentAIRobotCount()
+{
+    SimpleShaderProgram &program = Context::graphics().simpleShader();
+    const TextSystem &textSys = Context::graphics().textSys();
+    const GameScreenConfig &cfg = Context::gameScreenConfig();
+
+    aiRobotCountIcon_.present();
+    textSys.draw(program, map_.aiRobotCountStr(), aiRobotCountPos_,
+                 cfg.aiRobotCountTextSize(), &cfg.aiRobotCountTextColor());
+}
+
 void GameScreen::resetOverlayPos()
 {
     resetMessageBoxPos();
@@ -645,11 +647,14 @@ void GameScreen::resetProgressBarPos()
     const GameScreenConfig &cfg = Context::gameScreenConfig();
     const Vector2 &armorBarMargin = cfg.armorProgressBarMargin();
     const Vector2 &energyBarMargin = cfg.energyProgressBarMargin();
+    const Vector2 &hpBarMargin = cfg.hpProgressBarMargin();
     Vector2 armorBarPos{armorBarMargin[0], viewportSize_[1] - armorBarMargin[1]};
     Vector2 energyBarPos{energyBarMargin[0], viewportSize_[1] - energyBarMargin[1]};
+    Vector2 hpBarPos{hpBarMargin[0], viewportSize_[1] - hpBarMargin[1]};
 
     armorProgressBar_.setPos(armorBarPos);
     energyProgressBar_.setPos(energyBarPos);
+    hpProgressBar_.setPos(hpBarPos);
 }
 
 void GameScreen::resetGoodiePiePos()

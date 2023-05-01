@@ -35,9 +35,17 @@ public:
 
     inline float goodieRightMargin() const;
 
+    inline const ProgressBarTemplate *armorProgressBar() const;;
+
     inline const commonlib::Vector2 &armorProgressBarMargin() const;
 
+    inline const ProgressBarTemplate *energyProgressBar() const;
+
     inline const commonlib::Vector2 &energyProgressBarMargin() const;
+
+    inline const ProgressBarTemplate *hpProgressBar() const;
+
+    inline const commonlib::Vector2 &hpProgressBarMargin() const;
 
     inline float msgBoxWidth() const;
 
@@ -70,6 +78,16 @@ public:
     inline float skillButtonSpacing() const;
 
 private:
+    void initProgressBarTemplates(
+                    const GameLib &gameLib,
+                    const std::string &armorProgressBarName,
+                    const std::string &energyProgressBarName,
+                    const std::string &hpProgressBarName);
+
+    void initAIRobotCount(const GameLib &gameLib,
+                          const std::string &aiRobotCountIconName,
+                          const std::string &aiRobotCountTextSizeStr);
+
     void initGoodiePieTemplates(
                     const GameLib &gameLib,
                     const std::vector<std::string> &goodiePieNames);
@@ -81,8 +99,12 @@ private:
     float goodieSpacing_;
     float goodieTopMargin_;
     float goodieRightMargin_;
+    const ProgressBarTemplate *armorProgressBar_;
     commonlib::Vector2 armorProgressBarMargin_;
+    const ProgressBarTemplate *energyProgressBar_;
     commonlib::Vector2 energyProgressBarMargin_;
+    const ProgressBarTemplate *hpProgressBar_;
+    commonlib::Vector2 hpProgressBarMargin_;
     float msgBoxWidth_;
     float msgBoxHeight_;
     std::string victoryMsg_;
@@ -130,14 +152,34 @@ float GameScreenConfig::goodieRightMargin() const
     return goodieRightMargin_;
 }
 
+const ProgressBarTemplate *GameScreenConfig::armorProgressBar() const
+{
+    return armorProgressBar_;
+}
+
 const commonlib::Vector2 &GameScreenConfig::armorProgressBarMargin() const
 {
     return armorProgressBarMargin_;
 }
 
+const ProgressBarTemplate *GameScreenConfig::energyProgressBar() const
+{
+    return energyProgressBar_;
+}
+
 const commonlib::Vector2 &GameScreenConfig::energyProgressBarMargin() const
 {
     return energyProgressBarMargin_;
+}
+
+const ProgressBarTemplate *GameScreenConfig::hpProgressBar() const
+{
+    return hpProgressBar_;
+}
+
+const commonlib::Vector2 &GameScreenConfig::hpProgressBarMargin() const
+{
+    return hpProgressBarMargin_;
 }
 
 float GameScreenConfig::msgBoxWidth() const

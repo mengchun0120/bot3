@@ -129,6 +129,10 @@ private:
 
     void presentSkillButtons();
 
+    void presentProgressBars();
+
+    void presentAIRobotCount();
+
     void resetOverlayPos();
 
     void resetMessageBoxPos();
@@ -153,6 +157,7 @@ private:
     GameObjChooser objChooser_;
     ProgressBar armorProgressBar_;
     ProgressBar energyProgressBar_;
+    ProgressBar hpProgressBar_;
     MessageBox msgBox_;
     commonlib::Vector2 aiRobotIconPos_;
     Icon aiRobotCountIcon_;
