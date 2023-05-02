@@ -22,5 +22,17 @@
             "vertexArray": "progress_bar_border",
             "color": [0, 0, 180, 255]
         }
+    },
+    "hp_progress_bar": {
+        "width": 100.0,
+        "height": 25.0,
+        "frontColor": [255, 0, 0, 255],
+        "backgroundColor": [255, 250, 200, 255],
+        "vertexArray": "progress_bar",
+        "alpha": 0.75,
+        "border": {
+            "vertexArray": "progress_bar_border",
+            "color": [180, 0, 0, 255]
+        }
     }
 }

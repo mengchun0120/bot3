@@ -81,8 +81,6 @@ private:
 
     void initTestShapeApp();
 
-    void initTestMapApp();
-
     void initTestWidgetApp();
 
     void initTestParticleApp();
@@ -90,8 +88,6 @@ private:
     void initTestGameButtonsApp();
 
     void initTestDirectionPieApp();
-
-    void initTestGameNavigatorApp();
 
     void initShowMapApp();
 

@@ -671,6 +671,7 @@ void GameScreen::resetAIRobotCountPos()
 
     aiRobotIconPos_[0] = iconMargin[0];
     aiRobotIconPos_[1] = viewportSize_[1] - iconMargin[1];
+    aiRobotCountIcon_.setPos(aiRobotIconPos_);
     aiRobotCountPos_[0] = textMargin[0];
     aiRobotCountPos_[1] = viewportSize_[1] - textMargin[1];
 }

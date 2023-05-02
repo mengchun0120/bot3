@@ -6,12 +6,10 @@
 #include <commonlib_file_utils.h>
 #include <commonlib_out_utils.h>
 #include <botlib_test_shape_app.h>
-#include <botlib_test_map_app.h>
 #include <botlib_test_widget_app.h>
 #include <botlib_test_particle_app.h>
 #include <botlib_test_game_buttons_app.h>
 #include <botlib_test_direction_pie_app.h>
-#include <botlib_test_game_navigator_app.h>
 #include <botlib_show_map_app.h>
 #include <botlib_gen_map_app.h>
 #include <botlib_run_game_app.h>
@@ -27,12 +25,10 @@ namespace botlib {
 
 std::unordered_map<std::string, AppLauncher::InitFunc> AppLauncher::k_initMap{
     {"test_shape", &AppLauncher::initTestShapeApp},
-    {"test_map", &AppLauncher::initTestMapApp},
     {"test_widget", &AppLauncher::initTestWidgetApp},
     {"test_particle", &AppLauncher::initTestParticleApp},
     {"test_game_buttons", &AppLauncher::initTestGameButtonsApp},
     {"test_direction_pie", &AppLauncher::initTestDirectionPieApp},
-    {"test_game_navigator", &AppLauncher::initTestGameNavigatorApp},
     {"show_map", &AppLauncher::initShowMapApp},
     {"gen_map", &AppLauncher::initGenMapApp},
     {"run_game", &AppLauncher::initRunGameApp},
@@ -126,18 +122,6 @@ void AppLauncher::initTestShapeApp()
     app_ = a;
 }
 
-void AppLauncher::initTestMapApp()
-{
-    if (args_.mapFile_.empty())
-    {
-        THROW_EXCEPT(InvalidArgumentException, "mapFile cannot be empty");
-    }
-
-    TestMapApp *a = new TestMapApp();
-    a->init(args_.appConfigFile_, args_.appDir_, args_.mapFile_);
-    app_ = a;
-}
-
 void AppLauncher::initTestWidgetApp()
 {
     TestWidgetApp *a = new TestWidgetApp();
@@ -162,13 +146,6 @@ void AppLauncher::initTestGameButtonsApp()
 void AppLauncher::initTestDirectionPieApp()
 {
     TestDirectionPieApp *a = new TestDirectionPieApp();
-    a->init(args_.appConfigFile_, args_.appDir_);
-    app_ = a;
-}
-
-void AppLauncher::initTestGameNavigatorApp()
-{
-    TestGameNavigatorApp *a = new TestGameNavigatorApp();
     a->init(args_.appConfigFile_, args_.appDir_);
     app_ = a;
 }
@@ -262,13 +239,6 @@ void AppLauncher::initTestShapeApp()
     app_ = a;
 }
 
-void AppLauncher::initTestMapApp()
-{
-    TestMapApp *a = new TestMapApp();
-    a->init(env_, args_.appConfigFile_, args_.mapFile_);
-    app_ = a;
-}
-
 void AppLauncher::initTestWidgetApp()
 {
     TestWidgetApp *a = new TestWidgetApp();
@@ -293,13 +263,6 @@ void AppLauncher::initTestGameButtonsApp()
 void AppLauncher::initTestDirectionPieApp()
 {
     TestDirectionPieApp *a = new TestDirectionPieApp();
-    a->init(env_, args_.appConfigFile_);
-    app_ = a;
-}
-
-void AppLauncher::initTestGameNavigatorApp()
-{
-    TestGameNavigatorApp *a = new TestGameNavigatorApp();
     a->init(env_, args_.appConfigFile_);
     app_ = a;
 }

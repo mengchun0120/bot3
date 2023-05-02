@@ -2,11 +2,31 @@
     "mapFile": "map_03.json",
     "gameObjItemPoolSize": 500,
     "missilePoolSize": 500,
-    "goodieSpacing": 30.0,
-    "goodieTopMargin": 30.0,
-    "goodieRightMargin": 30.0,
-    "armorProgressBarMargin": [60.0, 80.0],
-    "energyProgressBarMargin": [190.0, 80.0],
+    "goodie": {
+        "spacing": 30.0,
+        "topMargin": 30.0,
+        "rightMargin": 30.0,
+        "progressPies": [
+            "damage_amplifier_progress_pie",
+            "attack_accelerator_progress_pie",
+            "speed_accelerator_progress_pie",
+            "god_mode_progress_pie"
+        ]
+    },
+    "progressBars": {
+        "armor": {
+            "template": "armor_progress_bar",
+            "margin": [60.0, 80.0]
+        },
+        "energy": {
+            "template": "energy_progress_bar",
+            "margin": [190.0, 80.0]
+        },
+        "hp": {
+            "template": "hp_progress_bar",
+            "margin": [320.0, 80.0]
+        }
+    },
     "messageBox": {
         "width": 400.0,
         "height": 160.0,
@@ -14,21 +34,15 @@
         "failMsg": "You are defeated"
     },
     "aiRobotCount": {
-        "iconMargin": [400.0, 70.0],
+        "iconMargin": [530.0, 70.0],
         "icon": "ai_robot_icon",
-        "textMargin": [440.0, 90.0],
+        "textMargin": [570.0, 90.0],
         "textSize": "big",
         "textColor": [190, 190, 190, 255]
     },
-    "goodiePies": [
-        "damage_amplifier_progress_pie",
-        "attack_accelerator_progress_pie",
-        "speed_accelerator_progress_pie",
-        "god_mode_progress_pie"
-    ],
-    "navigatorBottomSpacing": 250.0,
-    "navigatorLeftSpacing": 250.0,
-    "skillButtonBottomSpacing": 150.0,
-    "skillButtonRightSpacing": 150.0,
-    "skillButtonSpacing": 180.0
+    "skillButton": {
+        "bottomSpacing": 150.0,
+        "rightSpacing": 150.0,
+        "spacing": 180.0
+    }
 }
