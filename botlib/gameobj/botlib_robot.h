@@ -95,7 +95,7 @@ public:
 
     inline Skill *defaultSkill();
 
-    bool touched(const commonlib::Vector2 &p) const;
+    bool touched(const commonlib::Vector2 &p) const override;
 
 protected:
     void initSkills();

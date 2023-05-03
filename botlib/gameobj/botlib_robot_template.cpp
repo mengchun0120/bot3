@@ -12,6 +12,20 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+RobotTemplate::RobotTemplate()
+    : hp_(0.0f)
+    , armor_(0.0f)
+    , speed_(0.0f)
+    , energy_(0.0f)
+    , rechargeRate_(0.0f)
+    , missileTemplate_(nullptr)
+    , dyingDuration_(0.0f)
+    , defaultSkill_(nullptr)
+    , touchRadius_(0.0f)
+    , touchRadiusSquare_(0.0f)
+{
+}
+
 void RobotTemplate::init(const std::string &name,
                          const rapidjson::Value &v,
                          const MissileTemplateLib &missileTemplateLib,
@@ -28,9 +42,9 @@ void RobotTemplate::init(const std::string &name,
         jsonParam(rechargeRate_, "rechargeRate", true, ge(0.0f)),
         jsonParam(missileName, "missile", true, k_nonEmptyStrV),
         jsonParam(dyingDuration_, "dyingDuration", true, gt(0.0f)),
-        jsonParam(touchSpan_, "touchSpan", true, gt(0.0f)),
         jsonParam(skillNames, "skills", true),
         jsonParam(defaultSkillName, "defaultSkill", false, k_nonEmptyStrV),
+        jsonParam(touchRadius_, "touchRadius", false, ge(0.0f)),
     };
 
     parse(params, v);
@@ -46,6 +60,8 @@ void RobotTemplate::init(const std::string &name,
 
     CompositeObjectTemplate::init(GameObjectType::ROBOT, name,
                                   v, componentTemplateLib);
+
+    touchRadiusSquare_ = touchRadius_ * touchRadius_;
 }
 
 void RobotTemplate::initSkills(const std::vector<std::string> &skillNames,

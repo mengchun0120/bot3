@@ -38,7 +38,7 @@ public:
     void toJson(rapidjson::Value &v,
                 rapidjson::Document::AllocatorType &allocator) override;
 
-    bool touched(const commonlib::Vector2 &p) const;
+    bool touched(const commonlib::Vector2 &p) const override;
 
 private:
     float hp_;

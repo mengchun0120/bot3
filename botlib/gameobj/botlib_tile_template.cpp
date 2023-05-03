@@ -7,6 +7,13 @@ using namespace mcdane::commonlib;
 namespace mcdane {
 namespace botlib {
 
+TileTemplate::TileTemplate()
+    : hp_(0.0f)
+    , dyingDuration_(0.0f)
+    , touchSpan_(0.0f)
+{
+}
+
 void TileTemplate::init(
     const std::string &name,
     const rapidjson::Value &v,

@@ -337,33 +337,32 @@ void GameLib::calculateMaxProgressPieRadius()
     LOG_INFO << "maxProgressPieRadius=" << maxProgressPieRadius_ << LOG_END;
 }
 
-template <typename T>
-struct MaxTouchSpanFinder {
-    MaxTouchSpanFinder(float &m)
-        : max_(m)
-    {}
-
-    bool operator()(const T& t)
-    {
-        if (t.touchSpan() > max_)
-        {
-            max_ = t.touchSpan();
-        }
-
-        return true;
-    }
-
-    float &max_;
-};
-
 void GameLib::calculateMaxTouchSpan()
 {
     maxTouchSpan_ = 0.0f;
 
-    tileTemplateLib_.traverse(
-        MaxTouchSpanFinder<TileTemplate>(maxTouchSpan_) );
-    aiRobotTemplateLib_.traverse(
-        MaxTouchSpanFinder<AIRobotTemplate>(maxTouchSpan_) );
+    auto maxTileTouchSpanFinder = [&](const TileTemplate &t) -> bool
+    {
+        if (t.touchSpan() > maxTouchSpan_)
+        {
+            maxTouchSpan_ = t.touchSpan();
+        }
+
+        return true;
+    };
+
+    auto maxRobotTouchSpanFinder = [&](const AIRobotTemplate &t) -> bool
+    {
+        if (t.touchRadius() > maxTouchSpan_)
+        {
+            maxTouchSpan_ = t.touchRadius();
+        }
+
+        return true;
+    };
+
+    tileTemplateLib_.traverse(maxTileTouchSpanFinder);
+    aiRobotTemplateLib_.traverse(maxRobotTouchSpanFinder);
 
     LOG_INFO << "maxTouchSpan=" << maxTouchSpan_ << LOG_END;
 }

@@ -11,7 +11,7 @@ class MissileTemplate;
 
 class RobotTemplate: public CompositeObjectTemplate {
 public:
-    RobotTemplate() = default;
+    RobotTemplate();
 
     ~RobotTemplate() override = default;
 
@@ -35,11 +35,13 @@ public:
 
     inline float dyingDuration() const;
 
-    inline float touchSpan() const;
-
     inline const std::vector<const SkillTemplate*> skills() const;
 
     inline const SkillTemplate *defaultSkill() const;
+
+    inline float touchRadius() const;
+
+    inline float touchRadiusSquare() const;
 
 private:
     void initSkills(const std::vector<std::string> &skillNames,
@@ -54,9 +56,10 @@ protected:
     float rechargeRate_;
     const MissileTemplate *missileTemplate_;
     float dyingDuration_;
-    float touchSpan_;
     std::vector<const SkillTemplate*> skills_;
     const SkillTemplate *defaultSkill_;
+    float touchRadius_;
+    float touchRadiusSquare_;
 };
 
 float RobotTemplate::hp() const
@@ -94,11 +97,6 @@ float RobotTemplate::dyingDuration() const
     return dyingDuration_;
 }
 
-float RobotTemplate::touchSpan() const
-{
-    return touchSpan_;
-}
-
 const std::vector<const SkillTemplate*> RobotTemplate::skills() const
 {
     return skills_;
@@ -107,6 +105,16 @@ const std::vector<const SkillTemplate*> RobotTemplate::skills() const
 const SkillTemplate *RobotTemplate::defaultSkill() const
 {
     return defaultSkill_;
+}
+
+float RobotTemplate::touchRadius() const
+{
+    return touchRadius_;
+}
+
+float RobotTemplate::touchRadiusSquare() const
+{
+    return touchRadiusSquare_;
 }
 
 } // end of namespace botlib

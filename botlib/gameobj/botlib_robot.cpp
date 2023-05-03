@@ -217,11 +217,10 @@ void Robot::shoot(UpdateContext &cxt)
     }
 }
 
-bool Robot::touched(const commonlib::Vector2 &p) const
+bool Robot::touched(const Vector2 &p) const
 {
-    float span = getTemplate()->touchSpan();
-    return fabs(p[0] - pos_[0]) <= span &&
-           fabs(p[1] - pos_[1]) <= span;
+    Vector2 d = p - pos_;
+    return d[0] * d[0] + d[1] * d[1] <= getTemplate()->touchRadiusSquare();
 }
 
 void Robot::initSkills()

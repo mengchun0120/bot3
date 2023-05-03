@@ -19,11 +19,6 @@ public:
     inline GameObject *obj();
 
 private:
-    bool checkTile(GameObject *o);
-
-    bool checkRobot(GameObject *o);
-
-private:
     commonlib::Vector2 p_;
     GameObject *obj_;
 };

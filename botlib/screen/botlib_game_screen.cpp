@@ -256,7 +256,6 @@ void GameScreen::onObjSelected(GameObject *o)
 
     player->setDirection(d);
     player->setSkillEnabled(SkillType::MOVE, false);
-    LOG_INFO << "Default skill " << player->defaultSkill() << LOG_END;
     player->defaultSkill()->setEnabled(true);
 }
 #endif

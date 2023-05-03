@@ -20,50 +20,17 @@ void GameObjChooser::init(const Vector2 &p)
 
 bool GameObjChooser::operator()(GameObject *o)
 {
-    switch (o->type())
+    if (o->type() != GameObjectType::TILE && o->type() != GameObjectType::ROBOT)
     {
-        case GameObjectType::TILE:
-            return checkTile(o);
-        case GameObjectType::ROBOT:
-            return checkRobot(o);
-        default:
-            break;
+        return true;
     }
 
-    return true;
-}
-
-bool GameObjChooser::checkTile(GameObject *o)
-{
     if (o->state() != GameObjectState::ALIVE)
     {
         return true;
     }
 
-    Tile *tile = static_cast<Tile *>(o);
-    if (tile->touched(p_))
-    {
-        obj_ = o;
-        return false;
-    }
-
-    return true;
-}
-
-bool GameObjChooser::checkRobot(GameObject *o)
-{
-    if (o->state() != GameObjectState::ALIVE)
-    {
-        return true;
-    }
-
-    Robot *robot = static_cast<Robot *>(o);
-    if (robot->side() != Side::AI)
-    {
-        return true;
-    }
-
-    if (robot->touched(p_))
+    if (o->touched(p_))
     {
         obj_ = o;
         return false;

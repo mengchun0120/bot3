@@ -105,6 +105,8 @@ public:
     virtual void toJson(rapidjson::Value &v,
                         rapidjson::Document::AllocatorType &allocator);
 
+    virtual inline bool touched(const commonlib::Vector2 &p) const;
+
 protected:
     static unsigned int k_curId;
 
@@ -253,6 +255,11 @@ void GameObject::setPrev(GameObject *o)
 void GameObject::setNext(GameObject *o)
 {
     next_ = o;
+}
+
+bool GameObject::touched(const commonlib::Vector2 &p) const
+{
+    return false;
 }
 
 } // end of namespace botlib

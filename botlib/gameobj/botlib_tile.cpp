@@ -82,7 +82,7 @@ void Tile::toJson(rapidjson::Value &v,
     v.AddMember("type", jsonVal("tile", allocator), allocator);
 }
 
-bool Tile::touched(const commonlib::Vector2 &p) const
+bool Tile::touched(const Vector2 &p) const
 {
     float span = getTemplate()->touchSpan();
     return fabs(p[0] - pos_[0]) <= span &&

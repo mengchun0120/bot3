@@ -8,7 +8,7 @@ namespace botlib {
 
 class TileTemplate: public CompositeObjectTemplate {
 public:
-    TileTemplate() = default;
+    TileTemplate();
 
     ~TileTemplate() override = default;
 
