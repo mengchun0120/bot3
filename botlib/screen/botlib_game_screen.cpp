@@ -252,11 +252,16 @@ bool GameScreen::onObjPressed(float x, float y)
 void GameScreen::onObjSelected(GameObject *o)
 {
     Player *player = map_.player();
-    Vector2 d = normalize(o->pos() - player->pos());
 
-    player->setDirection(d);
     player->setSkillEnabled(SkillType::MOVE, false);
-    player->defaultSkill()->setEnabled(true);
+
+    if (o != static_cast<GameObject *>(player))
+    {
+        Vector2 d = normalize(o->pos() - player->pos());
+
+        player->setDirection(d);
+        player->defaultSkill()->setEnabled(true);
+    }
 }
 #endif
 
