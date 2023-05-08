@@ -151,7 +151,9 @@ void AppConfig::loadConfigFiles(const rapidjson::Document &doc)
         jsonParam(gameConfigFile_, {"configs", "gameConfigFile"},
                   true, k_nonEmptyStrV),
         jsonParam(hpIndicatorConfigFile_, {"configs", "hpIndicatorConfigFile"},
-                  true, k_nonEmptyStrV)
+                  true, k_nonEmptyStrV),
+        jsonParam(textBoxConfigFile_, {"configs", "textBoxConfigFile"},
+                  true, k_nonEmptyStrV),
     };
 
     parse(params, doc);
@@ -167,6 +169,7 @@ void AppConfig::loadConfigFiles(const rapidjson::Document &doc)
     showMapScreenConfigFile_ = constructPath({configDir_, showMapScreenConfigFile_});
     gameConfigFile_ = constructPath({configDir_, gameConfigFile_});
     hpIndicatorConfigFile_ = constructPath({configDir_, hpIndicatorConfigFile_});
+    textBoxConfigFile_ = constructPath({configDir_, textBoxConfigFile_});
 }
 
 void AppConfig::loadLibFiles(const rapidjson::Document &doc)

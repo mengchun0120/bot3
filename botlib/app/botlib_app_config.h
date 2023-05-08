@@ -75,6 +75,8 @@ public:
 
     inline const std::string &hpIndicatorConfigFile() const;
 
+    inline const std::string &textBoxConfigFile() const;
+
     inline const std::string &textureLibFile() const;
 
     inline const std::string &vertexArrayLibFile() const;
@@ -158,6 +160,7 @@ private:
     std::string showMapScreenConfigFile_;
     std::string gameConfigFile_;
     std::string hpIndicatorConfigFile_;
+    std::string textBoxConfigFile_;
     std::string textureLibFile_;
     std::string vertexArrayLibFile_;
     std::string vertexArrayDataDir_;
@@ -308,6 +311,11 @@ const std::string &AppConfig::gameConfigFile() const
 const std::string &AppConfig::hpIndicatorConfigFile() const
 {
     return hpIndicatorConfigFile_;
+}
+
+const std::string &AppConfig::textBoxConfigFile() const
+{
+    return textBoxConfigFile_;
 }
 
 const std::string &AppConfig::textureLibFile() const

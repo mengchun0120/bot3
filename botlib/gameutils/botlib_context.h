@@ -16,6 +16,7 @@
 #include <botlib_show_map_screen_config.h>
 #include <botlib_game_config.h>
 #include <botlib_goodie_generator.h>
+#include <botlib_text_box_config.h>
 
 namespace mcdane {
 namespace botlib {
@@ -54,6 +55,8 @@ public:
 
     inline static GoodieGenerator &goodieGenerator();
 
+    inline static const TextBoxConfig &textBoxConfig();
+
 private:
     Context(const AppConfig &cfg);
 
@@ -73,6 +76,7 @@ private:
     ShowMapScreenConfig showMapScreenConfig_;
     GameConfig gameConfig_;
     GoodieGenerator goodieGenerator_;
+    TextBoxConfig textBoxConfig_;
 };
 
 Graphics &Context::graphics()
@@ -143,6 +147,11 @@ const GameConfig &Context::gameConfig()
 GoodieGenerator &Context::goodieGenerator()
 {
     return k_instance->goodieGenerator_;
+}
+
+const TextBoxConfig &Context::textBoxConfig()
+{
+    return k_instance->textBoxConfig_;
 }
 
 } // end of namespace botlib

@@ -181,6 +181,7 @@ list(APPEND
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_message_box_config.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_rectangular_widget.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_skill_button.cpp
+    ${BOTLIB_SRC_DIR}/ui_widgets/botlib_text_box_config.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_widget.cpp
     ${BOTLIB_SRC_DIR}/ui_widgets/botlib_widget_group.cpp
 )

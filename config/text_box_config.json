@@ -1,0 +1,13 @@
+{
+    "blinkTime": 500.0,
+    "textSize": "medium",
+    "borderColor": [70, 70, 70, 255],
+    "backColor": [255, 255, 255, 255],
+    "textColor": [0, 0, 0, 255],
+    "caretWidth": 2.0,
+    "caretColor": [50, 50, 50, 100],
+    "leftMargin": 5.0,
+    "topMargin": 5.0,
+    "bottomMargin": 5.0,
+    "minWidth": 40.0
+}

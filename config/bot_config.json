@@ -36,7 +36,8 @@
         "gameScreenConfigFile": "game_screen_config.json",
         "showMapScreenConfigFile": "showmap_screen_config.json",
         "gameConfigFile": "game_config.json",
-        "hpIndicatorConfigFile": "hp_indicator_config.json"
+        "hpIndicatorConfigFile": "hp_indicator_config.json",
+        "textBoxConfigFile": "text_box_config.json"
     },
     "libraries": {
         "textureLibFile": "texture_lib.json",
