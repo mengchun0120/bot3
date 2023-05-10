@@ -28,6 +28,21 @@ public:
               TextSize size,
               const commonlib::Color *color=nullptr) const;
 
+    void draw(SimpleShaderProgram &program,
+              const char *s,
+              int len,
+              const commonlib::Point2 &pos,
+              TextSize size,
+              const commonlib::Color *color=nullptr) const;
+
+    template <typename ITERATOR>
+    void draw(SimpleShaderProgram &program,
+              ITERATOR begin,
+              ITERATOR end,
+              const commonlib::Point2 &pos,
+              TextSize size,
+              const commonlib::Color *color=nullptr) const;
+
     commonlib::Vector2 getSize(const std::string &s,
                                TextSize size) const;
 
@@ -53,6 +68,8 @@ private:
     int getRectWidthForTextSize(std::vector<int> &widths,
                                 int textSize);
 
+    inline float getWidth(int ch, TextSize textSize) const;
+
     inline const Rectangle &getRect(int ch, TextSize textSize) const;
 
     inline const commonlib::Texture &getTexture(int ch) const;
@@ -65,6 +82,32 @@ private:
     std::vector<std::vector<int>> fontRectIdx_;
     commonlib::Texture *fontTextures_;
 };
+
+template <typename ITERATOR>
+void TextSystem::draw(SimpleShaderProgram &program,
+                      ITERATOR begin,
+                      ITERATOR end,
+                      const commonlib::Point2 &pos,
+                      TextSize size,
+                      const commonlib::Color *color) const
+{
+    commonlib::Point2 p{pos[0], pos[1] + getHeight(size)/2.0f};
+
+    for (auto it = begin; it != end; ++it)
+    {
+        const Rectangle &curRect = getRect(*it, size);
+        const commonlib::Texture &texture = getTexture(*it);
+
+        p[0] += curRect.width() / 2.0f;
+        curRect.draw(program, &p, nullptr, nullptr, nullptr,
+                     texture.id(), color);
+    }
+}
+
+float TextSystem::getWidth(int ch, TextSize textSize) const
+{
+    return getRect(ch, textSize).width();
+}
 
 const Rectangle &TextSystem::getRect(int ch, TextSize textSize) const
 {

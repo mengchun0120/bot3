@@ -3,7 +3,6 @@
 
 #include <string>
 #include <vector>
-#include <botlib_text_size.h>
 #include <botlib_rectangle.h>
 #include <botlib_widget.h>
 
@@ -20,7 +19,6 @@ public:
               float y,
               float width,
               float height,
-              TextSize textSize1=TextSize::MEDIUM,
               int maxTextLen=k_defaultMaxTexLen);
 
     void setPos(float x, float y) override;
@@ -44,12 +42,18 @@ public:
     void setText(const std::string &s);
 
 private:
+    void initBox(float width, float height);
+
+    void initText(int maxTextLen);
+
+    void initCaret();
+
+private:
+    Rectangle box_;
     std::vector<char> text_;
     int textLen_;
-    TextSize textSize_;
-    Rectangle box_;
-    Rectangle caret_;
     int firstIndex_;
+    commonlib::Vector2 textPos_;
     int caretIndex_;
     commonlib::Vector2 caretPos_;
 };

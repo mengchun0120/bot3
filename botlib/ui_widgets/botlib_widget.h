@@ -19,8 +19,7 @@ public:
     void init(float x,
               float y,
               bool visible=true,
-              bool acceptInput=false,
-              bool hasTexture=false);
+              bool acceptInput=false);
 
 #ifdef DESKTOP_APP
     virtual inline void onKey(const commonlib::KeyEvent &e);

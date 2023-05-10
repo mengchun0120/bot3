@@ -30,6 +30,10 @@ public:
 
     inline const commonlib::Color &textColor() const;
 
+    inline float caretWidth() const;
+
+    inline float caretHeight() const;
+
     inline const Rectangle &caretRect() const;
 
     inline const commonlib::Color &caretColor() const;
@@ -37,8 +41,6 @@ public:
     inline float leftMargin() const;
 
     inline float topMargin() const;
-
-    inline float bottomMargin() const;
 
     inline float minWidth() const;
 
@@ -49,9 +51,10 @@ private:
     TextSize textSize_;
     float textHeight_;
     commonlib::Color borderColor_, backColor_, textColor_;
+    float caretWidth_, caretHeight_;
     Rectangle caretRect_;
     commonlib::Color caretColor_;
-    float leftMargin_, topMargin_, bottomMargin_;
+    float leftMargin_, topMargin_;
     float minWidth_, minHeight_;
 };
 
@@ -85,6 +88,16 @@ const commonlib::Color &TextBoxConfig::textColor() const
     return textColor_;
 }
 
+float TextBoxConfig::caretWidth() const
+{
+    return caretWidth_;
+}
+
+float TextBoxConfig::caretHeight() const
+{
+    return caretHeight_;
+}
+
 const Rectangle &TextBoxConfig::caretRect() const
 {
     return caretRect_;
@@ -103,11 +116,6 @@ float TextBoxConfig::leftMargin() const
 float TextBoxConfig::topMargin() const
 {
     return topMargin_;
-}
-
-float TextBoxConfig::bottomMargin() const
-{
-    return bottomMargin_;
 }
 
 float TextBoxConfig::minWidth() const

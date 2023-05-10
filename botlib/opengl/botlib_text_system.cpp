@@ -56,36 +56,19 @@ void TextSystem::draw(SimpleShaderProgram &program,
                       TextSize size,
                       const Color *color) const
 {
-    if (!isValidTextSize(size))
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid size");
-    }
-
-    if (s.size() == 0)
-    {
-        return;
-    }
-
-    Point2 p{
-        pos[0] + getRect(s[0], size).width()/2.0f,
-        pos[1] + fontHeights_[static_cast<int>(size)]/2.0f
-    };
-
-    for (std::size_t i = 0; i < s.size(); ++i)
-    {
-        const Rectangle &curRect = getRect(s[i], size);
-        const Texture &texture = getTexture(s[i]);
-
-        curRect.draw(program, &p, nullptr, nullptr, nullptr,
-                     texture.id(), color);
-
-        if (i < s.size() - 1)
-        {
-            const Rectangle &nextRect = getRect(s[i+1], size);
-            p[0] += (curRect.width() + nextRect.width()) / 2.0f;
-        }
-    }
+    draw(program, s.begin(), s.end(), pos, size, color);
 }
+
+void TextSystem::draw(SimpleShaderProgram &program,
+                      const char *s,
+                      int len,
+                      const Point2 &pos,
+                      TextSize size,
+                      const Color *color) const
+{
+    draw(program, s, s+len, pos, size, color);
+}
+
 
 commonlib::Vector2 TextSystem::getSize(const std::string &s,
                                        TextSize size) const

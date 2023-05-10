@@ -17,8 +17,7 @@ Widget::Widget()
 void Widget::init(float x,
                   float y,
                   bool visible,
-                  bool acceptInput,
-                  bool hasTexture)
+                  bool acceptInput)
 {
     visible_ = visible;
     acceptInput_ = acceptInput;
