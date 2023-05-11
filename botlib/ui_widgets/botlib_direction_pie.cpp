@@ -18,7 +18,7 @@ void DirectionPie::init(float x,
                         const Vector2 &direction1,
                         bool visible)
 {
-    Widget::init(x, y, visible, true, false);
+    Widget::init(x, y, visible, true);
     direction_ = direction1;
 
     const DirectionPieConfig &cfg = Context::directionPieConfig();

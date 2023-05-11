@@ -13,7 +13,7 @@ void GameNavigator::init(float x,
                          SteerFunc steerFunc)
 {
     const GameNavigatorConfig &cfg = Context::gameNavigatorConfig();
-    Widget::init(x, y, true, true, true);
+    Widget::init(x, y, true, true);
     directionValid_ = false;
     steerFunc_ = steerFunc;
     radiusSquare_ = cfg.radius() * cfg.radius();

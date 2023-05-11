@@ -9,7 +9,7 @@
 namespace mcdane {
 namespace botlib {
 
-class TextBox {
+class TextBox: public Widget {
 public:
     static constexpr int k_defaultMaxTexLen = 1000;
 
@@ -48,19 +48,37 @@ private:
 
     void initCaret();
 
+    inline const char *visibleTextBegin() const;
+
+    inline const char *visibleTextEnd() const;
+
 private:
     Rectangle box_;
+    commonlib::Vector2 boxPos_;
     std::vector<char> text_;
     int textLen_;
-    int firstIndex_;
+    int visibleTextStartIndex_;
+    int visibleTextLen_;
     commonlib::Vector2 textPos_;
+    float blinkDuration_;
     int caretIndex_;
+    bool caretVisible_;
     commonlib::Vector2 caretPos_;
 };
 
 std::string TextBox::text() const
 {
     return std::string(text_.data(), textLen_);
+}
+
+const char *TextBox::visibleTextBegin() const
+{
+    return text_.data() + visibleTextStartIndex_;
+}
+
+const char *TextBox::visibleTextEnd() const
+{
+    return visibleTextBegin() + visibleTextLen_;
 }
 
 } // end of namespace botlib

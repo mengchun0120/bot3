@@ -33,7 +33,7 @@ void TextBoxConfig::init(const std::string &fileName,
 
     textSize_ = toTextSize(textSizeStr);
     textHeight_ = textSys.getHeight(textSize_);
-    caretHeight_ = textHeight;
+    caretHeight_ = textHeight_;
     caretRect_.init(caretWidth_, caretHeight_);
     minHeight_ = textHeight_ + topMargin_;
 

@@ -12,7 +12,7 @@ void SkillButton::init(float x,
                        Action action,
                        SkillWithCost *skill)
 {
-    Widget::init(x, y, true, true, true);
+    Widget::init(x, y, true, true);
     skill_ = skill;
     pie_.init(t, &pos_);
     action_ = action;

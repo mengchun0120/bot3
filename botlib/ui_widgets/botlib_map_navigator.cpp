@@ -19,7 +19,7 @@ void MapNavigator::init(float x,
                         const std::vector<Action> &actions)
 {
     const MapNavigatorConfig &cfg = Context::mapNavigatorConfig();
-    Widget::init(x, y, true, true, true);
+    Widget::init(x, y, true, true);
     actions_ = actions;
     radiusSquare_ = cfg.radius() * cfg.radius();
     curControlIdx_ = -1;
