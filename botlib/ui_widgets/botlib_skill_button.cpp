@@ -30,7 +30,7 @@ void SkillButton::present() const
     pie_.present(enabled_ ? 0 : 1);
 }
 
-void SkillButton::update()
+void SkillButton::update(float timeDelta)
 {
     if (skill_)
     {

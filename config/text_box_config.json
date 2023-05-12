@@ -1,5 +1,5 @@
 {
-    "blinkTime": 500.0,
+    "blinkTime": 300.0,
     "textSize": "medium",
     "borderColor": [70, 70, 70, 255],
     "backColor": [255, 255, 255, 255],

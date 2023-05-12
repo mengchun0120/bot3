@@ -31,9 +31,13 @@ public:
     void onKey(const commonlib::KeyEvent &e) override;
 #endif
 
+    void onGetFocus() override;
+
     void onLostFocus() override;
 
     void onPointerDown(float x, float y) override;
+
+    void update(float timeDelta) override;
 
     bool containPos(float x, float y) const override;
 
@@ -62,6 +66,7 @@ private:
     commonlib::Vector2 textPos_;
     float blinkDuration_;
     int caretIndex_;
+    bool showCaret_;
     bool caretVisible_;
     commonlib::Vector2 caretPos_;
 };

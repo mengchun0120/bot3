@@ -24,9 +24,6 @@ Context::Context(const AppConfig &cfg)
     labelConfig_.init(cfg.labelConfigFile());
     msgBoxConfig_.init(cfg.messageBoxConfigFile());
     mapNavigatorConfig_.init(cfg.mapNavigatorConfigFile());
-    directionPieConfig_.init(cfg.directionPieConfigFile(),
-                             gameLib_.vertexArrayLib());
-    gameNavigatorConfig_.init(cfg.gameNavigatorConfigFile());
     startScreenConfig_.init(cfg.startScreenConfigFile());
     gameScreenConfig_.init(gameLib_, cfg.gameScreenConfigFile());
     showMapScreenConfig_.init(cfg.showMapScreenConfigFile());

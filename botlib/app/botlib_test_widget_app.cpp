@@ -4,6 +4,7 @@
 #include <botlib_context.h>
 #include <botlib_button.h>
 #include <botlib_label.h>
+#include <botlib_text_box.h>
 #include <botlib_test_widget_app.h>
 
 using namespace mcdane::commonlib;
@@ -26,6 +27,7 @@ void TestWidgetApp::init(const std::string &configFile,
     setupShader();
     setupWidgets();
     setupInput();
+    setupDeltaSmoother();
 }
 #elif __ANDROID__
 void TestWidgetApp::init(android_app *app,
@@ -37,25 +39,16 @@ void TestWidgetApp::init(android_app *app,
     setupShader();
     setupWidgets();
     setupInput();
+    setupDeltaSmoother();
 }
 #endif
 
 void TestWidgetApp::process()
 {
     App::process();
-
     InputManager::instance().processInput(*this);
-
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    widgets_.present();
-    if (msgBox_.visible())
-    {
-        msgBox_.present();
-    }
-
-    glFlush();
-
+    update();
+    present();
     postProcess();
 }
 
@@ -93,7 +86,15 @@ void TestWidgetApp::setupShader()
 
 void TestWidgetApp::setupWidgets()
 {
-    constexpr unsigned int BUTTON_COUNT = 3;
+    widgets_.init(k_buttonCount + 4);
+    setupButtons();
+    setupLabels();
+    setupTextBox();
+    setupMessageBox();
+}
+
+void TestWidgetApp::setupButtons()
+{
     float buttonWidth = 300.0f, buttonHeight = 100.0f;
     float buttonX = viewportWidth() / 2.0f;
     float buttonY = 100.0f;
@@ -109,8 +110,7 @@ void TestWidgetApp::setupWidgets()
         std::bind(&TestWidgetApp::onExitClicked, this)
     };
 
-    widgets_.init(BUTTON_COUNT+3);
-    for (unsigned int i = 0; i < BUTTON_COUNT; ++i)
+    for (unsigned int i = 0; i < k_buttonCount; ++i)
     {
         Button *button = new Button(buttonX, buttonY,
                                     buttonWidth, buttonHeight, buttonTexts[i]);
@@ -118,16 +118,31 @@ void TestWidgetApp::setupWidgets()
         widgets_.setWidget(i, button);
         buttonY += incrY;
     }
+}
 
+void TestWidgetApp::setupLabels()
+{
     Label *label = new Label(150.0f, 200.0f, 200.0f, 70.0f, "Label One");
-    widgets_.setWidget(BUTTON_COUNT, label);
+    widgets_.setWidget(k_buttonCount, label);
+
     label = new Label(150.0f, 400.0f, 200.0f, 70.0f, "Label Two",
                       TextSize::SMALL, HAlign::MIDDLE, VAlign::MIDDLE);
-    widgets_.setWidget(BUTTON_COUNT+1, label);
+    widgets_.setWidget(k_buttonCount + 1, label);
+
     label = new Label(150.0f, 600.0f, 200.0f, 70.0f, "Label Three",
                       TextSize::SMALL, HAlign::RIGHT, VAlign::BOTTOM);
-    widgets_.setWidget(BUTTON_COUNT+2, label);
+    widgets_.setWidget(k_buttonCount + 2, label);
+}
 
+void TestWidgetApp::setupTextBox()
+{
+    TextBox *textBox = new TextBox();
+    textBox->init(400.0f, 600.0f, 300.0f, 40.0f);
+    widgets_.setWidget(k_buttonCount + 3, textBox);
+}
+
+void TestWidgetApp::setupMessageBox()
+{
     msgBox_.init(500.0f, 400.0f, 300.0f, 150.0f, "", MessageBox::BUTTON_NONE);
 }
 
@@ -145,6 +160,33 @@ void TestWidgetApp::setupInput()
     InputManager::initInstance(app_, viewportSize());
 }
 #endif
+
+void TestWidgetApp::setupDeltaSmoother()
+{
+    const AppConfig& cfg = AppConfig::instance();
+
+    deltaSmoother_.init(cfg.timeDeltaHistoryLen());
+    deltaSmoother_.start();
+}
+
+void TestWidgetApp::update()
+{
+    deltaSmoother_.update();
+    widgets_.update(deltaSmoother_.curTimeDelta());
+}
+
+void TestWidgetApp::present()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    widgets_.present();
+    if (msgBox_.visible())
+    {
+        msgBox_.present();
+    }
+
+    glFlush();
+}
 
 void TestWidgetApp::onViewportChange(float width, float height)
 {

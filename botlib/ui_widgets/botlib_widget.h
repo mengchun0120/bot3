@@ -22,24 +22,28 @@ public:
               bool acceptInput=false);
 
 #ifdef DESKTOP_APP
-    virtual inline void onKey(const commonlib::KeyEvent &e);
+    inline virtual void onKey(const commonlib::KeyEvent &e);
 #endif
 
-    virtual inline void onLostFocus();
+    inline virtual void onGetFocus();
 
-    virtual inline void onPointerOut();
+    inline virtual void onLostFocus();
 
-    virtual inline void onPointerOver(float x, float y);
+    inline virtual void onPointerOut();
 
-    virtual inline void onPointerDown(float x, float y);
+    inline virtual void onPointerOver(float x, float y);
 
-    virtual inline void onPointerUp(float x, float y);
+    inline virtual void onPointerDown(float x, float y);
+
+    inline virtual void onPointerUp(float x, float y);
 
     virtual void setPos(float x, float y);
 
     virtual void shiftPos(float dx, float dy);
 
     virtual void present() const = 0;
+
+    inline virtual void update(float timeDelta);
 
     inline bool visible() const;
 
@@ -65,6 +69,10 @@ void Widget::onKey(const commonlib::KeyEvent &e)
 }
 #endif
 
+void Widget::onGetFocus()
+{
+}
+
 void Widget::onLostFocus()
 {
 }
@@ -82,6 +90,10 @@ void Widget::onPointerDown(float x, float y)
 }
 
 void Widget::onPointerUp(float x, float y)
+{
+}
+
+void Widget::update(float timeDelta)
 {
 }
 

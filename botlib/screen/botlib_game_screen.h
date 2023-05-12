@@ -9,7 +9,6 @@
 #include <botlib_progress_bar.h>
 #include <botlib_progress_pie.h>
 #include <botlib_skill_button.h>
-#include <botlib_game_navigator.h>
 #include <botlib_message_box.h>
 #include <botlib_icon.h>
 #include <botlib_update_context.h>

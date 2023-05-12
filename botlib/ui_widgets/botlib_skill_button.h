@@ -27,7 +27,7 @@ public:
 
     void present() const override;
 
-    void update();
+    void update(float timeDelta) override;
 
     bool containPos(float x, float y) const override;
 

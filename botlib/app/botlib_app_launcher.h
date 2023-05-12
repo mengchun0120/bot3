@@ -87,8 +87,6 @@ private:
 
     void initTestGameButtonsApp();
 
-    void initTestDirectionPieApp();
-
     void initShowMapApp();
 
     void initGenMapApp();

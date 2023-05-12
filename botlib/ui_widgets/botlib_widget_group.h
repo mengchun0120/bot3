@@ -33,6 +33,8 @@ public:
 
     inline void setVisible(bool v);
 
+    void update(float timeDelta);
+
 protected:
 #ifdef DESKTOP_APP
     bool process(const commonlib::KeyEvent &event);

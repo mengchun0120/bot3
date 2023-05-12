@@ -9,7 +9,6 @@
 #include <botlib_test_widget_app.h>
 #include <botlib_test_particle_app.h>
 #include <botlib_test_game_buttons_app.h>
-#include <botlib_test_direction_pie_app.h>
 #include <botlib_show_map_app.h>
 #include <botlib_gen_map_app.h>
 #include <botlib_run_game_app.h>
@@ -28,7 +27,6 @@ std::unordered_map<std::string, AppLauncher::InitFunc> AppLauncher::k_initMap{
     {"test_widget", &AppLauncher::initTestWidgetApp},
     {"test_particle", &AppLauncher::initTestParticleApp},
     {"test_game_buttons", &AppLauncher::initTestGameButtonsApp},
-    {"test_direction_pie", &AppLauncher::initTestDirectionPieApp},
     {"show_map", &AppLauncher::initShowMapApp},
     {"gen_map", &AppLauncher::initGenMapApp},
     {"run_game", &AppLauncher::initRunGameApp},
@@ -139,13 +137,6 @@ void AppLauncher::initTestParticleApp()
 void AppLauncher::initTestGameButtonsApp()
 {
     TestGameButtonsApp *a = new TestGameButtonsApp();
-    a->init(args_.appConfigFile_, args_.appDir_);
-    app_ = a;
-}
-
-void AppLauncher::initTestDirectionPieApp()
-{
-    TestDirectionPieApp *a = new TestDirectionPieApp();
     a->init(args_.appConfigFile_, args_.appDir_);
     app_ = a;
 }

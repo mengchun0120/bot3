@@ -1,3 +1,4 @@
+#include <iostream>
 #include <commonlib_exception.h>
 #include <commonlib_log.h>
 #include <botlib_widget_group.h>
@@ -93,6 +94,14 @@ void WidgetGroup::shiftPos(float dx, float dy)
     }
 }
 
+void WidgetGroup::update(float timeDelta)
+{
+    for (auto widget: widgets_)
+    {
+        widget->update(timeDelta);
+    }
+}
+
 #ifdef DESKTOP_APP
 bool WidgetGroup::process(const KeyEvent &event)
 {
@@ -137,7 +146,6 @@ bool WidgetGroup::onPointerOver(float x, float y)
     if (idx != hoverWidgetIdx_ && hoverWidgetIdx_ != -1)
     {
         widgets_[hoverWidgetIdx_]->onPointerOut();
-        return true;
     }
 
     if (idx == -1)
@@ -164,6 +172,10 @@ bool WidgetGroup::onPointerDown(float x, float y)
         }
 
         focusWidgetIdx_ = idx;
+        if (focusWidgetIdx_ != -1)
+        {
+            widgets_[focusWidgetIdx_]->onGetFocus();
+        }
     }
 
     if (idx < 0)

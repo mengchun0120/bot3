@@ -505,7 +505,7 @@ void GameScreen::updateSkillButtons()
 {
     for (auto &button : skillButtons_)
     {
-        button.update();
+        button.update(cxt_.timeDelta());
     }
 }
 

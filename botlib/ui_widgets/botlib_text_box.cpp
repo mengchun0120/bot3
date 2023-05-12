@@ -1,3 +1,5 @@
+#include <cmath>
+#include <iostream>
 #include <commonlib_log.h>
 #include <botlib_context.h>
 #include <botlib_text_box.h>
@@ -13,7 +15,7 @@ void TextBox::init(float x,
                    float height,
                    int maxTextLen)
 {
-    Widget::init(x, y, true, false);
+    Widget::init(x, y, true, true);
     initBox(width, height);
     initText(maxTextLen);
     initCaret();
@@ -49,7 +51,7 @@ void TextBox::present() const
                          textPos_, cfg.textSize(), &cfg.textColor());
     }
 
-    if (acceptInput_ && caretVisible_)
+    if (showCaret_ && caretVisible_)
     {
         cfg.caretRect().draw(program, &caretPos_, nullptr, &cfg.caretColor(),
                              nullptr, 0, nullptr);
@@ -62,17 +64,43 @@ void TextBox::onKey(const commonlib::KeyEvent &e)
 }
 #endif
 
+void TextBox::onGetFocus()
+{
+    showCaret_ = true;
+    caretVisible_ = true;
+    blinkDuration_ = 0.0f;
+}
+
 void TextBox::onLostFocus()
 {
+    showCaret_ = false;
 }
 
 void TextBox::onPointerDown(float x, float y)
 {
 }
 
+void TextBox::update(float timeDelta)
+{
+    if (!showCaret_)
+    {
+        return;
+    }
+
+    const TextBoxConfig &cfg = Context::textBoxConfig();
+
+    blinkDuration_ += timeDelta;
+    if (blinkDuration_ >= cfg.blinkTime())
+    {
+        caretVisible_ = !caretVisible_;
+        blinkDuration_ = 0.0f;
+    }
+}
+
 bool TextBox::containPos(float x, float y) const
 {
-    return false;
+    return fabs(x - boxPos_[0]) <= box_.width() / 2.0f &&
+           fabs(y - boxPos_[1]) <= box_.height() / 2.0f;
 }
 
 void TextBox::setText(const std::string &s)
@@ -120,7 +148,7 @@ void TextBox::initCaret()
 
     blinkDuration_ = 0.0f;
     caretIndex_ = 0;
-    caretVisible_ = false;
+    showCaret_ = false;
     caretPos_.init({
         pos_[0] + cfg.leftMargin() + cfg.caretWidth() / 2.0f,
         pos_[1] + box_.height() - cfg.topMargin() - cfg.caretHeight() / 2.0f

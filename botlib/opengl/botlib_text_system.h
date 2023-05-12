@@ -96,11 +96,14 @@ void TextSystem::draw(SimpleShaderProgram &program,
     for (auto it = begin; it != end; ++it)
     {
         const Rectangle &curRect = getRect(*it, size);
+        float halfWidth = curRect.width() / 2.0f;
         const commonlib::Texture &texture = getTexture(*it);
 
-        p[0] += curRect.width() / 2.0f;
+        p[0] += halfWidth;
         curRect.draw(program, &p, nullptr, nullptr, nullptr,
                      texture.id(), color);
+
+        p[0] += halfWidth;
     }
 }
 
