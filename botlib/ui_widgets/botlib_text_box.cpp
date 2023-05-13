@@ -61,7 +61,23 @@ void TextBox::present() const
 #ifdef DESKTOP_APP
 void TextBox::onKey(const commonlib::KeyEvent &e)
 {
-    std::cout << e.key_ << ' ' << e.mods_ << std::endl;
+    if (e.action_ != GLFW_PRESS)
+    {
+        return;
+    }
+
+    std::pair<int, bool> res = translate(e);
+
+    if (res.second)
+    {
+        std::cout << "'" << static_cast<char>(res.first) << "'";
+    }
+    else
+    {
+        std::cout << res.first;
+    }
+
+    std::cout << std::endl;
 }
 #endif
 

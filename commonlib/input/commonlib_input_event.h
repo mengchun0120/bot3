@@ -3,6 +3,7 @@
 
 #include <string>
 #include <ostream>
+#include <utility>
 #include <commonlib_opengl.h>
 
 namespace mcdane {
@@ -95,6 +96,18 @@ private:
         KeyEvent keyEvent_;
     };
 };
+
+inline bool shiftPressed(const KeyEvent &event)
+{
+    return event.mods_ & GLFW_MOD_SHIFT;
+}
+
+inline bool capsLockEnabled(const KeyEvent &event)
+{
+    return event.mods_ & GLFW_MOD_CAPS_LOCK;
+}
+
+std::pair<int, bool> translate(const KeyEvent &event);
 
 #elif __ANDROID__
 

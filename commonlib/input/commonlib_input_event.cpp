@@ -165,6 +165,100 @@ const KeyEvent &InputEvent::keyEvent() const
     return keyEvent_;
 }
 
+char translateLetter(const KeyEvent &event)
+{
+    char start;
+
+    if (capsLockEnabled(event))
+    {
+        start = shiftPressed(event) ? 'a' : 'A';
+    }
+    else
+    {
+        start = shiftPressed(event) ? 'A' : 'a';
+    }
+
+    return start + (event.key_ - GLFW_KEY_A);
+}
+
+char translateDigit(const KeyEvent &event)
+{
+    static const char shiftChars[] = {
+        ')', '!', '@', '#', '$', '%', '^', '&', '*', '('
+    };
+
+    int idx = event.key_ - GLFW_KEY_0;
+
+    return shiftPressed(event) ? shiftChars[idx] : '0' + idx;
+}
+
+std::pair<int, bool> translateOthers(const KeyEvent &event)
+{
+    int ch;
+    bool printable = true;
+    bool shift = shiftPressed(event);
+
+    switch (event.key_)
+    {
+        case GLFW_KEY_SPACE:
+            ch = ' ';
+            break;
+        case GLFW_KEY_APOSTROPHE:
+            ch = shift ? '\"' : '\'';
+            break;
+        case GLFW_KEY_COMMA:
+            ch = shift ? '<' : ',';
+            break;
+        case GLFW_KEY_MINUS:
+            ch = shift ? '_' : '-';
+            break;
+        case GLFW_KEY_PERIOD:
+            ch = shift ? '>' : '.';
+            break;
+        case GLFW_KEY_SLASH:
+            ch = shift ? '?' : '/';
+            break;
+        case GLFW_KEY_SEMICOLON:
+            ch = shift ? ';' : ':';
+            break;
+        case GLFW_KEY_EQUAL:
+            ch = shift ? '+' : '=';
+            break;
+        case GLFW_KEY_LEFT_BRACKET:
+            ch = shift ? '{' : '[';
+            break;
+        case GLFW_KEY_RIGHT_BRACKET:
+            ch = shift ? '}' : ']';
+            break;
+        case GLFW_KEY_BACKSLASH:
+            ch = shift ? '|' : '\\';
+            break;
+        case GLFW_KEY_GRAVE_ACCENT:
+            ch = shift ? '~' : '`';
+            break;
+        default:
+            ch = event.key_;
+            printable = false;
+            break;
+    }
+
+    return std::make_pair(ch, printable);
+}
+
+std::pair<int, bool> translate(const KeyEvent &event)
+{
+    if (event.key_ >= GLFW_KEY_A && event.key_ <= GLFW_KEY_Z)
+    {
+        return std::make_pair(translateLetter(event), true);
+    }
+    else if (event.key_ >= GLFW_KEY_0 && event.key_ <= GLFW_KEY_9)
+    {
+        return std::make_pair(translateDigit(event), true);
+    }
+
+    return translateOthers(event);
+}
+
 #elif __ANDROID__
 
 std::string toString(InputEvent::Type t)
