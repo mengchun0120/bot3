@@ -31,8 +31,6 @@ public:
     void onKey(const commonlib::KeyEvent &e) override;
 #endif
 
-    void onGetFocus() override;
-
     void onLostFocus() override;
 
     void onPointerDown(float x, float y) override;

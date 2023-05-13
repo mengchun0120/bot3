@@ -172,10 +172,6 @@ bool WidgetGroup::onPointerDown(float x, float y)
         }
 
         focusWidgetIdx_ = idx;
-        if (focusWidgetIdx_ != -1)
-        {
-            widgets_[focusWidgetIdx_]->onGetFocus();
-        }
     }
 
     if (idx < 0)

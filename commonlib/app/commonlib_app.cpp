@@ -67,6 +67,7 @@ void makeContextCurrent(GLFWwindow *window)
 void setupInputMode(GLFWwindow *window)
 {
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+    glfwSetInputMode(window, GLFW_LOCK_KEY_MODS, GL_TRUE);
 }
 
 void initGLEW()

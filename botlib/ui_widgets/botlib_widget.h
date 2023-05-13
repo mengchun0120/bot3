@@ -25,8 +25,6 @@ public:
     inline virtual void onKey(const commonlib::KeyEvent &e);
 #endif
 
-    inline virtual void onGetFocus();
-
     inline virtual void onLostFocus();
 
     inline virtual void onPointerOut();
@@ -68,10 +66,6 @@ void Widget::onKey(const commonlib::KeyEvent &e)
 {
 }
 #endif
-
-void Widget::onGetFocus()
-{
-}
 
 void Widget::onLostFocus()
 {

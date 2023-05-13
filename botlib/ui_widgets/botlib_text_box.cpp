@@ -61,15 +61,9 @@ void TextBox::present() const
 #ifdef DESKTOP_APP
 void TextBox::onKey(const commonlib::KeyEvent &e)
 {
+    std::cout << e.key_ << ' ' << e.mods_ << std::endl;
 }
 #endif
-
-void TextBox::onGetFocus()
-{
-    showCaret_ = true;
-    caretVisible_ = true;
-    blinkDuration_ = 0.0f;
-}
 
 void TextBox::onLostFocus()
 {
@@ -78,6 +72,9 @@ void TextBox::onLostFocus()
 
 void TextBox::onPointerDown(float x, float y)
 {
+    showCaret_ = true;
+    caretVisible_ = true;
+    blinkDuration_ = 0.0f;
 }
 
 void TextBox::update(float timeDelta)
