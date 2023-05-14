@@ -86,38 +86,14 @@ commonlib::Vector2 TextSystem::getSize(const std::string &s,
     return sz;
 }
 
-float TextSystem::getWidth(const std::string &s,
-                           TextSize size) const
+float TextSystem::getWidth(const char *s, int len, TextSize size) const
 {
-    if (!isValidTextSize(size))
-    {
-        THROW_EXCEPT(InvalidArgumentException, "Invalid size");
-    }
-
-    if (s.size() == 0)
-    {
-        return 0.0f;
-    }
-
-    float width = 0.0f;
-    for (std::size_t i = 0; i < s.size(); ++i)
-    {
-        width += getRect(s[i], size).width();
-    }
-
-    return width;
+    return getWidth(s, s+len, size);
 }
 
-float TextSystem::getHeight(TextSize size) const
+float TextSystem::getWidth(const std::string &s, TextSize size) const
 {
-    if (!isValidTextSize(size))
-    {
-        THROW_EXCEPT(InvalidArgumentException,
-                     "Invalid size" +
-                     std::to_string(static_cast<int>(size)));
-    }
-
-    return fontHeights_[static_cast<int>(size)];
+    return getWidth(s.begin(), s.end(), size);
 }
 
 void TextSystem::initFontTextures(const std::string &fontDir)

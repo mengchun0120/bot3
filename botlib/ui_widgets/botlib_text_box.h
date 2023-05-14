@@ -54,6 +54,30 @@ private:
 
     inline const char *visibleTextEnd() const;
 
+    void onPrintableKey(char ch);
+
+    void onUnprintableKey(int key);
+
+    void onKeyLeft();
+
+    void onKeyRight();
+
+    void onKeyBackspace();
+
+    void onKeyDelete();
+
+    void onKeyHome();
+
+    void onKeyEnd();
+
+    void recalibrateCaretPos();
+
+    void recalibrateVisibleTextLen();
+
+    float firstCaretX() const;
+
+    float caretY() const;
+
 private:
     Rectangle box_;
     commonlib::Vector2 boxPos_;

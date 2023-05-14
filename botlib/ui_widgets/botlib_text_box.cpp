@@ -1,4 +1,5 @@
 #include <cmath>
+#include <algorithm>
 #include <iostream>
 #include <commonlib_log.h>
 #include <botlib_context.h>
@@ -61,7 +62,7 @@ void TextBox::present() const
 #ifdef DESKTOP_APP
 void TextBox::onKey(const commonlib::KeyEvent &e)
 {
-    if (e.action_ != GLFW_PRESS)
+    if (e.action_ != GLFW_PRESS && e.action_ != GLFW_REPEAT)
     {
         return;
     }
@@ -70,15 +71,14 @@ void TextBox::onKey(const commonlib::KeyEvent &e)
 
     if (res.second)
     {
-        std::cout << "'" << static_cast<char>(res.first) << "'";
+        onPrintableKey(static_cast<char>(res.first));
     }
     else
     {
-        std::cout << res.first;
+        onUnprintableKey(e.key_);
     }
-
-    std::cout << std::endl;
 }
+
 #endif
 
 void TextBox::onLostFocus()
@@ -157,15 +157,221 @@ void TextBox::initText(int maxTextLen)
 
 void TextBox::initCaret()
 {
-    const TextBoxConfig &cfg = Context::textBoxConfig();
-
     blinkDuration_ = 0.0f;
     caretIndex_ = 0;
     showCaret_ = false;
-    caretPos_.init({
-        pos_[0] + cfg.leftMargin() + cfg.caretWidth() / 2.0f,
-        pos_[1] + box_.height() - cfg.topMargin() - cfg.caretHeight() / 2.0f
-    });
+    caretPos_.init({firstCaretX(), caretY()});
+}
+
+void TextBox::onPrintableKey(char ch)
+{
+    if (textLen_ >= static_cast<int>(text_.size()))
+    {
+        return;
+    }
+
+    for (int i = textLen_ - 1; i >= caretIndex_; --i)
+    {
+        text_[i + 1] = text_[i];
+    }
+
+    text_[caretIndex_] = ch;
+    ++textLen_;
+    ++caretIndex_;
+
+    const TextBoxConfig &cfg = Context::textBoxConfig();
+    const TextSystem &textSys = Context::graphics().textSys();
+
+    caretPos_[0] += textSys.getWidth(ch, cfg.textSize());
+    ++visibleTextLen_;
+
+    recalibrateCaretPos();
+    recalibrateVisibleTextLen();
+}
+
+void TextBox::onUnprintableKey(int key)
+{
+    switch (key)
+    {
+        case GLFW_KEY_LEFT:
+            onKeyLeft();
+            break;
+        case GLFW_KEY_RIGHT:
+            onKeyRight();
+            break;
+        case GLFW_KEY_BACKSPACE:
+            onKeyBackspace();
+            break;
+        case GLFW_KEY_DELETE:
+            onKeyDelete();
+            break;
+        case GLFW_KEY_HOME:
+            onKeyHome();
+            break;
+        case GLFW_KEY_END:
+            onKeyEnd();
+            break;
+        default:
+            break;
+    }
+}
+
+void TextBox::onKeyLeft()
+{
+    if (caretIndex_ == 0)
+    {
+        return;
+    }
+
+    const TextBoxConfig &cfg = Context::textBoxConfig();
+    const TextSystem &textSys = Context::graphics().textSys();
+
+    --caretIndex_;
+    caretPos_[0] -= textSys.getWidth(text_[caretIndex_], cfg.textSize());
+
+    recalibrateCaretPos();
+    recalibrateVisibleTextLen();
+}
+
+void TextBox::onKeyRight()
+{
+    if (caretIndex_ >= textLen_)
+    {
+        return;
+    }
+
+    const TextBoxConfig &cfg = Context::textBoxConfig();
+    const TextSystem &textSys = Context::graphics().textSys();
+
+    caretPos_[0] += textSys.getWidth(text_[caretIndex_], cfg.textSize());
+    ++caretIndex_;
+
+    recalibrateCaretPos();
+    recalibrateVisibleTextLen();
+}
+
+void TextBox::onKeyBackspace()
+{
+    if (caretIndex_ == 0)
+    {
+        return;
+    }
+
+    const TextBoxConfig &cfg = Context::textBoxConfig();
+    const TextSystem &textSys = Context::graphics().textSys();
+
+    caretPos_[0] -= textSys.getWidth(text_[caretIndex_ - 1], cfg.textSize());
+
+    for (int i = caretIndex_; i < textLen_; ++i)
+    {
+        text_[i-1] = text_[i];
+    }
+
+    --textLen_;
+    --caretIndex_;
+
+    recalibrateCaretPos();
+    recalibrateVisibleTextLen();
+}
+
+void TextBox::onKeyDelete()
+{
+    if (caretIndex_ == textLen_)
+    {
+        return;
+    }
+
+    for (int i = caretIndex_ + 1; i < textLen_; ++i)
+    {
+        text_[i-1] = text_[i];
+    }
+
+    --textLen_;
+
+    recalibrateVisibleTextLen();
+}
+
+void TextBox::onKeyHome()
+{
+    caretIndex_ = 0;
+    caretPos_[0] = firstCaretX();
+    visibleTextStartIndex_ = 0;
+
+    recalibrateVisibleTextLen();
+}
+
+void TextBox::onKeyEnd()
+{
+    const TextBoxConfig &cfg = Context::textBoxConfig();
+    const TextSystem &textSys = Context::graphics().textSys();
+
+    caretPos_[0] += textSys.getWidth(text_.data() + caretIndex_,
+                                     text_.data() + textLen_, cfg.textSize());
+    caretIndex_ = textLen_;
+    visibleTextLen_ = textLen_ - visibleTextStartIndex_;
+
+    recalibrateCaretPos();
+}
+
+void TextBox::recalibrateCaretPos()
+{
+    const TextBoxConfig &cfg = Context::textBoxConfig();
+    const TextSystem &textSys = Context::graphics().textSys();
+    float boxRight = pos_[0] + box_.width();
+
+    if (caretPos_[0] > boxRight)
+    {
+        float w;
+
+        while (caretPos_[0] > boxRight)
+        {
+            w = textSys.getWidth(text_[visibleTextStartIndex_], cfg.textSize());
+            caretPos_[0] -= w;
+            ++visibleTextStartIndex_;
+            --visibleTextLen_;
+        }
+    }
+    else if (caretPos_[0] < textPos_[0])
+    {
+        visibleTextStartIndex_ = caretIndex_;
+        caretPos_[0] = textPos_[0];
+    }
+}
+
+void TextBox::recalibrateVisibleTextLen()
+{
+    const TextBoxConfig &cfg = Context::textBoxConfig();
+    const TextSystem &textSys = Context::graphics().textSys();
+    float maxVisibleWidth = box_.width() - cfg.leftMargin();
+    float visibleWidth, charWidth;
+    int lastVisibleIndex;
+
+    visibleTextLen_ = textLen_ - visibleTextStartIndex_;
+    lastVisibleIndex = visibleTextStartIndex_ + visibleTextLen_ - 1;
+    visibleWidth = textSys.getWidth(visibleTextBegin(), visibleTextEnd(),
+                                    cfg.textSize());
+
+    while (visibleWidth >= maxVisibleWidth)
+    {
+        charWidth = textSys.getWidth(text_[lastVisibleIndex], cfg.textSize());
+        visibleWidth -= charWidth;
+        --visibleTextLen_;
+        --lastVisibleIndex;
+    }
+}
+
+float TextBox::firstCaretX() const
+{
+    const TextBoxConfig &cfg = Context::textBoxConfig();
+
+    return pos_[0] + cfg.leftMargin();
+}
+
+float TextBox::caretY() const
+{
+    const TextBoxConfig &cfg = Context::textBoxConfig();
+
+    return pos_[1] + box_.height() - cfg.topMargin() - cfg.caretHeight() / 2.0f;
 }
 
 } // end of namespace botlib

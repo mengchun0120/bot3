@@ -46,10 +46,16 @@ public:
     commonlib::Vector2 getSize(const std::string &s,
                                TextSize size) const;
 
-    float getWidth(const std::string &s,
-                   TextSize size) const;
+    float getWidth(const char *s, int len, TextSize size) const;
 
-    float getHeight(TextSize size) const;
+    float getWidth(const std::string &s, TextSize size) const;
+
+    template <typename ITERATOR>
+    float getWidth(ITERATOR begin, ITERATOR end, TextSize size) const;
+
+    inline float getWidth(int ch, TextSize textSize) const;
+
+    inline float getHeight(TextSize size) const;
 
 private:
     static std::string fontTextureFile(const std::string &fontDir,
@@ -67,8 +73,6 @@ private:
 
     int getRectWidthForTextSize(std::vector<int> &widths,
                                 int textSize);
-
-    inline float getWidth(int ch, TextSize textSize) const;
 
     inline const Rectangle &getRect(int ch, TextSize textSize) const;
 
@@ -107,9 +111,26 @@ void TextSystem::draw(SimpleShaderProgram &program,
     }
 }
 
+template <typename ITERATOR>
+float TextSystem::getWidth(ITERATOR begin, ITERATOR end, TextSize size) const
+{
+    float width = 0.0f;
+    for (auto it = begin; it != end; ++it)
+    {
+        width += getWidth(*it, size);
+    }
+
+    return width;
+}
+
 float TextSystem::getWidth(int ch, TextSize textSize) const
 {
     return getRect(ch, textSize).width();
+}
+
+float TextSystem::getHeight(TextSize size) const
+{
+    return fontHeights_[static_cast<int>(size)];
 }
 
 const Rectangle &TextSystem::getRect(int ch, TextSize textSize) const
